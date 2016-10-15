@@ -10,7 +10,9 @@
         <p>For distribution from TEI </p>
       </publicationStmt>
       <sourceDesc>
-        <p>Derived from TEI Lite <!-- insert guff here --></p>
+        <p>This document was derived from the tutorial for TEI Lite, with substantial additions and
+          modifications carried out within the TEI Simple project. It was also revised considerably
+          for approval by the TEI Council.</p>
       </sourceDesc>
     </fileDesc>
     <encodingDesc>
@@ -73,6 +75,8 @@
       </tagsDecl>
     </encodingDesc>
     <revisionDesc>
+      <change when="2016-10-12">More last minute changes to verbiage; checking examples for
+        validity</change>
       <change when="2016-07-28">Check procmodtab; do att classes; re-insert valLists; add some
         graphics; proofread first half</change>
       <change when="2016-07-23">Rerun checks: remove space</change>
@@ -120,10 +124,10 @@
         We don't however discuss the creation of a TEI customization in this document: the TEI
         website provides a number of links to tutorial material and tools which may assist in this
         process. </p>
-      <p>The document is intended to be generally comprehensible and accessible, but does assume
-        some knowledge of XML (the encoding language used by the TEI), and of the way it is used by
-        the TEI. Further information on both these topics are available from many places, not least
-        the TEI's own web site at <ptr target="http://www.tei-c.org"/>.</p>
+      <p>The present document is intended to be generally comprehensible and accessible, but does
+        assume some knowledge of XML (the encoding language used by the TEI), and of the way it is
+        used by the TEI. Further information on both these topics are available from many places,
+        not least the TEI's own web site at <ptr target="http://www.tei-c.org"/>.</p>
       <p>The TEI Simple schema was first elaborated as a part of a project funded by the Mellon
         Foundation (2012-2014). The project sought to define a new <soCalled>highly-constrained and
           prescriptive subset</soCalled> of the Text Encoding Initiative (TEI) Guidelines suited to
@@ -312,7 +316,13 @@ live without God in the world, and only mind earthly things.
           which both characterise and mark the beginning and end of a string of characters. For
           example, each paragraph is marked by a tag <tag>p</tag> at its start, and a corresponding
             <tag>/p</tag> at its end. We don't elaborate further on the syntax of TEI XML here.
-            <note place="foot">Reference XML tutorials here</note>
+            <note place="foot">Many introductory tutorials on XML are available on the web, for
+            example at <ptr target="http://www.w3schools.com/xml/"/>. The way the TEI uses XML is
+            fully documented in <ref
+              target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SG.html">section v of the
+              TEI Guidelines</ref>; a very basic introduction to TEI XML is also available at <ptr
+              target="http://www.ultraslavonic.info/intro-to-xml"/>. The formal specification of the
+            XML language is at <ptr target="http://www.w3.org/TR/xml"/>.</note>
         </p>
         <p>Aside from its syntax, it is important to note that this particular encoding represents a
           set of choices or priorities. We have chosen to prioritize and simplify the representation
@@ -380,7 +390,7 @@ live without God in the world, and only mind earthly things.
           source document. We discuss various kinds of composite text in section <ptr
             target="#Simple-composite"/> below.</p>
         <p>A unitary text will be encoded using an overall structure like this: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples"><TEI>
+            xmlns="http://www.tei-c.org/ns/Examples" valid="feasible"><TEI>
               <teiHeader><!-- [ TEI Header information ]  --></teiHeader>
               <text>
                 <front><!-- [ front matter ... ] -->
@@ -468,7 +478,8 @@ live without God in the world, and only mind earthly things.
             of the document. For example, Smith's <title>Wealth of Nations</title> as first
             published consists of five books, each of which is divided into chapters, while some
             chapters are further subdivided into parts. We might define <att>xml:id</att> values for
-            this structure as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><body>
+            this structure as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"
+              valid="feasible"><body>
                 <div xml:id="WN1" n="I" type="book">
                   <div xml:id="WN101" n="I.1" type="chapter">
                     <!-- ... -->
@@ -496,7 +507,7 @@ live without God in the world, and only mind earthly things.
             not tally with the structure of the work. For example, in a novel divided into books
             each containing chapters, where the chapters are numbered sequentially through the whole
             work, rather than within each book, one might use a scheme such as the following: <egXML
-              xmlns="http://www.tei-c.org/ns/Examples"><body>
+              xmlns="http://www.tei-c.org/ns/Examples" valid="feasible"><body>
                 <div xml:id="TS01" n="1" type="volume">
                   <div xml:id="TS011" n="1" type="chapter">
                     <!-- ... -->
@@ -530,7 +541,7 @@ live without God in the world, and only mind earthly things.
             unrecoverable text it should always be included. For example, the start of Hardy's
               <title>Under the Greenwood Tree</title> might be encoded as follows: <egXML
               xmlns="http://www.tei-c.org/ns/Examples"><div xml:id="UGT1" n="Winter" type="part">
-                <div xml:id="UGT11" n="1" type="chapter">
+                <div xml:id="UGT101" n="1" type="chapter">
                   <head>Mellstock-Lane</head>
                   <p>To dwellers in a wood almost every species of tree ... </p>
                 </div>
@@ -561,7 +572,8 @@ live without God in the world, and only mind earthly things.
                   <l>Whom Fate, with God made, but doth not controule,</l>
                   <!-- ... -->
                   <l>A worke t'out weare Seths pillars, bricke and stone,</l>
-                  <l>And (holy writs excepted) made to yeeld to none,</l></lg></egXML></p>
+                  <l>And (holy writs excepted) made to yeeld to none,</l>
+                </lg></egXML></p>
             <p>Note that the <gi>l</gi> element marks verse lines, not typographic lines: as
               elsewhere the original lineation of the source text is not therefore preserved by this
               encoding. The <gi>lb</gi> element described in section <ptr target="#Simple-pln"/>
@@ -599,14 +611,31 @@ live without God in the world, and only mind earthly things.
               directions, whether within or between speeches, are marked using the <gi>stage</gi>
               element. </p>
             <p>For example: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <sp><speaker>Vladimir</speaker><p>Pull on your trousers.</p></sp>
-                <sp><speaker>Estragon</speaker><p>You want me to pull off my trousers?</p></sp>
-                <sp><speaker>Vladimir</speaker><p>Pull <hi>on</hi> your trousers.</p></sp>
-                <sp><speaker>Vladimir</speaker><p><stage>(realizing his trousers are down)</stage>.
-                    True</p></sp>
+                <sp>
+                  <speaker>Vladimir</speaker>
+                  <p>Pull on your trousers.</p>
+                </sp>
+                <sp>
+                  <speaker>Estragon</speaker>
+                  <p>You want me to pull off my trousers?</p>
+                </sp>
+                <sp>
+                  <speaker>Vladimir</speaker>
+                  <p>Pull <hi>on</hi> your trousers.</p>
+                </sp>
+                <sp>
+                  <speaker>Vladimir</speaker>
+                  <p><stage>(realizing his trousers are down)</stage>. True</p>
+                </sp>
                 <stage>He pulls up his trousers</stage>
-                <sp><speaker>Vladimir</speaker><p>Well? Shall we go?</p></sp>
-                <sp><speaker>Estragon</speaker><p>Yes, let's go.</p></sp>
+                <sp>
+                  <speaker>Vladimir</speaker>
+                  <p>Well? Shall we go?</p>
+                </sp>
+                <sp>
+                  <speaker>Estragon</speaker>
+                  <p>Yes, let's go.</p>
+                </sp>
                 <stage>They do not move.</stage>
               </egXML>
             </p>
@@ -701,15 +730,16 @@ live without God in the world, and only mind earthly things.
           </div>
           <div xml:id="abseg">
             <head>Other Kinds of Text Block</head>
-            <p>As mentioned above, the <gi>ab</gi> element should be used for blocks of text which
-              are not clearly paragraphs, verse lines, or dramatic speeches. Typical examples
-              include the canonical verses of the Bible, and the textual blocks of other ancient
-              documents which predate the invention of the paragraph, such as Greek inscriptions or
-              Egyptian hieroglyphs. The element is also useful as a means of encoding more
-              specialized kinds of textual block, such as the question and answer structure of a
-              catechism, or the highly formalized substructure of a legal document (if <gi>div</gi>
-              is not considered appropriate for these). In more modern documents, it can be used to
-              encode semi-organized or fragmentary materials such as an artist's notebook or work in
+            <p>As mentioned above, the <gi>ab</gi> element may also be used in preference to the
+                <gi>p</gi> element. It should be used for blocks of text which are not clearly
+              paragraphs, verse lines, or dramatic speeches. Typical examples include the canonical
+              verses of the Bible, and the textual blocks of other ancient documents which predate
+              the invention of the paragraph, such as Greek inscriptions or Egyptian hieroglyphs.
+              The element is also useful as a means of encoding more specialized kinds of textual
+              block, such as the question and answer structure of a catechism, or the highly
+              formalized substructure of a legal document (if <gi>div</gi> is not considered
+              appropriate for these). In more modern documents, it can be used to encode
+              semi-organized or fragmentary materials such as an artist's notebook or work in
               progress; or to faithfully capture the substructure of a file produced by an OCR
               system. </p>
           </div>
@@ -1047,7 +1077,6 @@ live without God in the world, and only mind earthly things.
             <head>Simple Cross References</head>
             <p><specList>
                 <specDesc key="ref"/>
-
               </specList>
             </p>
             <p>Usually, the presence of a cross-reference or link will be indicated by some text or
@@ -1246,11 +1275,17 @@ live without God in the world, and only mind earthly things.
             composite text, using the <gi>choice</gi> element. <specList>
               <specDesc key="choice"/>
             </specList> This allows an editor to indicate where alternative encodings are possible:
-              <egXML xmlns="http://www.tei-c.org/ns/Examples">... for his Nose was as
-                  <choice><orig>sharpe</orig><reg>sharp</reg></choice> as a Pen, and
-                  <choice><orig>a</orig><reg>he</reg></choice>
-              <choice><corr resp="#Theobald">babbl'd</corr><sic>Table</sic></choice> of green fields
-            </egXML></p>
+              <egXML xmlns="http://www.tei-c.org/ns/Examples">... for his Nose was as <choice>
+                <orig>sharpe</orig>
+                <reg>sharp</reg>
+              </choice> as a Pen, and <choice>
+                <orig>a</orig>
+                <reg>he</reg>
+              </choice>
+              <choice>
+                <corr resp="#Theobald">babbl'd</corr>
+                <sic>Table</sic>
+              </choice> of green fields </egXML></p>
         </div>
         <div xml:id="Simple-edit2">
           <head>Omissions, Deletions, and Additions</head>
@@ -1304,12 +1339,14 @@ live without God in the world, and only mind earthly things.
             follows: </p>
           <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <l>And towards our distant rest began to trudge,</l>
-            <l><subst><del>Helping the worst amongst us</del>
+            <l><subst>
+                <del>Helping the worst amongst us</del>
                 <add>Dragging the worst amongt us</add>
               </subst>, who&#x2019;d no boots </l>
             <l>But limped on, blood&#x2013;shod. All went lame; <subst>
                 <del status="shortEnd">half&#x2013;</del>
-                <add>all</add></subst> blind;</l>
+                <add>all</add>
+              </subst> blind;</l>
             <l>Drunk with fatigue ; deaf even to the hoots</l>
             <l>Of tired, outstripped <del>fif</del> five&#x2013;nines that dropped behind.</l>
           </egXML>
@@ -1350,17 +1387,19 @@ live without God in the world, and only mind earthly things.
                 ><p> ... An example of a list appearing in a fief ledger of <name type="place"
                   >Koldinghus</name>
                 <date>1611/12</date> is given below. It shows cash income from a sale of
-                honey.</p><gap extent="50 lines"><desc>quotation from ledger (in
-                Danish)</desc></gap><p>A description of the overall structure of the account is once
-                again ... </p></egXML> (The <gi>name</gi> and <gi>date</gi> elements used in this
-            example are discussed further below)</p>
+                honey.</p><gap extent="50 lines">
+                <desc>quotation from ledger (in Danish)</desc>
+              </gap><p>A description of the overall structure of the account is once again ...
+              </p></egXML> (The <gi>name</gi> and <gi>date</gi> elements used in this example are
+            discussed further below)</p>
           <p>Language corpora (particular those constructed before the widespread use of scanners)
             often systematically omit figures and mathematics: <egXML
               xmlns="http://www.tei-c.org/ns/Examples"><p>At the bottom of your screen below the
                 mode line is the <hi>minibuffer</hi>. This is the area where Emacs echoes the
                 commands you enter and where you specify filenames for Emacs to find, values for
-                search and replace, and so on. <gap reason="graphic"><desc>diagram of Emacs
-                    screen</desc></gap>
+                search and replace, and so on. <gap reason="graphic">
+                  <desc>diagram of Emacs screen</desc>
+                </gap>
               </p></egXML></p>
 
         </div>
@@ -1390,7 +1429,10 @@ live without God in the world, and only mind earthly things.
           <p>To record both an abbreviation and its expansion, the <gi>choice</gi> element mentioned
             above may be used to group the abbreviated form with its proposed expansion: <egXML
               xmlns="http://www.tei-c.org/ns/Examples">
-              <choice><abbr>wt</abbr><expan>with</expan></choice>
+              <choice>
+                <abbr>wt</abbr>
+                <expan>with</expan>
+              </choice>
             </egXML>
           </p>
           <p>The elements <gi>expan</gi> and <gi>abbr</gi> should contain a full word, or the
@@ -1463,9 +1505,11 @@ live without God in the world, and only mind earthly things.
           <p>This use should be distinguished from the case of the <gi>reg</gi> (regularization)
             element, which provides a means of marking the standard form of a referencing string as
             demonstrated below: <egXML xmlns="http://www.tei-c.org/ns/Examples"><name type="person"
-                ref="#WADLM1"><choice><orig>Walter de la Mare</orig><reg>de la Mare,
-                  Walter</reg></choice></name> was born at <name key="Ch1" type="place"
-                >Charlton</name>, in <name key="KT1" type="county">Kent</name>, in 1873.</egXML></p>
+                ref="#WADLM1"><choice>
+                  <orig>Walter de la Mare</orig>
+                  <reg>de la Mare, Walter</reg>
+                </choice></name> was born at <name key="Ch1" type="place">Charlton</name>, in <name
+                key="KT1" type="county">Kent</name>, in 1873.</egXML></p>
 
         </div>
         <div xml:id="code">
@@ -1862,12 +1906,12 @@ live without God in the world, and only mind earthly things.
           digital facsimile of it. In the simplest case, the <att>facs</att> attribute on the
             <gi>pb</gi> element may be used to supply a location for an image file corresponding
           with that point in the text: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <text>
+            <div>
               <pb facs="page1.png" n="1"/>
               <!-- text contained on page 1 is encoded here -->
               <pb facs="page2.png" n="2"/>
               <!-- text contained on page 2 is encoded here -->
-            </text>
+            </div>
           </egXML> This method is only appropriate in the simple case where each digital image file
             <ident>page1.png</ident> etc. corresponds with a single transcribed and encoded page. If
           multiple images are provided for each page, or more detailed alignment of image and
@@ -1891,8 +1935,8 @@ live without God in the world, and only mind earthly things.
             applications at least) for marking <term>orthographic sentences</term>, that is, units
             defined by orthographic features such as punctuation. For example, the passage from
               <title>Jane Eyre</title> discussed earlier might be divided into s-units as
-              follows:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-              <pb n="474"/><div type="chapter" n="38">
+              follows:<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="chapter" n="38">
+                <pb n="474"/>
                 <p><s n="001">Reader, I married him.</s><s n="002">A quiet wedding we had:</s><s
                     n="003">he and I, the parson and clerk, were alone present.</s><s n="004">When
                     we got back from church, I went into the kitchen of the manor-house, where Mary
@@ -2110,7 +2154,7 @@ live without God in the world, and only mind earthly things.
         </p>
         <p>A typical example might be an anthology containing several distinct works, or any other
           kind of collection, encoded using an overall structure like this: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples"><TEI>
+            xmlns="http://www.tei-c.org/ns/Examples" valid="feasible"><TEI>
               <teiHeader>
                 <!--[ header information for the composite ]-->
               </teiHeader>
@@ -2176,21 +2220,24 @@ live without God in the world, and only mind earthly things.
           assumption is that the composite is at some level describable as a single work. However,
           it is also possible to define a composite of complete TEI texts, each with its own TEI
           header. Such a collection is known as a <term>TEI corpus</term>, and must itself have a
-          TEI header: <egXML xmlns="http://www.tei-c.org/ns/Examples"><teiCorpus><teiHeader>
-                <!--[header information for the corpus]--></teiHeader><TEI>
+          TEI header: <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible"><teiCorpus>
+              <teiHeader>
+                <!--[header information for the corpus]--></teiHeader>
+              <TEI>
                 <teiHeader><!--[header information for first text]--></teiHeader>
                 <text>
                   <!--[first text in corpus]-->
                 </text>
-              </TEI><TEI>
+              </TEI>
+              <TEI>
                 <teiHeader><!--[header information for second text]--></teiHeader>
                 <text>
                   <!--[second text in corpus]-->
                 </text>
-              </TEI></teiCorpus></egXML> It is also possible to create a composite of corpora --
-          that is, one <gi>teiCorpus</gi> element may contain many nested <gi>teiCorpus</gi>
-          elements rather than many nested <gi>TEI</gi> elements, to any depth considered
-          necessary.</p>
+              </TEI>
+            </teiCorpus></egXML> It is also possible to create a composite of corpora -- that is,
+          one <gi>teiCorpus</gi> element may contain many nested <gi>teiCorpus</gi> elements rather
+          than many nested <gi>TEI</gi> elements, to any depth considered necessary.</p>
       </div>
 
       <div xml:id="Simple-fronbac">
@@ -2422,12 +2469,13 @@ live without God in the world, and only mind earthly things.
           reference a set of page images, alone, or in combination with a transcription. For ease of
           management, it is strongly recommended that the <gi>graphic</gi> elements representing
           those page images be grouped together within a <gi>facsimile</gi> element, as in the
-          following example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile><graphic
-                url="page1.png" xml:id="page1"/>
-              <graphic url="page2.png" xml:id="page2"/></facsimile></egXML> If a transcription is
-          supplied in addition, the <att>xml:id</att> values can be used to align the page breaks
-          within it with the relevant image, rather than using the URL given on the <gi>graphic</gi>
-          element. <egXML xmlns="http://www.tei-c.org/ns/Examples"><text>
+          following example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+              <graphic url="page1.png" xml:id="page1"/>
+              <graphic url="page2.png" xml:id="page2"/>
+            </facsimile></egXML> If a transcription is supplied in addition, the <att>xml:id</att>
+          values can be used to align the page breaks within it with the relevant image, rather than
+          using the URL given on the <gi>graphic</gi> element. <egXML
+            xmlns="http://www.tei-c.org/ns/Examples"><text>
               <!-- ...-->
               <pb facs="#page1"/>
               <!-- text contained on page 1 -->
@@ -2507,7 +2555,7 @@ live without God in the world, and only mind earthly things.
               <specDesc key="sourceDesc"/>
             </specList></p>
           <p> A minimal TEI header has the following structure: <egXML
-              xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
+              xmlns="http://www.tei-c.org/ns/Examples" valid="feasible"><teiHeader>
                 <fileDesc>
                   <titleStmt>
                     <!-- [ bibliographic description of the digital resource ] -->
@@ -2559,9 +2607,10 @@ live without God in the world, and only mind earthly things.
                 <specDesc key="edition"/>
                 <specDesc key="respStmt"/>
               </specList></p>
-            <p>Example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><editionStmt><edition n="U2"
-                    >Third draft, substantially revised <date>1987</date>
-                  </edition></editionStmt></egXML></p>
+            <p>Example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><editionStmt>
+                  <edition n="U2">Third draft, substantially revised <date>1987</date>
+                  </edition>
+                </editionStmt></egXML></p>
             <p>Determining exactly what constitutes a new edition of an electronic text is left to
               the encoder.</p>
           </div>
@@ -2685,11 +2734,14 @@ live without God in the world, and only mind earthly things.
                 <label>interpretation</label>
                 <item>what analytic or interpretive information has been added to the text. </item>
               </list></p>
-            <p>Example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><editorialDecl><p>The part
-                    of speech analysis applied throughout section 4 was added by hand and has not
-                    been checked.</p><p>Errors in transcription controlled by using the WordPerfect
-                    spelling checker.</p><p>All words converted to Modern American spelling using
-                    Webster's 9th Collegiate dictionary.</p></editorialDecl></egXML></p>
+            <p>Example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><editorialDecl>
+                  <p>The part of speech analysis applied throughout section 4 was added by hand and
+                    has not been checked.</p>
+                  <p>Errors in transcription controlled by using the WordPerfect spelling
+                    checker.</p>
+                  <p>All words converted to Modern American spelling using Webster's 9th Collegiate
+                    dictionary.</p>
+                </editorialDecl></egXML></p>
             <p>The full TEI Guidelines provide specialized elements for each of the topics above;
               these are not however included in TEI Simple.</p>
           </div>
@@ -2820,11 +2872,12 @@ live without God in the world, and only mind earthly things.
             <p>The <gi>refsDecl</gi> element is used to document the way in which any standard
               referencing scheme built into the encoding works. In its simplest form, it consists of
               prose description.</p>
-            <p>Example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl><p>The
-                      <att>n</att> attribute on each <gi>div</gi> contains the canonical reference
-                    for each division in the form XX.yyy where XX is the book number in roman
-                    numeral and yyy is the section number in arabic.</p><p>Milestone tags refer to
-                    the edition of 1830 as E30 and that of 1850 as E50.</p></refsDecl></egXML></p>
+            <p>Example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl>
+                  <p>The <att>n</att> attribute on each <gi>div</gi> contains the canonical
+                    reference for each division in the form XX.yyy where XX is the book number in
+                    roman numeral and yyy is the section number in arabic.</p>
+                  <p>Milestone tags refer to the edition of 1830 as E30 and that of 1850 as E50.</p>
+                </refsDecl></egXML></p>
             <p>The <gi>listPrefixDef</gi> element contains one or more <gi>prefixDef</gi> elements,
               each defining a prefix which has been used to abbreviate references to other
               documents, for example as the value of a <att>target</att> or other pointing
@@ -2848,22 +2901,45 @@ live without God in the world, and only mind earthly things.
                 <specDesc key="catDesc"/>
               </specList></p>
             <p>In the simplest case, the taxonomy may be defined by a bibliographic reference, as in
-              the following example: <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                    ><classDecl><taxonomy xml:id="LC-SH"><bibl>Library of Congress Subject Headings
-                    </bibl></taxonomy></classDecl></egXML></p>
+              the following example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><classDecl>
+                  <taxonomy xml:id="LC-SH">
+                    <bibl>Library of Congress Subject Headings </bibl>
+                  </taxonomy>
+                </classDecl></egXML></p>
             <p>Alternatively, or in addition, the encoder may define a special purpose
               classification scheme, as in the following example: <egXML
-                xmlns="http://www.tei-c.org/ns/Examples"><taxonomy xml:id="B"><bibl>Brown
-                    Corpus</bibl><category xml:id="B.A"><catDesc>Press Reportage</catDesc><category
-                      xml:id="B.A1"><catDesc>Daily</catDesc></category><category xml:id="B.A2"
-                        ><catDesc>Sunday</catDesc></category><category xml:id="B.A3"
-                        ><catDesc>National</catDesc></category><category xml:id="B.A4"
-                        ><catDesc>Provincial</catDesc></category><category xml:id="B.A5"
-                        ><catDesc>Political</catDesc></category><category xml:id="B.A6"
-                        ><catDesc>Sports</catDesc></category></category><category xml:id="B.D"
-                      ><catDesc>Religion</catDesc><category xml:id="B.D1"
-                      ><catDesc>Books</catDesc></category><category xml:id="B.D2"
-                        ><catDesc>Periodicals and tracts</catDesc></category></category>
+                xmlns="http://www.tei-c.org/ns/Examples"><taxonomy xml:id="B">
+                  <bibl>Brown Corpus</bibl>
+                  <category xml:id="B.A">
+                    <catDesc>Press Reportage</catDesc>
+                    <category xml:id="B.A1">
+                      <catDesc>Daily</catDesc>
+                    </category>
+                    <category xml:id="B.A2">
+                      <catDesc>Sunday</catDesc>
+                    </category>
+                    <category xml:id="B.A3">
+                      <catDesc>National</catDesc>
+                    </category>
+                    <category xml:id="B.A4">
+                      <catDesc>Provincial</catDesc>
+                    </category>
+                    <category xml:id="B.A5">
+                      <catDesc>Political</catDesc>
+                    </category>
+                    <category xml:id="B.A6">
+                      <catDesc>Sports</catDesc>
+                    </category>
+                  </category>
+                  <category xml:id="B.D">
+                    <catDesc>Religion</catDesc>
+                    <category xml:id="B.D1">
+                      <catDesc>Books</catDesc>
+                    </category>
+                    <category xml:id="B.D2">
+                      <catDesc>Periodicals and tracts</catDesc>
+                    </category>
+                  </category>
                 </taxonomy></egXML></p>
             <p>Linkage between a particular text and a category within such a taxonomy is made by
               means of the <gi>catRef</gi> element within the <gi>textClass</gi> element, as
@@ -2908,13 +2984,17 @@ live without God in the world, and only mind earthly things.
               <profileDesc>
                 <particDesc>
                   <listPerson>
-                    <person xml:id="OPI"><p><name>Dr Opimian</name>: named for the famous Roman fine
-                        wine.</p></person>
-                    <person xml:id="GRM"><p><name>Mr Gryll</name>: named for the mythical Gryllus,
-                        one of Ulysses' sailors transformed by Circe into a pig, who argues that he
-                        was happier in that state than as a man.</p></person>
+                    <person xml:id="OPI">
+                      <p><name>Dr Opimian</name>: named for the famous Roman fine wine.</p>
+                    </person>
+                    <person xml:id="GRM">
+                      <p><name>Mr Gryll</name>: named for the mythical Gryllus, one of Ulysses'
+                        sailors transformed by Circe into a pig, who argues that he was happier in
+                        that state than as a man.</p>
+                    </person>
                   </listPerson>
-                </particDesc></profileDesc>
+                </particDesc>
+              </profileDesc>
             </egXML></p>
           <p>In the same way, the <gi>settingDesc</gi> element can be used to list descriptive
             information about the real or fictional places mentioned in a text. It contains at least
@@ -2926,11 +3006,15 @@ live without God in the world, and only mind earthly things.
                 <settingDesc>
                   <listPlace>
                     <head>Houses mentioned in <title>Pride and Prejudice</title></head>
-                    <place xml:id="NETF1"><p><name>Netherfield Park</name>: home of the
-                      Bingleys</p></place>
-                    <place xml:id="PEMB1"><p><name>Pemberley</name>: home of Mr Darcy</p></place>
+                    <place xml:id="NETF1">
+                      <p><name>Netherfield Park</name>: home of the Bingleys</p>
+                    </place>
+                    <place xml:id="PEMB1">
+                      <p><name>Pemberley</name>: home of Mr Darcy</p>
+                    </place>
                   </listPlace>
-                </settingDesc></profileDesc>
+                </settingDesc>
+              </profileDesc>
             </egXML></p>
           <p>The full TEI Guidelines provide a rich range of additional elements to define more
             structured information about persons and places; these are not however available in TEI
@@ -2973,16 +3057,18 @@ live without God in the world, and only mind earthly things.
               <catRef target="#B.A3 #B.D"/>
             </egXML>
           </p>
-          <p>The element <gi>keywords</gi> contains a list of keywords or phrases identifying the
-            topic or nature of a text. As usual, the attribute <att>scheme</att> identifies the
-            source from which these terms are taken. For example, if the LC Subject Headings are
-            used, following declaration of that classification system in a <gi>taxonomy</gi> element
-            as above: <egXML xmlns="http://www.tei-c.org/ns/Examples"><textClass><keywords
-                  scheme="#LCSH"><list>
-                    <item>English literature -- History and criticism -- Data processing.</item>
-                    <item>English literature -- History and criticism -- Theory etc.</item>
-                    <item>English language -- Style -- Data processing.</item>
-                  </list></keywords></textClass></egXML></p>
+          <p>The element <gi>keywords</gi> contains one or more keywords or phrases identifying the
+            topic or nature of a text, each tagged as a <gi>term</gi>. As usual, the attribute
+              <att>scheme</att> identifies the source from which these terms are taken. For example,
+            if the LC Subject Headings are used, following declaration of that classification system
+            in a <gi>taxonomy</gi> element as above: <egXML xmlns="http://www.tei-c.org/ns/Examples"><textClass>
+                <keywords scheme="#LCSH">
+                  <term>English literature</term>
+                  <term>History and criticism</term>
+                  <term>Data processing.</term>
+                </keywords>
+              </textClass></egXML></p>
+
           <p>Multiple classifications may be supplied using any of the mechanisms described in this
             section.</p>
         </div>
@@ -3214,26 +3300,24 @@ live without God in the world, and only mind earthly things.
           <specGrpRef target="#base"/>
           <specGrpRef target="#header"/>
           <specGrpRef target="#header2"/>
-          <!--specGrpRef target="#transcr"/-->
           <specGrpRef target="#simpleFax"/>
           <specGrpRef target="#attclasses"/>
           <specGrpRef target="#modelclasses"/>
           <specGrpRef target="#simpleelements"/>
           <specGrpRef target="#simpleelementspm"/>
           <specGrpRef target="#simplechanges"/>
-          <!--specGrpRef target="#rendition"/-->
+          <specGrpRef target="#simplexx"/>
         </schemaSpec>
         <div>
           <head>Summary</head>
-          <p>The TEI Simple schema defines a total of 166 elements, of which 56 appear in the TEI
-            header alone. Processing Models are defined for most of the elements. </p>
-          <p>The schema uses the whole of the TEI base module, the whole of the TEI gaiji module,
-            and the whole of the header module, with the exception of about 24 elements considered
-            to be of specialized interest only.</p>
+          <p>The TEI Simple schema defines a total of 166 elements, of which 56 appear only in the
+            TEI header. The schema uses the whole of the TEI base module, the whole of the TEI gaiji
+            module, and the whole of the header module, with the exception of about 24 elements
+            considered to be of specialized interest only.</p>
+
           <specGrp xml:id="base">
             <moduleRef key="tei"/>
           </specGrp>
-
 
           <specGrp xml:id="header">
 
@@ -3310,8 +3394,7 @@ live without God in the world, and only mind earthly things.
           </specGrp>
 
           <specGrp xml:id="header2">
-            <!-- <p>Elements which are only intended to be used in the header are banned from the
-                <gi>text</gi>, using a Schematron rule.</p>-->
+
             <p>A schematron rule is provided to prevent some elements which could otherwise appear
               in either header and text from appearing in the latter. </p>
             <elementSpec ident="text" mode="change">
@@ -3326,7 +3409,7 @@ live without God in the world, and only mind earthly things.
                     tei:msDesc | tei:msIdentifier | tei:person | tei:physDesc | tei:profileDesc | tei:publicationStmt | tei:relatedItem | 
                     tei:repository | tei:resp | tei:respStmt | tei:sourceDesc | tei:tag | tei:teiHeader | tei:term | tei:textClass | tei:textDesc 
                     | tei:titleStmt | tei:typeDesc | tei:val | tei:value">-->
-                  <rule xmlns="http://purl.oclc.org/dsdl/schematron" context=" tei:biblFull ">
+                  <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:term | tei:biblFull ">
                     <report test="ancestor::tei:text">Error: The element <name/> is not permitted
                       outside the header</report>
                   </rule>
@@ -3335,32 +3418,7 @@ live without God in the world, and only mind earthly things.
             </elementSpec>
           </specGrp>
         </div>
-        <!-- <div>
-          <head>Transcription</head>
-          <p>In order to support the <gi>sourcedoc</gi> and <gi>facsimile</gi> elements, the basic
-            transcriptional elements are loaded, and two attribute classes.</p>
-            <specGrp xml:id="transcr">
-            <elementRef key="damage"/>
-            <elementRef key="damageSpan"/>
-            <elementRef key="facsimile"/>
-            <elementRef key="line"/>
-            <elementRef key="listTranspose"/>
-            <elementRef key="metamark"/>
-            <elementRef key="mod"/>
-            <elementRef key="redo"/>
-            <elementRef key="restore"/>
-            <elementRef key="retrace"/>
-            <elementRef key="sourceDoc"/>
-            <elementRef key="surface"/>
-            <elementRef key="surfaceGrp"/>
-            <elementRef key="surplus"/>
-            <elementRef key="transpose"/>
-            <elementRef key="undo"/>
-            <elementRef key="zone"/>
-            <classRef key="att.coordinated"/>
-            <classRef key="att.global.change"/>
-          </specGrp>
-        </div>-->
+
         <div>
           <head>Add support for facsimile</head>
           <specGrp xml:id="simpleFax">
@@ -3409,7 +3467,8 @@ live without God in the world, and only mind earthly things.
                 <attDef ident="instant" mode="delete"/>
               </attList>
             </classSpec>
-            <p>URLs have a constraint that a local pointer must have a corresponding ID.</p>
+            <p>We add a constraint that the target of a local pointer must have a corresponding
+              identifier.</p>
             <classSpec type="atts" ident="att.pointing" mode="change">
               <attList>
                 <attDef ident="target" mode="change">
@@ -3427,7 +3486,7 @@ live without God in the world, and only mind earthly things.
                 </attDef>
               </attList>
             </classSpec>
-            <p>Constrained value lists are added to attribute classes where possible.</p>
+            <p>We constrain value lists where possible.</p>
             <classSpec type="atts" mode="change" ident="att.placement">
               <attList>
                 <attDef ident="place" mode="change">
@@ -3732,7 +3791,7 @@ live without God in the world, and only mind earthly things.
         </div>
         <div>
           <head>Elements</head>
-          <p>The main part of TEI Simple is the set of selected elements.</p>
+          <p>These are the elements selected for use in TEI Simple texts</p>
           <specGrp xmlns="http://www.tei-c.org/ns/1.0"
             xmlns:XSL="http://www.w3.org/1999/XSL/Transform" xml:id="simpleelements">
             <elementRef key="ab"/>
@@ -3741,7 +3800,6 @@ live without God in the world, and only mind earthly things.
             <elementRef key="add"/>
             <elementRef key="address"/>
             <elementRef key="addrLine"/>
-            <!-- elementRef key="addSpan"/-->
             <elementRef key="am"/>
             <elementRef key="anchor"/>
             <elementRef key="argument"/>
@@ -3749,7 +3807,6 @@ live without God in the world, and only mind earthly things.
             <elementRef key="back"/>
             <elementRef key="bibl"/>
             <elementRef key="biblScope"/>
-            <!-- added for bibl -->
             <elementRef key="body"/>
             <elementRef key="byline"/>
             <elementRef key="c"/>
@@ -3774,9 +3831,7 @@ live without God in the world, and only mind earthly things.
             <elementRef key="docImprint"/>
             <elementRef key="docTitle"/>
             <elementRef key="editor"/>
-            <!-- added for bibl -->
             <elementRef key="email"/>
-            <!-- added for bibl -->
             <elementRef key="epigraph"/>
             <elementRef key="ex"/>
             <elementRef key="expan"/>
@@ -3791,7 +3846,6 @@ live without God in the world, and only mind earthly things.
             <elementRef key="gap"/>
             <elementRef key="graphic"/>
             <elementRef key="group"/>
-            <!-- elementRef key="handShift"/-->
             <elementRef key="head"/>
             <elementRef key="hi"/>
             <elementRef key="imprimatur"/>
@@ -3828,9 +3882,7 @@ live without God in the world, and only mind earthly things.
             <elementRef key="relatedItem"/>
             <elementRef key="resp"/>
             <elementRef key="respStmt"/>
-            <!-- allowed in bibl -->
             <elementRef key="rhyme"/>
-            <!-- restored under protest -->
             <elementRef key="role"/>
             <elementRef key="roleDesc"/>
             <elementRef key="row"/>
@@ -3842,15 +3894,14 @@ live without God in the world, and only mind earthly things.
             <elementRef key="sic"/>
             <elementRef key="signed"/>
             <elementRef key="sp"/>
-            <!--elementRef key="space"/-->
             <elementRef key="speaker"/>
-            <!--elementRef key="spGrp"/-->
             <elementRef key="stage"/>
             <elementRef key="subst"/>
             <elementRef key="supplied"/>
             <elementRef key="table"/>
             <elementRef key="TEI"/>
             <elementRef key="teiCorpus"/>
+            <elementRef key="term"/> <!-- only for use within keywords -->
             <elementRef key="text"/>
             <elementRef key="time"/>
             <elementRef key="title"/>
@@ -3859,12 +3910,8 @@ live without God in the world, and only mind earthly things.
             <elementRef key="trailer"/>
             <elementRef key="unclear"/>
             <elementRef key="w"/>
-            <!--  <elementSpec module="core" ident="desc" mode="change">
-              <classes mode="replace">
-                <memberOf key="att.global"/>
-                <memberOf key="model.descLike"/>
-              </classes>
-            </elementSpec>-->
+            <elementRef key="egXML"/>
+
           </specGrp>
           <specGrp xml:id="simpleelementspm">
             <p>Processing Models are defined for all textual elements. </p>
@@ -4626,7 +4673,20 @@ live without God in the world, and only mind earthly things.
               </attList>
             </elementSpec>
           </specGrp>
-
+          <specGrp xml:id="simpleExx">
+            <!-- here we add Simple examples for some elements which are unchanged in Simple -->
+            <elementSpec ident="w" mode="change">
+              <exemplum xml:lang="en">
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <s n="1">
+                    <w ana="#NP0" type="open" lemma="Marley">Marley</w>
+                    <w ana="#VBD" type="verb" lemma="be">was</w>
+                    <w ana="#AJ0" type="complement" lemma="die">dead</w>
+                  </s>
+                </egXML>
+              </exemplum>
+            </elementSpec>
+          </specGrp>
         </div>
       </div>
     </body>
