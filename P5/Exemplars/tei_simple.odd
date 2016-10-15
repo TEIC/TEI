@@ -3311,16 +3311,17 @@ live without God in the world, and only mind earthly things.
         <div>
           <head>Summary</head>
           <p>The TEI Simple schema defines a total of 166 elements, of which 56 appear only in the
-            TEI header. The schema uses the whole of the TEI base module, the whole of the TEI gaiji
+            TEI header. The schema combines the whole of the TEI infrastructure module, the whole of the TEI gaiji
             module, and the whole of the header module, with the exception of about 24 elements
             considered to be of specialized interest only.</p>
 
           <specGrp xml:id="base">
             <moduleRef key="tei"/>
+            <moduleRef key="gaiji"/>
           </specGrp>
 
           <specGrp xml:id="header">
-
+<!--
             <p>The header is defined by exclusion: this means that we may need to revisit this list
               should any new elements be added to the header in the future.</p>
 
@@ -3328,8 +3329,56 @@ live without God in the world, and only mind earthly things.
               except="appInfo application cRefPattern calendar calendarDesc 
               correction correspAction correspContext correspDesc geoDecl hyphenation interpretation 
               normalization punctuation quotation refState  scriptNote 
-              segmentation styleDefDecl stdVals typeNote"/>
-            <moduleRef key="gaiji"/>
+              segmentation styleDefDecl stdVals typeNote"/>-->
+            
+            <moduleRef key="header" include="abstract
+              authority
+              availability
+              biblFull
+              catDesc
+              catRef
+              category
+              change
+              classCode
+              classDecl
+              creation
+              distributor
+              edition
+              editionStmt
+              editorialDecl
+              encodingDesc
+              extent
+              fileDesc
+              funder
+              idno
+              keywords
+              langUsage
+              language
+              licence
+              listChange
+              listPrefixDef
+              namespace
+              notesStmt
+              prefixDef
+              principal
+              profileDesc
+              projectDesc
+              publicationStmt
+              refsDecl
+              rendition
+              revisionDesc
+              samplingDecl
+              seriesStmt
+              sourceDesc
+              sponsor
+              tagUsage
+              tagsDecl
+              taxonomy
+              teiHeader
+              textClass
+              titleStmt
+              xenoData" />
+          
             <moduleRef key="corpus" include="particDesc settingDesc"/>
             <p>We include particDesc from the corpus module, but remove it from the model.listLike
               class so that it can only appear inside profileDesc.</p>
@@ -3338,61 +3387,8 @@ live without God in the world, and only mind earthly things.
                 <memberOf key="att.global"/>
               </classes>
             </elementSpec>
-            <!-- 
-            <moduleRef key="header"/>
-            <!-\- <elementRef key="att"/>-\->
-            <elementRef key="analytic"/>
-            <elementRef key="biblFull"/>
-            <!-\- used by bibl -\->
-            <elementRef key="biblStruct"/>
-            <elementRef key="change"/>
-            <elementRef key="charDecl"/>
-            <elementRef key="charProp"/>
-            <!-\- <elementRef key="editor"/>
-          -\->
-            <elementRef key="editorialDecl"/>
-            <!-\- <elementRef key="email"/>
-         -\->
-            <elementRef key="encodingDesc"/>
-            <elementRef key="extent"/>
-            <elementRef key="fileDesc"/>
-            <!-\- <elementRef key="gi"/>
-          -\->
-            <elementRef key="glyph"/>
-            <elementRef key="glyphName"/>
-            <elementRef key="idno"/>
-            <elementRef key="imprint"/>
-            <elementRef key="keywords"/>
-            <elementRef key="licence"/>
-            <elementRef key="listChange"/>
-            <elementRef key="listPerson"/>
-            <elementRef key="localName"/>
-            <elementRef key="monogr"/>
-            <!-\-    <elementRef key="msDesc"/>
-            <elementRef key="msIdentifier"/>-\->
-            <elementRef key="person"/>
-            <!-\-  <elementRef key="physDesc"/>
-         -\->
-            <elementRef key="profileDesc"/>
-            <elementRef key="publicationStmt"/>
-            <!-\- <elementRef key="relatedItem"/>-\->
-            <!-\- allowed in bibl -\->
-            <!-\-  <elementRef key="repository"/>
-          -\->
-            <elementRef key="resp"/>
-            <elementRef key="respStmt"/>
-            <elementRef key="sourceDesc"/>
-            <!-\-   <elementRef key="tag"/>-\->
-            <elementRef key="teiHeader"/>
-            <elementRef key="term"/>
-            <elementRef key="textClass"/>
-            <!-\-<elementRef key="textDesc"/>-\->
-            <elementRef key="titleStmt"/>
-            <!-\- <elementRef key="typeDesc"/>
-            <elementRef key="val"/>
-            <elementRef key="value"/>-\->-->
           </specGrp>
-
+            
           <specGrp xml:id="header2">
 
             <p>A schematron rule is provided to prevent some elements which could otherwise appear
