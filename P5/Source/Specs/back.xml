@@ -4,7 +4,8 @@ Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="back">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="back">
   <gloss versionDate="2005-01-14" xml:lang="en">back matter</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">후면부 내용</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">正文後資訊</gloss>
@@ -12,109 +13,118 @@ $Id$
   <gloss versionDate="2006-10-18" xml:lang="de"> Nachspann (back)</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">paratexto final</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">peritesto finale</gloss>
-  <desc versionDate="2005-01-14" xml:lang="en">contains any appendixes, etc. following the main part of a text.</desc>
+  <desc versionDate="2005-01-14" xml:lang="en">contains any appendixes, etc. following the main part
+    of a text.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">텍스트의 주요부 뒤에 오는 부록 등을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">在正文之後，包含附錄等。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">後付．本文の後に続く付録などを示す．</desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">contient tout supplément placé après la partie principale
-    d'un texte : appendice, etc.</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">contient tout supplément placé après la partie
+    principale d'un texte : appendice, etc.</desc>
   <desc versionDate="2006-10-18" xml:lang="de">enthält Anhänge jeglicher Art, die auf den Hauptteil
     eines Textes folgen</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene cualquier tipo de apéndice, etc. que aparece
     detrás del texto.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">contiene qualsiasi appendice che segua il testo vero e
-    proprio</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">contiene qualsiasi appendice che segua il testo vero
+    e proprio</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.declaring"/>
   </classes>
   <content>
     <sequence>
-      
+
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.frontPart"/>
+        <classRef key="model.pLike.front"/>
+        <classRef key="model.pLike"/>
+        <classRef key="model.listLike"/>
+        <classRef key="model.global"/>
+      </alternate>
+
+
+
+      <alternate minOccurs="0">
+        <sequence>
+
+          <classRef key="model.div1Like"/>
+
+
+          <alternate minOccurs="0" maxOccurs="unbounded">
+            <classRef key="model.frontPart"/>
+            <classRef key="model.div1Like"/>
+            <classRef key="model.global"/>
+          </alternate>
+
+        </sequence>
+        <sequence>
+
+          <classRef key="model.divLike"/>
+
+
+          <alternate minOccurs="0" maxOccurs="unbounded">
+            <classRef key="model.frontPart"/>
+            <classRef key="model.divLike"/>
+            <classRef key="model.global"/>
+          </alternate>
+
+        </sequence>
+      </alternate>
+
+
+
+      <sequence minOccurs="0">
+
+        <classRef key="model.divBottomPart"/>
+
+
         <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.frontPart"/>
-          <classRef key="model.pLike.front"/>
-          <classRef key="model.pLike"/>
-          <classRef key="model.listLike"/>
+          <classRef key="model.divBottomPart"/>
           <classRef key="model.global"/>
         </alternate>
-      
-      
-        
-          <alternate minOccurs="0">
-            <sequence>
-              
-                <classRef key="model.div1Like"/>
-              
-              
-                <alternate minOccurs="0" maxOccurs="unbounded">
-                  <classRef key="model.frontPart"/>
-                  <classRef key="model.div1Like"/>
-                  <classRef key="model.global"/>
-                </alternate>
-              
-            </sequence>
-            <sequence>
-              
-                <classRef key="model.divLike"/>
-              
-              
-                <alternate minOccurs="0" maxOccurs="unbounded">
-                  <classRef key="model.frontPart"/>
-                  <classRef key="model.divLike"/>
-                  <classRef key="model.global"/>
-                </alternate>
-              
-            </sequence>
-          </alternate>
-        
-      
-      
-        <sequence minOccurs="0">
-          
-            <classRef key="model.divBottomPart"/>
-          
-          
-            <alternate minOccurs="0" maxOccurs="unbounded">
-              <classRef key="model.divBottomPart"/>
-              <classRef key="model.global"/>
-            </alternate>
-          
-        </sequence>
-      
+
+      </sequence>
+
     </sequence>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <back>
-        <div1 type="appendix">
+        <div type="appendix">
           <head>The Golden Dream or, the Ingenuous Confession</head>
-          <p>To shew the Depravity of human Nature </p>
-        </div1>
-        <div1 type="epistle">
+          <p>TO shew the Depravity of human Nature, and how apt the Mind is to be misled by Trinkets
+            and false Appearances, Mrs. Two-Shoes does acknowledge, that after she became rich, she
+            had like to have been, too fond of Money <!-- .... -->
+          </p>
+        </div>
+        <!-- ... -->
+        <div type="epistle">
           <head>A letter from the Printer, which he desires may be inserted</head>
           <salute>Sir.</salute>
-          <p>I have done with your Copy, so you may return it to the Vatican, if you please </p>
-        </div1>
-        <div1 type="advert">
+          <p>I have done with your Copy, so you may return it to the Vatican, if you please;
+            <!-- ... -->
+          </p>
+        </div>
+        <div type="advert">
           <head>The Books usually read by the Scholars of Mrs Two-Shoes are these and are sold at Mr
             Newbery's at the Bible and Sun in St Paul's Church-yard.</head>
           <list>
             <item n="1">The Christmas Box, Price 1d.</item>
             <item n="2">The History of Giles Gingerbread, 1d.</item>
+            <!-- ... -->
             <item n="42">A Curious Collection of Travels, selected from the Writers of all Nations,
               10 Vol, Pr. bound 1l.</item>
           </list>
-        </div1>
-        <div1 type="advert">
-          <head><hi rend="center">By the KING's Royal Patent,</hi> Are sold by J. NEWBERY, at the
-            Bible and Sun in St. Paul's Church-Yard.</head>
+        </div>
+        <div type="advert">
+          <head>By the KING's Royal Patent, Are sold by J. NEWBERY, at the Bible and Sun in St.
+            Paul's Church-Yard.</head>
           <list>
-            <item n="1">Dr. James's Powders for Fevers, the Small-Pox, Measles, Colds, &amp;c.
-              2s. 6d</item>
+            <item n="1">Dr. James's Powders for Fevers, the Small-Pox, Measles, Colds, &amp;c. 2s.
+              6d</item>
             <item n="2">Dr. Hooper's Female Pills, 1s.</item>
+            <!-- ... -->
           </list>
-        </div1>
+        </div>
       </back>
     </egXML>
   </exemplum>
@@ -124,17 +134,16 @@ $Id$
         <div n="1" type="appendice">
           <head>APPENDICE I </head>
           <head>CHAPITRE XV bis </head>
-          <p>Des cruautez exercées par les Turcs, et       autres peuples : et nommément par les Espagnols, beaucoup plus barbares que les
-              Sauvages mesmes </p>
-          <p>Premierement Chalcondile en son histoire de la decadence de l'Empire des Grecs,
-            ...</p>
+          <p>Des cruautez exercées par les Turcs, et autres peuples : et nommément par les
+            Espagnols, beaucoup plus barbares que les Sauvages mesmes </p>
+          <p>Premierement Chalcondile en son histoire de la decadence de l'Empire des Grecs, ...</p>
         </div>
         <div n="2" type="appendice">
           <head> Appendice 2</head>
           <head>Advertissement de l'autheur</head>
-          <p>Outre les augmentations bien amples, et la revision beaucoup plus exacte que je
-              n'avoye fait és precedentes Editions, j'ai pour le contentement des Lecteurs,
-              plusieurs endroits de ceste quatrieme et derniere monstré ...</p>
+          <p>Outre les augmentations bien amples, et la revision beaucoup plus exacte que je n'avoye
+            fait és precedentes Editions, j'ai pour le contentement des Lecteurs, plusieurs endroits
+            de ceste quatrieme et derniere monstré ...</p>
         </div>
       </back>
     </egXML>
@@ -170,16 +179,14 @@ $Id$
     </egXML>
   </exemplum>
   <remarks versionDate="2015-01-30" xml:lang="en">
-    <p>Because cultural conventions differ as to which elements are
-    grouped as back matter and which as front matter, the content
-    models for the <gi>back</gi> and <gi>front</gi> elements are
-    identical.</p>
+    <p>Because cultural conventions differ as to which elements are grouped as back matter and which
+      as front matter, the content models for the <gi>back</gi> and <gi>front</gi> elements are
+      identical.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
-    <p>Le modèle de contenu de l'élément <gi>back</gi> est identique à
-    celui de l'élément <gi>front</gi>, ce qui permet de rendre compte
-    de pratiques éditoriales qui ont évolué avec l'histoire
-    culturelle.</p>
+    <p>Le modèle de contenu de l'élément <gi>back</gi> est identique à celui de l'élément
+        <gi>front</gi>, ce qui permet de rendre compte de pratiques éditoriales qui ont évolué avec
+      l'histoire culturelle.</p>
   </remarks>
   <remarks xml:lang="ja" versionDate="2008-04-05">
     <p> 後付の内容モデルは，文化的背景によっては，前付に相当するものになる． </p>
