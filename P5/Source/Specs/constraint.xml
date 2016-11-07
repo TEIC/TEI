@@ -11,20 +11,18 @@ $Id$
     <memberOf key="att.global"/>
   </classes>
   <content>
-    
-      <alternate minOccurs="0" maxOccurs="unbounded">
-        <textNode/>
-        <macroRef key="macro.anyXML"/>
-      </alternate>
-    
+    <alternate minOccurs="0" maxOccurs="unbounded">
+      <textNode/>
+      <anyElement include="http://purl.oclc.org/dsdl/schematron" except="http://www.tei-c.org/ns/1.0 http://www.tei-c.org/ns/Examples"/>
+    </alternate>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <constraintSpec ident="isoconstraint" scheme="isoschematron">
-	  <constraint>
-	    <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="tei:fileDesc/tei:titleStmt/tei:title[@type='main']"> a main title must be supplied
-	    </assert>
-	</constraint>
+        <constraint>
+          <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="tei:fileDesc/tei:titleStmt/tei:title[@type='main']"> a main title must be supplied
+          </assert>
+        </constraint>
       </constraintSpec>
     </egXML>
   </exemplum>
