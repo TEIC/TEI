@@ -16,7 +16,17 @@
     <memberOf key="model.contentPart"/>
     <memberOf key="att.readFrom"/>
   </classes>
-  <content/>
+  <content>
+    <elementRef minOccurs="0" maxOccurs="unbounded" key="dataFacet"/>
+  </content>
+  <constraintSpec ident="restrictDataFacet" scheme="isoschematron">
+    <constraint>
+      <sch:rule context="tei:dataRef[tei:dataFacet]">
+        <sch:assert test="@name" role="nonfatal">Data facets can only be specified for references to datatypes specified by
+          XML Schemas: Part 2: Datatypes</sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attList org="choice">
       <attDef ident="key">
@@ -67,6 +77,10 @@
     
   <remarks versionDate="2010-05-14" xml:lang="en">
     <p>Only one of the attributes <att>key</att>, <att>name</att>, and <att>ref</att> may be used. 
+    </p>
+  </remarks>
+  <remarks versionDate="2010-05-14" xml:lang="en">
+    <p><gi>dataFacet</gi> children are only only allowed when <gi>dataRef</gi>refers with <att>name</att> to a datatype from the specification <ref target="#XSD2">XML Schemas: Part 2: Datatypes</ref>.
     </p>
   </remarks>
   <listRef>

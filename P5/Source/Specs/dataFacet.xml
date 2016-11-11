@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright TEI Consortium.
+    Dual-licensed under CC-by and BSD2 licences
+    See the file COPYING.txt for details
+    $Date$
+    $Id$
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" ident="dataFacet">
+  <desc versionDate="2010-05-14" xml:lang="en">Restricts the value of the strings used to represent values of a datatype, 
+    according to <ref target="#XSD2">XML Schemas: Part 2: Datatypes</ref>. 
+ </desc>
+  <classes>
+    <memberOf key="att.global"/>
+  </classes>
+  <content/>
+  <attList>
+    <attList org="group">
+      <attDef ident="name" usage="req">
+        <desc versionDate="2010-05-14" xml:lang="en">the name of the facet</desc>
+        <valList type="closed">
+          <valItem ident="lenght"/>
+          <valItem ident="minLenght"/>
+          <valItem ident="maxLenght"/>
+          <valItem ident="pattern"/>
+          <valItem ident="enumeration"/>
+          <valItem ident="whiteSpace"/>
+          <valItem ident="maxInclusive"/>
+          <valItem ident="minInclusive"/>
+          <valItem ident="maxExclusive"/>
+          <valItem ident="minExclusive"/>
+          <valItem ident="totalDigits"/>
+          <valItem ident="fractionDigits"/> 
+        </valList>
+      </attDef>
+      <attDef ident="value" usage="req">
+        <desc versionDate="2010-05-14" xml:lang="en">the facet value.</desc>
+        <datatype><dataRef name="string"/></datatype>
+      </attDef>
+    </attList>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <schemaSpec ident="myTEI" source="http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml">
+        <!-- ... -->
+        <dataRef name="decimal">
+          <dataFacet name="maxInclusive" value="360.0"/>
+          <dataFacet name="minInclusive" value="-360.0"/>
+        </dataRef>
+        <!-- ... -->
+      </schemaSpec>
+    </egXML>
+  </exemplum>
+    <exemplum xml:lang="en">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <dataSpec ident="data.percentage">
+          <desc>datatype used for attributes taking an integer value between 0 and 99</desc>     
+          <content>   
+            <dataRef name="nonNegativeInteger">
+              <dataFacet name="maxInclusive" value="99"/>
+              <dataFacet name="minInclusive" value="0"/>
+            </dataRef>
+          </content>    
+        </dataSpec>
+      </egXML>
+    </exemplum>
+    
+  <remarks versionDate="2010-05-14" xml:lang="en">
+    <p>This element is only allowed when the parent <gi>dataRef</gi> refers with <att>name</att> to a datatype from the specification <ref target="#XSD2">XML Schemas: Part 2: Datatypes</ref>. 
+    </p>
+  </remarks>
+  <listRef>
+    <ptr target="#TD-datatypes"/>
+  </listRef>
+</elementSpec>
