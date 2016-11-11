@@ -26,24 +26,24 @@ $Id$
       <elementRef key="constraint" minOccurs="0"/>
     </sequence>
   </content>    
-  <constraintSpec ident="sch" scheme="isoschematron">
+  <constraintSpec ident="sch_no_more" scheme="isoschematron">
     <desc>Relationship between scheme attribute and contents: Schematron 1.x</desc>
     <constraint>
       <sch:ns prefix="s" uri="http://www.ascc.net/xml/schematron"/>
-      <sch:report test="tei:constraint/s:*  and  @scheme ne 'schematron'">Rules in the Schematron 1.* language must be inside a constraintSpec with a value of 'schematron' on the scheme attribute</sch:report>
+      <sch:report test="tei:constraint/s:*  and  @scheme eq 'schematron'">Rules in the Schematron 1.* language must be inside a constraintSpec with a value other than 'schematron' on the scheme attribute</sch:report>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="isosch" scheme="isoschematron">
     <desc>Relationship between scheme attribute and contents: ISO Schematron</desc>
     <constraint>
       <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
-      <sch:report test="tei:constraint/sch:*  and  @scheme ne 'isoschematron'">Rules in the ISO Schematron language must be inside a constraintSpec with a value of 'isoschematron' on the scheme attribute</sch:report>
+      <sch:report test="tei:constraint/sch:*  and  not( @scheme = ('isoschematron','schematron') )">Rules in the ISO Schematron language must be inside a constraintSpec with a value of 'isoschematron' (deprecated) or 'schematron' on the scheme attribute</sch:report>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="needrules" scheme="isoschematron">
     <constraint>
       <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
-      <sch:rule context="tei:macroSpec/tei:constraintSpec[@scheme='isoschematron']/tei:constraint">
+      <sch:rule context="tei:macroSpec/tei:constraintSpec[@scheme=('isoschematron','schematron')]/tei:constraint">
         <sch:report test="sch:assert|sch:report">An ISO Schematron constraint specification for a macro should not have an 'assert' or 'report' element without a parent 'rule' element</sch:report>
       </sch:rule>
     </constraint>
@@ -55,12 +55,21 @@ $Id$
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="semi">
         <valItem ident="schematron">
-          <gloss versionDate="2009-06-10" xml:lang="en">Schematron</gloss>
+          <gloss versionDate="2016-09-27" xml:lang="en">ISO Schematron</gloss>
         </valItem>
-        <valItem ident="isoschematron">
+        <valItem ident="isoschematron" validUntil="2017-12-14">
           <gloss versionDate="2009-06-10" xml:lang="en">ISO Schematron</gloss>
         </valItem>
       </valList>
+      <remarks versionDate="2016-09-27" xml:lang="en">
+	<p>These Guidelines no longer recommend, and the available TEI
+	stylesheets no longer support, the use of Schematron 1.x
+	within <gi>constraintSpec</gi>. Thus either the value
+	<val>schematron</val> or the value <val>isoschematron</val>
+	may be used to indicate that ISO Schematron is used within the
+	<gi>constraintSpec</gi>; the former is preferred, the latter
+	will be removed in a future release.</p>
+      </remarks>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
