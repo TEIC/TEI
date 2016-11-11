@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xml:lang="en" n="detest">
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+     xmlns:s="http://www.ascc.net/xml/schematron"
+     xml:lang="en" n="detest">
   <teiHeader>
     <fileDesc>
       <titleStmt>
@@ -14,6 +18,11 @@
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
+      <change when="2016-11-06" who="#sbauman.emt">
+	Added <gi>elementSpec</gi> for <gi>blort3</gi> in order to test
+	deprecation of <val>isoschematron</val>. (Note: this change begun
+	during TEI Council meeting in Vienna.)
+      </change>
       <change when="2015-03-27" who="#sbauman.emt">
 	Added an element specification to test constraints on
 	<gi>defaultVal</gi>
@@ -43,13 +52,13 @@
 	  <moduleRef key="tagdocs"/>
           <moduleRef key="spoken"/>
           <elementSpec ident="p" mode="change">
-            <constraintSpec mode="add" ident="c1" scheme="isoschematron">
+            <constraintSpec mode="add" ident="c1" scheme="schematron">
               <constraint>
                 <sch:report test="tei:list"> 
 	    lists inside paragraphs not supported </sch:report>
               </constraint>
             </constraintSpec>
-            <constraintSpec mode="add" ident="c2" scheme="isoschematron">
+            <constraintSpec mode="add" ident="c2" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:p|tei:q">
                   <sch:report test="contains(@rend,' ')"> 
@@ -127,7 +136,7 @@
             </attList>
           </elementSpec>
           <elementSpec ident="div" mode="change">
-            <constraintSpec mode="add" ident="canondiv" scheme="isoschematron">
+            <constraintSpec mode="add" ident="canondiv" scheme="schematron">
               <constraint>
                 <sch:report test="@type='canon' and          parent::tei:div/@type='canon'">
 	      divs of type 'canon' may not be nested
@@ -402,9 +411,47 @@
 	      ensure the saneness of <gi>defaultVal</gi></p>
 	    </remarks>
 	  </elementSpec>
+	  <elementSpec ident="blort3" mode="add">
+            <desc xml:lang="en" versionDate="2016-09-27">another completely spurious element made up for testing purposes only</desc>
+            <classes>
+              <memberOf key="model.pPart.data"/>
+            </classes>
+            <content>
+              <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+            </content>
+	    <constraintSpec scheme="schematron" ident="schematron_isoschematron__OK">
+	      <!-- This should not raise an error, as ISO Schematron
+		   is allowed inside constraintSpec/schematron -->
+	      <constraint>
+		<sch:assert test="true()"/>
+	      </constraint>
+	    </constraintSpec>
+	    <constraintSpec scheme="isoschematron" ident="isoschematron_isoschematron_deprecated">
+	      <!-- This should raise a deprecation message until 2017-12-14, -->
+	      <!-- after which it should raise an error, as "isoschematron" -->
+	      <!-- will no longer be allowed. -->
+	      <constraint>
+		<sch:assert test="true()"/>
+	      </constraint>
+	    </constraintSpec>
+	    <constraintSpec scheme="isoschematron" ident="isoschematron_schematron_error">
+	      <!-- This should just raise an error, as Schematron 1.x
+		   is not allowed inside an "isoschematron" <constraintSpec>. -->
+	      <constraint>
+		<s:assert test="false()"/>
+	      </constraint>
+	    </constraintSpec>
+	    <constraintSpec scheme="schematron" ident="isoschematron_isoschematron_deprecated">
+	      <!-- This should raise a warning, as Schematron 1.x is
+		   no longer allowed inside a "schematron" <constraintSpec>. -->
+	      <constraint>
+		<s:assert test="false()"/>
+	      </constraint>
+	    </constraintSpec>
+	  </elementSpec>
 
           <elementSpec ident="relation" mode="change">
-            <constraintSpec ident="activepassive" mode="delete" scheme="isoschematron"/>
+            <constraintSpec ident="activepassive" mode="delete" scheme="schematron"/>
           </elementSpec>
 
 	  <elementSpec ident="abbr" mode="change">
