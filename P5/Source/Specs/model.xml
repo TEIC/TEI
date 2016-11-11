@@ -6,9 +6,10 @@
     $Date: 2015-08-21 10:44:07 +0100 (Fri, 21 Aug 2015) $
     $Id:  $
 -->
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" ident="model" module="tagdocs">
-  <desc versionDate="2015-05-15" xml:lang="en">describes the processing intended for a specified element.</desc>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+  ident="model" module="tagdocs">
+  <desc versionDate="2015-05-15" xml:lang="en">describes the processing intended for a specified
+    element.</desc>
   <classes>
     <memberOf key="att.global"/>
   </classes>
@@ -22,6 +23,45 @@
       <elementRef key="outputRendition" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
+  <constraintSpec scheme="isoschematron" ident="no_dup_default_models">
+    <desc xml:lang="en" versionDate="2016-10-01">It is ambigous to have 2 <gi>model</gi>s
+      that have both the same <att>output</att> and have no <att>predicte</att>
+      (and thus select the same set of nodes).</desc>
+    <!-- We cannot possibly check, in general, that two
+         <att>predicate</att>s select the same set of nodes or not.
+         But if two <att>predicate</att>s are equal (or two
+         <gi>model</gi>s do not have <att>predicate</att>s), then they
+         will select the same set of nodes. -->
+    <constraint>
+      <sch:rule context="tei:model[ not( parent::tei:modelSequence ) ][ not( @predicate ) ]">
+        <sch:let name="output" value="normalize-space( @output )"/>
+        <sch:report
+          test="following-sibling::tei:model
+                                      [ not( @predicate )]
+			                                [ normalize-space( @output ) eq $output ]"
+          >There are 2 (or more) 'model' elements in this '<sch:value-of select="local-name(..)"/>'
+          that have no predicate, but are targeted to the same output ("<sch:value-of
+            select="( $output, parent::modelGrp/@output, 'all')[1]"/>")</sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec scheme="isoschematron" ident="no_dup_models">
+    <desc xml:lang="en" versionDate="2016-10-01">It is ambigous to have 2 <gi>model</gi>s
+      that have both the same <att>output</att> and the same <att>predicte</att>
+      (and thus select the same set of nodes).</desc>
+    <constraint>
+      <sch:rule context="tei:model[ not( parent::tei:modelSequence ) ][ @predicate ]">
+        <sch:let name="predicate" value="normalize-space( @predicate )"/>
+        <sch:let name="output" value="normalize-space( @output )"/>
+        <sch:report test="following-sibling::tei:model
+			                                                [ normalize-space( @predicate ) eq $predicate ]
+			                                                [ normalize-space( @output ) eq $output ]"
+          >There are 2 (or more) 'model' elements in this '<sch:value-of
+            select="local-name(..)"/>' that have the same predicate, and are targeted to the same output ("<sch:value-of
+            select="( $output, parent::modelGrp/@output, 'all')[1]"/>") </sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="behaviour" usage="req">
       <desc versionDate="2015-08-21" xml:lang="en">names the process or function which this
@@ -145,7 +185,7 @@
         </valItem>
         <valItem ident="index">
           <desc versionDate="2015-08-21" xml:lang="en">generate list according to
-            <ident>type</ident>.</desc>
+              <ident>type</ident>.</desc>
           <paramList>
             <paramSpec ident="type"/>
           </paramList>
@@ -267,8 +307,9 @@
         <dataRef key="teidata.truthValue"/>
       </datatype>
       <remarks versionDate="2016-02-23" xml:lang="en">
-        <p>If the <att>useSourceRendition</att> attribute is not specified, or has the value <val>false</val>,
-          any renditional information specified in the source document should be ignored. </p>
+        <p>If the <att>useSourceRendition</att> attribute is not specified, or has the value
+            <val>false</val>, any renditional information specified in the source document should be
+          ignored. </p>
       </remarks>
     </attDef>
     <attDef ident="output" usage="opt">
@@ -290,11 +331,14 @@
             plain text format</desc>
         </valItem>
       </valList>
-      <remarks versionDate="2016-02-23" xml:lang="en"><p>If the <att>output</att> attribute is not specified, this model is assumed to apply for all forms of output. </p>
+      <remarks versionDate="2016-02-23" xml:lang="en">
+        <p>If the <att>output</att> attribute is not specified, this model is assumed to apply for
+          all forms of output. </p>
       </remarks>
     </attDef>
     <attDef ident="cssClass" usage="opt">
-      <desc versionDate="2015-08-21" xml:lang="en">the name of a CSS class which should be associated with this element</desc>
+      <desc versionDate="2015-08-21" xml:lang="en">the name of a CSS class which should be
+        associated with this element</desc>
       <datatype maxOccurs="unbounded">
         <dataRef key="teidata.name"/>
       </datatype>
@@ -359,7 +403,7 @@
           <param name="content" value="@when"/>
         </model>
         <model predicate="@when" output="web" behaviour="alternate">
-           <param name="alternate" value="@when"/>
+          <param name="alternate" value="@when"/>
         </model>
       </elementSpec>
     </egXML>
@@ -369,7 +413,7 @@
       <elementSpec mode="change" ident="choice">
         <model predicate="sic and corr" behaviour="alternate">
           <param name="default" value="corr"/>
-          <param name="alternate"  value="sic"/>
+          <param name="alternate" value="sic"/>
         </model>
         <model predicate="abbr and expan" behaviour="alternate">
           <param name="default" value="expan"/>
@@ -383,16 +427,16 @@
     </egXML>
   </exemplum>
   <remarks versionDate="2015-08-21" xml:lang="en">
-      <p>The intended output to be generated for a particular behaviour of a processing model may be
-      documented in one or all of the three following ways. Firstly, the <att>cssClass</att> attribute may be
-      used to specify the name of a CSS style in some associated CSS stylesheet which is to be
-      applied to each occurrence of a specified element found (in a given context, for a specified
-      output). Secondly, the attribute <att>useSourceRendition</att> may be used to indicate that the default
-      rendition for occurrences of this element, as defined by a <gi>rendition</gi> element in the
-      document header, should be applied. Thirdly, the styling to be applied may be specified
-      explicitly as content of a child <gi>outputRendition</gi> element. When more than one of these
-      options is used, they are understood to be combined in accordance with the rules for multiple
-      declaration of the styling language used.</p>
+    <p>The intended output to be generated for a particular behaviour of a processing model may be
+      documented in one or all of the three following ways. Firstly, the <att>cssClass</att>
+      attribute may be used to specify the name of a CSS style in some associated CSS stylesheet
+      which is to be applied to each occurrence of a specified element found (in a given context,
+      for a specified output). Secondly, the attribute <att>useSourceRendition</att> may be used to
+      indicate that the default rendition for occurrences of this element, as defined by a
+        <gi>rendition</gi> element in the document header, should be applied. Thirdly, the styling
+      to be applied may be specified explicitly as content of a child <gi>outputRendition</gi>
+      element. When more than one of these options is used, they are understood to be combined in
+      accordance with the rules for multiple declaration of the styling language used.</p>
   </remarks>
   <listRef>
     <ptr target="#TDPMPM"/>
