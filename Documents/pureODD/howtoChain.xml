@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:s="http://www.ascc.net/xml/schematron" xmlns:rng="http://relaxng.org/ns/structure/1.0"
+  xml:lang="en" >
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>ODD chaining for Idiots</title>
+        <author>Lou Burnard</author>
+      </titleStmt>
+      <publicationStmt>
+        <p> Unpublished draft</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>authored from scratch</p>
+      </sourceDesc>
+    </fileDesc>
+    <revisionDesc><change when="2016-10-22">Uploaded for Council review</change>
+      <change when="2016-10-21">Drafted first part on train from Paris to La Souterraine;l then lost half of it by shutting lid in a hurry without saving first : doh.
+        </change></revisionDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <div>
+        <head>What is this for?</head>
+        <p>This little guide is intended to explain the mechanism of <term>ODD chaining</term>. An
+          ODD file specifies a particular view of the TEI, by selecting particular elements,
+          attributes, etc. from the whole of the TEI. But you can also refine such a specification
+          further, making your ODD derive from another one. In principle you can chain together ODDs
+          in this way as much as you like. You can use this feature in several different ways: <list>
+            <item>you can add additional restrictions to an existing ODD, for example by changing
+              the value list of an attribute</item>
+            <item> you can further reduce the subset of elements provided by an existing ODD</item>
+            <item>you can add new elements or modules to an existing ODD</item>
+          </list></p>
+      </div>
+      <div>
+        <head>How does it work?</head>
+        <p>An ODD can of course contain nothing but free standing declarations, using elements such
+          as <gi>elementSpec</gi>, <gi>classSpec</gi> alone. But most TEI ODDs are made by reference
+          to the huge existing collection of such declarations provided by the TEI Guidelines. An
+          ODD such as <ident>TEI Lite</ident> or <ident>TEI Bare</ident> is composed of
+            <emph>references</emph> to the objects it uses, expressed by means of elements such as
+            <gi>moduleRef</gi>, <gi>elementRef</gi>, or <gi>classRef</gi>. These references (and
+          also any additional free standing declarations) are collected together within a
+            <gi>schemaSpec</gi> element which specifies the schema the ODD is intended to generate.
+          This element has a useful but little known attribute <att>source</att> the purpose of
+          which is to state where exactly the objects referenced by the schema specification (the
+          free standing declarations) are to be found. By default, when an ODD specifies no source,
+          it is assumed that they are to be collected from the most recent release of the TEI
+          Guidelines. You can modify this behaviour by supplying a different of URL. For example, a
+            <gi> schemaSpec</gi> with its attribute<att> source</att> set to <val>tei:2.4.0</val>
+          would search for declarations in release 2.4.0 of the Guidelines. One with the value
+            <val>mySuperODD.subset.xml</val> will go looking for declarations in a file of that name
+          in the current source tree. And one with the value
+            <val>http://example.com/superODDs/anotherSubset.xml</val> will go looking for it at the
+          URL indicated. </p>
+        <p>It's important to understand that the resource indicated by the <att>source</att>s
+          attribute must contain complete and explicit specification elements: <gi>elementSpec</gi>
+          rather than <gi>elementRef</gi>, <gi>classSpec</gi> rather than <gi>classRef</gi> and so
+          on. It may of course contain other elements, but these will be ignored entirely in the
+          construction of a schema. A file called <ident>p5subset.xml</ident>, provided as part of
+          every TEI release, is an example of such a resource: it contains specifications for every
+          single TEI element, class, macro, and datatype, but nothing else much. If the
+            <att>source</att> parameter is not supplied, the most recently available version of this
+          file is what will be used during the processing of an ODD.</p>
+      </div>
+      <div>
+        <head>Processing an ODD</head>
+        <p>Let's look more closely at the way the TEI defines a very light weight schema called
+            <ident>TEI Bare</ident>. Its schema specification element begins like this : <egXML
+            xmlns="http://www.tei-c.org/ns/Examples">
+            <schemaSpec ident="tei_bare" xml:lang="en">
+              <moduleRef key="core" include="p list item label head author title"/>
+              <moduleRef key="tei"/>
+              <moduleRef key="header"
+                include="teiHeader fileDesc titleStmt publicationStmt sourceDesc"/>
+              <moduleRef key="textstructure" include="TEI text body div front back"/>
+              <classSpec ident="att.global" mode="change" module="tei" type="atts">
+                <attList>
+                  <attDef ident="xml:space" mode="delete"/>
+                  <attDef ident="rend" mode="delete"/>
+                  <attDef ident="xml:base" mode="delete"/>
+                </attList>
+              </classSpec>
+              <classSpec ident="att.fragmentable" mode="delete" module="tei" type="atts"/>
+            </schemaSpec>
+          </egXML>
+        </p>
+        <p>No <att>source</att> is specified, so declarations for the elements requested here will
+          be taken from the current <ident>p5subset.xml</ident>. </p>
+        <p>Note that this ODD contains both references and specifications: there are references to
+          modules (which may be thought of as short hand for references to elements) and
+          specifications for classes (<gi>classSpec</gi>), rather than references
+          (<gi>classRef</gi>). The reference to the module <ident>tei</ident> brings with it
+          specifications for most TEI classes, including these two. An ODD processor will therefore
+          have to resolve duplicate class specifications for the classes <ident>att.global</ident>
+          and <ident>att.fragmentable</ident>. The required resolution is indicated by the value of
+          the <att>mode</att> attribute: if this is <val>delete</val> then both declarations are to
+          be ignored, and the class is therefore suppressed; if it is <val>change</val> then the two
+          declarations are to be merged, with any part of it present in the second specification
+          over-riding that in the first. In this case, the effect will be to suppress the three
+          attributes mentioned. </p>
+        <p>If you'd like to check that this ODD does what you expect, and you have oXygen installed
+          with a recent version of the TEI Frameworks, just download the file
+            <ident>tei_bare.odd</ident>, and tell oXygen to apply the predefined transformation
+            <ident>TEI ODD to HTML</ident> to it. This will produce a mini-manual for the TEI Bare
+          customization in HTML format, near the beginning of which you should see a list of
+          elements like this: </p>
+        <p><graphic url="teibare-1.png"/>
+        </p>
+        <p>You may like to check that the modifications to the attribute class
+            <ident>att.global</ident> indicated above have indeed been performed, by looking at its
+          documentation in this mini-manual.</p>
+      </div>
+      <div>
+        <head>Rolling your own subset</head>
+        <p>In the preceding step, we processed <ident>tei_bare</ident> with reference to the default
+          p5subset, i.e with respect to the whole of the TEI. Suppose, however, that we would like
+          to use TEI bare as the starting point for another customization. We could simply edit the
+          source of TEI Bare, and add our further modifications there, but that would soon become
+          unmanageable if we were dealing with a larger customization as starting point. Instead, we
+          will use TEI bare itself as our source. To do this, as noted above, we need to generate a
+            <soCalled>compiled</soCalled> version of TEI bare containing only specification elements
+          in which all the references have been resolved. This is easily done using the stylesheet
+            <ident>odd2odd.xsl</ident> which is supplied as part of the TEI Stylesheet package, but
+          is not currently included in the TEI oXygen framework. There is however a command line
+          utility <ident>teitoodd</ident> which does the job, and it is also easy to set up your own
+          oXygen transformation to do it. We leave this as an exercise for the reader.</p>
+      </div>
+      <div>
+        <head>Chaining : subsetting </head>
+        <p>Suppose we now have a compiled version of TEI_bare in the file
+            <ident>TEI_bare.compiled.xml</ident>. Processing the following schema specification
+          should produce exactly the same results as we received from the uncompiled version. </p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <schemaSpec ident="Bare-prime" source="tei_bare.compiled.xml" start="TEI">
+            <moduleRef key="tei"/>
+            <moduleRef key="header"/>
+            <moduleRef key="core"/>
+            <moduleRef key="textstructure"/>
+          </schemaSpec></egXML>
+        <p>This works because each of the <gi>moduleRef</gi> elements here refers to the module
+          (i.e. set of elements etc.) <emph>available in the compiled ODD</emph> rather than to the
+          module as defined in the whole TEI. Note also that simply supplying the compiled ODD as
+          source for a schema is not enough : we must also specify which of the declarations it
+          contains we want to use: <foreign>nihil ex nihilo fit</foreign>...! </p>
+        <p>However, the reason we started down this path was not to find yet another way of doing
+          the same thing. Let's now make a reduced version of TEI_bare in which the <gi>head</gi>
+          element is missing. </p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <schemaSpec ident="Bare-minus" source="tei_bare.compiled.odd" start="TEI">
+            <moduleRef key="tei"/>
+            <moduleRef key="header"/>
+            <moduleRef key="core" except="head"/>
+            <moduleRef key="textstructure"/>
+          </schemaSpec></egXML>
+        <p>And, just for completeness, here is another way of achieving the same effect: </p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <schemaSpec ident="Bare-minus" source="tei_bare.compiled.odd" start="TEI">
+            <moduleRef key="tei"/>
+            <moduleRef key="header"/>
+            <moduleRef key="core"/>
+            <moduleRef key="textstructure"/>
+            <elementSpec module="core" ident="head" mode="delete"/>
+          </schemaSpec></egXML>
+        <p>Note that we cannot suppress or modify anything which is not already present in the
+          compiled ODD specified by the <att>source</att> attribute. This approach to ODD chaining
+          works best in a situation where we first define an ODD which combines all the elements
+          (etc.) that we ever plan to use, and then derive individual subset schemas from them, for
+          example, one for manuscripts, one for early modern print, one for modern print etc. This
+          approach has been adopted by, for example, the Deutsches Text Archive: see <ptr
+            target="I dont know where"/>. </p>
+      </div>
+      <div>
+        <head>Chaining : supersetting</head>
+
+        <p>But ODD chaining is not restricted to subsetting. Suppose we want to take our
+          pre-existing tei_bare schema and <emph>add</emph> declarations from some other module. We
+          could of course laboriously copy all the declarations we want into our
+          <gi>schemaSpec</gi>, but it would be much nicer not to have to do that. Suppose we want to
+          add to our bare schema everything provided by the <ident>gaiji</ident> module. That
+          module was not included when we defined our compiled version of TEI bare, though it is of
+          course available in the full TEI. Here's one way of doing it:</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <schemaSpec ident="Bare-plus" source="tei_bare.compiled.odd" start="TEI">
+            <moduleRef key="tei"/>
+            <moduleRef key="header"/>
+            <moduleRef key="gaiji" source="http://www.tei-c.org/release/xml/tei/odd/p5subset.xml"/>
+            <moduleRef key="textstructure"/>
+          </schemaSpec></egXML>
+        <p>The <gi>moduleRef</gi> which pulls in the gaiji module uses its own <att>source</att> attribute to specify
+        where to find the declarations for that module. No sense looking for them in <ident>tei_bare.compiled.odd</ident>: they're not there. Instead, we will
+        collect them from the online copy of  the compiled ODD which provides the whole TEI Guidelines, as noted above., Of course we can also 
+        do the usual kind of subsetting : for example </p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <schemaSpec ident="Bare-plus" source="tei_bare.compiled.odd" start="TEI">
+              <moduleRef key="tei"/>
+              <moduleRef key="header"/>
+              <moduleRef key="gaiji" source="http://www.tei-c.org/release/xml/tei/odd/p5subset.xml" include="g char glyph"/>
+              <moduleRef key="textstructure"/>
+            </schemaSpec></egXML>
+        <p>This ODD will give us everything in tei_bare along with just g, char, and glyph from the default gaiji module.  We could achieve the same effect by explicitly
+        naming the elements we want,  and again specifying where they are to be found: </p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <schemaSpec ident="Bare-plus" source="tei_bare.compiled.odd" start="TEI">
+            <moduleRef key="tei"/>
+          <moduleRef key="header"/>
+          <elementRef key="g" source="http://www.tei-c.org/release/xml/tei/odd/p5subset.xml"/>
+          <elementRef key="char" source="http://www.tei-c.org/release/xml/tei/odd/p5subset.xml"/>
+          <elementRef key="glyph" source="http://www.tei-c.org/release/xml/tei/odd/p5subset.xml"/>
+          <moduleRef key="textstructure"/>
+          </schemaSpec></egXML>
+        <p>We can  use this technique to put back an element which was deleted from the compiled schema. For example, the <gi>q</gi> element is not
+          available in  tei_bare, but we can easily get it back. We can even specify which version of the <gi>q</gi> element we want: in this case, we will get the version
+          defined in TEI P5 release 3.0.0 :</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <schemaSpec ident="Bare-plus" source="tei_bare.compiled.odd" start="TEI">
+            <moduleRef key="tei"/>
+            <moduleRef key="header"/>
+            <elementRef key="q" source="tei:3.0.0"/>
+            <moduleRef key="textstructure"/>
+          </schemaSpec></egXML>
+       <!-- still to come:
+            chaining two or more customisations not involving p5 subset
+            class and attribute tweaking
+            what else? -->
+      </div>
+    </body>
+  </text>
+</TEI>
