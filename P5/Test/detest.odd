@@ -419,15 +419,26 @@
             <content>
               <rng:ref name="macro.phraseSeq"/>
             </content>
-	    <constraintSpec scheme="schematron" ident="schematron_isoschematron__OK">
-	      <!-- This should not raise an error, as ISO Schematron
+	    <!--
+		* The following <constraintSpec>s have an @ident that
+		* is of the form
+		* "@scheme_content-language_expected-result",
+		* where:
+		*   @scheme = the value of ../@scheme
+		*   content-language = whether ../* are Schematron 1.x ("schematron") or ISO Schematron elements
+		*   expected-result = OK, deprecated, or error
+		* On or about 2017-12-14 the @ident for isoschamtron_isoschematron_deprecated should be
+		* changed to isoschematron_isoschematron_error.
+	    -->
+	    <constraintSpec scheme="schematron" ident="schematron_isoschematron_OK">
+	      <!-- This should *not* raise an error, as ISO Schematron
 		   is allowed inside constraintSpec/schematron -->
 	      <constraint>
 		<sch:assert test="true()"/>
 	      </constraint>
 	    </constraintSpec>
 	    <constraintSpec scheme="isoschematron" ident="isoschematron_isoschematron_deprecated">
-	      <!-- This should raise a deprecation message until 2017-12-14, -->
+ 	      <!-- This should raise a deprecation message until 2017-12-14, -->
 	      <!-- after which it should raise an error, as "isoschematron" -->
 	      <!-- will no longer be allowed. -->
 	      <constraint>
@@ -441,7 +452,7 @@
 		<s:assert test="false()"/>
 	      </constraint>
 	    </constraintSpec>
-	    <constraintSpec scheme="schematron" ident="isoschematron_isoschematron_deprecated">
+	    <constraintSpec scheme="schematron" ident="schematron_schematron_deprecated">
 	      <!-- This should raise a warning, as Schematron 1.x is
 		   no longer allowed inside a "schematron" <constraintSpec>. -->
 	      <constraint>
