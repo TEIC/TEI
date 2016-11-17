@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Testing changed content models for anyXML</title>
+         </titleStmt>
+         <publicationStmt>
+            <p>Publication Information</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>Information about the source</p>
+         </sourceDesc>
+      </fileDesc>
+  </teiHeader>
+  <text>
+      <body>
+         <schemaSpec ident="anyXML">
+            <moduleRef key="tei"/>
+            <moduleRef key="tagdocs"/>
+            <moduleRef key="header"/>
+            <moduleRef key="core"/>
+               
+          
+            <elementSpec ident="constraint" mode="change" module="tagdocs">
+               <content >
+                  <alternate minOccurs="0" maxOccurs="unbounded">
+                     <textNode/>
+                     <anyElement/>
+                  </alternate>
+               </content>
+            </elementSpec>
+            
+            <elementSpec ident="content" mode="change" module="tagdocs">
+               <content>             
+                     <classRef minOccurs="0" maxOccurs="unbounded" key="model.contentPart"
+                     />
+               </content>
+            </elementSpec>
+            
+            <elementSpec ident="egXML" mode="change" module="tagdocs">
+               <content>
+                  <alternate minOccurs="0" maxOccurs="unbounded">
+                     <textNode/>
+                     <anyElement
+                        include="http://www.tei-c.org/ns/Examples"/>
+                  </alternate>
+               </content>
+            </elementSpec>
+            
+            <elementSpec ident="xenoData" mode="change" module="tagdocs">
+               <content>
+                  <alternate minOccurs="1" maxOccurs="unbounded">
+                     <textNode/>
+                     <anyElement exccept="http://www.tei-c.org/ns/1.0"/>
+                  </alternate>
+               </content>
+            </elementSpec>
+            
+            <macroSpec ident="macro.schemaPattern" mode="change" module="tagdocs">
+               <content>
+                  <anyElement
+                     include="http://relaxng.org/ns/structure/1.0"/>
+               </content>
+            </macroSpec>
+            
+            <macroSpec ident="macro.anyXML" mode="change" module="tagdocs">
+              
+                  <content>
+                     <sequence>
+                        <anyElement  except="http://www.tei-c.org/ns/1.0"/>
+                        <alternate minOccurs="0" maxOccurs="undefined">
+                           <textNode/>
+                           <anyElement except="http://www.tei-c.org/ns/1.0"/>
+                        </alternate>
+                     </sequence>
+                  </content>
+            </macroSpec>
+     
+<elementSpec module="tagdocs" ident="anyElement">
+   <desc versionDate="2014-07-01" xml:lang="en">indicates the presence
+   of any elements  in a content model</desc>
+   <classes>     
+     <memberOf key="att.global"/>
+     <memberOf key="model.contentPart"/>
+     <memberOf key="att.repeatable"/>     
+</classes>
+  <content/>
+  
+  <attList org="choice">
+    <attDef ident="include">
+      <desc versionDate="2011-09-21" xml:lang="en">supplies a list of namespaces to which the
+        permitted element must belong.
+       </desc>
+      <datatype minOccurs="0" maxOccurs="unbounded">
+<dataRef key="teidata.namespace"/></datatype>
+    </attDef>
+    <attDef ident="except">
+      <desc versionDate="2011-09-21" xml:lang="en">supplies a list of namespaces to which the permitted
+        element may not belong.</desc>
+      <datatype minOccurs="0" maxOccurs="unbounded"><dataRef key="teidata.namespace"/></datatype>
+    </attDef>
+  </attList>
+   
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <content>
+        <anyElement except="http://www.tei-c.org/ns/1.0" />
+      </content>
+    </egXML>
+    <p>This  <gi>content</gi> element permits one occurrence of any element which 
+      does not belong to the TEI namespace.</p>
+  </exemplum>
+  
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <content>
+        <anyElement minOccurs="1" maxOccurs="unbounded" 
+          include="http://www.w3.org/1998/Math/MathML http://www.tei-c.org/ns/Examples/1.0"/>
+      </content>
+    </egXML>
+    <p>This  <gi>content</gi> element permits one or more  elements which 
+      belong either to the MathML namespace or to the TEI examples namespace.</p>
+  </exemplum>
+  
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <content>
+        <alternate minOccurs="1" maxOccurs="unbounded">
+          <textNode/>
+          <anyElement include="http://www.tei-c.org/ns/Examples/1.0"/>       
+        </alternate>
+      </content>
+    </egXML>
+    <p>This  <gi>content</gi> element permits one or more children which are
+      either text nodes or elements from the TEI examples namespace. It is the equivalent of the content model <code>ANY</code>
+    in an XML DTD using the TEI All schema.</p>
+  </exemplum>
+  
+ <listRef>
+    <ptr target="#TD"/>
+  </listRef>
+</elementSpec>
+
+            
+      </schemaSpec>
+      </body>
+  </text>
+</TEI>

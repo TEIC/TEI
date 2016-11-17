@@ -135,7 +135,7 @@ Regular Army, are not as plenty as blackberries.</p>
 </body></egXML>
  </p>
 <p>This news story shows typically short journalistic paragraphs:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><head>SARAJEVO, Bosnia and Herzegovina, April 19</head><p>Serbs seized more territory in this struggling new country today as
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NYT1992"><head>SARAJEVO, Bosnia and Herzegovina, April 19</head><p>Serbs seized more territory in this struggling new country today as
   the United States Air Force ended a two-day airlift of humanitarian
   aid into the capital, Sarajevo.</p>
 <p>International relief workers called on European Community nations
@@ -326,15 +326,16 @@ character is not, in this case, part of the word, but just a signal
 that the word continues over the break. Unfortunately, few languages
 distinguish these two cases visually, which necessarily poses a
 problem for text encoders. Suppose, for example, that we wish to
-investigate a diachronic English corpus for occurrences of "tea-pot"
-and "teapot", to find evidence for the point at which this compound
-becomes lexicalized. Any case where the word is hyphenated across a
-linebreak, like this: <eg xml:space="preserve"><![CDATA[tea-
-pot]]></eg> is entirely ambiguous: there is simply no way of deciding
-which of the two spellings was intended.
-</p>
+investigate a diachronic English corpus for occurrences of
+<mentioned>tea-pot</mentioned> and <mentioned>teapot</mentioned>, to
+find evidence for the point at which this compound becomes
+lexicalized. Any case where the word is hyphenated across a linebreak,
+like this: <eg xml:space="preserve"><![CDATA[tea-
+pot]]></eg> is
+ambiguous: there is no simple way of deciding which of the two
+spellings was intended.</p>
 
-<p>As elsewhere, therefore, the encoder has a range of choices:
+<p>As elsewhere, therefore, encoders have a range of choices:
 <list>
 <item>They
 may decide simply to remove any end-of-line hyphenation from the
@@ -351,8 +352,11 @@ appropriate symbolic value for one or more of the attributes on the
 <gi>lb</gi> or other milestone element used to record the fact of the line
  division. If the hyphen is included in the character data of the TEI document, it might be marked up using the <gi>pc</gi>
   (punctuation character) tag, which allows the encoder to express
-  information about its function as a separator, through the <att>force</att> attribute
- (see <ptr target="#AIPC"/>).</item>
+  information about its function as a separator, through the <att>force</att> attribute. 
+  For example, the example above could be encoded with a <att>force</att> value of "inter" 
+  to indicate that the punctuation mark may or may not be a word separator (See also <ptr target="#AIPC"/>). 
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">tea<pc force="inter">-</pc>pot</egXML>  
+</item>
 </list>
 A similar range of possibilities applies equally to the representation of
 other common punctuation marks, notably quotation marks, as discussed
@@ -1084,7 +1088,7 @@ last 20 years has been occupied with the design of parsers.</egXML>
 </p>
   <p>In the absence of a <gi>gloss</gi> in the source text, 
     a <gi>term</gi> can also be associated with a gloss or definition by means of its <att>ref</att> attribute, as in this imaginary example:
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">We discuss Leech's concept of <term
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">We discuss Leech's concept of <term
       ref="#TDPV2" rend="sc">discoursal point of view</term> below. </egXML>
  Here, the value <ident>#TDPV2</ident> references some other XML element in the same document. This might be, for example, an entry in a list of technical
   vocabulary given in the document header, or in an appendix. This attribute could also reference an entry in some centrally maintained
@@ -1162,14 +1166,14 @@ are distinguished by the highlighting is relatively
 uncontroversial.  As a less straightforward example, consider the
 use of italic font in the following passage:
 <q rend="display">A pretty common case, I believe; in all
-<hi rend="it">vehement</hi> debatings.  She says I am
-<hi rend="it">too witty</hi>; Anglicé,
-<hi rend="it">too pert</hi>; I, that she is
-<hi rend="it">too wise</hi>; that is to say, being
-likewise put into English, <hi rend="it">not so young as
+<hi rend="italic">vehement</hi> debatings.  She says I am
+<hi rend="italic">too witty</hi>; Anglicé,
+<hi rend="italic">too pert</hi>; I, that she is
+<hi rend="italic">too wise</hi>; that is to say, being
+likewise put into English, <hi rend="italic">not so young as
 she has been</hi>:  in short, she is grown so much into
-a <hi rend="it">mother</hi>, that she had forgotten
-she ever was a <hi rend="it">daughter</hi>. ...</q>
+a <hi rend="italic">mother</hi>, that she had forgotten
+she ever was a <hi rend="italic">daughter</hi>. ...</q>
  </p>
 <p>Clearly, the word <mentioned>vehement</mentioned> is not italicized for the
 same reason as the phrase <mentioned>not so young as she has been</mentioned>;
@@ -1266,7 +1270,7 @@ kinds.</p>
 <p>Elements which can be combined in this way constitute the
 <ident type="class">model.choicePart</ident> class. The default
 members of this class are  <gi>sic</gi>,
-<gi>corr</gi>, <gi>reg</gi>, <gi>orig</gi>, <gi>unclear</gi>,
+  <gi>corr</gi>, <gi>reg</gi>, <gi>orig</gi>, <gi>unclear</gi>, <gi>supplied</gi>,
  <gi>abbr</gi>, <gi>expan</gi>, <gi>ex</gi>, <gi>am</gi> and <gi>seg</gi>; 
 some of their functions and usage are described further below.</p>
 <p>Three categories of editorial intervention are discussed in this
@@ -1446,9 +1450,9 @@ Each place in the text at which omission has taken place should be
 marked with a <gi>gap</gi> element, with optionally further information
 about the reason for the omission, its extent, and the person or agency
 responsible for it, as in the following examples:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><gap
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><gap
 reason="illegible" unit="word" quantity="2"/></egXML><egXML
-xmlns="http://www.tei-c.org/ns/Examples"><gap reason="overwriting
+  xmlns="http://www.tei-c.org/ns/Examples"  source="#NONE"><gap reason="overwriting
 illegible" extent="several characters"/></egXML>
 Note that the extent of the gap may be marked precisely using
 attributes <att>unit</att> and <att>quantity</att>, or more
@@ -1457,7 +1461,7 @@ detailed, options are also available for representing dimensions of
 any kind; see further <ptr target="#msdim"/>. </p>
 <p>The <gi>desc</gi> element may be used to supply a description of
 the material omitted, where that is considered useful:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><gap reason="sampling" extent="120" unit="lines"><desc>irrelevant commentary</desc></gap></egXML>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples"  source="#NONE"><gap reason="sampling" extent="120" unit="lines"><desc>irrelevant commentary</desc></gap></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COEDADD-eg-83">… Their arrangement with respect to Jupiter and to each other was as follows:
 <gap reason="sampling" extent="2" unit="cm"><desc>astrological figure</desc></gap>
 That is, there were two stars on the easterly side and one to the
@@ -1496,7 +1500,7 @@ person responsible for the conjectured reading.</p><p>For example:
 <l><unclear reason="ink blot">The</unclear> sea between
 yet hence his pray'r prevail'd</l></egXML>
 or from a spoken text:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>... and then <unclear reason="passingTruck">marbled queen</unclear>...</p></egXML>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples"  source="#NONE"><p>... and then <unclear reason="passingTruck">marbled queen</unclear>...</p></egXML>
 </p>
 <p>Where the material affected is entirely illegible or inaudible, the
 <gi>gap</gi> element discussed above should be used in preference.</p>
@@ -1637,15 +1641,19 @@ ref"/></specList>
 
 <p>A very useful application for them is as a means of gathering
 together all references to the same individual or location scattered
-throughout a document: <egXML
-xmlns="http://www.tei-c.org/ns/Examples" source="#CONARS-eg-101"><p><q>My dear <rs key="BENM1"
-type="person"> Mr. Bennet</rs>,</q> said <rs key="BENM2"
-type="person">his lady</rs> to him one day, <q>have you heard that <rs
-key="NETP1" type="place">Netherfield Park</rs> is let at
-last?</q></p></egXML>
+throughout a document: 
+
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#CONARS-eg-101"><q>My dear 
+    <rs key="BENM1" type="person">Mr. Bennet</rs>,</q> said 
+    <rs key="BENM2" type="person">his lady</rs> to him one day, 
+  <q>have you heard that 
+    <rs key="NETP1" type="place">Netherfield Park</rs> is let at
+last?</q></egXML>
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#CONARS-eg-108" xml:lang="fr">
-<p><name key="VOM1" type="person">Mme. de Volanges</name> marie <rs key="VOM2">sa fille</rs>: c'est encore un secret;
+<p><name key="VOM1" type="person">Mme. de Volanges</name> 
+  marie <rs key="VOM2">sa fille</rs>: 
+  c'est encore un secret;
 mais elle m'en a fait part hier.</p></egXML>
 </p>
 
@@ -1740,7 +1748,7 @@ substructure of an email address (for example, distinguishing the
 local part from the domain part), nor of distinguishing personal email
 addresses from generic or fictitious ones. 
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#NONE">
 <email>info@tei-c.org</email>
 </egXML>
 </p>
@@ -1750,7 +1758,7 @@ of distinct lines, just as they might be written on an envelope. The
 following element supports this view:
 <specList><specDesc key="addrLine"/></specList>
 Here is an example of a postal address encoded using this approach:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><address>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><address>
    <addrLine>110 Southmoor Road,</addrLine>
    <addrLine>Oxford OX2 6RB,</addrLine>
    <addrLine>UK</addrLine>
@@ -1782,7 +1790,7 @@ provided for that purpose.
 <p>Using just the elements defined by the core module, the above
 address could thus be represented as follows:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><address>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><address>
    <street>110 Southmoor Road</street>
    <name type="city">Oxford</name>
    <postCode>OX2 6RB</postCode>
@@ -1792,7 +1800,7 @@ address could thus be represented as follows:
 
 <p>The order of elements within an address is highly culture-specific,
 and is therefore unconstrained:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><address>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><address>
    <name type="org">Università di Bologna</name>
    <name type="country">Italy</name>
    <postCode>40126</postCode>
@@ -1803,7 +1811,7 @@ and is therefore unconstrained:
   
   <p>A telephone number (normally outside of the <gi>address</gi> element) might be tagged with an
     <gi>addrLine</gi> and <gi>ref</gi>, with the number itself appearing in the <code>tel:</code> namespace:
-  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
     <addrLine><ref target="tel:+1-201-555-0123">(201) 555 0123</ref></addrLine>
   </egXML></p>
   
@@ -1816,7 +1824,7 @@ the name of the addressee, tagged as above using the general purpose
 module discussed in chapter <ptr target="#ND"/>, a large number of more specific elements such as <gi>country</gi> or <gi>settlement</gi> will be
 available from the class <ident type="class">model.addrPart</ident>. The above
 example might then be encoded as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><address>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><address>
    <street>110 Southmoor Road</street>
    <settlement>Oxford</settlement>
    <postCode>OX2 6RB</postCode>
@@ -1859,12 +1867,12 @@ here the <gi>num</gi> element is useful precisely because it provides a
 standardized way of representing a numerical value.
  </p>
 <p>For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><num value="33">xxxiii</num>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><num value="33">xxxiii</num>
 <num type="cardinal" value="21">twenty-one</num>
 <num type="percentage" value="10">ten percent</num>
 <num type="percentage" value="10">10%</num>
 <num type="ordinal" value="5">5th</num></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><num type="fraction" value="0.5">one half</num>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><num type="fraction" value="0.5">one half</num>
 <num type="fraction" value="0.5">1/2</num></egXML>
  </p>
 
@@ -1911,7 +1919,7 @@ In the same way, it may be convenient to mark
 representations of currency which might otherwise be misinterpreted as
 lexical:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>...the sum of
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p>...the sum of
 <measure type="currency">12s 6d</measure>...</p></egXML>
 </p>
 <p>In general, normalization of a measure will require specification
@@ -1925,7 +1933,7 @@ supplying values for the three attributes <att>quantity</att>,
 </specList>
 With these attributes, the measurement of Celia's neck may be
 specified in a normalized form:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#NONE">
 <measure quantity="13.75" unit="in">13¾"</measure>
 </egXML>
 Such techniques are particularly useful when representing historical
@@ -1944,7 +1952,7 @@ data such as inventories:
 several related measurements together, either because the measurement
 involves several dimensions (for example height and width) or to
 avoid the need to repeat all the normalizing attributes:
-<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 <measureGrp type="volume" unit="in">
 <measure type="height" quantity="14">xiv</measure>
 <measure type="width" quantity="5">v</measure>
@@ -2006,8 +2014,8 @@ recording the precision of numerical or temporal assertions.
 <p>The <att>when</att> attribute is a useful way of normalizing or
  disambiguating  dates and times which can appear in many formats, as
  the following examples show: 
-<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><date when="1980-02-12">12/2/1980</date></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Given on the <date when="1977-06-12">Twelfth Day of June
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><date when="1980-02-12">12/2/1980</date></egXML>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">Given on the <date when="1977-06-12">Twelfth Day of June
 in the Year of Our Lord One Thousand Nine Hundred and
 Seventy-seven of the Republic the Two Hundredth and first
 and of the University the Eighty-Sixth.</date></egXML>
@@ -2034,7 +2042,7 @@ datatypes require that the minutes and seconds be included in the
 normalized value if they are to be correctly processed for example
 when sorting.</note>
 Some typical examples follow:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 <date when="2001">The year 2001</date>
 <date when="2001-09">September 2001</date>
 <date when="2001-09-11">11 Sep 01</date>
@@ -2090,11 +2098,11 @@ motivates the elements of its <abbr>GSP</abbr>; ...</egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#CONAAB-eg-151">Every manufacturer of <abbr>3GL</abbr> or <abbr>4GL</abbr>
 languages is currently nailing on <abbr>OOP</abbr> extensions.</egXML> 
 </p><p>The <att>type</att> attribute may be used to distinguish types
-of abbreviation by their function:<egXML xmlns="http://www.tei-c.org/ns/Examples"><abbr type="title">Dr.</abbr> <abbr type="initial">M.</abbr> Deegan is
+  of abbreviation by their function:<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><abbr type="title">Dr.</abbr> <abbr type="initial">M.</abbr> Deegan is
 the Director of the <abbr type="acronym">CTI</abbr> Centre for Textual Studies.</egXML>
  </p>
 <p>Abbreviations such as <mentioned>Dr. M.</mentioned> above may be
-treated as two abbreviations, as above, or as one: <egXML xmlns="http://www.tei-c.org/ns/Examples"><abbr>Dr. M.</abbr> Deegan is
+  treated as two abbreviations, as above, or as one: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><abbr>Dr. M.</abbr> Deegan is
 the Director of the <abbr>CTI</abbr> Centre for Textual Studies.</egXML>
  </p>
 <p>The <gi>expan</gi> element may be used simply to record that an
@@ -2104,11 +2112,11 @@ always include the whole of an abbreviated phrase or word.  More
 usually however this will be combined with the <gi>abbr</gi> element
 inside a <gi>choice</gi> element to record both the abbreviation and
 its expansion: 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"> the 
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"> the 
 <choice><expan>World Wide Web Consortium</expan>
 <abbr>W3C</abbr></choice></egXML>
 Nested abbreviations may also be handled in this way:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><choice><abbr>RELAXNG</abbr><expan>regular
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><choice><abbr>RELAX NG</abbr><expan>regular
 language for <choice><abbr>XML</abbr><expan>extensible markup
 language</expan></choice>, next
 generation</expan></choice></egXML></p>
@@ -2148,7 +2156,7 @@ mechanism. This permits a range of complexity, from the very simple
 attribute) to the more complex usage of a full URI with
 embedded XPointers. For example, the source of the following paragraph
 looks something like this: 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>...
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p>...
 The complete XPointer specification is managed by the W3C<note place="foot"><ptr target="http://www.w3.org/TR/xptr-framework/"/>, 
 <ptr target="http://www.w3.org/TR/xptr-element/"/>, 
 <ptr target="http://www.w3.org/TR/xptr-xmlns/"/>, and 
@@ -2189,7 +2197,7 @@ specifying, or describing more exactly, the target of a cross-reference,
 which form the content of the element. Since its content thus serves as
 a human-readable pointer, in the simplest case a <gi>ref</gi> element
 need not identify its target in any other way. For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">See <ref>section 12 on page 34</ref>.</egXML>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">See <ref>section 12 on page 34</ref>.</egXML>
  </p>
 <p>More usually, it will be desirable to identify the target of the
 cross-reference using either the <att>target</att> or the
@@ -2198,15 +2206,15 @@ processing software can access it directly, for example to implement a
 linkage, to generate an appropriate reference, or to give an error
 message if it cannot be found. Assuming that section
 12 in the previous example has been tagged 
-<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"  source="#NONE">
 <div1 xml:id="SEC12"><!-- ... --> </div1></egXML> 
 then the same cross-reference might more exactly be encoded as 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">See especially <ref target="#SEC12">section 12 on page 34</ref>.</egXML>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">See especially <ref target="#SEC12">section 12 on page 34</ref>.</egXML>
 </p>
 <p>If the cross-reference itself is to be generated according to a
 fixed pattern, or if no text is to appear in the body of the 
 cross-reference, the <gi>ptr</gi> element would be used as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">See in particular <ptr target="#SEC12"/>.</egXML>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">See in particular <ptr target="#SEC12"/>.</egXML>
  </p>
 <p>The <att>cRef</att> attribute may be used to express the target of
 a cross reference using some canonical referencing scheme, such as
@@ -2231,7 +2239,7 @@ Here the targets of the cross-references are simply page numbers; it
 is assumed that corresponding elements with identifiers
 <ident>p299</ident>, <ident>p143</ident>, etc. have been provided in
 the body of the text, for example as page breaks
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#NONE">
 <pb xml:id="p143"/>
 ...
 <pb xml:id="p144"/>
@@ -2247,7 +2255,7 @@ the body of the text, for example as page breaks
 <p>A similar method may be used to link annotations on a text with the
 sigla used to encode their points of attachment in a text. For
 example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#NONE">
 annotated text <ref target="#a51" type="noteAnchor">&#x2075;&#x00B9;</ref>
 <!-- ... -->
 <note xml:id="a51" type="footnote">text of annotation</note>
@@ -2283,8 +2291,13 @@ temporal or other axis or with each other.</p>
 points to an external resource available on the network, the <att>mimeType</att> attribute 
  may be used to specify the mime type of that resource; this may be important 
  for to enable appropriate processing. For example:
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
-      <p>The current version of the TEI Guidelines source code is available in the TEI Sourceforge Repository; <ref target="http://sourceforge.net/p/tei/code/HEAD/tree/trunk/P5/Source/guidelines-en.xml" mimeType="application/tei+xml">guidelines-en.xml</ref> is the root document used to create the English version of these Guidelines.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NONE">
+      <p>The current version of the TEI Guidelines source code 
+        is available in the TEI GitHub Repository; <ref
+          target="https://github.com/TEIC/TEI/blob/dev/P5/Source/guidelines-en.xml"
+          mimeType="application/tei+xml">guidelines-en.xml</ref> 
+        is the root document used to create the English version 
+        of these Guidelines.</p>
     </egXML>
   </p><specGrp xml:id="DCOXR" >
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/ptr.xml"/>
@@ -2607,7 +2620,7 @@ agency concerned. The syntax used is identical to that used for other
 cross-references, as discussed in <ptr target="#COXR"/>; thus in this
 case,  the TEI header for this text might contain a 
 title statement like the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 <titleStmt>
 <title>The Rime of the Ancient Mariner: an annotated edition</title>
 <author xml:id="STC">Samuel Taylor Coleridge</author>
@@ -2676,7 +2689,7 @@ entail the use of nested lists like the following:
 might also include direct links to the appropriate location in the
 encoded text, using (for example) a target attribute to supply the
 identifier of an associated page break element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><!-- in the text -->
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><!-- in the text -->
 <pb xml:id="P624"/> <!-- start of  page 624 -->
 <!-- in the index -->
 <ref target="#P624">624</ref>
@@ -2723,7 +2736,7 @@ Alternatively, the special purpose  <gi>divGen</gi> element might be used.</p>
 <p>In the simplest case, a single headword is supplied  by
 an  <gi>term</gi> elements contained by an
 <gi>index</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The students understand procedures for Arabic lemmatisation
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p>The students understand procedures for Arabic lemmatisation
 <index>
   <term>Lemmatization, Arabic</term>
 </index>and are beginning to build parsers.</p></egXML>
@@ -2740,7 +2753,7 @@ done by supplying an  empty <gi>anchor</gi> element (as discussed in chapter
 the <gi>index</gi> element by means of its <att>spanTo</att>
 attribute, as
 in this example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>We now turn to the
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p>We now turn to the
 topic of Arabic lemmatisation
 <index spanTo="#ALAMEND">
   <term>Lemmatization, Arabic</term>
@@ -2777,7 +2790,7 @@ entry is to contain some non-Unicode character or glyph represented by
 the <gi>g</gi> element discussed in chapter <ptr target="#WD"/>. In
 the following example, we assume that somewhere a definition for this
 glyph has been provided using the elements described in chapter <ptr target="#WD"/>, and given the code <val>PrinceGlyph</val>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 <char xml:id="PrinceGlyph">
 <!-- definition of the glyph here -->
 </char>
@@ -2793,7 +2806,7 @@ poems by the subject of the study, another index of works by other writers,
 an index of places or historical personages etc. The indexName
 attribute is used to assigning index terms and locations to one or
 more specific indexes:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>Sir John Ashford
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p>Sir John Ashford
 <index indexName="INDEX-PERSONS"><term>Ashford, John</term></index> was,
 coincidentally, born in 
 <index indexName="INDEX-PLACES"><term>Ashford
@@ -2812,7 +2825,7 @@ suppose that we wish to make a structured index entry for
 <q>Sanskrit</q>, etc. The example at the start of this section  might
 then be encoded with  nested
 <gi>index</gi> elements:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The students understand procedures for Arabic lemmatisation
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p>The students understand procedures for Arabic lemmatisation
     <index>
    <term>lemmatization</term>
    <index>
@@ -2833,7 +2846,7 @@ To generate such an entry, the body of the text might include, at page
 </index>
 </egXML>. Similarly,  page 601 of the body text would include
 an <gi>index</gi> element like the following:
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"><index>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><index>
     <term>Women</term>
     <index>
       <term>their vices</term>
@@ -2841,7 +2854,7 @@ an <gi>index</gi> element like the following:
 </index></egXML>
 while the <gi>index</gi> element at page 624 would have a structure
 like the following:
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"><index>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><index>
     <term>Women</term>
     <index>
       <term>their vices</term>
@@ -2866,7 +2879,7 @@ should be used to specify which kind of index is to be generated, and
 its value should correspond with that of the
 <att>indexName</att> attribute on the relevant <gi>index</gi>
 elements. 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 <back>
    <div type="appendix">
       <head>Bibliography</head>
@@ -2884,7 +2897,7 @@ identifier for the
 generated index itself in the usual way. Any additional headings
 etc. required for the generated index must be specified as content of
 the <gi>divGen</gi> element.
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 <back>
    <divGen n="A1" type="INDEX-NAMES">
    <head>An Index of Names</head>
@@ -2995,7 +3008,7 @@ level  elements which may be used
 anywhere  that textual content is permitted, within but not between
 paragraphs or headings. In the following example, the encoder has
 decided to treat a specific printer's ornament as a heading:
- <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><head><graphic url="http://www.iath.virginia.edu/gants/Ornaments/Heads/hp-ral02.gif"/></head>
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><head><graphic url="http://www.iath.virginia.edu/gants/Ornaments/Heads/hp-ral02.gif"/></head>
 </egXML>. </p>
 <p>The <gi>figure</gi> element discussed in <ptr target="#FTGRA"/>
 provides additional capabilities, for example the ability to combine a
@@ -3089,7 +3102,7 @@ discussion of structural units in verse collections.) In such cases,
 it is convenient to record traditional reference numbers of the
 structural units using the <att>n</att> attribute. The relevant tags
 for our example would be:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div1 n="Amores" type="volume">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><div1 n="Amores" type="volume">
   <div2 n="1" type="book"><!-- ... --></div2>
   <div2 n="2" type="book">
       <div3 n="1" type="poem"><!-- ... --></div3>
@@ -3109,7 +3122,7 @@ for our example would be:
 <p>One may also place the entire standard reference for each portion of
 the text into the appropriate value for the <att>n</att> attribute,
 though for obvious reasons this takes more space in the file:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div1 n="Amores" type="volume">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><div1 n="Amores" type="volume">
   <div2 n="Amores 1" type="book"><!-- ... --></div2>
   <div2 n="Amores 2" type="book">
     <div3 n="Amores 2.1" type="poem"><!-- ... --></div3>
@@ -3133,7 +3146,7 @@ underscores, full stops, and the various combining and extender
 characters, as defined by the XML specification.  Unlike values for
 the <att>n</att> attribute, values for the <att>xml:id</att> attribute
 must be unique throughout the document. Our example then looks like
-this: <egXML xmlns="http://www.tei-c.org/ns/Examples"><div1 n="Amores" type="volume"> <div2 xml:id="am.1" type="book"><!-- ... --></div2>
+this: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><div1 n="Amores" type="volume"> <div2 xml:id="am.1" type="book"><!-- ... --></div2>
   <div2 xml:id="am.2" type="book">
     <div3 xml:id="am.2.1" type="poem"><!-- ... --></div3>
     <!-- ... -->
@@ -3232,7 +3245,7 @@ system may be used.</p>
       value, and an untyped-path identifier as its <att>n</att> value; the
       latter are prefixed with the string <mentioned>AB</mentioned>, which may be
       imagined to be the general identifier for this text.
-      <egXML xmlns="http://www.tei-c.org/ns/Examples"><text xml:id="Text-1" n="AB">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><text xml:id="Text-1" n="AB">
         <front xml:id="Front" n="AB.1">
           <div xml:id="Front.div-1" n="AB.1.1">
             <p> ... </p> 
@@ -3342,7 +3355,7 @@ chapter-based structure using <gi>div1</gi> elements, with
 parts end; or the reverse. Thus, an encoding in which chapters are
 regarded as more important than parts might encode some work in which
 chapter three begins in part one and is concluded in part two as
-follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><text><body>
+follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><text><body>
     <milestone unit="part" n="1"/>
     <div1 n="1" type="chapter">
       <p> <!-- ... --> </p>
@@ -3359,7 +3372,7 @@ follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><text><body>
   </body></text></egXML>
 An encoding of the same work in which parts are regarded as more
 important than chapters might begin as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><text>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><text>
   <body>
     <div1 n="1" type="part">
       <milestone unit="chapter" n="1"/>
@@ -3398,7 +3411,7 @@ on their <att>ed</att> attribute.
 poems regards the first two poems as constituting the first book, while
 edition E2 regards the first poem as prefatory, a markup scheme like
 the following might be adopted:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><milestone ed="E1" unit="work"/>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><milestone ed="E1" unit="work"/>
 <milestone ed="E2" unit="work"/>
 <milestone ed="E1" unit="book"/>
 <milestone ed="E1" unit="poem"/>
@@ -3415,13 +3428,13 @@ the document, if desired.
 <p>The value of the <att>n</att> attribute may but need not include the
 identifiers used for any larger sections.  That is, either of the
 following styles is legitimate:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><milestone ed="E1" unit="work" n="Amores"/>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><milestone ed="E1" unit="work" n="Amores"/>
 <milestone ed="E1" unit="book" n="1"/>
 <milestone ed="E1" unit="poem" n="1"/>
 <milestone ed="E1" unit="poem" n="2"/>
 <milestone ed="E1" unit="book" n="2"/></egXML>
 or
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><milestone ed="E1" unit="work" n="Amores"/>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><milestone ed="E1" unit="work" n="Amores"/>
 <milestone ed="E1" unit="book" n="1"/>
 <milestone ed="E1" unit="poem" n="1.1"/>
 <milestone ed="E1" unit="poem" n="1.2"/>
@@ -3462,7 +3475,7 @@ by default assumed to occur between orthographic tokens in the text, where
 these are not otherwise indicated.  By default it is reasonable to assume that
 words are not broken across page or line boundaries, and that
 therefore a sequence such as 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 ...sed imp<lb/>erator dixit...
 </egXML>
 should be tokenized as four words (<mentioned>sed</mentioned>,
@@ -3471,7 +3484,7 @@ should be tokenized as four words (<mentioned>sed</mentioned>,
 provided to change the default assumption. To make explicit that
 <mentioned>imperator</mentioned> in the above example should be
 treated as a single word, a tagging such as the following is recommended:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 ...sed imp<lb break="no"/>erator dixit...
 </egXML>
 Where hyphenation appears before a line or page break, the encoder may
@@ -3500,7 +3513,7 @@ software.</p>
 the standard references for Ovid's <title>Amores</title> one level at
 a time, using the <att>n</att> attribute on the <gi>div1</gi>,
 <gi>div2</gi>, <gi>div3</gi>, and <gi>l</gi> tags. The header section for such
-an encoding should look something like this: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+  an encoding should look something like this: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
     <encodingDesc>
          <refsDecl>
            <cRefPattern matchPattern="([^ ]+) ([0-9]+)\.([0-9]+)\.([0-9]+)" replacementPattern="#xpath(//div1[@n='$1']/div2[@n='$2']/div3[@n='$3']/l[@n='$4']">
@@ -3535,7 +3548,7 @@ an encoding should look something like this: <egXML xmlns="http://www.tei-c.org/
 the <att>n</att> attribute on the <gi>div1</gi>, <gi>div2</gi>,
 <gi>div3</gi>, and <gi>l</gi> tags, but giving the reference string in
 full on each tag. If canonical references are made only to lines, the
-reference system could be declared as follows: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><refsDecl>
+reference system could be declared as follows: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><refsDecl>
   <cRefPattern matchPattern="([^ ]+ [0-9]+\.[0-9]+\.[0-9]+)" replacementPattern="#xpath(//l[@n='$1')"/>
 </refsDecl></egXML>
 Since the entire regular expression is enclosed as a parenthetical
@@ -3544,7 +3557,7 @@ of the <att>n</att> attribute on an <gi>l</gi> element.</p>
 <p>In order to handle references to poems as well as to individual
 lines, the declaration for the reference system must be more
 complicated:
- <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><refsDecl>
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><refsDecl>
   <cRefPattern matchPattern="([^ ]+ [0-9]+\.[0-9]+\.[0-9]+)" replacementPattern="#xpath(//l[@n='$1')"/>
   <cRefPattern matchPattern="([^ ]+ [0-9]+\.[0-9]+)" replacementPattern="#xpath(//div2[@n='$1')"/>
 </refsDecl></egXML>
@@ -3565,13 +3578,13 @@ the value of <att>target</att>.</p>
 <p>Reference systems recorded by means of milestone tags can also be
 declared; the following prose description could be used to declare
 the example given in section <ptr target="#CORS5"/>.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><refsDecl>
    <p>Standard references to work, book, poem, and line may be
      constructed from the milestone tags in the text.</p>
 </refsDecl></egXML>
 Or in this way, using a formal declaration for this reference scheme
 derived from edition <val>E1</val>.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><refsDecl>
    <refState ed="E1" unit="work" delim=" "/>
    <refState ed="E1" unit="book" delim="."/>
    <refState ed="E1" unit="poem" delim=":"/>
@@ -3708,13 +3721,13 @@ made within it (for example, between the part of the reference which
 identifies a title or author and the rest).  Such references, containing
 a mixture of text with specialized bibliographic elements, are regarded
 as <gi>bibl</gi> elements, and tagged accordingly.  For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>A book which had a great influence on him
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p>A book which had a great influence on him
 was <bibl>Tufte's <title>Envisioning
 Information</title></bibl>, although he may
 never have actually read it.</p></egXML>
 Indeed, some encoders may find it unnecessary to mark the bibliographic
 reference at all:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>A book which had a great influence on him
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p>A book which had a great influence on him
 was Tufte's <title>Envisioning Information</title>,
 although he may never have actually read it.</p></egXML>
  </p>
@@ -3723,7 +3736,7 @@ string of the form <mentioned>Baxter, 1983</mentioned>.  If no further details o
 Baxter's book are given in the source text and none is supplied by the
 encoder, then the reference thus given should be tagged as a
 <gi>bibl</gi>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">All of this is of course much more fully treated
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">All of this is of course much more fully treated
 in <bibl>Baxter, 1983</bibl>.</egXML>
 In general, however, normal modern bibliographic practice, and these
 Guidelines, distinguish between a bibliographic <term rend="noindex">reference</term>,<index><term>references</term><index><term>bibliographic</term></index></index><index><term>bibliographic references</term></index>
@@ -3794,7 +3807,7 @@ require that a <gi>listBibl</gi> contain only one kind of bibliographic
 element, though the following example combines both fully structured
 <gi>biblStruct</gi> and informal <gi>bibl</gi> elements:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:space='preserve'><listBibl>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:space='preserve' source="#NONE"><listBibl>
    <head>Bibliography</head>
    <biblStruct xml:id="NELSON80">
       <analytic>
@@ -3856,7 +3869,7 @@ ordinary list, thus allowing them to be mixed with running prose or
 presented informally, as in the following version of the same example:
 
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><list>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><list>
    <head>Bibliography</head>
    <item>
       <bibl xml:id="NEL80">        
@@ -3944,7 +3957,7 @@ the series. </p>
     the practice of employing nested <gi>bibl</gi> elements. In this example, for
     instance, the monograph-level component of the reference is encapsulated in
     its own <gi>bibl</gi> within the main <gi>bibl</gi> for the article:
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
       <bibl type="article" subtype="magazine_article" xml:id="beaupaire_1911">
         <author><name><surname>Beaupaire</surname>
           (<forename>Edmond</forename>)</name></author>,
@@ -3991,7 +4004,7 @@ four volumes published together under the title <title>Cults of
 Boitia</title>;  this last title constituted the 38th volume in the
 series of <title>Bulletin of the Institute of Classical Studies
 Supplements</title>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><biblStruct>
 <analytic>
 <author>Albert Schachter</author>
 <title level="a">Iolaos</title>
@@ -4021,7 +4034,7 @@ twice, once in a journal (where it appeared in volume 40, on pages 3
 -46 of the issue of October 1986)  and once as a free-standing item,
 which appeared as number 11 of  a
 German language series. 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><biblStruct>
    <analytic>
       <author>
       <persName><surname>Thaller</surname>
@@ -4075,7 +4088,7 @@ represented by means of an <gi>idno</gi> element placed within the
 <gi>analytic</gi> element, as in the following example where a DOI
 (Digital Object identifier) is supplied for the article in question.</p>
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 <biblStruct>
 <analytic>
 <author>
@@ -4116,7 +4129,7 @@ references in any of several styles.
  </p>
 <p>Within a <gi>bibl</gi> however, it is possible and often convenient
 to include punctuation.
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
   <bibl xml:id="NELSON_80">
     <author>
       <persName>
@@ -4194,7 +4207,7 @@ the <gi>analytic</gi>, <gi>monogr</gi>, or <gi>series</gi> element; if
 it is enclosed only indirectly (i.e., nested more deeply), no semantic error need be present.  For
 example, the analytic title may contain a monographic title, as in the
 following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><biblStruct>
    <analytic>
       <author ref="http://id.loc.gov/authorities/names/no2001067434">
         <persName>
@@ -4339,7 +4352,7 @@ Ciklotronnye volny v plazme. ISBN 0-08-021680-3.
    <note place="inline">Translation of:
    <title xml:lang="ru-Latn" level="m">Ciklotronnye volny v
    plazme</title>.
-   <idno type="isbn">ISBN 0-08-021680-3</idno>. 
+   <idno type="ISBN">0-08-021680-3</idno>. 
    </note>
 </bibl></egXML>
 <!-- from ISO 690: 1987, clause 4.1, p. 2. -->
@@ -4356,7 +4369,7 @@ have been reordered from their appearance on the title
 page of the volume in order to ensure the correct relationship of the
 collection title, the edition statement, and the statement of
 responsibility. 
-<egXML xml:lang="de" xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
+  <egXML xml:lang="de" xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><biblStruct>
    <monogr xml:lang="de">
       <title level="m">Des Minnesangs Frühling</title>
       <note place="inline">Mit 1 Faksimile</note>
@@ -4385,14 +4398,14 @@ content may vary over time. Likewise, a given individal's
 responsibility or role may change over time. These situations may be
 recorded with the <gi>respStmt</gi> element. For example, the
 following could be used when one proofreader took over for another.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><respStmt>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><respStmt>
   <resp>proofreading</resp>
   <persName from="1994-02" to="1994-05">Ashley Cross</persName>
   <persName from="1994-06" to="1994-10">Loren Noveck</persName>
 </respStmt></egXML>
 The following example records the fact that one individual had two 
 distinctly different intellectual responsibilities at different times.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><respStmt>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><respStmt>
   <persName>Erica Dillon</persName>
   <resp when="2000-08">annotated uncredited citations</resp>
   <resp when="2001-03">encoded named entities</resp>
@@ -4402,7 +4415,7 @@ distinctly different intellectual responsibilities at different times.
 work is published as the outcome of a conference, workshop
 or similar meeting. The <gi>meeting</gi> element may be used to supply
 this information, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><biblStruct>
    <monogr>
      <title level="m">Proceedings of a workshop on corpus resources</title>
      <respStmt>
@@ -4429,7 +4442,7 @@ this information, as in the following example:
 </div>
 <div type="div4" xml:id="COBICOD"><head>Document Identifiers</head>
 <p>Many bibliographic references include identifiers for a work to help with precise identification of an appropriate document. For example, a book in the <title>Short Title Catalogue</title> could be referenced with its STC number:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 <biblStruct>
   <monogr>
     <author>
@@ -4463,8 +4476,10 @@ this information, as in the following example:
 <item><gi>date</gi> may be used to contain the date of the patent document. The <att>type</att> attribute may be used to specify whether this corresponds to the filing date of a patent application or the publication date of a patent publication.</item>
 </list>
 </p>
-<p>The following reference illustrates an encoding for a patent publication which might be cited in print as "United States patent US 6,885,550 B1, issued April 26, 2005":
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<p>The following reference illustrates an encoding for a patent
+publication which might be cited in print as <q>United States patent
+US 6,885,550 B1, issued April 26, 2005</q>:
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 <biblStruct type="patent" status="publication">
   <monogr>
     <authority>
@@ -4530,7 +4545,7 @@ city.
 (<soCalled>published</soCalled>) by an organization other than a
 conventional publisher, as is frequently the case with technical
 reports:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><biblStruct>
    <monogr>
       <author>Nicholas, Charles K.</author>
       <author>Welsch, Lawrence A.</author>
@@ -4608,7 +4623,7 @@ statement here applies only to the second <gi>monogr</gi> element.
 <!-- example from ANSI Z39.29, sec. A.3.12.1, p.41 -->
  </p>
 <p>This encoding can be extended to the case of patent documents, where the same patent application is published, with or without changes, at different stages of the patenting procedure. In this case, the kind code and, optionally, the publication date characterize different publications of the same patent application during the procedure. For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 <biblStruct type="patent" status="publication">
   <monogr>
     <authority>
@@ -4650,7 +4665,7 @@ suggested values).
 </p>
 <p>A scope of a bibliographic reference defines that the <emph>entire work 
 cited</emph> may be found in particular volumes, issues, pages, etc. For example: 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><biblStruct>
    <analytic>
       <author>
         <persName>
@@ -4693,7 +4708,7 @@ cited</emph> may be found in particular volumes, issues, pages, etc. For example
  </p>
 <p>The <att>unit</att> attribute on <gi>biblScope</gi> is optional:
 both the following are legal examples:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><biblStruct>
    <analytic>
       <author>Boguraev, Branimir</author>
       <author>Neff, Mary</author>
@@ -4733,7 +4748,7 @@ only the portion</emph> defined by this range. For example, a footnote
 following a quotation from page 378 of <title level="a">Historical 
 Editions in the States</title> that includes a full bibliographic 
 reference would be encoded using <gi>biblStruct</gi> as follows:
-  <egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><biblStruct>
     <analytic>
       <author>Chesnutt, David</author>
       <title level="a">Historical Editions in the States</title>
@@ -4788,7 +4803,7 @@ facsimile. The relation between the facsimile and its source is
 represented by means of a <gi>relatedItem</gi> within the first
 description, which points to the description of the source.
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct xml:id="bibl03">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><biblStruct xml:id="bibl03">
 <monogr>
     <author>Swinburne, Algernon Charles</author>
     <title level="m">Swinburne's <title level="m">Atalanta in Calydon</title>: A Facsimile of the
@@ -4826,7 +4841,7 @@ replaced by the referenced <gi>biblStruct</gi> itself since a
 reference. For example, one of the examples quoted above might also be
 encoded as follows:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><biblStruct>
    <monogr>
       <author>Shirley, James</author>
       <title type="main">The gentlemen of Venice</title>
@@ -4863,7 +4878,7 @@ be transitive (for example <val>translatedAs</val> or
 <val>otherEdition</val>).  The <att>subtype</att> attribute may be
 used to provide a more detailed classification, where this is
 appropriate. Some further examples follow:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><biblStruct>
    <monogr>
       <author>Tolkien, J.R.R.</author>
       <title level="m">Den hobbit</title>
@@ -4889,7 +4904,7 @@ of the edition used as source for the translation is provided within
 the content of the <gi>relatedItem</gi>. Alternatively this might be
 provided by means of a link, in which case the <gi>relatedItem</gi>
 would be empty:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 <relatedItem type="translatedFrom" target="http://www.example.com/bibliography.xml#TOLK97"/>
 </egXML>
 </p>
@@ -4912,7 +4927,7 @@ descriptive annotation of a bibliographic entry in a database.
 <specList><specDesc key="note"/></specList>
  </p>
 <p>For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><bibl>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><bibl>
    <author>Coombs, James H., Allen H. Renear,
            and Steven J. DeRose.</author>
    <title level="a">Markup Systems and the Future of Scholarly
@@ -4927,12 +4942,12 @@ Text Processing.</title>
 The <gi>textLang</gi> element may be used to record information about the languages used within a bibliographic item.
 <specList><specDesc key="textLang" atts="mainLang otherLangs"/></specList>
 This element can take the form of a simple note such as:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 <textLang>Latin, with some glosses in Anglo-Saxon and French</textLang>
 </egXML>
 However, it is generally recommended where feasible to use the <att>mainLang</att> attribute to record the chief 
 language of the bibliographic item, and optionally the <att>otherLangs</att> to identify other languages used in the work. For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 <textLang mainLang="la" otherLangs="ang fr">Latin, with some glosses in Anglo-Saxon and French</textLang>
 </egXML>
 </p>
@@ -4945,7 +4960,7 @@ individual <gi>language</gi> elements document the languages
 used: see <ptr target="#HD41"/>.  </p>
 <p> A description, in French, of a work predominantly in German, but also with some Latin might 
 have a <gi>textLang</gi> like the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="fr">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="fr" source="#NONE">
 <textLang xml:lang="fr" mainLang="de" otherLangs="la">allemand et latin</textLang>
 </egXML> For more information about the use of <gi>textLang</gi> in manuscript descriptions
 see: <ptr target="#mslangs"/>.</p>
@@ -4997,22 +5012,22 @@ elements, a bibliographic reference of some kind.  Where the form of the
 reference itself is unimportant, or may be reconstructed mechanically,
 or is not to be encoded, the <gi>ptr</gi> element is used, as in the
 following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">As shown above (<ptr target="#NEL80"/>) ...</egXML>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">As shown above (<ptr target="#NEL80"/>) ...</egXML>
  </p>
 <p>Where the form of the reference is important, or contains additional
 qualifying information which is to be kept but distinguished from the
 surrounding text, the <gi>ref</gi> element should be used, as in the
 following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Nelson claims <ref target="#NEL80">(ibid, passim)</ref> ...</egXML>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">Nelson claims <ref target="#NEL80">(ibid, passim)</ref> ...</egXML>
 It may be important to distinguish between the short form of a
 bibliographic reference and some qualifying or additional information.
 The latter should not appear within the scope of the <gi>ref</gi>
 element when this is the case, as for example in an application
 concerned to normalize bibliographic references:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Nelson claims (<ref target="#NEL80">Nelson [1980]</ref> pages 13–37) ...</egXML>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">Nelson claims (<ref target="#NEL80">Nelson [1980]</ref> pages 13–37) ...</egXML>
  </p>
 <p>The <gi>ref</gi> element may also be used to provide a reference to a copy of the bibliographic item itself, particularly if this is available online, as in the following example: 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 <biblStruct>
 <analytic>
 <author>

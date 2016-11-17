@@ -4,7 +4,8 @@ Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="CATCHWORDS" ident="catchwords">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="msdescription" xml:id="CATCHWORDS" ident="catchwords">
   <gloss versionDate="2007-06-12" xml:lang="fr">réclames</gloss>
   <desc versionDate="2005-12-13" xml:lang="en" xml:id="catchwords.desc">describes the system used to ensure
 correct ordering of the quires making up a codex or incunable,
@@ -25,6 +26,11 @@ typically by means of annotations at the foot of the page.</desc>
   <content>
     <macroRef key="macro.phraseSeq"/>
   </content>
+  <constraintSpec ident="catchword_in_msDesc" scheme="isoschematron">
+    <constraint>
+      <sch:assert test="ancestor::tei:msDesc" role="nonfatal">WARNING: deprecated use of element — The <sch:name/> element will not be allowed outside of msDesc as of 2018-10-01.</sch:assert>
+    </constraint> 
+  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <catchwords>Vertical catchwords in the hand of the scribe placed along 

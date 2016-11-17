@@ -8,8 +8,7 @@ $Id$
 -->
 <?xml-model href="../../../p5odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="TD" n="27"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:s="http://www.ascc.net/xml/schematron"
-  xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+  xmlns:rng="http://relaxng.org/ns/structure/1.0">
   <head>Documentation Elements</head>
   <p>This chapter describes a module which may be used for the documentation of the XML elements and element
     classes which make up any markup scheme, in particular that described by the TEI Guidelines, and also for
@@ -604,16 +603,18 @@ to mark any technical term, thus:
           <specDesc key="elementRef"/>
           <specDesc key="classRef"/>
           <specDesc key="macroRef"/>
+	  <specDesc key="anyElement"/>
         </specList>
       </p>
       <p>In the simplest case, the <gi>content</gi> element may be empty. This implies that the element being
         specified is also empty. </p>
       <p>An element may contain nothing but strings of Unicode characters. This is indicated by supplying the
-        special element <gi>textNode</gi> within the <gi>content</gi> element. </p>
-      <p>An <gi>elementRef</gi> provides the name of an element which may appear at a certain point in a
+        element <gi>textNode</gi>  within the <gi>content</gi> element. An element containing a 
+        sequence of zero or more Unicode characters would match an element with this content model.       </p>
+        <p>An <gi>elementRef</gi> provides the name of an element which may appear at a certain point in a
         content model. A <gi>classRef</gi> provides the name of a class, members of which may appear at a
         certain point in content model. A <gi>macroRef</gi> provides the name of a predefined macro, the
-        expansion of which may be inserted at a certain point in a content model.</p>
+        expansion of which may be inserted at a certain point in a content model. The <gi>anyElement</gi> element is used in a few special cases where any element is permitted in a content model. </p>
       <p>These elements are all members of an attribute class which provides attributes that further modify
         their significance as follows: <specList>
           <specDesc key="att.repeatable" atts="minOccurs maxOccurs context"/>
@@ -633,7 +634,7 @@ to mark any technical term, thus:
             </alternate>
           </content>
         </egXML>
-         This is the content model for the macro <ident type="macro">macro.xText</ident>, which is defined as
+         This is the expansion of  the macro <ident type="macro">macro.xText</ident>, which is defined as
         containing any number (including zero) of elements from the <ident type="class">model.gLike</ident>
         class mixed in with text. </p>
       <p>Here is a more complex example:
@@ -721,7 +722,7 @@ to mark any technical term, thus:
         notation which is found useful; the notation used must be recorded using the <att>scheme</att>
         attribute.</p>
       <p>Schematron is an ISO standard (<ref target="#ISO-19757-3">ISO/IEC 19757-3:2006</ref>) which defines a
-        simple XML vocabulary for an <soCalled>assertion language</soCalled>, together with a RELAXNG schema
+        simple XML vocabulary for an <soCalled>assertion language</soCalled>, together with a RELAX NG schema
         to validate it. The Schematron assertion language provides a powerful way of expressing constraints on
         the content of any XML document in addition to those provided by other schema languages. Such
         constraints can be embedded within a TEI schema specification using the methods exemplified in this
@@ -762,7 +763,7 @@ to mark any technical term, thus:
         </egXML>
       </p>
       <p>The constraints in the preceding example all related to attributes in the empty namespace, and the
-        schematron rules did not therefore need to define a TEI namespace prefix. The Schematron language <gi
+        Schematron rules did not therefore need to define a TEI namespace prefix. The Schematron language <gi
           scheme="Schematron">ns</gi> element should be used to do this when a constraint needs to refer to a
         TEI element, as in the following example, which models the constraint that a TEI <gi>div</gi> must
         contain either no subdivisions or at least two of them:
@@ -1256,18 +1257,18 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
           common a particular intended output, as in the following example:
           <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <modelGrp output="mobile">
-              <model behaviour="inline">
+              <model behaviour="inline" predicate="@rend='inline'">
                 <outputRendition>font-size: 7pt;</outputRendition>
               </model>
-              <model behaviour="block">
+              <model behaviour="block" predicate="@rend='block'">
                 <outputRendition>text-color: red;</outputRendition>
               </model>
             </modelGrp>
             <modelGrp output="print">
-              <model behaviour="inline">
+              <model behaviour="inline" predicate="@rend='inline'">
                 <outputRendition>font-size: 12pt;</outputRendition>
               </model>
-              <model behaviour="block" useSourceRendition="true">
+              <model behaviour="block" useSourceRendition="true" predicate="@rend='block'">
                 <outputRendition>text-align: center;</outputRendition>
               </model>
             </modelGrp>
@@ -1512,7 +1513,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
               within a <gi>modelSequence</gi>
             </item>
             <item>Consequently, if there are two or more <gi>model</gi> elements provided for an
-                <gi>elementSpec</gi>, and none of them has a <att>predicate</att> or an <gi>output</gi>
+                <gi>elementSpec</gi>, and none of them has a <att>predicate</att> or an <att>output</att>
              attribute, then an implementation may either choose to regard this as an error, or
               apply their own algorithm to determine the priorities; the nature of that algorithm (first
               found, last found, etc.) should form part of the implementation's documentation. </item>
@@ -1719,6 +1720,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/valItem.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/valList.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/textNode.xml"/>
+      <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/anyElement.xml"/>
     </specGrp>
   </div>
   <div type="div3" xml:id="TDENT">
@@ -1827,9 +1829,28 @@ most recent version of the Guidelines would be used instead.--></p>
          Note that in this last case, there is no need to specify the name of the module from which the two
         element declarations are to be found; in the TEI scheme, element names are unique across all modules.
         The module is simply a convenient way of grouping together a number of related declarations. </p>
+      
+      <p>In the same way, a schema may select a subset of the attributes available in a specific class, 
+      using the <gi>classRef</gi> element to point to an attribute class:
+        <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
+          <moduleRef key="tei"/>
+          <!-- ... -->
+          <classRef key="att.global.linking" include="corresp"/>
+          <!-- ... -->
+        </schemaSpec></egXML>
+        Here, only the <att>corresp</att> attribute is included; the other attributes in the class
+        are not available. The same effect can be achieved using <att>except</att>:
+        <egXML xml:lang="en" xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
+          <moduleRef key="tei"/>
+          <!-- ... -->
+          <classRef key="att.global.linking" except="copyOf exclude next prev sameAs select synch"/>
+          <!-- ... -->
+        </schemaSpec></egXML>
+      </p>
+      
       <p>A schema may also include declarations for new elements, as in the following example:
         <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
-            <moduleRef key="teiheader"/>
+            <moduleRef key="header"/>
             <moduleRef key="verse"/>
             <elementSpec ident="soundClip">
               <classes><memberOf key="model.pPart.data"/></classes>
@@ -1838,10 +1859,27 @@ most recent version of the Guidelines would be used instead.--></p>
          A declaration for the element <gi scheme="imaginary">soundClip</gi>, which is not defined in the TEI
         scheme, will be added to the output schema. This element will also be added to the existing TEI class
           <ident type="class">model.pPart.data</ident>, and will thus be available in TEI conformant
-        documents.</p>
+        documents. Attributes from existing TEI classes could be added to the new element using <gi>attRef</gi>:
+      
+        <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
+          <moduleRef key="header"/>
+          <moduleRef key="verse"/>
+          <elementSpec ident="soundClip">
+            <classes><memberOf key="model.pPart.data"/></classes>
+            <attList>
+              <attRef class="att.source" name="source"/>
+            </attList>
+          </elementSpec>
+        </schemaSpec></egXML>
+        This will provide the <att>source</att> attribute from the <ident type="class">att.source</ident> class on the new 
+        <gi scheme="imaginary">soundClip</gi> element.
+      </p>
+      
+      
+      
       <p>A schema might also include re-declarations of existing elements, as in the following example:
         <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
-            <moduleRef key="teiheader"/>
+            <moduleRef key="header"/>
             <moduleRef key="teistructure"/>
             <elementSpec ident="head" mode="change">
               <content><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.xtext"/></content>
