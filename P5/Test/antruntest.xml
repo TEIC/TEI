@@ -44,7 +44,6 @@
   <property name="listgraphics" value="${XSL}/tools/makegraphicsanttask.xsl"/>
   <dirname property="inputDir" file="${oddFile}"/>
   <property name="outputTempDir" value="${inputDir}/temp-dir-for-ant"/>
-  <property name="dtdSource" value="../p5subsetDoctored.xml"/>
   
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
@@ -72,7 +71,7 @@
     </xslt>
   </target>
   <target name="dtd">
-    <echo level="info">XSLT generate DTD ${outputname}.dtd using ${dtdSource} (first pass) </echo>
+    <echo level="info">XSLT generate DTD ${outputname}.dtd using ${defaultSource} (first pass) </echo>
     <xslt processor="trax" force="yes" style="${odd2odd}" in="${oddFile}" out="${outputname}.odd.processed">
       <xmlcatalog>
         <catalogpath>
@@ -85,10 +84,10 @@
       <param name="autoGlobal" expression="${autoGlobal}" if="autoGlobal"/>
       <param name="selectedSchema" expression="${schema}" if="schema"/>
       <param name="patternprefix" expression="${patternprefix}" if="patternprefix"/>
-      <param name="defaultSource" expression="${dtdSource}" if="dtdSource"/>
+      <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
       <param name="verbose" expression="${verbose}" if="verbose"/>
     </xslt>
-    <echo level="info">XSLT generate DTD ${outputname}.dtd using ${dtdSource} (second pass) </echo>
+    <echo level="info">XSLT generate DTD ${outputname}.dtd using ${defaultSource} (second pass) </echo>
     
     <xslt processor="trax" force="yes" style="${odd2dtd}" in="${outputname}.odd.processed" out="${outputname}.dtd">
       <xmlcatalog>
@@ -102,14 +101,13 @@
       <param name="debug" expression="${debug}" if="debug"/>
       <param name="selectedSchema" expression="${schema}" if="schema"/>
       <param name="patternprefix" expression="${patternprefix}" if="patternprefix"/>
-      <param name="defaultSource" expression="${dtdSource}" if="dtdSource"/>
       <param name="verbose" expression="${verbose}" if="verbose"/>
       <param name="autoGlobal" expression="${autoGlobal}" if="autoGlobal"/>
     </xslt>
   </target>
   <target name="rng">
-    <echo level="info">XSLT generate RELAXNG ${outputname}.rng</echo>
-    <xslt processor="trax" force="yes" style="${odd2relax}" in="${outputname}.odd.processed" out="${outputname}.rng">
+    <echo level="info">XSLT generate RELAXNG ${outputname}.rng using ${defaultSource}</echo>
+    <xslt processor="trax" force="yes" style="${odd2relax}" in="${outputname}.odd.processed" out="${outputname}.rng" >
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
