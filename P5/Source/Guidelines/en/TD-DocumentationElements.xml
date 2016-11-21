@@ -910,6 +910,15 @@ to mark any technical term, thus:
           /> above. Note that each is, of necessity, mapped eventually to an externally defined datatype such
           as W3C Schema's <ident>text</ident> or <ident>name</ident>, possibly combined to give more
           expressivity, or constrained to a particular defined usage. </p>
+        <p>It is possible reference W3C schema datatypes directly using <att>name</att>. In this case, 
+          the child <gi>dataFacet</gi> can be used instead of <att>restriction</att> to set W3C schema compliant 
+          restrictions on the datatype. This is particularly useful for restrictions that cannot be imposed with a 
+          regular expression pattern. 
+          <egXML xmlns="http://www.tei-c.org/ns/Examples"><dataRef name="decimal">
+              <dataFacet name="maxInclusive">360.0</dataFacet>
+              <dataFacet name="minInclusive">-360.0</dataFacet>
+            </dataRef></egXML>   
+        Note that restrictions are either expressed with <att>restriction</att> or <gi>dataFacet</gi>, never both.</p>
         <p>Attributes <att>minOccurs</att> and <att>maxOccurs</att> are available for the case where an
           attribute may take more than one value of the type specified. For example, the <att>target</att>
           attribute provided by the <ident type="class">att.pointing</ident> class has the following
@@ -1715,6 +1724,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/attRef.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/datatype.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/dataRef.xml"/>
+      <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/dataFacet.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/defaultVal.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/valDesc.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/valItem.xml"/>
