@@ -38,7 +38,7 @@ target="#NH"/>).-->
 
   <!-- Section added 2012-10-09 by MDH per http://purl.org/tei/fr/3565152. -->
 
-  <div type="div1" xml:id="MEDIATYPE">
+  <div type="div2" xml:id="MEDIATYPE">
     <head>Serving TEI files with the TEI Media Type</head>
     <p>In February 2011, the media type <code>application/tei+xml</code> was registered with IANA
       for <q>markup languages defined in accordance with the Text Encoding and Interchange
@@ -48,7 +48,7 @@ target="#NH"/>).-->
       processing of TEI files by external applications.</p>
   </div>
 
-  <div type="div1" xml:id="DT" n="36">
+  <div type="div2" xml:id="DT" n="36">
     <head>Obtaining the TEI Schemas</head>
     <p>As discussed in chapter <ptr target="#TD"/>, the modules making up the TEI scheme are
       generated from a single set of XML source files. Schemas can be generated for TEI
@@ -65,7 +65,7 @@ target="#NH"/>).-->
 
 
 
-  <div type="div1" xml:id="MD">
+  <div type="div2" xml:id="MD">
 
     <head>Personalization and Customization</head>
 
@@ -171,7 +171,7 @@ target="#NH"/>).-->
       provided in section <ptr target="#STIN"/>. Several example ODD files are also provided as part
       of the standard TEI release: see further section <ptr target="#MDlite"/> below.</p>
 
-    <div type="div2" xml:id="MDMD">
+    <div type="div3" xml:id="MDMD">
       <head>Kinds of Modification</head>
       <p>For ease of discussion, we distinguish the following different kinds of modification: <list
           rend="numbered">
@@ -202,7 +202,7 @@ target="#NH"/>).-->
 
 
 
-      <div type="div3" xml:id="MDMDSU">
+      <div type="div4" xml:id="MDMDSU">
         <head>Deletion of Elements</head>
 
         <p>The simplest way to modify the supplied modules is to suppress one or more of the
@@ -255,7 +255,7 @@ target="#NH"/>).-->
       </div>
 
 
-      <div type="div3" xml:id="MDMDNM">
+      <div type="div4" xml:id="MDMDNM">
         <head>Renaming of Elements</head>
 
         <p>Every element and other named markup construct in the TEI scheme has a <term>canonical
@@ -297,23 +297,21 @@ target="#NH"/>).-->
 
 
 
-      <div type="div3" xml:id="MDMDCM">
+      <div type="div4" xml:id="MDMDCM">
         <head>Modification of Content Models</head>
 
-        <p>The content model for an element in the TEI scheme is defined by means of a
-            <gi>content</gi> element within the <gi>elementSpec</gi> which specifies it. As shown
-          elsewhere in these Guidelines, the content model is defined using RELAX NG syntax, whether
-          the resulting schema is expressed in RELAX NG or in some other schema language. </p>
-
-        <p>For example, the specification for the element <gi>term</gi> provided by these Guidelines
-          contains a <gi>content</gi> element like the following: <egXML xml:lang="und"
-            xmlns="http://www.tei-c.org/ns/Examples">
-            <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
-              <rng:ref name="macro.phraseSeq"/>
-            </content>
-          </egXML> This indicates that the content model contains declarations taken from the RELAX
-          NG namespace, and that it consists of a reference to a pattern called <ident type="macro"
-            >macro.phraseSeq</ident>. Further examination shows that this pattern in turn expands to
+        <p>The content model for an element in the TEI scheme is
+        defined by means of a <gi>content</gi> element within the
+        <gi>elementSpec</gi> which specifies it. For example, the
+        specification for the element <gi>term</gi> provided by these
+        Guidelines contains a <gi>content</gi> element like the
+        following: <egXML xml:lang="und"
+        xmlns="http://www.tei-c.org/ns/Examples">
+  <content>
+    <macroRef key="macro.phraseSeq"/>
+  </content>
+          </egXML> This indicates that the content model consists of a reference to a pattern called
+	  <ident type="macro">macro.phraseSeq</ident>. Further examination shows that this pattern in turn expands to
           an optional repeatable alternation of text (<code>rng:text</code>) with references to
           three other classes (<ident type="class">model.gLike</ident>, <ident type="class"
             >model.phrase</ident>, or <ident type="class">model.global</ident>). For some particular
@@ -325,7 +323,7 @@ target="#NH"/>).-->
           following: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" rend="full"
               ><elementSpec ident="term" module="core" mode="change">
               <content xmlns:rng="http://relaxng.org/ns/structure/1.0"
-              ><rng:text/></content></elementSpec></egXML>
+              ><textNode/></content></elementSpec></egXML>
         </p>
 
         <p>This is a clean modification which does not change the meaning of a TEI element; there is
@@ -367,7 +365,7 @@ target="#NH"/>).-->
       </div>
 
 
-      <div xml:id="MDMDAL">
+      <div type="div4" xml:id="MDMDAL">
         <head>Modification of Attribute and Attribute Value Lists</head>
 
         <p>The attributes applicable to a given element may be specified in two ways: they may be
@@ -403,8 +401,8 @@ target="#NH"/>).-->
                 <attDef ident="source" mode="add" ns="http://www.example.com/ns/nonTEI">
                   <desc>specifies the source of an example by pointing to a single bibliographic
                     reference for it</desc>
-                  <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0" maxOccurs="1">
-                    <rng:ref name="data.pointer"/>
+                  <datatype maxOccurs="1">
+                    <dataRef key="teidata.pointer"/>
                   </datatype>
                 </attDef></attList>
             </elementSpec></egXML>
@@ -431,8 +429,8 @@ target="#NH"/>).-->
             <gi>desc</gi> element, and the latter by the <gi>datatype</gi> element. (There are of
           course many other pieces of information which could be supplied, as documented in <ptr
             target="#TD"/>). The content of the <gi>datatype</gi> element, like that of the
-            <gi>content</gi> element, uses patterns from the RELAX NG namespace, in this case to
-          select one of the predefined TEI datatypes (<ptr target="#DTYPES"/>). </p>
+	  <gi>content</gi> element, may use patterns from the RELAX NG namespace directly,
+	  rather than the TEI <soCalled>Pure ODD</soCalled> elements shown here.</p>
 
         <p>It is often desirable to constrain the possible values for an attribute to a greater
           extent than is possible by simply supplying a TEI datatype for it. This facility is
@@ -447,8 +445,8 @@ target="#NH"/>).-->
                 <attDef ident="source" ns="http://www.example.com/ns/notTEI" mode="add">
                   <desc>specifies the source of an example by supplying one of three predefined
                     codes for it.</desc>
-                  <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0" maxOccurs="1">
-                    <rng:ref name="data.word"/>
+                  <datatype maxOccurs="1">
+                    <dataRef key="teidata.word"/>
                   </datatype>
                   <valList type="closed">
                     <valItem ident="A">
@@ -474,7 +472,7 @@ target="#NH"/>).-->
           modifications are intrinsically unclean. </p>
 
       </div>
-      <div type="div3" xml:id="MDMDCL">
+      <div type="div4" xml:id="MDMDCL">
         <head>Class Modification</head>
 
         <p>The concept of element classes was introduced in <ptr target="#STECCM"/>; an
@@ -584,7 +582,7 @@ target="#NH"/>).-->
       </div>
 
 
-      <div type="div3" xml:id="MDMDNE">
+      <div type="div4" xml:id="MDMDNE">
         <head>Addition of New Elements</head>
 
         <p>To add a completely new element into a schema involves providing a complete element
@@ -608,7 +606,7 @@ target="#NH"/>).-->
 
     </div>
 
-    <div type="div2" xml:id="MDNS">
+    <div type="div3" xml:id="MDNS">
       <head>Modification and Namespaces</head>
 
 
@@ -679,7 +677,7 @@ target="#NH"/>).-->
       </p>
     </div>
 
-    <div type="div2" xml:id="MDDO">
+    <div type="div3" xml:id="MDDO">
       <head>Documenting the Modification</head>
 
       <p>The elements used to define a TEI customization (<gi>schemaSpec</gi>, <gi>moduleRef</gi>,
@@ -714,7 +712,7 @@ target="#NH"/>).-->
 
 
 
-    <div type="div2" xml:id="MDlite">
+    <div type="div3" xml:id="MDlite">
       <head>Examples of Modification </head>
 
       <p>Several examples of customizations of the TEI are provided as part of the standard release.
@@ -759,7 +757,7 @@ target="#NH"/>).-->
 
 
 
-  <div type="div1" xml:id="CF">
+  <div type="div2" xml:id="CF">
 
     <head>Conformance</head>
 
@@ -896,7 +894,7 @@ Conal -->
         be added to existing TEI classes.</p>
 
 
-      <div xml:id="CFAMsc">
+      <div type="div4" xml:id="CFAMsc">
         <head>Semantic Constraints</head>
 
         <p>It is an important condition of TEI conformance that elements defined in the TEI
@@ -936,7 +934,7 @@ Conal -->
 
       </div>
 
-      <div type="div3" xml:id="CFAMmc">
+      <div type="div4" xml:id="CFAMmc">
         <head>Mandatory Components of a TEI Document</head>
 
         <p>It is a long-standing requirement for any <term>TEI-conformant</term> document that it
@@ -1223,7 +1221,7 @@ Conal -->
 
 
 
-  <div xml:id="IM" type="div1">
+  <div xml:id="IM" type="div2">
     <head>Implementation of an ODD System</head>
     <p>This section specifies how a processing system may take advantage of the markup specification
       elements documented in chapter <ptr target="#TD"/> of these Guidelines in order to produce
@@ -1857,8 +1855,7 @@ head =
                   <equiv/>
                   <desc>indicates whether the end of a verse line is marked by enjambement.</desc>
                   <datatype>
-                    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"
-                    />
+		    <dataRef key="teidata.enumerated"/>
                   </datatype>
                   <valList type="open">
                     <valItem ident="no">
@@ -1882,21 +1879,21 @@ head =
               </attList>
             </classSpec>
           </egXML> produces <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <define xmlns="http://relaxng.org/ns/structure/1.0" name="att.enjamb.attributes">
-              <ref name="att.enjamb.attribute.enjamb"/>
-              <empty/>
-            </define>
-            <define xmlns="http://relaxng.org/ns/structure/1.0" name="att.enjamb.attribute.enjamb">
-              <optional>
-                <attribute name="enjamb">
+            <rng:define xmlns:rng="http://relaxng.org/ns/structure/1.0" name="att.enjamb.attributes">
+              <rng:ref name="att.enjamb.attribute.enjamb"/>
+              <rng:empty/>
+            </rng:define>
+            <rng:define xmlns:rng="http://relaxng.org/ns/structure/1.0" name="att.enjamb.attribute.enjamb">
+              <rng:optional>
+                <rng:attribute name="enjamb">
                   <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                     >(enjambement) indicates whether the end of a verse line is marked by
                     enjambement. Sample values include: 1] no; 2] yes; 3] weak; 4]
                     strong</a:documentation>
-                  <ref name="data.enumerated"/>
-                </attribute>
-              </optional>
-            </define>
+		    <rng:ref name="teidata.enumerated"/>
+                </rng:attribute>
+              </rng:optional>
+            </rng:define>
           </egXML> Since the processor may have expanded the attribute classes already, separate
           patterns are generated for each attribute in the class as well as one for the class
           itself. This allows an element to refer directly to a member of a class. Notice that the

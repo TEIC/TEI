@@ -4,7 +4,7 @@
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title>An Introduction to TEI Simple</title>
+        <title>An Introduction to TEI simplePrint</title>
       </titleStmt>
       <publicationStmt>
         <p>For distribution from TEI </p>
@@ -75,6 +75,7 @@
       </tagsDecl>
     </encodingDesc>
     <revisionDesc>
+      <change when="2016-11-17">Implement name change finally agreed by Council</change>
       <change when="2016-10-26">Remove authority,sponsor,funder,principal; unicodeName
         localName; add discussion of charDecl</change>
       <change when="2016-10-12">More last minute changes to verbiage; checking examples for
@@ -99,14 +100,14 @@
   <text>
     <front>
       <head>Preface</head>
-      <p>This document is the formal specification for TEI Simple, an entry-level customization of
+      <p>This document is the formal specification for TEI simplePrint, an entry-level customization of
         the Text Encoding Initiative (TEI) Guidelines, intended to be generally useful to a large
         variety of encoders attempting to cope with the standardized representation of a variety of
         documents in digital form.</p>
       <p>Like every other TEI customization, TEI Simple was designed for use with a particular type
         of material. If the material you are planning to encode matches the following criteria, then
-        TEI Simple is for you. If it does not, it may not be. <list>
-          <item>You are encoding print material, rather than manuscript : Simple provides no way of
+        TEI simplePrint is for you. If it does not, it may not be. <list>
+          <item>You are encoding print material, rather than manuscript: Simple provides no way of
             encoding manuscript features such as correction, deletion, or scribal variation</item>
           <item>You are encoding material from the Early Modern period (i.e., up to the end of the
             nineteenth century): some of the features for which Simple provides encodings are rarely
@@ -130,7 +131,7 @@
         assume some knowledge of XML (the encoding language used by the TEI), and of the way it is
         used by the TEI. Further information on both these topics are available from many places,
         not least the TEI's own web site at <ptr target="http://www.tei-c.org"/>.</p>
-      <p>The TEI Simple schema was first elaborated as a part of a project funded by the Mellon
+      <p>The TEI simplePrint schema was first elaborated as a part of a project funded by the Mellon
         Foundation (2012-2014). The project sought to define a new <soCalled>highly-constrained and
           prescriptive subset</soCalled> of the Text Encoding Initiative (TEI) Guidelines suited to
         the representation of early modern print materials, a formally-defined set of processing
@@ -140,13 +141,13 @@
         large-scale literary archives, notably those produced by the Text Creation Partnership.
         Practice of other comparable archives such as the German Text Archive was also taken into
         account.</p>
-      <p>The most distinctive feature of TEI Simple is its use of the TEI Processing Model, which
+      <p>The most distinctive feature of TEI simplePrint is its use of the TEI Processing Model, which
         provides explicit and recommended options for the display or processing of every textual
-        element. Programmers developing systems to handle texts encoded with TEI Simple do not have
+        element. Programmers developing systems to handle texts encoded with TEI simplePrint do not have
         to look beyond this when building stylesheets or other components. This greatly reduces the
         complexity of developing applications that will work reliably and consistently for many
         users and across large corpora of documents.</p>
-      <p>The TEI Simple schema and the TEI Processing Model were first defined by a working group
+      <p>The TEI simplePrint schema and the TEI Processing Model were first defined by a working group
         led by Martin Mueller (Northwestern University) and Sebastian Rahtz (Oxford University).
         Major contributions to the project were made by Magdalena Turska (Oxford University), James
         Cummings (Oxford University), and Brian Pytlik Zillig. The changes to the TEI scheme needed
@@ -249,7 +250,7 @@ live without God in the world, and only mind earthly things.
               returns have been introduced at the end of each line. Consequently, if the size of
               type used to display the text changes, reformatting will be problematic.</item>
           </list></p>
-        <p>We now present the same passage, as it might be encoded in TEI Simple. As we shall see,
+        <p>We now present the same passage, as it might be encoded in TEI simplePrint. As we shall see,
           there are many ways in which this encoding could be extended, but as a minimum, the TEI
           approach allows us to represent the following distinctions in a standardized way: <list>
             <item>Paragraph and chapter divisions are now marked explicitly by means of tags rather
@@ -366,7 +367,7 @@ live without God in the world, and only mind earthly things.
           proposes a view of the TEI Guidelines. This document defines and documents that view. </p>
       </div>
       <div xml:id="Simple-struc">
-        <head>The Structure of a TEI Simple Document</head>
+        <head>The Structure of a TEI simplePrint Document</head>
         <p>A TEI-conformant text contains (a) a <term>TEI header</term> (marked up as a
             <gi>teiHeader</gi> element) and (b) one or more representations of a text. These
           representations may be of three kinds: a transcribed text, marked up as a <gi>text</gi>
@@ -385,7 +386,7 @@ live without God in the world, and only mind earthly things.
             <gi>text</gi> element, though we describe one way of using the <gi>facsimile</gi>
           element in combination with it or alone in section <ptr target="#Simple-fax"/>. We do not
           consider the <gi>sourceDoc</gi> element further, since it is mainly used in very
-          specialised applications for which TEI Simple would not be appropriate. </p>
+          specialised applications for which TEI simplePrint would not be appropriate. </p>
         <p>A text may be <term>unitary</term> (a single work) or <term>composite</term> (a
           collection of single works, such as an anthology). In either case, the text may have
           optional <term>front</term> or <term>back</term> matter such as title pages, prefaces,
@@ -411,7 +412,7 @@ live without God in the world, and only mind earthly things.
           cases an example of how they are used. Throughout the text, element names are linked to
           their detailed reference documentation, as given in the TEI Guidelines. Note that most of
           the examples provided by the reference documentation, and all of the links, are not
-          specific to TEI Simple. </p>
+          specific to TEI simplePrint. </p>
         <p>For example, here are the elements discussed so far: <specList>
             <specDesc key="TEI"/>
             <specDesc key="teiHeader"/>
@@ -441,7 +442,7 @@ live without God in the world, and only mind earthly things.
           <p>The <att>type</att> attribute on the <gi>div</gi> element may be used to supply a
             conventional name for this category of text division in order to distinguish them.
             Typical values might be <val>book</val>, <val>chapter</val>, <val>section</val>,
-              <val>part</val>, <val>poem</val>, <val>song</val>, etc. TEI Simple does not constrain
+              <val>part</val>, <val>poem</val>, <val>song</val>, etc. TEI simplePrint does not constrain
             the range of values that may be used here. </p>
           <p>A <gi>div</gi> element may itself contain further, nested, <gi>div</gi>s, thus
             mimicking the traditional structure of a book, which can be decomposed hierarchically
@@ -472,7 +473,7 @@ live without God in the world, and only mind earthly things.
           <p>These four attributes, <att>xml:id</att>, <att>n</att>, <att>xml:lang</att>, and
               <att>rendition</att> are so widely useful that they are allowed on any element in any
             TEI schema: they are called <term>global attributes</term>. Other attributes defined in
-            the TEI Simple schema are discussed in section <ptr target="#xatts"/>.</p>
+            the TEI simplePrint schema are discussed in section <ptr target="#xatts"/>.</p>
           <p>As noted above, the value of every <att>xml:id</att> attribute must be unique within a
             document. One simple way of ensuring this is to make it reflect the hierarchic structure
             of the document. For example, Smith's <title>Wealth of Nations</title> as first
@@ -901,7 +902,7 @@ live without God in the world, and only mind earthly things.
               different features within a text, of which the most frequent is quotation, though many
               other features are possible. The full TEI Guidelines provide additional elements such
               as <gi>mentioned</gi> or <gi>said</gi> to distinguish some of these features, but
-              these more specialised elements are not included in TEI Simple. In TEI Simple however,
+              these more specialised elements are not included in TEI simplePrint. In TEI Simple however,
               we use the <gi>quote</gi> element for quotation only, and the <gi>q</gi> element for
               all other material found within quotation marks in the text.<specList>
                 <specDesc key="q"/>
@@ -1180,7 +1181,7 @@ live without God in the world, and only mind earthly things.
           <div xml:id="xatts">
             <head>Special Kinds of Linking</head>
             <p>The following special purpose <term>linking</term> attributes are defined for every
-              element in the TEI Simple schema: <list type="gloss">
+              element in the TEI simplePrint schema: <list type="gloss">
                 <label><att>ana</att></label>
                 <item>links an element with its interpretation.</item>
                 <label><att>corresp</att></label>
@@ -1439,12 +1440,12 @@ live without God in the world, and only mind earthly things.
             </egXML>
           </p>
           <p>The elements <gi>expan</gi> and <gi>abbr</gi> should contain a full word, or the
-            abbreviated form of a full word respectively. If it is required to tag smaller
+            abbreviated form of a full word respectively. <!--If it is required to tag smaller
             components of an abbreviated word, the following elements are also available in TEI
             Simple: <specList>
               <specDesc key="am"/>
               <specDesc key="ex"/>
-            </specList> For a fuller discussion of abbreviations and the intricacies of representing
+            </specList>--> For a fuller discussion of abbreviations and the intricacies of representing
             them consult the section on <ref
               target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/PH.html#PHAB">Abbreviation
               and Expansion</ref> in the TEI Guidelines. </p>
@@ -1547,7 +1548,7 @@ live without God in the world, and only mind earthly things.
               <email>lou.burnard@gmail.com</email>
           </egXML>
           <p>Note in this example that characters which have a syntactic function in XML (such as
-            the ampersand or the angle bracket) must be represented within a TEI Simple document by
+            the ampersand or the angle bracket) must be represented within a TEI simplePrint document by
             means of an entity reference such as <code>&amp;lt;</code> or <code>&amp;amp;</code>. </p>
           <p>The element <gi>ref</gi> discussed in section <ptr target="#Simple-ptrs"/> should be
             used to represent a coded reference such as a link given as a URL within a text, either
@@ -1804,7 +1805,7 @@ live without God in the world, and only mind earthly things.
       <div xml:id="Simple-tables">
         <head>Tables</head>
         <p>The following elements are provided for the description of tabular matter, commonly found
-          in many kinds of narrative text. Note that TEI Simple provides no sophisticated ways of
+          in many kinds of narrative text. Note that TEI simplePrint provides no sophisticated ways of
           describing the detailed layout of a table beyond its organization into rows and columns.<specList>
             <specDesc key="table"/>
             <specDesc key="row"/>
@@ -1964,7 +1965,7 @@ live without God in the world, and only mind earthly things.
               <specDesc key="c"/>
               <specDesc key="pc"/>
             </specList></p>
-          <p>For example, the output from a part of speech tagger might be recorded in TEI Simple as
+          <p>For example, the output from a part of speech tagger might be recorded in TEI simplePrint as
             follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
               <s n="1">
                 <w ana="#NP0">Marley</w>
@@ -2020,10 +2021,10 @@ live without God in the world, and only mind earthly things.
         <p>Some attributes are available on many elements, though not on all. These attributes are
           defined using a TEI attribute class, a concept which is discussed further in the TEI
           Guidelines. We list here some attribute classes which have been adapted or customized for
-          use in TEI Simple. </p>
+          use in TEI simplePrint. </p>
         <p>The elements <gi>add</gi>, <gi>figure</gi>, <gi>fw</gi>, <gi>label</gi>, <gi>note</gi>
           and <gi>stage</gi> all take the attribute <att>place</att> to indicate whereabouts on the
-          page they appear. In TEI Simple the possible values for this attribute are limited as
+          page they appear. In TEI simplePrint the possible values for this attribute are limited as
           indicated below: <specList>
             <specDesc key="att.placement" atts="place"/>
             <!-- stylesheets currently dont allow me to display valList here -->
@@ -2083,7 +2084,7 @@ live without God in the world, and only mind earthly things.
             <gi>ex</gi>, <gi>expan</gi>, <gi>gap</gi>, <gi>name</gi>, <gi>reg</gi>, <gi>space</gi>,
             <gi>subst</gi>, <gi>supplied</gi>, <gi>time</gi> and <gi>unclear</gi> all use the
           attribute <att>unit</att> to indicate the units in which the size of the feature concerned
-          is expressed. In TEI Simple the possible values for this attribute are limited as
+          is expressed. In TEI simplePrint the possible values for this attribute are limited as
           indicated below: <specList>
             <specDesc key="att.dimensions" atts="unit"/>
             <!-- stylesheets currently dont allow me to display valList here -->
@@ -2400,7 +2401,7 @@ live without God in the world, and only mind earthly things.
           </div>
           <div xml:id="specfronbac">
             <head>Specialized Front and Back Matter</head>
-            <p>TEI Simple also provides elements for some additional components of front or back
+            <p>TEI simplePrint also provides elements for some additional components of front or back
               matter which are characteristic of particular kinds of text, in particular old play
               texts. These often include lists of dramatis personae and notes about the setting of a
               play, for which the following elements are provided: <specList>
@@ -2461,7 +2462,7 @@ live without God in the world, and only mind earthly things.
             <!--<specDesc key="line"/>-->
           </specList>
         </p>
-        <p>As mentioned in section <ptr target="#Simple-figs"/> above, a TEI Simple document may
+        <p>As mentioned in section <ptr target="#Simple-figs"/> above, a TEI simplePrint document may
           reference a set of page images, alone, or in combination with a transcription. For ease of
           management, it is strongly recommended that the <gi>graphic</gi> elements representing
           those page images be grouped together within a <gi>facsimile</gi> element, as in the
@@ -2757,7 +2758,7 @@ live without God in the world, and only mind earthly things.
                 </editorialDecl></egXML>
             </p>
             <p>The full TEI Guidelines provide specialized elements for each of the topics above;
-              these are not however included in TEI Simple.</p>
+              these are not however included in TEI simplePrint.</p>
           </div>
           <div xml:id="hdr-rend">
             <head>Tagging Declaration</head>
@@ -2796,7 +2797,7 @@ live without God in the world, and only mind earthly things.
               rendition value to be associated with several elements: in this example, unless
               otherwise indicated, it is assumed that the content of each <gi>hi</gi> and each
                 <gi>title</gi> element was originally rendered using an italic font. </p>
-            <p>For TEI Simple, a large set of such rendition definitions has been predefined. The
+            <p>For TEI simplePrint, a large set of such rendition definitions has been predefined. The
               encoder is not therefore required to supply any detailed declarations, but can refer
               to the predefined list using the following list: <list type="gloss">
                 <label>simple:allcaps</label>
@@ -3158,25 +3159,25 @@ live without God in the world, and only mind earthly things.
       </div>
       <div xml:id="processingmodel">
         <head>The Simple Processing Model</head>
-        <p>Unlike most other TEI customizations, TEI Simple includes documentation of the intended
+        <p>Unlike most other TEI customizations, TEI simplePrint includes documentation of the intended
           processing associated with the majority of elements. As noted above, the TEI provides
           components such as the <att>rendition</att> attribute to indicate the appearance of
           particular parts of a document in the non-digital source from which it is derived. With
-          TEI Simple, it is also possible to indicate how in general an element should be processed,
+          TEI simplePrint, it is also possible to indicate how in general an element should be processed,
           in particular its intended appearance when processed for display on a screen or on paper.
           This ability derives from a number of capabilities recently added to the TEI architecture
           for the specification of processing, which were developed as part of the project that
-          defined the TEI Simple schema.</p>
+          defined the TEI simplePrint schema.</p>
         <p>The key feature of this <soCalled>Processing Model</soCalled> is a notation that allows
           the encoder to associate each element with one or more categories, which we call its
             <term>behaviour</term>s. In addition, the Processing Model indicates how the element
           should be rendered, possibly differently in differing circumstances, using the W3C
           Cascading Style Sheets (CSS) mentioned above. It is consequently much easier to develop
-          processors for documents conforming to TEI Simple, since the complexity of the task is
+          processors for documents conforming to TEI simplePrint, since the complexity of the task is
           much reduced.</p>
         <p>Twenty-five different behaviours are currently defined by the TEI Processing Model. Their
           names indicate informally the categorization concerned, and should be readily
-          comprehensible for most programmers. The following table indicates the TEI Simple elements
+          comprehensible for most programmers. The following table indicates the TEI simplePrint elements
           associated with each:</p>
         <table>
           <row role="label">
@@ -3329,17 +3330,17 @@ live without God in the world, and only mind earthly things.
           Guidelines, and we do not describe it further here. </p>
       </div>
       <div>
-        <head>The TEI Simple schema</head>
-        <p>Like other TEI customizations, TEI Simple is defined by reference to the TEI Guidelines.
+        <head>The TEI simplePrint schema</head>
+        <p>Like other TEI customizations, TEI simplePrint is defined by reference to the TEI Guidelines.
           The following reference documentation provides formal specifications for each element,
           model class, attribute class, macro and datatype it uses. These concepts are further
           explained in the TEI Guidelines. </p>
         <p>Specifications are provided here for each component which has been modified for inclusion
-          in TEI Simple. Almost every textual element has been modified, if only to include a
+          in TEI simplePrint. Almost every textual element has been modified, if only to include a
           processing model component. Note that the cross references included in these
           specifications are to the section of the full TEI Guidelines where the subject is treated,
           and not to sections of the present document.</p>
-        <schemaSpec ident="teisimple" start="TEI teiCorpus">
+        <schemaSpec ident="teisimpleprint" start="TEI teiCorpus">
           <specGrpRef target="#base"/>
           <specGrpRef target="#header"/>
           <specGrpRef target="#header2"/>
@@ -3351,7 +3352,7 @@ live without God in the world, and only mind earthly things.
         </schemaSpec>
         <div>
           <head>Summary of changes</head>
-          <p>The TEI Simple schema uses the TEI infrastructure and gaiji modules unchanged. </p>
+          <p>The TEI simplePrint schema uses the TEI infrastructure and gaiji modules unchanged. </p>
           <specGrp xml:id="base">
             <moduleRef key="tei"/>
             <moduleRef key="gaiji" include="g charDecl char glyph charName glyphName mapping"/>
@@ -3801,7 +3802,7 @@ live without God in the world, and only mind earthly things.
             <classSpec type="model" ident="model.glossLike" mode="delete"/>
           </specGrp>
           <!-- 
-            These are the 113 textual elements selected for use in TEI Simple texts-->
+            These are the 113 textual elements selected for use in TEI simplePrint texts-->
           <specGrp xmlns="http://www.tei-c.org/ns/1.0"
             xmlns:XSL="http://www.w3.org/1999/XSL/Transform" xml:id="simpleelements">
             <elementRef key="ab"/>
@@ -3810,7 +3811,7 @@ live without God in the world, and only mind earthly things.
             <elementRef key="add"/>
             <elementRef key="address"/>
             <elementRef key="addrLine"/>
-            <elementRef key="am"/>
+            <!--elementRef key="am"/-->
             <elementRef key="anchor"/>
             <elementRef key="argument"/>
             <elementRef key="author"/>
@@ -3843,7 +3844,7 @@ live without God in the world, and only mind earthly things.
             <elementRef key="editor"/>
             <elementRef key="email"/>
             <elementRef key="epigraph"/>
-            <elementRef key="ex"/>
+            <!--elementRef key="ex"/-->
             <elementRef key="expan"/>
             <elementRef key="facsimile"/>
             <elementRef key="figDesc"/>
@@ -3924,7 +3925,7 @@ live without God in the world, and only mind earthly things.
             <elementRef key="zone"/>
 
           </specGrp>
-          <p>The following elements are modified by the TEI Simple specification, mostly by the
+          <p>The following elements are modified by the TEI simplePrint specification, mostly by the
             addition of a processing model, but in other cases by additional constraints on the
             attributes they may have, or the values those attributes may take. Additional examples
             are also provided for some of them. </p>
@@ -3977,6 +3978,18 @@ live without God in the world, and only mind earthly things.
               <model behaviour="block">
                 <outputRendition>margin-bottom: 0.5em;</outputRendition>
               </model>
+              <exemplum xml:lang="en" versionDate="2016-11-18">
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <argument>
+                  <l>With ſighs and tears her love he doth deſire,</l>
+                  <l>Since Cupid hath his ſenſes ſet on fire;</l>
+                  <l>His torment and his pain to her he ſhews,</l>
+                  <l>With all his proteſtations and his vows:</l>
+                  <l>At laſt ſhe yields to grant him ſome relief,</l>
+                  <l>And make him joyful after all his grief.</l>
+                </argument>
+                </egXML>
+              </exemplum>
             </elementSpec>
             <elementSpec ident="author" mode="change">
               <model predicate="ancestor::teiHeader" behaviour="omit"/>
@@ -3985,6 +3998,7 @@ live without God in the world, and only mind earthly things.
             <elementSpec ident="back" mode="change">
               <model behaviour="block"/>
             </elementSpec>
+            
             <elementSpec ident="bibl" mode="change">
               <constraintSpec mode="add" ident="noEmptyBibl" scheme="isoschematron">
                 <constraint>
@@ -3995,7 +4009,51 @@ live without God in the world, and only mind earthly things.
               </constraintSpec>
               <model predicate="parent::listBibl" behaviour="listItem"/>
               <model behaviour="inline"/>
+              <exemplum xml:lang="en" versionDate="2016-11-18">
+                <!-- EEBO-TCP: A17717 -->
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <epigraph>
+                    <bibl>Deut. Chap. 5.</bibl>
+                    <q>11 Thou ſhalt not take the name of the Lord thy God in vaine,
+                      for the Lord will not hold him guiltleſſe which ſhall take his
+                      name in vaine.</q>
+                  </epigraph>
+                </egXML>
+              </exemplum>
             </elementSpec>
+            
+            <elementSpec ident="biblFull" mode="change">
+              <exemplum xml:lang="en" versionDate="2016-11-18">
+                <!-- EEBO-TCP: B02347 -->
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <sourceDesc>
+                    <biblFull>
+                      <titleStmt>
+                        <title>Buxom Joan of Lymas's love to a jolly sailer: or, The maiden's choice:
+                          being love for love again. To an excellent new play-house tune.</title>
+                        <author>Congreve, William, 1670-1729.</author>
+                      </titleStmt>
+                      <extent>1 sheet ([1] p.) : music. </extent>
+                      <publicationStmt>
+                        <publisher>printed for P[hilip]. Brooksby, at the Golden-ball, in
+                          Pye-corner.,</publisher>
+                        <pubPlace>London: :</pubPlace>
+                        <date>[between 1693-1695]</date>
+                      </publicationStmt>
+                      <notesStmt>
+                        <note>Attributed to William Congreve by Wing.</note>
+                        <note>Date of publication and publisher's name from Wing.</note>
+                        <note>Verse: "A soldier and a sailer ..."</note>
+                        <note>Printed in two columns.</note>
+                        <note>Reproduction of original in the British Library.</note>
+                      </notesStmt>
+                    </biblFull>
+                  </sourceDesc>
+                </egXML>
+              </exemplum>
+              
+            </elementSpec>
+            
             <elementSpec ident="biblScope" mode="change">
               <model behaviour="inline"/>
             </elementSpec>
@@ -4171,6 +4229,65 @@ live without God in the world, and only mind earthly things.
               <model predicate="ancestor::teiHeader" behaviour="omit"/>
               <model behaviour="inline"/>
             </elementSpec>
+            
+            <elementSpec ident="editorialDecl" mode="change">
+              <exemplum xml:lang="en" versionDate="2016-11-18">
+                <!-- Duplicate text in EEBO TCP Files -->
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <encodingDesc>
+                    <editorialDecl>
+                      <p>EEBO-TCP is a partnership between the Universities of Michigan and Oxford and the
+                        publisher ProQuest to create accurately transcribed and encoded texts based on the
+                        image sets published by ProQuest via their Early English Books Online (EEBO) database
+                        (http://eebo.chadwyck.com). The general aim of EEBO-TCP is to encode one copy
+                        (usually the first edition) of every monographic English-language title published
+                        between 1473 and 1700 available in EEBO.</p>
+                      <p>EEBO-TCP aimed to produce large quantities of textual data within the usual project
+                        restraints of time and funding, and therefore chose to create diplomatic
+                        transcriptions (as opposed to critical editions) with light-touch, mainly structural
+                        encoding based on the Text Encoding Initiative (http://www.tei-c.org).</p>
+                      <p>The EEBO-TCP project was divided into two phases. The 25,363 texts created during
+                        Phase 1 of the project have been released into the public domain as of 1 January
+                        2015. Anyone can now take and use these texts for their own purposes, but we
+                        respectfully request that due credit and attribution is given to their original
+                        source.</p>
+                      <p>Users should be aware of the process of creating the TCP texts, and therefore of any
+                        assumptions that can be made about the data.</p>
+                      <p>Text selection was based on the New Cambridge Bibliography of English Literature
+                        (NCBEL). If an author (or for an anonymous work, the title) appears in NCBEL, then
+                        their works are eligible for inclusion. Selection was intended to range over a wide
+                        variety of subject areas, to reflect the true nature of the print record of the
+                        period. In general, first editions of a works in English were prioritized, although
+                        there are a number of works in other languages, notably Latin and Welsh, included and
+                        sometimes a second or later edition of a work was chosen if there was a compelling
+                        reason to do so.</p>
+                      <p>Image sets were sent to external keying companies for transcription and basic
+                        encoding. Quality assurance was then carried out by editorial teams in Oxford and
+                        Michigan. 5% (or 5 pages, whichever is the greater) of each text was proofread for
+                        accuracy and those which did not meet QA standards were returned to the keyers to be
+                        redone. After proofreading, the encoding was enhanced and/or corrected and characters
+                        marked as illegible were corrected where possible up to a limit of 100 instances per
+                        text. Any remaining illegibles were encoded as &lt;gap&gt;s. Understanding these
+                        processes should make clear that, while the overall quality of TCP data is very good,
+                        some errors will remain and some readable characters will be marked as illegible.
+                        Users should bear in mind that in all likelihood such instances will never have been
+                        looked at by a TCP editor.</p>
+                      <p>The texts were encoded and linked to page images in accordance with level 4 of the
+                        TEI in Libraries guidelines.</p>
+                      <p>Copies of the texts have been issued variously as SGML (TCP schema; ASCII text with
+                        mnemonic sdata character entities); displayable XML (TCP schema; characters
+                        represented either as UTF-8 Unicode or text strings within braces); or lossless XML
+                        (TEI P5, characters represented either as UTF-8 Unicode or TEI g elements).</p>
+                      <p>Keying and markup guidelines are available at the <ref
+                        target="http://www.textcreationpartnership.org/docs/.">Text Creation Partnership
+                        web site</ref>.</p>
+                    </editorialDecl>
+                  </encodingDesc>
+                 </egXML>
+               </exemplum>
+            </elementSpec>
+            
+            
             <elementSpec ident="email" mode="change">
               <model behaviour="inline">
                 <outputRendition>font-family:monospace</outputRendition>
@@ -4178,6 +4295,17 @@ live without God in the world, and only mind earthly things.
             </elementSpec>
             <elementSpec ident="epigraph" mode="change">
               <model behaviour="block"/>
+              <exemplum xml:lang="en" versionDate="2016-11-18">
+                <!-- EEBO-TCP: A17717 -->
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <epigraph>
+                    <bibl>Deut. Chap. 5.</bibl>
+                    <q>11 Thou ſhalt not take the name of the Lord thy God in vaine,
+                      for the Lord will not hold him guiltleſſe which ſhall take his
+                      name in vaine.</q>
+                  </epigraph>
+                </egXML>
+              </exemplum>
             </elementSpec>
             <elementSpec ident="ex" mode="change">
               <model behaviour="inline"/>
@@ -4303,11 +4431,26 @@ live without God in the world, and only mind earthly things.
             <elementSpec ident="item" mode="change">
               <model behaviour="listItem"/>
             </elementSpec>
+            
             <elementSpec ident="l" mode="change">
               <model behaviour="block" useSourceRendition="true">
                 <outputRendition> margin-left: 1em; </outputRendition>
               </model>
+              <exemplum xml:lang="en" versionDate="2016-11-18">
+                <!-- EEBO-TCP: A57257 -->
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <argument>
+                    <l>With ſighs and tears her love he doth deſire,</l>
+                    <l>Since Cupid hath his ſenſes ſet on fire;</l>
+                    <l>His torment and his pain to her he ſhews,</l>
+                    <l>With all his proteſtations and his vows:</l>
+                    <l>At laſt ſhe yields to grant him ſome relief,</l>
+                    <l>And make him joyful after all his grief.</l>
+                  </argument>
+                 </egXML>
+              </exemplum>
             </elementSpec>
+            
             <elementSpec ident="label" mode="change">
               <model behaviour="inline"/>
             </elementSpec>
@@ -4389,6 +4532,32 @@ live without God in the world, and only mind earthly things.
                 <outputRendition>text-align: justify;</outputRendition>
               </model>
             </elementSpec>
+            <elementSpec ident="particDesc" mode="change">
+                <exemplum xml:lang="en" versionDate="2016-11-14">
+                    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <particDesc>
+                            <listPerson>
+                                <person xml:id="Trinder" sex="m">
+                                    <p>
+                                        <name type="surname">Trinder</name>
+                                        <name type="forename">William</name>
+                                        <name type="forename">Martin</name>
+                                    </p>
+                                </person>
+                                <person xml:id="Leland" sex="m">
+                                    <p>
+                                        <name type="surname">Leland</name>
+                                        <name type="forename">Thomas</name>
+                                    </p>
+                                </person>
+                            </listPerson>
+                        </particDesc>
+                    </egXML>
+                </exemplum>
+                <remarks xml:lang="en" versionDate="2016-11-15">
+                    <p />
+                </remarks>
+            </elementSpec>
             <elementSpec ident="pb" mode="change">
               <constraintSpec ident="pbposition" scheme="isoschematron">
                 <constraint>
@@ -4411,8 +4580,91 @@ live without God in the world, and only mind earthly things.
             <elementSpec ident="pc" mode="change">
               <model behaviour="inline"/>
             </elementSpec>
+            <elementSpec ident="person" mode="change">
+                <exemplum xml:lang="en" versionDate="2016-11-14">
+                    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <person sex="1">
+                            <p>William Shakespeare, born in Stratford-upon-Avon, 26 April 1564, died in Stratford-upon-Avon, 23 April 1616, English playwright and poet</p>
+                        </person>
+                    </egXML>
+                </exemplum>
+                <exemplum xml:lang="en" versionDate="2016-11-14">
+                    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <person xml:id="Stevenson" sex="m" role="writer">
+                            <p>
+                                <name type="surname">Stevenson</name>
+                                <name type="forename">Robert</name>
+                                <name type="forename">Louis</name>
+                            </p>
+                        </person>
+                    </egXML>
+                </exemplum>
+                <remarks xml:lang="en" versionDate="2016-11-15">
+                    <p />
+                </remarks>
+            </elementSpec>
+            <elementSpec ident="place" mode="change">
+                <exemplum xml:lang="en" versionDate="2016-11-14">
+                    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <place xml:id="Hereford">
+                            <p>
+                                <name type="place">Hereford</name>
+                                <name type="country">England</name>
+                            </p>
+                        </place>
+                    </egXML>
+                </exemplum>
+                <exemplum xml:lang="en" versionDate="2016-11-14">
+                    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <place xml:id="Lithuania">
+                            <p>
+                                <name type="country">Lithuania</name>
+                                <name type="country" xml:lang="lt">Lietuva</name>
+                            </p>
+                            <place xml:id="Vilnius">
+                                <p>
+                                    <name>Vilnius</name>
+                                </p>
+                            </place>
+                            <place xml:id="Kaunas">
+                                 <p>
+                                    <name>Kaunas</name>
+                                 </p>
+                            </place>
+                        </place>
+                    </egXML>
+                </exemplum>
+            </elementSpec>  
             <elementSpec ident="postscript" mode="change">
               <model behaviour="block"/>
+            </elementSpec>
+            <elementSpec ident="profileDesc" mode="change">
+                <exemplum xml:lang="en" versionDate="2016-11-14">
+                    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <profileDesc>
+                            <creation>
+                                <date notAfter="1623"/>
+                            </creation>
+                            <langUsage>
+                                <language ident="eng">English</language>
+                            </langUsage>
+                            <textClass>
+                                <keywords scheme="#LCSH">
+                                    <term type="genre">Plays -- England -- 16th century</term>
+                                    <term type="genre">Plays -- England -- 17th century</term>
+                                    <term type="genre">Comedies -- England -- 16th century</term>
+                                    <term type="genre">Comedies -- England -- 17th century</term>
+                                    <term type="genre">Tragedies -- England -- 16th century</term>
+                                    <term type="genre">Tragedies -- England -- 17th century</term>
+                                </keywords>
+                            </textClass>
+                        </profileDesc>
+                    </egXML>
+                </exemplum>
+                <remarks xml:lang="en" versionDate="2016-11-15">
+                    <p>Although the content model permits it, it is rarely meaningful to supply multiple 
+                        occurrences for any of the child elements of  <gi>profileDesc</gi> unless these are documenting multiple texts.</p>
+                </remarks>
             </elementSpec>
             <elementSpec ident="publisher" mode="change">
               <model predicate="ancestor::teiHeader" behaviour="omit">
@@ -4465,6 +4717,40 @@ live without God in the world, and only mind earthly things.
             </elementSpec>
             <elementSpec ident="relatedItem" mode="change">
               <model behaviour="inline"/>
+                <exemplum xml:lang="en" versionDate="2016-11-14">
+                  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                      <bibl xml:id="Shirley1953">
+                          <author>Shirley, James</author>
+                          <title type="main">The gentlemen of Venice</title>
+                          <pubPlace>New York</pubPlace>
+                          <publisher>Readex Microprint</publisher>
+                          <date>1953</date>
+                          <extent>1 microprint card, 23 x 15 cm.</extent>
+                          <relatedItem type="otherForm">
+                              <bibl>
+                                  <author>Shirley, James</author>
+                                  <title type="main">The gentlemen of Venicd</title>
+                                  <title type="sub">a tragi-comedie presented at the private house in Salisbury
+                                    Court by Her Majesties servants</title>
+                                  <pubPlace>London</pubPlace>
+                                  <publisher>H. Moseley</publisher>
+                                  <date>1655</date>
+                                  <extent>78 p.</extent>
+                              </bibl>
+                          </relatedItem>
+                      </bibl>
+                  </egXML>
+              </exemplum>
+              <exemplum xml:lang="en" versionDate="2016-11-14">
+                  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                      <relatedItem type="otherForm" target="http://www.example.com/bibliography.xml#Shirley1655" />
+                  </egXML>
+              </exemplum>
+              <remarks versionDate="2016-11-14" xml:lang="en">
+                    <p>If the <att>target</att> attribute is used to reference
+                        the related bibliographic item, the element must be
+                        empty.</p>
+                </remarks>
             </elementSpec>
             <elementSpec ident="rhyme" mode="change">
               <model behaviour="inline"/>
@@ -4514,6 +4800,13 @@ live without God in the world, and only mind earthly things.
             <elementSpec ident="seg" mode="change">
               <model behaviour="inline" useSourceRendition="true"/>
             </elementSpec>
+            <elementSpec ident="set" mode="change">
+                <remarks versionDate="2016-11-14" xml:lang="en">
+                    <p rend="dataDesc">Contains paragraphs or phrase level tags.</p>
+                    <p>This element should not be used outside the front or back matter; for similar contextual descriptions
+                    within the body of the text, use the <gi>stage</gi> element.</p>
+                </remarks>
+            </elementSpec>  
             <elementSpec ident="sic" mode="change">
               <model predicate="parent::choice and count(parent::*/*) gt 1" behaviour="inline"/>
               <model behaviour="inline">
@@ -4539,6 +4832,43 @@ live without God in the world, and only mind earthly things.
               <model behaviour="block">
                 <outputRendition> font-style:italic; </outputRendition>
               </model>
+                <exemplum xml:lang="en" versionDate="2016-11-14">
+                  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                      <div type="Act" n="I">
+                          <head>ACT I</head>
+                          <div type="Scene" n="1">
+                              <head>SCENE I</head>
+                              <stage rendition="#italic">Enter Barnardo and Francisco, two Sentinels, at
+                                  several doors</stage>
+                              <sp>
+                                  <speaker>Barn</speaker>
+                                  <l part="Y">Who's there?</l>
+                              </sp>
+                              <sp>
+                                  <speaker>Fran</speaker>
+                                  <l>Nay, answer me. Stand and unfold yourself.</l>
+                              </sp>
+                              <sp>
+                                  <speaker>Barn</speaker>
+                                  <l part="I">Long live the King!</l>
+                              </sp>
+                              <sp>
+                                  <speaker>Fran</speaker>
+                                  <l part="M">Barnardo?</l>
+                              </sp>
+                              <sp>
+                                  <speaker>Barn</speaker>
+                                  <l part="F">He.</l>
+                              </sp>
+                              <sp>
+                                  <speaker>Fran</speaker>
+                                  <l>You come most carefully upon your hour.</l>
+                              </sp>
+                              <!-- ... -->
+                          </div>
+                      </div>
+                  </egXML>
+              </exemplum>
             </elementSpec>
             <elementSpec ident="spGrp" mode="change">
               <model behaviour="block"/>
@@ -4575,6 +4905,70 @@ live without God in the world, and only mind earthly things.
                 <outputRendition> font-size: smaller; background-color: #F0F0F0; </outputRendition>
               </model>
             </elementSpec>
+            <elementSpec ident="taxonomy" mode="change">
+                <exemplum xml:lang="en" versionDate="2016-11-14">
+                    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <classDecl>
+                            <taxonomy xml:id="OTASH">
+                                <bibl>University of Oxford Text Archive Subject Headings</bibl>
+                            </taxonomy>
+                        </classDecl>
+                    </egXML>
+                </exemplum>
+                <exemplum xml:lang="en" versionDate="2016-11-14">
+                    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <taxonomy>
+                            <category xml:id="literature">
+                                <catDesc>Literature</catDesc>
+                                <category xml:id="poetry">
+                                    <catDesc>Poetry</catDesc>
+                                    <category xml:id="sonnet">
+                                        <catDesc>Sonnet</catDesc>
+                                        <category xml:id="shakesSonnet">
+                                            <catDesc>Shakespearean Sonnet</catDesc>
+                                        </category>
+                                        <category xml:id="petraSonnet">
+                                            <catDesc>Petrarchan Sonnet</catDesc>
+                                        </category>
+                                    </category>
+                                    <category xml:id="haiku">
+                                        <catDesc>Haiku</catDesc>
+                                    </category>
+                                </category>
+                                <category xml:id="drama">
+                                    <catDesc>Drama</catDesc>
+                                </category>
+                            </category>
+                            <category xml:id="meter">
+                                <catDesc>Metrical Categories</catDesc>
+                                <category xml:id="feet">
+                                    <catDesc>Metrical Feet</catDesc>
+                                    <category xml:id="iambic">
+                                        <catDesc>Iambic</catDesc>
+                                    </category>
+                                    <category xml:id="trochaic">
+                                        <catDesc>trochaic</catDesc>
+                                    </category>
+                                </category>
+                                <category xml:id="feetNumber">
+                                    <catDesc>Number of feet</catDesc>
+                                    <category xml:id="pentameter">
+                                        <catDesc>Pentameter</catDesc>
+                                    </category>
+                                    <category xml:id="tetrameter">
+                                        <catDesc>Tetrameter</catDesc>
+                                    </category>
+                                </category>
+                            </category>
+                        </taxonomy>
+                        <!-- elsewhere in document -->
+                        <lg ana="#shakesSonnet #iambic #pentameter">
+                            <l>Shall I compare thee to a summer's day</l>
+                            <!-- ... -->
+                        </lg>
+                    </egXML>
+                </exemplum>
+            </elementSpec>  
             <elementSpec ident="fileDesc" mode="change">
               <model behaviour="title">
                 <param name="content" value="titleStmt"/>
@@ -4595,6 +4989,99 @@ live without God in the world, and only mind earthly things.
               </attList>
               <!-- remove deprecated attribute -->
               <model behaviour="metadata"/>
+                <exemplum xml:lang="en" versionDate="2016-11-14">
+                  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                      <teiHeader>
+                          <fileDesc>
+                              <titleStmt>
+                                  <title>THE TEMPEST.</title>
+                                  <author>Shakespeare, William, 1564-1616</author>
+                              </titleStmt>
+                              <publicationStmt>
+                                  <distributor>
+                                      <name>University of Oxford Text Archive</name>
+                                      <address>
+                                          <addrLine>Oxford University Computing Services</addrLine>
+                                          <addrLine>13 Banbury Road</addrLine>
+                                          <addrLine>Oxford</addrLine>
+                                          <addrLine>OX2 6NN</addrLine>
+                                      </address>
+                                      <email>ota@oucs.ox.ac.uk</email>
+                                  </distributor>
+                                  <idno type="ota">http://ota.ox.ac.uk/id/5725</idno>
+                                  <idno type="isbn10">1106027248</idno>
+                                  <idno type="isbn13">9781106027245</idno>
+                                  <availability status="free">
+                                      <licence target="http://creativecommons.org/licenses/by-sa/3.0/">
+                                          Distributed by the University of Oxford under a Creative Commons
+                                          Attribution-ShareAlike 3.0 Unported License
+                                      </licence>
+                                  </availability>
+                              </publicationStmt>
+                              <sourceDesc>
+                                  <bibl>Revised version of  <relatedItem type="older" target="http://ota.ox.ac.uk/id/0119"/>
+                                  </bibl>
+                                  <bibl>The texts were originally prepared by Trevor
+                                      Howard-Hill for use in his single volume concordances to
+                                      Shakespeare (OUP, 1969f). They have since been reformatted
+                                      to modern standards and carefully proofread by staff of
+                                      Oxford University Press' Shakespeare Department for use in
+                                      the new "Old Spelling" Oxford Shakespeare, under the
+                                      general editorship of Dr Stanley Wells: <title>The complete works
+                                          / William Shakespeare</title>; general editors, Stanley
+                                      Wells and Gary Taylor ; editors Stanley Wells ... [et al.]
+                                      ; with introductions by Stanley Wells. -- Oxford :
+                                      Clarendon Press, 1986. -- (Oxford Shakespeare). -- ISBN
+                                      0-19-812926-2</bibl>
+                                  <biblFull>
+                                      <titleStmt>
+                                          <title>THE TEMPEST.</title>
+                                          <author>Shakespeare, William, 1564-1616</author>
+                                          <editor role="editor">Lee, Sidney, Sir, 1859-1926</editor>
+                                      </titleStmt>
+                                      <extent>xxxv, 908 p. : facsims. ; 39 cm.</extent>
+                                      <publicationStmt>
+                                          <publisher>Clarendon Press</publisher>
+                                          <pubPlace>Oxford</pubPlace>
+                                          <date>1902</date>
+                                      </publicationStmt>
+                                  </biblFull>
+                              </sourceDesc>
+                          </fileDesc>
+                          <encodingDesc>
+                              <classDecl>
+                                  <taxonomy xml:id="OTASH">
+                                      <bibl>University of Oxford Text Archive Subject Headings</bibl>
+                                  </taxonomy>
+                                  <taxonomy xml:id="LCSH">
+                                      <bibl>Library of Congress Subject Headings</bibl>
+                                  </taxonomy>
+                              </classDecl>
+                          </encodingDesc>
+                          <profileDesc>
+                              <creation>
+                                  <date notAfter="1623"/>
+                              </creation>
+                              <langUsage>
+                                  <language ident="eng">English</language>
+                              </langUsage>
+                              <textClass>
+                                  <keywords scheme="#LCSH">
+                                      <term type="genre">Plays -- England -- 16th century</term>
+                                      <term type="genre">Plays -- England -- 17th century</term>
+                                      <term type="genre">Comedies -- England -- 16th century</term>
+                                      <term type="genre">Comedies -- England -- 17th century</term>
+                                      <term type="genre">Tragedies -- England -- 16th century</term>
+                                      <term type="genre">Tragedies -- England -- 17th century</term>
+                                  </keywords>
+                              </textClass>
+                          </profileDesc>
+                          <revisionDesc>
+                              <change when="2010-08-31">Header normalised</change>
+                          </revisionDesc>
+                      </teiHeader>
+                  </egXML>
+              </exemplum>  
             </elementSpec>
             <elementSpec ident="TEI" mode="change">
               <attList>
