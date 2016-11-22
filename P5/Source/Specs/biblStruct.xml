@@ -33,39 +33,19 @@
   </classes>
   <content>
     <sequence>
-      
-        <elementRef key="analytic" minOccurs="0" maxOccurs="unbounded"/>
-      
+      <elementRef key="analytic" minOccurs="0" maxOccurs="unbounded"/>      
       <sequence minOccurs="1" maxOccurs="unbounded">
         <elementRef key="monogr"/>
-        
-          <elementRef key="series" minOccurs="0" maxOccurs="unbounded"/>
-        
+        <elementRef key="series" minOccurs="0" maxOccurs="unbounded"/>
       </sequence>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.noteLike"/>
-          <elementRef key="idno"/>
-          <!-- we leave idno here for now even though it's deprecated in this
-     place; preference is to use <ptr> or <ref> to supply a URL for the
-     item  (LB 1 oct 12)
- -->
-          <classRef key="model.ptrLike"/>
-          <elementRef key="relatedItem"/>
-          <elementRef key="citedRange"/>
-        </alternate>
-      
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.noteLike"/>
+        <classRef key="model.ptrLike"/>
+        <elementRef key="relatedItem"/>
+        <elementRef key="citedRange"/>
+      </alternate>
     </sequence>
   </content>
-  <constraintSpec scheme="isoschematron" ident="deprecate-altIdentifier-child">
-    <desc>The use of an <gi>idno</gi> element as a direct child of
-    <gi>biblStruct</gi> is deprecated. Rather, <gi>idno</gi> should
-    appear as a child of a <gi>monogr</gi>, <gi>analytic</gi>, or
-    <gi>series</gi>.</desc>
-    <constraint xmlns:sch="http://purl.oclc.org/dsdl/schematron">
-      <sch:report test="child::tei:idno" role="nonfatal">WARNING: use of deprecated method — the use of the idno element as a direct child of the biblStruct element will be removed from the TEI on 2016-09-18</sch:report>
-    </constraint>
-  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <biblStruct>

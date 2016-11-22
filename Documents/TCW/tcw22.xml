@@ -21,6 +21,7 @@
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
+      <change when="2016-09-25" who="mt">Recommendations for issue handling that facilitate preparing the Release Notes.</change>
       <change when="2016-04-02" who="mdh">Beginning edits arising out of the experiences
       releasing 3.0.0. More to come.</change>
       <change when="2016-03-16" who="KSH">Fixed error in git command as just reported on
@@ -142,12 +143,23 @@
         </list>
       </div>
 
+      <div xml:id="issueHandlingGuidelines">
+          <head>Issue Handling Recommendations</head>
+      <list type="unordered">
+        <item>Assign tickets to release milestone</item>
+        <item>Use ticket reference in any commits addressing or fixing the issue</item>
+        <item>At least for the final commit addressing the issue try to prepare the commit message so it can be used for Release Notes</item>
+        <item>Label the issue as Release Note (green label) if it’s important to include the note about it in Release Notes</item>
+      </list>
+      </div>
 
       <div xml:id="releaseSteps">
         <head>Step-by-step instructions</head>
 
         <list type="ordered">
           <head>1-2 weeks before release:</head>
+          <item>Ask one of the Jenkins maintainers (currently Martin Holmes, Peter Stadler, and 
+            James Cummings) to run a link check on the Guidelines and fix broken links in the dev branch</item>
           <item>At least one week before releasing, we enter a review period, during which the only
             changes made to the code to be released should be to fix errors, rather than to add new
             features. A release branch will be created by the release technician, to which ONLY
@@ -158,7 +170,7 @@
             <code>git checkout -b release-X.X.X</code><lb/>
             <code>git push -u origin release-X.X.X</code><lb/> After the release branch has been
             pushed, the release technician should inform the Council list and ask the maintainers of
-            the TEI Jenkins systems (currently Martin Holmes, Peter Stadler, and James Cummings) to
+            the TEI Jenkins systems to
             add a build of the release branch so that commits pushed there are properly tested. </item>
           <item>Pushes to the release branch should be merged back into dev regularly:<lb/>
             <code>git checkout dev</code><lb/>
