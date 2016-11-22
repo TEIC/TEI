@@ -18,16 +18,19 @@ $Id$
   
   <attList org="choice">
     <attDef ident="require">
-      <desc versionDate="2011-09-21" xml:lang="en">supplies a list of namespaces to which the
+      <desc versionDate="2011-09-21" xml:lang="en">supplies a list of namespaces to one of which the
         permitted element must belong.
        </desc>
-      <datatype minOccurs="0" maxOccurs="unbounded">
-<dataRef key="teidata.namespace"/></datatype>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+        <dataRef key="teidata.namespaceOrName"/>
+      </datatype>
     </attDef>
     <attDef ident="except">
       <desc versionDate="2011-09-21" xml:lang="en">supplies a list of namespaces to which the permitted
         element may not belong.</desc>
-      <datatype minOccurs="0" maxOccurs="unbounded"><dataRef key="teidata.namespace"/></datatype>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+        <dataRef key="teidata.namespaceOrName"/>
+      </datatype>
     </attDef>
   </attList>
    
@@ -48,7 +51,7 @@ $Id$
           require="http://www.w3.org/1998/Math/MathML http://www.tei-c.org/ns/Examples/1.0"/>
       </content>
     </egXML>
-    <p>This  <gi>content</gi> element permits one or more  elements which 
+    <p>This  <gi>content</gi> element permits one or more elements which 
       belong either to the MathML namespace or to the TEI examples namespace.</p>
   </exemplum>
   
