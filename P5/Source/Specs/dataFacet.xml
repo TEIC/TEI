@@ -8,7 +8,7 @@
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" ident="dataFacet">
-  <desc versionDate="2010-05-14" xml:lang="en">Restricts the value of the strings used to represent values of a datatype, 
+  <desc versionDate="2016-11-21" xml:lang="en">Restricts the value of the strings used to represent values of a datatype, 
     according to <ref target="#XSD2">XML Schemas: Part 2: Datatypes</ref>. 
  </desc>
   <classes>
@@ -16,9 +16,9 @@
   </classes>
   <content/>
   <attList>
-    <attList org="group">
       <attDef ident="name" usage="req">
-        <desc versionDate="2010-05-14" xml:lang="en">the name of the facet</desc>
+        <desc versionDate="2016-11-21" xml:lang="en">the name of the facet.</desc>
+        <datatype><dataRef key="teidata.word"/></datatype>
         <valList type="closed">
           <valItem ident="length"/>
           <valItem ident="minLength"/>
@@ -35,10 +35,9 @@
         </valList>
       </attDef>
       <attDef ident="value" usage="req">
-        <desc versionDate="2010-05-14" xml:lang="en">the facet value.</desc>
+        <desc versionDate="2016-11-21" xml:lang="en">the facet value.</desc>
         <datatype><dataRef name="string"/></datatype>
       </attDef>
-    </attList>
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -50,21 +49,20 @@
       </datatype>
     </egXML>
   </exemplum>
-    <exemplum xml:lang="en">
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <dataSpec ident="data.percentage">
-          <desc>datatype used for attributes taking an integer value between 0 and 99</desc>     
-          <content>   
-            <dataRef name="nonNegativeInteger">
-              <dataFacet name="maxInclusive" value="99"/>
-              <dataFacet name="minInclusive" value="0"/>
-            </dataRef>
-          </content>    
-        </dataSpec>
-      </egXML>
-    </exemplum>
-    
-  <remarks versionDate="2010-05-14" xml:lang="en">
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <dataSpec ident="data.percentage">
+        <desc>datatype used for attributes taking an integer value between 0 and 99</desc>     
+        <content>   
+          <dataRef name="nonNegativeInteger">
+            <dataFacet name="maxInclusive" value="99"/>
+            <dataFacet name="minInclusive" value="0"/>
+          </dataRef>
+        </content>    
+      </dataSpec>
+    </egXML>
+  </exemplum>
+  <remarks versionDate="2016-11-21" xml:lang="en">
     <p>This element is only allowed when the parent <gi>dataRef</gi> refers with
         <att>name</att> to a datatype from the specification <ref target="#XSD2">XML Schemas: Part 2: Datatypes</ref>. 
     </p>
