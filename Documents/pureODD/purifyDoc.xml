@@ -102,26 +102,26 @@
             <head>Content Model Revision</head>
             <p>In days of yore, (i.e. releases P1 to P3 inclusive) TEI Content Models were expressed
                in the SGML language. The first XML release TEI P4, and all releases of P5 prior to
-               3.0 used the ISO standard RELAXNG language for this purpose. But from the start, a
+               3.0 used the ISO standard RELAX NG language for this purpose. But from the start, a
                design goal of the TEI was to define an encoding scheme independent of any
                implementation metalanguage. The TEI has always used its own
                <soCalled>ODD</soCalled>language to define components which are then processed to
                produce documentation in a variety of formats (HTML, PDF, ePub etc.) and schemas in a
-               number of different languages (RELAXNG, W3C Schema, and XML DTD). At release 3.0 this
+               number of different languages (RELAX NG, W3C Schema, and XML DTD). At release 3.0 this
                principle was extended to the definition of content models, which previously had been
-               expressed using the RELAXNG language, but which are now expressed using some special
+               expressed using the RELAX NG language, but which are now expressed using some special
                purpose TEI elements<note place="end">The authoritative source of information on
                   these is of course chapter 22 of the Guidelines <ref
                      target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/TD.html"
                         ><title>Documentation Elements</title></ref>. In any disagreement between
                   what is stated there and what is suggested here, the former is correct.</note>. </p>
             <p>If your customization changed the content model of any element, it will have done so
-               using expressions in RELAXNG, typically using a <gi>rng:ref</gi> element to provide
+               using expressions in RELAX NG, typically using a <gi>rng:ref</gi> element to provide
                the name of a pattern. For example, suppose your customization defined a new element
                with a content model of <code>macro.phraseSeq</code>. In the <gi>elementSpec</gi>
                defining your new element, there will be a <gi>content</gi> element containing
                something like <code>&lt;rng:ref name="macro.phraseSeq"/></code>. To keep in step
-               with the current TEI P5 release, you need to change this RELAXNG content to its
+               with the current TEI P5 release, you need to change this RELAX NG content to its
                equivalent in the ODD language which is <code>&lt;macroRef
                   key="macro.phraseSeq"/></code>. </p>
             <p>In the ODD language, references to different kinds of object (elements, classes,
@@ -130,17 +130,16 @@
                   <specDesc key="elementRef"/>
                   <specDesc key="classRef"/>
                   <specDesc key="macroRef"/>
-               </specList> -->Hence, a RELAXNG content model in the form <code>&lt;rng:ref
-                  name="x"></code> will become <tag>classRef key="x"/</tag> if <ident>x</ident>
-               names a class, <tag>elementRef key="x"</tag> if it names an element, and
-                  <tag>macroRef key="x"</tag> if it names a macro. </p>
-            <p>Content models can of course be much more complicated. If your RELAXNG model uses an
+               </specList> --> Hence, a RELAX NG content model in the form <code>&lt;rng:ref
+                    name="x"></code> will become <tag>elementRef key="x"</tag> if it names an element, <tag>classRef key="x"/</tag> if <ident>x</ident>
+                names a class, and <tag>macroRef key="x"</tag> if it names a macro. </p>
+            <p>Content models can of course be much more complicated. If your RELAX NG model uses an
                alternation or a sequence of components, you will need to use one of the ODD elements <gi>alternate</gi> and <gi>sequence</gi><!--<specList>
                   <specDesc key="alternate"/>
                   <specDesc key="sequence"/>
-               </specList>--> to wrap them rather than the RELAXNG (semi)equivalents
-                  <tag>rng:choice</tag> and <tag>rng:group</tag> respectively. For example, this
-               RELAXNG model says that a <gi>foo</gi> can contain either a <gi>bar</gi> or a
+               </specList>--> to wrap them rather than the RELAX NG (semi)equivalents
+                  <gi>rng:choice</gi> and <gi>rng:group</gi> respectively. For example, this
+               RELAX NG model says that a <gi>foo</gi> can contain either a <gi>bar</gi> or a
                   <gi>baz</gi>: <egXML xmlns:rng="http://relaxng.org/ns/structure/1.0"
                   xmlns="http://www.tei-c.org/ns/Examples"><rng:choice>
                      <rng:ref name="bar"/><rng:ref name="baz"/></rng:choice></egXML> Its equivalent
@@ -148,10 +147,10 @@
                      <elementRef key="bar"/><elementRef key="baz"/></alternate></egXML>
             </p>
             <p>If some components of your content model are optional or repeatable, you will have
-               used the RELAXNG elements <gi>rng:oneOrMore</gi> or <tag>rng:zeroOrMore</tag>. In ODD
+               used the RELAX NG elements <gi>rng:oneOrMore</gi> or <gi>rng:zeroOrMore</gi>. In ODD
                optionality and repeatability are expressed using attributes <att>minOccurs</att> and
                   <att>maxOccurs</att>, which can be supplied for any of the elements discussed so
-               far. For example, a RELAXNG content model such as <egXML
+               far. For example, a RELAX NG content model such as <egXML
                   xmlns:rng="http://relaxng.org/ns/structure/1.0"
                   xmlns="http://www.tei-c.org/ns/Examples"><rng:oneOrMore><rng:choice>
                         <rng:ref name="bar"/><rng:ref name="baz"
@@ -159,8 +158,8 @@
                   <egXML xmlns="http://www.tei-c.org/ns/Examples"><alternate minOccurs="1"
                      maxOccurs="unbounded">
                      <elementRef key="bar"/><elementRef key="baz"/></alternate></egXML></p>
-            <p>An empty element is indicated in the RELAXNG language by a special pattern called
-                  <code>empty</code>. In the ODD language, however, we indicate that an element has
+            <p>An empty element is indicated in the RELAX NG language by a special pattern called
+                  <gi>rng:empty</gi>. In the ODD language, however, we indicate that an element has
                no content by supplying an empty <gi>content</gi> element in its specification. </p>
             <p>The ODD language also provides a few more special-purpose component elements for
                content models: <!--<specList>
@@ -168,8 +167,8 @@
                   <specDesc key="valList"/>
                   <specDesc key="anyElement"/>
                </specList>--> <gi>textNode</gi><gi>valList</gi> and (probably) <gi>anyElement</gi>. </p>
-            <p>The <gi>textNode</gi> element is provided as a replacement for the built-in RELAXNG
-               pattern <code>text</code>. There are no restrictions on where it may be placed in an
+            <p>The <gi>textNode</gi> element is provided as a replacement for the built-in RELAX NG
+               pattern <gi>rng:text</gi>. There are no restrictions on where it may be placed in an
                ODD content model, although existing schema languages mostly permit it to appear only
                in mixed content models like the following: <egXML
                   xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -178,20 +177,20 @@
                      <textNode/>
                      <elementRef key="foo"/>
                   </alternate></egXML></p>
-            <p>The RELAXNG language allows a number of other components within a content model, some
+            <p>The RELAX NG language allows a number of other components within a content model, some
                of which are difficult to convert, but few of which are likely to appear in a
-               pre-existing TEI ODD. If your ODD used the RELAXNG element <gi>rng:value</gi> to
+               pre-existing TEI ODD. If your ODD used the RELAX NG element <gi>rng:value</gi> to
                specify content explicitly, this must be expressed in an ODD as a <gi>valItem</gi>
-               within a <gi>valList</gi>. If your ODD used the RELAXNG element <gi>rng:element</gi>
+               within a <gi>valList</gi>. If your ODD used the RELAX NG element <gi>rng:element</gi>
                to specify that any element is permitted at this point in a content model, you can do
                something similar with the ODD <gi>anyElement</gi> element. In general, however, the
                presence of any of the following in your old content model will require manual
-               intervention: <code>rng:anyName rng:attribute rng:data rng:element rng:except
-                  rng:name nsName rng:param rng:value</code></p>
+               intervention: <gi>rng:anyName</gi> <gi>rng:attribute</gi> <gi>rng:data</gi> <gi>rng:element</gi> <gi>rng:except</gi>
+                  <gi>rng:name</gi> <gi>rng:nsName</gi> <gi>rng:param</gi> <gi>rng:value</gi></p>
             <p>Here are some example <gi>content</gi> elements taken from the content models of
                existing TEI elements: <table>
                   <row role="label">
-                     <cell>RELAXNG Specification</cell>
+                     <cell>RELAX NG Specification</cell>
                      <cell>ODD equivalent</cell>
                   </row>
                   <row>
@@ -283,13 +282,13 @@
             <head>Attribute values and datatypes</head>
             <p>As noted above, you may wish to change your existing ODD to be more precise in the
                way that attribute values are specified. If you decide to introduce a
-                  <gi>valList</gi> (senmi-closed or closed) to constrain the possible values of an
+                  <gi>valList</gi> (semi-closed or closed) to constrain the possible values of an
                attribute you will also need to change its <gi>datatype</gi> to reference
                   <ident>teidata.enumerated</ident>. </p>
             <p>If the <gi>datatype</gi> element appears in your ODD already, you will need to change
                it to use a <gi>dataRef</gi> element pointing to one of the predefined
                   <ident>teidata</ident> datatype specifications. A set of predefined data
-               specifications using RELAXNG has been retained for compatibility reasons, but these
+               specifications using RELAX NG has been retained for compatibility reasons, but these
                will probably be withdrawn by the end of 2017. </p>
             <p>Proceed as follows: <list>
                   <item>if your existing <gi>datatype</gi> contains something like <code>rng:ref
@@ -310,9 +309,9 @@
                   </item>
                </list></p>
             <p>Here are some example <gi>content</gi> elements taken from the data specifications
-               used by some existing TEI datatypes : <table>
+               used by some existing TEI datatypes: <table>
                   <row role="label">
-                     <cell>RELAXNG Specification</cell>
+                     <cell>RELAX NG Specification</cell>
                      <cell>ODD equivalent</cell>
                   </row>
                   <row>
@@ -391,7 +390,7 @@
             <p>Yes, there is a script or two you can experiment with if you find this all too
                daunting. They were used to transform the whole of the pre-3.0 TEI Guideline
                specifications semi-automatically. They deal with 99% of the situations you are
-               likely to encounter, but they're not guaranteed ! You can find them on Github at <ptr
+               likely to encounter, but they're not guaranteed! You can find them on Github at <ptr
                   target="https://github.com/TEIC/TEI/tree/dev/P5/Scripts"/>: use them in good
                health, but at your own risk.</p>
             <p>Don't hesitate to share your experience, good or bad, on the TEI discussion list, by
