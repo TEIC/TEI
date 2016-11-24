@@ -6,14 +6,14 @@ $Date$
 $Id$
 --><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="keywords">
   <gloss versionDate="2009-04-28" xml:lang="fr">mot clé</gloss>
+  <gloss versionDate="2016-11-24" xml:lang="de">Schlagwörter</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains a list of keywords or phrases identifying the topic or nature of a text.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">contient une liste de mots clés ou d’expressions
     décrivant la nature ou le sujet d’un texte.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">텍스트의 주제 또는 특성을 식별하는 주제어 또는 구의 목록을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含標明文件主題或性質的關鍵詞或字詞列表。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">テキストの話題や性格を特定するキーワードや句のリストを示す．</desc>
-  <desc versionDate="2006-10-18" xml:lang="de">enthält Zusammenstellung von Schlüsselwörtern oder
-    –phrasen zu Art und Thematik des Textes.</desc>
+    <desc versionDate="2016-11-24" xml:lang="de">enthält eine Zusammenstellung von Schlagwörtern oder Phrasen zur Art oder Thematik des Textes.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene una lista de palabras clave o sintagmas que
     identifican la temática o la naturaleza del texto.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una lista delle parole chiave o frasi che
@@ -39,8 +39,8 @@ $Id$
       <desc versionDate="2007-12-20" xml:lang="ko">관련 키워드 집합이 정의된 통제 어휘를 식별하며, 이 정의는 통제 어휘 내에서 수행된다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">標明相關關鍵詞所使用到的詞彙範圍。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該キーワードリストが定義されている統制語彙を示す．</desc>
-      <desc versionDate="2006-10-18" xml:lang="de">gibt das festgesetzte Vokabular an, mit dem die
-        zusammengestellten Schlüsselwörter definiert sind.</desc>
+        <desc versionDate="2016-11-24" xml:lang="de">gibt das kontrollierte Vokabular an, in dem die benutzten Schlagwörter 
+            definiert sind. Dabei kann das <att>scheme</att>-Attribut auf ein <gi>taxonomy</gi>-Element oder eine andere Ressource verweisen.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">identifican el vocabulario con el que se define el
         conjunto de palabras clave referidas.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">identifica il vocabolario controllato all'interno del
@@ -94,6 +94,14 @@ be supplied as a <gi>term</gi> element directly within the
 permitted for backwards compatibility, but is deprecated.</p>
     <p>If no control list exists for the keywords used, then no value
 should be supplied for the <att>scheme</att> attribute.</p>
+  </remarks>
+  <remarks versionDate="2016-11-24" xml:lang="de">
+      <p>Jedes einzelne Schlagwort (zusammengesetzte Themen-Schlagwörter eingeschlossen) 
+          sollte als <gi>term</gi>-Element direkt im <gi>keywords</gi>-Element notiert werden. 
+          Aus Gründen der Rückwärtskompatibilität ist es zwar auch erlaubt, ein <gi>term</gi>-Element 
+          in einem <gi>item</gi>-Element zu notieren, das wiederum Kindelement eines <gi>list</gi>-Elementes ist. 
+          Allerdings ist dieses Vorgehen veraltet und wird daher nicht empfohlen.</p>
+      <p>Wenn keine kontrollierte Liste für die verwendeten Schlagwörter existiert, sollte das <att>scheme</att>-Attribute nicht gesetzt werden.</p>
   </remarks>
   <listRef>
     <ptr target="#HD43"/>
