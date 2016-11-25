@@ -5,16 +5,16 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 --><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="header" ident="change">
+  <gloss versionDate="2016-11-25" xml:lang="de">Änderung</gloss>
   <desc versionDate="2011-10-31" xml:lang="en">documents a change or set of changes made during the production
-  of a source document, or during the revision of an electronic file.</desc>
+    of a source document, or during the revision of an electronic file.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">résume une modification ou une correction apportée à une
     version particulière d’un texte électronique partagé entre plusieurs chercheurs.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">몇몇 연구자들 사이에 공유된 전자 텍스트의 특정 버전에 대한 특정 변경 또는 수정 사항을 요약한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">概述多位研究者共享的某版本電子文本當中，某特定的內容變更或修正。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">研究者間で共有されている電子テキストの特定の版に対して施された変更や 修正を示す．</desc>
-  <desc versionDate="2006-10-18" xml:lang="de">gibt eine bestimmte Veränderung oder Korrektur an einer
-    bestimmten Version eines elektronischen Textes an, an der verschiedene Bearbeiter beteiligt
-    sind.</desc>
+  <desc versionDate="2016-11-25" xml:lang="de">verzeichnet Änderungen oder Korrekturen während der Erstellung eines 
+    Basisdokuments oder während der Überarbeitung einer elektronischen Datei.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">resume un cambio o corrección determinada llevada a cabo
     en una versión dada de un texto electrónico en el que trabajan diversos investigadores.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">sintetizza un particolare cambiamento o correzione
@@ -41,7 +41,9 @@ $Id$
   </content>
   <attList>
     <attDef ident="target">
+      <gloss versionDate="2016-11-25" xml:lang="de">Ziel</gloss>
       <desc versionDate="2011-10-31" xml:lang="en">points to one or more elements that belong to this change.</desc>
+      <desc versionDate="2016-11-25" xml:lang="de">verweist auf ein oder mehrere Elemente, die zu dieser Änderung gehören.  </desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
     </attDef>
   </attList>
@@ -124,6 +126,15 @@ supplied to printer.</change>
   </remarks>
   <remarks xml:lang="ja" versionDate="2008-04-05">
     <p>修正は一貫した並びで記録されるべきである．例えば，最新のものが 最初に書かれる，など． </p>
+  </remarks>
+  <remarks versionDate="2016-11-25" xml:lang="de">
+    <p>Das <att>who</att>-Attribut kann dafür verwendet werden, um zu einem beliebigen anderen 
+      Element zu verweisen, sollte aber typischerweise auf ein <gi>respStmt</gi>- oder 
+      <gi>person</gi>-Element innerhalb des TEI-Headers zeigen, um die für die Änderungen 
+      Verantwortlichen und deren Rolle zu identifizieren.</p>
+    <p>Es wird empfohlen, Änderungen so aufzuzeichnen, dass die neuesten am Anfang eingetragen werden. 
+      Das <att>status</att>-Attribut kann dafür verwendet werden, 
+      um den Zustand des Dokuments nach erfolgter Änderung zu beschreiben.</p>
   </remarks>
   <listRef>
     <ptr target="#HD6"/>
