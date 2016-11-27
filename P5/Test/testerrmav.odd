@@ -188,14 +188,23 @@
 		<elementRef key="hi"           minOccurs="3" maxOccurs="unbounded"/>
 	      </sequence>
 	      <sequence>
-		<elementRef key="hi"           minOccurs="3" maxOccurs="unbounded"/>
+		<elementRef key="add"          minOccurs="3" maxOccurs="unbounded"/>
 		<classRef key="model.biblPart" minOccurs="3" maxOccurs="unbounded"/>
-		<elementRef key="hi"           minOccurs="1" maxOccurs="3"/>
+		<elementRef key="add"          minOccurs="1" maxOccurs="3"/>
 		<classRef key="model.biblPart" minOccurs="1" maxOccurs="3"/>
-		<elementRef key="hi"           minOccurs="1" maxOccurs="1"/>
+		<elementRef key="add"          minOccurs="1" maxOccurs="1"/>
 		<classRef key="model.biblPart" minOccurs="1" maxOccurs="1"/>
-		<elementRef key="hi"           minOccurs="0" maxOccurs="1"/>
+		<elementRef key="add"          minOccurs="0" maxOccurs="1"/>
 		<classRef key="model.global  " minOccurs="0" maxOccurs="1"/>
+	      </sequence>
+	      <sequence>
+		<classRef   key="model.global" minOccurs=" 0 " maxOccurs="317"/>
+		<elementRef key="abbr"                         maxOccurs="370"/>
+		<elementRef key="add"          minOccurs="  3" maxOccurs="443"/>
+		<elementRef key="address"      minOccurs="370" maxOccurs="800"/>
+		<elementRef key="distinct"     minOccurs="360" maxOccurs="370"/>
+		<elementRef key="hi"           minOccurs="003" maxOccurs="unbounded"/>
+		<classRef key="model.biblPart" minOccurs="370" maxOccurs="unbounded"/>
 	      </sequence>
 	    </alternate>
 	  </content>
@@ -352,7 +361,7 @@
         <elementSpec ident="mentioned" mode="delete" module="core"/>
         <elementSpec ident="milestone" mode="delete" module="core"/>
         <elementSpec ident="monogr" mode="delete" module="core"/>
-        <elementSpec ident="name" mode="delete" module="core"/>
+        <!-- elementSpec ident="name" mode="delete" module="core"/ -->
         <elementSpec ident="note" mode="delete" module="core"/>
         <elementSpec ident="num" mode="delete" module="core"/>
         <elementSpec ident="orig" mode="delete" module="core"/>
@@ -460,7 +469,45 @@
         <elementSpec ident="titlePage" mode="delete" module="textstructure"/>
         <elementSpec ident="titlePart" mode="delete" module="textstructure"/>
         <elementSpec ident="trailer" mode="delete" module="textstructure"/>
-        <classSpec ident="att.global" mode="change" module="tei"
+	<!-- 3 quick tests from Lou's post "fun with min and max" of 2016-11-27 18:26 -->
+	<elementSpec ident="loub1" mode="add">
+	  <classes mode="replace">
+	    <memberOf key="att.global"/>
+	    <memberOf key="model.hiLike"/>
+	  </classes>
+	  <content>
+	    <alternate  maxOccurs="unbounded">
+               <textNode/>
+               <elementRef key="hi" />
+	    </alternate>
+	  </content>
+	</elementSpec>
+	<elementSpec ident="loub2" mode="add">
+	  <classes mode="replace">
+	    <memberOf key="att.global"/>
+	    <memberOf key="model.hiLike"/>
+	  </classes>
+	  <content>
+	    <alternate>
+	      <textNode/>
+	      <elementRef key="name" minOccurs="2"/>
+	    </alternate>
+	  </content>
+	</elementSpec>
+	<elementSpec ident="loub3" mode="add">
+	  <classes mode="replace">
+	    <memberOf key="att.global"/>
+	    <memberOf key="model.hiLike"/>
+	  </classes>
+	  <content>
+	     <sequence>
+	       <elementRef key="title" minOccurs="0" maxOccurs="1"/>
+	       <elementRef key="name" minOccurs="2" maxOccurs="4"/>
+	     </sequence>
+	  </content>
+	</elementSpec>
+	<!-- ********* -->
+	<classSpec ident="att.global" mode="change" module="tei"
           type="atts">
           <attList>
             <attDef ident="xml:space" mode="delete"/>
