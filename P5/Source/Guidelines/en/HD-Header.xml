@@ -1766,11 +1766,9 @@ more than one language, as in the following example:
     <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/geoDecl.xml"/>
   </div>
 
-<!-- JamesC: To Do: add in discussion of schemaRef -->
-
 
   <div type="div3" xml:id="HDSCHSPEC"><head>The Schema Specification</head>
-    <p>The <gi>schemaSpec</gi> element contains a schema specification. When this element appears inside <gi>encodingDesc</gi>, it allows embedding of a schema inside a TEI header; alternatively, this element may be used in the <gi>body</gi> of an ODD document. The use of ODD files, and their relationship to schemas, is described in detail in <ptr target="#TD"/>.</p>
+    <p>The <gi>schemaSpec</gi> element contains a schema specification. When this element appears inside <gi>encodingDesc</gi>, it allows embedding of a TEI ODD customization file inside a TEI header; alternatively, this element may be used in the <gi>body</gi> of an ODD document. The use of ODD files, and their relationship to schemas, is described in detail in <ptr target="#TD"/>.</p>
 
     <p>A <gi>schemaSpec</gi> element contains all the information needed to generate schemas for a particular TEI customization, and the ODD documentation elements, by reference to the TEI, are more succinct than the schemas derived from them. Therefore you may find it
     convenient to make a copy of the <gi>schemaSpec</gi> from your project's ODD document inside the <gi>teiHeader</gi> itself, in addition to
@@ -1788,6 +1786,15 @@ more than one language, as in the following example:
           </schemaSpec>
         </encodingDesc>
       </egXML>
+    </p>
+    <p>Alternatively, it is possible to point to an external ODD customization file or schema through use of the <gi>schemaRef</gi> element. More than one <gi>schemaRef</gi> element may be provided for different sources, stages in a workflow, or formats.
+      
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <schemaRef type="interchangeODD" url="http://www.tei-c.org/release/xml/tei/custom/odd/tei_lite.odd"/>
+        <schemaRef type="interchangeRNG" url="http://www.tei-c.org/release/xml/tei/custom/odd/tei_lite.rng"/>
+        <schemaRef type="projectODD" url="file:///schema/project.odd"/>
+      </egXML>
+      The <att>url</att> attribute may be any form of URI pointer including a private URI syntax documented by a <gi>prefixDef</gi>.  
     </p>
   </div>
 
