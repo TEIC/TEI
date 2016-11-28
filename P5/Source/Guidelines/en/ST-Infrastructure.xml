@@ -391,10 +391,13 @@ with others.--></p>
         <p>The following attributes are defined for every TEI element. <specList>
             <specDesc key="att.global"
               atts="xml:id n xml:lang rend style
-              rendition xml:base xml:space"/>
+              rendition xml:base xml:space
+              source cert resp
+              corresp ana
+              "/>
           </specList>
         </p>
-        <p>These attributes are optionally available for any TEI element; none of them is required.
+        <p>These attributes (a few others not discussed here) are optionally available for any TEI element, however, none of them is required. They are provided by the att.global attribute class or its respective subclasses.
           Their usage is discussed in the following subsections. </p>
         <div xml:id="STGAid">
           <head>Element Identifiers and Labels</head>
@@ -413,10 +416,10 @@ with others.--></p>
             element occurrences.</p>
           <p>If two elements are given the same identifier, a validating XML parser will signal a
             syntax error. The following example, therefore, is <emph>not</emph> valid: <egXML
-              xmlns="http://www.tei-c.org/ns/Examples" source="#STGA-eg-4">&lt;p
-              xml:id="PAGE1"&gt;&lt;q&gt;What's it going to be then, eh?&lt;/q&gt;&lt;/p&gt; &lt;p
-              xml:id="PAGE1"&gt;There was me, that is Alex, and my three droogs, that is Pete,
-              Georgie, and Dim, ... &lt;/p&gt;</egXML>
+              xmlns="http://www.tei-c.org/ns/Examples" source="#STGA-eg-4" valid="false">
+&lt;p xml:id="PAGE1"&gt;&lt;q&gt;What's it going to be then, eh?&lt;/q&gt;&lt;/p&gt; 
+&lt;p xml:id="PAGE1"&gt;There was me, that is Alex, and my three droogs, that is Pete,
+Georgie, and Dim, ... &lt;/p&gt;</egXML>
           </p>
           <p>For a discussion of methods of providing unique identifiers for elements, see section
               <ptr target="#CORS2"/>.</p>
@@ -654,6 +657,61 @@ with others.--></p>
             source document, <emph>not</emph> intended output renditions, although often the two may
             be closely related. </p>
         </div>
+        
+        <!-- We are missing a section here on source cert resp corresp ana attributes -->
+        <div xml:id="STGAso">
+          <head>Sources, certainty, and responsibility</head>
+          <p>The <att>source</att> attribute is provided by the <ident type="class">att.global.source</ident> class to 
+            give a way to point to the source for an element, for example linking a quote to a bibliographic citation. 
+            This enables encoders wishing to provide the source from which some aspect of this element is drawn. While this will most
+            often reasonably be a bibliographic source, and thus the attribute will contain a pointer to a digital surrogate of that 
+            source or a description of it, when used on schema documentation elements such as <gi>schemaSpec</gi> it points to the 
+            source for the ODD processor from which declarations and definitions for the components of the object being defined may 
+            be obtained. For example on <gi>schemaSpec</gi> it points to the TEI customization file being used as a source.  
+            On most other elements it provides a pointer to the bibliographical source from which a quotation or citation is drawn, or that 
+            has acted as a source for the intellectual content of the element. These <att>source</att> attribute values are provided as any 
+            form of URI, for example in full, fragmentary, or private-URI syntax.
+            
+            For example, for an encoder may wish to document the source of a <gi>quote</gi> by pointing to a <gi>bibl</gi> elsewhere 
+            in the bibliography of the document (or another document): 
+            
+              <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                <p>
+                  <!-- ... -->
+                  <quote source="#chicago_15_ed">Grammatical theories 
+                    are in flux, and the more we learn, the less we 
+                    seem to know.</quote>
+                  <!-- ... -->
+                </p>
+                <!-- ... -->
+                <bibl xml:id="chicago_15_ed"><title level="m">The Chicago Manual of Style</title>, 
+                  <edition>15th edition</edition>. 
+                  <pubPlace>Chicago</pubPlace>: 
+                  <publisher>University of Chicago Press</publisher> 
+                  (<date>2003</date>), 
+                  <biblScope unit="page">p.147</biblScope>.
+                </bibl>
+              </egXML>
+            
+            whereas someone customizing the TEI to include the <gi>p</gi> element specifically as it was in version 2.0.1 of TEI P5 would indicate the source for this on an <gi>elementRef</gi> element. In this case they are using a private URI syntax <val>tei:2.0.1</val> which points to this version of the TEI P5 and more specifically the <code>p5subset.xml</code> file available with every release that is used by ODD processors in the process of generating custom schemas.  In this case the full URI would be: <ptr target="http://www.tei-c.org/Vault/P5/2.0.1/xml/tei/odd/p5subset.xml"/>. 
+            
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <elementRef key="p" source="tei:2.0.1"/>
+            </egXML>
+            While the assumption that most values provided in <att>source</att> attributes will point to bibliographic entries or schema components for customization, the definition intentionally leaves scope of this open as to what aspects of the source are being documented.
+          </p>
+          
+          <p>The <att>cert</att> and <att>resp</att> attributes are provided by the <ident type="class">att.global.responsibility</ident> class, which makes these attributes available to provide a method to indicate the certainty the encoder has concerning an intervention or interpretation represented by the markup and the agency responsible for that intervention or intepretation. Certainty may be documented through this attribute by providing values of <val>high</val>, <val>medium</val>, <val>low</val>, or <val>unknown</val>. Those which wish, or whose source document or encoding process contains, numerical degrees of certainty may do so. In these cases, probability is expressed as a real number between 0 and 1; 0 representing certainly false and 1 representing certainly true.
+            
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+Blessed are the <choice><sic>placemakers</sic><corr resp="#editor" cert="high">peacemakers</corr></choice>: 
+for they shall be called the children of God.</egXML>
+            
+          </p>
+          <p>Where there is a simple <att>resp</att> pointing to a person or organization, it is likely to be somewhat ambiguous with regard 
+            to the nature of the responsibility. For this reason, the TEI recommends that <att>resp</att> be used to point not directly to an agent (<gi>person</gi> or <gi>org</gi>) but to a <gi>respStmt</gi>, <gi>author</gi>, <gi>editor</gi> or similar element which clarifies the exact role played by the agent. Pointing to multiple <gi>respStmt</gi>s allows the encoder to specify clearly each of the roles played in part of a TEI file (creating, transcribing, encoding, editing, proofing etc.). The <gi>name</gi> element inside a <gi>respStmt</gi> may then point to a more detailed <gi>person</gi> if desired.</p>
+        </div>
+        
         <div xml:id="STGAba">
           <head>Evaluation of Links</head>
           <p>Several TEI elements carry attributes whose values are defined as <code>anyURI</code>,
