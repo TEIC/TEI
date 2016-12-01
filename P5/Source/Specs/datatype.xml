@@ -17,6 +17,7 @@ $Id$
   <desc versionDate="2007-01-21" xml:lang="it">indica il valore dichiarato di un attributo facendo riferimento a un qualsiasi tipo di dati definito nel linguaggio scelto per lo schema</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.repeatable"/>
   </classes>
   <content>
     <alternate>
@@ -26,13 +27,7 @@ $Id$
     </alternate>
   </content>
   <attList>
-    <attDef ident="minOccurs">
-      <gloss versionDate="2007-03-05" xml:lang="en">minimum number of occurences</gloss>
-      <gloss versionDate="2007-12-20" xml:lang="ko">빈도의 최소 수</gloss>
-      <gloss versionDate="2007-05-02" xml:lang="zh-TW">出現次數最小值</gloss>
-      <gloss versionDate="2007-06-12" xml:lang="fr">nombre minimum d'occurrences</gloss>
-      <gloss versionDate="2007-11-06" xml:lang="it">numero minimo di occorrenze</gloss>
-      <gloss versionDate="2007-05-04" xml:lang="es">número mínimo de apariciones</gloss>
+    <attDef ident="minOccurs" mode="change">
       <desc versionDate="2007-03-11" xml:lang="en">indicates the minimum number of times this datatype may
       occur in the specification of the attribute being defined</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">정의되고 있는 속성 명시에서 발생할 수 있는 이 유형의 최소 횟수를 나타낸다.</desc>
@@ -43,16 +38,8 @@ $Id$
 					de ce type de données dans la spécification de l'attribut.</desc>
       <desc versionDate="2007-11-06" xml:lang="it">indica il numero minimo di volte che questo tipo di dati può verificarsi nella definizione dell'attributo da definire</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica el mínimo número de veces que los tipo de datos pueden aparecer en la especificación del atributo que se define.</desc>
-      <datatype><dataRef key="teidata.count"/></datatype>
-      <defaultVal>1</defaultVal>
     </attDef>
-    <attDef ident="maxOccurs">
-      <gloss versionDate="2007-03-05" xml:lang="en">maximum number of occurences</gloss>
-      <gloss versionDate="2007-12-20" xml:lang="ko">빈도의 최대 수</gloss>
-      <gloss versionDate="2007-05-02" xml:lang="zh-TW">出現次數最大值</gloss>
-      <gloss versionDate="2007-06-12" xml:lang="fr">nombre maximum d'occurrences.</gloss>
-      <gloss versionDate="2007-11-06" xml:lang="it">numero minimo di occorrenze</gloss>
-      <gloss versionDate="2007-05-04" xml:lang="es">número máximo de apariciones.</gloss>
+    <attDef ident="maxOccurs" mode="change">
       <desc versionDate="2007-03-05" xml:lang="en">indicates the maximum number of times this datatype may
       occur in the specification of the attribute being defined</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">정의되고 있는 속성 명시에서 발생할 수 있는 이 유형의 최대 횟수를 나타낸다.</desc>
@@ -62,10 +49,6 @@ $Id$
 					de ce type de données dans la spécification de l'attribut.</desc>
       <desc versionDate="2007-11-06" xml:lang="it">indica il numero massimo di volte che questo tipo di dati può verificarsi nella definizione dell'attributo da definire</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica el máximo número de veces que los tipo de datos pueden aparecer en la especificación del atributo que se define.</desc>
-      <datatype>
-        <dataRef key="teidata.unboundedInt"/>
-      </datatype>
-      <defaultVal>1</defaultVal>
     </attDef>
   </attList>
   <exemplum xml:lang="und">
@@ -123,15 +106,15 @@ $Id$
       </datatype>
     </egXML>
   </exemplum>
-  <remarks versionDate="2005-10-10" xml:lang="en">
+  <remarks versionDate="2016-11-30" xml:lang="en">
     <p>In the TEI scheme, most datatypes are expressed using
     pre-defined TEI macros, which map a name in the form
-    <code>data.xxxx</code> to a RELAX NG or WSD defined datatype.</p>
+    <code>teidata.xxxx</code> to a datatype defined by RELAX NG or the W3C Schema Language.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Dans le schéma TEI, la plupart des types de données sont exprimées en utilisant des
                 macros TEI prédéfinies, qui font correspondre un nom dans sa forme
-                <code>data.xxxx</code> à un type de données définies en RELAX NG or WSD.</p>
+                <code>teidata.xxxx</code> à un type de données définies en RELAX NG or XSD.</p>
   </remarks>
   <remarks xml:lang="ja" versionDate="2008-04-05">
     <p>
