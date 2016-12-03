@@ -8,6 +8,7 @@
         <editor xml:id="sbauman.emt">Syd Bauman</editor>
       </titleStmt>
       <publicationStmt>
+	<publisher>TEI Consortium</publisher>
         <availability status="restricted">
           <p>Copyright 2007 Syd Bauman and TEI-C.</p>
           <p>Intended soley for testing within the TEI, but freely
@@ -37,18 +38,215 @@
     </front>
     <body>
       <schemaSpec ident="testerrmav" xml:lang="en" start="TEI div">
+	<!-- load required modules -->
         <moduleRef key="core"/>
         <moduleRef key="tei"/>
         <moduleRef key="header"/>
         <moduleRef key="textstructure"/>
-        <elementSpec ident="abbr" mode="delete" module="core"/>
-        <elementSpec ident="add" mode="delete" module="core"/>
-        <elementSpec ident="addrLine" mode="delete" module="core"/>
-        <elementSpec ident="address" mode="delete" module="core"/>
-        <elementSpec ident="altIdent" mode="delete" module="core"/>
-        <elementSpec ident="analytic" mode="delete" module="core"/>
-        <elementSpec ident="bibl" mode="delete" module="core"/>
-        <elementSpec ident="biblFull" mode="delete" module="core"/>
+	<!-- remove most elements, modify a few to test occurences -->
+        <elementSpec ident="abbr" mode="change" module="core">
+	  <desc>TEST <att>minOccurs</att> of <val>3</val> on a ref in content</desc>
+	  <content>
+	    <elementRef key="hi" minOccurs="3"/>
+	  </content>
+	</elementSpec>
+        <elementSpec ident="add" mode="change" module="core">
+	  <desc>TEST <att>maxOccurs</att> of <val>3</val> on a ref in content</desc>
+	  <content>
+	    <elementRef key="hi" maxOccurs="3"/>
+	  </content>
+	</elementSpec>
+        <elementSpec ident="addrLine" mode="change" module="core"/>
+        <elementSpec ident="address" mode="change" module="core">
+	  <desc>TEST both <att>minOccurs</att>=<val>3</val> and <att>maxOccurs</att>=<val>8</val> on a ref in content</desc>
+	  <content>
+	    <elementRef key="addrLine" minOccurs="3" maxOccurs="8"/>
+	  </content>
+	</elementSpec>
+        <elementSpec ident="altIdent" mode="change" module="core">
+	  <desc>TEST various content occurence values &#x2014; on alternations in sequence</desc>
+	  <content>
+	    <sequence>
+	      <alternate>
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </alternate>
+	      <alternate minOccurs="0" maxOccurs="1">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </alternate>
+	      <alternate minOccurs="0" maxOccurs="3">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </alternate>
+	      <alternate minOccurs="0" maxOccurs="300">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </alternate>
+	      <alternate minOccurs="0" maxOccurs="unbounded">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </alternate>
+	      <alternate minOccurs="1" maxOccurs="1">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </alternate>
+	      <alternate minOccurs="1" maxOccurs="3">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </alternate>
+	      <alternate minOccurs="1" maxOccurs="300">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </alternate>
+	      <alternate minOccurs="1" maxOccurs="unbounded">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </alternate>
+	      <alternate minOccurs="3" maxOccurs="3">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </alternate>
+	      <alternate minOccurs="3" maxOccurs="300">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </alternate>
+	      <alternate minOccurs="3" maxOccurs="unbounded">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </alternate>
+	    </sequence>
+	  </content>	      
+	</elementSpec>
+        <elementSpec ident="analytic" mode="change" module="core">
+	  <desc>TEST various content occurence values &#x2014; on sequences in alternation</desc>
+	  <content>
+	    <alternate>
+	      <sequence>
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </sequence>
+	      <sequence minOccurs="0" maxOccurs="1">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </sequence>
+	      <sequence minOccurs="0" maxOccurs="3">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </sequence>
+	      <sequence minOccurs="0" maxOccurs="300">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </sequence>
+	      <sequence minOccurs="0" maxOccurs="unbounded">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </sequence>
+	      <sequence minOccurs="1" maxOccurs="1">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </sequence>
+	      <sequence minOccurs="1" maxOccurs="3">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </sequence>
+	      <sequence minOccurs="1" maxOccurs="300">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </sequence>
+	      <sequence minOccurs="1" maxOccurs="unbounded">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </sequence>
+	      <sequence minOccurs="3" maxOccurs="3">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </sequence>
+	      <sequence minOccurs="3" maxOccurs="300">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </sequence>
+	      <sequence minOccurs="3" maxOccurs="unbounded">
+		<elementRef key="distinct"/>
+		<elementRef key="hi"/>
+	      </sequence>
+	    </alternate>
+	  </content>	      
+	</elementSpec>
+        <elementSpec ident="bibl" mode="change" module="core">
+	  <desc>TEST occurence ranges of a reference to a class or macro</desc>
+	  <content>
+	    <alternate>
+	      <sequence>
+		<classRef key="model.global"   minOccurs="0" maxOccurs="1"/>
+		<elementRef key="hi"           minOccurs="0" maxOccurs="1"/>
+		<classRef key="model.biblPart" minOccurs="1" maxOccurs="1"/>
+		<elementRef key="hi"           minOccurs="1" maxOccurs="1"/>
+		<classRef key="model.biblPart" minOccurs="1" maxOccurs="3"/>
+		<elementRef key="hi"           minOccurs="1" maxOccurs="3"/>
+		<classRef key="model.biblPart" minOccurs="3" maxOccurs="unbounded"/>
+		<elementRef key="hi"           minOccurs="3" maxOccurs="unbounded"/>
+	      </sequence>
+	      <sequence>
+		<elementRef key="add"          minOccurs="3" maxOccurs="unbounded"/>
+		<classRef key="model.biblPart" minOccurs="3" maxOccurs="unbounded"/>
+		<elementRef key="add"          minOccurs="1" maxOccurs="3"/>
+		<classRef key="model.biblPart" minOccurs="1" maxOccurs="3"/>
+		<elementRef key="add"          minOccurs="1" maxOccurs="1"/>
+		<classRef key="model.biblPart" minOccurs="1" maxOccurs="1"/>
+		<elementRef key="add"          minOccurs="0" maxOccurs="1"/>
+		<classRef key="model.global"   minOccurs="0" maxOccurs="1"/>
+	      </sequence>
+	      <sequence>
+		<classRef   key="model.global" minOccurs=" 0 " maxOccurs="317"/>
+		<elementRef key="abbr"                         maxOccurs="370"/>
+		<elementRef key="add"          minOccurs="  3" maxOccurs="443"/>
+		<elementRef key="address"      minOccurs="370" maxOccurs="800"/>
+		<elementRef key="distinct"     minOccurs="360" maxOccurs="370"/>
+		<elementRef key="hi"           minOccurs="003" maxOccurs="unbounded"/>
+		<classRef key="model.biblPart" minOccurs="370" maxOccurs="unbounded"/>
+	      </sequence>
+	    </alternate>
+	  </content>
+	  <remarks>
+	    <p>We don't bother testing <att>minOccurs</att> and
+	    <att>maxOccurs</att> on <gi>macroRef</gi>, as they are not
+	    allowed. Yes, there is code in <name>teiodds.xsl</name>
+	    for the, but <gi>macroRef</gi> is not a member of
+	    <name>att.repeatable</name></p>
+	  </remarks>	    
+	</elementSpec>
+	<elementSpec ident="biblFull" mode="delete" module="core">
+	  <desc>TEST content complexity</desc>
+	  <content>
+	    <alternate minOccurs="0" maxOccurs="4">
+	      <sequence minOccurs="1" maxOccurs="4">
+		<classRef key="model.biblPart" minOccurs="2" maxOccurs="3"/>
+		<macroRef key="macro.xtext"/>
+		<elementRef key="hi" minOccurs="2" maxOccurs="3"/>
+	      </sequence>
+	      <sequence minOccurs="2" maxOccurs="4">
+		<alternate minOccurs="0" maxOccurs="2">
+		  <classRef key="model.biblPart" minOccurs="2" maxOccurs="3"/>
+		  <macroRef key="macro.xtext"/>
+		</alternate>
+		<elementRef key="hi" minOccurs="2" maxOccurs="3"/>
+	      </sequence>
+	      <sequence minOccurs="2" maxOccurs="4">
+		<alternate minOccurs="0" maxOccurs="2">
+		  <classRef key="model.biblPart" minOccurs="2" maxOccurs="3"/>
+		  <sequence minOccurs="0" maxOccurs="unbounded">
+		    <elementRef key="abbr"/>
+		    <elementRef key="add"/>
+		    <elementRef key="altIdent" minOccurs="3"/>
+		    <elementRef key="analytic" maxOccurs="unbounded"/>
+		  </sequence>
+		</alternate>
+		<elementRef key="hi" minOccurs="2" maxOccurs="3"/>
+	      </sequence>
+	    </alternate>
+	  </content>
+	</elementSpec>
         <elementSpec ident="biblItem" mode="delete" module="core"/>
         <elementSpec ident="biblScope" mode="delete" module="core"/>
         <elementSpec ident="biblStruct" mode="delete" module="core"/>
@@ -66,78 +264,78 @@
 	    <!-- min=0 max=1,2,3,9,* -->
 	    <attDef ident="o01" usage="opt">
 	      <gloss>optional, min 0, max 1</gloss>
-	      <datatype minOccurs="0" maxOccurs="1"><rng:ref name="data.count"/></datatype>
+	      <datatype minOccurs="0" maxOccurs="1"><dataRef key="teidata.count"/></datatype>
 	    </attDef>
 	    <attDef ident="o02" usage="opt">
 	      <gloss>optional, min 0, max 2</gloss>
-	      <datatype minOccurs="0" maxOccurs="2"><rng:ref name="data.count"/></datatype>
+	      <datatype minOccurs="0" maxOccurs="2"><dataRef key="teidata.count"/></datatype>
 	    </attDef>
 	    <attDef ident="o03" usage="opt">
 	      <gloss>optional, min 0, max 3</gloss>
-	      <datatype minOccurs="0" maxOccurs="3"><rng:ref name="data.count"/></datatype>
+	      <datatype minOccurs="0" maxOccurs="3"><dataRef key="teidata.count"/></datatype>
 	    </attDef>
 	    <attDef ident="o09" usage="opt">
 	      <gloss>optional, min 0, max 9</gloss>
-	      <datatype minOccurs="0" maxOccurs="9"><rng:ref name="data.count"/></datatype>
+	      <datatype minOccurs="0" maxOccurs="9"><dataRef key="teidata.count"/></datatype>
 	    </attDef>
 	    <attDef ident="o0i" usage="opt">
 	      <gloss>optional, min 0, max unbounded</gloss>
-	      <datatype minOccurs="0" maxOccurs="unbounded"><rng:ref name="data.count"/></datatype>
+	      <datatype minOccurs="0" maxOccurs="unbounded"><dataRef key="teidata.count"/></datatype>
 	    </attDef>
 	    <!-- min=1 max=1,2,3,9,* -->	    
 	    <attDef ident="o11" usage="opt">
 	      <gloss>optional, min 1, max 1</gloss>
-	      <datatype minOccurs="1" maxOccurs="1"><rng:ref name="data.count"/></datatype>
+	      <datatype minOccurs="1" maxOccurs="1"><dataRef key="teidata.count"/></datatype>
 	    </attDef>
 	    <attDef ident="o12" usage="opt">
 	      <gloss>optional, min 1, max 2</gloss>
-	      <datatype minOccurs="1" maxOccurs="2"><rng:ref name="data.count"/></datatype>
+	      <datatype minOccurs="1" maxOccurs="2"><dataRef key="teidata.count"/></datatype>
 	    </attDef>
 	    <attDef ident="o13" usage="opt">
 	      <gloss>optional, min 1, max 3</gloss>
-	      <datatype minOccurs="1" maxOccurs="3"><rng:ref name="data.count"/></datatype>
+	      <datatype minOccurs="1" maxOccurs="3"><dataRef key="teidata.count"/></datatype>
 	    </attDef>
 	    <attDef ident="o19" usage="opt">
 	      <gloss>optional, min 1, max 9</gloss>
-	      <datatype minOccurs="1" maxOccurs="9"><rng:ref name="data.count"/></datatype>
+	      <datatype minOccurs="1" maxOccurs="9"><dataRef key="teidata.count"/></datatype>
 	    </attDef>
 	    <attDef ident="o1i" usage="opt">
 	      <gloss>optional, min 1, max unbounded</gloss>
-	      <datatype minOccurs="1" maxOccurs="unbounded"><rng:ref name="data.count"/></datatype>
+	      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.count"/></datatype>
 	    </attDef>
 	    <!-- min=2 max=2,3,9,* -->
 	    <attDef ident="o22" usage="opt">
 	      <gloss>optional, min 2, max 2</gloss>
-	      <datatype minOccurs="2" maxOccurs="2"><rng:ref name="data.count"/></datatype>
+	      <datatype minOccurs="2" maxOccurs="2"><dataRef key="teidata.count"/></datatype>
 	    </attDef>
 	    <attDef ident="o23" usage="opt">
 	      <gloss>optional, min 2, max 3</gloss>
-	      <datatype minOccurs="2" maxOccurs="3"><rng:ref name="data.count"/></datatype>
+	      <datatype minOccurs="2" maxOccurs="3"><dataRef key="teidata.count"/></datatype>
 	    </attDef>
 	    <attDef ident="o29" usage="opt">
 	      <gloss>optional, min 2, max 9</gloss>
-	      <datatype minOccurs="2" maxOccurs="9"><rng:ref name="data.count"/></datatype>
+	      <datatype minOccurs="2" maxOccurs="9"><dataRef key="teidata.count"/></datatype>
 	    </attDef>
 	    <attDef ident="o2i" usage="opt">
 	      <gloss>optional, min 2, max unbounded</gloss>
-	      <datatype minOccurs="2" maxOccurs="unbounded"><rng:ref name="data.count"/></datatype>
+	      <datatype minOccurs="2" maxOccurs="unbounded"><dataRef key="teidata.count"/></datatype>
 	    </attDef>
 	    <!-- various min > 2 -->
 	    <attDef ident="o33" usage="opt"> 
 	      <gloss>optional, min 3, max 3</gloss>
-	      <datatype minOccurs="3" maxOccurs="3"><rng:ref name="data.count"/></datatype>
+	      <datatype minOccurs="3" maxOccurs="3"><dataRef key="teidata.count"/></datatype>
 	    </attDef>
 	    <attDef ident="o39" usage="opt">
 	      <gloss>optional, min 3, max 9</gloss>
-	      <datatype minOccurs="3" maxOccurs="9"><rng:ref name="data.count"/></datatype>
+	      <datatype minOccurs="3" maxOccurs="9"><dataRef key="teidata.count"/></datatype>
 	    </attDef>
 	    <attDef ident="o99" usage="opt">
 	      <gloss>optional, min 9, max 9</gloss>
-	      <datatype minOccurs="9" maxOccurs="9"><rng:ref name="data.count"/></datatype>
+	      <datatype minOccurs="9" maxOccurs="9"><dataRef key="teidata.count"/></datatype>
 	    </attDef>
 	    <attDef ident="o9i" usage="opt">
 	      <gloss>optional, min 9, max unbounded</gloss>
-	      <datatype minOccurs="9" maxOccurs="unbounded"><rng:ref name="data.count"/></datatype>
+	      <datatype minOccurs="9" maxOccurs="unbounded"><dataRef key="teidata.count"/></datatype>
 	    </attDef>
 	  </attList>
 	</elementSpec>
@@ -152,7 +350,6 @@
         <elementSpec ident="graphic" mode="delete" module="core"/>
         <elementSpec ident="headItem" mode="delete" module="core"/>
         <elementSpec ident="headLabel" mode="delete" module="core"/>
-        <elementSpec ident="hi" mode="delete" module="core"/>
         <elementSpec ident="imprint" mode="delete" module="core"/>
         <elementSpec ident="index" mode="delete" module="core"/>
         <elementSpec ident="l" mode="delete" module="core"/>
@@ -164,11 +361,11 @@
         <elementSpec ident="mentioned" mode="delete" module="core"/>
         <elementSpec ident="milestone" mode="delete" module="core"/>
         <elementSpec ident="monogr" mode="delete" module="core"/>
-        <elementSpec ident="name" mode="delete" module="core"/>
+        <!-- elementSpec ident="name" mode="delete" module="core"/ -->
         <elementSpec ident="note" mode="delete" module="core"/>
         <elementSpec ident="num" mode="delete" module="core"/>
         <elementSpec ident="orig" mode="delete" module="core"/>
-        <elementSpec ident="pb" mode="delete" module="core"/>
+        <!-- elementSpec ident="pb" mode="delete" module="core"/> need something in model.global -->
         <elementSpec ident="postBox" mode="delete" module="core"/>
         <elementSpec ident="postCode" mode="delete" module="core"/>
         <elementSpec ident="ptr" mode="delete" module="core"/>
@@ -193,152 +390,124 @@
         <elementSpec ident="time" mode="delete" module="core"/>
         <elementSpec ident="timeRange" mode="delete" module="core"/>
         <elementSpec ident="unclear" mode="delete" module="core"/>
-        <elementSpec ident="authority" mode="delete"
-          module="header"/>
-        <elementSpec ident="availability" mode="delete"
-          module="header"/>
-        <elementSpec ident="broadcast" mode="delete"
-          module="header"/>
-        <elementSpec ident="cRefPattern" mode="delete"
-          module="header"/>
+        <elementSpec ident="authority" mode="delete" module="header"/>
+        <elementSpec ident="availability" mode="delete" module="header"/>
+        <elementSpec ident="broadcast" mode="delete" module="header"/>
+        <elementSpec ident="cRefPattern" mode="delete" module="header"/>
         <elementSpec ident="catDesc" mode="delete" module="header"/>
         <elementSpec ident="catRef" mode="delete" module="header"/>
-        <elementSpec ident="category" mode="delete"
-          module="header"/>
+        <elementSpec ident="category" mode="delete" module="header"/>
         <elementSpec ident="change" mode="delete" module="header"/>
-        <elementSpec ident="classCode" mode="delete"
-          module="header"/>
-        <elementSpec ident="classDecl" mode="delete"
-          module="header"/>
-        <elementSpec ident="correction" mode="delete"
-          module="header"/>
-        <elementSpec ident="creation" mode="delete"
-          module="header"/>
-        <elementSpec ident="distributor" mode="delete"
-          module="header"/>
+        <elementSpec ident="classCode" mode="delete" module="header"/>
+        <elementSpec ident="classDecl" mode="delete" module="header"/>
+        <elementSpec ident="correction" mode="delete" module="header"/>
+        <elementSpec ident="creation" mode="delete" module="header"/>
+        <elementSpec ident="distributor" mode="delete" module="header"/>
         <elementSpec ident="edition" mode="delete" module="header"/>
-        <elementSpec ident="editorialDecl" mode="delete"
-          module="header"/>
-        <elementSpec ident="encodingDesc" mode="delete"
-          module="header"/>
-        <elementSpec ident="equipment" mode="delete"
-          module="header"/>
+        <elementSpec ident="editionStmt" mode="delete" module="header"/>
+        <elementSpec ident="editorialDecl" mode="delete" module="header"/>
+        <elementSpec ident="encodingDesc" mode="delete" module="header"/>
+        <elementSpec ident="equipment" mode="delete" module="header"/>
         <elementSpec ident="extent" mode="delete" module="header"/>
         <elementSpec ident="fsdDecl" mode="delete" module="header"/>
         <elementSpec ident="funder" mode="delete" module="header"/>
-        <elementSpec ident="hyphenation" mode="delete"
-          module="header"/>
+        <elementSpec ident="hyphenation" mode="delete" module="header"/>
         <elementSpec ident="idno" mode="delete" module="header"/>
-        <elementSpec ident="interpretation" mode="delete"
-          module="header"/>
-        <elementSpec ident="keywords" mode="delete"
-          module="header"/>
-        <elementSpec ident="langUsage" mode="delete"
-          module="header"/>
-        <elementSpec ident="language" mode="delete"
-          module="header"/>
+        <elementSpec ident="interpretation" mode="delete" module="header"/>
+        <elementSpec ident="keywords" mode="delete" module="header"/>
+        <elementSpec ident="langUsage" mode="delete" module="header"/>
+        <elementSpec ident="language" mode="delete" module="header"/>
         <elementSpec ident="metDecl" mode="delete" module="header"/>
         <elementSpec ident="metSym" mode="delete" module="header"/>
-        <elementSpec ident="namespace" mode="delete"
-          module="header"/>
-        <elementSpec ident="normalization" mode="delete"
-          module="header"/>
-        <elementSpec ident="notesStmt" mode="delete"
-          module="header"/>
-        <elementSpec ident="principal" mode="delete"
-          module="header"/>
-        <elementSpec ident="profileDesc" mode="delete"
-          module="header"/>
-        <elementSpec ident="projectDesc" mode="delete"
-          module="header"/>
-        <elementSpec ident="quotation" mode="delete"
-          module="header"/>
-        <elementSpec ident="recording" mode="delete"
-          module="header"/>
-        <elementSpec ident="recordingStmt" mode="delete"
-          module="header"/>
-        <elementSpec ident="refsDecl" mode="delete"
-          module="header"/>
-        <elementSpec ident="rendition" mode="delete"
-          module="header"/>
-        <elementSpec ident="revisionDesc" mode="delete"
-          module="header"/>
-        <elementSpec ident="samplingDecl" mode="delete"
-          module="header"/>
-        <elementSpec ident="scriptStmt" mode="delete"
-          module="header"/>
-        <elementSpec ident="segmentation" mode="delete"
-          module="header"/>
-        <elementSpec ident="seriesStmt" mode="delete"
-          module="header"/>
+        <elementSpec ident="namespace" mode="delete" module="header"/>
+        <elementSpec ident="normalization" mode="delete" module="header"/>
+        <elementSpec ident="notesStmt" mode="delete" module="header"/>
+        <elementSpec ident="principal" mode="delete" module="header"/>
+        <elementSpec ident="profileDesc" mode="delete" module="header"/>
+        <elementSpec ident="projectDesc" mode="delete" module="header"/>
+        <elementSpec ident="quotation" mode="delete" module="header"/>
+        <elementSpec ident="recording" mode="delete" module="header"/>
+        <elementSpec ident="recordingStmt" mode="delete" module="header"/>
+        <elementSpec ident="refsDecl" mode="delete" module="header"/>
+        <elementSpec ident="rendition" mode="delete" module="header"/>
+        <elementSpec ident="revisionDesc" mode="delete" module="header"/>
+        <elementSpec ident="samplingDecl" mode="delete" module="header"/>
+        <elementSpec ident="scriptStmt" mode="delete" module="header"/>
+        <elementSpec ident="segmentation" mode="delete" module="header"/>
+        <elementSpec ident="seriesStmt" mode="delete" module="header"/>
         <elementSpec ident="sponsor" mode="delete" module="header"/>
         <elementSpec ident="state" mode="delete" module="header"/>
         <elementSpec ident="stdVals" mode="delete" module="header"/>
-        <elementSpec ident="tagUsage" mode="delete"
-          module="header"/>
-        <elementSpec ident="tagsDecl" mode="delete"
-          module="header"/>
-        <elementSpec ident="taxonomy" mode="delete"
-          module="header"/>
-        <elementSpec ident="textClass" mode="delete"
-          module="header"/>
-        <elementSpec ident="variantEncoding" mode="delete"
-          module="header"/>
-        <elementSpec ident="argument" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="byline" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="closer" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="dateline" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="div0" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="div1" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="div2" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="div3" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="div4" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="div5" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="div6" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="div7" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="docAuthor" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="docDate" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="docEdition" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="docImprint" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="docTitle" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="epigraph" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="group" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="imprimatur" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="opener" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="salute" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="signed" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="titlePage" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="titlePart" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="trailer" mode="delete"
-          module="textstructure"/>
-        <elementSpec ident="editionStmt" mode="delete"
-          module="header"/>
-        <classSpec ident="att.global" mode="change" module="tei"
+        <elementSpec ident="tagUsage" mode="delete" module="header"/>
+        <elementSpec ident="tagsDecl" mode="delete" module="header"/>
+        <elementSpec ident="taxonomy" mode="delete" module="header"/>
+        <elementSpec ident="textClass" mode="delete" module="header"/>
+        <elementSpec ident="variantEncoding" mode="delete" module="header"/>
+        <elementSpec ident="argument" mode="delete" module="textstructure"/>
+        <elementSpec ident="byline" mode="delete" module="textstructure"/>
+        <elementSpec ident="closer" mode="delete" module="textstructure"/>
+        <elementSpec ident="dateline" mode="delete" module="textstructure"/>
+        <elementSpec ident="div0" mode="delete" module="textstructure"/>
+        <elementSpec ident="div1" mode="delete" module="textstructure"/>
+        <elementSpec ident="div2" mode="delete" module="textstructure"/>
+        <elementSpec ident="div3" mode="delete" module="textstructure"/>
+        <elementSpec ident="div4" mode="delete" module="textstructure"/>
+        <elementSpec ident="div5" mode="delete" module="textstructure"/>
+        <elementSpec ident="div6" mode="delete" module="textstructure"/>
+        <elementSpec ident="div7" mode="delete" module="textstructure"/>
+        <elementSpec ident="docAuthor" mode="delete" module="textstructure"/>
+        <elementSpec ident="docDate" mode="delete" module="textstructure"/>
+        <elementSpec ident="docEdition" mode="delete" module="textstructure"/>
+        <elementSpec ident="docImprint" mode="delete" module="textstructure"/>
+        <elementSpec ident="docTitle" mode="delete" module="textstructure"/>
+        <elementSpec ident="epigraph" mode="delete" module="textstructure"/>
+        <elementSpec ident="group" mode="delete" module="textstructure"/>
+        <elementSpec ident="imprimatur" mode="delete" module="textstructure"/>
+        <elementSpec ident="opener" mode="delete" module="textstructure"/>
+        <elementSpec ident="salute" mode="delete" module="textstructure"/>
+        <elementSpec ident="signed" mode="delete" module="textstructure"/>
+        <elementSpec ident="titlePage" mode="delete" module="textstructure"/>
+        <elementSpec ident="titlePart" mode="delete" module="textstructure"/>
+        <elementSpec ident="trailer" mode="delete" module="textstructure"/>
+	<!-- 3 quick tests from Lou's post "fun with min and max" of 2016-11-27 18:26 -->
+	<elementSpec ident="loub1" mode="add">
+	  <classes mode="replace">
+	    <memberOf key="att.global"/>
+	    <memberOf key="model.hiLike"/>
+	  </classes>
+	  <content>
+	    <alternate  maxOccurs="unbounded">
+               <textNode/>
+               <elementRef key="hi" />
+	    </alternate>
+	  </content>
+	</elementSpec>
+	<elementSpec ident="loub2" mode="add">
+	  <classes mode="replace">
+	    <memberOf key="att.global"/>
+	    <memberOf key="model.hiLike"/>
+	  </classes>
+	  <content>
+	    <alternate>
+	      <textNode/>
+	      <elementRef key="name" minOccurs="2"/>
+	    </alternate>
+	  </content>
+	</elementSpec>
+	<elementSpec ident="loub3" mode="add">
+	  <classes mode="replace">
+	    <memberOf key="att.global"/>
+	    <memberOf key="model.hiLike"/>
+	  </classes>
+	  <content>
+	     <sequence>
+	       <elementRef key="title" minOccurs="0" maxOccurs="1"/>
+	       <elementRef key="name" minOccurs="2" maxOccurs="4"/>
+	     </sequence>
+	  </content>
+	</elementSpec>
+	<!-- ********* -->
+	<classSpec ident="att.global" mode="change" module="tei"
           type="atts">
           <attList>
             <attDef ident="xml:space" mode="delete"/>
@@ -364,14 +533,12 @@
             <attDef ident="default" mode="delete"/>
           </attList>
         </elementSpec>
-        <elementSpec ident="TEI" mode="change"
-          module="textstructure">
+        <elementSpec ident="TEI" mode="change" module="textstructure">
           <attList>
             <attDef ident="version" mode="delete"/>
           </attList>
         </elementSpec>
-        <classSpec ident="att.declaring" mode="change"
-          module="tei" type="atts">
+        <classSpec ident="att.declaring" mode="change" module="tei" type="atts">
           <attList>
             <attDef ident="decls" mode="delete"/>
           </attList>

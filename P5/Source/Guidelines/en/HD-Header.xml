@@ -6,7 +6,7 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-<?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <div xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" type="div1" xml:id="HD" n="5">
 <head>The TEI Header</head>
 <p>This chapter addresses the problems of describing an encoded work
@@ -98,7 +98,7 @@ the general case, however, a TEI-conformant text will contain a single
 <gi>facsimile</gi> element, or both.
 </p>
 <p>The header element has the following description:
-<specList><specDesc key="teiHeader" atts="type"/></specList>
+<specList><specDesc key="teiHeader" /></specList>
 </p>
 <p>As discussed above, the <gi>teiHeader</gi> element has five principal
 components:
@@ -1000,12 +1000,14 @@ class. By default, this class makes available the following elements:
   <specDesc key="classDecl"/>
   <specDesc key="geoDecl"/>
   <specDesc key="schemaSpec"/>
+  <specDesc key="schemaRef"/>
 </specList>Each of these elements is further described
 in the appropriate section below. Other modules have the ability to
 extend this class; examples are noted in section <ptr target="#HDENCOTH"/>
 </p>
 <specGrp xml:id="D225">
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/encodingDesc.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/schemaRef.xml"/>
 <specGrpRef target="#D2251"/>
 <specGrpRef target="#D2252"/>
 <specGrpRef target="#D2253"/>
@@ -1764,8 +1766,9 @@ more than one language, as in the following example:
     <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/geoDecl.xml"/>
   </div>
 
+
   <div type="div3" xml:id="HDSCHSPEC"><head>The Schema Specification</head>
-    <p>The <gi>schemaSpec</gi> element contains a schema specification. When this element appears inside <gi>encodingDesc</gi>, it allows embedding of a schema inside a TEI header; alternatively, this element may be used in the <gi>body</gi> of an ODD document. The use of ODD files, and their relationship to schemas, is described in detail in <ptr target="#TD"/>.</p>
+    <p>The <gi>schemaSpec</gi> element contains a schema specification. When this element appears inside <gi>encodingDesc</gi>, it allows embedding of a TEI ODD customization file inside a TEI header; alternatively, this element may be used in the <gi>body</gi> of an ODD document. The use of ODD files, and their relationship to schemas, is described in detail in <ptr target="#TD"/>.</p>
 
     <p>A <gi>schemaSpec</gi> element contains all the information needed to generate schemas for a particular TEI customization, and the ODD documentation elements, by reference to the TEI, are more succinct than the schemas derived from them. Therefore you may find it
     convenient to make a copy of the <gi>schemaSpec</gi> from your project's ODD document inside the <gi>teiHeader</gi> itself, in addition to
@@ -1783,6 +1786,15 @@ more than one language, as in the following example:
           </schemaSpec>
         </encodingDesc>
       </egXML>
+    </p>
+    <p>Alternatively, it is possible to point to an external ODD customization file or schema through use of the <gi>schemaRef</gi> element. More than one <gi>schemaRef</gi> element may be provided for different sources, stages in a workflow, or formats.
+      
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <schemaRef type="interchangeODD" url="http://www.tei-c.org/release/xml/tei/custom/odd/tei_lite.odd"/>
+        <schemaRef type="interchangeRNG" url="http://www.tei-c.org/release/xml/tei/custom/odd/tei_lite.rng"/>
+        <schemaRef type="projectODD" url="file:///schema/project.odd"/>
+      </egXML>
+      The <att>url</att> attribute may be any form of URI pointer including a private URI syntax documented by a <gi>prefixDef</gi>.  
     </p>
   </div>
 

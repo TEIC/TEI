@@ -6,7 +6,8 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-<?xml-model href="../../../p5odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" 
+     schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="TD" n="27"
   xmlns:rng="http://relaxng.org/ns/structure/1.0">
   <head>Documentation Elements</head>
@@ -294,7 +295,7 @@ an XML Document Type Declaration.</item-->
     <p>Unlike most elements in the TEI scheme, each of these <soCalled>specification elements</soCalled> has a
       fairly rigid internal structure consisting of a large number of child elements which are always
       presented in the same
-      order.<!-- For this reason, we refer to them metaphorically as <soCalled>crystals</soCalled>. -->
+      order.
       Furthermore, since these elements all describe markup objects in broadly similar ways, they have several
       child elements in common. In the remainder of this chapter, we discuss first the elements which are
       common to all the specification elements, and then those which are specific to a particular type. </p>
@@ -614,7 +615,8 @@ to mark any technical term, thus:
         <p>An <gi>elementRef</gi> provides the name of an element which may appear at a certain point in a
         content model. A <gi>classRef</gi> provides the name of a class, members of which may appear at a
         certain point in content model. A <gi>macroRef</gi> provides the name of a predefined macro, the
-        expansion of which may be inserted at a certain point in a content model. The <gi>anyElement</gi> element is used in a few special cases where any element is permitted in a content model. </p>
+        expansion of which may be inserted at a certain point in a content model. The <gi>anyElement</gi> element 
+        is used in a few special cases where any element is permitted in a content model. </p>
       <p>These elements are all members of an attribute class which provides attributes that further modify
         their significance as follows: <specList>
           <specDesc key="att.repeatable" atts="minOccurs maxOccurs context"/>
@@ -910,6 +912,15 @@ to mark any technical term, thus:
           /> above. Note that each is, of necessity, mapped eventually to an externally defined datatype such
           as W3C Schema's <ident>text</ident> or <ident>name</ident>, possibly combined to give more
           expressivity, or constrained to a particular defined usage. </p>
+        <p>It is possible reference W3C schema datatypes directly using <att>name</att>. In this case, 
+          the child <gi>dataFacet</gi> can be used instead of <att>restriction</att> to set W3C schema compliant 
+          restrictions on the datatype. This is particularly useful for restrictions that cannot be imposed with a 
+          regular expression pattern. 
+          <egXML xmlns="http://www.tei-c.org/ns/Examples"><dataRef name="decimal">
+            <dataFacet name="maxInclusive" value="360.0"/>
+            <dataFacet name="minInclusive" value="-360.0"/>
+            </dataRef></egXML>   
+        Note that restrictions are either expressed with <att>restriction</att> or <gi>dataFacet</gi>, never both.</p>
         <p>Attributes <att>minOccurs</att> and <att>maxOccurs</att> are available for the case where an
           attribute may take more than one value of the type specified. For example, the <att>target</att>
           attribute provided by the <ident type="class">att.pointing</ident> class has the following
@@ -1509,7 +1520,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
               it is assumed to apply to all instances of the element defined in its parent
                 <gi>elementSpec</gi> for all outputs. Otherwise its applicability depends on these
               attributes.</item>
-            <item>Individual <gi>model</gi> elements are processed independently, except when they appear
+            <item>Only one of the <gi>model</gi>s is to be applied for a particular instance of the element, except when they appear
               within a <gi>modelSequence</gi>
             </item>
             <item>Consequently, if there are two or more <gi>model</gi> elements provided for an
@@ -1715,6 +1726,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/attRef.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/datatype.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/dataRef.xml"/>
+      <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/dataFacet.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/defaultVal.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/valDesc.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/valItem.xml"/>
@@ -1867,11 +1879,11 @@ most recent version of the Guidelines would be used instead.--></p>
           <elementSpec ident="soundClip">
             <classes><memberOf key="model.pPart.data"/></classes>
             <attList>
-              <attRef class="att.source" name="source"/>
+              <attRef class="att.global.source" name="source"/>
             </attList>
           </elementSpec>
         </schemaSpec></egXML>
-        This will provide the <att>source</att> attribute from the <ident type="class">att.source</ident> class on the new 
+        This will provide the <att>source</att> attribute from the <ident type="class">att.global.source</ident> class on the new 
         <gi scheme="imaginary">soundClip</gi> element.
       </p>
       
@@ -1882,7 +1894,7 @@ most recent version of the Guidelines would be used instead.--></p>
             <moduleRef key="header"/>
             <moduleRef key="teistructure"/>
             <elementSpec ident="head" mode="change">
-              <content><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.xtext"/></content>
+              <content><macroRef key="macro.xtext"/></content>
             </elementSpec>
           </schemaSpec>
         </egXML>

@@ -5,10 +5,34 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<classSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0" ident="att.repeatable" type="atts" module="tagdocs">
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<classSpec xmlns:rng="http://relaxng.org/ns/structure/1.0"  xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+           xmlns="http://www.tei-c.org/ns/1.0" ident="att.repeatable" type="atts" module="tagdocs">
   <desc versionDate="2013-11-21" xml:lang="en">supplies attributes for
   the elements which define component parts of a content model.</desc>
+  <constraintSpec ident="MAXandMINoccurs" scheme="schematron">
+    <!-- This rule applies to <datatype>, too -->
+    <desc>The value of <att>minOccurs</att> should be less than or
+    equal to that of <att>maxOccurs</att>. Since the default value of
+    <att>maxOccurs</att> is 1, if it is not specifed
+    <att>minOccurs</att> should be less than or equal to 1, i.e. 0 or
+    1.</desc>
+    <constraint>
+      <sch:rule context="*[@minOccurs and @maxOccurs]">
+        <!-- we know that @minOccurs is castable as an integer, and we know that -->
+        <!-- @maxOccurs is either "unbounded" or castable as an integer, because -->
+        <!-- they have passed standard grammar-based validation. -->
+        <sch:let name="min" value="@minOccurs cast as xs:integer"/>
+        <sch:let name="max" value="if ( normalize-space(@maxOccurs) eq 'unbounded' )
+                                   then -1
+                                   else @maxOccurs cast as xs:integer"/>
+        <sch:assert test="$max eq -1  or  $max ge $min">@maxOccurs should be greater than or equal to @minOccurs</sch:assert>
+      </sch:rule>
+      <sch:rule context="*[@minOccurs and not(@maxOccurs)]">
+        <sch:assert test="@minOccurs cast as xs:integer lt 2">When @maxOccurs is not specified, @minOccurs must be 0 or 1</sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="context">
       <desc versionDate="2013-11-21" xml:lang="en">supplies an XPath

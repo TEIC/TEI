@@ -6,7 +6,7 @@
     $Date$
     $Id$
 -->
-<?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" ident="dataRef">
   <desc versionDate="2010-05-14" xml:lang="en">identifies the datatype of an attribute value, either by referencing an item in an externally defined datatype library, or by
     pointing to a TEI-defined data specification</desc>
@@ -14,9 +14,25 @@
     <memberOf key="att.global"/>
     <memberOf key="model.oddRef"/>
     <memberOf key="model.contentPart"/>
-    <memberOf key="att.readFrom"/>
   </classes>
-  <content/>
+  <content>
+    <elementRef minOccurs="0" maxOccurs="unbounded" key="dataFacet"/>
+  </content>
+  <constraintSpec ident="restrictDataFacet" scheme="isoschematron">
+    <constraint>
+      <sch:rule context="tei:dataRef[tei:dataFacet]">
+        <sch:assert test="@name" role="nonfatal">Data facets can only be specified for references to datatypes specified by
+          XML Schemas: Part 2: Datatypes</sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="restrictAttRestriction" scheme="isoschematron">
+    <constraint>
+      <sch:rule context="tei:dataRef[tei:dataFacet]">
+        <sch:report test="@restriction" role="nonfatal">The attribute restriction cannot be used when dataFacet elements are present.</sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attList org="choice">
       <attDef ident="key">
@@ -67,6 +83,10 @@
     
   <remarks versionDate="2010-05-14" xml:lang="en">
     <p>Only one of the attributes <att>key</att>, <att>name</att>, and <att>ref</att> may be used. 
+    </p>
+  </remarks>
+  <remarks versionDate="2010-05-14" xml:lang="en">
+    <p><gi>dataFacet</gi> children are only allowed when <gi>dataRef</gi>refers with <att>name</att> to a datatype from the specification <ref target="#XSD2">XML Schemas: Part 2: Datatypes</ref>.
     </p>
   </remarks>
   <listRef>
