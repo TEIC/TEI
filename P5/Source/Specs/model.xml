@@ -25,7 +25,7 @@
   </content>
   <constraintSpec scheme="isoschematron" ident="no_dup_default_models">
     <desc xml:lang="en" versionDate="2016-10-01">It is ambigous to have 2 <gi>model</gi>s
-      that have both the same <att>output</att> and have no <att>predicte</att>
+      that have both the same <att>output</att> and have no <att>predicate</att>
       (and thus select the same set of nodes).</desc>
     <!-- We cannot possibly check, in general, that two
          <att>predicate</att>s select the same set of nodes or not.
@@ -35,30 +35,30 @@
     <constraint>
       <sch:rule context="tei:model[ not( parent::tei:modelSequence ) ][ not( @predicate ) ]">
         <sch:let name="output" value="normalize-space( @output )"/>
-        <sch:report
-          test="following-sibling::tei:model
-                                      [ not( @predicate )]
-			                                [ normalize-space( @output ) eq $output ]"
-          >There are 2 (or more) 'model' elements in this '<sch:value-of select="local-name(..)"/>'
-          that have no predicate, but are targeted to the same output ("<sch:value-of
-            select="( $output, parent::modelGrp/@output, 'all')[1]"/>")</sch:report>
+        <sch:report test="following-sibling::tei:model
+                            [ not( @predicate )]
+                            [ normalize-space( @output ) eq $output ]">
+          There are 2 (or more) 'model' elements in this '<sch:value-of select="local-name(..)"/>'
+          that have no predicate, but are targeted to the same output
+          ("<sch:value-of select="( $output, parent::modelGrp/@output, 'all')[1]"/>")</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
   <constraintSpec scheme="isoschematron" ident="no_dup_models">
     <desc xml:lang="en" versionDate="2016-10-01">It is ambigous to have 2 <gi>model</gi>s
-      that have both the same <att>output</att> and the same <att>predicte</att>
+      that have both the same <att>output</att> and the same <att>predicate</att>
       (and thus select the same set of nodes).</desc>
     <constraint>
       <sch:rule context="tei:model[ not( parent::tei:modelSequence ) ][ @predicate ]">
         <sch:let name="predicate" value="normalize-space( @predicate )"/>
         <sch:let name="output" value="normalize-space( @output )"/>
         <sch:report test="following-sibling::tei:model
-			                                                [ normalize-space( @predicate ) eq $predicate ]
-			                                                [ normalize-space( @output ) eq $output ]"
-          >There are 2 (or more) 'model' elements in this '<sch:value-of
-            select="local-name(..)"/>' that have the same predicate, and are targeted to the same output ("<sch:value-of
-            select="( $output, parent::modelGrp/@output, 'all')[1]"/>") </sch:report>
+                            [ normalize-space( @predicate ) eq $predicate ]
+                            [ normalize-space( @output ) eq $output ]">
+          There are 2 (or more) 'model' elements in this
+          '<sch:value-of select="local-name(..)"/>' that have
+          the same predicate, and are targeted to the same output
+          ("<sch:value-of select="( $output, parent::modelGrp/@output, 'all')[1]"/>")</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
