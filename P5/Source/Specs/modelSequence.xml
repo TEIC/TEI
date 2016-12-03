@@ -7,7 +7,7 @@
     $Id:  $
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" ident="modelSequence" module="tagdocs">
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" ident="modelSequence" module="tagdocs">
   <desc versionDate="2015-05-15" xml:lang="en">any sequence of model or modelSequence elements which
     is to be processed as a single set of actions</desc>
   <classes>
@@ -19,12 +19,15 @@
         <classRef key="model.glossLike"/>
         <classRef key="model.descLike"/>
       </alternate>
-      <!--   <elementRef key="model" maxOccurs="unbounded" minOccurs="2"/>
-    restore this when issue #135 is fixed 
- -->
-      <elementRef key="model" maxOccurs="unbounded"/>
+      <elementRef key="model" minOccurs="2" maxOccurs="unbounded"/>
     </sequence>
   </content>
+  <constraintSpec scheme="schematron" ident="no_outputs_nor_predicates_4_my_kids">
+    <constraint>
+      <sch:report test="tei:model[@predicate|@output]" role="warning"
+        >The 'model' children of a 'modelSequence' element inherit the @predicate and @output attributes of the parent 'modelSequence', and thus should not have their own</sch:report>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="predicate" usage="opt">
       <desc versionDate="2015-05-15" xml:lang="en">the condition under which this model applies
