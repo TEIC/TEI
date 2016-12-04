@@ -1523,11 +1523,14 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
             <item>Only one of the <gi>model</gi>s is to be applied for a particular instance of the element, except when they appear
               within a <gi>modelSequence</gi>
             </item>
-            <item>Consequently, if there are two or more <gi>model</gi> elements provided for an
-                <gi>elementSpec</gi>, and none of them has a <att>predicate</att> or an <att>output</att>
-             attribute, then an implementation may either choose to regard this as an error, or
-              apply their own algorithm to determine the priorities; the nature of that algorithm (first
-              found, last found, etc.) should form part of the implementation's documentation. </item>
+            <item>A <soCalled>matching</soCalled> model is one where the element to be processed satisfies the XPath in the 
+              <att>predicate</att> attribute of the <gi>model</gi> or <gi>modelSequence</gi> and the current 
+              output method matches the method specified in the <att>output</att> attribute of the <gi>model</gi>, 
+              <gi>modelSequence</gi>, or a containing <gi>modelGrp</gi>. A <gi>model</gi> or <gi>modelSequence</gi> 
+              without a <att>predicate</att> always matches the element to be processed. A <gi>model</gi>, 
+              <gi>modelGrp</gi>, or <gi>modelSequence</gi> without an <att>output</att> attribute matches any output method.</item>
+            <item>Processing Model implementations must execute only the first matching <gi>model</gi> or 
+              <gi>modelSequence</gi> in document order.</item>
             <item>If there are two or more <gi>model</gi> elements provided for an <gi>elementSpec</gi> but
               they have different <att>output</att> attributes then the implementation should choose the
                 <gi>model</gi> appropriate to the desired output. </item>
