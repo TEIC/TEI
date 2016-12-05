@@ -588,27 +588,23 @@ Georgie, and Dim, ... &lt;/p&gt;</egXML>
             with any element, either by default, or by means of the global <att>rendition</att>
             attribute. For example: <egXML xmlns="http://www.tei-c.org/ns/Examples">
               <tagsDecl>
-                <!-- define italic style using CSS -->
-                <rendition xml:id="IT" scheme="css">font-style: italic</rendition>
-                <!-- define a serif font family -->
-                <rendition xml:id="FontRoman" scheme="css">font-family: serif</rendition>
-                <!-- set italic style as default for the emph and hi elements -->
-                <namespace name="http://www.tei-c.org/ns/1.0">
-                  <tagUsage gi="emph" render="#IT"/>
-                  <tagUsage gi="hi" render="#IT"/>
-                  <!-- set the default font-family for the text element -->
-                  <tagUsage gi="text" render="#FontRoman"/>
-                </namespace>
+                <!-- define italic style using CSS, selecting it as default for emph and hi elements -->
+                <rendition xml:id="IT" scheme="css"
+			   selector="emph hi">font-style: italic;</rendition>
+                <!-- define a serif font family, selecting it as default for the text element -->
+                <rendition xml:id="FontRoman" scheme="css"
+			   selector="text">font-family: serif;</rendition>
               </tagsDecl>
               <!-- ... -->
               <text>
                 <body>
                   <div>
-                    <p rendition="#IT"
-                      ><!-- this paragraph uses the seriffed font, but is in italic--></p>
+                    <p rendition="#IT">
+		      <!-- this paragraph uses the seriffed font, but is in italic-->
+		    </p>
                     <p>
-                      <!-- this paragraph uses the seriffed font, but is not in
-   italic --></p>
+                      <!-- this paragraph uses the seriffed font, but is not in italic -->
+		    </p>
                   </div>
                 </body>
               </text>
@@ -636,9 +632,10 @@ Georgie, and Dim, ... &lt;/p&gt;</egXML>
             document, rather than to control how it should be formatted. </p>
           <p>In the TEI scheme, it is possible to supply information about the appearance of
             elements within a source document in the following distinct ways: <list rend="numbered">
-              <item>One or more properties may be specified as the default for all elements of a
-                given type, using the <att>render</att> attribute to point to <gi>rendition</gi>
-                elements ;</item>
+	    <item>One or more properties may be specified as the
+	    default for a set of elements (based on an external
+	    scheme, by default CSS), using <gi>rendition</gi> elements
+	    and their <att>selector</att> attributes;</item>
               <item>One or more properties may be specified for individual element occurrences,
                 using the <att>rend</att> attribute with any convenient set of one or more
                 sequence-indeterminate tokens; </item>
@@ -670,9 +667,16 @@ Georgie, and Dim, ... &lt;/p&gt;</egXML>
           <p>The <att>source</att> attribute is used to indicate the source of an element and its content, for example 
             by pointing to a bibliographic citation for a quotation to indicate the source from which it derives.  The target of the
             pointer may be an entry in a bibliographic list of some kind, or a pointer to a digital version of the source itself. </p>
-          <p>As with other TEI pointers, the value of this attribute may take the form of any URI, using full, fragmentary, or private-URI syntax. 
-           In the following typical example a fragmentary URI value is used to point to <gi>bibl</gi> elsewhere 
-            in the bibliography of the document (or another document) which contains a bibliographic source for the quotation itself:
+
+	    <p>As with other TEI pointers, the value of this attribute
+	    is expressed as any form of URI, for example an absolute
+	    URL, a relative URL, or a private scheme URI that is
+	    expanded to a relative or absolute URL as documented in a
+	    <gi>prefixDef</gi>. In the following typical example a
+	    relative <soCalled>bare name</soCalled> URL value is used
+	    to point to a <gi>bibl</gi> elsewhere in the bibliography
+	    of the document which contains a bibliographic source for
+	    the quotation itself:
               <egXML xmlns="http://www.tei-c.org/ns/Examples">
                 <p>
                   <!-- ... -->

@@ -868,25 +868,25 @@ attribute values supplied.
 rendering information by using the <att>rendition</att> attribute and
 its associated <gi>rendition</gi> element as described in section <ptr
 target="#HD57-1"/>. If the rendition of passages tagged as
-<gi>said</gi> is uniform throughout a text, then the <att>render</att>
-attribute of the <gi>tagUsage</gi> element in the header may be used
-to specify a default rendering, in which case the same section might
-simply be tagged: 
+<gi>said</gi> is generally uniform throughout a text, then the
+<gi>rendition</gi> element may used to specify a default rendering, in
+which case the same section might simply be tagged:
 
- <egXML xmlns="http://www.tei-c.org/ns/Examples"
- source="#DSHD-eg-30">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#DSHD-eg-30">
 <said>Who-e debel
  you?</said> — he at last said — 
  <said>you no speak-e,
  damme, I kill-e.</said>  And so saying,
  the lighted tomahawk began flourishing
  about me in the dark.
-<!-- in the header -->
-<tagsDecl>
-  <rendition xml:id="prequote" scheme="css" scope="before">content:"‘";</rendition>
-  <rendition xml:id="postquote" scheme="css" scope="after">content:"’";</rendition>
+<!-- in the header: -->
+<tagsDecl partial="true">
+  <rendition xml:id="prequote" scheme="css"
+	     selector="said" scope="before">content:"‘";</rendition>
+  <rendition xml:id="postquote" scheme="css"
+	     selelctor="said" scope="after">content:"’";</rendition>
   <namespace name="http://www.tei-c.org/ns/1.0">    
-    <tagUsage gi="said" render="#prequote #postquote"/>
+    <tagUsage gi="said"/>
   </namespace>
 </tagsDecl>
 </egXML>

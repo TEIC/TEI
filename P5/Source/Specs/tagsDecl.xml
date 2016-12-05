@@ -27,13 +27,9 @@ $Id$
     <memberOf key="model.encodingDescPart"/>
   </classes>
   <content>
-    <sequence>
-      
-        <elementRef key="rendition" minOccurs="0" maxOccurs="unbounded"/>
-      
-      
-        <elementRef key="namespace" minOccurs="0" maxOccurs="unbounded"/>
-      
+    <sequence>      
+      <elementRef key="rendition" minOccurs="0" maxOccurs="unbounded"/>
+      <elementRef key="namespace" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
   <attList>
@@ -54,13 +50,14 @@ $Id$
       </remarks>
     </attDef>
   </attList>
-  <exemplum xml:lang="en">
+  <exemplum xml:lang="en" versionDate="2016-12-05">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <tagsDecl partial="true">
-        <rendition xml:id="rend-it">rendered in italic font</rendition>
+        <rendition xml:id="rend-it" scheme="css"
+		   selector="emph hi name title">font-style: italic;</rendition>
         <namespace name="http://www.tei-c.org/ns/1.0">
-          <tagUsage gi="hi" occurs="467" render="#rend-it"/>
-          <tagUsage gi="title" occurs="45" render="#rend-it"/>
+          <tagUsage gi="hi" occurs="467"/>
+          <tagUsage gi="title" occurs="45"/>
         </namespace>
         <namespace name="http://docbook.org/ns/docbook">
           <tagUsage gi="para" occurs="10"/>
@@ -69,34 +66,6 @@ $Id$
     </egXML>
     <p>If the <att>partial</att> attribute were not specified here, the implication would be that
     the document in question contains only <gi>hi</gi>, <gi>title</gi>, and <gi>para</gi> elements.</p>
-  </exemplum>
-  <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <tagsDecl>
-        <rendition xml:id="fr_rend-it">restitué à l'affichage en caractères italiques</rendition>
-        <namespace name="http://www.tei-c.org/ns/1.0">
-          <tagUsage gi="hi" occurs="467" render="#fr_rend-it"/>
-          <tagUsage gi="title" occurs="45" render="#fr_rend-it"/>
-        </namespace>
-        <namespace name="http://docbook.org/ns/docbook">
-          <tagUsage gi="para" occurs="10"/>
-        </namespace>
-      </tagsDecl>
-    </egXML>
-  </exemplum>
-  <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <tagsDecl>
-        <rendition xml:id="zh-tw_rend-it">用於斜體字</rendition>
-        <namespace name="http://www.tei-c.org/ns/1.0">
-          <tagUsage gi="hi" occurs="467" render="#zh-tw_rend-it"/>
-          <tagUsage gi="title" occurs="45" render="#zh-tw_rend-it"/>
-        </namespace>
-        <namespace name="http://docbook.org/ns/docbook">
-          <tagUsage gi="para" occurs="10"/>
-        </namespace>
-      </tagsDecl>
-    </egXML>
   </exemplum>
   <listRef>
     <ptr target="#HD57"/>
