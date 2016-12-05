@@ -80,7 +80,7 @@ identity transform
   </xsl:template>
 
   <xsl:template match="processing-instruction('insert')">
-    <xsl:variable name="info" select="doc(resolve-uri('../repodate.xml',base-uri(/)))"/>
+    <xsl:variable name="info" select="doc(resolve-uri('../repodate.xml', static-base-uri()))"/>
     <xsl:choose>
       <xsl:when test=".='date'">
 	<xsl:variable name="date">
@@ -125,7 +125,7 @@ identity transform
         </xsl:choose>
       </xsl:when>
       <xsl:when test=".='version'">
-	<xsl:variable name="v" select="normalize-space(unparsed-text(resolve-uri('../VERSION',base-uri(/))))"/>
+	<xsl:variable name="v" select="normalize-space(unparsed-text(resolve-uri('../VERSION',static-base-uri())))"/>
 	<ref   target="AB.html#ABTEI4">Version</ref>&#160;<ref target="../../readme-{replace($v,'[A-z]','')}.html"><xsl:value-of
 	    select="$v"/></ref>
       </xsl:when>
