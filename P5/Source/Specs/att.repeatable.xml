@@ -31,6 +31,9 @@ $Id$
       <sch:rule context="*[@minOccurs and not(@maxOccurs)]">
         <sch:assert test="@minOccurs cast as xs:integer lt 2">When @maxOccurs is not specified, @minOccurs must be 0 or 1</sch:assert>
       </sch:rule>
+      <sch:rule context="*[@maxOccurs and not(@minOccurs)]">
+        <sch:assert test="@maxOccurs cast as xs:integer = 0">@maxOccurs should be greater than or equal to @minOccurs, which has a default value of 1</sch:assert>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>
@@ -51,6 +54,11 @@ $Id$
       occur.</desc>
       <datatype><dataRef key="teidata.count"/></datatype>
       <defaultVal>1</defaultVal>
+      <remarks versionDate="2016-12-08" xml:lang="en">
+        <p><att>minOccurs</att> cannot be greater than <att>maxOccurs</att>. If a <att>minOccurs</att> 
+          greater than 1 is specified, a <att>maxOccurs</att> with an equal or greater value must also 
+          be specified.</p>
+      </remarks>
     </attDef>
     <attDef ident="maxOccurs">
       <gloss versionDate="2007-12-20" xml:lang="en">maximum number of occurences</gloss>
@@ -65,4 +73,8 @@ $Id$
       <defaultVal>1</defaultVal>
     </attDef>
   </attList>
+  <remarks versionDate="2016-12-08" xml:lang="en">
+    <p><att>maxOccurs</att> cannot be less than <att>minOccurs</att>. Since the default value of 
+      <att>minOccurs</att> is 1, if <att>maxOccurs</att> is set to 0, <att>minOccurs</att> must also be 0.</p>
+  </remarks>
 </classSpec>
