@@ -12,11 +12,10 @@ $Id$
   the elements which define component parts of a content model.</desc>
   <constraintSpec ident="MAXandMINoccurs" scheme="schematron">
     <!-- This rule applies to <datatype>, too -->
-    <desc>The value of <att>minOccurs</att> should be less than or
+    <desc>The value of <att>minOccurs</att> should always be less than or
     equal to that of <att>maxOccurs</att>. Since the default value of
-    <att>maxOccurs</att> is 1, if it is not specifed
-    <att>minOccurs</att> should be less than or equal to 1, i.e. 0 or
-    1.</desc>
+      <att>maxOccurs</att> is 1, when <att>maxOccurs</att> is not specified
+      <att>minOccurs</att> must always be less than or equal to 1.</desc>
     <constraint>
       <sch:rule context="*[@minOccurs and @maxOccurs]">
         <!-- we know that @minOccurs is castable as an integer, and we know that -->
@@ -65,4 +64,10 @@ $Id$
       <defaultVal>1</defaultVal>
     </attDef>
   </attList>
+  <remarks xml:lang="en" versionDate="2016-12-08"><p>The value of <att>minOccurs</att> should always be less than or
+    equal to that of <att>maxOccurs</att>. Since the default value of
+    <att>maxOccurs</att> is 1, when <att>maxOccurs</att> is not specified
+    <att>minOccurs</att> must always be less than or equal to 1. An ODD processor
+  should therefore raise an error if a value of <att>minOccurs</att> greater than 1 is 
+    supplied in the absence of a <att>maxOccurs</att> with a value exceeding it. </p></remarks>
 </classSpec>
