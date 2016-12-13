@@ -14,7 +14,7 @@ See the file COPYING.txt for details
       </titleStmt>
       <editionStmt>
         <edition>
-          <date when="2016-12-06">6 December 2016</date>
+          <date when="2016-12-15">Thursday, 15 December 2016</date>
         </edition>
       </editionStmt>
       <publicationStmt>
@@ -27,32 +27,62 @@ See the file COPYING.txt for details
   </teiHeader>
   <text>
     <body>
-      <p>
-This release (Codename: Sinterklaas) has...
-
-
+      <p>This release (Codename: Sinterklaas) has...
         <list>
-          <item> Add more items</item>
+          <item><!-- Add more items --></item>
+          <item>A new datatype <ident type="datatype">teidata.prefix</ident> has been introduced
+          to allow restricting an attribute value to one that could be use as a URI scheme name.</item>
+          <item>The <att>ident</att> attribute of <gi>prefixDef</gi>
+          is now restricted to the new <ident
+          type="datatype">teidata.prefix</ident> datatype. This will
+          avoid errors which would occur if a character that is not
+          legal as a URI scheme were used as part of this attribute’s
+          value.</item>
+          <item>Further formal constraints on the <att>output</att>
+          and <att>predicate</att> attributes of <gi>model</gi> have
+          been added to try to help users avoid ambiguous sets of
+          <gi>model</gi>s elements.</item>
+          <item>ISO Schematron is now the only flavor of Schematron
+          used or supported by the <title>Guidelines</title>.</item>
+          <item>The following constructs are now deprecated:
+            <list>
+              <item>the value <val>isoschematron</val> of
+              <att>scheme</att> of <gi>constraintSpec</gi> (use
+              <val>schematron</val> instead, as they mean the same
+              thing now).</item>
+              <item>the default value (<val>false</val>) of <att>defective</att> of <ident type="class">att.msExcerpt</ident></item>
+              <item>the default value (<val>unknown</val>) of <att>status</att> of <gi>availability</gi></item>
+              <item>the default value (<val>unknown</val>) of <att>status</att> of <gi>correction</gi></item>
+              <item>the default value (<val>unknown</val>) of <att>aloud</att> of <gi>said</gi></item>
+              <item>the default value (<val>unknown</val>) of <att>discrete</att> of <gi>sound</gi></item>
+            </list>
+          </item>
+          <item>The rules regarding <gi>f</gi>, its <att>fVal</att> attribute and its content have been
+          cleaned up to fix a contradiction.</item>
+          <item>The <gi>title</gi> element is now a member of <ident type="class">att.datable</ident>.</item>
+          <item>The <gi>listBibl</gi> element is now a member of <ident type="class">model.frontPart</ident>.</item>
           <item>A new element called <gi>anyElement</gi>, which permits any XML content in a content model. This removes the last remaining requirement for RELAX NG in content models, allowing us to define TEI entirely in TEI.</item>
           <item>A new element called <gi>dataFacet</gi> for restricting references to W3C datatypes in ODD.</item>
           <item><gi>supplied</gi> is now part of model.choicePart, so it can be used within <gi>choice</gi>.</item>
-          <item>A new attribute <att>require</att> has been added to att.textCritical. It can be used to indicate interdependance between
-            variant readings.</item>
+          <item>A new attribute <att>require</att> has been added to
+          <ident type="class">att.textCritical</ident>. It can be used
+          to indicate interdependance between variant readings.</item>
           <item>A new Exemplar called <ident>simpleText</ident> has been added. This
           updated version of TEI Lite, developed as part of the 
             <title>TEI Simple</title>  project, makes extensive use of 
             the processing model techniques introduced in a previous release and is fully documented
             by the ODD included in this release.
           </item>
-          
         </list>
       </p>
-
-      <p>In addition, improvements have been made to the XSL stylesheets (which provide processing
-        of TEI ODD files for Roma and OxGarage as well as other TEI conversions). The Stylesheets
-        are maintained separately from the Guidelines and are at <ref target="https://github.com/TEIC/Stylesheets">https://github.com/TEIC/Stylesheets</ref>.</p>
-
-<p>Say something about oXygen release maybe?</p>
+      <p>In addition, dozens of wording improvements and corrections
+      of typographic errors have been made to the <title>Guidelines</title>.</p>
+      <p>Furthermore, improvements have been made to the XSL
+      stylesheets (which provide processing of TEI ODD files for Roma
+      and OxGarage as well as other TEI conversions). The Stylesheets
+      are maintained separately from the Guidelines and are at <ref
+      target="https://github.com/TEIC/Stylesheets">https://github.com/TEIC/Stylesheets</ref>.</p>
+      <p><!-- Say something about oXygen release maybe? --></p>
     </body>
   </text>
 </TEI>
