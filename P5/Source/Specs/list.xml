@@ -4,8 +4,9 @@
   See the file COPYING.txt for details
   $Date$
   $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="list">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="list">
   <gloss versionDate="2007-06-12" xml:lang="fr">liste</gloss>
+  <gloss versionDate="2016-11-25" xml:lang="de">Liste</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains any sequence of items organized as a list.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">목록의 형태로 정리된 항목을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含以列表方式呈現的任何連續項目。</desc>
@@ -15,6 +16,7 @@
     organizados en una lista.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una qualsiasi sequenza di voci organizzate in
     una lista.</desc>
+    <desc versionDate="2016-11-25" xml:lang="de">enthält eine Reihe von Listenpunkten, die als Liste organisiert sind.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.sortable"/>
@@ -100,10 +102,11 @@
     
     <attDef ident="type" usage="opt" mode="change">
       <desc versionDate="2014-07-29" xml:lang="en">describes the nature of the items in the list.</desc>
+      <desc versionDate="2016-11-25" xml:lang="de">beschreibt die Art der Listenpunkte.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="semi" mode="add">
         <valItem ident="gloss">
-          <desc versionDate="2007-06-27" xml:lang="en">each list item glosses some term or concept, which is given by a label element
+          <desc versionDate="2016-11-25" xml:lang="en">each list item glosses some term or concept, which is given by a <gi>label</gi> element
             preceding the list item.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">목록의 각 항목은 선행하는 요소에서 제시된 용어 또는 개념에 대한 설명이다.</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">各列表項目為一些字詞或概念下註解，每個項目之前並帶有標籤元素。</desc>
@@ -116,22 +119,31 @@
             concept qui est donné par un élément <gi>label</gi> précédant l'item de la liste.</desc>
           <desc versionDate="2007-01-21" xml:lang="it">ogni voce dell'elenco è la glossa di un termine o
             concetto dato da un elemento legenda che precede la voce stessa</desc>
+            <desc versionDate="2016-11-25" xml:lang="de">jeder Listenpunkt erläutert einen Begriff oder ein Konzept, das von einem voranstehenden <gi>label</gi>-Element genannt wird.</desc>
         </valItem>
         <valItem ident="index">
           <desc versionDate="2014-05-04" xml:lang="en">each list item is an entry in an index such as the alphabetical topical index 
           at the back of a print volume.</desc>
+            <desc versionDate="2016-11-25" xml:lang="de">jeder Listenpunkt ist ein Registereintrag z. B. in einem alphabetisch geordneten 
+                Sachregister am Ende einer Druckausgabe.</desc>
         </valItem>
         <valItem ident="instructions">
           <desc versionDate="2014-05-04" xml:lang="en">each list item is a step in a sequence of instructions, as in a
             recipe.</desc>
+            <desc versionDate="2016-11-25" xml:lang="de">jeder Listenpunkt ist ein Arbeitsschritt in einer Folge von Anweisungen, 
+                wie z. B. in einem Rezept.</desc>
         </valItem>
         <valItem ident="litany">
           <desc versionDate="2014-05-04" xml:lang="en">each list item is one of a sequence of petitions, supplications 
             or invocations, typically in a religious ritual.</desc>
+            <desc versionDate="2016-11-25" xml:lang="de">jeder Listenpunkt ist Teil einer Reihenfolge von Gebeten, Bitten oder Anrufungen die 
+                üblicherweise in einem religiösen Ritual verwendet werden.</desc>
         </valItem>
         <valItem ident="syllogism">
           <desc versionDate="2014-05-04" xml:lang="en">each list item is part of an argument consisting of two or more propositions 
             and a final conclusion derived from them.</desc>
+            <desc versionDate="2016-11-25" xml:lang="de">jeder Listenpunkt ist Teil eines Arguments, das aus zwei oder mehr Prämissen 
+                und einem daraus gezogenen Schluss besteht.</desc>
         </valItem>
       </valList>
       <remarks versionDate="2014-07-30" xml:lang="en">
@@ -157,6 +169,17 @@
         <p> 当該要素の宣言では，要素<gi>label</gi>は，タグ<tag>list type="gloss"</tag>中で省略することができることになっているが，
           これは意味上のエラーになる． </p>
       </remarks>
+      <remarks versionDate="2016-11-25" xml:lang="de">
+          <p>In älteren Versionen dieser Richtlinien wurde empfohlen, mit dem Attribut <att>type</att> am <gi>list</gi>-Element 
+              die Darstellung oder das Erscheinungsbild einer Liste zu kodieren (also ob sie z. B. nummeriert oder mit Symbolen 
+              versehen ist). Die aktuelle Empfehlung ist, dafür die Attribute <att>rend</att> oder <att>style</att> zu verwenden, 
+              während mit <att>type</att> der Inhalt der Liste charakterisiert werden sollte.</p>
+      </remarks>
+        <remarks versionDate="2016-11-25" xml:lang="de">
+            <p>Die formale Syntax der Elementdeklaration 
+                erlaubt es, Listen vom <tag>list type="gloss"</tag> ohne das Element <gi>label</gi> zu verwenden; das ist jedoch ein 
+                semantischer Fehler.</p>
+        </remarks>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
@@ -342,6 +365,10 @@
   <remarks xml:lang="ja" versionDate="2008-04-05">
     <p rend="dataDesc"> 一連の項目またはラベルと項目の組の前に，選択的にヘダーをとることが ある．一連のラベルと項目の組の場合，選択的に，ひとつ以上のヘダーが
       先行することがある． </p>
+  </remarks>
+  <remarks xml:lang="de" versionDate="2016-11-25">
+      <p>Die Liste kann mit einer Überschrift <gi>head</gi> beginnen. Sie kann auch aus Paaren von Bezeichnern und Beschreibungen bestehen, 
+          sodass dann für jeden Teil spezielle Überschriften (<gi>headLabel</gi>, <gi>headItem</gi>) verwendet werden können.</p>
   </remarks>
   <listRef>
     <ptr target="#COLI" type="div2"/>

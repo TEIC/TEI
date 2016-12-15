@@ -4,8 +4,8 @@ Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="prefixDef">
-  <gloss versionDate="2012-11-22" xml:lang="en">prefixing scheme used in <ident type="datatype">data.pointer</ident> values</gloss>
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="prefixDef">
+  <gloss versionDate="2012-11-22" xml:lang="en">prefix definition</gloss>
   <desc versionDate="2012-12-26" xml:lang="en">defines a prefixing scheme used in <ident type="datatype">data.pointer</ident> values,
   showing how abbreviated URIs using the scheme may be expanded into full URIs.</desc>
   <classes>
@@ -13,16 +13,16 @@ $Id$
     <memberOf key="att.patternReplacement"/>
   </classes>
   <content>
-    
       <classRef key="model.pLike" minOccurs="0" maxOccurs="unbounded"/>
-    
   </content>
   <attList xmlns:rng="http://relaxng.org/ns/structure/1.0">
     <attDef ident="ident" usage="req">
       <desc versionDate="2012-11-22" xml:lang="en">supplies a name which functions as the prefix for an abbreviated
           pointing scheme such as a private URI scheme. The prefix constitutes the 
         text preceding the first colon.</desc>
-      <datatype><dataRef key="teidata.name"/></datatype>
+	<datatype>
+	  <dataRef key="teidata.prefix"/>
+	</datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="en" versionDate="2012-11-22">
@@ -42,6 +42,10 @@ $Id$
     combined with the value of <att>xml:base</att> in force at the
     place where the pointing attribute occurs to form an absolute URI
     in the usual manner as prescribed by <ref target="http://www.w3.org/TR/xmlbase/">XML Base</ref>.</p>
+  </remarks>
+  <remarks versionDate="2016-11-28" xml:lang="en">
+    <p>So that the value of this attribute may be mapped directly to a URI prefix, the value
+    is limited to <ident type="datatype">teidata.prefix</ident>.</p>
   </remarks>
   <listRef>
     <ptr target="#SAPU"/>

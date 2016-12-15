@@ -785,7 +785,7 @@
         <head>Internal Linking</head>
         <p>Internal links are cross-links within the article. In jTEI, you can point to other text
           structures that can have labels, namely <gi>div</gi>, <gi>figure</gi> (containing either
-          graphics or code examples), or <gi>table</gi>. You can link to those structures either
+          graphics or code examples), or <gi>table</gi>. Additionally, internal links can point to footnotes inside <gi>note</gi> elements, too. You can link to those structures either
           with an unlabeled cross-reference in <gi>ptr</gi>, or with a labeled link in <gi>ref</gi>.
           Both must have a <att>type</att> attribute with value <val>crossref</val>, and a
             <att>target</att> attribute, whose value should start with the <q>#</q> sign, followed
@@ -1862,7 +1862,7 @@
         </table>
       </div>
       <div>
-        <schemaSpec ident="tei_jtei" start="TEI">
+        <schemaSpec ident="tei_jtei" start="TEI" defaultExceptions="http://www.tei-c.org/ns/1.0 eg:egXML">
           <moduleRef key="tei"/>
           <moduleRef key="core"
             include="abbr author bibl biblScope cit date desc editor email emph foreign gap graphic head hi item label lb list listBibl mentioned name note num p pubPlace publisher q quote ptr ref series soCalled term title"/>
@@ -2409,7 +2409,7 @@
                 <desc versionDate="2014-03-20" xml:lang="en">describes the way the list
                   should be rendered. </desc>
                 <datatype maxOccurs="unbounded">
-                  <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+                  <dataRef key="teidata.enumerated"/>
                 </datatype>
                 <valList mode="replace" type="closed">
                   <valItem ident="bulleted">
@@ -2532,7 +2532,7 @@
                 In jTEI, we only use this attribute in the context of a <gi>head</gi> 
                 element in <gi>figure</gi>, where it must have one of two values.</desc>
                 <datatype>
-                  <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+                  <dataRef key="teidata.enumerated"/>
                 </datatype>
                 <valList type="closed">
                   <valItem ident="legend">
@@ -2557,7 +2557,7 @@
                   superscript. Note, however, that ordinals for centuries should be spelled out, 
                 not written using digits (<q>nineteenth century</q>, not <q>19th century</q>).</desc>
                 <datatype>
-                  <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+                  <dataRef key="teidata.enumerated"/>
                 </datatype>
                 <valList type="closed">
                   <valItem ident="cardinal">
@@ -3177,8 +3177,8 @@
           <constraintSpec ident="jtei.sch-crossrefTargetType" scheme="isoschematron">
             <constraint>
               <sch:rule context="tei:ptr[@type='crossref']|tei:ref[@type='crossref']">
-                <sch:assert test="id(substring-after(@target, '#'))/(self::tei:div|self::tei:figure|self::tei:table)">
-                  Cross-links (<sch:name/>[@type="crossref"]) should be targeted at div, figure, or table elements.
+                <sch:assert test="id(substring-after(@target, '#'))/(self::tei:div|self::tei:figure|self::tei:table|self::tei:note)">
+                  Cross-links (<sch:name/>[@type="crossref"]) should be targeted at div, figure, table, or note elements.
                 </sch:assert>
               </sch:rule>
             </constraint>

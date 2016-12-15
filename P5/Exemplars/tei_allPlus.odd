@@ -45,7 +45,8 @@
         their presence makes the documentation harder to read and use, and makes
         a schema that is often more lax than desired.</p>
 
-      <schemaSpec ident="tei_allPlus" prefix="tei_" start="TEI teiCorpus">
+      <schemaSpec ident="tei_allPlus" prefix="tei_" start="TEI teiCorpus" xmlns:teix="http://www.tei-c.org/ns/Examples"
+        defaultExceptions="http://www.tei-c.org/ns/1.0 http://www.w3.org/1998/Math/MathML http://www.w3.org/2000/svg teix:egXML">
         <moduleRef key="tei"/>           <!-- required -->
         <moduleRef key="core"/>          <!-- required -->
         <moduleRef key="analysis"/>
@@ -97,32 +98,6 @@
 	<?NameList?>
       </content>
     </macroSpec>
-
-    <macroSpec mode="change" ident="macro.anyXML">
-      <content>
-	<element xmlns="http://relaxng.org/ns/structure/1.0">
-	  <anyName>
-	    <except>
-	      <nsName ns="http://www.tei-c.org/ns/1.0"/>
-	      <nsName ns="http://www.w3.org/1998/Math/MathML"/>
-	      <nsName ns="http://www.w3.org/2000/svg"/>
-	      <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
-	    </except>
-	  </anyName>
-	  <zeroOrMore>
-	    <attribute>
-	      <anyName/>
-	    </attribute>
-	  </zeroOrMore>
-	  <zeroOrMore>
-	    <choice>
-	      <text/>
-	      <ref name="macro.anyXML"/>
-	    </choice>
-	  </zeroOrMore>
-	</element>
-      </content>
-      </macroSpec>
 
       </schemaSpec>
     </body>

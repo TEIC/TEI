@@ -4,7 +4,7 @@
   See the file COPYING.txt for details
   $Date$
   $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="biblStruct">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="biblStruct">
   <gloss versionDate="2005-04-15" xml:lang="en">structured bibliographic citation</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">구조화된 서지 인용</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">結構次要書目</gloss>
@@ -33,39 +33,19 @@
   </classes>
   <content>
     <sequence>
-      
-        <elementRef key="analytic" minOccurs="0" maxOccurs="unbounded"/>
-      
+      <elementRef key="analytic" minOccurs="0" maxOccurs="unbounded"/>      
       <sequence minOccurs="1" maxOccurs="unbounded">
         <elementRef key="monogr"/>
-        
-          <elementRef key="series" minOccurs="0" maxOccurs="unbounded"/>
-        
+        <elementRef key="series" minOccurs="0" maxOccurs="unbounded"/>
       </sequence>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.noteLike"/>
-          <elementRef key="idno"/>
-          <!-- we leave idno here for now even though it's deprecated in this
-     place; preference is to use <ptr> or <ref> to supply a URL for the
-     item  (LB 1 oct 12)
- -->
-          <classRef key="model.ptrLike"/>
-          <elementRef key="relatedItem"/>
-          <elementRef key="citedRange"/>
-        </alternate>
-      
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.noteLike"/>
+        <classRef key="model.ptrLike"/>
+        <elementRef key="relatedItem"/>
+        <elementRef key="citedRange"/>
+      </alternate>
     </sequence>
   </content>
-  <constraintSpec scheme="isoschematron" ident="deprecate-altIdentifier-child">
-    <desc>The use of an <gi>idno</gi> element as a direct child of
-    <gi>biblStruct</gi> is deprecated. Rather, <gi>idno</gi> should
-    appear as a child of a <gi>monogr</gi>, <gi>analytic</gi>, or
-    <gi>series</gi>.</desc>
-    <constraint xmlns:sch="http://purl.oclc.org/dsdl/schematron">
-      <sch:report test="child::tei:idno" role="nonfatal">WARNING: use of deprecated method — the use of the idno element as a direct child of the biblStruct element will be removed from the TEI on 2016-09-18</sch:report>
-    </constraint>
-  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <biblStruct>

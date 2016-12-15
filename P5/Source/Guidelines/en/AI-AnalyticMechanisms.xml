@@ -8,7 +8,7 @@ $Id$
 -->
 
 
-<?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="AI" n="15"><head>Simple Analytic Mechanisms</head>
 
@@ -438,6 +438,14 @@ named <soCalled>para</soCalled>:
     </egXML>
 </p>
 
+<p>A similar encoding can be used for hyphenation:
+  
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:space="preserve">A fire<pc force="strong">-</pc>proof vest is recom<pc force="weak">-</pc><lb/>
+mended. 
+</egXML>
+  
+    Refer to <ptr target="#COPU-2"/> for a discussion of the motivations for 
+  explicitely recording the presence of hyphens.</p>
 
 
 <p>The <gi>w</gi>, <gi>m</gi>, <gi>c</gi>, and <gi>pc</gi> elements can be used
@@ -486,7 +494,9 @@ representing an analysis or interpretation of it. Its target should be
 one of the elements described in the section <ptr target="#AISP"/> below,
 or some other interpretative element such as <gi>note</gi>, on which 
 see section <ptr target="#CONO"/> or <gi>fs</gi>,
-on which see chapter <ptr target="#FS"/>.
+on which see chapter <ptr target="#FS"/>. If a hierarchical form of classification 
+is desired then it may point to <gi>category</gi> element at a suitable level in a
+<gi>taxonomy</gi> see <ptr target="#HD55"/>.
  </p>
 <specGrp xml:id="DAIGA" n="Global attribute for analysis">
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.global.analytic.xml"/>
@@ -673,7 +683,7 @@ together inside a <gi>spanGrp</gi> element, with the values of the
 common attribute(s) inherited from the higher element, as follows.
  -->
 <p>The same analysis may be expressed with the <gi>interp</gi> element
-instead of the <gi>span</gi> element; this element provide attributes
+instead of the <gi>span</gi> element; this element provides attributes
 for recording an interpretive category and its value, as well as the
 identity of the interpreter, but does not itself indicate which passage
 of text is being interpreted; the same interpretive structures can thus
@@ -682,6 +692,7 @@ text passages and <gi>interp</gi> elements must be made either by
 pointing from the text to the <gi>interp</gi> element with the
 <att>ana</att> attribute defined in section <ptr target="#AIATTS"/>, or by
 pointing at both text and interpretation from a <gi>link</gi> element,
+<!-- If the associations must be made by @ana or <link>, then why does <interp> have an @inst? -sb, 2016-07-20 -->
 as described in chapter <ptr target="#SA" type="div1"/>.
  </p>
 <p>To encode the first example above using <gi>interp</gi>, it is

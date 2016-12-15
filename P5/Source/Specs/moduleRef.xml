@@ -4,7 +4,7 @@ Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="MODULEREF" ident="moduleRef">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="MODULEREF" ident="moduleRef">
   <gloss versionDate="2007-07-04" xml:lang="en">module reference</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">모듈 참조</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">referencia de módulo</gloss>
@@ -21,7 +21,6 @@ $Id$
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.oddRef"/>
-    <memberOf key="att.readFrom"/>
   </classes>
   <content>
     
@@ -137,7 +136,10 @@ processor should signal an error. </p>
     online source from which the specification of that module may be
     read. A URI may alternatively be supplied in the case of a non-TEI
     module, and this is expected to be written as a RELAX NG schema.
-    </p>
+    </p><p>If the <att>uri</att> attribute is used, the <gi>content</gi> element may also be supplied as 
+    a child of this element. Its content (which is assumed to be a fragment of RELAX NG code) will be copied
+    along with the content of the resource indicated by the  <att>uri</att> attribute into the 
+      target RELAX NG schema. </p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Les modules sont identifiés par le nom fourni comme valeur de l'attribut

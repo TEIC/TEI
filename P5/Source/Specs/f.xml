@@ -4,7 +4,7 @@ Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="iso-fs" ident="f">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="iso-fs" ident="f">
   <gloss versionDate="2007-07-05" xml:lang="en">feature</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">자질</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">功能</gloss>
@@ -26,22 +26,11 @@ $Id$
     <memberOf key="att.datcat"/>
   </classes>
   <content>
-    <alternate minOccurs="0" maxOccurs="unbounded">
+    <alternate minOccurs="1" maxOccurs="1">
       <textNode/>
-      <classRef key="model.gLike"/>
       <classRef key="model.featureVal"/>
     </alternate>    
   </content>
-  <constraintSpec ident="f-has-child-or-PCDATA" scheme="isoschematron">
-    <constraint>
-      <sch:report test="tei:*  and  text()[normalize-space(.) ne '']">A feature value cannot contain both text and element content</sch:report>
-    </constraint>
-  </constraintSpec>
-  <constraintSpec ident="f-has-max-one-child-element" scheme="isoschematron">
-    <constraint>
-      <sch:report test="count(tei:*) gt 1">A feature value can contain only one child element</sch:report>
-    </constraint>
-  </constraintSpec>
   <attList>
     <attDef ident="name" usage="req">
       <desc versionDate="2012-10-10" xml:lang="en">a single word which follows the rules defining a
@@ -107,10 +96,10 @@ $Id$
     </egXML>
   </exemplum>
   <remarks versionDate="2012-04-20" xml:lang="en">
-    <p>If the element is empty then a value must be supplied for the 
-<att>fVal</att> attribute. The content of <gi>f</gi> may also be textual, 
-      with the assumption that the data type of the feature value is determined 
-      by the schema—this is the approach used in many language-technology-oriented projects and recommendations.</p>
+    <p>The content of <gi>f</gi> may be textual, with the assumption
+    that the data type of the feature value is determined by the
+    schema—this is the approach used in many
+    language-technology-oriented projects and recommendations.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Si l'élément est vide, une valeur doit être fournie pour l'attribut

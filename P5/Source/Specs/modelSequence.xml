@@ -6,8 +6,8 @@
     $Date: 2015-08-21 10:44:07 +0100 (Fri, 21 Aug 2015) $
     $Id:  $
 -->
-<?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" ident="modelSequence" module="tagdocs">
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" ident="modelSequence" module="tagdocs">
   <desc versionDate="2015-05-15" xml:lang="en">any sequence of model or modelSequence elements which
     is to be processed as a single set of actions</desc>
   <classes>
@@ -19,12 +19,16 @@
         <classRef key="model.glossLike"/>
         <classRef key="model.descLike"/>
       </alternate>
-      <!--   <elementRef key="model" maxOccurs="unbounded" minOccurs="2"/>
-    restore this when issue #135 is fixed 
- -->
-      <elementRef key="model" maxOccurs="unbounded"/>
+      <elementRef key="model" minOccurs="2" maxOccurs="unbounded"/>
     </sequence>
   </content>
+  <constraintSpec scheme="schematron" ident="no_outputs_nor_predicates_4_my_kids">
+    <constraint>
+      <sch:report test="tei:model[@output]" role="warning">The 'model' children
+      of a 'modelSequence' element inherit the @output attribute of the
+      parent 'modelSequence', and thus should not have their own</sch:report>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="predicate" usage="opt">
       <desc versionDate="2015-05-15" xml:lang="en">the condition under which this model applies
@@ -75,9 +79,12 @@
       </modelGrp>
     </egXML>
   </exemplum>
-  <remarks versionDate="2015-05-15" xml:lang="en">
-    <p>All of the child elements of a <gi>modelSequence</gi> element are to be processed together,
-      for example in sequence, rather than independently of one another. </p>
+  <remarks versionDate="2016-11-21" xml:lang="en">
+    <p>All of the <gi>model</gi> elements inside a <gi>modelSequence</gi> 
+      element must be processed. The operations indicated by each <gi>model</gi> 
+      child cannot be dependent on any other operation in the sequence. The results 
+      must be rendered in the order given by the list of <gi>model</gi>s in the 
+      <gi>modelSequence</gi>.</p>
   </remarks>
   <listRef>
     <ptr target="#TDPMMS"/>

@@ -4,9 +4,10 @@
   See the file COPYING.txt for details
   $Date$
   $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" 
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" 
   type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="gap">
   <gloss versionDate="2008-12-09" xml:lang="fr">omission</gloss>
+  <gloss versionDate="2016-11-25" xml:lang="de">Auslassung</gloss>
   <desc versionDate="2008-01-24" xml:lang="en">indicates a point where material has been omitted in a transcription, whether for editorial
     reasons described in the TEI header, as part of sampling practice, or because the material is
     illegible, invisible, or inaudible.</desc>
@@ -25,6 +26,9 @@
   <desc versionDate="2007-01-21" xml:lang="it">indica un punto in cui del materiale è stato omesso dalla
     trascrizione, sia per ragioni editoriali descritte nell'intestazione TEI, come pratica di
     campionatura, sia perché il materiale è illegibile o incomprensibile.</desc>
+  <desc versionDate="2016-11-25" xml:lang="de">weist in einer Transkription auf eine Stelle hin, 
+    in der Text aus der Vorlage ausgelassen worden ist, sei es aus editorischen Gründen, die im TEI-Header beschrieben werden, 
+    sei es auf Grund der Auswahlpraxis, sei es weil das Material nicht lesbar, nicht sichtbar oder nicht hörbar ist.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.global.edit"/>
@@ -39,6 +43,7 @@
   </content>
   <attList>
     <attDef ident="reason" usage="opt">
+      <gloss versionDate="2016-11-25" xml:lang="de">Grund</gloss>
       <desc versionDate="2008-10-03" xml:lang="en">gives the reason for omission. Sample values include <val>sampling</val>,
         <val>inaudible</val>, <val>irrelevant</val>, <val>cancelled</val>.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">누락의 이유를 제시한다. 그 값의 예들은 다음과 같다: <val>sampling</val>,
@@ -60,9 +65,13 @@
       <desc versionDate="2007-01-21" xml:lang="it">indica il motivo dell'omisione. Fra i valori
         possibili ci sono <val>campionatura</val>, <val>incomprensibile</val>,
         <val>irrilevante</val>, <val>cancellato</val>, <val>cancellato e illegibile</val>.</desc>
+      <desc versionDate="2016-11-25" xml:lang="de">gibt den Grund für eine Auslassung an. 
+        Beispielwerte: <val>sampling</val> (Auswahl), <val>inaudible</val> (nicht hörbar), 
+        <val>irrelevant</val> (irrelevant), <val>cancelled</val> (abgebrochen).</desc>
       <datatype maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
     </attDef>
   <attDef ident="hand" usage="opt" validUntil="2017-08-01">
+      <gloss versionDate="2016-11-25" xml:lang="de">Schreibhand</gloss>
       <desc versionDate="2005-01-14" xml:lang="en">in the case of text omitted from the transcription because of deliberate deletion by an
         identifiable hand, indicates the hand which made the deletion.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">어떤 특정 수작업자가 의도적으로 전사본에서 생략된 텍스트의 경우, 그 생략의 장본인을 표시한다.</desc>
@@ -76,6 +85,8 @@
         la omisión.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">nel caso in cui il testo sia stato volontariamente
         omesso dalla trascrizione da una mano identificabile, indica la mano autrice dell'omissione</desc>
+      <desc versionDate="2016-11-25" xml:lang="de">im Falle von Text, der in der Transkription wegen bewusster Tilgung 
+        durch eine identifizierbare Schreibhand weggelassen wird. Bezeichnet die Schreibhand, die die Tilgung vorgenommen hat.</desc>
       <datatype><dataRef key="teidata.pointer"/></datatype>
     <remarks versionDate="2016-02-20" xml:lang="p"><p>The hand responsible for the deletion
       should be specified on a surrounding <gi>del</gi> element rather than directly on the 
@@ -83,6 +94,7 @@
     
     </attDef>
     <attDef ident="agent" usage="opt">
+      <gloss versionDate="2016-11-25" xml:lang="de">Ursache</gloss>
       <desc versionDate="2005-08-03" xml:lang="en">in the case of text omitted because of damage, categorizes the cause of the damage, if
         it can be identified.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">훼손으로 인해 누락된 텍스트의 경우, 확인이 가능하다면 그 훼손 원인을 분류하여 기술한다.</desc>
@@ -94,9 +106,12 @@
         identifica (si es posible) la causa de tal daño.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">nel caso in cui il testo sia stato omesse a causa di
         danneggiamento, indica la causa del danno qualora possa essere identificata.</desc>
+      <desc versionDate="2016-11-25" xml:lang="de">bestimmt im Falle von Text, der wegen Beschädigung weggelassen wird, 
+        die Ursache für den Schaden, sofern er ermittelt werden kann.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="open">
         <valItem ident="rubbing">
+          <gloss versionDate="2016-11-25" xml:lang="de">Abrieb</gloss>
           <desc versionDate="2007-06-27" xml:lang="en">damage results from rubbing of the leaf edges</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">책장 모서리 마모로 인한 훼손</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">損毀起因於書頁邊緣摩擦受損</desc>
@@ -107,8 +122,10 @@
             la feuille.</desc>
           <desc versionDate="2007-01-21" xml:lang="it">il danno è causato da segni di strofinamento sui
             bordi del foglio</desc>
+          <desc versionDate="2016-11-25" xml:lang="de">Schaden, verursacht durch Abrieb an den Blatträndern</desc>
         </valItem>
         <valItem ident="mildew">
+          <gloss versionDate="2016-11-25" xml:lang="de">Schimmel</gloss>
           <desc versionDate="2007-06-27" xml:lang="en">damage results from mildew on the leaf surface</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">곰팡이로 인한 책장 표면의 훼손</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">損毀起因於書頁表面發霉</desc>
@@ -119,8 +136,10 @@
             surface de feuille.</desc>
           <desc versionDate="2007-01-21" xml:lang="it">il danno è causato da macchie di umido sulla
             superficie del foglio</desc>
+          <desc versionDate="2016-11-25" xml:lang="de">Schaden, verursacht durch Schimmelbefall</desc>
         </valItem>
         <valItem ident="smoke">
+          <gloss versionDate="2016-11-25" xml:lang="de">Ruß/Rauch</gloss>
           <desc versionDate="2007-06-27" xml:lang="en">damage results from smoke</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">연기로 그을린 훼손</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">損毀起因於煙燻</desc>
@@ -128,6 +147,7 @@
           <desc versionDate="2008-04-05" xml:lang="ja">煙による損傷．</desc>
           <desc versionDate="2008-03-30" xml:lang="fr">dégâts provoqués par de la fumée.</desc>
           <desc versionDate="2007-01-21" xml:lang="it">il danno è causato dal fumo</desc>
+          <desc versionDate="2016-11-25" xml:lang="de">Schaden, verursacht durch Ruß/Rauch</desc>
         </valItem>
       </valList>
     </attDef>
@@ -171,7 +191,7 @@
   </exemplum>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <gap extent="unknown" unit="lines" reason="lost"/>
+      <gap extent="several lines" reason="lost"/>
     </egXML>
   </exemplum>
   <remarks versionDate="2011-12-09" xml:lang="en">
@@ -200,6 +220,15 @@
   <remarks xml:lang="ja" versionDate="2008-04-05">
     <p> コアモジュールの要素<gi>gap</gi>, <gi>unclear</gi>, <gi>del</gi>は， 転記モジュールの要素<gi>damage</gi>,
         <gi>supplied</gi>と連携するこ とができる．どのタグを使用すべきかについては，詳細については， <ptr target="#PHCOMB"/>を参照のこと． </p>
+  </remarks>
+  <remarks versionDate="2016-11-25" xml:lang="de">
+    <p>Die Elemente <gi>gap</gi>, <gi>unclear</gi> und <gi>del</gi> aus dem Core-Modul sind eng verwandt mit den 
+      Elementen <gi>damage</gi> und <gi>supplied</gi>, die mit dem <ident type="module">transcr</ident> zur Verfügung 
+      gestellt werden. Die Unterschiede im Gebrauch dieser Elemente werden in <ptr target="#PHCOMB"/> näher beschrieben.</p> 
+    <p>Das <gi>gap</gi>-Element weist nur darauf hin, dass die Bearbeiter*innen sich entschieden haben, 
+      eine Textpassage auszulassen oder sie nicht transkribieren konnten. 
+      Ergänzende Informationen, wie die Interpretation, dass der Text absichtlich unlesbar gemacht wurde, 
+      sollten über die einschlägigen Elemente, wie z. B. <gi>del</gi> im Fall einer bewussten Tilgung ausgezeichnet werden.</p>
   </remarks>
   <listRef>
     <ptr target="#COEDADD" type="div1"/>

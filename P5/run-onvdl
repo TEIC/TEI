@@ -14,8 +14,11 @@ then
 else
     if  test ! -f oNVDL/bin/onvdl.jar
 	then
-	echo download ONVDL from http://www.oxygenxml.com/InstData/Editor/onvdl/onvdl-20070517.zip
-	curl -s -O http://www.oxygenxml.com/InstData/Editor/onvdl/onvdl-20070517.zip
+	#MDH 2016-12-03: ONVDL now missing from Oxygen site, but George Bina has a download on SF
+	echo download ONVDL from http://downloads.sourceforge.net/project/onvdl/onvdl/20070517/onvdl-20070517.zip
+	curl -L -s -O http://downloads.sourceforge.net/project/onvdl/onvdl/20070517/onvdl-20070517.zip
+	#echo download ONVDL from http://www.oxygenxml.com/InstData/Editor/onvdl/onvdl-20070517.zip
+	#curl -s -O http://www.oxygenxml.com/InstData/Editor/onvdl/onvdl-20070517.zip
 	unzip -q onvdl-20070517.zip oNVDL/bin/*
 	rm onvdl-20070517.zip
   fi

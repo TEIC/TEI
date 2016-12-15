@@ -6,7 +6,7 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-<?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <div xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" type="div1" xml:id="HD" n="5">
 <head>The TEI Header</head>
 <p>This chapter addresses the problems of describing an encoded work
@@ -98,7 +98,7 @@ the general case, however, a TEI-conformant text will contain a single
 <gi>facsimile</gi> element, or both.
 </p>
 <p>The header element has the following description:
-<specList><specDesc key="teiHeader" atts="type"/></specList>
+<specList><specDesc key="teiHeader" /></specList>
 </p>
 <p>As discussed above, the <gi>teiHeader</gi> element has five principal
 components:
@@ -1000,12 +1000,14 @@ class. By default, this class makes available the following elements:
   <specDesc key="classDecl"/>
   <specDesc key="geoDecl"/>
   <specDesc key="schemaSpec"/>
+  <specDesc key="schemaRef"/>
 </specList>Each of these elements is further described
 in the appropriate section below. Other modules have the ability to
 extend this class; examples are noted in section <ptr target="#HDENCOTH"/>
 </p>
 <specGrp xml:id="D225">
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/encodingDesc.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/schemaRef.xml"/>
 <specGrpRef target="#D2251"/>
 <specGrpRef target="#D2252"/>
 <specGrpRef target="#D2253"/>
@@ -1280,46 +1282,19 @@ XSL-FO</item>
 <item>using a project-defined formal language</item>
 </list></p>
 <p>One or more such specifications may be associated with elements of
-a document in three ways:
+a document in two ways:
 <list rend="bulleted">
-<item>the
-<att>render</att> attribute of the appropriate <gi>tagUsage</gi>
-element may be used to indicate a default rendition for all occurrences of the named
-element</item>
-  <item>the <att>selector</att> attribute on any <gi>rendition</gi> element may be used to select a collection of elements to which it applies</item>
+<item>the <att>selector</att> attribute on any <gi>rendition</gi> element may be used to select a collection of elements to which it applies</item>
 <item>the global <att>rendition</att> attribute may be used on any
 element to
 indicate its rendition, overriding or complementing any supplied default value</item>
 </list>
 The global <att>rend</att> and <att>style</att> attributes may also be
 used to  describe the rendering of an element. See further <ptr
-target="#STGAre"/>
+target="#STGAre"/>.
 </p>
-
-<p>For example, the following schematic shows how an encoder might
-specify that all <gi>p</gi> elements are by default to be rendered using one
-set of specifications identified as <val>style1</val>,
-while <gi>hi</gi>
-elements are to use a different set, identified as <val>style2</val>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><tagsDecl>
-   <rendition xml:id="style1">
-      ... description of one default rendition here ...
-   </rendition>
-   <rendition xml:id="style2">
-      ... description of another default rendition here ...
-   </rendition>
-   <namespace name="http://www.tei-c.org/ns/1.0">
-   <tagUsage gi="p" render="#style1"> ... </tagUsage>
-   <tagUsage gi="hi" render="#style2"> ... </tagUsage>
-   </namespace>
-</tagsDecl><!-- elsewhere in the document -->
-<p>This paragraph, mostly rendered in style1, contains a few words
-<hi>rendered in style2</hi></p>
-<p rendition="#style2">This paragraph is all rendered in style2</p>
-<p>This is back to style1</p>
-</egXML></p>
-
-<p>As noted above, the content of a <gi>rendition</gi> element may
+  <p>Note that the use of the <att>render</att> attribute on the <gi>tagUsage</gi> element to indicate a default rendition for an element has been deprecated and will no longer be permitted after 2016-12-31.</p>
+  <p>The content of a <gi>rendition</gi> element may
 describe the appearance of the source material using prose, a
 project-defined formal language, or any standard languages such as the
 Cascading Stylesheet Language (<ptr target="#CSS21"/>) or the XML
@@ -1327,11 +1302,11 @@ vocabulary for specifying formatting semantics which forms a part of
 the W3C's Extensible Stylesheet Language (<ptr target="#XSL11"/>). A
 <gi>styleDefDecl</gi> element (<ptr target="#HD57-1a"/>) may be
 supplied within the <gi>encodingDesc</gi> to specify which of these
-applies by default; it may be overridden for one or more specific
+applies by default, and it may be overridden for one or more specific
 <gi>rendition</gi> elements using the <att>scheme</att> attribute.
 </p>
   
-  <p>In the above example, all <gi>p</gi> elements are styled in the same way, as are all <gi>hi</gi> elements, except where <att>rendition</att> is used to override the default at the element level. However, suppose that all paragraphs in the <gi>front</gi> of a text appear in a large font, with significant top and bottom margins, while paragraphs in the main <gi>body</gi> are in regular font size and have no top and bottom margins. This would be difficult to express using <gi>tagUsage</gi>; and it would be inefficient to have to provide repeated <att>rendition</att> attributes on every paragraph in one or the other context. Instead, we can use the <att>selector</att> attribute on <gi>rendition</gi> for a more elegant solution:
+  <p>The recommended way to indicate a default rendition on one or more elements is to use the <att>selector</att> attribute together with the <att>scheme</att> attribute on <gi>rendition</gi>. For example, suppose that all paragraphs in the <gi>front</gi> of a text appear in a large font, with significant top and bottom margins, while paragraphs in the main <gi>body</gi> are in regular font size and have no top and bottom margins. The use of <att>selector</att> together with <att>scheme</att> provides an efficient way to specify the distinct styling for distinct contexts of the paragraph by means of CSS selectors:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
   <rendition 
     scheme="css" 
@@ -1350,9 +1325,6 @@ applies by default; it may be overridden for one or more specific
     margin-bottom: 0;
   </rendition>
 </egXML>
-    
-It is recommended that in a single text, either <gi>rendition</gi>/<att>selector</att> or <gi>tagUsage</gi>/<att>render</att> be used; the combination of both is potentially confusing and harder to process.
-    
 </p>
 
 <p>In the following extended example we consider how to capture the
@@ -1552,11 +1524,7 @@ used within a single <gi>refsDecl</gi> element.</p>
 <p>More than one <gi>refsDecl</gi> element can be included in the
 header if more than one canonical reference scheme is to be used in
 the same document, but the current proposals do not check for mutual
-inconsistency. <!-- A reference declaration can only describe the
-referencing system applicable to a single document; if therefore
-several referencing systems are in use (as discussed in section <ptr target="#CORS"/>), a <gi>refsDecl</gi> element must be supplied for
-each; the <att>doctype</att> attribute should be used to specify the
-document type to which the declaration relates.--></p>
+inconsistency.</p>
 
 <div type="div4" xml:id="HD54P"><head>Prose Method</head>
 <p>The referencing scheme may be specified within the <gi>refsDecl</gi>
@@ -1727,7 +1695,7 @@ nested <gi>category</gi> element, having the same structure.
 Categories may be nested to an arbitrary depth in order to reflect the
 hierarchical structure of the taxonomy. Each <gi>category</gi> element
 bears a unique <att>xml:id</att> attribute, which is used as the
-target for <gi>catRef</gi> elements referring to it.
+target for <gi>catRef</gi> elements referring to it. 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><taxonomy xml:id="b">
   <bibl>Brown Corpus</bibl>
   <category xml:id="b.a">
@@ -1746,7 +1714,9 @@ target for <gi>catRef</gi> elements referring to it.
 </taxonomy></egXML></p>
 <p>Linkage between a particular text and a category within such a
 taxonomy is made by means of the <gi>catRef</gi> element within the
-<gi>textClass</gi> element, as described in section <ptr target="#HD43"/>.  Where the taxonomy permits of classification along more
+<gi>textClass</gi> element, as described in section <ptr target="#HD43"/>.  
+Where finer-grained analysis is desired, a <att>ana</att> attribute on an
+element in the text could point to a category.  Where the taxonomy permits of classification along more
 than one dimension, more than one category will be referenced by a
 particular <gi>catRef</gi>, as in the following example, which
 identifies a text with the sub-categories <q>Daily</q>, <q>National</q>,
@@ -1796,8 +1766,9 @@ more than one language, as in the following example:
     <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/geoDecl.xml"/>
   </div>
 
+
   <div type="div3" xml:id="HDSCHSPEC"><head>The Schema Specification</head>
-    <p>The <gi>schemaSpec</gi> element contains a schema specification. When this element appears inside <gi>encodingDesc</gi>, it allows embedding of a schema inside a TEI header; alternatively, this element may be used in the <gi>body</gi> of an ODD document. The use of ODD files, and their relationship to schemas, is described in detail in <ptr target="#TD"/>.</p>
+    <p>The <gi>schemaSpec</gi> element contains a schema specification. When this element appears inside <gi>encodingDesc</gi>, it allows embedding of a TEI ODD customization file inside a TEI header; alternatively, this element may be used in the <gi>body</gi> of an ODD document. The use of ODD files, and their relationship to schemas, is described in detail in <ptr target="#TD"/>.</p>
 
     <p>A <gi>schemaSpec</gi> element contains all the information needed to generate schemas for a particular TEI customization, and the ODD documentation elements, by reference to the TEI, are more succinct than the schemas derived from them. Therefore you may find it
     convenient to make a copy of the <gi>schemaSpec</gi> from your project's ODD document inside the <gi>teiHeader</gi> itself, in addition to
@@ -1815,6 +1786,15 @@ more than one language, as in the following example:
           </schemaSpec>
         </encodingDesc>
       </egXML>
+    </p>
+    <p>Alternatively, it is possible to point to an external ODD customization file or schema through use of the <gi>schemaRef</gi> element. More than one <gi>schemaRef</gi> element may be provided for different sources, stages in a workflow, or formats.
+      
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <schemaRef type="interchangeODD" url="http://www.tei-c.org/release/xml/tei/custom/odd/tei_lite.odd"/>
+        <schemaRef type="interchangeRNG" url="http://www.tei-c.org/release/xml/tei/custom/odd/tei_lite.rng"/>
+        <schemaRef type="projectODD" url="file:///schema/project.odd"/>
+      </egXML>
+      The <att>url</att> attribute may be any form of URI pointer including a private URI syntax documented by a <gi>prefixDef</gi>.  
     </p>
   </div>
 
@@ -1911,8 +1891,7 @@ forms part of a standard bibliographic style description,
 if only because such information has already been included
 elsewhere in the TEI header.
 </p>
-<p>The <gi>profileDesc</gi> element contains an optional
-<gi>creation</gi> element, followed by any number of additional
+<p>The <gi>profileDesc</gi> element contains 
 elements taken from the <ident type="class">model.profileDescPart</ident> class. The
 default members of this class are the following :
 <specList>
@@ -1920,6 +1899,7 @@ default members of this class are the following :
   <specDesc key="creation"/>
   <specDesc key="langUsage"/>
   <specDesc key="textClass"/>
+  <specDesc key="correspDesc"/>
   <specDesc key="calendarDesc"/>
 </specList>
 These elements are further described in the remainder of this section.</p>
@@ -1936,12 +1916,13 @@ For descriptions of these elements, see section <ptr
 target="#CCAH"/>.</p>
 <p>When the <ident type="module">transcr</ident> module for the
 transcription of primary sources described in chapter <ptr
-target="#PH"/> is included in a schema, the following element becomes
-available within the <gi>profileDesc</gi>element:
+target="#PH"/> is included in a schema, the following elements become
+available within the <gi>profileDesc</gi> element:
 <specList>
 <specDesc key="handNotes"/>
+<specDesc key="listTranspose"/>
 </specList>
-For a description of this element, see section <ptr target="#PHDH"/>. Its purpose is to group together a number of
+For a description of the <gi>handNotes</gi> element, see section <ptr target="#PHDH"/>. Its purpose is to group together a number of
 <gi>handNote</gi> elements, each of which describes a different hand
 or equivalent identified within a manuscript. The
 <gi>handNote</gi> element can also appear within a structured manuscript
@@ -1951,6 +1932,7 @@ schema. For this reason, the <gi>handNote</gi> element is actually
 declared within the header module, but is only accessible to a schema
 when one or other of the <ident type="module">transcr</ident> or <ident type="module">msdescription</ident> modules is included in a
 schema. See further the discussion at <ptr target="#PHDH"/>.  </p>
+<p>The <gi>listTranspose</gi> element is discussed in detail in section <ptr target="#transpo"/>.</p>
 <specGrp xml:id="D224" n="The profile description">
 <!--&model.profileDescPart;-->
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/profileDesc.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/handNote.xml"/>
@@ -2278,7 +2260,7 @@ type="class">att.datable</ident> class.
 supplying  a date
 expressed using that calendar system:
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<p>Captain's log <date calendar="#Stardate">stardate 23.9 rounded off
+<p>Captain's log <date calendar="#stardate">stardate 23.9 rounded off
     to the nearest decimal point</date>...</p></egXML>
 
   See <ptr target="#NDDATECUSTOM"/> for details of the usage of dating attributes in conjunction
@@ -2291,12 +2273,12 @@ expressed using that calendar system:
 <div type="div3" xml:id="HD44CD"><head>Correspondence Description</head>
       <p>The <gi>correspDesc</gi> element is used within the <gi>profileDesc</gi> element to
         provide detailed correspondence-specific metadata, concerning in particular the
-        communicative aspects (sending, receiving, forwarding etc.) associated with acts of
+        communicative aspects (sending, receiving, forwarding etc.) associated with an act
         of correspondence. </p>
       <p>This information is complementary to the detailed
       descriptions of physical objects (such as letters) associated
-      with correspondence activities, which are typically provided by
-      the sourceDesc element. <specList>
+      with correspondence acts, which are typically provided by
+      the <gi>sourceDesc</gi> element. <specList>
           <specDesc key="correspDesc"/>
         </specList>
       </p>
@@ -2313,9 +2295,9 @@ expressed using that calendar system:
         it is a reply, or the item which replies to it: <egXML
           xmlns="http://www.tei-c.org/ns/Examples">
           <correspContext>
-            <ref type="replyTo" target="#CLF0102">Previous letter of <persName>Chamisso</persName> to <persName>de La
+            <ref type="prev" target="#CLF0102">Previous letter of <persName>Chamisso</persName> to <persName>de La
               Foye</persName>: <date when="1807-01-16">16 January 1807</date></ref>
-            <ref type="replyFrom" target="#CLF0104">Next letter of <persName>Chamisso</persName> to <persName>de La Foye</persName>:
+            <ref type="next" target="#CLF0104">Next letter of <persName>Chamisso</persName> to <persName>de La Foye</persName>:
               <date when="1810-05-07">07 May 1810</date></ref>
           </correspContext>
         </egXML>
@@ -2323,19 +2305,19 @@ expressed using that calendar system:
 
 <!-- add an example using note or p ? -->
 
-      <p>Many types of correspondence action may be distinguished. The <att>type</att>
+      <p>Many types of correspondence actions may be distinguished. The <att>type</att>
         attribute should be used to indicate the type of action being documented, using values
         such as those suggested above. </p>
       <p>The following simple example uses <gi>correspAction</gi> to describe the sending of a
         letter by Adelbert von Chamisso from Vertus on 29 January 1807 to Louis de La Foye at
         Caen. The date of reception is unknown: <egXML
           xmlns="http://www.tei-c.org/ns/Examples">
-          <correspAction type="sentBy">
+          <correspAction type="sent">
             <persName>Adelbert von Chamisso</persName>
             <placeName>Vertus</placeName>
             <date when="1807-01-29"/>
           </correspAction>
-          <correspAction type="deliveredTo">
+          <correspAction type="received">
             <persName>Louis de La Foye</persName>
             <placeName>Caen</placeName>
             <date>unknown</date>
@@ -2347,9 +2329,9 @@ Note the use of the <att>when</att> attribute described in <ptr target="#CONADA"
 
       <p>Several senders, recipients, etc. can be specified for a single
         <gi>correspAction</gi> if the action is considered to apply to them all acting as
-        a single group. In the following example two people are considered to have received
-        the communication. <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <correspAction type="receiving">
+        a single group. In the following example, two people are considered to have received
+        the piece of correspondence. <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <correspAction type="received">
             <persName>Hermann Hesse</persName>
             <persName>Ninon Hesse</persName>
             <placeName>Montagnola</placeName>
@@ -2359,36 +2341,36 @@ Note the use of the <att>when</att> attribute described in <ptr target="#CONADA"
       <p>The <att>subtype</att> attribute may be used to further distinguish types of action.
         In the following example, an e-mail is sent to two people directly and to a third by
         <soCalled>carbon copy</soCalled> (<term>cc</term>). <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <correspAction type="sentBy">
+          <correspAction type="sent">
             <persName>PN0001</persName>
             <date when="1999-06-02"/>
           </correspAction>
-          <correspAction type="deliveredTo" subtype="to">
+          <correspAction type="received" subtype="to">
             <persName>PN0002</persName>
           </correspAction>
-          <correspAction type="deliveredTo" subtype="to">
+          <correspAction type="received" subtype="to">
             <persName>PN0003</persName>
           </correspAction>
-          <correspAction type="deliveredTo" subtype="cc">
+          <correspAction type="received" subtype="cc">
             <persName>PN0004</persName>
           </correspAction>
         </egXML>
       </p>
-      <p>The same person may be associated with many actions. For example, it will often
+      <p>The same person may be associated with several actions. For example, it will often
         be the case that the author and sender of a message are identical, and that many
         individual letters will need to be associated with the same person. The
         <att>sameAs</att> attribute defined in section <ptr target="#SAIE"/> may be used
         to indicate that the same name applies to many actions. Its value will usually be the
         identifier of an element defining the person or name concerned, which is supplied
         elsewhere in the document. <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <correspAction type="sentBy">
+          <correspAction type="sent">
             <name sameAs="#author"/>
           </correspAction>
         </egXML>
         <!-- example needs expansion to include definition for #author -->
       </p>
       <p>It is assumed that each correspondence action applies to a single act of
-        communication. It may however be the case that the same physical object is involved
+        communication. However, it may be the case that the same physical object is involved
         in several such acts, if for example person A sends a letter to person B,
         who then annotates it and sends it on to person C, or if persons A and B both use
         the same document to convey quite different messages. In such situations, multiple
@@ -2397,23 +2379,23 @@ Note the use of the <att>when</att> attribute described in <ptr target="#CONADA"
         different people to the same destination: <gi>correspDesc</gi> is used for each
         separately: <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <correspDesc xml:id="message1">
-            <correspAction type="sentBy">
+            <correspAction type="sent">
               <persName>John Gneisenau Neihardt</persName>
               <placeName>Branson (Montgomery)</placeName>
               <date when="1932-12-17"/>
             </correspAction>
-            <correspAction type="deliveredTo">
+            <correspAction type="received">
               <persName xml:id="JTH">Julius Temple House</persName>
               <placeName>New York</placeName>
             </correspAction>
           </correspDesc>
           <correspDesc xml:id="message2">
-            <correspAction type="sentBy">
+            <correspAction type="sent">
               <persName>Enid Neihardt</persName>
               <placeName>Branson (Montgomery)</placeName>
               <date when="1932-12-17"/>
             </correspAction>
-	    <correspAction type="deliveredTo">
+            <correspAction type="received">
               <persName sameAs="#JTH"/>
               <placeName>New York</placeName>
             </correspAction>

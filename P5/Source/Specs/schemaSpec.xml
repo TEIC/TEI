@@ -4,7 +4,7 @@ Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" xml:id="SCHEMASPEC" ident="schemaSpec">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" xml:id="SCHEMASPEC" ident="schemaSpec">
   <gloss versionDate="2007-07-04" xml:lang="en">schema specification</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">스키마 명시</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">especificación de esquema</gloss>
@@ -24,7 +24,6 @@ $Id$
     <memberOf key="model.encodingDescPart"/>
     <memberOf key="att.identified"/>
     <memberOf key="att.namespaceable"/>
-    <memberOf key="att.readFrom"/>
     <memberOf key="att.docStatus"/>
   </classes>
   <content>
@@ -130,6 +129,17 @@ $Id$
       <desc versionDate="2007-01-21" xml:lang="it">indica la lingua da utilizzare per la creazione della documentazione nel caso in cui le descrizioni di elementi, attributi, classi o macro siano disponibili in più lingue</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.language"/></datatype>
     </attDef>
+    <attDef ident="defaultExceptions" usage="rec">
+      <gloss versionDate="2016-11-20" xml:lang="en">default namespace exclusions</gloss>
+      <desc versionDate="2016-11-20" xml:lang="en">provides a list of namespaces and/or prefixed element names to be excluded by default from anyName in RelaxNG schemas</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+        <dataRef key="teidata.namespaceOrName"/>
+      </datatype>
+      <defaultVal xmlns:teix="http://www.tei-c.org/ns/Examples">http://www.tei-c.org/ns/1.0 teix:egXML</defaultVal>
+      <remarks versionDate="2016-11-28" xml:lang="en">
+        <p>Specifies defaults for the <att>except</att> attribute of <gi>anyElement</gi>. RelaxNG validation (unless DTD Compatibility Mode is turned off) requires that any elements which may take an <att>xml:id</att> be excluded from the content of <code>anyName</code> name classes. For normal TEI purposes, this includes anything in the TEI namespace and the <gi>egXML</gi> element. The <att>defaultExceptions</att> attribute sets the global defaults for these exclusions. Element prefixes must be declared using a namespace declaration on the parent or an ancestor element.</p>
+      </remarks>
+    </attDef>
   </attList>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -142,7 +152,7 @@ $Id$
     </egXML>
     <p>This schema combines elements from the current versions of the drama and core
 modules,  the current release version of the header module, and elements
-from an existing RELAXNG schema available from the URL indicated.</p>
+from an existing RELAX NG schema available from the URL indicated.</p>
   </exemplum>
   <remarks versionDate="2010-05-14" xml:lang="en">
     <p>A <gi>schemaSpec</gi> combines references to modules,
@@ -152,6 +162,19 @@ from an existing RELAXNG schema available from the URL indicated.</p>
     declarations it contains or references. Different ODD processors
     may generate schemas and documentation using different concrete
     syntaxes. </p>
+    
+    <!-- noted moved from removed att.readFrom -->
+      <p>The source may be specified in the form of a private URI, for which
+        the form recommended is <code>tei:x.y.z</code>, where
+        <code>x.y.z</code> indicates the version number,
+        e.g. <code>tei:1.5.1</code> for 1.5.1 release of TEI P5
+        or (as a special case) <code>tei:current</code> for whatever is the
+        latest release. The context indicated must provide a set of TEI-conformant
+          specifications in a form directly usable by an ODD processor. By
+          default, this will be the location of the current release of the TEI
+          Guidelines.</p>
+    
+    
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Un schéma combine des références aux modules ou aux groupes de spécifications avec

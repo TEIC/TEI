@@ -4,13 +4,14 @@
     See the file COPYING.txt for details
     $Date$
     $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="expan">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="expan">
   <gloss versionDate="2005-01-14" xml:lang="en">expansion</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">확장 표기</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">縮寫還原</gloss>
   <gloss versionDate="2009-01-06" xml:lang="fr">expansion</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">expansión</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">espansione</gloss>
+    <gloss versionDate="2016-11-25" xml:lang="de">Abkürzungsauflösung</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains the expansion of an abbreviation.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">약어의 확장(비약어) 표기</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含一個縮寫詞的還原形式。</desc>
@@ -18,6 +19,7 @@
   <desc versionDate="2009-01-06" xml:lang="fr">contient l'expansion d'une abréviation.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene la expansión de una abreviatura.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene l'esapnsione di un'abbreviazione.</desc>
+    <desc versionDate="2016-11-25" xml:lang="de">enthält die aufgelöste Form einer Abkürzung.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.pPart.editorial"/>
@@ -28,11 +30,20 @@
     <macroRef key="macro.phraseSeq"/>
   </content>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">The address is Southmoor <choice><expan>Road</expan><abbr>Rd</abbr></choice>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">The address is Southmoor 
+        <choice>
+            <expan>Road</expan>
+            <abbr>Rd</abbr>
+        </choice>
       </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">Il habite<choice><expan>Avenue</expan><abbr>Av.</abbr></choice>de la Paix </egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">Il habite
+        <choice>
+            <expan>Avenue</expan>
+            <abbr>Av.</abbr>
+        </choice>de la Paix 
+    </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -42,16 +53,16 @@
       </choice>
     </egXML>
   </exemplum>
-  <exemplum xml:lang="en">
+  <exemplum versionDate="2016-08-12" xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="la">
-      <expan xml:lang="la">
+      <choice xml:lang="la">
         <abbr>Imp</abbr>
-        <ex>erator</ex>
-      </expan>
+        <expan>Imp<ex>erator</ex></expan>
+      </choice> 
     </egXML>
   </exemplum>
-  <remarks versionDate="2007-08-29" xml:lang="en">
-    <p>The content of this element should usually be a complete word or phrase. The <gi>ex</gi>
+  <remarks versionDate="2016-08-12" xml:lang="en">
+      <p>The content of this element should be the expanded abbreviation, usually (but not always) a complete word or phrase. The <gi>ex</gi>
       element provided by the <ident type="module">transcr</ident> module may be used to mark up
       sequences of letters supplied within such an expansion.</p>
   </remarks>
@@ -63,6 +74,11 @@
   <remarks xml:lang="ja" versionDate="2008-04-05">
     <p> 当該要素の内容は，完全な語句であるべきである． <ident type="module">転記モジュール</ident>にある要素<gi>ex</gi>
       を使い，省略形の元の形を文字列として示すことができる． </p>
+  </remarks>
+  <remarks xml:lang="de" versionDate="2016-11-25">
+      <p>Der Inhalt dieses Elements sollte die aufgelöste Abkürzung sein, üblicherweise ein vollständiges Wort oder eine Phrase. 
+          Das <gi>ex</gi>-Element aus dem Modul <ident type="module">transcr</ident> 
+          kann verwendet werden, um einzelne Buchstaben innerhalb der Auflösung auszuzeichnen.  </p>
   </remarks>
   <listRef>
     <ptr target="#CONAAB" type="div3"/>

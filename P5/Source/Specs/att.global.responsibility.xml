@@ -4,7 +4,7 @@ Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" predeclare="true" type="atts" ident="att.global.responsibility">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" predeclare="true" type="atts" ident="att.global.responsibility">
   <desc versionDate="2014-12-10" xml:lang="en">provides attributes indicating the agent
     responsible for some aspect of the text, the markup or 
     something asserted by the markup, and the degree of certainty 
@@ -52,9 +52,8 @@ $Id$
         interpretazione, per esempio un curatore o trascrittore</desc>
       <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
       <remarks versionDate="2014-12-10" xml:lang="en">
-        <p>Note that a simple <att>resp</att> pointing to a person or 
-          organization is likely to be somewhat ambiguous with regard 
-          to the nature of the responsibility. For this reason, we 
+        <p>To reduce the ambiguity of a <att>resp</att> pointing directly to a person or 
+          organization, we 
           recommend that <att>resp</att> be used to point not to an agent 
           (<gi>person</gi> or <gi>org</gi>) but to a <gi>respStmt</gi>, 
           <gi>author</gi>, <gi>editor</gi> or similar 
@@ -62,21 +61,14 @@ $Id$
           Pointing to multiple <gi>respStmt</gi>s allows the encoder to specify 
           clearly each of the roles played in part of a TEI file (creating, 
           transcribing, encoding, editing, proofing etc.).</p></remarks>
-<!--      <valDesc>A pointer to an element typically, but not necessarily, in the document header that is associated with a person
-        asserted as responsible for some aspect of the text's creation, transcription, editing, or
-        encoding.</valDesc>
-      <valDesc versionDate="2009-05-25" xml:lang="fr">Pointeur vers un élément de l'en-tête du
-        document TEI relatif à une personne déclarée comme responsable de l'un des aspects de la création, de la transcription, de l'édition ou de l'encodage du texte.</valDesc>
- --> 
-<!-- leaving this as a comment for the moment : use of the word "creation" may be interpreted as contradicting what it says in the desc : well known problem LB dec 2013 -->
   </attDef>
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">Blessed are the 
-      <choice><sic>placemakers</sic><corr resp="#editor" cert="high">peacemakers</corr></choice>: for they shall be called the children of God.</egXML>
+      <choice><sic>cheesemakers</sic><corr resp="#editor" cert="high">peacemakers</corr></choice>: for they shall be called the children of God.</egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#TAYLOR">
       <!-- in the <text> ... -->
       <lg>
         <!-- ... -->
@@ -94,7 +86,7 @@ $Id$
   </exemplum>
   
   <listRef>
-    <!--<ptr target="#ST"/>-->
+    <ptr target="#STGAso"/>
     <ptr target="#COED"/>
     <ptr target="#PHHR"/>
     <ptr target="#AISP"/>
