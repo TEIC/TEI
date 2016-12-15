@@ -5,7 +5,7 @@
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title>ODD chaining for Idiots</title>
+        <title>ODD chaining for Beginners</title>
         <author>Lou Burnard</author>
       </titleStmt>
       <publicationStmt>
@@ -48,7 +48,7 @@
           which is to state where exactly the objects referenced by the schema specification (the
           free standing declarations) are to be found. By default, when an ODD specifies no source,
           it is assumed that they are to be collected from the most recent release of the TEI
-          Guidelines. You can modify this behaviour by supplying a different of URL. For example, a
+          Guidelines. You can modify this behaviour by supplying a different URI. For example, a
             <gi> schemaSpec</gi> with its attribute<att> source</att> set to <val>tei:2.4.0</val>
           would search for declarations in release 2.4.0 of the Guidelines. One with the value
             <val>mySuperODD.subset.xml</val> will go looking for declarations in a file of that name
@@ -58,7 +58,7 @@
         <p>It's important to understand that the resource indicated by the <att>source</att>s
           attribute must contain complete and explicit specification elements: <gi>elementSpec</gi>
           rather than <gi>elementRef</gi>, <gi>classSpec</gi> rather than <gi>classRef</gi> and so
-          on. It may of course contain other elements, but these will be ignored entirely in the
+          on. It may of course contain other TEI elements, but these will be ignored entirely in the
           construction of a schema. A file called <ident>p5subset.xml</ident>, provided as part of
           every TEI release, is an example of such a resource: it contains specifications for every
           single TEI element, class, macro, and datatype, but nothing else much. If the
@@ -90,8 +90,9 @@
         <p>No <att>source</att> is specified, so declarations for the elements requested here will
           be taken from the current <ident>p5subset.xml</ident>. </p>
         <p>Note that this ODD contains both references and specifications: there are references to
-          modules (which may be thought of as short hand for references to elements) and
-          specifications for classes (<gi>classSpec</gi>), rather than references
+          modules (which may be thought of as short hand for references to elements or classes, since a module is
+          simply a collection of element and class specifications) and
+          specifications for two classes (<gi>classSpec</gi>), rather than references
           (<gi>classRef</gi>). The reference to the module <ident>tei</ident> brings with it
           specifications for most TEI classes, including these two. An ODD processor will therefore
           have to resolve duplicate class specifications for the classes <ident>att.global</ident>
@@ -106,8 +107,8 @@
             <ident>tei_bare.odd</ident>, and tell oXygen to apply the predefined transformation
             <ident>TEI ODD to HTML</ident> to it. This will produce a mini-manual for the TEI Bare
           customization in HTML format, near the beginning of which you should see a list of
-          elements like this: </p>
-        <p><graphic url="teibare-1.png"/>
+         the elements the schema contains. <!--like this: </p>
+        <p><graphic url="teibare-1.png"/>-->
         </p>
         <p>You may like to check that the modifications to the attribute class
             <ident>att.global</ident> indicated above have indeed been performed, by looking at its
@@ -115,13 +116,13 @@
       </div>
       <div>
         <head>Rolling your own subset</head>
-        <p>In the preceding step, we processed <ident>tei_bare</ident> with reference to the default
+        <p>In the preceding step, we processed the ODD with reference to the default
           p5subset, i.e with respect to the whole of the TEI. Suppose, however, that we would like
-          to use TEI bare as the starting point for another customization. We could simply edit the
+          to use TEI Bare as the starting point for another customization. We could simply edit the
           source of TEI Bare, and add our further modifications there, but that would soon become
           unmanageable if we were dealing with a larger customization as starting point. Instead, we
-          will use TEI bare itself as our source. To do this, as noted above, we need to generate a
-            <soCalled>compiled</soCalled> version of TEI bare containing only specification elements
+          will use TEI Bare itself as our source. To do this, as noted above, we need to generate a
+            <soCalled>compiled</soCalled> version of TEI Bare containing only specification elements
           in which all the references have been resolved. This is easily done using the stylesheet
             <ident>odd2odd.xsl</ident> which is supplied as part of the TEI Stylesheet package, but
           is not currently included in the TEI oXygen framework. There is however a command line
@@ -146,7 +147,7 @@
           source for a schema is not enough : we must also specify which of the declarations it
           contains we want to use: <foreign>nihil ex nihilo fit</foreign>...! </p>
         <p>However, the reason we started down this path was not to find yet another way of doing
-          the same thing. Let's now make a reduced version of TEI_bare in which the <gi>head</gi>
+          the same thing. Let's now make a reduced version of TEI Bare in which the <gi>head</gi>
           element is missing. </p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <schemaSpec ident="Bare-minus" source="tei_bare.compiled.odd" start="TEI">
@@ -168,19 +169,19 @@
           compiled ODD specified by the <att>source</att> attribute. This approach to ODD chaining
           works best in a situation where we first define an ODD which combines all the elements
           (etc.) that we ever plan to use, and then derive individual subset schemas from them, for
-          example, one for manuscripts, one for early modern print, one for modern print etc. This
-          approach has been adopted by, for example, the Deutsches Text Archive: see <ptr
-            target="I dont know where"/>. </p>
+          example, one for manuscripts, one for early modern print, one for modern print etc. (This
+          approach has been adopted by, for example, the Deutsches Text Archive.) <!--: see <ptr
+            target="I dont know where"/>.--> </p>
       </div>
       <div>
         <head>Chaining : supersetting</head>
 
-        <p>But ODD chaining is not restricted to subsetting. Suppose we want to take our
-          pre-existing tei_bare schema and <emph>add</emph> declarations from some other module. We
+        <p>But ODD chaining is not restricted to subsetting. Suppose we want to take the
+          pre-existing TEI Bare schema and <emph>add</emph> declarations from some other module. We
           could of course laboriously copy all the declarations we want into our
-          <gi>schemaSpec</gi>, but it would be much nicer not to have to do that. Suppose we want to
-          add to our bare schema everything provided by the <ident>gaiji</ident> module. That
-          module was not included when we defined our compiled version of TEI bare, though it is of
+          <gi>schemaSpec</gi>, but it would be much nicer not to have to do that. Suppose for example that we want to
+          add everything provided by the <ident>gaiji</ident> module. That
+          module was not included when we defined our compiled version of TEI Bare, though it is of
           course available in the full TEI. Here's one way of doing it:</p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <schemaSpec ident="Bare-plus" source="tei_bare.compiled.odd" start="TEI">
@@ -191,7 +192,7 @@
           </schemaSpec></egXML>
         <p>The <gi>moduleRef</gi> which pulls in the gaiji module uses its own <att>source</att> attribute to specify
         where to find the declarations for that module. No sense looking for them in <ident>tei_bare.compiled.odd</ident>: they're not there. Instead, we will
-        collect them from the online copy of  the compiled ODD which provides the whole TEI Guidelines, as noted above., Of course we can also 
+        collect them from the online copy of  the compiled ODD which provides the whole TEI Guidelines, as noted above. Of course we can also 
         do the usual kind of subsetting : for example </p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <schemaSpec ident="Bare-plus" source="tei_bare.compiled.odd" start="TEI">
@@ -211,8 +212,8 @@
           <elementRef key="glyph" source="http://www.tei-c.org/release/xml/tei/odd/p5subset.xml"/>
           <moduleRef key="textstructure"/>
           </schemaSpec></egXML>
-        <p>We can  use this technique to put back an element which was deleted from the compiled schema. For example, the <gi>q</gi> element is not
-          available in  tei_bare, but we can easily get it back. We can even specify which version of the <gi>q</gi> element we want: in this case, we will get the version
+        <p>We can use this technique to put back an element which was deleted from the compiled schema. For example, the <gi>q</gi> element is not
+          available in  TEI Bare, but we can easily get it back. We can even specify which version of the <gi>q</gi> element we want: in this case, we will get the version
           defined in TEI P5 release 3.0.0 :</p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <schemaSpec ident="Bare-plus" source="tei_bare.compiled.odd" start="TEI">

@@ -191,7 +191,7 @@ element is provided for this purpose:
               <elementSpec ident="mixedElement">
                 <desc>an element which contains any combination of text nodes, <gi>one</gi>
                   elements, and <gi>two</gi> elements</desc>
-                <alternate minOccurs="0" maxOccurs="unlimited"><textNode/><elementRef key="one"
+                <alternate minOccurs="0" maxOccurs="unbounded"><textNode/><elementRef key="one"
                     /><elementRef key="two"/></alternate>
               </elementSpec>
             </egXML>
@@ -229,11 +229,25 @@ element is provided for this purpose:
                   of the <gi>model.digital</gi> class </desc>
                 <content>
                   <sequence minOccurs="1" maxOccurs="3">
-                    <classRef key="model.digital"/>
+                    <classRef  key="model.digital"/>
                   </sequence></content>
               </elementSpec>
             </egXML>
-          </p>
+          </p><p>The <gi>classRef</gi> element here is understood to mean <q>any one member of the class</q>.
+          Its attribute <att>expand</att> can be used to specify other meanings. For example, supposing
+          that the <ident type="class">model.digital</ident> has members <gi>dig1</gi> <gi>dig2</gi> and 
+            <gi>dig3</gi>, a reference to the class can have the following meanings:
+          <table>
+            <row role="label">
+              <cell>Value of <att>expand</att>
+              </cell><cell>Expansion of <gi>classRef</gi></cell>
+            </row>
+           <row><cell>alternate [default]</cell><cell><egXML xmlns="http://www.tei-c.org/ns/Examples"><alternate><elementRef key="dig1"/><elementRef key="dig2"/><elementRef key="dig3"/></alternate></egXML></cell></row>
+            <row><cell>sequence</cell><cell><egXML xmlns="http://www.tei-c.org/ns/Examples"><sequence><elementRef key="dig1"/><elementRef key="dig2"/><elementRef key="dig3"/></sequence></egXML></cell></row>
+            <row><cell>sequenceOptional</cell><cell><egXML xmlns="http://www.tei-c.org/ns/Examples"><sequence><elementRef key="dig1" minOccurs="0"/><elementRef key="dig2" minOccurs="0"/><elementRef key="dig3" minOccurs="0"/></sequence></egXML></cell></row>
+            <row><cell>sequenceOptionalRepeatable</cell><cell><egXML xmlns="http://www.tei-c.org/ns/Examples"><sequence><elementRef key="dig1" minOccurs="0" maxOccurs="unbounded"/><elementRef key="dig2" minOccurs="0"  maxOccurs="unbounded"/><elementRef key="dig3" minOccurs="0"  maxOccurs="unbounded"/></sequence></egXML></cell></row>
+            <row><cell>sequenceRepeatable</cell><cell><egXML xmlns="http://www.tei-c.org/ns/Examples"><sequence><elementRef key="dig1" maxOccurs="unbounded"/><elementRef key="dig2" maxOccurs="unbounded"/><elementRef key="dig3" maxOccurs="unbounded"/></sequence></egXML></cell></row>
+          </table></p>
           <p>A model class contains a predefined set of element types which we wish to manipulate or
             reference together, usually because they can all appear in the same context, or share
             other properties. Pure ODD allows us to define such classes by means of a
@@ -335,7 +349,30 @@ element is provided for this purpose:
             </elementSpec></egXML>
        </p><p>Note however that not all schema languages support the ability to constrain element content in
        this way. </p>
-      </div><div><head>Macro specifications</head></div>
+      </div><div><head>Macro specifications</head>
+      <p>A small number of comparatively complex content models are frequently used by other TEI specifications. Rather than define
+        them afresh each time, it is convenient to reference a <ident>macro</ident>, the value of which contains their definition. For example,
+        the following code defines a macro called <ident>macro.xText</ident>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><macroSpec ident="macro.xText">
+          <desc>a content model alternating any gaiji-like element and plain text</desc>
+          <content>
+            <alternate minOccurs="0" maxOccurs="unbounded">
+              <textNode/>
+              <classRef key="model.gLike"/>
+            </alternate>
+          </content>
+        </macroSpec></egXML></p>
+        <p>To use this declaration, a content model can simply reference it by means of a <gi>macroRef</gi>:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="txtElement">
+            <desc>an element containing any gaiji-like element and plain text</desc>
+            <content>
+              <macroRef key="macro.xText"/>
+            </content>
+          </elementSpec></egXML></p>
+        
+        
+          
+        </div>
     </body>
   </text>
 </TEI>

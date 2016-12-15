@@ -94,7 +94,7 @@ then
  echo You must use the --package option to specify which package you are installing
  exit 1
 fi
-jenkinsdir=${Jenkins}/${package}-master/lastSuccessfulBuild/artifact/P5
+jenkinsdir=${Jenkins}/${package}/lastSuccessfulBuild/artifact/P5
 SFNAME=$package
 case $package in
   TEIP5)         name=P5;           pname=tei;      SFNAME=TEI-P5-all;;
