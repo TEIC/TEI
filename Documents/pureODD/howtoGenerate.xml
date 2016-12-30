@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_lite.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_lite.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>How to Make an ODD Automagically</title>
+         </titleStmt>
+         <publicationStmt>
+            <p>Publication information</p>        
+         </publicationStmt>
+         <sourceDesc>
+            <p>Information about the source</p>
+         </sourceDesc>
+      </fileDesc>
+  </teiHeader>
+  <text>
+     <!-- typical usage:
+   saxon -it:main -o:myodd /usr/share/xml/tei/stylesheet/tools/oddbyexample.xsl   corpus=`pwd`/
+
+-->
+     <!-- 
+Read a corpus of TEI P5 documents and construct
+an ODD customization file which expresses the subset
+of the TEI you need to validate that corpus
+-->
+     <!-- How does this work?
+
+1) start a variable and copy in all of the TEI 
+
+2) read the corpus and get a list of all the elements and their
+attributes that it uses, put that in the same variable.
+
+3) process the variable and read the TEI section. if an element or
+ attribute is not present in the corpus section, put out a delete
+ customization; 
+ if the attributes of an attribute class are never used 
+ that class may be deleted only if it doesn't claim membership in any other class 
+ or, if it does, none of the attributes from that other class is used.
+
+4) for every attribute which is of type "enumerated", construct a
+valList
+
+-->
+     <!-- name of odd -->
+         <body>
+         <p>We keep telling you to make an ODD for your project. Surely there must be a way of
+         kickstarting the process automatically? Of course there is. This Guide will tell you
+         how to generate an ODD automatically from a corpus of existing TEI P5 documents, and 
+         make suggestions about how you might want to improve it.</p>
+       <div><head>Setting up the TEI by Example Stylesheet</head>
+       <p>The TEI provides a utility called TEI By Example which will process a set of existing TEI documents and
+       extract from them a description of the TEI elements and classes they use. This utility is an XSLT stylesheet,
+  forming part of the standard TEI Stylesheet package. You will find it in the file <ident>tools/oddbyexample.xsl</ident>,
+          
+          within whatever folder you have installed the Stylesheet package, on a typical Linux system, this  will 
+          be
+          called <ident>/usr/share/xml/tei/stylesheet</ident>. We don't describe here how to
+       install the Stylesheet package.</p><p>The oddybyexample stylesheet is a little different from the typical
+          XSLT stylesheet in that it is designed to process a large number of separate documents rather than 
+          a single one. You control its input and output by means of parameters which must be passed to the XSLT processor
+          slightly differing ways depending on the processing environment. For example, you could run the stylesheet at the command line,
+          using a command such as <ident>saxon</ident> directly, or you could run it within the oXygen framework, having first set up
+          an appropriate <term>transformation scenario</term>.
+       </p><p>If you are used to working at the command line, this may be the quickest and simplest option. To process
+          all the TEI files in a directory called <ident>/home/me/myTEICorpus</ident> and produce a sample ODD file called 
+          <ident>myGenerated.odd</ident> in the current directory, you would simply type        
+          <code>saxon /usr/share/xml/tei/stylesheet/tools/oddbyexample.xsl -o:myGenerated.odd  corpus=/home/me/myCorpus -it:main
+          </code>
+       </p><p>(In case you are wondering, the <code>-it</code> parameter tells saxon which template in the stylesheet shoulkd
+          be processed first.)</p><p>To define an appropriate oXygen transformation scenario for the same files, proceed as follows:
+             <list> <item>In oXygen, open any TEI XML file in the <ident>/home/me/myTEICorpus</ident> folder</item>
+             <item>Choose <ident>Transformation -> Configure Transformation Scenario(s)</ident>
+                from the<ident> Document</ident> menu</item>
+             <item>Click <ident>New</ident> and choose "XML Transformation with XSLT"</item>
+             <item>Give your scenario a name ("<ident>oddGenerator</ident>" for example)</item>
+             <item>Leave XML URL as it is. Change XSL URL to point to the stylesheet
+                <ident>oddbyexample.xsl</ident> in your TEI Framework directory directory.
+                Enter <code>${frameworks}/tei/xml/tei/tools/oddbyexample.xsl</code> to find
+                it</item>
+             <item>Choose <ident>Saxon-PE 9.4.0.4</ident> as processor</item>
+             <item>Click the little yellow wheel next to this window to select Advanced Options:
+                you need to set <code>Template("-it")</code> to <code>main</code>
+             </item>
+             <item>Click the <ident>Parameters</ident> button : you need to set the
+                <code>corpus</code> parameter to contain the full name of the folder which you
+                want to analyse. Assuming you opened one of its files in the first step above, just set
+                the parameter to <code>${cfd}</code> and click OK </item>
+             <item>Now select the <ident>Output</ident> tab ... <list>
+                <item>In the <ident>Save as</ident> window supply an output filename such as
+                   myGenerated.odd </item>
+                <item>Tick the <ident>Open in editor</ident> box </item>
+                <item>Select the XML radio button underneath <ident>Show in results view
+                   as</ident> and click OK</item>
+             </list>
+             </item>
+             <item>Launch the transformation by clicking the <ident>Apply Associated</ident>
+                button</item>
+           </list>
+               
+</p></div>  
+      </body>
+  </text>
+</TEI>
+<!--<xsl:param name="schema">oddbyexample</xsl:param>
+<!-\- whether to do all the global attributes -\->
+<xsl:param name="keepGlobals">true</xsl:param><!-\- was false -\->
+<!-\- the document corpus -\->
+<xsl:param name="corpus">./</xsl:param>
+<!-\- file names starting with what prefix? -\->
+<xsl:param name="prefix"/>
+<!-\- should elements in teiHeader be included?-\->
+<xsl:param name="includeHeader">true</xsl:param>
+<!-\- the source of the TEI (just needs *Spec)-\->
+<xsl:param name="defaultSource"
+   >http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml</xsl:param>
+<!-\- should we make valList for @rend and @rendition -\->
+<xsl:param name="enumerateRend">false</xsl:param>
+<!-\- should we make valList for @type -\->
+<xsl:param name="enumerateType">true</xsl:param><!-\- was false -\->
+<!-\- should we deal with non-TEI namespaces -\->
+<xsl:param name="processNonTEI">false</xsl:param>
+<!-\- which attributes should be make valLists for, regardless -\->
+<xsl:param name="attributeList"/>
+<!-\- do you want moduleRef generated with @include or @except? -\->
+<xsl:param name="method">include</xsl:param> <!-\- this doesn't seem to be used -\->
+<!-\- turn on debug messages -\->
+<xsl:param name="debug">false</xsl:param>
+
+-->
