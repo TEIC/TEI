@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>How to Make an ODD Automagically</title>
+            <author>Lou Burnard</author>
+         </titleStmt>
+         <publicationStmt>
+            <p>Unpublished draft</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>Born digital</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>
+      <!-- typical usage:
+   saxon -it:main -o:myodd /usr/share/xml/tei/stylesheet/tools/oddbyexample.xsl   corpus=`pwd`/
+
+-->
+      <!-- 
+Read a corpus of TEI P5 documents and construct
+an ODD customization file which expresses the subset
+of the TEI you need to validate that corpus
+-->
+      <!-- How does this work?
+
+1) start a variable and copy in all of the TEI 
+
+2) read the corpus and get a list of all the elements and their
+attributes that it uses, put that in the same variable.
+
+3) process the variable and read the TEI section. if an element or
+ attribute is not present in the corpus section, put out a delete
+ customization; 
+ if the attributes of an attribute class are never used 
+ that class may be deleted only if it doesn't claim membership in any other class 
+ or, if it does, none of the attributes from that other class is used.
+
+4) for every attribute which is of type "enumerated", construct a
+valList
+
+-->
+      <!-- name of odd -->
+      <body>
+         <p>We keep telling you to make an ODD for your project. Surely there must be a way of
+            kickstarting the process automatically? Of course there is. This Guide will tell you how
+            to generate an ODD automatically from a corpus of existing TEI P5 documents, and make
+            suggestions about how you might want to improve it.</p>
+         <div>
+            <head>Setting up the TEI by Example Stylesheet</head>
+            <p>The TEI provides a utility called TEI By Example which will process a set of existing
+               TEI documents and extract from them a description of the TEI elements and classes
+               they use. This utility is an XSLT stylesheet, forming part of the standard TEI
+               Stylesheet package. You will find it in the file
+                  <ident>tools/oddbyexample.xsl</ident>, within whatever folder you have used to
+               install the Stylesheet package; on a typical Linux system, this will be called
+                  <ident>/usr/share/xml/tei/stylesheet</ident>. We don't describe here how to
+               install the Stylesheet package.</p>
+            <p>The oddybyexample stylesheet is a little different from the typical XSLT stylesheet
+               in that it is designed to process a large number of separate documents rather than a
+               single one. You control its input and output by means of parameters which must be
+               passed to the XSLT processor in slightly differing ways depending on the processing
+               environment. For example, you could run the stylesheet at the command line, using a
+               command such as <ident>saxon</ident> directly, or you could run it within the oXygen
+               framework, having first set up an appropriate <term>transformation scenario</term>. </p>
+            <p>If you are used to working at the command line, this may be the quickest and simplest
+               option. To process all the TEI files in a directory called
+                  <ident>/home/me/myTEICorpus</ident> and produce a sample ODD file called
+                  <ident>myGenerated.odd</ident> in the current directory, you would issue a command
+               like the following: <code>saxon /usr/share/xml/tei/stylesheet/tools/oddbyexample.xsl
+                  -o:myGenerated.odd corpus=/home/me/myCorpus -it:main </code>
+            </p>
+            <p>(In case you are wondering, the <code>-it</code> parameter tells saxon which template
+               in the stylesheet should be processed first.)</p>
+            <p>To define an appropriate oXygen transformation scenario for the same files, you would
+               proceed as follows: <list>
+                  <item>In oXygen, open any TEI XML file in the <ident>/home/me/myTEICorpus</ident>
+                     folder</item>
+                  <item>Choose <ident>Transformation -> Configure Transformation Scenario(s)</ident>
+                     from the<ident> Document</ident> menu</item>
+                  <item>Click <ident>New</ident> and choose "XML Transformation with XSLT"</item>
+                  <item>Give your scenario a name ("<ident>oddGenerator</ident>" for example)</item>
+                  <item>Leave XML URL as it is. Change XSL URL to point to the stylesheet
+                        <ident>oddbyexample.xsl</ident> in your TEI Framework directory directory.
+                     Enter <code>${frameworks}/tei/xml/tei/tools/oddbyexample.xsl</code> to find
+                     it</item>
+                  <item>Choose <ident>Saxon-PE 9.4.0.4</ident> as processor</item>
+                  <item>Click the little yellow wheel next to this window to select Advanced
+                     Options: you need to set <code>Template("-it")</code> to <code>main</code>
+                  </item>
+                  <item>Click the <ident>Parameters</ident> button : you need to set the
+                        <code>corpus</code> parameter to contain the full name of the folder which
+                     you want to analyse. Assuming you opened one of its files in the first step
+                     above, just set the parameter to <code>${cfd}</code> and click OK </item>
+                  <item>Now select the <ident>Output</ident> tab ... <list>
+                        <item>In the <ident>Save as</ident> window supply an output filename such as
+                           myGenerated.odd </item>
+                        <item>Tick the <ident>Open in editor</ident> box </item>
+                        <item>Select the XML radio button underneath <ident>Show in results view
+                              as</ident> and click OK</item>
+                     </list>
+                  </item>
+                  <item>Launch the transformation by clicking the <ident>Apply Associated</ident>
+                     button</item>
+               </list>
+            </p>
+            <p>Once you have defined this transformation scenario, you can use it as often as you
+               like with any collection of files. You don't need to go through the whole of the
+               above rigmarole every time! Next time round, proceed as follows: <list>
+                  <item>In oXygen, open any TEI XML file in the collection you want to process </item>
+                  <item>Choose <ident>Transformation -> Configure Transformation Scenario(s)</ident>
+                     from the<ident> Document</ident> menu as before </item>
+                  <item>You should see the Scenario you just defined in the list of "Global"
+                     scenarios. Check the box next to it and click the <ident>Apply
+                        Associated</ident> button</item>
+               </list></p>
+            <p>You can also edit the scenario, for example by changing the value of the parameters
+               passed on to the stylesheet, or by changing the output options. See below for a list
+               of the things you can modify.</p>
+         </div>
+         <div>
+            <head>Understanding the output</head>
+            <p>The ODD generated by <ident>oddbyexample</ident> is probably not the one you will
+               want to keep. Scan the generated ODD for <gi>moduleRef</gi> elements, since these are particularly useful. You should see 
+                  lines like the following
+                  <egXML xmlns="http://www.tei-c.org/ns/Examples">            
+                     <moduleRef key="namesdates" include="persName listPerson person"/>
+                  </egXML>  This tells me that my corpus uses the elements <gi>persName</gi>, <gi>listPerson</gi> and <gi>person</gi> which are supplied
+                  by the TEI module <ident>namesdates</ident>. No other element from that module is used in my corpus. </p>
+            <p>However, my ODD also contains many lines which are less useful For
+               example, if one of the global attributes (such as @corresp) has been used on just one
+               of the elements in your corpus, the generated ODD has to delete it explicitly from
+               every element on which it is <emph>not</emph> been used. More annoyingly, perhaps,
+               the generated ODD always contains declarations of all module-specific classes whether
+               or not elements from that module have actually been used. The declarations have no
+               effect on the generated schema, but they make it harder to understand what the ODD
+               itself is doing. More usefully, the generated ODD can tell you about the values which
+               are actually used for attributes (such as <att>type</att>) which are of datatype
+               teidata.enumerated.</p>
+            <p>Here's an example of the sort of thing I mean:
+               <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <elementSpec ident="persName" mode="change">
+                     <attList>
+                        <attDef ident="corresp" mode="delete"/>
+                        <attDef ident="when" mode="delete"/>
+                        <attDef ident="notBefore" mode="delete"/>
+                        <attDef ident="notAfter" mode="delete"/>
+                        <attDef ident="key" mode="delete"/>
+                        <attDef ident="type" mode="change">
+                           <valList mode="add" type="closed">
+                              <valItem ident="actor"/>
+                           </valList>
+                        </attDef>
+                        <attDef ident="subtype" mode="delete"/>
+                     </attList>
+                  </elementSpec></egXML>
+                This specification tells me that in my corpus the only value actually specified for
+               the attribute <att>type</att> on the element <gi>persName</gi> is <val>actor</val>.
+               Other instances of this element might not specify a <att>type</att> at all, of
+               course, but this is the only value actually used. It also tells me that most of the
+               other attributes made available by classes of which <gi>persName</gi> is a member are
+               never actually used. For example, the attributes <att>when</att>,
+                  <att>notBefore</att> and <att>notAfter</att> are all supplied by the class
+                  <ident>att.datable</ident>, of which <gi>persName</gi> is a member. These
+               attributes are not used on any instance of <gi>persName</gi> in my corpus. They are
+               however used on instances of at least one other member of that class (<gi>date</gi>
+               in fact) and so the attribute class itself cannot be deleted from the ODD. Instead,
+               as we see here, they must be explicitly deleted from each element which does not use
+               them.</p>
+        </div><div><head>Using and improving a generated ODD</head>
+        <p>What can we do with this ODD file, other than study it as a witness to the follies of our encoders? We can of course process it
+        to generate a schema and a mini-manual documenting our practice, just like any other ODD. Here's a reminder of how to set up  an
+        oxyGen transformation scenario to do just that:  <list>
+          
+           <item>Open your generated ODD file in oXygen</item>
+           <item>In the <ident>Document</ident> menu, choose <ident>Transformation</ident> ->
+              <ident>Configure Transformation Scenario(s)</ident>, or type CTRL-SHIFT-C, or
+              click the spanner icon <!--(this one : <graphic url="spanner.png" height="7mm"/>)--> on
+              the toolbar. </item>
+           <item>A list of available transformation scenarios is displayed. Tick the box next to
+              those you want to apply: probably TEI ODD XHTML and
+              TEI ODD to RELAXNG Compact</item>
+          <!-- <item><graphic url="scenarios.png" height="7cm"/>
+           </item>-->
+           <item>Click the <ident>Apply Associated</ident> button to start the
+              transformation(s); you can safely ignore the messages that scroll by in the lower
+              window</item>
+           <item>All being well, XHTML will be displayed using your default browser, while an RNC
+              output will be saved in a folder called <ident>out</ident>, which oXygen will
+              create in the current directory if necessary. </item>
+        </list></p>
+ <p></p>
+     </div>
+         <div>
+            <head>Configurable parameters for the oddbyexample stylesheet</head>
+            <table>
+               <row role="label">
+                  <cell>Parameter</cell>
+                  <cell>Function</cell>
+                  <cell>Default</cell>
+               </row>
+                   <row>
+                  <cell>corpus</cell>
+                  <cell>path to directory containing input files</cell>
+                  <cell>./</cell>
+               </row>
+               <row>
+                  <cell>schema</cell>
+                  <cell>name for generated schema</cell>
+                  <cell>oddbyexample</cell>
+               </row>
+               <row>
+                  <cell>corpusList</cell>
+                  <cell>process only these input files</cell>
+                  <cell>(no constraint)</cell>
+               </row>
+               <row>
+                  <cell>prefix</cell>
+                  <cell>process only files with names starting like this</cell>
+                  <cell>(no constraint)</cell>
+               </row>
+               <row>
+                  <cell>suffix</cell>
+                  <cell>process only files with extensions like this</cell>
+                  <cell>xml</cell>
+               </row>
+              
+               <row>
+                  <cell>defaultSource</cell>
+                  <cell>path to reference TEI declarations</cell>
+                  <cell>http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml</cell>
+               </row>
+               <row>
+                  <cell>keepGlobals</cell>
+                  <cell>whether to enumerate all global attributes</cell>
+                  <cell>false</cell>
+               </row>
+               <row>
+                  <cell>attributeList</cell>
+                  <cell>specific attributes whose values should be enumerated</cell>
+                  <cell>(none)</cell>
+               </row>
+               <row>
+                  <cell>enumerateRend</cell>
+                  <cell>whether to enumerate values used for rendition</cell>
+                  <cell>false</cell>
+               </row>
+               <row>
+                  <cell>enumerateType</cell>
+                  <cell>whether to enumerate values used for type</cell>
+                  <cell>false</cell>
+               </row>
+               <row>
+                  <cell>includeHeader</cell>
+                  <cell>whether to enumerate attributes of elements in TEI headers</cell>
+                  <cell>true</cell>
+               </row>
+               <row>
+                  <cell>processNonTEI</cell>
+                  <cell>whether to process non-TEI elements</cell>
+                  <cell>false</cell>
+               </row>
+            
+               <!--     <row><cell>method</cell><cell>should generated moduleRefs use @include or @except</cell><cell>include</cell></row>
+     -->
+               <row>
+                  <cell>debug</cell>
+                  <cell>whether to print debugging information</cell>
+                  <cell>false</cell>
+               </row>
+               <row>
+                  <cell>verbose</cell>
+                  <cell>whether to produce verbose messages</cell>
+                  <cell>false</cell>
+               </row>
+              
+            </table>
+         </div>
+      </body>
+   </text>
+</TEI>

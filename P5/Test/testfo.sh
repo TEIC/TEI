@@ -6,6 +6,10 @@
 # https://github.com/TEIC/TEI/issues/1559
 
 XSL=`pwd`/../../../Stylesheets
-ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -lib ../Utilities/lib/saxon9he.jar:../Utilities/lib/jing.jar -Dtrang=../Utilities/lib/trang.jar -f antruntest.xml -DdefaultSource=`pwd`/../p5subset.xml -DXSL=${XSL} -Doutputname=testbasic -DoddFile=testbasic.odd compileodd docfopdf cleanup
+testbasic=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -lib ../Utilities/lib/saxon9he.jar:../Utilities/lib/jing.jar -Dtrang=../Utilities/lib/trang.jar -f antruntest.xml -DdefaultSource=`pwd`/../p5subset.xml -DXSL=${XSL} -Doutputname=testbasic -DoddFile=testbasic.odd -Ddebug=true compileodd docfopdf cleanup
 
-${ANT}
+simplePrint=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -lib ../Utilities/lib/saxon9he.jar:../Utilities/lib/jing.jar -Dtrang=../Utilities/lib/trang.jar -f antruntest.xml -DdefaultSource=`pwd`/../p5subset.xml -DXSL=${XSL} -Doutputname=simplePrint -DoddFile=`pwd`/../Exemplars/tei_simplePrint.odd -Ddebug=true compileodd docfopdf cleanup
+
+${testbasic}
+
+${simplePrint}
