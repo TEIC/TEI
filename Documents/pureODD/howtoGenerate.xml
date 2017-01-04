@@ -190,10 +190,70 @@ valList
            <item>Click the <ident>Apply Associated</ident> button to start the
               transformation(s); you can safely ignore the messages that scroll by in the lower
               window</item>
-           <item>All being well, XHTML will be displayed using your default browser, while an RNC
+           <item>All being well, XHTML will be displayed using your default browser, while the RELAXNG Compact
               output will be saved in a folder called <ident>out</ident>, which oXygen will
               create in the current directory if necessary. </item>
-        </list></p>
+        </list></p><p>You should of course check that the schema generated from this ODD does in fact validate all your
+        corpus files correctly though it would be somewhat alarming if it did not. When you have some
+        new files to add to your corpus, however, this process becomes very useful, whether you decide to maintain the
+        encoding practices already established, or to expand them to cater for new usages in your new files. Maybe you'll need to
+        add new values to the permitted range for one of your attributes? Maybe an attribute or element you thought you would
+        never use needs to be restored to the ODD?</p><p>Suppose for example that although your ODD says that the values of <att>type</att>
+        if supplied on <gi>div</gi> should be <val>chapter</val> or <val>section</val>, your new material includes some <gi>div</gi>
+           elements with a <att>type</att> of <val>book</val>. You might decide that this is a mistake and change the data, or you might decide
+        that you need to modify the ODD. (Michael always used to say <q>If there is a discrepancy between the text and the schema, in
+           our world we trust the text</q>) Let's say you adopt the latter course. You need to locate the <gi>valList</gi> within
+        the <gi>attDef</gi> concerned, and add a new <gi>valItem</gi>. So where your ODD perhaps looks like this:
+           <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <elementSpec ident="div" mode="change">
+                 <attList>
+                    <attDef ident="type" mode="change">
+                       <valList mode="add" type="closed">
+                          <valItem ident="chapter"/>
+                          <valItem ident="section"/>
+                       </valList>
+                    </attDef>
+                 </attList>
+              </elementSpec></egXML>
+        You need to change it to read
+           <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <elementSpec ident="div" mode="change">
+                 <attList>
+                    <attDef ident="type" mode="change">
+                       <valList mode="add" type="closed">
+                          <valItem ident="chapter"/>
+                          <valItem ident="section"/>
+                          <valItem ident="book"/>
+                       </valList>
+                    </attDef>
+                 </attList>
+              </elementSpec></egXML>
+        </p>
+           <p>While you're there, you might like to  document what you mean by each of these values, for the benefit
+           of non-English speakers, or yourself when you have forgotten whether <soCalled>section</soCalled>s contain <soCalled>book</soCalled>s or vice versa. You can
+           do this by adding one or more <gi>desc</gi> elements within the appropriate <gi>valItem</gi>, like this
+              <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                 <elementSpec ident="div" mode="change">
+                 <attList>
+                    <attDef ident="type" mode="change">
+                       <valList mode="add" type="closed">
+                          <valItem ident="chapter"><desc xml:lang="en">the smallest subdivisions of a text</desc>
+                             <desc xml:lang="fr">les divisions les plus petites d'une texte</desc></valItem>
+                          <valItem ident="section"><desc xml:lang="en">a group of <soCalled>chapter</soCalled>s within a <soCalled>book</soCalled></desc>
+                             <desc xml:lang="fr">un  regroupement de <soCalled>chapter</soCalled>s au sein d'un <soCalled>book</soCalled></desc></valItem>
+                          <valItem ident="book"><desc xml:lang="en">the largest subdivisions of a text</desc>
+                             <desc xml:lang="fr">les divisions les plus grandes d'une texte</desc></valItem>
+                       </valList>
+                    </attDef>
+                 </attList>
+              </elementSpec></egXML>         
+           </p>
+        <p>Once you've made these changes, you might like to regenerate a schema from your ODD, and then check that
+           oXygen will use the new features you added. When adding a <gi>div</gi> to a new document, for example, you
+           should be offered a menu for the <att>type</att> attribute including the new values and their associated help text. </p>
+           <p>Of course, there are many other things you might do once you start adding new features to your ODD. This
+        tutorial just suggests a few that are likely to be useful in the process of defining a useful schema for an existing set of
+        TEI documents. </p>
  <p></p>
      </div>
          <div>
