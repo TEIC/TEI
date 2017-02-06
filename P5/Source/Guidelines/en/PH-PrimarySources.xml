@@ -1997,6 +1997,22 @@ lead to unpredictable results.</p>
                   interpretation will be that a deletion was made from a passage which had earlier
                   been added: <egXML xmlns="http://www.tei-c.org/ns/Examples"><add>This sentence was
                         added <del>eventually</del> to the text.</add></egXML></item>
+		<item>When some text has been blackened out so thoroughly that can no longer be read,
+		the encoding should be:
+		<egXML xmlns="http://www.tei-c.org/ns/Examples">bla bla bla <gap reason="deletion" extent="3 words"/> bla bla bla</egXML> 
+		For consistency, one might prefer to encode the deletion as such, using <gi>del</gi>,
+		and containing a <gi>gap</gi>, as in the following example:
+		<egXML xmlns="http://www.tei-c.org/ns/Examples">bla bla bla <del><gap reason="deletion" extent="3 words"/></del> bla bla bla</egXML> 
+		This is something that would be necessary if one wanted to encode a <gi>subst</gi>
+		including an illegible deletion:
+		<egXML xmlns="http://www.tei-c.org/ns/Examples">bla bla bla <subst>
+		<del><gap reason="deletion" extent="3 words"/></del>
+		<add place="above">bla</add>
+		</subst></egXML>
+		If some parts of the deleted text are readable, and other parts unreadable, it should be
+		encoded as in the following example:
+		<egXML xmlns="http://www.tei-c.org/ns/Examples">bla bla bla <del>readable deleted part <gap reason="deletion" extent="3 words"/> another readable deleted part</del> bla bla bla</egXML>
+		</item>
             </list>
          </div>
       </div>
