@@ -22,34 +22,7 @@
       </revisionDesc>
    </teiHeader>
    <text>
-      <!-- typical usage:
-   saxon -it:main -o:myodd /usr/share/xml/tei/stylesheet/tools/oddbyexample.xsl   corpus=`pwd`/
-
--->
-      <!-- 
-Read a corpus of TEI P5 documents and construct
-an ODD customization file which expresses the subset
-of the TEI you need to validate that corpus
--->
-      <!-- How does this work?
-
-1) start a variable and copy in all of the TEI 
-
-2) read the corpus and get a list of all the elements and their
-attributes that it uses, put that in the same variable.
-
-3) process the variable and read the TEI section. if an element or
- attribute is not present in the corpus section, put out a delete
- customization; 
- if the attributes of an attribute class are never used 
- that class may be deleted only if it doesn't claim membership in any other class 
- or, if it does, none of the attributes from that other class is used.
-
-4) for every attribute which is of type "enumerated", construct a
-valList
-
--->
-      <!-- name of odd -->
+     
       <body>
          <p>We keep telling you to make an ODD for your project. Surely there must be a way of
             kickstarting the process automatically? Of course there is. This Guide shows you how
@@ -88,14 +61,14 @@ valList
                   <item>Choose <ident>Transformation -> Configure Transformation Scenario(s)</ident>
                      from the<ident> Document</ident> menu</item>
                   <item>Click <ident>New</ident> and choose "XML Transformation with XSLT"</item>
-                  <item>Give your scenario a name ("<ident>oddGenerator</ident>" for example)</item>
-                  <item>Leave XML URL as it is. Change XSL URL to point to the stylesheet
+                  <item>Give your scenario a name (<ident>oddByExample</ident> for example)</item>
+                  <item>Leave <ident>XML URL</ident> as it is. Change <ident>XSL URL</ident> to point to the stylesheet
                         <ident>oddbyexample.xsl</ident> in your TEI Framework directory directory.
                      Enter <code>${frameworks}/tei/xml/tei/tools/oddbyexample.xsl</code> to find
-                     it</item>
+                     it (yes, there <emph>are</emph> meant to be two <code>tei</code>s in that path)</item>
                   <item>Choose <ident>Saxon-PE 9.4.0.4</ident> as processor</item>
                   <item>Click the little yellow wheel next to this window to select Advanced
-                     Options: you need to set <code>Template("-it")</code> to <code>main</code>
+                     Options: you need to set <ident>Template("-it")</ident> to <code>main</code>
                   </item>
                   <item>Click the <ident>Parameters</ident> button : you need to set the
                         <code>corpus</code> parameter to contain the full name of the folder which
@@ -103,7 +76,7 @@ valList
                      above, just set the parameter to <code>${cfd}</code> and click OK </item>
                   <item>Now select the <ident>Output</ident> tab ... <list>
                         <item>In the <ident>Save as</ident> window supply an output filename such as
-                           myGenerated.odd </item>
+                           generated.odd </item>
                         <item>Tick the <ident>Open in editor</ident> box </item>
                         <item>Select the XML radio button underneath <ident>Show in results view
                               as</ident> and click OK</item>
@@ -112,7 +85,7 @@ valList
                   <item>Launch the transformation by clicking the <ident>Apply Associated</ident>
                      button</item>
                </list>
-            </p>
+              </p>
             <p>Once you have defined this transformation scenario, you can use it as often as you
                like with any collection of files. You don't need to go through the whole of the
                above rigmarole every time! Next time round, proceed as follows: <list>
