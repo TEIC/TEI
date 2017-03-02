@@ -33,8 +33,8 @@ be remembered that in their written forms they may deploy a huge
 variety of scripts or writing systems. These scripts are in turn
 composed of smaller units, which for simplicity we term here
 characters. A primary goal when encoding a text should be to capture
-enough information for subsequent users of it correctly to identify
-both language, script, and constituent characters. In this chapter we
+enough information for subsequent users to correctly identify
+not only the constituent characters, but also the language and script. In this chapter we
 address this requirement, and propose recommended mechanisms to
 indicate the languages, scripts and characters used in a document or a
 part thereof.  </p>
@@ -43,7 +43,7 @@ identifiers for a language where these are available, as they
 increasingly are, in part as a result of the twin pressures of an
 increasing demand for language-specific software and an increased
 interest in language documentation. Where such identifiers are not
-available or not standardized, these Guidelines recommend a way of
+available or not standardized, these Guidelines recommend a method for
 documenting language identifiers and their significance, in the same
 way as other metadata is documented in the TEI header.</p>
 <p>Standardization of the means available to represent characters and
@@ -53,15 +53,13 @@ explicitly document the characters and encoded character sets used by
 almost any digital resource if it was to have any chance of being
 usable across different computer platforms or environments, but this
 is no longer the case. With the availability of the Unicode standard,
-more than 110,000 different characters representing almost all of the world's
+more than 128,000 different characters representing almost all of the world's
 current writing systems are available and usable in any XML processing
 environment without formality. Nevertheless, however large the number
 of standardized characters, there will always be a need to encode
 documents which use non-standard characters and glyphs, particularly
-but not exclusively in historical material. Furthermore, the full
-potential of Unicode is still not yet realized in all software which
-users of these Guidelines are likely to encounter. The second part of
-this chapter therefore discusses in some detail the concepts and
+but not exclusively in historical material. The second part of
+this chapter discusses in some detail the concepts and
 practice underlying this standard, and also introduces the methods
 available for extending beyond it, which are more fully discussed in
 <ptr target="#WD"/>.</p>
@@ -171,7 +169,7 @@ dates, and predefined value lists.</note></p></div>
    Eventually, tension in East Asia between commitment to
    technological progress and the inability of existing computers
    to cope with local writing systems led to decisive developments.
-   Japanese, Korean and Chinese standards bodies, who long before
+   Japanese, Korean, and Chinese standards bodies, who long before
    the advent of computers had been engaged in the specification of
    character sets, joined with computer manufacturers and software
    houses to devise ways of mapping those character sets to numeric
@@ -204,7 +202,7 @@ dates, and predefined value lists.</note></p></div>
    resources (such as are seldom found in academia). Earlier
    editions of these Guidelines offered advice on character set and
    writing system issues addressed to the condition of those for
-   whom SGML was the only feasible option. That advice must now be
+   whom SGML was the only feasible option. That advice is here
    substantially altered because of two closely-related
    developments: the availability of the ISO/Unicode character set
    as an international standard, and the emergence of XML and
@@ -261,7 +259,7 @@ dates, and predefined value lists.</note></p></div>
    glyphs used to render those abstract characters in the original
    document. An encoding that faithfully registers the abstract
    characters of a document allows us to search and analyse our
-   document's content, language and structure and access its full
+   document's content, language, and structure, and to access its full
    semantics. That same encoding, however, may not contain
    sufficient information to allow an exact visual representation
    of the glyphs in the source text or manuscript to be recreated.
@@ -290,7 +288,7 @@ dates, and predefined value lists.</note></p></div>
    particular glyph or set of strokes rather than a
    semantically-equivalent but visually distinct alternative, and
    in that case the specific appearance of the form will have to be
-   encoded on one way or another. But that encoding need not (and
+   encoded in one way or another. But that encoding need not (and
    in most cases will not) involve a notation that visually
    resembles the original, any more than italicized text in an
    original document will be represented by the use of italic
@@ -323,38 +321,40 @@ dates, and predefined value lists.</note></p></div>
     is mentioned here explicitly, it should be noted that the
     character repertoire and assigned code points of Unicode and
     the ISO standard 10646 are identical and maintained in a way
-    that ensures this continues to be the case. </note> Unicode is
-   distinguished from other, earlier and co-existing coded
-   character sets by its (current and potential) size and scope;
-   its built-in provision for (in practical terms) limitless
-   expansion; the range and quality of linguistic and computational
-   expertise on which it draws; the commitment in principle (and to
-   an increasing degree in practice) to implement it by all
-   important providers of hardware and software worldwide; and  the
-   stability, authority and accessibility it derives from its
-   status as an international public standard.</p> </div> 
+    that ensures this continues to be the case. </note> Unicode is 
+  distinguished from other coded character sets by its
+  (current and potential) size and scope; its built-in provision
+  for (in practical terms) limitless expansion; the range and
+  quality of linguistic and computational expertise on which it
+  draws; the stability, authority, and accessibility it derives
+  from its status as an international public standard; and,
+  perhaps most importantly, the fact that today it is implemented
+  by almost every provider of hardware and software platforms
+  worldwide..</p> </div> 
   <div type="div3" xml:id="D4-43"> 
-   <head><!--4.3 -->Abstract Characters, Glyphs and Encoding Scheme
+   <head><!--4.3 -->Abstract Characters, Glyphs, and Encoding Scheme
    Design</head> 
    <p>The distinction between abstract characters and glyphs can be
-   crucial when devising an encoding scheme. Users performing text
-   retrieval, searching or concordancing will expect the system to
-   recognize and treat different glyphs as instances of the same
-   character; but when perusing the text itself they may well expect
-   to see glyph variants preserved and rendered. When encoding a
-   pre-existing text, the encoder must determine whether a particular
-   letter or symbol is a character or a glyphic variant. A detailed
-   model of the relationship between characters and glyphs has been
-   developed within the Unicode Consortium and an ISO work group
-   (ISO/IEC JTC1 SC2/WG2). Its report (<ref target="http://www.unicode.org/reports/tr17/">Unicode Technical
-   Report 17: Character Encoding Model</ref>) will form the base for
-   much future standards work.</p>
+   crucial when devising an encoding scheme.  When performing 
+   searches, text retrieval, or creating concordances, users of 
+   electronic text will expect the system to recognize and treat 
+   different glyphs as instances of the same character; but when 
+   perusing the text itself they may well expect to see glyph variants 
+   preserved and rendered. When encoding a pre-existing text, the 
+   encoder must determine whether a particular
+   letter or symbol is a character or a glyphic variant. The Unicode 
+   Consortium and an ISO work group (ISO/IEC JTC1
+   SC2/WG2) have developed a detailed model of the relationship
+   between characters and glyphs. This model, presented in <ref
+     target="http://www.unicode.org/reports/tr17/">Unicode Technical
+     Report 17: Character Encoding Model</ref>, is the underpinning
+     of much standards work since, including the current chapter.</p>
    <p>The model makes explicit the distinction between two different
    properties of the components of written language: 
 <list> 
     <item>their content, i.e. its meaning and phonetic value
-    (represented by a character)</item> <item>their graphical
-    appearance (represented by a glyph) </item> 
+    (represented by characters)</item> <item>their graphical
+    appearance (represented by glyphs) </item> 
 </list> 
    </p>  
    <p> When searching for information, a system generally operates
