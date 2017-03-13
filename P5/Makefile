@@ -47,6 +47,8 @@ check.stamp:
 	@command -v  java || exit 1
 	@echo -n xmllint:
 	@command -v  xmllint || exit 1
+	@echo -n rnv (https://sourceforge.net/projects/rnv/):
+	@command -v  rnv || exit 1
 	touch check.stamp
 
 p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml p5odds.odd check.stamp
