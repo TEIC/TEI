@@ -47,7 +47,7 @@ check.stamp:
 	@command -v  java || exit 1
 	@echo -n xmllint:
 	@command -v  xmllint || exit 1
-	@echo -n rnv (https://github.com/dtolpin/RNV):
+	@echo -n rnv \(https://github.com/dtolpin/RNV\):
 	@command -v  rnv || exit 1
 	touch check.stamp
 
