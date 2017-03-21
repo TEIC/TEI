@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+$Date$
+$Id$
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" ident="att.referring">
+	<desc versionDate="2017-03-21" xml:lang="en">provides attributes for specifying the beginning
+		and end of a linguistic or textual segment, by addressing the character offsets or by
+		identifying the edge elements via their ID.</desc>
+	<classes/>
+	<attList>
+		<attDef ident="referringMode" usage="opt">
+			<desc versionDate="2017-03-21" xml:lang="en">specifies whether the span/segment edges
+				are identified as <val>numeric</val> offsets or as references to ID
+				(<val>URI</val>).</desc>
+			<datatype>
+				<dataRef key="teidata.enumerated"/>
+			</datatype>
+			<valList type="closed">
+				<valItem ident="numeric">
+					<desc versionDate="2017-03-21" xml:lang="en">edges are identified by numeric
+						offsets (non-negative integers)</desc>
+				</valItem>
+				<valItem ident="URI">
+					<desc versionDate="2017-03-21" xml:lang="en">edges are identified by pointing at
+						elements (e.g. <gi>w</gi>, <gi>c</gi> or <gi>seg</gi>) that can be pointed
+						at by means of an URI (which most often means that they have
+							<att>xml:id</att> attributes defined).</desc>
+				</valItem>
+			</valList>
+		</attDef>
+		<attDef ident="from" usage="opt">
+			<desc versionDate="2017-03-21" xml:lang="en">specifies the starting point of the range
+				of character offsets or elements that can be pointed at with an URI.</desc>
+			<datatype>
+				<dataRef key="teidata.pointerInt"/>
+			</datatype>
+		</attDef>
+		<attDef ident="to" usage="opt">
+			<desc versionDate="2017-03-21" xml:lang="en">specifies the end-point of the range of
+				character offsets or elements that can be pointed at with an URI.</desc>
+			<datatype>
+				<dataRef key="teidata.pointerInt"/>
+			</datatype>
+		</attDef>
+	</attList>
+	<listRef>
+		<ptr target="#STECAT"/>
+	</listRef>
+</classSpec>
