@@ -14,26 +14,36 @@ $Id$
 		xmlns:sch="http://purl.oclc.org/dsdl/schematron">
 		<constraint>
 			<sch:rule context="*[@referringMode eq 'pointer']">
-				<sch:assert test="@from castable as xsd:anyURI">when @referringMode is 'pointer',
+				<sch:assert test="count(@from) eq 0 or @from castable as xsd:anyURI">when @referringMode is 'pointer',
 					@from must be a URI</sch:assert>
-				<sch:assert test="@to castable as xsd:anyURI">when @referringMode is 'pointer', @to
+				<sch:assert test="count(@to) eq 0 or @to castable as xsd:anyURI">when @referringMode is 'pointer', @to
 					must be a URI</sch:assert>
 			</sch:rule>
 			<sch:rule context="*[@referringMode = ('character','icp','byte')]">
-				<sch:assert test="@from castable as xsd:nonNegativeInteger">when @referringMode is
+				<sch:assert test="count(@from) eq 0 or @from castable as xsd:nonNegativeInteger">when @referringMode is
 						'<sch:value-of select="@referringMode"/>', @from must be a counting
 					number</sch:assert>
-				<sch:assert test="@to castable as xsd:nonNegativeInteger">when @referringMode is
+				<sch:assert test="count(@to) eq 0 or @to castable as xsd:nonNegativeInteger">when @referringMode is
 						'<sch:value-of select="@referringMode"/>', @to must be a counting
 					number</sch:assert>
 			</sch:rule>
+			<sch:rule context="*[@referringMode eq 'temporal.w3c']">
+				<sch:assert
+					test="count(@from) eq 0 or @from castable as xsd:date or @from castable as xsd:gYear or @from castable as xsd:gMonth or @from castable as xsd:gDay or @from castable as xsd:gYearMonth or @from castable as xsd:gMonthDay or @from castable as xsd:time or @from castable as xsd:dateTime"
+					>when @referringMode is 'temporal.iso', @from must conform to the W3C/XSD time-date
+					format</sch:assert>
+				<sch:assert
+					test="count(@to) eq 0 or @to castable as xsd:date or @to castable as xsd:gYear or @to castable as xsd:gMonth or @to castable as xsd:gDay or @to castable as xsd:gYearMonth or @to castable as xsd:gMonthDay or @to castable as xsd:time or @to castable as xsd:dateTime"
+					>when @referringMode is 'temporal.iso', @to must conform to the W3C/XSD time-date
+					format</sch:assert>
+			</sch:rule>
 			<sch:rule context="*[@referringMode eq 'temporal.iso']">
 				<sch:assert
-					test="@from castable as xsd:date or @from castable as xsd:gYear or @from castable as xsd:gMonth or @from castable as xsd:gDay or @from castable as xsd:gYearMonth or @from castable as xsd:gMonthDay or @from castable as xsd:time or @from castable as xsd:dateTime"
+					test="count(@from) eq 0 or @from castable as xsd:date or @from castable as xsd:gYear or @from castable as xsd:gMonth or @from castable as xsd:gDay or @from castable as xsd:gYearMonth or @from castable as xsd:gMonthDay or @from castable as xsd:time or @from castable as xsd:dateTime or matches(@from, '[0-9.,DHMPRSTWYZ/:+\-]+'))"
 					>when @referringMode is 'temporal.iso', @from must conform to the ISO time-date
 					format</sch:assert>
 				<sch:assert
-					test="@to castable as xsd:date or @to castable as xsd:gYear or @to castable as xsd:gMonth or @to castable as xsd:gDay or @to castable as xsd:gYearMonth or @to castable as xsd:gMonthDay or @to castable as xsd:time or @to castable as xsd:dateTime"
+					test="count(@to) eq 0 or @to castable as xsd:date or @to castable as xsd:gYear or @to castable as xsd:gMonth or @to castable as xsd:gDay or @to castable as xsd:gYearMonth or @to castable as xsd:gMonthDay or @to castable as xsd:time or @to castable as xsd:dateTime or matches(@to, '[0-9.,DHMPRSTWYZ/:+\-]+')"
 					>when @referringMode is 'temporal.iso', @to must conform to the ISO time-date
 					format</sch:assert>
 			</sch:rule>
