@@ -25,6 +25,9 @@ default: normal special testmeta2010 test-extns test-frag detest
 normal: $(NORMALFILES)
 special: $(EXTENDEDFILES)
 
+checkrnv:
+    $(if $(shell command -v rnv 2> /dev/null),$(info Found rnv),$(warning WARNING: rnv is not installed. Some targets may fail.))
+
 testall.examples: testall.xsd
 	$(SAXON) -o:testall-ex.odd -s:testall.odd -xsl:../Utilities/odd2exodd.xsl
 	$(ANT) -f antruntest.xml -Doutputname=testall-examples -DoddFile=testall-ex.odd compileodd rng cleanup
@@ -48,12 +51,12 @@ testall.examples: testall.xsd
 	@echo Validate XSD using Jing ...
 	${JING} $*.xsd $*.xml
 
-%.special: %.odd
+%.special: %.odd checkrnv
 	@echo "BUILD:  Test schema from (special) $<"
 	xmllint --xinclude $< > xi_$<
 	$(ANT) -f antruntest.xml -Dtestfile=$*.xml -DoddFile=xi_$*.odd -Doutputname=$* validateodd compileodd rng validaterng cleanup
 	${TRANG} $*.rng $*.rnc
-	-command -v rnv && xmllint --noent --dropdtd  $*.xml | rnv $*.rnc
+	xmllint --noent --dropdtd  $*.xml | rnv $*.rnc
 	rm xi_$*.odd
 
 testmeta2010:
@@ -69,10 +72,10 @@ testmeta2010:
 		$(ANT) -f antruntest.xml -DoddFile=testmeta2010.odd -Dtestfile=testmeta2010.xml -Doutputname=$$j -Dschema=$$j  compileodd rng validaterng cleanup; \
 	done
 
-test-frag:
+test-frag: checkrnv
 	@echo BUILD: Testing files which exercise inclusion of fragments
 	${JING} -t -c frag.rnc testfrag.xml
-	-rnv frag.rnc testfrag.xml
+	rnv frag.rnc testfrag.xml
 
 
 test-extns:
@@ -84,14 +87,14 @@ test-sgml:
 	@echo BUILD: Test SGML extension mechanism
 	onsgmls -e -g -s  sgmldecl.tei extns.sgm
 
-detest:
+detest: checkrnv
 	@echo BUILD: Test file with deliberate mistakes
 	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd compileodd rng isoschematron cleanup
 	${TRANG} detest.rng detest.rnc
 	@echo Validate ODD file using Schematron
 	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd validateodd > detest1.log 2>&1
 	@echo Validate ODD file using RELAX NG schema
-	-command -v rnv && rnv detest.rnc detest.xml > detest2.log 2>&1
+	-rnv detest.rnc detest.xml > detest2.log 2>&1
 	@echo Validate XML file using Schematron
 	$(SAXON) detest.xml detest.xsl > detest3.log 2>&1
 	grep "\[xslt\]" detest1.log | sed 's/Processing.*detest.odd//' | sed 's/Loading.*message.isosch.xsl//' > detest.log
