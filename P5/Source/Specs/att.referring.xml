@@ -10,42 +10,76 @@ $Id$
 		and end of a linguistic or textual segment, by addressing the character offsets or by
 		identifying the edge elements via their ID.</desc>
 	<classes/>
-	<attList>
-		<attDef ident="referringMode" usage="opt">
-			<desc versionDate="2017-03-21" xml:lang="en">specifies whether the span/segment edges
-				are identified as <val>numeric</val> offsets or as references to ID
-				(<val>URI</val>).</desc>
-			<datatype>
-				<dataRef key="teidata.enumerated"/>
-			</datatype>
-			<valList type="closed">
-				<valItem ident="numeric">
-					<desc versionDate="2017-03-21" xml:lang="en">edges are identified by numeric
-						offsets (non-negative integers)</desc>
-				</valItem>
-				<valItem ident="URI">
-					<desc versionDate="2017-03-21" xml:lang="en">edges are identified by pointing at
-						elements (e.g. <gi>w</gi>, <gi>c</gi> or <gi>seg</gi>) that can be pointed
-						at by means of an URI (which most often means that they have
+
+
+
+	<constraintSpec scheme="schematron" ident="two-and-three-match-one" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+			<constraint>
+				<sch:rule context="*[@referringMode eq 'pointer']">
+					<sch:assert test="@from castable as xsd:anyURI">when @referringMode is 'pointer' @from must be a URI</sch:assert>
+					<sch:assert test="@to castable as xsd:anyURI">when @referringMode is 'pointer' @to must be a URI</sch:assert>
+				</sch:rule>
+				<sch:rule context="*[@referringMode = ('character','icp','byte')]">
+					<sch:assert test="@from castable as xsd:nonNegativeInteger">when @referringMode is '<sch:value-of select="@referringMode"/>' @from must be a counting number</sch:assert>
+					<sch:assert test="@to castable as xsd:nonNegativeInteger">when @referringMode is '<sch:value-of select="@referringMode"/>' @to must be a counting number</sch:assert>
+				</sch:rule>
+				<sch:rule context="*[@referringMode eq 'second']">
+					<sch:assert test="@from castable as xsd:integer">when @referringMode is 'second' @from must be an integer</sch:assert>
+					<sch:assert test="@to castable as xsd:integer">when @referringMode is 'second' @to must be an integer</sch:assert>
+				</sch:rule>
+			</constraint>
+		</constraintSpec>
+		<attList>
+			<attDef ident="referringMode" usage="opt">
+				<desc versionDate="2017-03-21" xml:lang="en">specifies whether the span/segment edges
+					are identified as <val>numeric</val> offsets or as references to ID
+					(<val>URI</val>).</desc>
+				<datatype>
+					<dataRef key="teidata.enumerated"/>
+				</datatype>
+				<valList type="closed">
+					<valItem ident="pointer">
+						<desc versionDate="2017-03-21" xml:lang="en">edges are identified by pointing at
+							elements (e.g. <gi>w</gi>, <gi>c</gi> or <gi>seg</gi>) that can be pointed
+							at by means of an URI (which most often means that they have
 							<att>xml:id</att> attributes defined).</desc>
-				</valItem>
-			</valList>
-		</attDef>
-		<attDef ident="from" usage="opt">
-			<desc versionDate="2017-03-21" xml:lang="en">specifies the starting point of the range
-				of character offsets or elements that can be pointed at with an URI.</desc>
-			<datatype>
-				<dataRef key="teidata.pointerInt"/>
-			</datatype>
-		</attDef>
-		<attDef ident="to" usage="opt">
-			<desc versionDate="2017-03-21" xml:lang="en">specifies the end-point of the range of
-				character offsets or elements that can be pointed at with an URI.</desc>
-			<datatype>
-				<dataRef key="teidata.pointerInt"/>
-			</datatype>
-		</attDef>
-	</attList>
+					</valItem>
+					<valItem ident="character">
+						<desc versionDate="2017-03-21" xml:lang="en">edges are identified by numeric
+							offsets (non-negative integers)</desc>
+					</valItem>
+					<valItem ident="icp">
+						<desc versionDate="2017-03-21" xml:lang="en">edges are identified by numeric
+							offsets (non-negative integers) identifying inter-character points. In e.g.
+							the string "point", inter-character points are marked by vertical lines:
+							|p|o|i|n|t| (by convention, there is an icp before the first character and
+							after the last one).</desc>
+					</valItem>
+					<valItem ident="byte">
+						<desc versionDate="2017-03-21" xml:lang="en">edges are identified by numeric
+							offsets (non-negative integers) addressing bytes.</desc>
+					</valItem>
+					<valItem ident="second">
+						<desc versionDate="2017-03-21" xml:lang="en">edges are identified by numeric
+							offsets (integers) addressing seconds in a timeline.</desc>
+					</valItem>
+				</valList>
+			</attDef>
+			<attDef ident="from" usage="opt">
+				<desc versionDate="2017-03-21" xml:lang="en">specifies the starting point of the range
+					of character offsets or elements that can be pointed at with an URI.</desc>
+				<datatype minOccurs="1" maxOccurs="1">
+					<dataRef key="teidata.pointerInt"/>
+				</datatype>
+			</attDef>
+			<attDef ident="to" usage="opt">
+				<desc versionDate="2017-03-21" xml:lang="en">specifies the end-point of the range of
+					character offsets or elements that can be pointed at with an URI.</desc>
+				<datatype>
+					<dataRef key="teidata.pointerInt"/>
+				</datatype>
+			</attDef>
+		</attList>
 	<listRef>
 		<ptr target="#STECAT"/>
 	</listRef>
