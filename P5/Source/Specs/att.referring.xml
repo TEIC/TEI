@@ -10,82 +10,93 @@ $Id$
 		and end of a linguistic or textual segment, by addressing the character offsets or by
 		identifying the edge elements via their ID.</desc>
 	<classes/>
-
-
-
-	<constraintSpec scheme="schematron" ident="two-and-three-match-one" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
-			<constraint>
-				<sch:rule context="*[@referringMode eq 'pointer']">
-					<sch:assert test="@from castable as xsd:anyURI">when @referringMode is 'pointer' @from must be a URI</sch:assert>
-					<sch:assert test="@to castable as xsd:anyURI">when @referringMode is 'pointer' @to must be a URI</sch:assert>
-				</sch:rule>
-				<sch:rule context="*[@referringMode = ('character','icp','byte')]">
-					<sch:assert test="@from castable as xsd:nonNegativeInteger">when @referringMode is '<sch:value-of select="@referringMode"/>' @from must be a counting number</sch:assert>
-					<sch:assert test="@to castable as xsd:nonNegativeInteger">when @referringMode is '<sch:value-of select="@referringMode"/>' @to must be a counting number</sch:assert>
-				</sch:rule>
-				<sch:rule context="*[@referringMode eq 'second']">
-					<sch:assert test="@from castable as xsd:integer">when @referringMode is 'second' @from must be an integer</sch:assert>
-					<sch:assert test="@to castable as xsd:integer">when @referringMode is 'second' @to must be an integer</sch:assert>
-				</sch:rule>
-			</constraint>
-		</constraintSpec>
-		<attList>
-			<attDef ident="referringMode" usage="opt">
-				<desc versionDate="2017-03-21" xml:lang="en">specifies whether the span/segment edges
-					are identified as <val>numeric</val> offsets or as references to ID
-					(<val>URI</val>).</desc>
-				<datatype>
-					<dataRef key="teidata.enumerated"/>
-				</datatype>
-				<valList type="closed">
-					<valItem ident="pointer">
-						<desc versionDate="2017-03-21" xml:lang="en">edges are identified by pointing at
-							elements (e.g. <gi>w</gi>, <gi>c</gi> or <gi>seg</gi>) that can be pointed
-							at by means of an URI (which most often means that they have
+	<constraintSpec scheme="schematron" ident="two-and-three-match-one"
+		xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+		<constraint>
+			<sch:rule context="*[@referringMode eq 'pointer']">
+				<sch:assert test="@from castable as xsd:anyURI">when @referringMode is 'pointer',
+					@from must be a URI</sch:assert>
+				<sch:assert test="@to castable as xsd:anyURI">when @referringMode is 'pointer', @to
+					must be a URI</sch:assert>
+			</sch:rule>
+			<sch:rule context="*[@referringMode = ('character','icp','byte')]">
+				<sch:assert test="@from castable as xsd:nonNegativeInteger">when @referringMode is
+						'<sch:value-of select="@referringMode"/>', @from must be a counting
+					number</sch:assert>
+				<sch:assert test="@to castable as xsd:nonNegativeInteger">when @referringMode is
+						'<sch:value-of select="@referringMode"/>', @to must be a counting
+					number</sch:assert>
+			</sch:rule>
+			<sch:rule context="*[@referringMode eq 'temporal.iso']">
+				<sch:assert
+					test="@from castable as xsd:date or @from castable as xsd:gYear or @from castable as xsd:gMonth or @from castable as xsd:gDay or @from castable as xsd:gYearMonth or @from castable as xsd:gMonthDay or @from castable as xsd:time or @from castable as xsd:dateTime"
+					>when @referringMode is 'temporal.iso', @from must conform to the ISO time-date
+					format</sch:assert>
+				<sch:assert
+					test="@to castable as xsd:date or @to castable as xsd:gYear or @to castable as xsd:gMonth or @to castable as xsd:gDay or @to castable as xsd:gYearMonth or @to castable as xsd:gMonthDay or @to castable as xsd:time or @to castable as xsd:dateTime"
+					>when @referringMode is 'temporal.iso', @to must conform to the ISO time-date
+					format</sch:assert>
+			</sch:rule>
+		</constraint>
+	</constraintSpec>
+	<attList>
+		<attDef ident="referringMode" usage="opt">
+			<desc versionDate="2017-03-21" xml:lang="en">specifies whether the span/segment edges
+				are identified as <val>numeric</val> offsets or as references to ID
+				(<val>URI</val>).</desc>
+			<datatype>
+				<dataRef key="teidata.enumerated"/>
+			</datatype>
+			<valList type="closed">
+				<valItem ident="pointer">
+					<desc versionDate="2017-03-21" xml:lang="en">edges are identified by pointing at
+						elements (e.g. <gi>w</gi>, <gi>c</gi> or <gi>seg</gi>) that can be pointed
+						at by means of an URI (which most often means that they have
 							<att>xml:id</att> attributes defined).</desc>
-					</valItem>
-					<valItem ident="character">
-						<desc versionDate="2017-03-21" xml:lang="en">edges are identified by numeric
-							offsets (non-negative integers)</desc>
-					</valItem>
-					<valItem ident="icp">
-						<desc versionDate="2017-03-21" xml:lang="en">edges are identified by numeric
-							offsets (non-negative integers) identifying inter-character points. In e.g.
-							the string "point", inter-character points are marked by vertical lines:
-							|p|o|i|n|t| (by convention, there is an icp before the first character and
-							after the last one).</desc>
-					</valItem>
-					<valItem ident="byte">
-						<desc versionDate="2017-03-21" xml:lang="en">edges are identified by numeric
-							offsets (non-negative integers) addressing bytes.</desc>
-					</valItem>
-					<valItem ident="temporal.iso">
-						<desc versionDate="2017-03-21" xml:lang="en">edges are identified by 
-							offsets expressed as values that conform to the international standard <title>Data elements
-								and interchange formats – Information interchange – Representation of dates and times</title>.</desc>
-					</valItem>
-					<valItem ident="temporal.w3c">
+				</valItem>
+				<valItem ident="character">
+					<desc versionDate="2017-03-21" xml:lang="en">edges are identified by numeric
+						offsets (non-negative integers)</desc>
+				</valItem>
+				<valItem ident="icp">
+					<desc versionDate="2017-03-21" xml:lang="en">edges are identified by numeric
+						offsets (non-negative integers) identifying inter-character points. In e.g.
+						the string "point", inter-character points are marked by vertical lines:
+						|p|o|i|n|t| (by convention, there is an icp before the first character and
+						after the last one).</desc>
+				</valItem>
+				<valItem ident="byte">
+					<desc versionDate="2017-03-21" xml:lang="en">edges are identified by numeric
+						offsets (non-negative integers) addressing bytes.</desc>
+				</valItem>
+				<valItem ident="temporal.iso">
+					<desc versionDate="2017-03-21" xml:lang="en">edges are identified by offsets
+						expressed as values that conform to the international standard <title>Data
+							elements and interchange formats – Information interchange –
+							Representation of dates and times</title>.</desc>
+				</valItem>
+				<valItem ident="temporal.w3c">
 					<desc versionDate="2017-03-21" xml:lang="en">edges are identified by offsets
 						expressed as values that conform to the W3C <title ref="#XSD2">XML Schema
 							Part 2: Datatypes Second Edition</title> specification.</desc>
-					</valItem>
-				</valList>
-			</attDef>
-			<attDef ident="from" usage="opt">
-				<desc versionDate="2017-03-21" xml:lang="en">specifies the starting point of the range
-					of character offsets or elements that can be pointed at with an URI.</desc>
-				<datatype minOccurs="1" maxOccurs="1">
-					<dataRef key="teidata.referring"/>
-				</datatype>
-			</attDef>
-			<attDef ident="to" usage="opt">
-				<desc versionDate="2017-03-21" xml:lang="en">specifies the end-point of the range of
-					character offsets or elements that can be pointed at with an URI.</desc>
-				<datatype>
-					<dataRef key="teidata.referring"/>
-				</datatype>
-			</attDef>
-		</attList>
+				</valItem>
+			</valList>
+		</attDef>
+		<attDef ident="from" usage="opt">
+			<desc versionDate="2017-03-21" xml:lang="en">specifies the starting point of the range
+				of character offsets or elements that can be pointed at with an URI.</desc>
+			<datatype minOccurs="1" maxOccurs="1">
+				<dataRef key="teidata.referring"/>
+			</datatype>
+		</attDef>
+		<attDef ident="to" usage="opt">
+			<desc versionDate="2017-03-21" xml:lang="en">specifies the end-point of the range of
+				character offsets or elements that can be pointed at with an URI.</desc>
+			<datatype>
+				<dataRef key="teidata.referring"/>
+			</datatype>
+		</attDef>
+	</attList>
 	<listRef>
 		<ptr target="#STECAT"/>
 	</listRef>
