@@ -53,7 +53,7 @@ testall.examples: testall.xsd
 	xmllint --xinclude $< > xi_$<
 	$(ANT) -f antruntest.xml -Dtestfile=$*.xml -DoddFile=xi_$*.odd -Doutputname=$* validateodd compileodd rng validaterng cleanup
 	${TRANG} $*.rng $*.rnc
-	xmllint --noent --dropdtd  $*.xml | rnv $*.rnc
+	-command -v rnv && xmllint --noent --dropdtd  $*.xml | rnv $*.rnc
 	rm xi_$*.odd
 
 testmeta2010:
@@ -72,7 +72,7 @@ testmeta2010:
 test-frag:
 	@echo BUILD: Testing files which exercise inclusion of fragments
 	${JING} -t -c frag.rnc testfrag.xml
-	rnv frag.rnc testfrag.xml
+	-rnv frag.rnc testfrag.xml
 
 
 test-extns:
@@ -91,7 +91,7 @@ detest:
 	@echo Validate ODD file using Schematron
 	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd validateodd > detest1.log 2>&1
 	@echo Validate ODD file using RELAX NG schema
-	-rnv detest.rnc detest.xml > detest2.log 2>&1
+	-command -v rnv && rnv detest.rnc detest.xml > detest2.log 2>&1
 	@echo Validate XML file using Schematron
 	$(SAXON) detest.xml detest.xsl > detest3.log 2>&1
 	grep "\[xslt\]" detest1.log | sed 's/Processing.*detest.odd//' | sed 's/Loading.*message.isosch.xsl//' > detest.log
