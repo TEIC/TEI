@@ -10,45 +10,76 @@ $Id$
 		and end of a linguistic or textual segment, by addressing the character offsets or by
 		identifying the edge elements via their ID.</desc>
 	<classes/>
+
+	<constraintSpec scheme="schematron" ident="default_is_URI"
+		xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+		<constraint>
+			<sch:rule context="*[not(@referringMode) and (@to or @from)]">
+				<sch:assert test="@from castable as xsd:anyURI">The default form of @from is a URI</sch:assert>
+				<sch:assert test="@to castable as xsd:anyURI">The default form of @to is a URI</sch:assert>
+			</sch:rule>
+		</constraint>
+	</constraintSpec>
 	<constraintSpec scheme="schematron" ident="two-and-three-match-one"
 		xmlns:sch="http://purl.oclc.org/dsdl/schematron">
 		<constraint>
 			<sch:rule context="*[@referringMode eq 'pointer']">
-				<sch:assert test="count(@from) eq 0 or @from castable as xsd:anyURI">when @referringMode is 'pointer',
+				<sch:assert test="@from castable as xsd:anyURI">when @referringMode is 'pointer',
 					@from must be a URI</sch:assert>
-				<sch:assert test="count(@to) eq 0 or @to castable as xsd:anyURI">when @referringMode is 'pointer', @to
+				<sch:assert test="@to castable as xsd:anyURI">when @referringMode is 'pointer', @to
 					must be a URI</sch:assert>
 			</sch:rule>
 			<sch:rule context="*[@referringMode = ('character','icp','byte')]">
-				<sch:assert test="count(@from) eq 0 or @from castable as xsd:nonNegativeInteger">when @referringMode is
+				<sch:assert test="@from castable as xsd:nonNegativeInteger">when @referringMode is
 						'<sch:value-of select="@referringMode"/>', @from must be a counting
 					number</sch:assert>
-				<sch:assert test="count(@to) eq 0 or @to castable as xsd:nonNegativeInteger">when @referringMode is
+				<sch:assert test="@to castable as xsd:nonNegativeInteger">when @referringMode is
 						'<sch:value-of select="@referringMode"/>', @to must be a counting
 					number</sch:assert>
 			</sch:rule>
 			<sch:rule context="*[@referringMode eq 'temporal.w3c']">
 				<sch:assert
-					test="count(@from) eq 0 or @from castable as xsd:date or @from castable as xsd:gYear or @from castable as xsd:gMonth or @from castable as xsd:gDay or @from castable as xsd:gYearMonth or @from castable as xsd:gMonthDay or @from castable as xsd:time or @from castable as xsd:dateTime"
+					test="@from castable as xsd:date or @from castable as xsd:gYear or @from castable as xsd:gMonth or @from castable as xsd:gDay or @from castable as xsd:gYearMonth or @from castable as xsd:gMonthDay or @from castable as xsd:time or @from castable as xsd:dateTime"
 					>when @referringMode is 'temporal.iso', @from must conform to the W3C/XSD time-date
 					format</sch:assert>
 				<sch:assert
-					test="count(@to) eq 0 or @to castable as xsd:date or @to castable as xsd:gYear or @to castable as xsd:gMonth or @to castable as xsd:gDay or @to castable as xsd:gYearMonth or @to castable as xsd:gMonthDay or @to castable as xsd:time or @to castable as xsd:dateTime"
+					test="@to castable as xsd:date or @to castable as xsd:gYear or @to castable as xsd:gMonth or @to castable as xsd:gDay or @to castable as xsd:gYearMonth or @to castable as xsd:gMonthDay or @to castable as xsd:time or @to castable as xsd:dateTime"
 					>when @referringMode is 'temporal.iso', @to must conform to the W3C/XSD time-date
 					format</sch:assert>
 			</sch:rule>
 			<sch:rule context="*[@referringMode eq 'temporal.iso']">
 				<sch:assert
-					test="count(@from) eq 0 or @from castable as xsd:date or @from castable as xsd:gYear or @from castable as xsd:gMonth or @from castable as xsd:gDay or @from castable as xsd:gYearMonth or @from castable as xsd:gMonthDay or @from castable as xsd:time or @from castable as xsd:dateTime or matches(@from, '[0-9.,DHMPRSTWYZ/:+\-]+')"
+					test="@from castable as xsd:date or @from castable as xsd:gYear or @from castable as xsd:gMonth or @from castable as xsd:gDay or @from castable as xsd:gYearMonth or @from castable as xsd:gMonthDay or @from castable as xsd:time or @from castable as xsd:dateTime or matches(@from, '[0-9.,DHMPRSTWYZ/:+\-]+')"
 					>when @referringMode is 'temporal.iso', @from must conform to the ISO time-date
 					format</sch:assert>
 				<sch:assert
-					test="count(@to) eq 0 or @to castable as xsd:date or @to castable as xsd:gYear or @to castable as xsd:gMonth or @to castable as xsd:gDay or @to castable as xsd:gYearMonth or @to castable as xsd:gMonthDay or @to castable as xsd:time or @to castable as xsd:dateTime or matches(@to, '[0-9.,DHMPRSTWYZ/:+\-]+')"
+					test="@to castable as xsd:date or @to castable as xsd:gYear or @to castable as xsd:gMonth or @to castable as xsd:gDay or @to castable as xsd:gYearMonth or @to castable as xsd:gMonthDay or @to castable as xsd:time or @to castable as xsd:dateTime or matches(@to, '[0-9.,DHMPRSTWYZ/:+\-]+')"
 					>when @referringMode is 'temporal.iso', @to must conform to the ISO time-date
 					format</sch:assert>
 			</sch:rule>
 		</constraint>
 	</constraintSpec>
+	
+	<constraintSpec ident="tofrom" scheme="isoschematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+<!--	this rule should be unnecessary, because the datatypes on @to and @from are independently restricted.
+		but their restriction appears to be ineffective... (?) -->
+		<constraint>
+			<sch:rule context="*[@to or @from]">
+				<sch:report  test="contains(normalize-space(@to),' ') or contains(normalize-space(@from),' ')"
+					> The attributes @to and @from on <sch:name/> may each contain only a single
+					value</sch:report>
+			</sch:rule>
+		</constraint>
+	</constraintSpec>
+	<constraintSpec ident="tonotfrom" scheme="isoschematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+		<constraint>
+			<sch:rule context="@to">
+				<sch:report test="@to and not(@from)"> If @to is supplied on <sch:name/>, @from must
+					be supplied as well</sch:report>
+			</sch:rule>
+		</constraint>
+	</constraintSpec>
+
 	<attList>
 		<attDef ident="referringMode" usage="opt">
 			<desc versionDate="2017-03-21" xml:lang="en">specifies whether the span/segment edges
@@ -95,14 +126,14 @@ $Id$
 		<attDef ident="from" usage="opt">
 			<desc versionDate="2017-03-21" xml:lang="en">specifies the starting point of the range
 				of character offsets or elements that can be pointed at with an URI.</desc>
-			<datatype>
+			<datatype minOccurs="1" maxOccurs="1">
 				<dataRef key="teidata.referring"/>
 			</datatype>
 		</attDef>
 		<attDef ident="to" usage="opt">
 			<desc versionDate="2017-03-21" xml:lang="en">specifies the end-point of the range of
 				character offsets or elements that can be pointed at with an URI.</desc>
-			<datatype>
+			<datatype minOccurs="1" maxOccurs="1">
 				<dataRef key="teidata.referring"/>
 			</datatype>
 		</attDef>
