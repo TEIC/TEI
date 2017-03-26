@@ -4,7 +4,7 @@ Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema-datatypes"?>
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" ident="att.referring">
 	<desc versionDate="2017-03-21" xml:lang="en">provides attributes for specifying the beginning
 		and end of a linguistic or textual segment, by addressing the character offsets or by
@@ -37,31 +37,9 @@ $Id$
 			</sch:rule>
 			<sch:rule context="*[@referringMode = ('character','icp','byte')]">
 				<sch:assert test="@from castable as xsd:nonNegativeInteger">when @referringMode is
-						'<sch:value-of select="@referringMode"/>', @from must be a counting
-					number</sch:assert>
+						'<sch:value-of select="@referringMode"/>', @from must be a non-negative integer</sch:assert>
 				<sch:assert test="@to castable as xsd:nonNegativeInteger">when @referringMode is
-						'<sch:value-of select="@referringMode"/>', @to must be a counting
-					number</sch:assert>
-			</sch:rule>
-			<sch:rule context="*[@referringMode eq 'temporal.w3c']">
-				<sch:assert
-					test="@from castable as xsd:date or @from castable as xsd:gYear or @from castable as xsd:gMonth or @from castable as xsd:gDay or @from castable as xsd:gYearMonth or @from castable as xsd:gMonthDay or @from castable as xsd:time or @from castable as xsd:dateTime"
-					>when @referringMode is 'temporal.iso', @from must conform to the W3C/XSD time-date
-					format</sch:assert>
-				<sch:assert
-					test="@to castable as xsd:date or @to castable as xsd:gYear or @to castable as xsd:gMonth or @to castable as xsd:gDay or @to castable as xsd:gYearMonth or @to castable as xsd:gMonthDay or @to castable as xsd:time or @to castable as xsd:dateTime"
-					>when @referringMode is 'temporal.iso', @to must conform to the W3C/XSD time-date
-					format</sch:assert>
-			</sch:rule>
-			<sch:rule context="*[@referringMode eq 'temporal.iso']">
-				<sch:assert
-					test="@from castable as xsd:date or @from castable as xsd:gYear or @from castable as xsd:gMonth or @from castable as xsd:gDay or @from castable as xsd:gYearMonth or @from castable as xsd:gMonthDay or @from castable as xsd:time or @from castable as xsd:dateTime or matches(@from, '[0-9.,DHMPRSTWYZ/:+\-]+')"
-					>when @referringMode is 'temporal.iso', @from must conform to the ISO time-date
-					format</sch:assert>
-				<sch:assert
-					test="@to castable as xsd:date or @to castable as xsd:gYear or @to castable as xsd:gMonth or @to castable as xsd:gDay or @to castable as xsd:gYearMonth or @to castable as xsd:gMonthDay or @to castable as xsd:time or @to castable as xsd:dateTime or matches(@to, '[0-9.,DHMPRSTWYZ/:+\-]+')"
-					>when @referringMode is 'temporal.iso', @to must conform to the ISO time-date
-					format</sch:assert>
+					'<sch:value-of select="@referringMode"/>', @to must be a non-negative integer</sch:assert>
 			</sch:rule>
 		</constraint>
 	</constraintSpec>
@@ -116,17 +94,6 @@ $Id$
 				<valItem ident="byte">
 					<desc versionDate="2017-03-21" xml:lang="en">edges are identified by numeric
 						offsets (non-negative integers) addressing bytes.</desc>
-				</valItem>
-				<valItem ident="temporal.iso">
-					<desc versionDate="2017-03-21" xml:lang="en">edges are identified by offsets
-						expressed as values that conform to the international standard <title>Data
-							elements and interchange formats – Information interchange –
-							Representation of dates and times</title>.</desc>
-				</valItem>
-				<valItem ident="temporal.w3c">
-					<desc versionDate="2017-03-21" xml:lang="en">edges are identified by offsets
-						expressed as values that conform to the W3C <title ref="#XSD2">XML Schema
-							Part 2: Datatypes Second Edition</title> specification.</desc>
 				</valItem>
 			</valList>
 		</attDef>
