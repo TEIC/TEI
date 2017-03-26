@@ -11,12 +11,18 @@ $Id$
 		identifying the edge elements via their ID.</desc>
 	<classes/>
 
+	<!-- the fragment *[local-name() = ('span')] is an expression of a kludge that makes it impossible
+	     at present to say "only elements that add themselves to this class" 
+	     
+	Ideally, the sequence should be extensible automatically, but that is unfortunately currently the 
+	task of the person preparing a customization -->
+
 	<constraintSpec scheme="schematron" ident="default_is_URI"
-		xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+		xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xsd="http://www.w3.org/2001/XMLSchema-datatypes">
 		<constraint>
-			<sch:rule context="*[not(@referringMode) and (@to or @from)]">
+			<sch:rule context="*[local-name() = ('span')][not(@referringMode) and @from and @to]">
 				<sch:assert test="@from castable as xsd:anyURI">The default form of @from is a URI</sch:assert>
-				<sch:assert test="@to castable as xsd:anyURI">The default form of @to is a URI</sch:assert>
+				<sch:report test="@to and not(@to castable as xsd:anyURI)">The default form of @to is a URI</sch:report>
 			</sch:rule>
 		</constraint>
 	</constraintSpec>
@@ -64,7 +70,7 @@ $Id$
 <!--	this rule should be unnecessary, because the datatypes on @to and @from are independently restricted.
 		but their restriction appears to be ineffective... (?) -->
 		<constraint>
-			<sch:rule context="*[@to or @from]">
+			<sch:rule context="*[local-name() = ('span')][@to or @from]">
 				<sch:report  test="contains(normalize-space(@to),' ') or contains(normalize-space(@from),' ')"
 					> The attributes @to and @from on <sch:name/> may each contain only a single
 					value</sch:report>
@@ -73,7 +79,7 @@ $Id$
 	</constraintSpec>
 	<constraintSpec ident="tonotfrom" scheme="isoschematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
 		<constraint>
-			<sch:rule context="@to">
+			<sch:rule context="*[local-name() = ('span')][@to]">
 				<sch:report test="@to and not(@from)"> If @to is supplied on <sch:name/>, @from must
 					be supplied as well</sch:report>
 			</sch:rule>
@@ -88,8 +94,9 @@ $Id$
 			<datatype>
 				<dataRef key="teidata.enumerated"/>
 			</datatype>
+			<defaultVal>pointer</defaultVal>
 			<valList type="closed">
-				<valItem ident="pointer">
+				<valItem ident="pointer"  >
 					<desc versionDate="2017-03-21" xml:lang="en">edges are identified by pointing at
 						elements (e.g. <gi>w</gi>, <gi>c</gi> or <gi>seg</gi>) that can be pointed
 						at by means of an URI (which most often means that they have
