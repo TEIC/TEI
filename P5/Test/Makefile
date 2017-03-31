@@ -26,7 +26,7 @@ normal: $(NORMALFILES)
 special: $(EXTENDEDFILES)
 
 checkrnv:
-    $(if $(shell command -v rnv 2> /dev/null),$(info Found rnv),$(warning WARNING: rnv is not installed. Some targets may fail.))
+	@command -v rnv || echo WARNING: rnv is not installed. Some targets may fail.
 
 testall.examples: testall.xsd
 	$(SAXON) -o:testall-ex.odd -s:testall.odd -xsl:../Utilities/odd2exodd.xsl
