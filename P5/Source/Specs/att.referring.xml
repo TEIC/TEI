@@ -42,9 +42,9 @@ $Id$
 					@to must be pointing at an existing local target</sch:assert>
 			</sch:rule>
 			<sch:rule context="*[@referringMode = ('character','icp','byte')]">
-				<sch:assert test="@from castable as xsd:nonNegativeInteger">When @referringMode is
+				<sch:assert test="@from castable as xsd:int">When @referringMode is
 						'<sch:value-of select="@referringMode"/>', @from must be a non-negative integer</sch:assert>
-				<sch:assert test="@to castable as xsd:nonNegativeInteger">When @referringMode is
+				<sch:assert test="@to castable as xsd:int">When @referringMode is
 					'<sch:value-of select="@referringMode"/>', @to must be a non-negative integer</sch:assert>
 			</sch:rule>
 		</constraint>
@@ -115,13 +115,13 @@ $Id$
 			</valList>
 			<exemplum xml:lang="en">
 				<p>The example below comes from a part of the CoMParS (Collection of Multi-lingual
-					Parallel Sequences) project that stores a monolingual subcorpus of German.</p>
+					Parallel Sequences) project and presents a fragment of a monolingual subcorpus of German.</p>
 				<p>The individual sequences (in this case, a sentence) are listed in the
-						<gi>text</gi> part of the corpus, while linguistic analysis is performed in
+						<gi>text</gi> part of the corpus, while the linguistic analysis is performed in
 					the <gi>standOff</gi> part, which consists, among others, of segmentation
 					information. CoMParS adheres to ISO LAF principles and uses inter-character
 					points with the indexing starting at 0.</p>
-				<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+				<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="false">
 					<text xml:lang="de">
 						<body>
 							<ab xml:id="deu-ab1" n="1">
@@ -132,25 +132,22 @@ $Id$
 							</ab>
 						</body>
 					</text>
-				</egXML>
-				<ab><eg xml:space="preserve"><![CDATA[
-					<standOff>
-						<listAnnotation n="1" corresp="#deu-ab1" type="sequence">
-							<listAnnotation type="segmentation">
-								<seg from="0" to="3" xml:id="deu-ab1tok1">Ich</seg>
-								<seg from="4" to="8" xml:id="deu-ab1tok2">habe</seg>
-								<seg from="9" to="13" xml:id="deu-ab1tok3">mich</seg>
-								<seg from="14" to="16" xml:id="deu-ab1tok4">im</seg>
-								<seg from="17" to="23" xml:id="deu-ab1tok5">Winter</seg>
-								<seg from="24" to="26" xml:id="deu-ab1tok6">in</seg>
-								<seg from="27" to="30" xml:id="deu-ab1tok7">dir</seg>
-								<seg from="31" to="39" xml:id="deu-ab1tok8">verliebt</seg>
-								<seg from="39" to="40" xml:id="deu-ab1tok9">.</seg>
-							</listAnnotation>
+					<standOff xmlns="">
+					<listAnnotation n="1" corresp="#deu-ab1" type="sequence">
+						<listAnnotation type="segmentation">
+							<seg from="0" to="3" xml:id="deu-ab1tok1">Ich</seg>
+							<seg from="4" to="8" xml:id="deu-ab1tok2">habe</seg>
+							<seg from="9" to="13" xml:id="deu-ab1tok3">mich</seg>
+							<seg from="14" to="16" xml:id="deu-ab1tok4">im</seg>
+							<seg from="17" to="23" xml:id="deu-ab1tok5">Winter</seg>
+							<seg from="24" to="26" xml:id="deu-ab1tok6">in</seg>
+							<seg from="27" to="30" xml:id="deu-ab1tok7">dir</seg>
+							<seg from="31" to="39" xml:id="deu-ab1tok8">verliebt</seg>
+							<seg from="39" to="40" xml:id="deu-ab1tok9">.</seg>
 						</listAnnotation>
+					</listAnnotation>
 					</standOff>
-				]]></eg></ab>
-				
+				</egXML>
 			</exemplum>
 		</attDef>
 		<attDef ident="from" usage="opt">
