@@ -17,15 +17,16 @@ $Id$
 	Ideally, the sequence should be extensible automatically, but that is unfortunately currently the 
 	task of the person preparing a customization -->
 
-	<constraintSpec scheme="schematron" ident="default_is_URI"
+	<constraintSpec scheme="schematron" ident="default_mode"
 		xmlns:sch="http://purl.oclc.org/dsdl/schematron">
 		<constraint>
 			<sch:rule context="*[local-name() = ('span')][not(@referringMode) and @from and @to]">
 				<sch:assert test="@from castable as xsd:anyURI">The default form of @from is a URI</sch:assert>
-				<sch:report test="@to and not(@to castable as xsd:anyURI)">The default form of @to is a URI</sch:report>
+				<sch:assert test="@to castable as xsd:anyURI">The default form of @to is a URI</sch:assert>
 			</sch:rule>
 		</constraint>
 	</constraintSpec>
+	
 	<constraintSpec scheme="schematron" ident="two-and-three-match-one"
 		xmlns:sch="http://purl.oclc.org/dsdl/schematron">
 		<constraint>
@@ -113,42 +114,6 @@ $Id$
 						indexing type ignores XML or any other structuring.</desc>
 				</valItem>
 			</valList>
-			<exemplum xml:lang="en">
-				<p>The example below comes from a part of the CoMParS (Collection of Multi-lingual
-					Parallel Sequences) project and presents a fragment of a monolingual subcorpus of German.</p>
-				<p>The individual sequences (in this case, a sentence) are listed in the
-						<gi>text</gi> part of the corpus, while the linguistic analysis is performed in
-					the <gi>standOff</gi> part, which consists, among others, of segmentation
-					information. CoMParS adheres to ISO LAF principles and uses inter-character
-					points with the indexing starting at 0.</p>
-				<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="false">
-					<text xml:lang="de">
-						<body>
-							<ab xml:id="deu-ab1" n="1">
-								<seg xml:id="deu-ab1seg1" xml:space="preserve">Ich habe mich im Winter in dir verliebt.</seg>
-<!--
-'I'c'h' 'h'a'b'e' 'm'i'c'h' 'i'm' 'W'i'n't'e'r' 'i'n' 'd'i'r' 'v'e'r'l'i'e'b't'.'
-0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0   -->
-							</ab>
-						</body>
-					</text>
-					<standOff xmlns="">
-					<listAnnotation n="1" corresp="#deu-ab1" type="sequence">
-						<listAnnotation type="segmentation">
-							<seg from="0" to="3" xml:id="deu-ab1tok1">Ich</seg>
-							<seg from="4" to="8" xml:id="deu-ab1tok2">habe</seg>
-							<seg from="9" to="13" xml:id="deu-ab1tok3">mich</seg>
-							<seg from="14" to="16" xml:id="deu-ab1tok4">im</seg>
-							<seg from="17" to="23" xml:id="deu-ab1tok5">Winter</seg>
-							<seg from="24" to="26" xml:id="deu-ab1tok6">in</seg>
-							<seg from="27" to="30" xml:id="deu-ab1tok7">dir</seg>
-							<seg from="31" to="39" xml:id="deu-ab1tok8">verliebt</seg>
-							<seg from="39" to="40" xml:id="deu-ab1tok9">.</seg>
-						</listAnnotation>
-					</listAnnotation>
-					</standOff>
-				</egXML>
-			</exemplum>
 		</attDef>
 		<attDef ident="from" usage="opt">
 			<desc versionDate="2017-03-21" xml:lang="en">specifies the starting point of a sequence of characters
@@ -165,6 +130,42 @@ $Id$
 			</datatype>
 		</attDef>
 	</attList>
+	<exemplum xml:lang="en">
+		<p>The example below comes from a part of the CoMParS (Collection of Multi-lingual
+			Parallel Sequences) project and presents a fragment of a monolingual subcorpus of German.</p>
+		<p>The individual sequences (in this case, a sentence) are listed in the
+			<gi>text</gi> part of the corpus, while the linguistic analysis is performed in
+			the <gi>standOff</gi> part, which consists, among others, of segmentation
+			information. CoMParS adheres to ISO LAF principles and uses inter-character
+			points with the indexing starting at 0.</p>
+		<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+			<text xml:lang="de">
+				<body>
+					<ab xml:id="deu-ab1" n="1">
+						<seg xml:id="deu-ab1seg1" xml:space="preserve">Ich habe mich im Winter in dir verliebt.</seg>
+						<!--
+'I'c'h' 'h'a'b'e' 'm'i'c'h' 'i'm' 'W'i'n't'e'r' 'i'n' 'd'i'r' 'v'e'r'l'i'e'b't'.'
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0   -->
+					</ab>
+				</body>
+			</text>
+			<standOff xmlns="">
+				<listAnnotation n="1" corresp="#deu-ab1" type="sequence">
+					<listAnnotation type="segmentation">
+						<seg from="0" to="3" xml:id="deu-ab1tok1">Ich</seg>
+						<seg from="4" to="8" xml:id="deu-ab1tok2">habe</seg>
+						<seg from="9" to="13" xml:id="deu-ab1tok3">mich</seg>
+						<seg from="14" to="16" xml:id="deu-ab1tok4">im</seg>
+						<seg from="17" to="23" xml:id="deu-ab1tok5">Winter</seg>
+						<seg from="24" to="26" xml:id="deu-ab1tok6">in</seg>
+						<seg from="27" to="30" xml:id="deu-ab1tok7">dir</seg>
+						<seg from="31" to="39" xml:id="deu-ab1tok8">verliebt</seg>
+						<seg from="39" to="40" xml:id="deu-ab1tok9">.</seg>
+					</listAnnotation>
+				</listAnnotation>
+			</standOff>
+		</egXML>
+	</exemplum>
 	<remarks versionDate="2017-03-21" xml:lang="en">
 		<p>When <att>referringMode</att> assumes numeric values, two theoretical options are
 			possible for the start index. Some systems assume that indexing starts with 0, some
