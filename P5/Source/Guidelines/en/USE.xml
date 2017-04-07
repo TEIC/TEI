@@ -180,24 +180,30 @@ that practice. -->
           <item>addition of new elements.</item>
         </list> Each of these is described in the following sections.</p>
 
-      <p>Each kind of modification changes the set of documents that will be considered valid
-        according to the resulting schema. Any combination of unchanged TEI modules may be thought
-        of as defining a certain set of documents. Each schema resulting from a modified combination
-        of TEI modules will define a different set of documents. The set of documents valid
-        according to the unmodified schema may or may not be properly contained in the set of
-        documents considered to be valid according to the modified schema. We use the term
-          <term>clean modification</term> to describe a modification which regards as valid a subset
-        of the documents considered valid by the same combination of TEI modules unmodified.
-        Alternatively, the set of documents considered valid by the original schema might be
-        disjoint from the set of documents considered valid by the modified schema, with neither
-        being properly contained by the other. Modifications that have this result are called
-          <term>unclean modifications</term>. Despite this terminology, unclean modifications are
-        not particularly deprecated, and their use may often be vital to the success of a project.
-        The concept is introduced solely to distinguish the effects of different kinds of
+      <p>Each kind of modification changes the set of documents that will be
+        considered valid according to the resulting schema. A schema derived
+        from any combination of unmodified TEI declarations (an "unmodified
+        schema") may be thought of as defining a certain set of documents.  A
+        schema deriving from a combination of modified TEI declarations (a
+        "modified schema") will define a different set of documents. The set
+        of documents valid according to the modified schema may or may not be
+        properly contained by the set of documents considered to be valid
+        according to the unmodified schema. We use the term <term>clean
+          modification</term> for the former case, where the set of documents
+        defined by the modified schema is a proper subset of the set of
+        documents defined by the unmodified schema.  Where this is not the
+        case, that is, where the modified schema considers valid some
+        documents which the unmodified schema does not,  we use
+        the term <term>unclean modification</term>. Despite this terminology,
+        unclean modifications are not particularly deprecated, and their use
+        may often be vital to the success of a project.  The concept is
+        introduced solely to distinguish the effects of different kinds of
         modification.</p>
+      
+     <!-- 
       <p>Cleanliness can only be assessed with reference to elements in the TEI namespace. </p>
 
-
+-->
 
       <div type="div4" xml:id="MDMDSU">
         <head>Deletion of Elements</head>
@@ -229,12 +235,13 @@ that practice. -->
           schema is contained by the set of documents matching the original schema.</p>
 
         <p>There are however some elements in the TEI scheme which have mandatory children; for
-          example, the element <gi>fileDesc</gi> must contain both a <gi>titleStmt</gi> and a
-            <gi>sourceDesc</gi>. A modification which deleted either of these would be unclean,
-          because it would regard as valid documents that the unmodified schema would regard as
-          invalid. Deleting one of the many optional children of <gi>fileDesc</gi>
-            (<gi>editionStmt</gi> or <gi>notesStmt</gi> for example) would not have this effect, and
-          would be a clean modification. </p>
+          example, the element <gi>listPerson</gi> must contain at least one element from the
+          <ident>model.personLike</ident> class. If that class has no members because
+          all of its member elements have been removed, then the content
+          model cannot be satisfied. A modification which keeps <gi>listPerson</gi> but removes
+          all of its possible children would therefore be regarded as unclean. So long as at least
+          one member of the class remains available, however, deleting other members would not have 
+          this effect, and would therefore be regarded as a clean modification. </p>
 
         <p>In general, whenever the element deleted by a modification is mandatory within the
           content model of some other (undeleted) element, the result is an unclean modification,
@@ -276,7 +283,7 @@ that practice. -->
 
         <p>Renaming in this way is always a <term>reversible</term> modification. Although it is an
           inherently unclean modification (because the set of documents matched by the resulting
-          schema is disjoint with the set matched by its unmodified equivalent), the process of
+          schema is not contained by the set matched by its unmodified equivalent), the process of
           converting any document in which elements have been renamed into an exactly equivalent
           document using canonical names is completely deterministic, requiring only access to the
           ODD in which the renaming has been specified. This assumes that the renamed elements used
@@ -286,9 +293,9 @@ that practice. -->
           Furthermore, unclean modifications which do not specify a namespace are not conformant
           (see further <ptr target="#MD"/>) </p>
 
-        <p>The TEI provides a systematic set of renamings into languages other than English. These
+      <!--  <p>The TEI provides a systematic set of renamings into languages other than English. These
           all use a language-specific namespace.</p>
-
+-->
 
       </div>
 
@@ -351,7 +358,7 @@ that practice. -->
 
         <p>Content model changes which are not simple restrictions on an existing model should be
           undertaken with caution. The set of documents matching the schema which results from such
-          changes is likely to be disjoint with the set of documents matching the unmodified schema,
+          changes is unlikely to be contained by the set of documents matching the unmodified schema,
           and such changes are therefore regarded as unclean. When content models are changed or
           extended, care should be taken to respect the existing semantics of the element concerned
           as stated in these Guidelines. For example, the element <gi>l</gi> is defined as containing
@@ -441,7 +448,7 @@ that practice. -->
             xmlns="http://www.tei-c.org/ns/Examples" rend="full">
             <elementSpec ident="eg" module="tagdocs" mode="change">
               <attList>
-                <attDef ident="valid" ns="http://www.example.com/ns/notTEI" mode="add">
+                <attDef ident="valid" ns="http://www.example.com/ns/nonTEI" mode="add">
                   <desc>indicates the validity of the example by supplying one of three predefined
                     codes for it.</desc>
                   <datatype>
@@ -487,7 +494,7 @@ that practice. -->
           element concerned. For example, to add an element to the <ident type="class"
             >att.typed</ident> class, we include a declaration like the following: <egXML
             xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec
-              ident="eg" module="tagdocs" mode="change" ns="http://www.example.com/ns/notTEI">
+              ident="eg" module="tagdocs" mode="change" ns="http://www.example.com/ns/nonTEI">
               <classes mode="change">
                 <memberOf key="att.typed"/>
               </classes>
@@ -517,7 +524,7 @@ that practice. -->
           value is specified), indicating that the memberships indicated by its child
             <gi>memberOf</gi> elements are the only ones applicable. Thus the following declaration:
             <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec
-              ident="term" module="core" mode="change" ns="http://www.example.com/ns/notTEI">
+              ident="term" module="core" mode="change" ns="http://www.example.com/ns/nonTEI">
               <classes mode="replace">
                 <memberOf key="att.interpLike"/>
               </classes>
@@ -584,18 +591,23 @@ that practice. -->
       <div type="div4" xml:id="MDMDNE">
         <head>Addition of New Elements</head>
 
-        <p>To add a completely new element into a schema involves providing a complete element
-          specification for it, the <gi>classes</gi> element of which includes a reference to at
-          least one TEI model class. Without such a reference, the new element will not be
-          referenced by the content model of any other TEI element, and will therefore be
-          inaccessible within a TEI document. </p>
-
+        <p>To add a completely new element into a schema involves providing a 
+          complete element   specification for it. It is recommended that  the 
+          <gi>classes</gi> element of this new declaration should include a reference
+          to at  least one TEI model class. Without such a reference, the new element
+          would not  otherwise be referenced by the content model of any other 
+          TEI element, and would therefore be  inaccessible within a TEI document.  
+          It is also possible to modify the content models  of one or more existing 
+          elements to refer to the new element explicitly, as discussed 
+          in <ptr target="#MDMDCM"/> <!-- 23.3.1.3-->  but this will generally be 
+          less convenient. </p>
+        
         <p>For example, the three elements <gi>bibl</gi>, <gi>biblFull</gi>, and <gi>biblStruct</gi>
           are all defined as members of the class <ident type="class">model.biblLike</ident>. To add
           a fourth member (say <gi scheme="imaginary">myBibl</gi>) to this class, we need to include
           in the <gi>elementSpec</gi> defining our new element a <gi>memberOf</gi> element which
           nominates the intended class: <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full"
-              ><elementSpec ident="myBibl" mode="add" ns="http://www.example.com/ns/notTEI">
+              ><elementSpec ident="myBibl" mode="add" ns="http://www.example.com/ns/nonTEI">
               <classes><memberOf key="model.biblLike"/></classes>
               <!-- other parts of the new declaration here -->
             </elementSpec></egXML> The other parts of this declaration will typically include a
