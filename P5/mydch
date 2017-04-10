@@ -1,7 +1,7 @@
 #!/bin/sh
 NEWVERSION=`cat VERSION`
 DATE=`date "+%a, %d %b %Y %H:%M:%S %z"`
-if [ ! f $1 ]
+if [ ! -f $1 ]
 then
     DIR=`dirname $1`
     PACKAGE=`(cd $DIR; grep Source: control | awk '{print $2}')`
@@ -9,12 +9,12 @@ then
     echo "" >> $1
     echo '  * release generated from TEI source. We do not maintain a history here of releases' >> $1
     echo "" >> $1
-    echo "  TEI <editors@www.teic.org>  $DATE" >> $1
+    echo " -- TEI <editors@www.tei-c.org>  $DATE" >> $1
 else
-    OLDVERSION=`head 1 $1 | awk '{print $2}' | tr d '/\(\)/'`
-    PACKAGE=`head 1 $1 | awk '{print $1}' `
-    NAME=`grep   "^ " $1| head 1 | sed 's/  \(.*\)<.*/\1/'`
-    EMAIL=`grep   "^ " $1 | head 1 | sed 's/.*<\(.*\)>.*/\1/'`
+    OLDVERSION=`head -1 $1 | awk '{print $2}' | tr -d '/\(\)/'`
+    PACKAGE=`head -1 $1 | awk '{print $1}' `
+    NAME=`grep  -- "^ --" $1| head -1 | sed 's/ -- \(.*\)<.*/\1/'`
+    EMAIL=`grep  -- "^ --" $1 | head -1 | sed 's/.*<\(.*\)>.*/\1/'`
     if [ $OLDVERSION = $NEWVERSION ]
     then
 	echo "version in Debian ($OLDVERSION) is the same as $NEWVERSION"
@@ -24,7 +24,7 @@ else
 	echo "" >> /tmp/changelog
 	echo "  * new release from upstream" >> /tmp/changelog
 	echo "" >> /tmp/changelog
-	echo "  $NAME <$EMAIL>  $DATE" >> /tmp/changelog
+	echo " -- $NAME <$EMAIL>  $DATE" >> /tmp/changelog
 	echo "" >> /tmp/changelog
 	cat $1 >> /tmp/changelog
 	mv /tmp/changelog $1
