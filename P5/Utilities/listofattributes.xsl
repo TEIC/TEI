@@ -24,7 +24,9 @@
       <xsl:value-of select="@ident"/>
       <xsl:text>,</xsl:text>
       <xsl:choose>
-	<xsl:when test="valList[@type='closed']">valList</xsl:when>
+      	<xsl:when test="datatype/dataRef[@key]"><xsl:value-of select="datatype/dataRef/@key"/></xsl:when>
+      	<xsl:when test="datatype/dataRef[@name]"><xsl:value-of select="concat('xs:',datatype/dataRef/@name)"/></xsl:when>
+      	<xsl:when test="valList[@type='closed']">valList</xsl:when>
 	<xsl:when test="datatype/rng:text">TEXT</xsl:when>
 	<xsl:when test="datatype//rng:data"><xsl:value-of select="datatype//rng:data/@type"/></xsl:when>
 	<xsl:otherwise>
