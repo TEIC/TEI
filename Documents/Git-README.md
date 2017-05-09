@@ -25,20 +25,20 @@ you commit, you're committing to your local copy of the repo, not to the server 
 
 ### Remotes
 The first bit of difference is that when you want to sync your local copy with the server (if someone has pushed changes
-to GitHub, for example), you'll want to pull them down, using a command like `git pull origin master`. "Git pull" is the 
+to GitHub, for example), you'll want to pull them down, using a command like `git pull origin dev`. "Git pull" is the 
 command, "origin" is a nickname for the URL you cloned the repo from (GitHub in this case). You can have other remotes, 
 and they don't have to be called "origin", it's just a convention.
 
 ### Branches
-The "master" part of your pull command is a branch name. Again, this is a convention, but you can think of it like "trunk"
+The "dev" part of your pull command is a branch name. Again, this is a convention, but you can think of it like "trunk"
 in subversion. Branches in Git are very different from branches in svn. In the latter, they are copies of your working
 directories. In Git they are alternate paths in the commit history. You're not bloating the repo by creating branches in
 other words, you can use them as much as you like. You can create a new branch by issuing a `git checkout -b newbranchname` 
 command. This creates a new branch, starting at the current commit (or HEAD in Git terminology) and switches you into it.
-Changes you make here won't be visible in master until and unless you merge them back in. For more on branching, see 
+Changes you make here won't be visible in dev until and unless you merge them back in. For more on branching, see 
 <https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging>.
 
-Ok, so we're in master, and you just ran a pull command to make sure you're up-to-date with the copy on GitHub. Now you want 
+Ok, so we're in dev, and you just ran a pull command to make sure you're up-to-date with the copy on GitHub. Now you want 
 to make a change and send it back to the server. Unlike svn, where this is just one command (`svn commit`), in Git, changes
 have to be committed locally before they are pushed back. There are a couple of ways to do this. The simple one, where you
 just want to commit all of your changes, would use a command like `git commit -am "My helpful commit message"`. This says
@@ -63,13 +63,13 @@ blobs (files) as well as commits. They are derived from the contents of the obje
 killed by wolves in unrelated incidents on a single night). So they look hideous because they're actually doing something very
 useful. They're not sequential because history in Git can actually be manipulated in various ways.
 
-If you then want to send your changes back to GitHub, you just run `git push origin master`. Remember, "origin" is just 
-shorthand for the URL where you cloned from, and "master" is the branch you want to push. It's possible Git will tell you
+If you then want to send your changes back to GitHub, you just run `git push origin dev`. Remember, "origin" is just 
+shorthand for the URL where you cloned from, and "dev" is the branch you want to push. It's possible Git will tell you
 no you can't do that, because someone else has pushed changes to GitHub before you did, so your repo is out of sync with the 
-remote. In that case, you just run another `git pull origin master` and the remote changes will be merged. There's always the 
+remote. In that case, you just run another `git pull origin dev` and the remote changes will be merged. There's always the 
 possibility of a merge conflict, and these are resolved the same way they are in svn, you look at the affected files, get rid 
 of the bits you don't want along with the conflict markers, and go through the add-commit cycle above again. Now, if you 
-couldn't before, you can run `git push origin master` and your changes will be synced to the remote, and you'll be able to see 
+couldn't before, you can run `git push origin dev` and your changes will be synced to the remote, and you'll be able to see 
 them here.
 
 
