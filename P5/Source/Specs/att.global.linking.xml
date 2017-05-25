@@ -56,25 +56,24 @@ $Id$
         <p>In this example a <gi>group</gi> contains two <gi>text</gi>s, each containing the same document in a different language. The correspondence is indicated using <att>corresp</att>. The language is indicated using <att>xml:lang</att>, whose value is inherited; both the tag with the <att>corresp</att> and the tag pointed to by the <att>corresp</att> inherit the value from their immediate parent.  </p>
       </exemplum>
       
-      <exemplum xml:lang="en" versionDate="2013-12-23">
+      <exemplum xml:lang="en" versionDate="2017-05-25">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
           
-        <!-- In a placeography -->
-          
-        <place xml:id="LOND1" corresp="#LOND2 #GENI1">
+        <!-- In a placeography called "places.xml" -->
+        <place xml:id="LOND1" corresp="people.xml#LOND2 people.xml#GENI1">
           <placeName>London</placeName>
           <desc>The city of London...</desc>
         </place>
         
-        <!-- In a literary personography -->
-        <person xml:id="LOND2" corresp="#LOND1 #GENI1">
+        <!-- In a literary personography called "people.xml" -->
+        <person xml:id="LOND2" corresp="places.xml#LOND1 #GENI1">
           <persName type="lit">London</persName>
           <note>
-            <p>Allegorical character representing the city of <ref target="LOND1.xml">London</ref>.
-            </p>
+            <p>Allegorical character representing the city of <placeName
+	    ref="places.xml#LOND1">London</placeName>.</p>
           </note>
         </person>
-        <person xml:id="GENI1" corresp="#LOND1 #LOND2">
+        <person xml:id="GENI1" corresp="places.xml#LOND1 #LOND2">
           <persName type="lit">London’s Genius</persName>
           <note>
             <p>Personification of London’s genius. Appears as an 
@@ -88,8 +87,7 @@ $Id$
            This correspondence represents a slightly looser relationship than the one in the 
            preceding example; there is no sense in which an allegorical character could be 
            substituted for the physical city, or vice versa, but there is obviously a correspondence 
-           between them.
-        </p>
+           between them.</p>
       </exemplum>
       
     </attDef>
