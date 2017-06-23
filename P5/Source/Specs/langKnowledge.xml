@@ -27,21 +27,29 @@
     <memberOf key="model.persStateLike"/>
     <memberOf key="att.datable"/>
     <memberOf key="att.editLike"/>
+    <memberOf key="att.typed"/>
   </classes>
   <content>
-     <sequence>
-        
-           <elementRef key="precision" minOccurs="0" maxOccurs="unbounded"/>
-        
-        <alternate>
-           <classRef key="model.pLike"/>
-           
-              <elementRef key="langKnown" minOccurs="1" maxOccurs="unbounded"/>
-           
-        </alternate>
+     <sequence>        
+       <elementRef key="precision" minOccurs="0" maxOccurs="unbounded"/>
+       <alternate>
+	 <classRef key="model.pLike"/>
+	 <elementRef key="langKnown" minOccurs="1" maxOccurs="unbounded"/>
+       </alternate>
      </sequence>
   </content>
   <attList>
+    <attDef ident="type" usage="opt" mode="change">
+      <datatype>
+	<dataRef key="teidata.enumerated"/>
+      </datatype>
+      <valList type="open" mode="add">
+	<valItem ident="listening"/>
+	<valItem ident="speaking"/>
+	<valItem ident="reading"/>
+	<valItem ident="writing"/>
+      </valList>
+    </attDef>
     <attDef ident="tags" usage="opt">
       <desc versionDate="2006-06-21" xml:lang="en">supplies one or more valid language tags for the languages specified</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">명시된 언어의 하나 이상의 유효한 언어 태그를 제시한다.</desc>
