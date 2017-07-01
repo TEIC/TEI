@@ -25,6 +25,9 @@ default: normal special testmeta2010 test-extns test-frag detest
 normal: $(NORMALFILES)
 special: $(EXTENDEDFILES)
 
+checkrnv:
+	@command -v rnv || echo WARNING: rnv is not installed. Some targets may fail.
+
 testall.examples: testall.xsd
 	$(SAXON) -o:testall-ex.odd -s:testall.odd -xsl:../Utilities/odd2exodd.xsl
 	$(ANT) -f antruntest.xml -Doutputname=testall-examples -DoddFile=testall-ex.odd compileodd rng cleanup
@@ -48,7 +51,7 @@ testall.examples: testall.xsd
 	@echo Validate XSD using Jing ...
 	${JING} $*.xsd $*.xml
 
-%.special: %.odd
+%.special: %.odd checkrnv
 	@echo "BUILD:  Test schema from (special) $<"
 	xmllint --xinclude $< > xi_$<
 	$(ANT) -f antruntest.xml -Dtestfile=$*.xml -DoddFile=xi_$*.odd -Doutputname=$* validateodd compileodd rng validaterng cleanup
@@ -58,7 +61,8 @@ testall.examples: testall.xsd
 
 testmeta2010:
 	echo check that TEI web site is up and responding
-	curl -s --head http://www.tei-c.org/Vault/P5/1.5.0/xml/tei/odd/p5subset.xml
+	-TEISITE=`curl -s --head http://www.tei-c.org/Vault/P5/1.5.0/xml/tei/odd/p5subset.xml`
+ifdef TEISITE
 	$(ANT) -f antruntest.xml -DoddFile=testmeta2010.odd -Dtestfile=testmeta2010.xml validateodd
 	for j in `grep "<schemaSpec" testmeta2010.odd | sed 's/.*ident=.//' | sed 's/\".*//' | grep _old `; do \
 		echo found schemaSpec $$j in testmeta2010; \
@@ -68,8 +72,9 @@ testmeta2010:
 		echo found schemaSpec $$j in testmeta2010; \
 		$(ANT) -f antruntest.xml -DoddFile=testmeta2010.odd -Dtestfile=testmeta2010.xml -Doutputname=$$j -Dschema=$$j  compileodd rng validaterng cleanup; \
 	done
+endif
 
-test-frag:
+test-frag: checkrnv
 	@echo BUILD: Testing files which exercise inclusion of fragments
 	${JING} -t -c frag.rnc testfrag.xml
 	rnv frag.rnc testfrag.xml
@@ -84,7 +89,7 @@ test-sgml:
 	@echo BUILD: Test SGML extension mechanism
 	onsgmls -e -g -s  sgmldecl.tei extns.sgm
 
-detest:
+detest: checkrnv
 	@echo BUILD: Test file with deliberate mistakes
 	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd compileodd rng isoschematron cleanup
 	${TRANG} detest.rng detest.rnc

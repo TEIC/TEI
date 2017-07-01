@@ -405,7 +405,7 @@ element -->
         running the procedure with the name <ident>bold</ident>. The <att>mimeType</att> attribute specifies
         the language (in this case XSL) in which the filter is written:
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <elementSpec ident="bo" ns="http://www.example.com/ns/notTEI">
+          <elementSpec ident="bo" ns="http://www.example.com/ns/nonTEI">
             <equiv filter="http://www.example.com/equiv-filter.xsl" mimeType="text/xsl" name="bold"/>
             <gloss>bold</gloss>
             <desc>contains a sequence of characters rendered in a bold face.</desc>
@@ -605,10 +605,13 @@ to mark any technical term, thus:
           <specDesc key="classRef"/>
           <specDesc key="macroRef"/>
 	  <specDesc key="anyElement"/>
+        <specDesc key="empty"/>
+        
         </specList>
       </p>
-      <p>In the simplest case, the <gi>content</gi> element may be empty. This implies that the element being
-        specified is also empty. </p>
+      <p>In the simplest case, an element may have no content. This may be indicated by supplying an empty <gi>content</gi> element. 
+        It may however be considered preferable to indicate this explicitly by supplying a <gi>content</gi> element containing the <gi>empty</gi>
+      element. </p>
       <p>An element may contain nothing but strings of Unicode characters. This is indicated by supplying the
         element <gi>textNode</gi>  within the <gi>content</gi> element. An element containing a 
         sequence of zero or more Unicode characters would match an element with this content model.       </p>
@@ -619,7 +622,7 @@ to mark any technical term, thus:
         is used in a few special cases where any element is permitted in a content model. </p>
       <p>These elements are all members of an attribute class which provides attributes that further modify
         their significance as follows: <specList>
-          <specDesc key="att.repeatable" atts="minOccurs maxOccurs context"/>
+          <specDesc key="att.repeatable" atts="minOccurs maxOccurs"/>
         </specList>
       </p>
       <p>Finally, two wrapper elements are provided to indicate whether the components of a content model form
@@ -744,19 +747,19 @@ to mark any technical term, thus:
         schema language support co-occurence constraints such as the latter. In the current version of the
         Guidelines, constraint specifications expressed as Schematron rules have been added, as follows:
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <constraintSpec ident="reforkeyorname" scheme="isoschematron">
+          <constraintSpec ident="reforkeyorname" scheme="schematron">
             <constraint>
               <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="@ref or @key or @name">One of the
                 attributes 'name', 'ref' or 'key' must be supplied</assert>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="activemutual" scheme="isoschematron">
+          <constraintSpec ident="activemutual" scheme="schematron">
             <constraint>
               <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@active and @mutual">Only one of the
                 attributes @active and @mutual may be supplied</report>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="activepassive" scheme="isoschematron">
+          <constraintSpec ident="activepassive" scheme="schematron">
             <constraint>
               <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@passive and not(@active)">the
                 attribute 'passive' may be supplied only if the attribute 'active' is supplied</report>
@@ -770,7 +773,7 @@ to mark any technical term, thus:
         TEI element, as in the following example, which models the constraint that a TEI <gi>div</gi> must
         contain either no subdivisions or at least two of them:
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <constraintSpec ident="subclauses" scheme="isoschematron">
+          <constraintSpec ident="subclauses" scheme="schematron">
             <constraint>
               <ns prefix="tei" uri="http://www.tei-c.org/ns/1.0" xmlns="http://purl.oclc.org/dsdl/schematron"/>
               <rule context="tei:div" xmlns="http://purl.oclc.org/dsdl/schematron">
@@ -783,14 +786,14 @@ to mark any technical term, thus:
          Schematron rules are also useful where an application needs to enforce rules on attribute values, as
         in the following examples which check that various types of <gi>title</gi> are provided:
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <constraintSpec ident="introtitle" scheme="isoschematron">
+          <constraintSpec ident="introtitle" scheme="schematron">
             <constraint>
               <assert xmlns="http://purl.oclc.org/dsdl/schematron"
                 test="tei:fileDesc/tei:titleStmt/tei:title[@type='introductory']"> an introductory component
                 of the title is expected </assert>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="maintitle" scheme="isoschematron">
+          <constraintSpec ident="maintitle" scheme="schematron">
             <constraint>
               <assert xmlns="http://purl.oclc.org/dsdl/schematron"
                 test="tei:fileDesc/tei:titleStmt/tei:title[@type='main']"> a main title must be supplied
@@ -804,7 +807,7 @@ to mark any technical term, thus:
         from which the <att scheme="HTML">alt</att> attribute of an HTML <gi scheme="HTML">img</gi> can be
         created:
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <constraintSpec ident="alt" scheme="isoschematron">
+          <constraintSpec ident="alt" scheme="schematron">
             <constraint>
               <ns prefix="tei" uri="http://www.tei-c.org/ns/1.0" xmlns="http://purl.oclc.org/dsdl/schematron"/>
               <pattern id="altTags" xmlns="http://purl.oclc.org/dsdl/schematron">
@@ -819,7 +822,7 @@ to mark any technical term, thus:
          Schematron rules can also be used to enforce other HTML accessibility rules about tables; note here
         the use of a report and an assertion within one pattern:
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <constraintSpec ident="tables" scheme="isoschematron">
+          <constraintSpec ident="tables" scheme="schematron">
             <constraint>
               <ns prefix="tei" uri="http://www.tei-c.org/ns/1.0" xmlns="http://purl.oclc.org/dsdl/schematron"/>
               <pattern id="Tables" xmlns="http://purl.oclc.org/dsdl/schematron">
@@ -960,7 +963,7 @@ to mark any technical term, thus:
             <attDef ident="age">
               <desc>age in years at death</desc>
               <datatype><dataRef key="teidata.numeric"/></datatype>
-              <constraintSpec ident="lessThan150" scheme="isoschematron">
+              <constraintSpec ident="lessThan150" scheme="schematron">
                 <constraint>
                   <assert xmlns="http://purl.oclc.org/dsdl/schematron" test=". &lt; 150"> age at death must be
                     a number less than 150 </assert>
@@ -1736,6 +1739,8 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/valList.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/textNode.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/anyElement.xml"/>
+      <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/empty.xml"/>
+      
     </specGrp>
   </div>
   <div type="div3" xml:id="TDENT">

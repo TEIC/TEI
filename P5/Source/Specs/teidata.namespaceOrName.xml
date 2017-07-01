@@ -8,13 +8,32 @@ See the file COPYING.txt for details
           xmlns:tei="http://www.tei-c.org/ns/1.0"
           module="tei"
           ident="teidata.namespaceOrName">
-  <desc xmlns:rng="http://relaxng.org/ns/structure/1.0"
-         versionDate="2016-11-21"
-         xml:lang="en">defines attribute values which contain either a namespace URI or an XML name.</desc>
-  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  <desc versionDate="2017-05-23"
+         xml:lang="en">defines attribute values which contain either an absolute namespace URI or a qualified XML name.</desc>
+  <content>
+    <!--
+     What we'd like to say:
     <alternate>
-      <dataRef key="teidata.namespace"/>
-      <dataRef key="teidata.name"/>
+      <!- - no slashes before the required first colon, thus to exclude relative URIs - ->
+      <dataRef key="teidata.namespace" restriction="[^/]+:.*"/>
+      <!- - require a colon[1] - ->
+      <dataRef key="teidata.name" restriction=".+:.+"/>
+    </alternate>
+     but cannot, because @restriction on <dataRef> is not implemented yet -->
+    <alternate>
+      <dataRef name="anyURI">
+        <!-- no slashes before the required first colon, thus to exclude relative URIs -->
+        <dataFacet name="pattern" value="[^/]+:.*"/>
+      </dataRef>
+      <dataRef name="Name">
+        <!-- require a colon[1] -->
+        <dataFacet name="pattern" value=".+:.+"/>
+      </dataRef>
     </alternate>
   </content>
+  <!-- [1] Cannot use <dateRef name="QName"> for two reasons: first,  -->
+  <!-- for reasons I don't entirely understand, 'duck' is valid as a  -->
+  <!-- QName. (I suspect because it inherits a namespace.) Second, it -->
+  <!-- would require that the prefix 'mid' in 'mid:night' be in scope -->
+  <!-- wherever this was used. -->
 </dataSpec>
