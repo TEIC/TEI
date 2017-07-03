@@ -77,7 +77,7 @@ following way:<list>
  about the languages used in a document: see further <ptr target="#HD41"/>.</item>
 </list></p>
 <p>The value of the attribute <att>xml:lang</att> identifies the
-language using a coded value. For maximal compatibility with existing
+language (and, optionally, script) using a coded value. For maximal compatibility with existing
 processes, the identifier for the language must be constructed as in
 <title>Best Current Practice 47</title><note place="bottom">Currently
 BCP 47 comprises two Internet Engineering Task Force documents,
@@ -417,7 +417,7 @@ dates, and predefined value lists.</note></p></div>
     anything but <soCalled>readable</soCalled> and it is all too easy
     for the wrong character to be entered in error and retained undetected. 
     Where characters are not defined in Unicode, these Guidelines provide advice
-    on the strategies available for handling their representation in TEI <ref 
+    on the strategies available for handling their representation in <ref 
       target="#WD">Chapter 25 Representation of non-standard Characters and 
     Glyphs</ref>. </p>
   </div>
@@ -482,7 +482,8 @@ dates, and predefined value lists.</note></p></div>
    not sufficient simply to declare in the XML Declaration that a document
    is in UTF-8 format. Doing so merely means that processors will treat the
    content therein as if it were UTF-8, and may fail to process the 
-   document if it is not.</p> 
+   document if it is not. For further discussion of UTF-8 and UTF-16, see the 
+   section below on <ptr target="#D4-48"/>.</p> 
   </div>
   <div type="div3" xml:id="D4-46"> 
   <head><!--4.6 -->Special Aspects of Unicode Character Definitions</head> 
@@ -623,6 +624,13 @@ dates, and predefined value lists.</note></p></div>
    defective software, and in order to recognize the resulting
    symptoms and correct their causes an outline knowledge of
    certain aspects of Unicode internal representation is desirable.
+   There are three encodings of Unicode available for use: UTF-8, which
+   uses 1–4 bytes per character, UTF-16, which uses 2–4, and UTF-32,
+   which uses 4 bytes per character. Current practice for documents to
+   be transmitted via the Web recommends only UTF-8.<note>See the W3C 
+   Internationalization document, <title>Choosing &amp; applying a 
+   character encoding</title> at 
+     <ptr target="https://www.w3.org/International/questions/qa-choosing-encodings"/></note>
    </p> 
    <div type="div4" xml:id="D4-48-1"> 
    <head><!--4.8.1. -->Encoding Errors Related to UTF-8</head> 
@@ -643,7 +651,7 @@ dates, and predefined value lists.</note></p></div>
     the character), the more bytes UTF-8 uses to encode it. What
     makes UTF-8 particularly attractive for representing Latin
     scripts, explaining its status as the default encoding in XML
-    documents,  is that all code points that can be expressed in
+    documents, is that all code points that can be expressed in
     seven or fewer bits (the 127 values in the original ASCII
     character set) are also encoded as the same seven or fewer bits
     (and therefore in a single byte) in UTF-8. That is why a
@@ -668,7 +676,7 @@ dates, and predefined value lists.</note></p></div>
     no longer represented in the file or in memory by the same number
     as its code-point value: it is <hi>transformed</hi> (hence the T in
     UTF) into a sequence of two different numbers. Now as a
-    side-effect of the way such  UTF-8 sequences  are derived from
+    side-effect of the way such  UTF-8 sequences are derived from
     the underlying code-point value, many of the single-byte
     eight-bit values employed in ISO-8859-n encodings are illegal
     in UTF-8.</p>
@@ -683,33 +691,15 @@ dates, and predefined value lists.</note></p></div>
     the input stream, unless the document's encoding has been
     explicitly and correctly declared. Explicitly declaring the
     encoding ought to solve the problem, and if the file is
-    correctly encoded throughout, it will do so. But since text
-    editors and word processors are currently acquiring different
-    degrees of Unicode support at different rates, projects are
-    likely to find that they have to deal with some files  encoded
+    correctly encoded throughout, it will do so. But projects dealing 
+    with documents of sufficient age may find that they have to deal with some files  encoded
     in UTF-8 along with others in, say, ISO-8859-1. Such encoding
     differences may go unnoticed, especially if the proportion of
     characters where the internal encodings are distinguishable is
     relatively small (for example in a long English text with a
-    smattering of French words). If in the process of document
-    preparation two such files have been merged, or intermixed via
-    <soCalled>cut and paste</soCalled> techniques, it is all too possible that the
-    internal encodings of the resulting files will have become
-    mixed as well. Thanks to misplaced notions of <soCalled>user
-    friendliness</soCalled> some current editing software silently corrects
-    such miscodings as it displays the text, so that they remain
-    hidden until the XML parser terminates with a fatal <soCalled>invalid
-    character</soCalled> error.</p>
-   <p>Where erroneously mixed encodings are the source of such an
-    error, altering the encoding declaration will not solve the
-    problem, though it may obfuscate it. Eight-bit character codes
-    in a file declared as UTF-8 will always stop the parser. More
-    insidiously, UTF-8 sequences in a file declared as ISO-8859-1
-    will not halt the parse, but will cause data corruption,
-    because the parser will silently but erroneously convert each
-    byte in every UTF-8 sequence into a spurious separate
-    character, introducing semantic errors which may not become
-    apparent until much later in the processing chain. </p>  
+    smattering of French words). These types of error may or may not
+    manifest in actual processing errors, and may only become visible
+    as <soCalled>garbage</soCalled> characters in the eventual display of documents.</p>
    <p>In projects that routinely handle documents in non-Latin
     scripts, everyone is well aware of the need to ensure correct
     and consistent encoding, so in such places mixed encoding
@@ -729,58 +719,6 @@ dates, and predefined value lists.</note></p></div>
     consistency and integrity of encoding and its correct
     declaration, including the use of appropriate software for
     transcoding and verification. </p> </div> 
-   <div type="div4" xml:id="D4-48-2">  <head><!--4.8.2. -->Encoding
-    Errors Related to UTF-16</head> <p>The advantages of UTF-8 as
-    an internal representation of Unicode code points outlined
-    above do not obtain where documents are in scripts other than
-    Latin, Cyrillic or Hebrew. Where characters with code points in
-    the sixteen-bit range (two-byte) predominate, UTF-8 is
-    inappropriate, because it requires three or more bytes to
-    represent each abstract character. Here the preferred
-    representation of Unicode (which all XML-conformant parsers
-    must support) is UTF-16, where each code point corresponding to
-    an abstract character is represented in two eight-bit bytes<note place="bottom">The use of <soCalled>surrogate</soCalled> values to represent code points
-    beyond the 16-bit range is passed over here, since it adds a
-    complication that does not affect the key points at
-    issue</note>. This encoding presents a different hazard,
-    especially while support for Unicode in editing software is
-    relatively uneven and immature. Because the code points are
-    represented as sixteen-bit integers stored (in most popular
-    computers) in two separate bytes, the order in which those
-    bytes are stored becomes important. This is dependent on the
-    underlying hardware. In the realm of desktop computing,
-    Macintosh machines, for example, store (on disk as well as in
-    memory) byte pairs representing 16-bit integers with the
-    higher-value byte first, whereas PCs using Intel processors
-    store the bytes in the reverse order (this is often referred to
-    with Swiftian nomenclature as <term>big-endian</term> versus <term>little-endian</term>
-    byte order). This means that if a semantically identical plain
-    text file encoded in UTF-16 is prepared on a Macintosh and on a
-    PC, and the two files are then saved to disk, each byte pair in
-    one file will be in the reverse order from the corresponding
-    byte pair in the other file. To avoid the obvious
-    incompatibility problems, the XML standard requires that all
-    documents whose declared encoding is UTF-16 must begin with a
-    special pseudo-character which is not itself part of the
-    document, but merely a Byte Order Marker (BOM) from which the
-    processor can determine the byte order of the document that
-    follows. Now the insertion of a correct BOM and the consistent
-    maintenance of the byte order throughout the file ought to be
-    taken care of transparently by software, but experience,
-    especially from environments where work is distributed across
-    big-endian and little-endian hardware, shows that this cannot always be
-    taken for granted in the current state of software development. 
-    As with mixed encoding problems involving
-    UTF-8, inconsistent byte-order in UTF-16 files seems to be the
-    result of merging or cutting and pasting between files using
-    software which does not correctly enforce byte order integrity,
-    and out of misconceived <soCalled>user friendliness</soCalled> which conceals byte-order
-    inconsistencies from the user. Once more, the result can be
-    files which look correct in an editor, but which the XML parser
-    either rejects outright or silently passes on in a seriously
-    garbled form. Again, to avoid the consequent errors, projects
-    need to cultivate an informed awareness of relevant encoding
-    issues and devise policies to avoid them in the first place or
-    detect them at an early stage.  </p> </div> </div>
+    </div>
   </div>
   </div>
