@@ -6,7 +6,7 @@
     $Id$
 --><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="label">
   <gloss versionDate="2009-01-06" xml:lang="fr">étiquette</gloss>
-  <gloss versionDate="2016-11-29" xml:lang="de">Bezeichner</gloss>
+  <gloss versionDate="2017-06-25" xml:lang="de">Label</gloss>
   <desc versionDate="2011-11-05" xml:lang="en">contains any label or heading used to identify part of a text,
   typically but not exclusively in a list or glossary.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">목록의 항목과 관련된 표지를 포함한다; 용어집에서는 정의되고 있는 용어를 표지한다.</desc>
@@ -18,7 +18,7 @@
     una lista; en un glosario marca el término que se define.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene l'etichetta associata ad una voce in una lista;
     nei glossari indica il dermine che viene definito</desc>
-  <desc versionDate="2016-11-29" xml:lang="de">enthält einen Bezeichner oder eine Überschrift zur 
+  <desc versionDate="2017-06-25" xml:lang="de">enthält ein Label oder eine Überschrift zur 
     Identifikation eines Textteils, insbesondere in einer Liste oder einem Glossar.</desc>
   <classes>
     <memberOf key="att.global"/>
@@ -58,6 +58,44 @@
         <label>sterteth</label>
         <item xml:lang="en">bounds, frisks (cf. <cit><ref>Chaucer, K.T.644</ref><quote>a courser, <term>sterting</term>as the fyr</quote></cit>
             </item>
+        <label>verteth</label>
+        <item xml:lang="la">pedit</item>
+        <label>murie</label>
+        <item xml:lang="en">merrily</item>
+        <label>swik</label>
+        <item xml:lang="en">cease</item>
+        <label>naver</label>
+        <item xml:lang="en">never</item>
+      </list>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="de" versionDate="2017-06-25">
+    <p>Labels werden häufig für Schlagwörter in Glossaren verwendet; Beachten Sie die Verwendung des
+      globalen <att>xml:lang</att>-Attributs, um die Standardsprache des Glossars auf Mittelenglisch
+      zu setzen sowie die Glossen und Überschriften als modernes Englisch oder Latein zu
+      identifizieren:</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <list type="gloss" xml:lang="enm">
+        <head xml:lang="en">Vocabulary</head>
+        <headLabel xml:lang="en">Middle English</headLabel>
+        <headItem xml:lang="en">New English</headItem>
+        <label>nu</label>
+        <item xml:lang="en">now</item>
+        <label>lhude</label>
+        <item xml:lang="en">loudly</item>
+        <label>bloweth</label>
+        <item xml:lang="en">blooms</item>
+        <label>med</label>
+        <item xml:lang="en">meadow</item>
+        <label>wude</label>
+        <item xml:lang="en">wood</item>
+        <label>awe</label>
+        <item xml:lang="en">ewe</item>
+        <label>lhouth</label>
+        <item xml:lang="en">lows</item>
+        <label>sterteth</label>
+        <item xml:lang="en">bounds, frisks (cf. <cit><ref>Chaucer, K.T.644</ref><quote>a courser, <term>sterting</term>as the fyr</quote></cit>
+        </item>
         <label>verteth</label>
         <item xml:lang="la">pedit</item>
         <label>murie</label>
@@ -191,6 +229,16 @@
           printer: the faults and the merits are exclusively my own.</item></list>
       </egXML>
   </exemplum>
+  <exemplum xml:lang="de" versionDate="2017-06-25">
+    <p>Labels können auch verwendet werden, um die Zahlen oder Buchstaben explizit zu erfassen, die
+      Listenelemente in geordneten Listen markieren – wie in diesem Auszug aus Gibbons
+      <title>Autobiographie</title>. In diesem Fall ist das <gi>label</gi>-Element gleichbedeutend
+      mit dem <att>n</att>-Attribut des <gi>item</gi>-Elements:</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#GibAut">I will add two facts, which have seldom occurred
+      in the composition of six, or at least of five quartos. <list rend="runon" type="ordered"><label>(1)</label><item>My first rough manuscript, without any intermediate copy, has been sent to the press.</item><label>(2) </label><item>Not a sheet has been seen by any human eyes, excepting those of the author and the
+        printer: the faults and the merits are exclusively my own.</item></list>
+    </egXML>
+  </exemplum>
   <exemplum xml:lang="en">
     <p>Labels may also be used for other structured list items, as in this extract from the journal
       of Edward Gibbon:</p>
@@ -211,6 +259,27 @@
     <p>Note that the <gi>label</gi> might also appear within the
 <gi>item</gi> rather than as its sibling. Though syntactically valid,
 this usage is not recommended TEI practice.</p>
+  </exemplum>
+  <exemplum xml:lang="de" versionDate="2017-06-25">
+    <p>Labels können auch für andere strukturierte Listenelemente verwendet werden, wie in diesem Auszug
+      aus der Zeitschrift von Edward Gibbon:</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#GibAut">
+      <list type="gloss">
+        <label>March 1757.</label>
+        <item>I wrote some critical observations upon Plautus.</item>
+        <label>March 8th.</label>
+        <item>I wrote a long dissertation upon some lines of Virgil.</item>
+        <label>June.</label>
+        <item>I saw Mademoiselle Curchod — <quote xml:lang="la">Omnia vincit amor, et nos cedamus
+          amori.</quote>
+        </item>
+        <label>August.</label>
+        <item>I went to Crassy, and staid two days.</item>
+      </list>
+    </egXML>
+    <p>Das <gi>label</gi>-Element kann auch innerhalb des <gi>item</gi>-Elements, anstatt als sein
+      Geschwisterelement, vorkommen. Obwohl syntaktisch gültig, wird diese Verwendung von der TEI
+      nicht empfohlen.</p>
   </exemplum>
   <exemplum xml:lang="en">
     <p>Labels may also be used to represent a label or heading attached to
@@ -240,6 +309,34 @@ entre les Romains.</label>
     <!-- graphic url="Images/marginal-label.png"/--></p>
     <p>If so desired the <att>type</att> attribute may be used to
     distinguish different categories of label.</p>
+  </exemplum>
+  <exemplum xml:lang="de" versionDate="2017-06-25">
+    <p>Das <gi>label</gi>-Element kann auch verwendet werden, um ein Label oder eine Überschrift zu
+      kennzeichnen, die an einen Absatz oder eine Abfolge von Absätzen gebunden sind, die nicht als
+      struktureller Abschnitt oder Gruppe von Verszeilen behandelt werden. Beachten Sie, dass in
+      diesem Fall das <gi>label</gi>-Element <emph>innerhalb</emph> des <gi>p</gi> oder
+      <gi>lg</gi>-Elements erscheint und nicht als deren Geschwisterelement.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#CholNup">
+      <p>[...]
+        <lb/>&amp; n’entrer en mauuais &amp; mal-heu-
+        <lb/>ré meſnage. Or des que le conſente-
+        <lb/>ment des parties y eſt le mariage eſt
+        <lb/> arreſté, quoy que de faict il ne ſoit
+        <label place="margin">Puiſſance maritale 
+          entre les Romains.</label>
+        <lb/> conſommé. Depuis la conſomma-
+        <lb/>tion du mariage la femme eſt ſoubs
+        <lb/> la puiſſance du mary, s’il n’eſt eſcla-
+        <lb/>ue ou enfant de famille : car en ce
+        <lb/> cas, la femme, qui a eſpouſé vn en-
+        <lb/>fant de famille, eſt ſous la puiſſance
+        [...]</p>
+    </egXML>
+    <p>In diesem Beispiel erscheint der Text des Labels im rechten Randbereich der Vorlage, neben dem
+      Absatz, den er beschreibt, ungefähr auf mittlerer Höhe. 
+      <!-- graphic url="Images/marginal-label.png"/--></p>
+    <p>Zusätzlich kann das <att>type</att>-Attribut verwendet werden, um verschiedene Kategorien von
+      Labels zu unterscheiden.</p>
   </exemplum>
   <listRef>
     <ptr target="#COLI" type="div2"/>

@@ -55,7 +55,7 @@ $Id$
       
     </sequence>
   </content>
-  <constraintSpec ident="attDefContents" scheme="isoschematron">
+  <constraintSpec ident="attDefContents" scheme="schematron">
     <constraint>
       <ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="teix" uri="http://www.tei-c.org/ns/Examples"/>
       <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="ancestor::teix:egXML[@valid='feasible'] or @mode eq 'change' or @mode eq 'delete' or tei:datatype or tei:valList[@type='closed']">Attribute: the definition of the @<value-of select="@ident"/> attribute in the <value-of select="ancestor::*[@ident][1]/@ident"/>
@@ -63,7 +63,7 @@ $Id$
       <value-of select="local-name(ancestor::*[@ident][1])"/> should have a closed valList or a datatype</assert>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="noDefault4Required" scheme="isoschematron">
+  <constraintSpec ident="noDefault4Required" scheme="schematron">
     <constraint>
       <sch:rule context="tei:attDef[@usage eq 'req']">
 	<sch:report test="tei:defaultVal">It does not make sense to make "<sch:value-of select="normalize-space(tei:defaultVal)"/>" the default value of @<sch:value-of select="@ident"/>, because that attribute is required.</sch:report>
@@ -76,7 +76,7 @@ $Id$
   <!-- made them separate for now to make debugging easier. After we're -->
   <!-- confident these work properly, could condense them to one. -->
   <!-- -Syd, 2015-03-29 -->
-  <constraintSpec ident="defaultIsInClosedList-twoOrMore" scheme="isoschematron">
+  <constraintSpec ident="defaultIsInClosedList-twoOrMore" scheme="schematron">
     <constraint>
       <sch:rule context="tei:attDef[   tei:defaultVal   and   tei:valList[@type eq 'closed']   and   tei:datatype[    @maxOccurs &gt; 1    or    @minOccurs &gt; 1    or    @maxOccurs = 'unbounded'    ]   ]">
 	<sch:assert test="     tokenize(normalize-space(tei:defaultVal),' ')     =     tei:valList/tei:valItem/@ident">In the <sch:value-of select="local-name(ancestor::*[@ident][1])"/> defining
@@ -86,7 +86,7 @@ $Id$
       </sch:rule>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="defaultIsInClosedList-one" scheme="isoschematron">
+  <constraintSpec ident="defaultIsInClosedList-one" scheme="schematron">
     <constraint>
       <sch:rule context="tei:attDef[   tei:defaultVal   and   tei:valList[@type eq 'closed']   and   tei:datatype[    not(@maxOccurs)    or (    if ( @maxOccurs castable as xs:integer )     then ( @maxOccurs cast as xs:integer eq 1 )     else false()    )]   ]">
 	<sch:assert test="string(tei:defaultVal)      =      tei:valList/tei:valItem/@ident">In the <sch:value-of select="local-name(ancestor::*[@ident][1])"/> defining
