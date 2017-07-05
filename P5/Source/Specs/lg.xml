@@ -11,6 +11,7 @@
   <gloss versionDate="2009-01-06" xml:lang="fr">groupe de vers</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">grupo de versos</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">un gruppo di versi</gloss>
+  <gloss versionDate="2017-06-13" xml:lang="de">Gruppe von Vers(zeil)en</gloss>
   <desc versionDate="2012-04-17" xml:lang="en">contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain,
         verse paragraph, etc.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">예를 들어, 연, 후렴구, 운문 단락과 같이 형식적 단위로 기능하는 운문 행군을 포함한다.</desc>
@@ -22,6 +23,7 @@
         unidad formal, p.ej. una estrofa, un refrán, un estribillo, etc.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene un gruppo di versi che costituiscono un'unità
         formale, per esempio una stanza, un refrain, un paragrafo in versi, ecc.</desc>
+  <desc versionDate="2017-06-13" xml:lang="de">enthält eine oder mehrere Verse bzw. Verszeilen, die zusammen eine formale Einheit (z. B. Strophe, Refrain) bilden.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.divPart"/>
@@ -62,13 +64,13 @@
       </sequence>
     </sequence>
   </content>
-  <constraintSpec scheme="isoschematron" ident="atleast1oflggapl">
+  <constraintSpec scheme="schematron" ident="atleast1oflggapl">
     <constraint xmlns:sch="http://purl.oclc.org/dsdl/schematron">
       <sch:assert test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element
         must contain at least one child l, lg or gap element.</sch:assert>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="abstractModel-structure-l" scheme="isoschematron">
+  <constraintSpec ident="abstractModel-structure-l" scheme="schematron">
     <constraint>
       <report xmlns="http://purl.oclc.org/dsdl/schematron" test="ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]">
         Abstract model violation: Lines may not contain line groups.
@@ -142,6 +144,10 @@
   </remarks>
   <remarks xml:lang="ja" versionDate="2008-04-05">
     <p rend="dataDesc"> 韻文の行または(普通は見出しが付く)入れ子化された行グループのみを示 す． </p>
+  </remarks>
+  <remarks versionDate="2017-06-13" xml:lang="de">
+    <p rend="dataDesc">enthält lediglich Vers(zeil)en (<gi>l</gi>) oder verschachtelte Gruppen von Vers(zeil)en
+      (<gi>lg</gi>); eine Überschrift ist fakultativ.</p>
   </remarks>
   <listRef>
     <ptr target="#COVE"/>

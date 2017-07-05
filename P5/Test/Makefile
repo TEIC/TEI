@@ -61,7 +61,8 @@ testall.examples: testall.xsd
 
 testmeta2010:
 	echo check that TEI web site is up and responding
-	curl -s --head http://www.tei-c.org/Vault/P5/1.5.0/xml/tei/odd/p5subset.xml
+	-TEISITE=`curl -s --head http://www.tei-c.org/Vault/P5/1.5.0/xml/tei/odd/p5subset.xml`
+ifdef TEISITE
 	$(ANT) -f antruntest.xml -DoddFile=testmeta2010.odd -Dtestfile=testmeta2010.xml validateodd
 	for j in `grep "<schemaSpec" testmeta2010.odd | sed 's/.*ident=.//' | sed 's/\".*//' | grep _old `; do \
 		echo found schemaSpec $$j in testmeta2010; \
@@ -71,6 +72,7 @@ testmeta2010:
 		echo found schemaSpec $$j in testmeta2010; \
 		$(ANT) -f antruntest.xml -DoddFile=testmeta2010.odd -Dtestfile=testmeta2010.xml -Doutputname=$$j -Dschema=$$j  compileodd rng validaterng cleanup; \
 	done
+endif
 
 test-frag: checkrnv
 	@echo BUILD: Testing files which exercise inclusion of fragments
