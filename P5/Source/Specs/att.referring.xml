@@ -52,8 +52,9 @@ $Id$
 	</constraintSpec>
 	
 	<constraintSpec ident="tofrom" scheme="schematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
-<!--	this rule should be unnecessary, because the datatypes on @to and @from are independently restricted.
-		but their restriction appears to be ineffective... (?) -->
+<!--	originally defined in span.xml
+		this rule should be unnecessary, because the datatypes on @to and @from are independently restricted
+		(in attDef below), but that restriction appears to be ineffective... (?) -->
 		<constraint>
 			<sch:rule context="*[local-name() = ('span')][@to or @from]">
 				<sch:report  test="contains(normalize-space(@to),' ') or contains(normalize-space(@from),' ')"
@@ -63,6 +64,7 @@ $Id$
 		</constraint>
 	</constraintSpec>
 	<constraintSpec ident="tonotfrom" scheme="schematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+		<!--originally defined in span.xml-->
 		<constraint>
 			<sch:rule context="*[local-name() = ('span')][@to]">
 				<sch:report test="@to and not(@from)">If @to is supplied on <sch:name/>, @from must
@@ -118,6 +120,17 @@ $Id$
 		<attDef ident="from" usage="opt">
 			<desc versionDate="2017-03-21" xml:lang="en">specifies the starting point of a sequence of characters
 				or bytes, or of elements that can be pointed at with a URI.</desc>
+			<desc versionDate="2007-12-20" xml:lang="ko">현재 부호를 붙이는 단락의 처음을 명시함; <att>to</att> 속성과 같이 쓰이지 않으면
+				전체 문단을 명시함.</desc>
+			<desc versionDate="2007-05-02" xml:lang="zh-TW">指出被註解段落的起點；若沒有使用屬性<att>to</att>，則指出全部段落。</desc>
+			<desc versionDate="2008-04-05" xml:lang="ja">当該注釈対象の始点を示す．属性<att>to</att>がない場合は，対象全 体を示す．</desc>
+			<desc versionDate="2007-06-12" xml:lang="fr">précise le début du passage sur lequel porte
+				l'annotation ; s'il n'est pas accompagné d'un attribut <att>to</att>, désigne alors
+				l'intégralité du passage</desc>
+			<desc versionDate="2007-05-04" xml:lang="es">especifica el principio del pasaje que se anota; si
+				no aparece con el atributo <att>to</att>, especifica el pasaje entero.</desc>
+			<desc versionDate="2007-01-21" xml:lang="it">indica l'inizio di un brano annotato; se non è
+				accompagnato dall'attributo <att>to</att> indica l'inero brano</desc>
 			<datatype minOccurs="1" maxOccurs="1">
 				<dataRef key="teidata.referring"/>
 			</datatype>
@@ -125,19 +138,26 @@ $Id$
 		<attDef ident="to" usage="opt">
 			<desc versionDate="2017-03-21" xml:lang="en">specifies the end-point of a sequence of characters
 				or bytes, or of elements that can be pointed at with a URI.</desc>
+			<desc versionDate="2007-12-20" xml:lang="ko">부호를 붙이는 단락의 끝을 명시한다.</desc>
+			<desc versionDate="2007-05-02" xml:lang="zh-TW">指出被註解段落的終點。</desc>
+			<desc versionDate="2008-04-05" xml:lang="ja">注釈対象の終点を示す．</desc>
+			<desc versionDate="2007-06-12" xml:lang="fr">spécifie la fin du passage annoté.</desc>
+			<desc versionDate="2007-05-04" xml:lang="es">especifica el final del pasaje que se anota.</desc>
+			<desc versionDate="2007-01-21" xml:lang="it">indica la fine del brano annotato</desc>
 			<datatype minOccurs="1" maxOccurs="1">
 				<dataRef key="teidata.referring"/>
 			</datatype>
 		</attDef>
 	</attList>
 	<exemplum xml:lang="en">
-		<p>The example below comes from a part of the CoMParS (Collection of Multi-lingual
-			Parallel Sequences) project and presents a fragment of a monolingual subcorpus of German.</p>
-		<p>The individual sequences (in this case, a sentence) are listed in the
-			<gi>text</gi> part of the corpus, while the linguistic analysis is performed in
-			the <gi>standOff</gi> part, which consists, among others, of segmentation
-			information. CoMParS adheres to ISO LAF principles and uses inter-character
-			points with the indexing starting at 0.</p>
+		<p>The example below comes from a part of the CoMParS (Collection of Multi-lingual Parallel
+			Sequences) project and presents a fragment of a monolingual subcorpus of German.</p>
+		<p>The individual sequences (in this case, a sentence) are listed in the <gi>text</gi> part
+			of the corpus, while the linguistic analysis is performed in the <gi>standOff</gi> part,
+			which consists, among others, of segmentation information. CoMParS adheres to ISO LAF
+			principles and uses inter-character points with the indexing starting at 0.</p>
+
+		<!--	@valid should become "true" once the modification is incorporated into the Guidelines	-->
 		<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
 			<text xml:lang="de">
 				<body>
@@ -165,6 +185,35 @@ $Id$
 				</listAnnotation>
 			</standOff>
 		</egXML>
+		<p>The CoMParS ODD contains the following statements that (a) include <gi>seg</gi> into the
+			att.referring class, and (b) change the default value of the <att>referringMode</att> to
+				<val>icp</val>. 
+			<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="true">
+				<elementSpec ident="seg" module="linking" mode="change">
+					<classes mode="change">
+						<memberOf key="att.referring"/>
+					</classes>
+				</elementSpec>
+				<classSpec ident="att.referring" mode="change" type="atts" module="tei">
+					<constraintSpec scheme="schematron" ident="default_mode" mode="replace">
+						<constraint xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+							<sch:rule
+								context="*[local-name() = ('span','seg')][not(@referringMode) and @from and @to]">
+								<sch:assert test="@from castable as xsd:nonNegativeInteger">The
+									default form of @from is a non-negative integer</sch:assert>
+								<sch:assert test="@to castable as xsd:nonNegativeInteger">The
+									default form of @to is a non-negative integer</sch:assert>
+							</sch:rule>
+						</constraint>
+					</constraintSpec>
+					<attList>
+						<attDef ident="referringMode" usage="opt" mode="change">
+							<defaultVal>icp</defaultVal>
+						</attDef>
+					</attList>
+				</classSpec>
+			</egXML>
+		</p>
 	</exemplum>
 	<remarks versionDate="2017-03-21" xml:lang="en">
 		<p>When <att>referringMode</att> assumes numeric values, two theoretical options are
@@ -172,8 +221,8 @@ $Id$
 			assume that the initial index value is 1. This decision is not reflected by
 				<att>referringMode</att> but should be documented in the header, together with other
 			project-specific encoding decisions. Linguistic analysis in the ISO LAF (Linguistic
-			Annotation Framework) assumes inter-character points (represented here by the value
-				<val>icp</val>) and indices starting at 0.</p>
+			Annotation Framework, ISO 24612:2012) assumes inter-character points (represented here
+			by the value <val>icp</val>) and indices starting at 0.</p>
 	</remarks>
 	<listRef>
 		<ptr target="#STECAT"/>
