@@ -6,14 +6,11 @@ $Date$
 $Id$
 --><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" xml:id="ATTLING" type="atts" ident="att.linguistic">
-  <desc versionDate="2017-03-24" xml:lang="en">provides a set of attributes concerning linguistic features of tokens, for usage within the element <el>w</el> in the analysis module.</desc>
+  <desc versionDate="2017-03-24" xml:lang="en">provides a set of attributes concerning linguistic features of tokens, for usage within the element <gi>w</gi> in the analysis module.</desc>
   <classes/>
   <attList>
-    <attDef ident="lemma" usage="opt"><!-- SH: I copied @lemma from its current description within the w-spec -->
-      <desc versionDate="2008-02-23" xml:lang="en">provides a lemma for the word, such as an uninflected
-        dictionary entry form.</desc>
-      <desc versionDate="2017-03-24" xml:lang="en">(lemma) provides a lemma for the word, such as an uninflected
-        dictionary entry form.</desc><!-- SH: I added the short description within a completely new description entry with new version date. Correct? -->
+    <attDef ident="lemma" usage="opt">
+      <desc versionDate="2017-07-07" xml:lang="en">provides a lemma (base form) for the word, typically uninflected and serving both as an identifier (e.g. in dictionary contexts, as a headword), and as a basis for potential inflections.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">단어의 레마(사전의 표제 형식)를 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指出在字典中該字的詞條形式。</desc>
       <desc versionDate="2008-04-06" xml:lang="ja">当該語の，辞書の見出し形を示す．</desc>
@@ -26,13 +23,13 @@ $Id$
           <w lemma="year">yeare</w>
         </egXML>
       </exemplum>
-      <exemplum versionDate="2017-03-24" xml:lang="de"><!-- SH: I added a second example -->
+      <exemplum versionDate="2017-03-24" xml:lang="de">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <w lemma="Arznei">Artzeneyen</w>
         </egXML>
       </exemplum>
     </attDef>
-    <attDef ident="lemmaRef"><!-- SH: I copied @lemma from its current description within the w-spec -->
+    <attDef ident="lemmaRef">
       <desc versionDate="2010-07-20" xml:lang="en">provides a pointer to a definition of the lemma for the
         word, for example in an online lexicon.</desc>
       <desc versionDate="2017-03-24" xml:lang="en">(lemma reference) provides a pointer to a definition of the lemma for the
@@ -50,29 +47,34 @@ $Id$
           </w>
         </egXML>
       </exemplum>
+      <exemplum xml:lang="zh-TW">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <w type="動詞" lemma="hit">hitt<m type="字尾">ing</m>
+          </w>
+        </egXML>
+      </exemplum>
     </attDef>
     <attDef ident="pos" usage="opt">
-      <gloss versionDate="2017-03-24" xml:lang="en">(part of speech) indicates the part of speech assigned to a token (i.e. information on whether it is a noun, adjective, or verb), usually according to some official reference vocabulary (e.g. for German: Stuttgart-Tuebingen-Tagset [STTS], for English XXX).</gloss>
-      <!-- SH: Which reference POS tagset could be named here for English texts? -->
+      <gloss versionDate="2017-03-24" xml:lang="en">(part of speech) indicates the part of speech assigned to a token (i.e. information on whether it is a noun, adjective, or verb), usually according to some official reference vocabulary (e.g. for German: Stuttgart-Tuebingen-Tagset [STTS], for English: CLAWS, for Polish: NKJP, etc.).</gloss>
       <datatype><dataRef key="teidata.text"/></datatype>
       <exemplum versionDate="2017-03-20" xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-         <w pos="vvz">is</w>
+          <w pos="vvz" xmlns="">is</w>
         </egXML>
       </exemplum>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <w msd="vvg">taking</w>
+          <w msd="vvg" xmlns="">taking</w>
         </egXML>
       </exemplum>
       <exemplum versionDate="2017-03-20" xml:lang="de">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <w pos="NN">Universitäten</w>
+          <w pos="NN" xmlns="">Universitäten</w>
         </egXML>
       </exemplum>
       <exemplum versionDate="2017-03-20" xml:lang="de">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <w pos="VVFIN">fragte</w>
+          <w pos="VVFIN" xmlns="">fragte</w>
         </egXML>
       </exemplum>
     </attDef>
@@ -83,11 +85,12 @@ $Id$
       
       <exemplum xml:lang="de">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <w msd="PPER:1.Pl.*.Nom">Wir</w>
-          <w msd="VVFIN:1.Pl.Pres.Ind">fahren</w>
-          <w msd="APPR:Akk">in</w>
-          <w msd="ART:Def.Masc.Akk.Sg.">den</w>
-          <w msd="NN:Masc.Akk.Sg.">Urlaub</w>
+          <ab xmlns="">
+            <w msd="PPER:1.Pl.*.Nom">Wir</w>
+            <w msd="VVFIN:1.Pl.Pres.Ind">fahren</w>
+            <w msd="APPR:Akk">in</w>
+            <w msd="ART:Def.Masc.Akk.Sg.">den</w>
+            <w msd="NN:Masc.Akk.Sg.">Urlaub</w></ab>
         </egXML>
       </exemplum>
     </attDef>
@@ -96,38 +99,43 @@ $Id$
       <datatype><dataRef key="teidata.text"/></datatype>
       <exemplum xml:lang="de">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <w reg="Teil">Theyll</w>
+          <w reg="Teil"  xmlns="">Theyll</w>
         </egXML>
       </exemplum>
       <exemplum xml:lang="de">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <w reg="Freude">Frewde</w>
+          <w reg="Freude" xmlns="">Frewde</w>
         </egXML>
       </exemplum>
     </attDef>
     <attDef ident="join" usage="opt">
       <desc versionDate="2017-03-24" xml:lang="en">(join) provides information on the absence of whitespace between a token and its preceding/following token.</desc>
       <datatype><dataRef key="teidata.text"/></datatype>
-      <valList type="open"><!-- SH: open according to the general practice within the TEI guideslines, or should it be closed? -->
+      <valList type="closed">
         <valItem ident="left">
-          <gloss>token is followed by whitespace</gloss>
+          <gloss xml:lang="en" versionDate="2017-07-07">there is no whitespace on the left side of the token</gloss>
         </valItem>
         <valItem ident="right">
-          <gloss>token is preceded by whitespace</gloss>
+          <gloss xml:lang="en" versionDate="2017-07-07">there is no whitespace on the right side of the token</gloss>
         </valItem>
         <valItem ident="both">
-          <gloss>token is enclosed by whitespace</gloss>
+          <gloss xml:lang="en" versionDate="2017-07-07">there is no whitespace on either side of the token</gloss>
         </valItem>
       </valList>
       <exemplum xml:lang="de">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <s>
-            <pc>"</pc><!-- SH: Do we need //pc in our proposal? STTS has POS tags for punctuation characters. That way we could reduce the attribute set to //w. -->
+          <s xmlns="">
+            <pc>"</pc>
+            <!-- SH: Do we need //pc in our proposal? STTS has POS tags for punctuation characters. That way we could reduce the attribute set to //w. -->
+            <!-- PB: It would be simpler without <pc>, but we have legacy encoding to take care of, so somehow, we need to embrace <pc>, as an option  -->
             <w glued="left">Friends</w>
             <w>will</w>
             <w>be</w>
             <w glued="right">friends</w>
-            <pc glued="both">.</pc><!-- SH: It's redundant to mark token "friends" as @glued="right" and token "." als @glued="both" (the information, that there's no whitespace between "friends" and "."). Should this be handled differently? -->
+            <pc glued="both">.</pc>
+            <!-- SH: It's redundant to mark token "friends" as @glued="right" and token "." als @glued="both" (the information, that there's no whitespace between "friends" and "."). Should this be handled differently? -->
+            <!-- PB: I think it should be a project-internal decision. It is valid information if you want to be able to access all elements separately and expect all the local information
+            to be complete. And it's easy to run a consistency checker on this kind of redundant markup. But if a project decides on economizing on this information and cutting redundancy, nothing stops them :-)-->
             <pc>"</pc>
           </s>
         </egXML>
