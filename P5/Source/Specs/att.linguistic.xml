@@ -123,21 +123,21 @@ $Id$
         </valItem>
       </valList>
       <exemplum xml:lang="en">
+        <p>In cases where <gi>pc</gi> is also made a member of this class, the following illustrates the use of all the values.</p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <s xmlns="">
-            <pc>"</pc>
-            <!-- SH: Do we need //pc in our proposal? STTS has POS tags for punctuation characters. That way we could reduce the attribute set to //w. -->
-            <!-- PB: It would be simpler without <pc>, but we have legacy encoding to take care of, so somehow, we need to embrace <pc>, as an option  -->
+            <pc glued="right">"</pc>
             <w glued="left">Friends</w>
             <w>will</w>
             <w>be</w>
             <w glued="right">friends</w>
             <pc glued="both">.</pc>
-            <!-- SH: It's redundant to mark token "friends" as @glued="right" and token "." als @glued="both" (the information, that there's no whitespace between "friends" and "."). Should this be handled differently? -->
-            <!-- PB: I think it should be a project-internal decision. It is valid information if you want to be able to access all elements separately and expect all the local information
-            to be complete. And it's easy to run a consistency checker on this kind of redundant markup. But if a project decides on economizing on this information and cutting redundancy, nothing stops them :-)-->
-            <pc>"</pc>
+            <pc glued="left">"</pc>
           </s>
+          <p>Note that a project may make a decision to only indicate lack of whitespace in one
+            direction, and/or do that non-redundantly. The existing proposal is the broadest
+            possible, on the assumption that we adopt the "streamable view", where all the
+            information on the current element needs to be represented locally.</p>
         </egXML>
       </exemplum>
     </attDef>
