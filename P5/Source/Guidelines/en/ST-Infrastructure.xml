@@ -782,24 +782,35 @@ for they shall be called the children of God.</egXML>
               <body>
                 <div xml:base="http://www.example.org/somewhere.xml">
                   <p><!--... -->
-                    <ptr target="#p1"/>
+                    <ptr target="elsewhere.xml"/>
                     <!--... -->
                   </p>
                 </div>
                 <div>
                   <p><!--... -->
-                    <ptr target="#p1"/>
+                    <ptr target="elsewhere.xml"/>
                     <!--... -->
                   </p>
                 </div>
               </body></egXML>The first <gi>ptr</gi> element here is within the scope of a
               <gi>div</gi> which supplies a value for <att>xml:base</att>; its target is therefore
-            to be found at <code>http://www.example.org/somewhere.xml#p1</code>. The second
+            to be found at <code>http://www.example.org/elsewhere.xml</code>. The second
               <gi>ptr</gi>, however, is within the scope of a <gi>div</gi> which does not change the
-            default context, and its target is therefore some element within the current document
-            with the value <code>p1</code> for its <att>xml:id</att> attribute. Further discussion
-            of this element and its effect on TEI linking methods is provided in chapter <ptr
-              target="#SA"/>. </p>
+            default context, and its target is therefore a document in the same directory as the current
+            document. </p>
+          <p>The <att>xml:base</att> attribute is intended to enable the stable resolution of
+            relative URIs in a document after that document's context may have changed (for example as a
+            result of being embedded in another document via XInclude). Setting the <att>xml:base</att>
+            simply as a way to allow encoders to write shorter URIs is not recommended. In
+            particular, <att>xml:base</att> may cause ambiguity as to the referent of same-document
+            references in the form <code>#id</code> (where <code>id</code> is an <att>xml:id</att>).
+            <ref target="https://tools.ietf.org/html/rfc3986#section-4.4">RFC 3986</ref> states that
+            URIs of this type should not result in the loading of a different document. The RFC
+            therefore assumes that such references are internal to the document in which they are located. 
+            Using <att>xml:base</att> to denote arbitrary external bases while also using same-document 
+            references may mean that software agents deal with these links in unexpected and
+            inconsistent ways. Further discussion of this attribute and its effect on TEI linking methods 
+            is provided in chapter <ptr target="#SA"/>. </p>
         </div>
         <div xml:id="STGAxs">
           <head>XML Whitespace</head>

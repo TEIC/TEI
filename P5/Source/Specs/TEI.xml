@@ -12,8 +12,8 @@ $Id$
   <gloss versionDate="2006-10-18" xml:lang="de">TEI-Dokument</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">documento TEI</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">documento TEI</gloss>
-  <desc versionDate="2016-11-04" xml:lang="en">contains a single TEI-conformant document, combining
-    a single TEI header with one or more members of the <ident type="class">model.resourceLike</ident> class. Multiple TEI
+  <desc versionDate="2017-02-07" xml:lang="en">contains a single TEI-conformant document, combining
+    a single TEI header with one or more members of the <ident type="class">model.resourceLike</ident> class. Multiple <gi>TEI</gi>
     elements may be combined to form a <gi>teiCorpus</gi> element.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">TEI 헤더와 텍스트로 구성된 단일 TEI 구조 문서를 포함한다. 독립 요소 또는 <gi>teiCorpus</gi> 요소의 부분.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含符合TEI標準的單一文件，由一個TEI標頭及一份文本組成，可單獨出現或是作為元素<gi>teiCorpus</gi>的一部分。</desc>
@@ -21,10 +21,10 @@ $Id$
   <desc versionDate="2007-06-12" xml:lang="fr">contient un seul document conforme à la TEI, qui
             comprend un en-tête TEI et un texte, soit de façon isolée, soit comme  partie d’un
             élément <gi>teiCorpus</gi>.</desc>
-  <desc versionDate="2006-10-18" xml:lang="de"> 
-enthält ein einzelnes TEI-konformes Dokument, das aus TEI-Header (Dateikopf) und Text besteht, entweder als eigenständige Datei oder als  Teil eines Elements <gi>teiCorpus</gi>.
-</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">contiene un único documento TEI-conforme, que comprende un encabezado y un texto, sea este aislado o parte de un elemento <gi>teiCorpus</gi>
+  <desc versionDate="2017-06-13" xml:lang="de">enthält ein einzelnes TEI-konformes Dokument, das aus einem einzigen TEI-Header und einem oder
+    mehreren Mitgliedern der <ident type="class">model.resourceLike</ident>-Klasse besteht. Mehrere
+    <gi>TEI</gi>-Elemente können in einem <gi>teiCorpus</gi>-Element zusammengefasst werden.</desc>
+  <desc versionDate="2017-02-06" xml:lang="es">contiene un solo documento conforme a la norma TEI, combinando una sola cabecera TEI (teiHeader) con uno o más miembros de la clase <ident type="class">model.resourceLike</ident>. Múltiples elementos TEI se pueden combinar para formar un elemento <gi>teiCorpus</gi>.
    </desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene un documento TEI-conforme, comprendente un'intestazione e un testo, sia esso isolato o parte di un elemento <gi>teiCorpus</gi>
    </desc>
@@ -38,13 +38,13 @@ enthält ein einzelnes TEI-konformes Dokument, das aus TEI-Header (Dateikopf) un
       <classRef key="model.resourceLike" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </content>
-  <constraintSpec ident="c1" scheme="isoschematron">
+  <constraintSpec ident="c1" scheme="schematron">
     <constraint>
       <ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
       <ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="xs" uri="http://www.w3.org/2001/XMLSchema"/>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="c2" scheme="isoschematron">
+  <constraintSpec ident="c2" scheme="schematron">
     <constraint>
       <ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="rng" uri="http://relaxng.org/ns/structure/1.0"/>
     </constraint>
@@ -57,7 +57,7 @@ enthält ein einzelnes TEI-konformes Dokument, das aus TEI-Header (Dateikopf) un
       <desc versionDate="2007-05-02" xml:lang="zh-TW">TEI架構的版本</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">TEIスキームの版を示す．</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">la version majeure du schéma TEI</desc>
-      <desc versionDate="2006-10-18" xml:lang="de"> Version des TEI-Schemas</desc>
+      <desc versionDate="2017-06-13" xml:lang="de">gibt die Hauptversionsnummer der TEI-Richtlinien an, gegen die dieses Dokument validiert wird.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">Versión del esquema TEI</desc>
       <desc versionDate="2007-01-21" xml:lang="it">versione dello schema TEI</desc>
       <datatype><dataRef key="teidata.version"/></datatype>
@@ -67,6 +67,12 @@ enthält ein einzelnes TEI-konformes Dokument, das aus TEI-Header (Dateikopf) un
 used for individual releases of the Guidelines, as used by (for
 example) the <att>source</att> of the <gi>schemaSpec</gi> element. The current version is
 P5. </p>
+      </remarks>
+      <remarks versionDate="2017-06-13" xml:lang="de">
+        <p>Der Hauptversionsnummer wird traditionell ein P (für Proposal) vorangestellt. Sie unterscheidet
+          sich von den Versionsnummern für einzelne Veröffentlichungen der TEI-Richtlinien, wie sie (zum
+          Beispiel) vom Attribut <att>source</att> des Elementes <gi>schemaSpec</gi> benutzt wird. Die
+          aktuelle Version ist P5.</p>
       </remarks>
     </attDef>
   </attList>
@@ -181,6 +187,11 @@ TEI namespace <code>http://www.tei-c.org/ns/1.0</code> on it, using
     <p>
     当該要素は必須である．
     </p>
+  </remarks>
+  <remarks versionDate="2017-06-13" xml:lang="de">
+    <p>Dieses Element ist obligatorisch. Es ist notwendig, darin den TEI-Namensraum <ident type="ns"
+      >http://www.tei-c.org/ns/1.0</ident> mithilfe des <att>xmlns</att>-Attributs zu
+      spezifizieren.</p>
   </remarks>
   <listRef>
     <ptr target="#DS"/>

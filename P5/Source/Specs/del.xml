@@ -11,6 +11,7 @@
   <gloss versionDate="2008-12-09" xml:lang="fr">suppression</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">cancelación</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">cancellatura</gloss>
+  <gloss versionDate="2017-06-04" xml:lang="de">Streichung</gloss>
   <desc versionDate="2007-09-25" xml:lang="en">contains a letter, word, or passage deleted, marked as deleted, or otherwise indicated as
     superfluous or spurious in the copy text by an author, scribe, or a previous annotator or corrector.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">삭제된 것으로 표시되었거나, 저자, 전사자, 부호화자 또는 수정작업자에 의해 사본 텍스트에서
@@ -27,6 +28,9 @@
   <desc versionDate="2007-01-21" xml:lang="it">contiene un carattere, parola o brano cancellati,
     codificati come cancellati, o altrimenti indicati come superflui o spuri, nella copia originale
     da parte di un autore, copista, commentatore o correttore.</desc>
+  <desc versionDate="2017-06-04" xml:lang="de">enthält Buchstaben, Wörter oder Textpassagen, die in der Vorlage von einem Autor, einem
+    Schreiber oder im Rahmen einer zuvor erfolgten Annotation oder Korrektur gelöscht wurden oder
+    als gelöscht bzw. gegenstandslos gekennzeichnet wurden.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.pPart.transcriptional"/>
@@ -127,6 +131,34 @@
       するための追加モジュールを使用する際に使うことができる)． </p>
     <p> 要素<gi>del</gi>は，編集者や符号化する人による削除部分に使用される べきではない．この場合は，要素<gi>corr</gi>または要素<gi>gap</gi>
       が使われるべきである． </p>
+  </remarks>
+  <remarks versionDate="2017-06-04" xml:lang="de">
+    <p>Dieses Element sollte nur für Löschungen kürzerer Textpassagen wie etwa einzelner Wörter
+      oder Phrasen benutzt werden. Für längere Textpassagen, sowie jene mit strukturellen
+      Untergliederungen oder sich überschneidenden Hinzufügungen bzw. Löschungen, sollte das
+      <gi>delSpan</gi>-Element benutzt werden.</p>
+    <p>Der gelöschte Text muss zumindest teilweise lesbar
+      sein, um von den Bearbeitern transkribiert werden zu können (außer er wurde in einem
+      <gi>supplied</gi>-Element rekonstruiert). Nicht lesbarer oder nicht mehr vorhandender Text
+      innerhalb einer Löschung kann mit dem <gi>gap</gi>-Element markiert werden, um anzuzeigen, dass
+      Text zwar vorhanden ist aber nicht transkribiert wurde oder nicht mehr sichtbar ist. Im
+      <gi>gap</gi>-Element können Attribute benutzt werden, um, unter anderem, Angaben zur
+      ausgelassenen Textmenge zu machen oder die Gründe für die Auslassung anzugeben. Wenn Text nur
+      teilweise lesbar ist und daher nicht mit Sicherheit entziffert werden kann, sollte das
+      <gi>unclear</gi>-Element (verfügbar im zusätzlichen Tagset für die Transkription von
+      primären Ressourcen) benutzt werden.</p>
+    <p>Das <gi>certainty</gi>-Element (siehe <ptr target="#CE"/>) kann benutzt werden, um den Grad
+      an Gewissheit anzugeben, was noch lesbar ist bzw. ob eine Löschung intendiert war oder nicht.</p>
+    <p>Die TEI unterscheidet eindeutig zwischen <gi>del</gi> und <gi>surplus</gi> auf der einen
+      und <gi>gap</gi> und <gi>unclear</gi> auf der anderen Seite. <gi>del</gi> beschreibt eine
+      Löschung in der zu transkribierenden Ressource, die darauf hinweist, dass ein Autor oder
+      späterer Schreiber bewusst Text löschen oder entfernen wollte. Das <gi>surplus</gi>-Element
+      beschreibt Text in der zu transkribierenden Ressource, der gelöscht werden sollte, aber in
+      Wirklichkeit nicht gelöscht wurde. Die Elemente <gi>gap</gi> oder <gi>unclear</gi> hingegen
+      beschreiben eine vom Editor oder Auszeichnenden getroffene Entscheidung, etwas auszulassen oder
+      deren Unvermögen, die Textvorlage zu entziffern. Vergleiche die Abschnitte <ptr target="#PHOM"/>
+      und <ptr target="#PHCOMB"/> zur Beziehung dieser Elemente untereinander und zu anderen,
+      verwandten Elementen und wie diese in einer detaillierten Transkription verwendet werden.</p>
   </remarks>
   <listRef>
     <ptr target="#COEDADD" type="div3"/>

@@ -181,7 +181,7 @@ validate: schemas.stamp valid
 
 valid: jing_version=$(wordlist 1,3,$(shell jing))
 valid: check.stamp p5.xml
-	@echo BUILD: Check validity with rnv if we have it
+	@echo BUILD: Check validity with rnv \(https://github.com/dtolpin/RNV\) if we have it
 	-command -v  rnv && rnv -v p5odds.rnc p5.xml
 	@echo BUILD: Check validity with special-purpose XSL code, looking for bad links etc
 	${ANT} -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} validators

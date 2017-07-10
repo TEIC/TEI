@@ -70,7 +70,7 @@ subclass of the class <ident type="class">att.canonical</ident>, from
 which it
 inherits the following attributes:
 <specList><specDesc key="att.canonical" atts="key ref"/></specList>
-As discussed elsewhere, these attributes provide two 
+As discussed in <ptr target="#CONARS"/>, these attributes provide two 
 different ways of associating any sort of name with its referent. For
 cases where all that is required is to provide some minimal information about
 the person name, for example their occupation or status, the
@@ -923,8 +923,8 @@ structure itself may be represented using feature structures (<ptr target="#FS"/
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/bloc.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/country.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/region.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/district.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/settlement.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/district.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/offset.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/geogName.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/geogFeat.xml"/>
@@ -1168,10 +1168,11 @@ elements:
   <specDesc key="affiliation"/>
   <specDesc key="education"/>
   <specDesc key="floruit"/>
+  <specDesc key="persona"/>
   <specDesc key="state"/>
   <specDesc key="trait"/>
 </specList>
-All, apart from <gi>langKnowledge</gi>, allow  content of ordinary prose containing phrase-level elements.
+All, apart from <gi>langKnowledge</gi> and <gi>persona</gi>, allow  content of ordinary prose containing phrase-level elements.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <socecStatus ref="tag:projectname.org,2012:AB1">Status AB1 in the RG Classification scheme</socecStatus>
 </egXML>
@@ -1212,6 +1213,14 @@ or
 </langKnowledge>
 </egXML>
 </p>
+<p>The <gi>persona</gi> element may contain the same component elements as a <gi>person</gi>
+element. Its function is to document a distinct persona assumed by the <gi>person</gi> element
+containing it. A person, not necessarily fictional, may take on different personas at different
+times or in different situations, each persona having different personal characteristics, such as
+name, age, sex etc.  We distinguish a persona, which is a set of characteristics associated 
+with one specific individual, from a role, which is a set of characteristics that many different 
+people can assume. An actor does not change their persona when adopting a different role, but 
+none of the personas associated with one person can properly be associated with another.</p>
  <p>The <gi>sex</gi> element carries a <att>value</att> attribute to give values from a
    project-internal taxonomy, or an external standard, such as vCard's sex property
    <ptr target="http://microformats.org/wiki/gender-formats"/>
@@ -1231,7 +1240,7 @@ As elsewhere, these coded values may be used as an alternative to or
      <sex value="F"/>
    </egXML>
 </p>
-<p>The generic <gi>trait</gi> and <gi>state</gi> elements are also a member of this class,
+<p>The generic <gi>trait</gi> and <gi>state</gi> elements are also members of this class,
 <specList>
 <specDesc key="trait"/>
 <specDesc key="state"/>
@@ -2385,7 +2394,8 @@ occupation and residence.</p>
 <!--<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/relationGrp.xml"/> -->
   
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/person.xml"/>
-
+  <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/persona.xml"/>
+  
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/personGrp.xml"/>
 
 

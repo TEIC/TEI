@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../schemas/teiSlides.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title xml:lang="fr">Comment faire un ODD magiquement</title>
+            <author>Lou Burnard</author>
+         </titleStmt>
+         <publicationStmt>
+            <p>Traduction d’un brouillon de tutoriel non publié intitulé <title>How to Make an ODD
+                  Automagically</title></p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>Born digital</p>
+         </sourceDesc>
+      </fileDesc>
+      <revisionDesc>
+         <change when="2017-02-18">French translation by Emmanuel Château-Dutier</change>
+         <change when="2017-01-03">First completish version in english</change>
+      </revisionDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <div>
+            <head>Introduction</head>
+            <p>On n’a de cesse de vous dire de faire un ODD pour votre projet. Mais il y existe
+               sûrement une manière de démarrer rapidement le processus automatiquement ? Eh oui,
+               c’est possible ! Ce guide vous présente comment générer un ODD automatiquement à
+               partir d’un corpus existant de documents TEI P5, et vous propose quelques suggestions
+               pour pouvoir l’améliorer.</p>
+         </div>
+         <div>
+            <head>Installer la transformation ODD by Example</head>
+            <p>La Text Encoding Initiative fournit un utilitaire dénommé <ident>ODD By
+                  Example</ident> qui est capable de traiter un ensemble de documents TEI existants
+               et d’en extraire une description des éléments et des classes TEI qu’ils emploient.
+               Cet utilitaire est une feuille de style XSLT qui fait maintenant partie du paquet
+               standard TEI Stylesheet. Vous trouverez le fichier
+                  <ident>tools/oddbyexample.xsl</ident>, dans le répertoire que vous avez utilisé
+               pour installer le paquet des Stylesheet ; sur un système Linux typique, ce répertoire
+               sera nommé <ident>/usr/share/xml/tei/stylesheet</ident>. Nous n’expliquons pas ici
+               comment installer ce paquet.</p>
+            <!-- @quest les étudiants de l’ENSC auront-ils le paquet d’installé en dehors de ce qui est distribué avec oXygen ? -->
+            <p>Cette transformation est légèrement différente des feuilles de style XSLT habituelle
+               du fait qu’elle est conçue pour traiter un grand nombre de documents séparés plutôt
+               qu’un simple document. Vous pouvez contrôler ses entrées et ses sorties au moyen de
+               paramètres qui doivent être passés au processeur XSLT de manière légèrement distincte
+               <!--en fonction -->en fonction de votre environnement. Par exemple, vous pouvez exécuter la
+               transformation en ligne de commande, en utilisant une commande comme
+                  <ident>saxon</ident> directement, ou bien vous pouvez la lancer au sein du
+               logiciel oXygen en ayant d’abord configuré un <term>scénario de transformation</term>
+               approprié.</p>
+            <p>Si vous êtes habitué à travailler en ligne de commande, cela pourrait être l’option
+               la plus simple et la plus rapide. Pour traiter tous les fichiers du répertoire
+               suivant <ident>/home/me/myTEICorpus</ident> et produire un fichier ODD d’exemple
+               appelé <ident>myGenerated.odd</ident> dans le répertoire courant, vous pourriez
+               entrer une commande comme celle-ci : <code>saxon
+                  /usr/share/xml/tei/stylesheet/tools/oddbyexample.xsl -o:myGenerated.odd -it:main
+                  corpus=/home/me/myCorpus </code>
+            </p>
+            <p>(Si vous vous posiez la question, l’option <code>-it</code> indique à saxon quelle
+               règle modèle (template) de la feuille de style doit être traitée en premier.)</p>
+            <p>Pour définir un scénario de transformation approprié dans oXygen pour les mêmes
+               fichiers, vous pourriez procéder comme suit :<list>
+                  <item>Dans oXygen, ouvrir un des fichiers du répertoire
+                        <ident>/home/me/myTEICorpus</ident></item>
+                  <item>Choisir <ident>Transformation -> Configurer le/les scénario(s) de
+                        transformation</ident> depuis le menu <ident>Document</ident></item>
+                  <item>Cliquer sur <ident>Nouveau</ident> et choisissez "XML Transformation with
+                     XSLT"<!-- @rmq étrangement le message d’interface est non traduit dans oXygen -->
+                  </item>
+                  <item>Donner un nom à votre scénario (par exemple,
+                     <ident>oddByExample</ident>)</item>
+                  <item>Laisser <ident>XML URL</ident> tel quel. Changer <ident>XSL URL</ident> pour
+                     pointer vers la feuille de style XSLT <ident>oddbyexample.xsl</ident> dans le
+                     répertoire de votre Framework TEI. Entrer
+                        <code>${frameworks}/tei/xml/tei/stylesheet/tools/oddbyexample.xsl</code> pour le
+                     trouver (oui, il <emph>y a bien</emph> deux <code>tei</code> dans ce
+                     chemin)</item>
+                  <item>Choisir <ident>Saxon-PE 9.4.0.4</ident> comme processeur</item>
+                  <item>Cliquer sur la petite roue à engrenage près de cette boîte de dialogue pour
+                     choisir les Options avancées : vous avez besoin de renseigner la valeur
+                        <code>main</code> pour <ident>Template("-it")</ident> puis valider</item>
+                  <item>Cliquer ensuite sur le bouton <ident>Paramètres</ident> : vous devez régler
+                     le paramètre <code>corpus</code> pour contenir le nom complet du répertoire que
+                     vous voulez analyser. Supposant que vous avez ouvert un des fichiers mentionnés
+                     à la première étape ci-dessus, vous pouvez seulement donner au paramètre la
+                     valeur <code>${cfd}</code> et cliquer sur OK.</item>
+                  <item>Maintenant, sélectionner l’onglet <ident>Sortie</ident>…<list>
+                        <item>Dans <ident>Enregistrer sous</ident> fournir un nom de fichier pour la
+                           sortie comme <ident>generated.odd</ident></item>
+                        <item>Cocher la case <ident>Ouvrir dans l’éditeur</ident></item>
+                        <item>Sélectionner le bouton radio XML dans <ident>Afficher la vue des
+                              résultats comme</ident> et cliquer sur OK</item>
+                     </list>
+                  </item>
+                  <item>Lancer la transformation en cliquant sur le bouton <ident>Appliquer les
+                        scénarios associés</ident></item>
+               </list>
+            </p>
+            <p>Une fois que vous avez défini ce scénario de transformation, vous pouvez y avoir
+               recours aussi souvent que vous voulez avec n’importe quelle collection de fichiers.
+               Vous n’avez pas besoin de suivre à nouveau l’ensemble des étapes précédentes à chaque
+               fois ! La prochaine fois, procédez comme suit :<list>
+                  <item>Dans oXygen, ouvrir n’importe quel fichier TEI-XML de la collection que vous
+                     voulez traiter</item>
+                  <item>Choisir <ident>Transformation -> Configurer le/les scénario(s) de
+                        transformation</ident> depuis le menu <ident>Document</ident> comme
+                     précédemment</item>
+                  <item>Vous pouvez maintenant voir le scénario que vous venez de définir dans la
+                     liste des scénarios "Globaux". Cocher la case à côté et cliquer sur le bouton
+                        <ident>Appliquer le/les scénario(s) associés</ident></item>
+               </list></p>
+            <p>Une fois que cette association est faite, chaque fois que vous ouvrez un fichier
+               TEI-XML dans oXygen, vous pouvez lancer à nouveau la transformation en cliquant
+               simplement sur le bouton avec un grand triangle rouge dans la barre d’outils (ou bien
+               en pressant simultanément les touches
+                  <ident>CTRL</ident>-<ident>SHIFT</ident>-<ident>T</ident>, ou bien en
+               sélectionnant Document -> Transformation -> Appliquer le/les scénario de
+               transformation)</p>
+            <p>Vous pouvez également éditer le scénario, par exemple en changeant l’une des valeurs
+               de paramètres passés à la transformation, ou en changeant les options de sorties.
+               Vous trouverez ci-dessous une liste des paramètres que vous pouvez modifier.</p>
+         </div>
+         <div>
+            <head>Comprendre la sortie</head>
+            <p>L’ODD généré par <ident>oddbyexample</ident> peut, à première vue, paraître un peu
+               étrange. Parcourir le fichier pour trouver les éléments <gi>moduleRef</gi> car
+               ceux-ci sont particulièrement utiles. Vous devriez voir les lignes suivantes <egXML
+                  xmlns="http://www.tei-c.org/ns/Examples">
+                  <moduleRef key="namesdates" include="persName listPerson person"/>
+               </egXML> Cela nous indique que notre corpus utilise les éléments <gi>persName</gi>,
+                  <gi>listPerson</gi> et <gi>person</gi> qui sont fournis par le module TEI
+                  <ident>namesdates</ident>. Aucun autre élément de ce module n’est utilisé dans ce
+               corpus.</p>
+            <p>Toutefois, mon ODD contient aussi de nombreuses lignes moins utiles. Par exemple, si
+               un des attribut globaux (comme <att>corresp</att>) a été utilisé sur seulement un
+               élément dans notre corpus, l’ODD généré doit le supprimer explicitement de tous les
+               éléments sur lesquels il n’est <emph>pas</emph> employé. Plus ennuyeux encore,
+               peut-être, l’ODD généré contient toujours les déclarations de toutes les classes
+               spécifiques aux modules que les éléments dudit module aient été utilisés ou non. Les
+               déclarations n’ont aucun effet sur le schéma qui est généré, mais ils rendent plus
+               compliqué à comprendre ce que fait l’ODD proprement dit.</p>
+            <p>Plus utile, l’ODD généré peut vous indiquer les valeurs qui sont effectivement
+               employées pour les attributs (par exemple pour les valeurs de <att>type</att>) qui
+               ont le type de données (datatype) <val>teidata.enumerated</val>.</p>
+            <p>Voici un exemple de ce que nous voulons dire : <egXML
+                  xmlns="http://www.tei-c.org/ns/Examples">
+                  <elementSpec ident="persName" mode="change">
+                     <attList>
+                        <attDef ident="corresp" mode="delete"/>
+                        <attDef ident="when" mode="delete"/>
+                        <attDef ident="notBefore" mode="delete"/>
+                        <attDef ident="notAfter" mode="delete"/>
+                        <attDef ident="key" mode="delete"/>
+                        <attDef ident="type" mode="change">
+                           <valList mode="add" type="closed">
+                              <valItem ident="actor"/>
+                           </valList>
+                        </attDef>
+                        <attDef ident="subtype" mode="delete"/>
+                     </attList>
+                  </elementSpec>
+               </egXML> Cette spécification nous indique que dans notre corpus la seule valeur
+               réellement spécifiée pour l’attribut <att>type</att> sur l’élément <gi>persName</gi>
+               est <val>actor</val>. <!--D’autres instances de cet élément pourraient être spécifiées
+               pour <att>type</att>, bien sûr, mais c’est en effet la seule valeur pour le moment
+               utilisée. --> <!-- WRONG --> Cela m’indique également que la plupart des autres attributs disponibles
+               pour les classes dont <gi>persName</gi> est membre ne sont jamais effectivement
+               employés. Par exemple, les attributs <att>when</att>, <att>notBefore</att> et
+                  <att>notAfter</att> sont tous fournis par la classe <ident>att.datable</ident>, de
+               laquelle <gi>persName</gi> est membre. Ces attributs ne sont utilisés sur aucune
+               instance de <gi>persName</gi> au sein de notre corpus. Ils sont cependant utilisés
+               sur les instances d’au moins un autre membre de cette classe (en fait <gi>date</gi>),
+               ainsi la classe d’attribut elle-même ne peut pas être supprimée de l’ODD. Au lieu de
+               cela, comme nous allons le voir,<!-- elles--> ils doivent être explicitement effacées de chaque
+               éléments qui ne les utilise pas.</p>
+         </div>
+         <div>
+            <head>Utiliser et améliorer un ODD généré</head>
+            <p>Que pouvons-nous faire avec ce fichier ODD, à part l’étudier comme témoin des folies
+               de nos encodeurs ? Nous pouvons, bien sûr, l’utiliser pour générer un schéma ou une
+               documentation de nos pratiques, comme on l’aurait fait avec n’importe quel autre ODD.
+               Voici un rappel de la manière dont vous pouvez configurer un scénario de
+               transformation avec oXygen pour cela : <list>
+                  <item>Ouvrir le fichier ODD généré dans oXygen</item>
+                  <item>Dans le menu <ident>Document</ident>, choisir <ident>Transformation</ident>
+                     -> <ident>Configurer le/les scénario(s) de transformation</ident>, ou presser
+                     les touches <ident>CTRL</ident>-<ident>SHIFT</ident>-<ident>C</ident>, ou bien
+                     cliquer sur l’icône représentant une clef-à-molette dans la barre
+                     d’outil.<!--(celle-ci : <graphic url="spanner.png" height="7mm"/>)--></item>
+                  <item>Une liste des scénarios de transformation disponibles est présentée. Cocher
+                     sur la case adjacente au scénario que vous souhaitez appliquer : probablement
+                        <ident>TEI ODD XHTML</ident> et <ident>TEI ODD to RELAXNG
+                     Compact</ident></item>
+                  <!-- <item><graphic url="scenarios.png" height="7cm"/>
+           </item>-->
+                  <item>Cliquer le bouton <ident>Appliquer le/les scénario(s) associés</ident> pour
+                     lancer la ou les transformations ; vous pouvez ignorer les messages qui
+                     s’affichent dans la fenêtre du bas</item>
+                  <item>Si tout se déroule comme il faut, le XHTML va s’afficher dans votre
+                     navigateur par défaut, tandis que la sortie RelaxNG compacte sera sauvée dans
+                     un répertoire nommé <ident>out</ident>, qu’oXygen créée dans le répertoire
+                     courant si nécessaire. </item>
+               </list></p>
+            <p>Bien sûr, vous pouvez vérifier que le schéma généré depuis cet ODD valide
+               correctement les documents de votre corpus. Ce serait alarmant si cela n’était pas le
+               cas ! Mais lorsque vous aurez de nouveaux fichiers à ajouter à votre corpus,
+               cependant, cette procédure peut devenir utile en fonction du fait que vous décidiez
+               de maintenir des pratiques d’encodage déjà établies, ou bien pour les étendre afin de
+               tenir compte des nouveaux usages dans vos fichiers. Vous aurez peut-être besoin
+               d’ajouter de nouvelles valeurs parmi celles permises pour l’un de vos attributs.
+               Peut-être devrez-vous réintroduire un nouvel attribut ou un élément dont vous pensiez
+               ne jamais avoir besoin ?</p>
+            <p>Supposons par exemple que votre ODD indique que les valeurs de <att>type</att> si
+               elles sont indiquées sur <gi>div</gi> devrait être <val>chapter</val> ou
+                  <val>section</val>, mais vos nouveaux matériaux incluent des éléments <gi>div</gi> avec
+               un attribut <att>type</att> avec la valeur <val>book</val>. Vous pourriez décider que
+               c’est une erreur et modifier le fichier, ou bien vous pourriez décider que vous avez
+               besoin de modifier le fichier ODD. (Michael avait toujours l’habitude de dire <q>S’il
+                  y a un manque de compatibilité entre le texte et le schéma, dans notre monde nous
+                  suivons le texte.</q>) Disons-donc que vous adoptiez la dernière solution. Vous
+               auriez alors besoin de localiser l’élément <gi>valList</gi> au sein de
+                  l’<gi>attDef</gi> concerné, et d’ajouter un nouvel élément <gi>valItem</gi>. De
+               sorte que votre ODD ressemblerait alors à ça : <egXML
+                  xmlns="http://www.tei-c.org/ns/Examples">
+                  <elementSpec ident="div" mode="change">
+                     <attList>
+                        <attDef ident="type" mode="change">
+                           <valList mode="add" type="closed">
+                              <valItem ident="chapter"/>
+                              <valItem ident="section"/>
+                           </valList>
+                        </attDef>
+                     </attList>
+                  </elementSpec></egXML> Que vous changeriez pour ce qui suit : <egXML
+                  xmlns="http://www.tei-c.org/ns/Examples">
+                  <elementSpec ident="div" mode="change">
+                     <attList>
+                        <attDef ident="type" mode="change">
+                           <valList mode="add" type="closed">
+                              <valItem ident="chapter"/>
+                              <valItem ident="section"/>
+                              <valItem ident="book"/>
+                           </valList>
+                        </attDef>
+                     </attList>
+                  </elementSpec></egXML>
+            </p>
+            <p>Tant que vous êtes-là, vous pourriez aimer documenter ce que signifient chacune de
+               ces valeurs, pour le bénéfice des non-anglophones, ou pour vous lorsque vous avez
+               oublié si <soCalled>section</soCalled> contient les <soCalled>book</soCalled> ou
+               l’inverse, ou bien vice-et-versa. <!-- ? --> Vous pouvez faire cela en ajoutant une ou deux
+               descriptions supplémentaires en ajoutant les éléments <gi>desc</gi> au sein des
+               différents <gi>valItem</gi>, comme ceci : <egXML
+                  xmlns="http://www.tei-c.org/ns/Examples">
+                  <elementSpec ident="div" mode="change">
+                     <attList>
+                        <attDef ident="type" mode="change">
+                           <valList mode="add" type="closed">
+                              <valItem ident="chapter"><desc xml:lang="en">the smallest subdivisions
+                                    of a text</desc>
+                                 <desc xml:lang="fr">les divisions les plus petites d'une
+                                    texte</desc></valItem>
+                              <valItem ident="section"><desc xml:lang="en">a group of
+                                       <soCalled>chapter</soCalled>s within a
+                                       <soCalled>book</soCalled></desc>
+                                 <desc xml:lang="fr">un regroupement de
+                                    <soCalled>chapter</soCalled>s au sein d'un
+                                       <soCalled>book</soCalled></desc></valItem>
+                              <valItem ident="book"><desc xml:lang="en">the largest subdivisions of
+                                    a text</desc>
+                                 <desc xml:lang="fr">les divisions les plus grandes d'une
+                                    texte</desc></valItem>
+                           </valList>
+                        </attDef>
+                     </attList>
+                  </elementSpec>
+               </egXML>
+            </p>
+            <p>Maintenant que vous avez fait ces changements, vous pourriez vouloir régénérer un
+               schéma depuis votre ODD, puis pouvoir vérifier qu’oXygen utilise les nouvelles
+               fonctionnalités que vous avez ajoutées. En ajoutant une <gi>div</gi> à un nouveau
+               document, par exemple, vous devriez vous voir proposer un menu pour l’attribut
+                  <att>type</att> incluant les nouvelles valeurs ainsi que l’aide qui leur est
+               associée.</p>
+            <p>Maintenant, jeter un œil au <soCalled>mini-manuel</soCalled> HTML généré depuis votre
+               ODD. Par défaut, cela contiendra seulement un index des liens qui pointent vers des
+               spécifications détaillées de chacun des éléments et des classes utilisées dans votre
+               corpus. Ces descriptions sont apparemment modelée de près sur les spécifications
+               employées dans les <title>Guidelines</title>.</p>
+            <p>Par défaut les exemples, les descriptions et les références fournies pour chaque
+               élément seront les mêmes que celles des <title>Guidelines</title>. Le modèle de
+               contenu et la liste des attributs pourraient toutefois refléter les changements que
+               vous avez proposés dans votre ODD.</p>
+            <p>Vous pourriez vouloir tester cela en remplaçant un ou plusieurs des exemples
+               d’utilisation fournis pour chaque éléments par des exemples tirés de votre propre
+               corpus.</p>
+            <p>Ouvrir le fichier ODD que vous avez généré dans oXygen puis localiser l’élément
+                  <gi>elementSpec</gi> que vous voulez changer, s’il y en a un. (Sinon, vous devriez
+               en ajouter un vous-même, bien évidemment.) Par exemple, supposons que je veuille
+               fournir un meilleur exemple pour l’élément <gi>hi</gi> qui est inclus dans mon ODD.
+               Une déclaration a été fournie pour cet élément qui efface les deux attributs globaux
+               qui ne sont pas employés sur lui : <egXML xmlns="http://www.tei-c.org/ns/Examples"
+                     ><elementSpec ident="hi" mode="change">
+                     <attList>
+                        <attDef ident="facs" mode="delete"/>
+                        <attDef ident="resp" mode="delete"/>
+                     </attList>
+                  </elementSpec></egXML> Mon nouvel exemple d’usage est fourni après
+                  <gi>attList</gi>. Il est encodé en utilisant l’élément <gi>exemplum</gi>, qui
+               contient un élément <gi>egXML</gi> et (optionnellement) quelques paragraphes
+               additionnels de discussion. <egXML xmlns="http://www.tei-c.org/ns/Examples"
+                     ><elementSpec ident="hi" mode="change">
+                     <attList>
+                        <attDef ident="facs" mode="delete"/>
+                        <attDef ident="resp" mode="delete"/>
+                     </attList>
+                     <exemplum> &lt;egXML xmlns="http://www.tei-c.org/ns/Examples"> Here's how I use
+                        it <hi>my example</hi> &lt;/egXML> </exemplum>
+                  </elementSpec></egXML> Plus de détails au sujet de l’élément <gi>exemplum</gi> et
+               son contenu sont donnés dans la section dédiée des <title>Guidelines</title>, bien
+               sûr. Notons que quand nous l’utilisons comme cela dans une personnalisation ODD, elle
+               remplace complètement tous les <gi>exemplum</gi> existants dans la source TEI. Vous
+               pouvez vouloir modifier votre ODD comme cela puis régénérer un mini-manuel HTML pour
+               vérifier. </p>
+            <p>Avant cela, nous vous suggérons cependant d’aussi ajouter des explications au sujet
+               de la destination de votre ODD, en documentant ses composants et leur emploi attendu.
+               Cette documentation informelle peut être aussi simple ou complexe que vous le voulez,
+               et vous pouvez (bien sûr) utiliser toute l’étendue des éléments fournis par la TEI
+               pour l’exprimer. Ajouter au moins une <gi>div</gi> ou deux, avec quelques éléments
+                  <gi>head</gi>, quelques <gi>p</gi> et quelques <gi>list</gi>… Vous pouvez aussi
+               utiliser quelques balises de documentation plus spéciales fournies par le module
+                  <ident>tagdocs</ident> qui vous permettent de distinguer les noms d’attributs ou
+               d’éléments par le balisage, et d’embarquer des descriptions formelles d’éléments
+               spécifiques dans la prose, ou plein d’autres choses. Assurez-vous seulement que votre
+               document ODD est valide contre un schéma qui inclue ces éléments spécialisés : le
+               schéma <ident>tei_odds</ident> au sein du répertoire <ident>exemplars</ident> est
+               destiné à cet usage.</p>
+            <p>Par exemple, vous pourriez étendre votre ODD pour arriver à quelque chose qui
+               ressemblerait à ça :<egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <body>
+                     <div>
+                        <head>Un schéma minimal TEI pour la transcription d’archives</head>
+                        <p>Ce schéma propose un ensemble minimal d’éléments TEI adéquates pour une
+                           transcription élémentaire de sources archivistiques. </p>
+                        <p>Chaque document est transcrit avec un élément <gi>text</gi> distinct qui
+                           dipsose de son propre <gi>teiHeader</gi>. Les sous-sections du document
+                           sont marquées en utilisant l’élément <gi>div</gi>. </p>
+                        <p>Les éléments suivants de la TEI sont employés pour représenter ces
+                           composants : <specList>
+                              <specDesc key="TEI"/>
+                              <specDesc key="header"/>
+                              <specDesc key="text"/>
+                           </specList></p>
+                        <!-- lots more prose and discussion and examples here-->
+                     </div>
+                     <div>
+                        <head>Spécification formelle</head>
+                        <schemaSpec ident="minimalSchema" start="TEI">
+                           <!-- declarations from your generated ODD here -->
+                        </schemaSpec>
+                     </div>
+                  </body>
+               </egXML>
+            </p>
+            <p>Lorsqu’un ODD comme ceci est traité par un processeur, la sortie HTML (ou les autres
+               formats de document) générée par un processeur ODD contiendra l’ensemble du texte que
+               vous voyez ici. L’élément <gi>specDesc</gi> sera toutefois remplacé par le contenu de
+               l’élement <gi>desc</gi> au sein de la spécification de l’élément indiquée par la
+               valeur de l’attribut <att>key</att>. Le <gi>schemaSpec</gi> sera aussi traité ainsi
+               que nous l’avons vu plus haut pour produire une documentation formelle. Essayez ! </p>
+            <p>Il y a beaucoup d’autres choses que vous pourriez vouloir faire en commençant à
+               éditer votre ODD. Ce tutoriel en suggère seulement quelques unes qui s’avèrent
+               particulièrement utiles dans le processus de définition d’un schéma utile pour un
+               ensemble de documents TEI. </p>
+         </div>
+         <div>
+            <head>Paramètres configurables pour la feuille de style oddbyexample</head>
+            <p>Ceux-ci ne fonctionnent pas toujours... voir <ptr
+                  target="https://github.com/TEIC/Stylesheets/issues/212"/></p>
+            <table>
+               <row role="label">
+                  <cell>Paramètre</cell>
+                  <cell>Fonction</cell>
+                  <cell>Valeur par défaut</cell>
+               </row>
+               <row>
+                  <cell>corpus</cell>
+                  <cell>chemin vers le répetoire contenant les fichiers d’entrée</cell>
+                  <cell>./</cell>
+               </row>
+               <row>
+                  <cell>schema</cell>
+                  <cell>nom du schéma à générer</cell>
+                  <cell>oddbyexample</cell>
+               </row>
+               <row>
+                  <cell>corpusList</cell>
+                  <cell>traiter seulement ces fichiers d’entrées</cell>
+                  <cell>(no constraint)</cell>
+               </row>
+               <row>
+                  <cell>prefix</cell>
+                  <cell>traiter seulement les fichiers dont le nom débute par</cell>
+                  <cell>(no constraint)</cell>
+               </row>
+               <row>
+                  <cell>suffix</cell>
+                  <cell>traiter seulement les fichiers avec l’extension</cell>
+                  <cell>xml</cell>
+               </row>
+               <row>
+                  <cell>defaultSource</cell>
+                  <cell>chemin pour faire référence à aux déclarations TEI</cell>
+                  <cell>http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml</cell>
+               </row>
+               <row>
+                  <cell>keepGlobals</cell>
+                  <cell>énumérer tous les attributs globaux</cell>
+                  <cell>false</cell>
+               </row>
+               <row>
+                  <cell>attributeList</cell>
+                  <cell>attributs spécifiques dont les valeurs doivent être énumérées</cell>
+                  <cell>(none)</cell>
+               </row>
+               <row>
+                  <cell>enumerateRend</cell>
+                  <cell>énumérer les valeurs utilisées pour le <att>rend</att></cell>
+                  <cell>false</cell>
+               </row>
+               <row>
+                  <cell>enumerateType</cell>
+                  <cell>énumérer les valeurs utilisées pour <att>type</att></cell>
+                  <cell>false</cell>
+               </row>
+               <row>
+                  <cell>includeHeader</cell>
+                  <cell>énumérer les attributs des éléments dans les headers TEI</cell>
+                  <cell>true</cell>
+               </row>
+               <row>
+                  <cell>processNonTEI</cell>
+                  <cell>énumérer les éléments non-TEI</cell>
+                  <cell>false</cell>
+               </row>
+               <!--     <row><cell>method</cell><cell>should generated moduleRefs use @include or @except</cell><cell>include</cell></row>
+     -->
+               <row>
+                  <cell>debug</cell>
+                  <cell>indiquer les informations de bugs</cell>
+                  <cell>false</cell>
+               </row>
+               <row>
+                  <cell>verbose</cell>
+                  <cell>produire des messages en mode verbose</cell>
+                  <cell>false</cell>
+               </row>
+            </table>
+         </div>
+      </body>
+   </text>
+</TEI>

@@ -3,6 +3,7 @@
   xmlns:sch="http://purl.oclc.org/dsdl/schematron" 
   xmlns:sqf="http://www.schematron-quickfix.com/validator/process"
   xmlns:eg="http://www.tei-c.org/ns/Examples"
+  xmlns:egXML="http://www.tei-c.org/ns/Examples"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
   xmlns:tei="http://www.tei-c.org/ns/1.0"
   xml:lang="en">
@@ -194,7 +195,11 @@
                   <date>2014</date>
                   <idno>Issue 7</idno>
                   <availability>
-                    <p>TEI Consortium 2014 (Creative Commons Attribution-NoDerivs 3.0 Unported License)</p>
+                    <licence target="https://creativecommons.org/licenses/by/4.0/">
+                      <p>For this publication, a Creative Commons Attribution 4.0
+                        International license has been granted by the author(s), who 
+                        retain full copyright.</p>
+                    </licence>
                   </availability>
                 </publicationStmt>
                 <sourceDesc>
@@ -1869,7 +1874,7 @@
           <moduleRef key="corpus" include="particDesc"/>
           <moduleRef key="figures" include="cell figure row table"/>
           <moduleRef key="header"
-            include="appInfo application availability catRef change classCode edition encodingDesc fileDesc idno keywords langUsage language listChange profileDesc projectDesc publicationStmt rendition revisionDesc seriesStmt sourceDesc tagsDecl teiHeader textClass titleStmt"/>
+            include="appInfo application availability catRef change classCode edition encodingDesc fileDesc idno keywords langUsage language licence listChange profileDesc projectDesc publicationStmt rendition revisionDesc seriesStmt sourceDesc tagsDecl teiHeader textClass titleStmt"/>
           <moduleRef key="namesdates"
             include="affiliation forename listPerson person orgName roleName surname"/>
           <moduleRef key="tagdocs" include="att code eg egXML gi ident tag val"/>
@@ -1887,14 +1892,11 @@
                 <gi>author</gi> element for each author of the paper, which in turn must include
                 <gi>name</gi>, <gi>affiliation</gi> and <gi>email</gi>.</desc>
             <content>
-              <group xmlns="http://relaxng.org/ns/structure/1.0">
-                <oneOrMore>
-                  <ref name="title"/>
-                </oneOrMore>
-                <oneOrMore>
-                  <ref name="author"/>
-                </oneOrMore>
-              </group>
+              <!-- [RvdB] sequence wrapper seems necessary to keep ODD2DTD happy -->
+              <sequence>                
+                <elementRef key="title" minOccurs="1" maxOccurs="unbounded"/>
+                <elementRef key="author" minOccurs="1" maxOccurs="unbounded"/>
+              </sequence>              
             </content>
             <constraintSpec ident="jtei.sch-title" scheme="isoschematron">
               <constraint>
@@ -1914,13 +1916,14 @@
           </elementSpec>
           <elementSpec ident="textClass" module="header" mode="change">
             <content>
-              <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-                <choice>
-                  <ref name="classCode"/>
-                  <ref name="catRef"/>
-                </choice>
-              </zeroOrMore>
-              <ref xmlns="http://relaxng.org/ns/structure/1.0" name="keywords"/>
+              <!-- [RvdB] sequence wrapper seems necessary to keep ODD2DTD happy -->
+              <sequence>
+                <alternate minOccurs="0" maxOccurs="unbounded">
+                  <elementRef key="classCode"/>
+                  <elementRef key="catRef"/>
+                </alternate>
+                <elementRef key="keywords"/>
+              </sequence>
             </content>
           </elementSpec>
           <elementSpec ident="affiliation" mode="change">
@@ -2177,13 +2180,11 @@
               use the <gi>quote</gi> element and link it to a reference using
               <att>source</att>.</desc>
             <content>
-              <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-                <choice>
-                  <ref name="quote"/>
-                  <ref name="model.biblLike"/>
-                  <ref name="model.ptrLike"/>
-                </choice>
-              </oneOrMore>
+              <alternate minOccurs="1" maxOccurs="unbounded">
+                <elementRef key="quote"/>
+                <classRef key="model.biblLike"/>
+                <classRef key="model.ptrLike"/>
+              </alternate>
             </content>
             <constraintSpec ident="jtei.sch-cit" scheme="isoschematron">
               <constraint>
@@ -2318,14 +2319,15 @@
               without the <gi>figure</gi> wrapper.
             </desc>
             <content>
-              <rng:choice>
-                <rng:ref name="graphic"/>
-                <rng:ref name="egXML"/>
-                <rng:ref name="eg"/>
-              </rng:choice>
-              <rng:oneOrMore>
-                <rng:ref name="head"/>
-              </rng:oneOrMore>
+              <!-- [RvdB] sequence wrapper seems necessary to keep ODD2DTD happy -->
+              <sequence>
+                <alternate>
+                  <elementRef key="graphic"/>
+                  <elementRef key="egXML"/>
+                  <elementRef key="eg"/>
+                </alternate>
+                <elementRef key="head" minOccurs="1" maxOccurs="unbounded"/>
+              </sequence>
             </content>
             <attList>
               <attDef ident="place" mode="delete"/>
@@ -2837,61 +2839,45 @@
               divs at all instead of a single div. This has proved problematic, 
               so we're abandoning it at this stage to enable integration into 
               P5; we'll revisit this later. -->
-              <choice xmlns="http://relaxng.org/ns/structure/1.0">
-                <group>
-                  <zeroOrMore>
-                    <choice>
-                      <ref name="model.divTop"/>
-                      <ref name="model.global"/>
-                    </choice>
-                  </zeroOrMore>
-                  <optional>
-                    <choice>
-                      <group>
-                        <oneOrMore>
-                          <choice>
-                            <ref name="model.divLike"/>
-                            <ref name="model.divGenLike"/>
-                          </choice>
-                          <zeroOrMore>
-                            <ref name="model.global"/>
-                          </zeroOrMore>
-                        </oneOrMore>
-                      </group>
-                      <group>
-                        <oneOrMore>
-                          <group>
-                            <ref name="model.common"/>
-                          </group>
-                          <zeroOrMore>
-                            <ref name="model.global"/>
-                          </zeroOrMore>
-                        </oneOrMore>
-                        <zeroOrMore>
-                          <choice>
-                            <ref name="model.divLike"/>
-                            <ref name="model.divGenLike"/>
-                          </choice>
-                          <zeroOrMore>
-                            <ref name="model.global"/>
-                          </zeroOrMore>
-                        </zeroOrMore>
-                      </group>
-                    </choice>
-                    <zeroOrMore>
-                      <group>
-                        <ref name="model.divBottom"/>
-                      </group>
-                      <zeroOrMore>
-                        <ref name="model.global"/>
-                      </zeroOrMore>
-                    </zeroOrMore>
-                  </optional>
-                </group>
-              <!--<oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-                <ref name="model.divLike"/>
-              </oneOrMore>-->
-              </choice>
+<!--              <alternate>-->
+                <sequence>                  
+                  <alternate minOccurs="0" maxOccurs="unbounded">
+                    <classRef key="model.divTop"/>
+                    <classRef key="model.global"/>
+                  </alternate>
+                  <sequence minOccurs="0">
+                    <alternate>
+                      <sequence minOccurs="1" maxOccurs="unbounded">
+                        <alternate>
+                          <classRef key="model.divLike"/>
+                          <classRef key="model.divGenLike"/>
+                        </alternate>
+                        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+                      </sequence>
+                      <sequence>
+                        <sequence minOccurs="1" maxOccurs="unbounded">
+                          <classRef key="model.common"/>
+                          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+                        </sequence>
+                        <sequence minOccurs="0" maxOccurs="unbounded">
+                          <alternate>
+                            <classRef key="model.divLike"/>
+                            <classRef key="model.divGenLike"/>
+                          </alternate>
+                          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+                        </sequence>
+                      </sequence>
+                    </alternate>
+                    <sequence minOccurs="0" maxOccurs="unbounded">
+                      <classRef key="model.divBottom"/>
+                      <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+                    </sequence>
+                  </sequence>
+                </sequence>
+              <!--                 
+                <classRef key="model.divLike" minOccurs="1" maxOccurs="unbounded"/>
+-->              
+              <!--</alternate>-->
             </content>
             <constraintSpec ident="jtei.sch-body" scheme="isoschematron">
               <constraint>

@@ -88,11 +88,15 @@ used for this element in the source text</desc>
               <lb/><hi style="font-variant: normal">New Blazing-World</hi>. </head>
         </egXML>
       </exemplum>
-      <remarks versionDate="2014-09-09" xml:lang="en">
+      <remarks versionDate="2017-07-02" xml:lang="en">
         <p>Unlike the attribute values of <att>rend</att>, which uses whitespace as a separator, the <att>style</att> attribute may contain whitespace. This attribute is intended for recording inline stylistic information concerning the
 source, not any particular output.</p>
         <p>The formal language in which values for this attribute are expressed may be specified using the <gi>styleDefDecl</gi> element in
 the TEI header.</p>
+        <p>If <att>style</att> and <att>rendition</att> are both present on an element, then
+          <att>style</att> overrides or complements <att>rendition</att>. <att>style</att> should
+          not be used in conjunction with <att>rend</att>, because the latter does not employ a
+          formal style definition language.</p>
       </remarks>
     </attDef>
     <attDef ident="rendition" usage="opt">
@@ -125,12 +129,14 @@ the TEI header.</p>
           <rendition xml:id="fr_ac" scheme="css">text-align: center</rendition>
         </egXML>
       </exemplum>
-      <remarks versionDate="2007-09-22" xml:lang="en">
+      <remarks versionDate="2017-07-02" xml:lang="en">
         <p>The <att>rendition</att> attribute is used in a very similar way to the <att>class</att>
           attribute defined for XHTML but with the important distinction that its function is to
           describe the appearance of the source text, not necessarily to determine how that text
           should be presented on screen or paper.</p>
-        <p>Where both <att>rendition</att> and <att>rend</att> are supplied, the latter is
+        <p>If <att>rendition</att> is used to refer to a style definition in a formal language like
+          CSS, it is recommended that it not be used in conjunction with <att>rend</att>. 
+          Where both <att>rendition</att> and <att>rend</att> are supplied, the latter is
           understood to override or complement the former.</p>
         <p>Each URI provided should indicate a <gi>rendition</gi> element defining the intended
           rendition in terms of some appropriate style language, as indicated by the

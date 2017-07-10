@@ -32,11 +32,17 @@
   <property name="saxon" value="../Utilities/lib/saxon9he.jar"/>
   <property name="trang" value="../Utilities/lib/trang.jar"/>
   <property name="jing" value="../Utilities/lib/jing.jar"/>
+  
+  <!-- MDH 2016-12-24: working on https://github.com/TEIC/TEI/issues/1559, added 
+  this property per instructions at https://xmlgraphics.apache.org/fop/2.1/anttask.html. -->
+  <property name="fop.home" value="../Utilities/lib/fop-2.1"/>
+  
   <property name="XSL" value="../../Stylesheets"/>
   <property name="odd2dtd" value="${XSL}/profiles/${profile}/dtd/to.xsl"/>
   <property name="odd2html" value="${XSL}/odds/odd2html.xsl"/>
   <property name="odd2lite" value="${XSL}/odds/odd2lite.xsl"/>
   <property name="lite2latex" value="${XSL}/profiles/${profile}/latex/to.xsl"/>
+  <property name="lite2fo" value="${XSL}/profiles/${profile}/fo/to.xsl"/>
   <property name="odd2relax" value="${XSL}/profiles/${profile}/relaxng/to.xsl"/>
   <property name="odd2odd" value="${XSL}/odds/odd2odd.xsl"/>
   <property name="odd2isosch" value="${XSL}/odds/extract-isosch.xsl"/>
@@ -49,6 +55,22 @@
     <pathelement path="${java.class.path}"/>
   </path>
   <taskdef name="runjing" classpath="${jing}" classname="com.thaiopensource.relaxng.util.JingTask"/>
+  
+  <!-- MDH 2016-12-24: working on https://github.com/TEIC/TEI/issues/1559, added 
+  this taskdef per instructions at https://xmlgraphics.apache.org/fop/2.1/anttask.html. -->
+  <taskdef name="fop"
+    classname="org.apache.fop.tools.anttasks.Fop">
+    <classpath>
+      <fileset dir="${fop.home}/lib">
+        <include name="*.jar"/>
+      </fileset>
+      <fileset dir="${fop.home}/build">
+        <include name="fop.jar"/>
+        <include name="fop-hyph.jar" />
+      </fileset>
+    </classpath>
+  </taskdef>
+  
   <target name="dist" depends="setup,validateodd,compileodd,dtd,rng,rnc,xsd,validaterng,isoschematron,validateschematron,dochtml,cleanup"/>
   <target name="setup">
   </target>
@@ -235,6 +257,39 @@
     <delete file="${outputname}.doc.html"/>
     <delete file="${outputname}.doc.log"/>
     <delete file="${outputname}.doc.out"/>
+  </target>
+  
+  <!-- MDH: Adding this target in the early stages of working on 
+    https://github.com/TEIC/TEI/issues/1559 2016-12-24. -->
+  <target name="docfo" depends="doclite">
+    <echo level="info">XSLT generate XSL:FO from Lite</echo>
+    <xslt processor="trax" force="yes" style="${lite2fo}" in="${outputname}.doc.xml" out="${outputname}.doc.fo">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="lang" expression="${lang}" if="lang"/>
+      <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+      
+<!--  MDH: These params are copied directly from doclatex; need to check whether they're actually used 
+      in fo conversion, and whether others are needed. -->
+      <param name="useHeaderFrontMatter"  expression="true"/>
+      <param name="reencode"  expression="false"/>
+      
+<!--  MDH 2016-12-30: This is the first use of this parameter AFAIK.    -->
+      <param name="foEngine" expression="fop"/>
+    </xslt>
+  </target>
+  
+  <!-- MDH: Adding this target in the early stages of working on 
+    https://github.com/TEIC/TEI/issues/1559 2016-12-24. 
+    It can't do anything till fop.jar and associated dependencies
+    are available on the classpath. Details here: 
+      https://xmlgraphics.apache.org/fop/2.1/anttask.html
+  -->
+  <target name="docfopdf" depends="docfo">
+    <echo level="info">Generate PDF ${outputname}.doc.pdf from XSL:FO</echo>
+    <fop format="application/pdf"
+      fofile="${outputname}.doc.fo"
+      outfile="${outputname}.doc.fo.pdf" />
   </target>
 
   <target name="docepub" depends="compileodd">

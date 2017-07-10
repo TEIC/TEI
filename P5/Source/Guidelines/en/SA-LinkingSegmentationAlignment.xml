@@ -536,7 +536,7 @@ the pointing can be accomplished absolutely (using the entire address
 of the target document) or relatively (using an address relative to
 the current base URI in force). The <soCalled>current base
 URI</soCalled> is defined according to <ref target="#XMLBASE">Marsh
-2001</ref>. If there is none, the base URI is that of the current
+and Tobin 2009</ref>. If there is none, the base URI is that of the current
 document.  In common practice the current base URI in force is likely
 to be the value of the <att>xml:base</att> attribute of the closest
 ancestor that has one. However this may not be the case, since
@@ -564,7 +564,7 @@ to point to a local document:
   </figure></egXML> 
 
 Since no <att>xml:base</att> is specified here, the location of the resource
-<ident type="file">Figures/compic.png</ident> is determined relative to the
+  <ident type="file">Images/compic.png</ident> is determined relative to the
 resource indicated by the current base URI, which is the current
 document.
 </p>
@@ -582,45 +582,19 @@ required is then identified by means of a relative URI:
   <!-- ... -->
 </div></egXML></p>
 <p>As noted above, the current base URI is found on the nearest
-ancestor. This provides a useful way of abbreviating URIs within a
-given scope:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><body>
-  <div n="A">
-    <p>The base URI here is the current document. A URI such as
-    <code>a.xml</code> is equivalent to
-    <code>./a.xml</code>.</p>
-  </div>
-  <div n="B" xml:base="http://www.example.org/">
-    <p>The base URI here is
-    <code>http://www.example.org/</code>. A
-    URI such as <code>a.xml</code> is equivalent to
-    <code>http://www.example.org/a.xml</code>.</p>
-  </div>
-  <div n="C" xml:base="ftp://ftp.example.net/mirror/">
-    <p>The base URI here is
-    <code>ftp://ftp.example.net/mirror/</code>. A URI such
-    as
-    <code>a.xml</code> is equivalent to
-    <code>ftp://ftp.example.net/mirror/a.xml</code>.</p>
-  </div>
-  <div n="D">
-    <p>The base URI here is the current document. A URI such as
-    <code>a.xml</code> is equivalent to
-    <code>./a.xml</code>.</p>
-  </div>
-</body></egXML>
+ancestor. It is technically possible to use <att>xml:base</att> as a means to shorten URIs, but
+this usage is not recommended. <ref target="#SAPU">Abbreviated pointers</ref> provide a more
+flexible and consistent method for creating shorthand links.
 </p>
 
 
     </div>
     <div type="div3" xml:id="SABN">
 <head>Pointing Locally</head>
-<p>Because the  default base  URI is the  current document,  a pointer
-that is specified as a <term>bare name</term> fragment identifier<note
-place="bottom">In  more recent  W3C documents,  the  term <soCalled>bare
-name</soCalled>  is   deprecated  in  favour  of   the  more  explicit
-<term>shorthand  pointer</term>.</note>alone acts as  a pointer  to an
-element in the current document,  as in the following example.  <egXML
+<p>A <term>shorthand pointer</term>, in which the URI consists only of
+<code>#</code> followed by the value of an <att>xml:id</att> acts as a
+pointer to the element in the current document with that <att>xml:id</att>, 
+as in the following example.  <egXML
 xmlns="http://www.tei-c.org/ns/Examples" source="#SA-eg-01"><div
 type="section" xml:id="sect106"><!-- ... --></div>
 <div type="section" n="107" xml:id="sect107">
@@ -662,7 +636,7 @@ chapter and elsewhere in these Guidelines. </p>
     <div type="div3" xml:id="SAPU">
       <head>Using Abbreviated Pointers</head>
       
-      <p><att>xml:base</att> is a useful way of handling the repeated use of long external URIs. However, it is less convenient when your text contain many references to a variety of different sources in different locations. Even in the case of relative links on the local file system, <att>ref</att> or <att>target</att> attributes may become quite lengthy and make XML code difficult to read. To deal with this problem, the TEI provides a useful method of using abbreviated pointers and documenting a way to dereference them automatically.</p>
+      <p>Even in the case of relative links on the local file system, <att>ref</att> or <att>target</att> attributes may become quite lengthy and make XML code difficult to read. To deal with this problem, the TEI provides a useful method of using abbreviated pointers and documenting a way to dereference them automatically.</p>
       
       <p>Imagine a project which has a large collection of XML documents organized like this:</p>
       
@@ -1210,47 +1184,11 @@ actual string including a dollar sign followed by a digit that is
 not supposed to be replaced, the dollar sign should be written
 as <code>$$</code>. Implementations must convert <code>$$</code> 
 to <code>$</code> during processing.</p>
-<!--<p>A TEI application
-encounters a canonical reference, for example <egXML
-xmlns="http://www.tei-c.org/ns/Examples">This story is continued
-in <ptr cRef="Matt 5:7" decls="#biblical"/>.</egXML> and wants
-to be able to convert it to a standard URI Reference that
-corresponds to <q>Matt 5:7</q>.</p>
-  <p>The application first follows the URI in the
-  <ident>decls</ident> attribute, which points to a
-  <gi>refsDecl</gi> element in the local document or a remote
-  document<note place="bottom" resp="#sdb">As with other elements
-  in the <ident type="class">tei.delcarable</ident> class, the
-  default is the <gi>refsDecl</gi> in the <gi>teiHeader</gi> of
-  the current document; or, if there are more than one
-  <gi>refsDecl</gi>s, the one that has a <val>yes</val> value
-  specified for the <att>default</att> attriubte.</note> Within
-  that declaration (see example above), it refers to the list of
-  <gi>cRefPattern</gi>s, and for each pattern in the order
-  specified, applies the regular expression found on the
-  <att>matchPattern</att> attribute to the reference <q>Matt 5:7</q>.</p>
-  <p>If
-  the first regular expression matches, it applies the matched
-  substrings (in this case, <q>Matt</q>, <q>5</q>, and <q>7</q>)
-  to the string in the <att>replacementPattern</att> attribute of that
-  <gi>cRefPattern</gi> element, substituting the first
-  matched substring for $1, the second for $2, and so on, to
-  produce an absolute or relative URI. In the case that a
-  relative URI is produced, it is relative to whatever
-  <att>xml:base</att> is in force for the pointer itself, i.e.
-  the <gi>ptr</gi> or <gi>ref</gi> element that bore the
-  <att>cRef</att> attripte.</p>
-  <p>If the regular expression in the first
-  <gi>cRefPattern</gi> element does not match, the regular
-  expression in the second <gi>cRefPattern</gi> element is
-  tried, and so on.</p> -->
 <div type="div4" xml:id="SACRWE">
   <head>Worked Example</head>
   <p>Let us presume that with the example <gi>refsDecl</gi>
   above, an application comes across a <att>cRef</att> value of
-  <val>Matt 5:7</val> inside a <gi>div</gi> which has an
-  <att>xml:base</att> of
-  <val>http://www.example.org/resources/books/Bible.xml</val>. The
+  <val>Matt 5:7</val>. The
   application would first apply the regular expression
   <code>(.+) (.+):(.+)</code> to <q>Matt 5:7</q>. This regular
   expression would successfully match. The first matched
@@ -1258,10 +1196,7 @@ corresponds to <q>Matt 5:7</q>.</p>
   third <q>7</q>. The application would then apply these
   substrings to the pattern
   <code>#xpath(//div[@n='$1']/div[$2]/div[$3])</code>, producing
-  <code>#xpath(//div[@n='Matt']/div[5]/div[7])</code>. It would
-  append this to the <att>xml:base</att> in force, thus
-  generating the complete URI Reference
-  <code>http://www.example.org/resources/books/Bible.xml#xpath(//div[@n='Matt']/div[5]/div[7])</code>.
+  <code>#xpath(//div[@n='Matt']/div[5]/div[7])</code>.
   </p>
   <p>If, however, the input string had been <q>Matt 5</q>, the
   first regular expression would not have matched. The
@@ -1270,16 +1205,13 @@ corresponds to <q>Matt 5:7</q>.</p>
   substrings <q>Matt</q> and <q>5</q>. It would then have
   substituted those matched substrings into the pattern
   <code>#xpath(//div[@n='$1']/div[$2])</code> to produce a
-  fragment identifier, which when appended to the
-  <att>xml:base</att> in force produces the absolute URI
-  reference 
-  <code>http://www.example.org/resources/books/Bible.xml#xpath(//div[@n='Matt']/div[5])</code>.</p>
+  fragment identifier indicating the referenced element.</p>
   <p>If the input string had been <q>Matt</q>, neither the first
     nor the second regular expressions would have successfully
     matched. The application would have then tried the third,
     <code>(.+)</code>, producing the matched substring <q>Matt</q>,
     and the URI Reference
-    <code>http://www.example.org/resources/books/Bible.xml#xpath(//div[@n='Matt'])</code>.</p>
+    <code>#xpath(//div[@n='Matt'])</code>.</p>
   <p>a <gi>cRefPattern</gi> should not reference more matched substrings. For example:
     <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><cRefPattern matchPattern="(.+) (.+):(.+)" replacementPattern="//div[@n='$1']/div[$2]/div[$3]/p[$4]"/></egXML>
     is faulty, since only three matched
@@ -1289,8 +1221,7 @@ corresponds to <q>Matt 5:7</q>.</p>
 <div type="div4" xml:id="SACRex">
   <head>Complete and Partial URI Examples</head>
   <p>In the above example, the value of <att>cRef</att> was used
-  to generate a Fragment Identifier, which in turn was used to
-  generate a complete URI. The complete URI could be generated
+  to generate a Fragment Identifier. An absolute URI could be generated
   directly, as in the following example.
     <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
     <refsDecl xml:id="USC">
@@ -2389,6 +2320,8 @@ aggregation of parts, and the <gi>joinGrp</gi> for grouping
 <att>prev</att>; each of these attributes has a single identifier as its
 value:
 <specList><specDesc key="att.global.linking" atts="next prev"/></specList></p>
+<p>It is recommended that the elements indicated by these attributes be of the same type as the element bearing them.</p>
+  
 <p>The <gi>join</gi> element is also a member of the class of <ident type="class">att.pointing</ident> elements, and so may carry any of the
 attributes of that class; for the list, see section <ptr target="#SAPT"/>.</p>
 <p>Here is the material on which we base our first illustration of the

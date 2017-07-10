@@ -6,12 +6,9 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-
-
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="DI" n="12">
-<head>Dictionaries</head>
+  <head>Dictionaries</head>
 
 <p>This chapter defines a module for encoding lexical resources of all
 kinds, in particular human-oriented
@@ -1452,7 +1449,7 @@ a bibliographic reference to its source.<specList>
 </specList>
 </p>
 <p>Examples frequently abbreviate the headword, and so their transcription will
-frequently make use of the <gi>oRef</gi> or <gi>oVar</gi> elements described
+frequently make use of the <gi>oRef</gi> element described
 below in section <ptr target="#DIHW"/>. </p>
 <p>Examples:<q rend="display">
 <hi rend="bold">multiplex</hi>
@@ -2071,8 +2068,6 @@ orthographic form or to the pronunciation, to the form given or to a variant of 
 form. The following elements are used to encode such iconic references to a headword:<specList>
 <specDesc key="oRef" atts="type"/>
 <specDesc key="pRef"/>
-<specDesc key="oVar" atts="type"/>
-<specDesc key="pVar"/>
 </specList>
 </p>
 <p>These elements all inherit the following attributes from the class <ident type="class">att.pointing</ident>
@@ -2198,9 +2193,9 @@ a specific form of the headword:<q rend="display">
 <def>vagus nerve</def>
 <cit type="example">
 <quote>
-<oRef target="#di-o1" type="nohyph"/>al</quote>
+<oRef target="#di-o1" type="noHyph"/>al</quote>
 <quote>
-<oRef target="#di-o2" type="nohyph"/>tomy</quote>
+<oRef target="#di-o2" type="noHyph"/>tomy</quote>
 </cit>
 </entry>
 </egXML>
@@ -2287,13 +2282,13 @@ a specific form of the headword:<q rend="display">
 </p>
 <p>In many cases the reference is not to the orthographic form of the headword, but rather
 to another form of the headword—usually to an inflected form. In these cases, the
-element <gi>oVar</gi> should be used; this element takes as its content the string as it
+element <gi>oRef</gi> should be used; this element may take as its content the string as it
 appears in the text.<q rend="display">
 <hi rend="bold">take</hi> … &lt; Mr Burton <hi rend="bold">took</hi> us for
 French &gt; <ref target="#DIC-NPEG">NPEG</ref> </q>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <cit type="example">
-<quote>Mr Burton <oVar type="pt">took</oVar> us for French</quote>
+<quote>Mr Burton <oRef type="pt">took</oRef> us for French</quote>
 </cit>
 </egXML>
 <q rend="display">
@@ -2301,8 +2296,7 @@ French &gt; <ref target="#DIC-NPEG">NPEG</ref> </q>
 &gt; <ref target="#DIC-NPEG">NPEG</ref> </q>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <cit type="example">
-<quote>was quite <oVar type="pp">
-<oRef/>n</oVar> with him</quote>
+<quote>was quite <oRef type="pp"><oRef/>n</oRef> with him</quote>
 </cit>
 </egXML>
 </p>
@@ -2315,14 +2309,14 @@ that module be selected in addition to that for dictionaries.<q rend="display">
 <hi rend="bold">mix up</hi>… &lt; it's easy to <hi rend="bold">mix</hi> her <hi rend="bold">up</hi> with her sister &gt; <ref target="#DIC-NPEG">NPEG</ref> </q>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <cit type="example">
-<quote>it's easy to <oVar next="#ov2" xml:id="ov1">mix</oVar> 
-her <oVar prev="#ov1" xml:id="ov2">up</oVar> with her sister</quote>
+<quote>it's easy to <oRef next="#ov2" xml:id="ov1">mix</oRef> 
+her <oRef prev="#ov1" xml:id="ov2">up</oRef> with her sister</quote>
 </cit>
 </egXML>
 </p>
 <p>In addition, some dictionaries make reference to the pronunciation of the headword in the
 pronunciation of related entries, variants, or examples. The <gi>pRef</gi>
-and <gi>pVar</gi> elements should be used for such references.<q rend="display">
+element should be used for such references.<q rend="display">
 <hi rend="bold">hors d'oeuvre</hi>
 <code lang="ipa">/,aw'duhv </code> (Fr O:r dœvr)/ n, pl hors d'oeuvres also hors
 d'oeuvre <code lang="ipa">/'duhv(z) </code> (Fr ~)/ <ref target="#DIC-NPEG">NPEG</ref> </q>
@@ -2350,85 +2344,21 @@ d'oeuvre <code lang="ipa">/'duhv(z) </code> (Fr ~)/ <ref target="#DIC-NPEG">NPEG
 </egXML>
 </p>
 <p>Because headword and pronunciation references can occur virtually anywhere in an entry,
-the <gi>oRef</gi>, <gi>oVar</gi>, <gi>pRef</gi>, and <gi>pVar</gi> elements can appear
-within any other element defined for dictionary entries. </p>
+the <gi>oRef</gi> and <gi>pRef</gi> elements may appear
+within any other element defined for dictionary entries.</p>
 <p>Since existing printed dictionaries use different conventions for headword references
 (swung dash, first letter abbreviated form, capitalization, or italicization of the word,
-etc.) the exact method used should be documented in the header. </p>
+etc.) the exact method used should be documented in the header.</p>
 
 <specGrp xml:id="DEDIHW" n="Classes for headword references">
-
-
-
-
-
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.ptrLike.form.xml"/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.ptrLike.form.xml"/>
 </specGrp>
 
 <specGrp xml:id="DDIHW" n="Headword references">
-
-
-
-
-
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/oRef.xml"/>
-
-
-
-
-
-
-
-
-
-
-
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/oVar.xml"/>
-
-
-
-
-
-
-
-
-
-
-
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/pRef.xml"/>
-
-
-
-
-
-
-
-
-
-
-
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/pVar.xml"/>
-
-
-
-
-
+  <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/oRef.xml"/>
+  <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/oVar.xml"/> <!--remove 2017-08-24-->
+  <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/pRef.xml"/>
+  <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/pVar.xml"/> <!--remove 2017-08-24-->
  </specGrp>
 
 </div>
