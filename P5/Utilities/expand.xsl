@@ -130,6 +130,10 @@ identity transform
 	    select="$v"/></ref>
       </xsl:when>
       <xsl:when test=".='totalElements'"><xsl:value-of select="count(distinct-values(//elementSpec/@ident))"/></xsl:when>
+      <xsl:when test=".='totalAttributes'"><xsl:value-of select="count(distinct-values(//attDef/@ident))"/></xsl:when>
+      <xsl:when test=".='totalModelClasses'"><xsl:value-of select="count(distinct-values(//classSpec[@type='model']/@ident))"/></xsl:when>
+      <xsl:when test=".='totalAttributeClasses'"><xsl:value-of select="count(distinct-values(//classSpec[@type='atts']/@ident))"/></xsl:when>
+      <xsl:when test=".='totalDataSpec'"><xsl:value-of select="count(distinct-values(//dataSpec/@ident))"/></xsl:when>
       <xsl:when test=".='tab-content-models'"><xsl:call-template name="tab-content-models"/></xsl:when>
     </xsl:choose>
   </xsl:template>
