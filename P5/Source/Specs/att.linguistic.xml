@@ -57,29 +57,42 @@ $Id$
         (i.e. information on whether it is a noun, adjective, or verb), usually according to some official reference 
         vocabulary (e.g. for German: Stuttgart-Tuebingen-Tagset [STTS], for English: CLAWS, for Polish: NKJP, etc.).</desc>
       <datatype><dataRef key="teidata.text"/></datatype>
- <!--     <exemplum versionDate="2017-03-20" xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <w pos="vvz" xmlns="">is</w>
-        </egXML>
-      </exemplum>
       <exemplum xml:lang="en">
+        <p>The German sentence <q>Wir fahren in den Urlaub</q> tagged with the Stuttgart-Tuebingen-Tagset [STTS].</p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <w msd="vvg" xmlns="">taking</w>
+          <p xmlns="">
+            <w pos="PPER">Wir</w>
+            <w pos="VVFIN">fahren</w>
+            <w pos="APPR">in</w>
+            <w pos="ART">den</w>
+            <w pos="NN">Urlaub</w></p>
         </egXML>
       </exemplum>
-      <exemplum versionDate="2017-03-20" xml:lang="en">
+      
+      <exemplum xml:lang="en">
+        <p>The English sentence <q>We're going on vacation</q> tagged with the CLAWS-5 tagset, arranged sequentially.</p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <w pos="NN" xmlns="">Universitäten</w>
-        </egXML>
-      </exemplum>-->
-      <exemplum versionDate="2017-03-20" xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <w pos="VVFIN" xmlns="">fragte</w>
+          <p xmlns="">
+            <w pos="PNP">We</w>
+            <w pos="VBB">'re</w>
+            <w pos="VVG">going</w>
+            <w pos="PRP">on</w>
+            <w pos="NN1">vacation</w></p>
         </egXML>
       </exemplum>
+
+      <exemplum xml:lang="en">
+        <p>The English sentence <q>We're going on vacation to Brazil for a month</q> tagged with the CLAWS-7 tagset and arranged inline (with significant whitespace).</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <p xmlns=""><w pos="PPIS2">We</w><w pos="VBR">'re</w> <w pos="VVG">going</w> <w pos="II">on</w> <w pos="NN1">vacation</w> <w pos="II">to</w><w pos="NP1">Brazil</w><w pos="IF">for</w><w pos="AT1">a</w><w pos="NNT1">month</w></p>
+        </egXML>
+      </exemplum>
+      
+<!--
+We_PPIS2 're_VBR going_VVG on_II vacation_NN1 to_II Brazil_NP1 for_IF a_AT1 month_NNT1 !_! 
+-->      
     </attDef>
     <attDef ident="msd" usage="opt">
-      <!-- SH: further (English) examples would be good; which would be a suitable reference vocabulary for English? -->
       <desc versionDate="2005-10-10" xml:lang="en">(morphosyntactic description) supplies morphosyntactic information for a token, usually according to some official reference vocabulary (e.g. for German: Stuttgart-Tuebingen-Tagset [STTS] -- large tag set; for English XXX). </desc>
       <datatype><dataRef key="teidata.text"/></datatype>
       
@@ -126,18 +139,36 @@ $Id$
         <p>In cases where <gi>pc</gi> is also made a member of this class, the following illustrates the use of all the values.</p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <s xmlns="">
-            <pc glued="right">"</pc>
-            <w glued="left">Friends</w>
+            <pc join="right">"</pc>
+            <w join="left">Friends</w>
             <w>will</w>
             <w>be</w>
-            <w glued="right">friends</w>
-            <pc glued="both">.</pc>
-            <pc glued="left">"</pc>
+            <w join="right">friends</w>
+            <pc join="both">.</pc>
+            <pc join="left">"</pc>
           </s>
-          <p>Note that a project may make a decision to only indicate lack of whitespace in one
-            direction, and/or do that non-redundantly. The existing proposal is the broadest
-            possible, on the assumption that we adopt the "streamable view", where all the
-            information on the current element needs to be represented locally.</p>
+        </egXML>
+        <p>Note that a project may make a decision to only indicate lack of whitespace in one
+          direction, and/or do that non-redundantly. The existing proposal is the broadest possible,
+          on the assumption that we adopt the "streamable view", where all the information on the
+          current element needs to be represented locally. In this example, for the sake of
+          uniformity, we have assumed that <gi>pc</gi> is also a member of
+            <code>att.linguistic</code>.</p>
+      </exemplum>
+      <exemplum xml:lang="en">
+        <p>The English sentence <q>We're going on vacation.</q> tagged with the CLAWS-5 tagset,
+          arranged sequentially, tagged on the assumption that only the lack of the preceding
+          whitespace is indicated. This example assumes that <gi>pc</gi> is also a member of
+            <code>att.linguistic</code>.</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <p xmlns="">
+            <w pos="PNP">We</w>
+            <w pos="VBB" join="left">'re</w>
+            <w pos="VVG">going</w>
+            <w pos="PRP">on</w>
+            <w pos="NN1">vacation</w>
+            <pc pos="PUN" join="left">.</pc>
+          </p>
         </egXML>
       </exemplum>
     </attDef>
