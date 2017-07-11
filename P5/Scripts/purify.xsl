@@ -149,11 +149,11 @@
   <!-- ********************************************* -->
    
   <xsl:template match="datatype/rng:ref">
-    <dataRef key="{concat('tei',rng:ref/@name)}"/>
+    <dataRef key="{concat('tei',./@name)}"/>
   </xsl:template>
   
   <xsl:template match="datatype/rng:data">
-    <dataRef name="{rng:data/@type}"/>
+    <dataRef name="{./@type}"/>
   </xsl:template>
   
   <!-- ********************************************* -->
