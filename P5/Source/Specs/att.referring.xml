@@ -13,7 +13,9 @@ $Id$
 
 	<!-- the fragment *[local-name() = ('span')] is an expression of a kludge that makes it impossible
 	     at present to say "only elements that add themselves to this class" 
-	     
+
+	     see https://github.com/TEIC/TEI/issues/1417
+
 	Ideally, the sequence should be extensible automatically, but that is unfortunately currently the 
 	task of the person preparing a customization -->
 
@@ -26,7 +28,7 @@ $Id$
 			</sch:rule>
 		</constraint>
 	</constraintSpec>
-	
+
 	<constraintSpec scheme="schematron" ident="two-and-three-match-one"
 		xmlns:sch="http://purl.oclc.org/dsdl/schematron">
 		<constraint>
@@ -50,7 +52,7 @@ $Id$
 			</sch:rule>
 		</constraint>
 	</constraintSpec>
-	
+
 	<constraintSpec ident="tofrom" scheme="schematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
 <!--	originally defined in span.xml
 		this rule should be unnecessary, because the datatypes on @to and @from are independently restricted
@@ -183,6 +185,7 @@ $Id$
 				</listAnnotation>
 			</standOff>
 		</egXML>
+		<p>Segmentation information gathered above is subsequently used by all other (numerous) annotation layers.</p>
 		<p>The CoMParS ODD contains the following statements that (a) include <gi>seg</gi> into the
 			att.referring class, and (b) change the default value of the <att>referringMode</att> to
 				<val>icp</val>. The first part will hopefully be accepted by the Council together with this ticket or afterwards, while the second part is forced by the lack of a mechanism that would make attribute classes aware of the elements that belong to them. This mechanism is on the Council's to-do list.
