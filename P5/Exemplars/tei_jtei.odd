@@ -500,7 +500,7 @@
                 </item>
               </list>
             </egXML></p>
-          <p>For processing reasongs, jTEI puts one restriction on what can appear inside lists: you can't use <gi>table</gi> anywhere inside <gi>item</gi>.</p>
+          <p>For processing reasons, jTEI puts one restriction on what can appear inside lists: you can't use <gi>table</gi> anywhere inside <gi>item</gi>.</p>
         </div>
       <div xml:id="quotations">
         <head>Quotations, Inline and Block</head>
@@ -2481,14 +2481,34 @@
             </attList>
           </elementSpec>
           <elementSpec ident="note" mode="change">
-            <constraintSpec ident="jtei.sch-note" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-note-punctuation" scheme="isoschematron">
               <constraint>
                 <sch:rule context="tei:note">
-                  <sch:assert test="not(following-sibling::text()[1][matches(., '^[,\.:;!?)\]]')])">
+                  <sch:assert test="not(following::text()[not(ancestor::tei:note)][1][matches(., '^[,\.:;!?\]]')])">
                     Footnotes should follow punctuation marks, not precede them. Place 
-                    your &lt;note&gt; element after the punctuation mark.
+                    your &lt;<sch:name/>&gt; element after the punctuation mark.
                   </sch:assert>
                 </sch:rule>
+                <sch:rule context="tei:note">
+                  <sch:report test="preceding::text()[not(ancestor::tei:note)][1][matches(., '—$')]">
+                    Footnotes should precede the dash, not follow it. Place 
+                    your &lt;<sch:name/>&gt; element before the dash.
+                  </sch:report>
+                </sch:rule>
+                <sch:rule context="tei:note" role="warning">
+                  <sch:report test="not(@rend='inside.parenthesis') and following::text()[not(ancestor::tei:note)][1][matches(., '^\)')]" sqf:fix="note.rend.add">
+                    Footnotes may be placed before closing parentheses, though this is
+                    exceptionial. If this note's placement is intentional, please mark
+                    this with a @rend='inside.parenthesis' attribute. Otherwise, move
+                    it after the closing parenthesis.
+                  </sch:report>
+                  <sqf:fix id="note.rend.add">
+                    <sqf:description>
+                      <sqf:title>Add a @rend='inside.parentheses' attribute to the &lt;note&gt;.</sqf:title>
+                    </sqf:description>
+                    <sqf:add match="self::tei:note" node-type="attribute" target="rend">inside.parenthesis</sqf:add>
+                  </sqf:fix>                  
+                </sch:rule>                
               </constraint>
             </constraintSpec>
             <constraintSpec ident="jtei.sch-note-blocks" scheme="isoschematron">
@@ -3195,7 +3215,7 @@
           </constraintSpec>
           <constraintSpec ident="jtei.sch-teiVersion" scheme="isoschematron">
             <constraint>
-              <sch:rule context="@target[contains(., 'http://www.tei-c.org/release/doc/tei-p5-doc')]">
+              <sch:rule context="@target[matches(., '^https?://www\.tei-c\.org/release/doc/tei-p5-doc')]">
                 <sch:assert test="false()">
                   Please refer to the exact version of the TEI Guidelines, and link to the version that can be found in the Vault section. For an overview of all archived versions, see http://www.tei-c.org/Vault/P5/.
                   
