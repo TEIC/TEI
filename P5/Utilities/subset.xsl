@@ -39,7 +39,8 @@
 	  <xsl:apply-templates/>
 	</xsl:copy>
       </xsl:when>
-      <xsl:when test="self::elementSpec|self::macroSpec|self::classSpec|self::moduleSpec|self::dataSpec">
+      <xsl:when
+        test="self::elementSpec|self::macroSpec|self::classSpec|self::moduleSpec|self::dataSpec|self::behaviourSpec">
 	<xsl:copy-of select="."/>
       </xsl:when>
       <xsl:otherwise>
