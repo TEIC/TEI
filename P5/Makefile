@@ -1,4 +1,4 @@
-#rend="none"/> Main makefile for TEI P5
+# Main makefile for TEI P5
 # $Id$
 VCS := git
 ALLLANGUAGES=en
@@ -20,6 +20,7 @@ XSL=/usr/share/xml/tei/stylesheet
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
 SAXONJAR=saxon9he.jar
+OLDSAXONJAR=Saxon-HE-9.4.0.6.jar
 ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -q
 
 # The following will include a local (not in the repo) makefile
@@ -118,12 +119,12 @@ epub: Guidelines.epub
 
 Guidelines.epub: check.stamp p5.xml
 	@echo BUILD: Make epub version of Guidelines
-	${ANT} -f ${XSL}/epub3/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=tei -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines.epub -Dcoverimage=`pwd`/Utilities/cover.jpg
+	${ANT} -f ${XSL}/epub3/build-to.xml -lib Utilities/lib/${OLDSAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=tei -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines.epub -Dcoverimage=`pwd`/Utilities/cover.jpg
 	java -jar Utilities/epubcheck3.jar Guidelines.epub
 	touch Guidelines.epub
 
 epub3: check.stamp p5.xml
-	${ANT}  -f ${XSL}/epub3/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=tei -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines.epub -Dcoverimage=`pwd`/Utilities/cover.jpg
+	${ANT}  -f ${XSL}/epub3/build-to.xml -lib Utilities/lib/${OLDSAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=tei -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines.epub -Dcoverimage=`pwd`/Utilities/cover.jpg
 	java -jar Utilities/epubcheck3.jar Guidelines.epub
 
 mobi:  Guidelines.mobi
