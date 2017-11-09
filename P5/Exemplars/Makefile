@@ -22,7 +22,8 @@ ODDSJUSTRELAX=	isofs.rng \
 	tei_its.rng \
 	tei_math.rng \
 	tei_jtei.rng \
-	tei_odds.rng
+	tei_odds.rng \
+	tei_customization.rng
 
 DOCONLYODDS=tei_lite_fr.doc.epub
 
@@ -93,6 +94,13 @@ docschemas: $(DOCODDS) $(DOCONLYODDS)
 	-test -f tite.xsd && mv tite.xsd $*_tite.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*_tite.xsd && perl -p -i -e "s/tite.xsd/$*_tite.xsd/" $*.xsd
 	@echo Validate XSD using Jing ...
 	${JING} $*.xsd $*.tei
+
+tei_customization.odd: ../Utilities/TEI_to_odd4odds.xslt ../p5subset.xml
+#	Note that the "../p5subset.xml" in above line is the same as the definition
+#	of ${SOURCE}, but you can't use a variable as prerequisite (at least, it
+#	didn't work for me. :-)  Syd, 2017-11-05
+	@echo generating tei_customization.odd from p5subset
+	$(SAXON) -s:${SOURCE} -xsl:../Utilities/TEI_to_odd4odds.xslt -o:tei_customization.odd
 
 dist: schemas docschemas
 	rm -rf tei[0-9]*.xml ../release/tei-p5-exemplars

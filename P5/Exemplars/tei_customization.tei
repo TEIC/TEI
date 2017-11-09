@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en" version="3.1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>5PEML</title>
+        <title type="expanded">Five-paragraph Essay Markup Language</title>
+        <author>Syd Bauman</author>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>TEI-C</publisher>
+      </publicationStmt>
+      <sourceDesc><p>born digital</p></sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <head>The Five-paragraph Essay Markup Language</head>
+      <p>This eccentric little language is not really designed
+      for the encoding of five-paragraph essays, but rather as
+      a demonstration of TEI customization.</p>
+      <schemaSpec ident="fivepara" prefix="fiveP" docLang="en" targetLang="en">
+        <desc>Tiny little example TEI customization</desc>
+        <moduleRef key="tei"/>
+        <moduleRef key="core" include="abbr addrLine address author bibl biblScope biblStruct cit citedRange date distinct editor email emph foreign gloss graphic head headItem headLabel hi item l label lg list listBibl measure measureGrp mentioned name note num p postBox postCode ptr pubPlace publisher q quote ref relatedItem resp respStmt rs said sic soCalled street term time title"/>
+        <moduleRef key="header" include="authority availability biblFull change distributor edition editionStmt fileDesc funder idno licence notesStmt principal profileDesc projectDesc publicationStmt rendition revisionDesc schemaRef sourceDesc sponsor teiHeader titleStmt"/>
+        <moduleRef key="textstructure" include="TEI back body byline dateline div epigraph floatingText front text trailer"/>
+        <elementSpec ident="body" module="textstructure" mode="change">
+          <content>
+            <sequence>
+              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+              <classRef key="model.headLike" minOccurs="1" maxOccurs="1"/>
+              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+              <sequence minOccurs="5" maxOccurs="5">
+                <elementRef key="p" minOccurs="1" maxOccurs="1"/>
+                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+              </sequence>
+            </sequence>
+          </content>
+        </elementSpec>
+      </schemaSpec>
+    </body>
+  </text>
+</TEI>
