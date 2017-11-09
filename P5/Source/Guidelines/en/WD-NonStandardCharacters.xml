@@ -881,20 +881,18 @@ have weak or neutral settings because they may appear in several
 contexts. </p>
 
 <p>The Unicode Bidirectional Algorithm (<ref target="#WDBIDI">Unicode
-Consortium, 2013</ref>)
+Consortium, 2017</ref>)
  defines a number of
 rules enabling software to render sequences of characters which have
 differing directionality properties in a predictable and reliable way,
 using only those properties. <note place="foot"> Because this
 algorithm may not always give the desired result, Unicode also
 provides a set of "directional formatting characters" (<ptr
-target="http://www.unicode.org/reports/tr9/#Directional_Formatting_Codes"/>). These
+  target="http://www.unicode.org/reports/tr9/#Directional_Formatting_Characters"/>). These
 additional codepoints can be used to signal to rendering software that
 a specific directionality setting should be turned on or off. However,
-in the case of documents encoded in XML, there is no need to use such
-characters, and in fact the W3C explicitly advises against it. "In
-(X)HTML and XML do not use the paired Unicode bidi formatting code
-characters where equivalent markup is available." (<ptr
+in the case of documents encoded in XML, there is generally no need to use such
+characters, and the W3C advises against it unless markup is unavailable. (<ptr
 target="http://www.w3.org/International/questions/qa-bidi-controls"/>)</note>. It
 should be remembered however that individual sequences of characters
 are always stored in a file in the order in which they should be read,
@@ -913,7 +911,7 @@ explicitly in their encoding, we recommend using the global @style
 attribute to supply detail about the writing mode applicable to the
 content of any element. The <att>style</att> attribute (discussed in 
 <ptr target="#STGAre"/>) permits use of any formatting language; for
-these purposes however, we recommend use of CSS, which now includes a
+these purposes however, we recommend use of CSS, which  includes a
 Writing Modes module <note place="foot"> At the time of writing, this
 W3C module has the status of a candidate recommendation: see further
 <ptr target="#CSSWM"/> <!--
