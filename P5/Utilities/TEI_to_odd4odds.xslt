@@ -1396,7 +1396,7 @@
               
               <classSpec ident="att.global" module="tei" mode="change" type="atts">
                 <attList>
-                  <attDef ident="xml" mode="change" ns="http://www.w3.org/XML/1998/namespace">
+                  <attDef ident="id" mode="change" ns="http://www.w3.org/XML/1998/namespace">
                     <constraintSpec scheme="schematron" ident="unique_xmlIDs">
                       <constraint>
                         <sch:let name="myID" value="normalize-space(.)"/>
