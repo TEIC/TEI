@@ -1,7 +1,7 @@
 # Main makefile for TEI P5
 # $Id$
 VCS := git
-ALLLANGUAGES=en
+ALLLANGUAGES=en de fr
 LANGUAGE=en
 INJENKINS=false
 INPUTLANGUAGE=en
