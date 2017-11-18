@@ -50,6 +50,21 @@
   <property name="listgraphics" value="${XSL}/tools/makegraphicsanttask.xsl"/>
   <dirname property="inputDir" file="${oddFile}"/>
   <property name="outputTempDir" value="${inputDir}/temp-dir-for-ant"/>
+  <!-- Syd, 2017-11-09: -->
+  <!-- Need to be able to run RELAX NG with the ID/IDREF checking feature -->
+  <!-- turned off in order to generate the tei_customization schema.      -->
+  <condition property="DTDcompat">
+    <!-- I am sure direct comparison of a filename is not the right way -->
+    <!-- to do this, but don't have time right now. Probably the option -->
+    <!-- should be passed in from the calling routine, rather than      -->
+    <!-- calculated here, anyway.    —Syd, 2017-11-09                   -->
+    <not>
+      <or>
+        <contains string="${oddFile}"  substring="tei_customization"/>
+        <contains string="${testfile}" substring="tei_customization"/>
+      </or>
+    </not>
+  </condition>
   
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
@@ -156,22 +171,7 @@
       <arg value="${outputname}.rnc"/>
     </java>
   </target>
-  <!-- Syd, 2017-11-09: -->
-  <!-- Need to be able to run RELAX NG with the ID/IDREF checking feature -->
-  <!-- turned off in order to generate the tei_customization schema.      -->
-  <condition property="DTDcompat">
-    <!-- I am sure direct comparison of a filename is not the right way -->
-    <!-- to do this, but don't have time right now. Probably the option -->
-    <!-- should be passed in from the calling routine, rather than      -->
-    <!-- calculated here, anyway.    —Syd, 2017-11-09                   -->
-    <not>
-      <or>
-        <contains string="${oddFile}"  substring="tei_customization"/>
-        <contains string="${testfile}" substring="tei_customization"/>
-      </or>
-    </not>
-  </condition>
-  <target name="validateodd" unless="DTDcompat">
+  <target name="validateodd">
     <echo level="info">Validate ${oddFile} as ODD </echo>
     <runjing rngfile="../p5odds.rng" file="${oddFile}" checkid="${DTDcompat}"/>
     <xslt processor="trax" 
@@ -184,7 +184,8 @@
   </target>
   <target name="validaterng">
     <echo level="info">Validate ${testfile} against RELAXNG ${outputname}.rng</echo>
-    <runjing rngfile="${outputname}.rng" file="${testfile}" checkid="${DTDcompat}"/>
+    <echo level="info">DEBUG: ... checkid= ${DTDcompat} (false)</echo>
+    <runjing rngfile="${outputname}.rng" file="${testfile}" checkid="false"/>
   </target>
   <target name="validatesecondrng">
     <echo level="info">Validate ${testfile2} against RELAXNG ${outputname}.rng</echo>
