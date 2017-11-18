@@ -13,28 +13,28 @@ $Id$
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="DS" n="7">
 <head>Default Text Structure</head>
 <p>This chapter describes the default high-level structure for TEI
-documents. A full TEI document combines metadata describing
-it, represented by a <gi>teiHeader</gi> element, with the document
-itself, represented by either a <gi>text</gi> element or
-one or more other elements taken from the
-<ident>model.resourceLike</ident> class, or the two in
-combination. This group of elements makes up a <gi>TEI</gi> element. The <gi>teiHeader</gi> element
-is specified by the <ident type="module">header</ident> module, which is fully
-described in chapter <ptr target="#HD"/>. The remainder of the present
-chapter describes the <gi>text</gi> element and its high-level
-constituents. </p>
+documents. A full TEI document combines metadata describing it,
+represented by a <gi>teiHeader</gi> element, with the document itself,
+represented by one or more <gi>text</gi> elements or other elements
+taken from the <ident>model.resourceLike</ident> class. This group of
+elements makes up a <gi>TEI</gi> element. The <gi>teiHeader</gi>
+element is specified by the <ident type="module">header</ident>
+module, which is fully described in chapter <ptr target="#HD"/>. The
+remainder of the present chapter describes the <gi>text</gi> element
+and its high-level constituents.</p>
 
 <p>A variant on this basic form, the <gi>teiCorpus</gi>, is also
 defined for the representation of language corpora, or other
-collections of encoded texts. A <gi>teiCorpus</gi> consists of one or
-more complete <gi>TEI</gi> elements, each combining a
-<gi>teiHeader</gi> and a <gi>text</gi> which itself carries a
-<gi>teiHeader</gi>. This permits the encoder to distinguish metadata
-applicable to the whole collection of encoded texts, which is
-represented by the outermost <gi>teiHeader</gi>, from that applicable
-to each of the individual <gi>TEI</gi> elements within the
-corpus. Further information about the organization and encoding of
-language corpora is given in chapter <ptr target="#CC"/>. </p>
+collections of encoded texts. A <gi>teiCorpus</gi> consists of its own
+metadata in a <gi>teiHeader</gi>, followed by one or more complete
+<gi>TEI</gi> elements, each combining a <gi>teiHeader</gi> with one or
+more elements from the <ident>model.resourceLike</ident> class. This
+permits the encoder to distinguish metadata applicable to the whole
+collection of encoded texts, which is represented by the outermost
+<gi>teiHeader</gi>, from that applicable to each of the individual
+<gi>TEI</gi> elements within the corpus. Further information about the
+organization and encoding of language corpora is given in chapter <ptr
+target="#CC"/>.</p>
 
 <p>In summary, when the default structure module is included in a
 schema, the following elements are available for the
@@ -56,26 +56,23 @@ however, this class is not populated and hence only the elements
 as major parts of a TEI document. These three elements are
 provided by the <ident type="module">textstructure</ident> module
 described by the present chapter.
+
 <specGrp xml:id="DCOTOPELEMENTS">
-
-
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/TEI.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teiCorpus.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/text.xml"/>
 </specGrp>
 </p>
 
-
 <p>TEI texts may be regarded either as <term>unitary</term>, that is,
 forming an organic whole, or as <term>composite,</term> that is,
 consisting of several components which are in some important sense
-independent of each other.  The distinction is not always entirely
-obvious:  for example a collection of essays might be regarded as a
+independent of each other. The distinction is not always entirely
+obvious: for example a collection of essays might be regarded as a
 single item in some circumstances, or as a number of distinct items in
-others.  In such borderline cases, the encoder must choose whether to
+others. In such borderline cases, the encoder must choose whether to
 treat the text as unitary or composite; each may have advantages and
-disadvantages in a given situation.
- </p>
+disadvantages in a given situation.</p>
 
 <p>Whether unitary or composite, the text is marked with the
 <gi>text</gi> tag and may contain front matter, a text body, and back
