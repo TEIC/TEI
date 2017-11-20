@@ -23,7 +23,9 @@ ODDSJUSTRELAX=	isofs.rng \
 	tei_math.rng \
 	tei_jtei.rng \
 	tei_odds.rng \
-	tei_customization.rng
+
+# Odds just relax, no check ID/IDREF
+ODDSJRNCID= tei_customization.rng
 
 DOCONLYODDS=tei_lite_fr.doc.epub
 
@@ -42,7 +44,7 @@ ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -lib ../Utilities/li
 
 default: schemas
 
-schemas: $(NORMALODDS) $(ODDSJUSTRELAX) $(SPECIALODDS) $(ADDITIONALXSDS)
+schemas: $(NORMALODDS) $(ODDSJUSTRELAX) $(SPECIALODDS) $(ADDITIONALXSDS) $(ODDSJRNCID)
 	echo Done
 
 docschemas: $(DOCODDS) $(DOCONLYODDS)
@@ -56,8 +58,14 @@ docschemas: $(DOCODDS) $(DOCONLYODDS)
 	${TRANG} $*.rng $*.rnc
 
 %.rng: %.odd
+	@echo debug: run lots of stuff via Test/antruntest, normal
 	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd dtd rng validaterng  isoschematron validateschematron cleanup
 	${TRANG}  $*.rng $*.rnc
+
+tei_customization.rng: tei_customization.odd
+	@echo debug: run lots of stuff via Test/antruntest, DTDcompat=false
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=tei_customization -Dtestfile=tei_customization.tei -DoddFile=tei_customization.odd -DDTDcompat=false validateodd compileodd dtd rng validaterng  isoschematron validateschematron cleanup
+	${TRANG} tei_customization.rng tei_customization.rnc
 
 %.dtd: %.odd
 	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng dtd exampleschema isoschematron validateschematron cleanup
