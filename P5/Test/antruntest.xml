@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project basedir="." default="dist" name="testtei">
   <!--
-	This library is free software; you can redistribute it and/or
-	modify it under the terms of the GNU Lesser General Public
-	License as published by the Free Software Foundation; either
-	version 2.1 of the License, or (at your option) any later version.
-	
-	This library is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-	Lesser General Public License for more details.
-	
-	You should have received a copy of the GNU Lesser General Public
-	License along with this library; if not, write to the Free Software
-	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-	
+        This library is free software; you can redistribute it and/or
+        modify it under the terms of the GNU Lesser General Public
+        License as published by the Free Software Foundation; either
+        version 2.1 of the License, or (at your option) any later version.
+        
+        This library is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+        Lesser General Public License for more details.
+        
+        You should have received a copy of the GNU Lesser General Public
+        License along with this library; if not, write to the Free Software
+        Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+        
         Id: $Id$
         Copyright: 2011, TEI Consortium<
 -->
@@ -50,6 +50,21 @@
   <property name="listgraphics" value="${XSL}/tools/makegraphicsanttask.xsl"/>
   <dirname property="inputDir" file="${oddFile}"/>
   <property name="outputTempDir" value="${inputDir}/temp-dir-for-ant"/>
+  <!-- Syd, 2017-11-09: -->
+  <!-- Need to be able to run RELAX NG with the ID/IDREF checking feature -->
+  <!-- turned off in order to generate the tei_customization schema.      -->
+  <condition property="DTDcompat">
+    <!-- I am sure direct comparison of a filename is not the right way -->
+    <!-- to do this, but don't have time right now. Probably the option -->
+    <!-- should be passed in from the calling routine, rather than      -->
+    <!-- calculated here, anyway.    —Syd, 2017-11-09                   -->
+    <not>
+      <or>
+        <contains string="${oddFile}"  substring="tei_customization"/>
+        <contains string="${testfile}" substring="tei_customization"/>
+      </or>
+    </not>
+  </condition>
   
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
@@ -158,18 +173,19 @@
   </target>
   <target name="validateodd">
     <echo level="info">Validate ${oddFile} as ODD </echo>
-    <runjing rngfile="../p5odds.rng" file="${oddFile}"/>
+    <runjing rngfile="../p5odds.rng" file="${oddFile}" checkid="${DTDcompat}"/>
     <xslt processor="trax" 
-	  force="yes" 
-	  style="../p5odds.message.isosch.xsl"
-	  in="${oddFile}" 
-	  out="/dev/null">
+          force="yes" 
+          style="../p5odds.message.isosch.xsl"
+          in="${oddFile}" 
+          out="/dev/null">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
   </target>
   <target name="validaterng">
     <echo level="info">Validate ${testfile} against RELAXNG ${outputname}.rng</echo>
-    <runjing rngfile="${outputname}.rng" file="${testfile}" checkid="true"/>
+    <echo level="info">DEBUG: ... checkid= ${DTDcompat} (false)</echo>
+    <runjing rngfile="${outputname}.rng" file="${testfile}" checkid="false"/>
   </target>
   <target name="validatesecondrng">
     <echo level="info">Validate ${testfile2} against RELAXNG ${outputname}.rng</echo>
@@ -185,7 +201,7 @@
     <echo level="info">TRANG generate XSD from RELAXNG files</echo>
     <java classname="com.thaiopensource.relaxng.translate.Driver" fork="no">
       <!-- Even though the output type is inferred from the output file extension,
-	   make sure it's the right one. -->
+           make sure it's the right one. -->
       <classpath location="${trang}"/>
       <arg value="-O"/>
       <arg value="xsd"/>
@@ -355,7 +371,7 @@
     <echo level="info">ZIP: put files from ${outputTempDir} together into ${outputname}.doc.epub</echo>
     <delete file="${outputname}.doc.epub"/>
     <zip destfile="${outputname}.doc.epub" basedir="${outputTempDir}"
-	 compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
+         compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
     <zip destfile="${outputname}.doc.epub" basedir="${outputTempDir}" includes="mimetype" update="true" keepcompression="true" compress="false"/>
   </target>
 
