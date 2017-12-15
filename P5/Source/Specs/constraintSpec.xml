@@ -40,16 +40,15 @@ $Id$
     <desc>Relationship between scheme attribute and contents: ISO Schematron</desc>
     <constraint>
       <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
-      <sch:report test="tei:constraint/sch:*  and  not( @scheme = ('isoschematron','schematron') )">Rules
+      <sch:report test="tei:constraint/sch:*  and  not( @scheme eq 'schematron')">Rules
         in the ISO Schematron language must be inside a constraintSpec
-        with a value of 'isoschematron' (deprecated) or 'schematron' on the
-        scheme attribute</sch:report>
+        with the value 'schematron' on the scheme attribute</sch:report>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="needrules" scheme="schematron">
     <constraint>
       <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
-      <sch:rule context="tei:macroSpec/tei:constraintSpec[@scheme=('isoschematron','schematron')]/tei:constraint">
+      <sch:rule context="tei:macroSpec/tei:constraintSpec[@scheme eq 'schematron']/tei:constraint">
         <sch:report test="sch:assert|sch:report">An ISO Schematron constraint specification for a macro should not
         have an 'assert' or 'report' element without a parent 'rule' element</sch:report>
       </sch:rule>
@@ -64,18 +63,13 @@ $Id$
         <valItem ident="schematron">
           <gloss versionDate="2016-09-27" xml:lang="en">ISO Schematron</gloss>
         </valItem>
-        <valItem ident="isoschematron" validUntil="2017-12-14">
-          <gloss versionDate="2009-06-10" xml:lang="en">ISO Schematron</gloss>
-        </valItem>
       </valList>
       <remarks versionDate="2016-09-27" xml:lang="en">
         <p>These Guidelines no longer recommend, and the available TEI
         stylesheets no longer support, the use of Schematron 1.x
-        within <gi>constraintSpec</gi>. Thus either the value
-        <val>schematron</val> or the value <val>isoschematron</val>
-        may be used to indicate that ISO Schematron is used within the
-        <gi>constraintSpec</gi>; the former is preferred, the latter
-        will be removed in a future release.</p>
+        within <gi>constraintSpec</gi>. Thus the value
+        <val>schematron</val> is used to indicate that ISO Schematron
+        is used within the <gi>constraintSpec</gi>.</p>
       </remarks>
     </attDef>
   </attList>
