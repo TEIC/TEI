@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><TEI xmlns="http://www.tei-c.org/ns/1.0" xml:base="file:/home/lou/Public/TEI/Documents/pureODD/motherODD.xml"><?TEIVERSION Version 3.2.0. Last updated on
+<?xml version="1.0" encoding="utf-8"?><TEI xmlns="http://www.tei-c.org/ns/1.0" xml:base="file:/home/lou/Public/TEI/Documents/pureODD/chainingTuto/motherODD.xml"><?TEIVERSION Version 3.2.0. Last updated on
 	10th July 2017, revision 0fcf651?>
    <teiHeader>
       <fileDesc>
@@ -617,8 +617,8 @@ Elements</ref>
   <desc versionDate="2007-01-21" xml:lang="it">assegna attributi per la normalizzazione di elementi che contengono eventi databili</desc>
   <classes>
     <memberOf key="att.datable.w3c"/>
-    
-    
+    <memberOf key="att.datable.iso"/>
+    <memberOf key="att.datable.custom"/>
   </classes>
   <attList>
     <attDef ident="calendar" usage="opt">
@@ -1886,6 +1886,64 @@ sub-classification for the element additional to that provided by its
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/TS.html#TSBA">8.3. Elements Unique to Spoken Texts</ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/USE.html#MDMDAL">23.3.1.4. Modification of Attribute and Attribute Value Lists</ref>
   </listRef>
+</classSpec><classSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tei" type="atts" ident="att.sortable">
+  <desc versionDate="2011-11-06" xml:lang="en">provides attributes for elements in lists or groups that are sortable, but whose sorting key cannot be derived mechanically from the element content.</desc>
+  <attList>
+    <attDef ident="sortKey" usage="opt">
+      <desc versionDate="2011-11-06" xml:lang="en">supplies the sort key for this element in an index, list or group which contains it.</desc>
+      <datatype><dataRef key="teidata.word"/></datatype>
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">David's other principal backer, Josiah
+            ha-Kohen <index indexName="NAMES"><term sortKey="Azarya_Josiah_Kohen">Josiah ha-Kohen b. Azarya</term></index> b. Azarya, son of one of the last gaons of Sura was David's own first
+            cousin.</egXML>
+      </exemplum>
+      <exemplum versionDate="2008-04-06" xml:lang="fr">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Verne_Vingt"> Je me suis
+            procuré une <term>clef anglaise</term> pour dévisser les écrous qui attachent le canot à
+            la coque du Nautilus. Ainsi tout est prêt.</egXML>
+      </exemplum>
+      <remarks versionDate="2013-12-09" xml:lang="en">
+        <p>The sort key is used to determine the sequence and grouping of entries in an index. It provides a sequence of characters which, when sorted with the other values, will produced
+          the desired order; specifics of sort key construction are application-dependent</p>
+        <p>Dictionary order often differs from the collation sequence of machine-readable character
+            sets; in English-language dictionaries, an entry for <mentioned>4-H</mentioned> will often
+            appear alphabetized under <q>fourh</q>, and <mentioned>McCoy</mentioned> may be
+            alphabetized under <q>maccoy</q>, while <mentioned>A1</mentioned>,
+            <mentioned>A4</mentioned>, and <mentioned>A5</mentioned> may all appear in numeric order
+            <soCalled>alphabetized</soCalled> between <q>a-</q> and <q>AA</q>. The sort key is
+            required if the orthography of the dictionary entry does not suffice to determine its
+            location.</p>
+      </remarks>
+      <remarks xml:lang="fr" versionDate="2013-12-09">
+        <p>La clé de tri est utilisée pour déterminer la séquence et le groupement d'entrées dans un
+          index. Elle fournit une séquence de caractères qui, lorsqu'ils sont triés avec les autres valeurs, produisent l'ordre souhaité ; les détails de construction d'une clé de tri
+          dépendent des applications.
+.</p>
+        <p>La structure d'un dictionnaire diffère souvent de l'ordre de collation des jeux de
+            caractères lisibles par la machine ; dans des dictionnaires de langue anglaise, une entrée
+            pour <mentioned>4-H</mentioned> apparaîtra souvent alphabétiquement sous <q>fourh</q>, et
+            <mentioned>McCoy</mentioned>peut être classé alphabétiquement sous <q>maccoy</q>, tandis que <mentioned>A1</mentioned>, <mentioned>A4</mentioned> et <mentioned>A5</mentioned>
+            apparaîtront tous dans un ordre alphanumérique entre <q>a-</q> et <q>AA</q>. La clef de
+            tri est exigée si l'orthographe de l'entrée du dictionnaire n'est pas suffisante pour
+            déterminer son emplacement.</p>
+      </remarks>
+      <remarks xml:lang="es" versionDate="2008-04-06">
+        <p>La clave de ordenación se utiliza para determinar la secuencia y agrupar las entradas en
+            un índice.</p>
+      </remarks>
+      <remarks xml:lang="ja" versionDate="2008-04-05">
+        <p> 当該属性は，索引中の項目の一連やグループを決めるために使用され る．当該属性がない場合，当該要素の内容が，並び替えのために使用 される． </p>
+        <p> 辞書順序は，機械可読文字集合の照合順序とは，多くの場合異なって いる．例えば，英語の場合，辞書項目<mentioned>4-H</mentioned>は，
+              文字化された<q>fourh</q>の所に出てくる．また，項目 <mentioned>McCoy</mentioned>は，<q>maccoy</q>の所に出てくるだ
+              ろう．しかし，項目<mentioned>A1</mentioned>, <mentioned>A4</mentioned>,
+              <mentioned>A5</mentioned>らは，文字 順の<q>a-</q>と<q>AA</q>との間で，数字順で出てくる．
+              当該並び替えキーは，当該辞書が採る正書法では，場所の特定が十分 に行えない場合に，必要となる． </p>
+      </remarks>
+    </attDef>
+  </attList>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/DI.html#DIBO">9.1. Dictionary Body and Overall Structure</ref>
+  </listRef>
 </classSpec><classSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tei" type="atts" ident="att.edition">
   <desc versionDate="2013-01-11" xml:lang="en">provides attributes identifying the source edition from which
   some encoded feature derives.</desc>
@@ -2455,7 +2513,7 @@ Elements</ref>
   <desc versionDate="2007-01-21" xml:lang="it">raggruppa elementi che contengono una descrizione bibliografica</desc>
   <classes>
     <memberOf key="model.inter"/>
-    
+    <memberOf key="model.personPart"/>
     
   </classes>
   <listRef>
@@ -2575,6 +2633,12 @@ expliquer d'autres parties d'un document.</desc>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/DR.html#DROTH">7.3. Other Types of Performance Text</ref>
   </listRef>
+</classSpec><classSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" predeclare="true" module="tei" type="model" ident="model.eventLike">
+  <desc versionDate="2015-05-25" xml:lang="en">groups elements which describe events.</desc>
+  <classes>
+    <memberOf key="model.personPart"/>
+    
+  </classes>
 </classSpec><classSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tei" xml:id="EDITINCL" type="model" ident="model.global.edit">
   <desc versionDate="2007-10-03" xml:lang="en">groups globally available elements which perform a specifically editorial function.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">명확한 편집 기능을 수행하며, 전체적으로 이용 가능한 요소를 모아 놓는다.</desc>
@@ -2624,6 +2688,70 @@ expliquer d'autres parties d'un document.</desc>
   </remarks>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#STEC">1.3. The TEI Class System</ref>
+  </listRef>
+</classSpec><classSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" type="model" module="tei" ident="model.persStateLike">
+  <desc versionDate="2007-10-03" xml:lang="en">groups elements describing changeable characteristics of a person which have a definite
+    duration, for example occupation, residence, or name.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">직업, 거주지, 이름과 같이 일정 기간 유지되는 변화가능한 사람의 특성을 기술하는 요소를 모아 놓는다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">該元素集描述人物的可改變特性，有明確的時間長度，例如職業、居所、姓名等。這些特性通常是個人或他人行為的結果。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">一定期間で変容する，個人の特性を示す要素をまとめる．例えば，仕事，住 所，名前など．</desc>
+  <desc versionDate="2009-05-28" xml:lang="fr">regroupe des éléments décrivant les caractéristiques
+    d'une personne, variables mais définies dans le temps, par exemple sa profession, son lieu de
+    résidence ou son nom.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">clase de elementos que describen las características
+    mutables o con una duración determinada en una persona, p.ej. ocupación, residencia, nombre,
+    etc.; tales características de un individuo representan generalmente una consecuencia de sus
+    acciones o de las de otros.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">classe di elementi che descrivono le caratteristiche
+    mutevoli e con una determinata durata di una persona, per esempio occupazione, residenza, nome,
+    ecc.; tali caratteristiche di un individuo rappresentano in genere una conseguenza delle sue
+    azioni o di quelle degli altri</desc>
+  <classes>
+    <memberOf key="model.personPart"/>
+  </classes>
+  <remarks versionDate="2007-10-03" xml:lang="en">
+    <p>These characteristics of an individual are typically a consequence of their own action or
+      that of others.</p>
+  </remarks>
+  <remarks xml:lang="fr" versionDate="2007-06-12">
+    <p>Il s'agit en général des caractéristiques d'un individu résultant de sa propre action ou de
+      celle d'autrui.</p>
+  </remarks>
+  <remarks xml:lang="es" versionDate="2008-04-06">
+    <p>Estas características de un individuo son típicamente una consecuencia de su propia acción o
+      de la de otros.</p>
+  </remarks>
+  <remarks xml:lang="ja" versionDate="2008-04-05">
+    <p> 当該個人の特性は，自らの行動などによる結果である． </p>
+  </remarks>
+</classSpec><classSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" type="model" module="tei" ident="model.personLike">
+  <desc versionDate="2007-10-03" xml:lang="en">groups elements which provide information about people and their relationships.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">사람과 그들의 친족관계에 관한 정보를 제공하는 요소를 모아 놓는다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">該元素集提供人物及人物關係的資訊。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">人々やその関係を表す情報を示す要素をまとめる．</desc>
+  <desc versionDate="2009-10-06" xml:lang="fr">regroupe des éléments qui donnent des informations
+    sur des personnes et leurs relations.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">clase de elementos utilizados para proporcionar
+    informaciones relativas a personas y a las relaciones entre estas.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">classe di elementi utilizzati per fornire informazioni
+    relative a persone e relazioni tra le stesse</desc>
+  
+  
+</classSpec><classSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tei" xml:id="DEMOG" type="model" ident="model.personPart">
+  <desc versionDate="2007-10-03" xml:lang="en">groups elements which form part of the description of a person.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">개인에 대한 기술의 부분을 형성하는 요소를 모아 놓는다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">匯集的元素描述由文本所參照、或參與語言互動的人物特性。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">個人の説明する部分となる要素をまとめる．</desc>
+  <desc versionDate="2009-05-28" xml:lang="fr">regroupe des éléments qui font partie de la description
+    d'une personne</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">agrupa elementos que describen determinadas
+    características de las personas a las cuales se hace referencia en el texto o que participan en
+    una interacción verbal.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">raggruppa elementi che descrivono determinate
+    caratteristiche delle persone a cui si fa riferimento nel testo o che partecipano a
+    un'interazione verbale</desc>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAHPA">15.2.2. The Participant Description</ref>
   </listRef>
 </classSpec><classSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" predeclare="true" module="tei" xml:id="PLACPART" type="model" ident="model.placeNamePart">
   <desc versionDate="2007-10-03" xml:lang="en">groups elements which form part of a place name.</desc>
@@ -3054,6 +3182,17 @@ fin d'une division de texte.</desc>
       <gi>sourceDesc</gi> (descripción de la fuente) y que aparecen en diversas ocasiones.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">raggruppa gli elementi utilizzati all'interno di
       <gi>sourceDesc</gi> e che appaiono più volte.</desc>
+</classSpec><classSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tei" xml:id="PROFILE" type="model" ident="model.profileDescPart">
+  <desc versionDate="2007-10-18" xml:lang="en">groups elements which may be used inside <gi>profileDesc</gi>
+and appear multiple times.</desc>
+  <desc versionDate="2009-10-06" xml:lang="fr">regroupe des éléments que l'on peut utiliser plusieurs fois dans l'élément <gi>profileDesc</gi>.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko"><gi>profileDesc</gi> 내부에 사용되어 여러 번 출현할 수 있는 요소를 모아 놓는다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">匯集可用於元素<gi>profileDesc</gi>內，且多次出現的元素</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">要素<gi>profileDesc</gi>内で使われ，複数回出現可能な要素をまとめる．</desc>
+  <desc versionDate="2006-10-18" xml:lang="de">umfasst Elemente die in der<gi>profileDesc</gi> genutzt werden und mehrfach auftreten
+  können.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">agrupa los elementos que pueden ser usados al interno de <gi>profileDesc</gi> y que aparecen en diversas ocasiones.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">raggruppa gli elementi utilizzati all'interno di <gi>profileDesc</gi> e che appaiono più volte.</desc>
 </classSpec><macroSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tei" type="pe" ident="macro.paraContent">
   <gloss versionDate="2005-01-14" xml:lang="en">paragraph content</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">문단 내용</gloss>
@@ -3389,6 +3528,68 @@ integer value used as a count.</desc>
       première paire alphanumérique <soCalled>time</soCalled>.</p>
       <p>Pour des détails complets, voir ISO 8601 <title>Data elements and interchange formats —
         Information interchange — Representation of dates and times</title>.</p>
+  </remarks>
+</dataSpec><dataSpec module="tei" ident="teidata.temporal.iso">
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" versionDate="2007-04-08" xml:lang="en">defines the range of attribute values expressing a temporal expression such as a date, a
+    time, or a combination of them, that conform to the international standard <title>Data elements
+      and interchange formats – Information interchange – Representation of dates and times</title>.</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" versionDate="2007-12-20" xml:lang="ko">날짜, 시간, 또는 이들의 조합과 같은 시간 표현의 속성 값 범위를 정의하며, 이는 국제 표준
+      <title>Data elements and interchange formats – Information interchange – Representation of
+      dates and times</title>을 따른다.</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" versionDate="2007-05-02" xml:lang="zh-TW">定義該系列表示時間的屬性值，例如日期、時間或兩者的組合，需符合國際標準 Data elements and
+    interchange formats – Information interchange – Representation of dates and times</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" versionDate="2008-04-05" xml:lang="ja">日付や時間などの時間表現をとる属性値の範囲を定義する．これは，国際標 準である<title>Data
+      elements and interchange formats - Information interchange - Representation of dates and
+    times</title>に準拠したも のになる．</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" versionDate="2007-06-12" xml:lang="fr">définit la gamme des valeurs d'attribut qui sont capables
+    d''exprimer une valeur temporelle comme une date, une période, ou une combinaison des deux qui
+    se conforment au standard international <title>Data elements and interchange formats –
+      Information interchange – Representation of dates and times</title>
+   </desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos que expresan una
+    expresión temporal como una fecha, una hora, o una combinación de estas, de acuerdo a un
+    estándard internacional <title>Elementos de datos y formatos de intercambio - Intercambio de
+      información – Representación de fechas y horas</title>.</desc>
+  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <alternate>
+         <dataRef name="date"/>
+         <dataRef name="gYear"/>
+         <dataRef name="gMonth"/>
+         <dataRef name="gDay"/>
+         <dataRef name="gYearMonth"/>
+         <dataRef name="gMonthDay"/>
+         <dataRef name="time"/>
+         <dataRef name="dateTime"/>
+         <dataRef name="token" restriction="[0-9.,DHMPRSTWYZ/:+\-]+"/>
+      </alternate>
+   </content>
+  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" versionDate="2007-04-13" xml:lang="en">
+      <p>If it is likely that the value used is to be compared with another, then a time zone
+      indicator should always be included, and only the dateTime representation should be used.</p>
+      <p>For all representations for which ISO 8601 describes both a <term>basic</term> and an
+        <term>extended</term> format, these Guidelines recommend use of the extended format.</p>
+      <p>While ISO 8601 permits the use of both <code>00:00</code> and <code>24:00</code> to represent
+      midnight, these Guidelines strongly recommend against the use of <code>24:00</code>.
+      </p>
+  </remarks>
+  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="ja" versionDate="2008-04-05">
+      <p> 当該属性値が他の値と比較される場合，時間帯は必ず示されるべきである． またはdateTimeを使うべきである(訳注：この文は修正されるかもしれな い)． </p>
+      <p> ISO 8601には<term>基本形式</term>と<term>拡張形式</term>がある． 本ガイドラインでは拡張形式を使うことを推奨する． </p>
+      <p> ISO 8601では，深夜の12時を示す方法として， <code>00:00</code>と<code>24:00</code>の両方を認めているが，
+        本ガイドラインでは，<code>24:00</code>とは表記しないことを強く推奨 している．
+      
+    </p>
+  </remarks>
+  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="fr" versionDate="2007-06-12">
+      <p> S'il est vraisemblable que la valeur utilisée soit destinée à être comparer à d’autres
+      valeurs, alors une indication du fuseau horaire devrait toujours être incluse, et seule la
+      représentation <term>dateTime</term> devrait être employée.</p>
+      <p>Pour toutes les représentations pour lesquelles l’ISO 8601 décrit à la fois un format
+        <term>basique</term> et un format<term> étendu </term>, ce guide d’encodage recommandande
+      l’emploi du format <term> étendu </term>.</p>
+      <p> Même si l’ ISO 8601 permet d’écrire à la fois <code>00:00</code> et <code>24:00</code> pour
+      minuit, ce guide d’encodage déconseille vivement d’écrire <code>24:00</code>.
+      </p>
   </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.duration.w3c">
   <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" versionDate="2007-10-18" xml:lang="en">defines the range of attribute values available for representation of a duration in time using W3C datatypes.</desc>
@@ -4070,6 +4271,39 @@ defined in <ptr target="#XSLT2"/>
       d’espace.
     </p>
   </remarks>
+</dataSpec><dataSpec module="tei" ident="teidata.sex">
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" versionDate="2007-10-18" xml:lang="en">defines the range of attribute values used to identify human or animal sex.</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" versionDate="2007-12-20" xml:lang="ko">인간 또는 동물의 성을 식별하는 속성 값 범위를 정의한다.</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍用以識別人類或動物的性別</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" versionDate="2008-04-05" xml:lang="ja">人間または動物の性を示す属性値の範囲を定義する． </desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" versionDate="2007-06-12" xml:lang="fr">définit la gamme des valeurs d'attributs employés pour
+    identifier le sexe humain ou animal.</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos usados para
+    identificar el género humano o animal.</desc>
+  <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" versionDate="2007-01-21" xml:lang="it">definisce una gamma di valori di attributi usati per
+    identificare il sesso umano o animale</desc>
+  <content xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <dataRef key="teidata.word"/>
+   </content>
+  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" versionDate="2013-04-14" xml:lang="en">
+      <p>Values for attributes using this datatype may be locally defined by a project, or may refer to an external standard, such as
+      vCard's sex property <ptr target="http://microformats.org/wiki/gender-formats"/>
+      (in which <val>M</val> indicates male, <val>F</val> female, <val>O</val> other, <val>N</val> none or not applicable, <val>U</val> unknown),
+      or the often used ISO 5218:2004 <title>Representation of Human Sexes</title>
+         <ptr target="http://standards.iso.org/ittf/PubliclyAvailableStandards/c036266_ISO_IEC_5218_2004(E_F).zip"/> (in which <val>0</val>
+      indicates unknown; <val>1</val> male; <val>2</val> female; and <val>9</val> not applicable,
+      although the ISO standard is widely considered inadequate);
+      cf. CETH's <title>Recommendations for Inclusive Data Collection of Trans People</title>
+         <ptr target="http://transhealth.ucsf.edu/trans?page=lib-data-collection"/>.</p>
+  </remarks>
+  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="ja" versionDate="2008-04-05">
+      <p> 当該属性値は，ISO 5218:2004 <title>Representation of Human Sexes</title>にあるものとなる．
+      0は不明，1は男性，2は女性，9は当てはまらないことを意味する． </p>
+  </remarks>
+  <remarks xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="fr" versionDate="2007-06-12">
+      <p>des valeurs sont celle de l' SO 5218:2004 <title>identification des sexes humains.</title>; 0
+      : inconnu ; 1 : homme ; 2 : femme ; et 9 : non applicable.</p>
+  </remarks>
 </dataSpec><dataSpec module="tei" ident="teidata.text">
   <desc xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" versionDate="2012-06-17" xml:lang="en">defines the range of attribute values used to express some
   kind of identifying string as a single sequence
@@ -4260,6 +4494,15 @@ one initial.</desc>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDPER">13.2.1. Personal Names</ref>
   </listRef>
+</classSpec><classSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" type="model" module="tei" ident="model.placeLike">
+  <desc versionDate="2007-10-03" xml:lang="en">groups elements used to provide information about places and their relationships.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">장소와 그 관계에 관한 정보를 제공하는 요소를 모아 놓는다.</desc>
+  <desc versionDate="2008-04-06" xml:lang="es">elementos de los grupos usados para proporcionar a la
+    información sobre los lugares y sus lazos.</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">場所やそれらの関連性に関する情報を示す要素をまとめる．</desc>
+  <desc versionDate="2009-10-06" xml:lang="fr">regroupe des éléments qui donne des informations sur des lieux et leurs relations.</desc>
+  <desc versionDate="2007-11-06" xml:lang="it">raggruppa elementi utilizzati per fornire informazioni
+    relative a luoghi e relazioni corrispondenti</desc>
 </classSpec><elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" module="core" ident="p">
   <gloss versionDate="2005-01-14" xml:lang="en">paragraph</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">문단</gloss>
@@ -4399,7 +4642,7 @@ one initial.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.nameLike.agent"/>
-    
+    <memberOf key="model.personPart"/>
     <memberOf key="att.personal"/>
     <memberOf key="att.datable"/>
     <memberOf key="att.editLike"/>
@@ -5682,6 +5925,134 @@ epistemology, methodology and history of
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD3">2.2.7. The Source Description</ref>
   </listRef>
+</elementSpec><elementSpec xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="header" ident="profileDesc">
+  <gloss versionDate="2005-01-14" xml:lang="en">text-profile description</gloss>
+  <gloss versionDate="2009-01-05" xml:lang="fr">description du profil</gloss>
+  <gloss versionDate="2007-12-20" xml:lang="ko">텍스트-개요 기술</gloss>
+  <gloss versionDate="2007-05-02" xml:lang="zh-TW">文件背景描述</gloss>
+  <gloss versionDate="2006-10-18" xml:lang="de">Beschreibung des Textprofils</gloss>
+  <gloss versionDate="2007-05-04" xml:lang="es">descripción del perfil del texto.</gloss>
+  <gloss versionDate="2007-01-21" xml:lang="it">descrizione del profilo del testo</gloss>
+  <desc versionDate="2005-01-14" xml:lang="en">provides a detailed description of non-bibliographic aspects of a text, specifically the
+    languages and sublanguages used, the situation in which it was produced, the participants and
+    their setting.</desc>
+  <desc versionDate="2009-01-05" xml:lang="fr"> fournit une description détaillée des aspects
+    non bibliographiques du texte, notamment les langues utilisées et leurs variantes, les
+    circonstances de sa production, les collaborateurs et leur statut.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">분명하게 언어와 특수 언어가 사용된 텍스트, 텍스트가 생산된 상황, 참여자, 배경에 관한 비서지적
+    측면을 상세히 기술한다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">提供文件非書目性方面的細節描述，特別是所使用的語言及次要語言、在何種情況下製作、參與人員及其環境背景。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">書誌情報的ではない詳細な解説を示す．例えば，言語や特殊言語，生成され たときの状況，参加者など．</desc>
+    <desc versionDate="2016-11-17" xml:lang="de">enthält eine detaillierte Beschreibung der nicht-bibliografischen Merkmale des Textes, besonders der verwendeten Sprachen und Subsprachen, 
+        der Entstehungsbedingungen eines Textes sowie der Beteiligten und deren Umfeld.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">proporciona una descripción detallada de los aspectos no
+    bibliográficos de un texto, especialmente las lenguas y jergas usadas, la situación en que se
+    aparecen, los participantes que intervienen, etc.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">fornisce una descrizione dettagliata degli aspetti non
+    bibliografici di un testo, in modo particolare le lingue e i linguaggi secondari utilizzati, la
+    situazione in cui è stato prodotto il testo, i partecipanti e la relativa ambientazione</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="model.teiHeaderPart"/>
+  </classes>
+  <content>
+    
+      
+        <classRef key="model.profileDescPart" minOccurs="0" maxOccurs="unbounded"/>
+      
+    
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <profileDesc>
+        <langUsage>
+          <language ident="fr">French</language>
+        </langUsage>
+        <textDesc n="novel">
+          <channel mode="w">print; part issues</channel>
+          <constitution type="single"/>
+          <derivation type="original"/>
+          <domain type="art"/>
+          <factuality type="fiction"/>
+          <interaction type="none"/>
+          <preparedness type="prepared"/>
+          <purpose type="entertain" degree="high"/>
+          <purpose type="inform" degree="medium"/>
+        </textDesc>
+        <settingDesc>
+          <setting>
+            <name>Paris, France</name>
+            <time>Late 19th century</time>
+          </setting>
+        </settingDesc>
+      </profileDesc>
+    </egXML>
+  </exemplum>
+  <exemplum versionDate="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <profileDesc>
+        <langUsage>
+          <language ident="fr">français</language>
+        </langUsage>
+        <textDesc n="roman">
+          <channel mode="w">copie; extraits </channel>
+          <constitution type="single"/>
+          <derivation type="original"/>
+          <domain type="art"/>
+          <factuality type="fiction"/>
+          <interaction type="none"/>
+          <preparedness type="prepare"/>
+          <purpose type="distraction" degree="high"/>
+          <purpose type="information" degree="medium"/>
+        </textDesc>
+        <settingDesc>
+          <setting>
+            <name>Paris, France</name>
+            <time>Fin 19e</time>
+          </setting>
+        </settingDesc>
+      </profileDesc>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-TW">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <profileDesc>
+        <langUsage>
+          <language ident="fr">法文</language>
+        </langUsage>
+        <textDesc n="novel">
+          <channel mode="w">出版品；專題輯</channel>
+          <constitution type="single"/>
+          <derivation type="original"/>
+          <domain type="art"/>
+          <factuality type="fiction"/>
+          <interaction type="none"/>
+          <preparedness type="prepared"/>
+          <purpose type="entertain" degree="high"/>
+          <purpose type="inform" degree="medium"/>
+        </textDesc>
+        <settingDesc>
+          <setting>
+            <name>法國巴黎</name>
+            <time>19世紀晚期</time>
+          </setting>
+        </settingDesc>
+      </profileDesc>
+    </egXML>
+  </exemplum>
+  <remarks versionDate="2017-06-25" xml:lang="en">
+    <p>Although the content model permits it, it is rarely
+meaningful to supply multiple occurrences for any of the child
+elements of  <gi>profileDesc</gi> unless these are documenting multiple texts.</p>
+  </remarks>
+  <remarks versionDate="2017-06-25" xml:lang="de">
+      <p>Obwohl durch das Inhaltsmodell erlaubt, erscheint es in den seltensten Fällen sinnvoll, mehrere Vorkommen der erlaubten Kindelemente der <gi>profileDesc</gi> zu notieren – außer diese beziehen sich auf unterschiedliche Texte.
+        </p>
+  </remarks>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD4">2.4. The Profile Description</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD11">2.1.1. The TEI Header and Its Components</ref>
+  </listRef>
 </elementSpec><elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" module="textstructure" ident="TEI">
   <gloss versionDate="2005-12-24" xml:lang="en">TEI document</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">TEI 문서</gloss>
@@ -6414,7 +6785,1003 @@ TEI namespace <code>http://www.tei-c.org/ns/1.0</code> on it, using
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/DS.html#DSDIV">4.1. Divisions of the Body</ref>
   </listRef>
-</elementSpec><moduleSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" n="ST" xml:id="DSTTEI2" ident="tei" type="core"/><moduleSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" n="CO" xml:id="DCO" ident="core"/><moduleSpec xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" n="HD" xml:id="DHD" ident="header"/><moduleSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" n="DS" xml:id="DDS" ident="textstructure"/></schemaSpec>
+</elementSpec><classSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" xml:id="DATABLECUSTOM" type="atts" predeclare="true" ident="att.datable.custom">
+  <desc versionDate="2011-11-11" xml:lang="en">provides attributes for normalization of elements that contain datable events to a custom dating system
+    (i.e. other than the Gregorian used by W3 and ISO).</desc>
+  <attList>
+    <attDef ident="when-custom" usage="opt">
+      <desc versionDate="2014-11-19" xml:lang="en">supplies the value of a date or time in some custom standard form.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
+      <exemplum xml:lang="en">
+        <p>The following are examples of custom date or time formats that are <emph>not</emph> valid ISO or W3C format
+                    normalizations, normalized to a different dating system</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <p>Alhazen died in Cairo on the 
+            <date when="1040-03-06" when-custom="431-06-12">
+              12th day of Jumada t-Tania, 430 AH
+            </date>.</p>
+          <p>The current world will end at the 
+            <date when="2012-12-21" when-custom="13.0.0.0.0">end of B'ak'tun 13</date>.</p>
+          <p>The Battle of Meggidu
+            (<date when-custom="Thutmose_III:23">23rd year of reign of Thutmose III</date>).</p>
+          <p>Esidorus bixit in pace annos LXX plus minus sub
+            <date when-custom="Ind:4-10-11">die XI mensis Octobris indictione IIII</date>
+               </p>
+        </egXML>
+        <p>Not all custom date formulations will have Gregorian equivalents.</p>
+        <p>The <att>when-custom</att> attribute and other custom dating are not contrained to a datatype by the TEI, but
+        individual projects are recommended to regularize and document their dating formats.</p>
+      </exemplum>
+    </attDef>
+    <attDef ident="notBefore-custom" usage="opt">
+      <desc versionDate="2011-11-11" xml:lang="en">specifies the earliest possible date for the event in some custom standard form.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
+    </attDef>
+    <attDef ident="notAfter-custom" usage="opt">
+      <desc versionDate="2011-11-11" xml:lang="en">specifies the latest possible date for the event in some custom standard form.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
+    </attDef>
+    <attDef ident="from-custom" usage="opt">
+      <desc versionDate="2014-11-19" xml:lang="en">indicates the starting point of the period in some custom standard form.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <event xml:id="FIRE1" datingMethod="#julian" from-custom="1666-09-02" to-custom="1666-09-05">
+            <head>The Great Fire of London</head>
+            <p>The Great Fire of London burned through a large part 
+          of the city of London.</p>
+          </event>
+        </egXML>
+      </exemplum>
+    </attDef>
+    <attDef ident="to-custom" usage="opt">
+      <desc versionDate="2014-11-19" xml:lang="en">indicates the ending point of the period in some custom standard form.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
+    </attDef>
+    <attDef ident="datingPoint" usage="opt">
+      <desc versionDate="2011-11-25" xml:lang="en">supplies a pointer to some location defining a named point in time with reference to which the datable item is understood to have occurred</desc>
+      <datatype><dataRef key="teidata.pointer"/></datatype>
+    </attDef>
+    <attDef ident="datingMethod" usage="opt">
+      <desc versionDate="2012-08-15" xml:lang="en">supplies a pointer to a <gi>calendar</gi> element or other
+        means of interpreting the values of the custom dating attributes.</desc>
+      <datatype><dataRef key="teidata.pointer"/></datatype>
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#STOW">Contayning the Originall, Antiquity, Increaſe, Moderne 
+            eſtate, and deſcription of that Citie, written in the yeare 
+            <date when-custom="1598" calendar="#julian" datingMethod="#julian">1598</date>. by Iohn Stow 
+            Citizen of London.</egXML>
+        <p>In this example, the <att>calendar</att> attribute points to a <gi>calendar</gi> element for the 
+          Julian calendar, specifying that the text content of the <gi>date</gi> element is a 
+          Julian date, and the <att>datingMethod</att> attribute also points to the Julian calendar
+          to indicate that the content of the <att>when-custom</att> attribute value is Julian too.</p>
+      </exemplum>
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <date when="1382-06-28" when-custom="6890-06-20" datingMethod="#creationOfWorld">
+            μηνὶ Ἰουνίου εἰς <num>κ</num> ἔτους <num>ςωϞ</num>
+          </date>
+        </egXML>
+        <p>In this example, a date is given in a Mediaeval text measured "from the creation of the world", which is normalised
+        (in <att>when</att>) to the Gregorian date, but is also normalized (in <att>when-custom</att>) to a
+        machine-actionable, numeric version of the date from the Creation.</p>
+      </exemplum>
+      <remarks xml:lang="en" versionDate="2015-05-29"><p>Note that the <att>datingMethod</att> attribute (unlike
+        <att>calendar</att> defined in <ident type="class">att.datable</ident>) defines
+        the calendar or dating system to which the date described by the parent element is normalized (i.e. in the  
+        <att>when-custom</att> or other <att>X-custom</att> attributes), <emph>not</emph> the calendar of the
+        original date in the element.</p></remarks>
+    </attDef>
+  </attList>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDDATE">13.3.6. Dates and Times</ref>
+  </listRef>
+</classSpec><classSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" predeclare="true" module="namesdates" xml:id="PERSPART" type="model" ident="model.persNamePart">
+  <desc versionDate="2007-10-03" xml:lang="en">groups elements which form part of a personal name.</desc>
+  <desc versionDate="2009-05-27" xml:lang="fr">regroupe des éléments qui font partie d'un nom de
+        personne</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">사람 이름의 부분을 형성하는 요소를 모아놓는다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">匯集構成部分個人名稱的元素。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">個人名の部分を構成する要素をまとめる．</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">agrupa los elementos que componen un nombre propio de
+        persona.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">raggruppa gli elementi che compongono un nome proprio
+        di persona</desc>
+  <classes>
+    <memberOf key="model.nameLike"/>
+  </classes>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDPER">13.2.1. Personal Names</ref>
+  </listRef>
+</classSpec><classSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" xml:id="DATABLEISO" type="atts" predeclare="true" ident="att.datable.iso">
+  <desc versionDate="2007-04-09" xml:lang="en">provides attributes for normalization of elements that contain datable events using the ISO 8601 standard.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">ISO 8601 표준을 사용해서 날짜를 추정할 수 있는 사건을 포함하는 요소의 규격화를 위한 속성을 제공한다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">用於紀錄規格化時間的屬性，該規格使用ISO 8601標準</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">ISO8601に従い，時間事象の正規的方法を示す属性を示す．</desc>
+  <desc versionDate="2009-03-19" xml:lang="fr">fournit des attributs pour la normalisation, selon la norme ISO 8601, d'éléments contenant des évènements
+        datables.</desc>
+  <desc versionDate="2007-11-06" xml:lang="it">indica attributi per la normalizzazione tramite lo standard ISO 8601 di elementi che contengono eventi
+        databili</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos para la normalización de elementos que contienen eventos datables usando el
+        estándard ISO 8601.</desc>
+  <attList>
+    
+    <attDef ident="when-iso" usage="opt">
+      <desc versionDate="2007-06-12" xml:lang="en">supplies the value of a date or time in a standard form.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">표준형의 날짜 또는 시간 값을 제시한다.</desc>
+      <desc versionDate="2008-04-06" xml:lang="es">proporciona el valor de fecha o de tiempo en una forma estándar.</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">日付や時間を，標準形式で示す．</desc>
+      <desc versionDate="2008-12-09" xml:lang="fr">précise une date exacte pour l'évènement selon la forme normalisée ISO 8601, c'est-à-dire
+                aaaa-mm-jj.</desc>
+      <desc versionDate="2007-11-06" xml:lang="it">indica il valore di una data o di un orario in un formato standard</desc>
+      <datatype><dataRef key="teidata.temporal.iso"/></datatype>
+      <exemplum xml:lang="en">
+        <p>The following are examples of ISO date, time, and date &amp; time formats that are <emph>not</emph> valid W3C format
+                    normalizations.</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <date when-iso="1996-09-24T07:25+00">Sept. 24th, 1996 at 3:25 in the morning</date>
+          <date when-iso="1996-09-24T03:25-04">Sept. 24th, 1996 at 3:25 in the morning</date>
+          <time when-iso="1999-01-04T20:42-05">4 Jan 1999 at 8:42 pm</time>
+          <time when-iso="1999-W01-1T20,70-05">4 Jan 1999 at 8:42 pm</time>
+          <date when-iso="2006-05-18T10:03">a few minutes after ten in the morning on Thu 18 May</date>
+          <time when-iso="03:00">3 A.M.</time>
+          <time when-iso="14">around two</time>
+          <time when-iso="15,5">half past three</time>
+        </egXML>
+        <p>All of the examples of the <att>when</att> attribute in the <ident type="class">att.datable.w3c</ident> class are also valid with
+                    respect to this attribute.</p>
+      </exemplum>
+      <exemplum versionDate="2008-04-06" xml:lang="fr">
+        <p>Les exemples qui suivent sont des mentions de date, d'heure, de temps au format ISO qui
+            ne sont <emph> pas </emph>normalisées au format W3C </p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <date when-iso="1996-09-24T07:25+00">le 24 sept. 1996, à 3 h 25 du matin.</date>
+          <date when-iso="1996-09-24T03:25-04">le 24 sept. 1996, à 3 h 25 du matin.</date>
+          <time when-iso="1999-01-04T20:42-05">le 4 janvier 1999 à 8 h.42 du soir </time>
+          <time when-iso="1999-W01-1T20,70-05">le 4 janvier 1999 à 8 h.42 du soir </time>
+          <date when-iso="2006-05-18T10:03">quelques minutes après 10 heures du matin, le mardi 18
+              mai.</date>
+          <time when-iso="03:00">3 h. du matin.</time>
+          <time when-iso="14">aux alentours de deux heures.</time>
+          <time when-iso="15,5">trois heures et demi.</time>
+        </egXML>
+        <p>Tous les exemples de l’attribut <att>when</att> dans la classe <ident type="class">att.datable.w3c</ident> sont également valides en ce qui concerne cet attribut</p>
+      </exemplum>
+      <exemplum versionDate="2008-04-06" xml:lang="fr">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">Il aime à être ponctuel . J'ai dit<q><time when-iso="12">autour du midi</time></q>, et il est apparu à <time when-iso="12:00:00">midi </time>à l'heure pile.</egXML>
+        <p>La deuxième occurence de <gi>time</gi> a pu être encodée avec l'attribut
+            <att>when</att> , puisque<val>12:00:00</val> est une marque de temps en accord avec la
+            spécification du W3C <title ref="#XSD2">XML Schema Part 2: Datatypes Second
+        Edition</title>. La première occurence
+            ne l'est pas.</p>
+      </exemplum>
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">He likes to be punctual. I said <q><time when-iso="12">around noon</time></q>, and he showed up at <time when-iso="12:00:00">12 O'clock</time> on the dot.</egXML>
+        <p>The second occurence of <gi>time</gi> could have been encoded with the <att>when</att> attribute, as <val>12:00:00</val> is a valid
+                    time with respect to the W3C <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title> specification. The first occurence could not.</p>
+      </exemplum>
+    </attDef>
+    
+    <attDef ident="notBefore-iso" usage="opt">
+      <desc versionDate="2007-04-09" xml:lang="en">specifies the earliest possible date for the event in standard form, e.g. yyyy-mm-dd.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">yyyy-mm-dd 같은 표준형으로 사건의 시작 날짜를 명시한다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">以標準格式標明該事件可能發生的最早日期，例如年-月-日。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該事象の一番古い日付を，標準形式で示す．例えば，yyyy-mm-dd．</desc>
+      <desc versionDate="2008-12-09" xml:lang="fr">précise la première date possible pour l'évènement selon la forme normalisée, c'est-à-dire
+                aaaa-mm-jj.</desc>
+      <desc versionDate="2007-11-06" xml:lang="it">specifica la prima data possibile per un evento nel formato standard aaaa-mm-gg</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">indica la fecha más temprana posible para un evento en un formato estándard, p.ej.
+                aaaa-mm-dd.</desc>
+      <datatype><dataRef key="teidata.temporal.iso"/></datatype>
+    </attDef>
+    <attDef ident="notAfter-iso" usage="opt">
+      <desc versionDate="2007-04-09" xml:lang="en">specifies the latest possible date for the event in standard form, e.g. yyyy-mm-dd.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">yyyy-mm-dd 같은 표준형으로 사건의 종료 날짜를 명시한다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">以標準格式標明該事件可能發生的最晚日期，例如年-月-日。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該事象の一番新しい日付を，標準形式で示す．例えば，yyyy-mm-dd．</desc>
+      <desc versionDate="2008-12-09" xml:lang="fr">précise la dernière date possible pour l'évènement selon la forme normalisée, c'est-à-dire
+                aaaa-mm-jj.</desc>
+      <desc versionDate="2007-11-06" xml:lang="it">specifica l'ultima data possibile per un evento nel formato standard aaaa-mm-gg</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">indica la fecha más tardana posible para un evento en un formato estándard, p.ej.
+                aaaa-mm-dd.</desc>
+      <datatype><dataRef key="teidata.temporal.iso"/></datatype>
+    </attDef>
+    <attDef ident="from-iso" usage="opt">
+      <desc versionDate="2007-04-09" xml:lang="en">indicates the starting point of the period in standard form.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">표준형으로 기간의 시작 지점을 나타낸다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">以標準格式表示該段時間的起始點。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該時間幅の，始点を標準形で示す．</desc>
+      <desc versionDate="2008-12-09" xml:lang="fr">Indique le point de départ de la période sous une forme normalisée</desc>
+      <desc versionDate="2007-11-06" xml:lang="it">indica l'inizio del periodo nel formato standard</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">indica el punto de inicio de un periodo de tiempo en formato estándard.</desc>
+      <datatype><dataRef key="teidata.temporal.iso"/></datatype>
+    </attDef>
+    <attDef ident="to-iso" usage="opt">
+      <desc versionDate="2007-04-09" xml:lang="en">indicates the ending point of the period in standard form.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">표준형으로 기간의 종료 지점을 나타낸다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">以標準格式表示該段時間的結束點。</desc>
+      <desc versionDate="2008-04-06" xml:lang="es">indica en forma estándard el punto de conclusión de un período.</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該時間幅の，終点を標準形で示す．</desc>
+      <desc versionDate="2008-12-09" xml:lang="fr">Indique le point final de la période sous une forme normalisée</desc>
+      <desc versionDate="2007-11-06" xml:lang="it">indica la fine del periodo nel formato standard</desc>
+      <datatype><dataRef key="teidata.temporal.iso"/></datatype>
+    </attDef>
+    
+  </attList>
+  <remarks versionDate="2008-07-23" xml:lang="en">
+    <p>The value of these attributes should be a normalized
+    representation of the date, time, or combined date &amp; time
+    intended, in any of the standard formats specified by ISO 8601,
+    using the Gregorian calendar.</p>
+  </remarks>
+  <remarks versionDate="2009-03-19" xml:lang="fr">
+    <p>La valeur de <att>when-iso</att> doit être une représentation normalisée de la date, de la durée ou d'une combinaison de date et de
+    durée, dans l'un des formats spécifiés dans ISO 8601, selon le calendrier grégorien.</p>
+  </remarks>
+  <remarks xml:lang="ja" versionDate="2008-04-05">
+    <p> 属性<att>when-iso</att>の値は，ISO8601に従った，日付や時間，ま たはその組み合わせになる．属性<att>calendar</att>がある場合に は，要素内容の歴システムが示される．属<att>calendar</att>は，
+    属性<att>when</att>
+    <att>when-iso</att>の歴システムを示すもので はない．これは普通はグレゴリオ暦になる． </p>
+  </remarks>
+  <remarks versionDate="2007-06-12" xml:lang="en">
+    <p>If both <att>when-iso</att> and <att>dur-iso</att> are specified, the values should be interpreted as indicating a span of time by its
+            starting time (or date) and duration. That is, <egXML xmlns="http://www.tei-c.org/ns/Examples"><date when-iso="2007-06-01" dur-iso="P8D"/></egXML> indicates the same time period as <egXML xmlns="http://www.tei-c.org/ns/Examples"><date when-iso="2007-06-01/P8D"/></egXML>
+        </p>
+    <p>In providing a <soCalled>regularized</soCalled> form, no claim is made that the form in the source text is incorrect; the regularized form
+            is simply that chosen as the main form for purposes of unifying variant forms under a single heading.</p>
+  </remarks>
+  <remarks versionDate="2009-03-19" xml:lang="fr">
+    <p>Si les attributs <att>when-iso</att> et <att>dur-iso</att> sont tous les deux spécifiés, les valeurs doivent être interprétées comme
+            indiquant un intervalle de temps au moyen de son point de départ (ou date) et de sa durée. C'est à dire, <egXML xmlns="http://www.tei-c.org/ns/Examples"><date when-iso="2007-06-01" dur-iso="P8D"/></egXML> indique la même période temporelle que <egXML xmlns="http://www.tei-c.org/ns/Examples"><date when-iso="2007-06-01/P8D"/></egXML>
+        </p>
+    <p>En fournissant une forme dite "régularisée", il n'est rien affirmé sur la correction ou l'incorrection de la forme dans le texte source ;
+            la forme régularisée est simplement celle qui est choisie comme forme principale afin de réunir les variantes de forme sous une seule
+            rubrique.</p>
+  </remarks>
+  <remarks xml:lang="ja" versionDate="2008-04-05">
+    <p> 属性<att>when-iso</att>と<att>dur-iso</att>が付与されている場合， 当該属性値は時間幅を示し，それぞれ始点と幅を示すものになる． 例えば，以下のような場合， <egXML xmlns="http://www.tei-c.org/ns/Examples"><date when-iso="2007-06-01" dur-iso="P8D"/></egXML> この記述は，以下のようにも書くことができる． <egXML xmlns="http://www.tei-c.org/ns/Examples"><date when-iso="2007-06-01/P8D"/></egXML>
+        </p>
+    <p><soCalled>正規化</soCalled>形式ということで，元テキストにある形式 が不正確であるということを含むものではない． ここでいう正規化形式とは，単に，ひとつの項目に同じ値を付与すること を目的とするものである． </p>
+  </remarks>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#CONADA">3.5.4. Dates and Times</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDDATE">13.3.6. Dates and Times</ref>
+  </listRef>
+</classSpec><elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" ident="persName">
+  <gloss versionDate="2005-01-14" xml:lang="en">personal name</gloss>
+  <gloss versionDate="2007-12-20" xml:lang="ko">개인 이름</gloss>
+  <gloss versionDate="2007-05-02" xml:lang="zh-TW">個人名稱</gloss>
+  <gloss versionDate="2008-12-09" xml:lang="fr">nom de personne</gloss>
+  <gloss versionDate="2007-05-04" xml:lang="es">nombre propio de persona</gloss>
+  <gloss versionDate="2007-01-21" xml:lang="it">nome proprio di persona</gloss>
+  <desc versionDate="2012-03-13" xml:lang="en">contains a proper noun or proper-noun phrase referring to a
+  person, possibly including one or more of
+  the person's forenames, surnames, honorifics, added names, etc.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">개인의 이름, 성, 존칭어, 추가 명 등의 하나 또는 전부를 사용하여 개인을 지칭하는, 고유명사 또는
+    고유명사구를 포함한다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">包含一個人名，可能是任何或全部屬於該人物的名字、姓氏、敬稱、或附加名等。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">人物の固有名詞を示す．例えば，名，姓，敬称，追加名など．</desc>
+  <desc versionDate="2008-12-09" xml:lang="fr">contient un nom propre ou une expression nominale se
+    référant à une personne, pouvant inclure tout ou partie de ses prénoms, noms de famille, titres
+    honorifiques, noms ajoutés, etc.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">contiene un nombre propio o un sintagma identificable
+    como un nombre propio, que se refiere a una persona y puede incluir cualquier o todos los
+    nombres de pila, apellidos, títulos honoríficos, o nombres añadidos de la persona en cuestión.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">contiene un nome proprio o un sintagma identificabile
+    come nome proprio, che si riferisce a una persona e può includere qualsiasi o tutti i prenomi,
+    cognomi, titoli onorifici, o nomi aggiunti della persona in questione</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="model.persStateLike"/>
+    <memberOf key="model.nameLike.agent"/>
+    <memberOf key="att.datable"/>
+    <memberOf key="att.editLike"/>
+    <memberOf key="att.personal"/>
+    <memberOf key="att.typed"/>
+  </classes>
+  <content>
+    <macroRef key="macro.phraseSeq"/>
+  </content>
+
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <persName><forename>Edward</forename><forename>George</forename><surname type="linked">Bulwer-Lytton</surname>, <roleName>Baron Lytton of
+        <placeName>Knebworth</placeName>
+            </roleName></persName>
+    </egXML>
+  </exemplum>
+  <exemplum versionDate="2017-06-23" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <persName> <surname>Poncet</surname> <forename>Olivier</forename> <roleName>professeur d'archivistique et diplomatique moderne</roleName> </persName>
+    </egXML>
+  </exemplum>
+  <exemplum versionDate="2017-06-23" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <persName> <forename>Joseph</forename> <addName type="stagename">Le Pétomane</addName> <surname>Pujol</surname> </persName> 
+   </egXML>
+  </exemplum>
+  <exemplum versionDate="2017-06-23" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <persName> <forename>Catherine</forename> <genName>II</genName>, <addName type="epithet"> la Grande</addName>, <roleName>impératrice de Russie</roleName> </persName>
+    </egXML>
+  </exemplum>
+  
+  
+  <exemplum xml:lang="zh-TW">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <persName><forename>夏爾</forename><forename>皮耶</forename><surname>波特萊爾</surname>，<roleName><placeName>法國</placeName>象徵派詩人         </roleName>
+         </persName>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDPER">13.2.1. Personal Names</ref>
+  </listRef>
+</elementSpec><elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" ident="placeName">
+  <gloss versionDate="2008-12-09" xml:lang="fr">nom de lieu</gloss>
+  
+  <desc versionDate="2005-01-14" xml:lang="en">contains an absolute or relative place name.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">절대적 또는 상대적 위치명을 포함한다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">包含一個確切位置或相對位置的名稱。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">絶対的，相対的場所名を示す．</desc>
+  <desc versionDate="2009-03-19" xml:lang="fr">contient un nom de lieu absolu ou relatif.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">contiene la indicación absoluta o relativa de un nombre de lugar.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">contiene l'indicazione assoluta o relativa di un nome di luogo</desc>
+  <classes>
+    <memberOf key="att.datable"/>
+    <memberOf key="att.editLike"/>
+    <memberOf key="att.global"/>
+    <memberOf key="att.personal"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="model.placeNamePart"/>
+  </classes>
+  <content>
+    <macroRef key="macro.phraseSeq"/>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <placeName>
+        <settlement>Rochester</settlement>
+        <region>New York</region>
+      </placeName>
+    </egXML>
+  </exemplum>
+  <exemplum versionDate="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <placeName>
+        <settlement>Bordeaux</settlement>
+        <region>Gironde</region>
+      </placeName>
+    </egXML>
+  </exemplum>
+  <exemplum versionDate="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <placeName>
+        <geogName>Le Massif Armoricain</geogName>
+        <region>Bretagne</region>
+      </placeName>
+    </egXML>
+  </exemplum>
+  <exemplum versionDate="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <placeName>
+        <measure>2,5 milles</measure>
+        <offset>à l'ouest de la </offset>
+        <settlement>Pointe du Raz</settlement>
+      </placeName>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-TW">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <placeName>
+        <settlement>曼徹斯特</settlement>
+        <region>紐約</region>
+      </placeName>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-TW">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <placeName>
+        <geogName>天池</geogName>
+        <region>新疆</region>
+      </placeName>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-TW">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <placeName>
+        <settlement>烏魯木齊</settlement>
+        <offset>北邊</offset>
+        <measure>十哩</measure>
+      </placeName>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <placeName>
+        <geogName>Arrochar Alps</geogName>
+        <region>Argylshire</region>
+      </placeName>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <placeName>
+        <measure>10 miles</measure>
+        <offset>Northeast of</offset>
+        <settlement>Attica</settlement>
+      </placeName>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDPLAC">13.2.3. Place Names</ref>
+  </listRef>
+</elementSpec><elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" ident="listPerson">
+  <gloss versionDate="2007-07-04" xml:lang="en">list of persons</gloss>
+  <gloss versionDate="2007-12-20" xml:lang="ko">개인 목록</gloss>
+  <gloss versionDate="2008-04-06" xml:lang="es">lista de personas</gloss>
+  <gloss versionDate="2008-12-09" xml:lang="fr">liste de personnes</gloss>
+  <gloss versionDate="2007-11-06" xml:lang="it">elenco delle persone</gloss>
+  
+  <desc versionDate="2006-10-08" xml:lang="en">contains a list of descriptions, each of which provides information about an identifiable
+    person or a group of people, for example the participants in a language interaction, or the
+    people referred to in a historical source.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">기술 목록을 포함하며, 그 개별 기술 각각은, 언어 상호작용 참여자 또는 역사적 원전에서 언급되는
+    사람과 같이, 식별 가능한 사람 또는 사람군에 관한 정보를 제공한다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">人物描述清單，其中每個項目包含一個已知人物的相關資料，例如語言互動中的參與者、或是歷史來源中提及的人物。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">特定可能な個人やグループに関する情報のリストを示す．例えば，言語交流
+    の参加者や，歴史資料中で参照される人物など．</desc>
+  <desc versionDate="2008-12-09" xml:lang="fr">contient une liste d'éléments, chacun d'entre eux
+    apportant des informations sur une personne précise ou sur un groupe de personnes, par exemple
+    les participants à une interaction linguistique, ou les personnes citées dans une source
+    historique.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">contiene una lista de descripciones, y cada una de las
+    cuales proporciona información relativa a una persona específica o a un grupo de personas, p.ej,
+    los participantes de una interacción verbal o las personas referidas en una fuente histórica.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">contiene una lista di descrizioni, ciascuna delle quali
+    fornisce informazioni relative a una persona specifica o a un gruppo di persone, per esempio i
+    partecipanti a un'interazione verbale o le persone identificate da una fonte storica</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.declarable"/>
+    <memberOf key="att.sortable"/>
+    <memberOf key="model.listLike"/>
+    
+  </classes>
+  <content>
+    <sequence>
+      
+        <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <alternate minOccurs="1" maxOccurs="unbounded">
+          <classRef key="model.personLike"/>
+          <elementRef key="listPerson"/>
+        </alternate>
+      
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <elementRef key="relation"/>
+          <elementRef key="listRelation"/>
+        </alternate>
+      
+    </sequence>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listPerson type="respondents">
+        <personGrp xml:id="PXXX"/>
+        <person xml:id="P1234" sex="2" age="mid"/>
+        <person xml:id="P4332" sex="1" age="mid"/>
+        <listRelation>
+          <relation type="personal" name="spouse" mutual="#P1234 #P4332"/>
+        </listRelation>
+      </listPerson>
+    </egXML>
+  </exemplum>
+  <exemplum versionDate="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listPerson type="respondents">
+        <personGrp xml:id="fr_PXXX"/>
+        <person xml:id="fr_P1234" sex="2" age="mid"/>
+        <person xml:id="fr_P4332" sex="1" age="mid"/>
+        <listRelation>
+          <relation type="personal" name="spouse" mutual="#fr_P1234 #fr_P4332"/>
+        </listRelation>
+      </listPerson>
+    </egXML>
+  </exemplum>
+  <remarks versionDate="2006-10-08" xml:lang="en">
+    <p rend="dataDesc">The type attribute may be used to distinguish lists of people of a particular
+      type if convenient.</p>
+  </remarks>
+  <remarks versionDate="2008-12-09" xml:lang="fr">
+    <p rend="dataDesc"> L'attribut type peut être utilisé pour établir des listes par type de
+      personne si cela présente un intérêt.</p>
+  </remarks>
+  <remarks xml:lang="ja" versionDate="2008-04-05">
+    <p rend="dataDesc"> 属性typeは，特別な種類の人物を区別するために使われるかもしれない． </p>
+  </remarks>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDPERSE">13.3.2. The Person Element</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAH">15.2. Contextual Information</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD4">2.4. The Profile Description</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAS2">15.3.2. Declarable Elements</ref>
+  </listRef>
+</elementSpec><elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" ident="listPlace">
+  <gloss versionDate="2007-07-04" xml:lang="en">list of places</gloss>
+  <gloss versionDate="2007-12-20" xml:lang="ko">장소 목록</gloss>
+  <gloss versionDate="2008-04-06" xml:lang="es">lista de lugares</gloss>
+  <gloss versionDate="2008-12-09" xml:lang="fr">liste de lieux</gloss>
+  <gloss versionDate="2007-11-06" xml:lang="it">elenco dei luoghi</gloss>
+  <desc versionDate="2007-06-14" xml:lang="en">contains a list of places, optionally followed by a list of relationships (other than
+        containment) defined amongst them.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">장소 목록을 포함하며, 그 뒤에 수의적으로 그들 사이에 정의된 (포함 외의) 관련성 목록을
+        제시한다.</desc>
+  <desc versionDate="2008-04-06" xml:lang="es">contiene una lista de lugares, seguida opcionalmente
+        por una lista de interelaciones (a excepción de la inclusión) definidas entre ellos.</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">場所のリストを示す．選択的に，場所間の(包含関係ではなく)関連性を 示すリストが続く．</desc>
+  <desc versionDate="2008-12-09" xml:lang="fr">contient une liste de lieux, qui peut être suivie d'une
+        liste de relations définies entre les lieux (autres que la relation d'inclusion).</desc>
+  <desc versionDate="2007-11-06" xml:lang="it">contiene una lista di luoghi, eventualmente seguita da
+        una lista di relazioni tra questi (ad eccezione di quella contenete-contenuto)</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.declarable"/>
+    <memberOf key="att.sortable"/>
+    <memberOf key="model.listLike"/>
+    
+  </classes>
+  <content>
+    <sequence>
+      
+        <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <alternate minOccurs="1" maxOccurs="unbounded">
+          <classRef key="model.placeLike"/>
+          <elementRef key="listPlace"/>
+        </alternate>
+      
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <elementRef key="relation"/>
+          <elementRef key="listRelation"/>
+        </alternate>
+      
+    </sequence>
+  </content>
+  <exemplum xml:lang="mul">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listPlace type="offshoreIslands">
+        <place>
+          <placeName>La roche qui pleure</placeName>
+        </place>
+        <place>
+          <placeName>Ile aux cerfs</placeName>
+        </place>
+      </listPlace>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD3">2.2.7. The Source Description</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDGEOG">13.3.4. Places</ref>
+  </listRef>
+</elementSpec><elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" ident="person">
+  <gloss versionDate="2008-12-09" xml:lang="fr">personne</gloss>
+  <desc versionDate="2005-12-14" xml:lang="en">provides information about an identifiable individual, for example a participant in a language interaction, or a person referred to in a
+        historical source.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">예를 들어 언어 상호작용의 참여자 또는 역사적 문헌에서 언급된 사람과 같이 식별가능한 개인에 관한 정보를 제공한다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">提供一個已知人物的相關資料，例如語言互動中的參與者、或是歷史來源中提及的人物。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">特定可能な個人の情報を示す．例えば，言語交流の参加者，歴史資料中で参 照される人物など．</desc>
+  <desc versionDate="2009-03-19" xml:lang="fr">fournit des informations sur un individu identifiable, par exemple un participant à une interaction
+        linguistique, ou une personne citée dans une source historique.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">proporciona información relativa a un individuo específico, p.ej. un participante de una interacción
+        verbal o una persona identificada por una fuente histórica.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">fornisce informazioni relative a un soggetto specifico, come i partecipanti a un'interazione verbale o le
+        persone identificate da una fonte storica</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="att.editLike"/>
+    <memberOf key="model.personLike"/>
+    <memberOf key="att.sortable"/>
+  </classes>
+  <content>
+    <alternate>
+      
+        <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
+      
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.personPart"/>
+          <classRef key="model.global"/>
+        </alternate>
+      
+    </alternate>
+  </content>
+  <attList>
+    <attDef ident="role" usage="opt">
+      <desc versionDate="2005-12-14" xml:lang="en">specifies a primary role or classification for the person.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">사람에 대한 주요 역할 또는 분류를 명시한다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">說明該人物的主要角色或分類。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該人物の第一位の役割や分類を示す．</desc>
+      <desc versionDate="2009-03-19" xml:lang="fr">précise un rôle principal ou une classification principale pour cette personne.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">establece el rol o la clasificación primaria de una persona.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">stabilisce il ruolo o la classificazione primaria di una persona</desc>
+      <datatype maxOccurs="unbounded"><dataRef key="teidata.enumerated"/></datatype>
+<remarks versionDate="2013-12-21" xml:lang="en">
+        <p>Values for this attribute may be locally defined by a
+	project, using arbitrary keywords such as <val>artist</val>,
+	<val>employer</val>, <val>author</val>, <val>relative</val>, or
+	<val>servant</val>, each of which should be associated with a
+	definition. Such local definitions will typically be provided by a
+	<gi>valList</gi> element in the project schema
+specification.</p></remarks>
+    </attDef>
+    <attDef ident="sex" usage="opt">
+      <desc versionDate="2005-12-14" xml:lang="en">specifies the sex of the person.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">사람의 성을 명시한다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出該人物的性別。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該人物の性別を示す．</desc>
+      <desc versionDate="2009-03-19" xml:lang="fr">précise le sexe de la personne.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">especifica el sexo de una persona.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica il sesso di una persona</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.sex"/></datatype>
+      <remarks versionDate="2013-04-14" xml:lang="en">
+        <p>Values for this attribute may be locally defined by a project, or may refer to an external standard, such as
+          vCard's sex property <ptr target="http://microformats.org/wiki/gender-formats"/>
+          (in which <val>M</val> indicates male, <val>F</val> female, <val>O</val> other, <val>N</val> none or not applicable, <val>U</val> unknown),
+          or the often used ISO 5218:2004 <title>Representation of Human Sexes</title>
+               <ptr target="http://standards.iso.org/ittf/PubliclyAvailableStandards/c036266_ISO_IEC_5218_2004(E_F).zip"/> (in which <val>0</val>
+          indicates unknown; <val>1</val> male; <val>2</val> female; and <val>9</val> not applicable,
+          although the ISO standard is widely considered inadequate);
+          cf. CETH's <title>Recommendations for Inclusive Data Collection of Trans People</title>
+               <ptr target="http://transhealth.ucsf.edu/trans?page=lib-data-collection"/>.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="age" usage="opt">
+      <desc versionDate="2005-12-14" xml:lang="en">specifies an age group for the person.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">사람의 연령군을 명시한다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出該人物所屬的年齡層。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該人物の年齢層を示す．</desc>
+      <desc versionDate="2009-03-19" xml:lang="fr">précise une tranche d'âge pour la personne.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">especifica un intervalo de edad para una persona.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica la fascia di età di una persona</desc>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
+<remarks versionDate="2013-12-21" xml:lang="en">
+        <p>Values for this attribute may be locally defined by a
+	project, using arbitrary keywords such as <val>infant</val>,
+	<val>child</val>, <val>teen</val>, <val>adult</val>, or
+	<val>senior</val>, each of which should be associated with a
+	definition. Such local definitions will typically be provided by a
+	<gi>valList</gi> element in the project schema
+specification.</p></remarks>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <person sex="F" age="adult">
+        <p>Female respondent, well-educated, born in Shropshire UK, 12 Jan 1950, of unknown occupation. Speaks French fluently. Socio-Economic
+          status B2.</p>
+      </person>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <person sex="intersex" role="god" age="immortal">
+        <persName>Hermaphroditos</persName>
+        <persName xml:lang="grc">Ἑρμαφρόδιτος</persName>
+      </person>
+    </egXML>
+  </exemplum>
+  <exemplum versionDate="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <person sex="2" age="adult">
+        <p>Personne interrogée, de sexe féminin, instruite, née à Shropshire, au ROYAUME-UNI le 12
+            Janvier 1950, d'occupation inconnue. Parle le français couramment. Statut
+            socio-économique B2.</p>
+      </person>
+    </egXML>
+  </exemplum>
+  <exemplum versionDate="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <person xml:id="fr_Ovi01" sex="1" role="poet">
+        <persName xml:lang="en">Ovid</persName>
+        <persName xml:lang="la">Publius Ovidius Naso</persName>
+        <birth when="-0044-03-20"> 20 March 43 BC<placeName><settlement type="city">Sulmona</settlement><country key="IT">Italie</country></placeName>
+            </birth>
+        <death notBefore="0017" notAfter="0018">17 or 18 AD<placeName><settlement type="city">Tomis (Constanta)</settlement><country key="RO">Roumanie</country></placeName>
+            </death>
+      </person>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-TW">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <person sex="2" age="adult">
+        <p>女性被告。1950年1月12日生於西藏，受過良好教育，職業不明。能說流利漢語，中產階級。</p>
+      </person>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-TW">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <person xml:id="zh-tw_Ovi01" sex="1" role="poet">
+        <persName xml:lang="en">Ovid</persName>
+        <persName xml:lang="zh-TW">奧維德</persName>
+        <birth when="-0044-03-20"> 西元前43年3月20日<placeName><settlement type="city">Sulmona</settlement><country key="IT">義大利</country></placeName>
+            </birth>
+        <death notBefore="0017" notAfter="0018">西元後17或18年<placeName><settlement type="city">Tomis (Constanta)</settlement><country key="RO">羅馬尼亞</country></placeName>
+            </death>
+      </person>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <person xml:id="Ovi01" sex="1" role="poet">
+        <persName xml:lang="en">Ovid</persName>
+        <persName xml:lang="la">Publius Ovidius Naso</persName>
+        <birth when="-0044-03-20"> 20 March 43 BC <placeName><settlement type="city">Sulmona</settlement><country key="IT">Italy</country></placeName>
+            </birth>
+        <death notBefore="0017" notAfter="0018">17 or 18 AD <placeName><settlement type="city">Tomis (Constanta)</settlement><country key="RO">Romania</country></placeName>
+            </death>
+      </person>
+    </egXML>
+  </exemplum>
+  <remarks versionDate="2005-12-14" xml:lang="en">
+    <p rend="dataDesc">May contain either a prose description organized as paragraphs, or a sequence of more specific demographic elements drawn
+            from the <ident type="class">model.personPart</ident> class.</p>
+  </remarks>
+  <remarks versionDate="2008-12-09" xml:lang="fr">
+    <p rend="dataDesc">Peut contenir soit une description en prose organisée en paragraphes, soit une suite d'éléments spécifiques relatifs à la
+            démographie extraits de la classe <ident type="class">model.personPart</ident>.</p>
+  </remarks>
+  <remarks xml:lang="ja" versionDate="2008-04-05">
+    <p rend="dataDesc"> 段落による散文の解説，またはクラス <ident type="class">model.personPart</ident>にある一連の人口統計要 素を含むかもしれない． </p>
+  </remarks>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDPERSE">13.3.2. The Person Element</ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAHPA">15.2.2. The Participant Description</ref>
+  </listRef>
+</elementSpec><elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="place" module="namesdates">
+  <gloss versionDate="2008-12-09" xml:lang="fr">lieu</gloss>
+  <desc versionDate="2007-06-14" xml:lang="en">contains data about a geographic location</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">지리적 위치에 관한 데이터를 포함한다.</desc>
+  <desc versionDate="2008-04-06" xml:lang="es">contiene los datos sobre una localización geográfica</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">地理上の場所のデータを示す．</desc>
+  <desc versionDate="2008-12-09" xml:lang="fr">contient des informations sur un lieu géographique.</desc>
+  <desc versionDate="2007-11-06" xml:lang="it">contiene informazioni relative a un luogo geografico</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.editLike"/>
+    <memberOf key="att.sortable"/>
+    <memberOf key="model.placeLike"/>
+  </classes>
+  <content>
+    <sequence>
+      
+        <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      
+      <alternate>
+        
+          
+            <classRef key="model.pLike" minOccurs="0" maxOccurs="unbounded"/>
+          
+        
+        
+          <alternate minOccurs="0" maxOccurs="unbounded">
+            <classRef key="model.labelLike"/>
+            <classRef key="model.placeStateLike"/>
+            <classRef key="model.eventLike"/>
+          </alternate>
+        
+      </alternate>
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.noteLike"/>
+          <classRef key="model.biblLike"/>
+          <elementRef key="idno"/>
+          <elementRef key="linkGrp"/>
+          <elementRef key="link"/>
+        </alternate>
+      
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.placeLike"/>
+          <elementRef key="listPlace"/>
+        </alternate>
+      
+    </sequence>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <place>
+        <country>Lithuania</country>
+        <country xml:lang="lt">Lietuva</country>
+        <place>
+          <settlement>Vilnius</settlement>
+        </place>
+        <place>
+          <settlement>Kaunas</settlement>
+        </place>
+      </place>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDGEOG">13.3.4. Places</ref>
+  </listRef>
+</elementSpec><elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" module="corpus" ident="particDesc">
+    <gloss versionDate="2005-01-14" xml:lang="en">participation description</gloss>
+    <gloss versionDate="2007-12-20" xml:lang="ko">참여 기술</gloss>
+    <gloss versionDate="2007-05-02" xml:lang="zh-TW">參與描述</gloss>
+    <gloss versionDate="2007-06-12" xml:lang="fr">description des participants</gloss>
+    <gloss versionDate="2007-05-04" xml:lang="es">descripción de participación</gloss>
+    <gloss versionDate="2007-01-21" xml:lang="it">descrizione dei partecipanti</gloss>
+    <desc versionDate="2014-01-06" xml:lang="en">describes the identifiable speakers, voices, or
+        other participants in any kind of text or other persons named or otherwise referred to in a
+        text, edition, or metadata.</desc>
+    <desc versionDate="2007-12-20" xml:lang="ko">언어적 상호작용에서 식별가능한 화자, 음성, 또는 기타 참여자를 기술한다.</desc>
+    <desc versionDate="2007-05-02" xml:lang="zh-TW">描述在一個語言互動中可辨識的說話者、聲音或其他參與者。</desc>
+    <desc versionDate="2008-04-05" xml:lang="ja">言語交流における，特定可能な発話者，声，その他の参加者を示す．</desc>
+    <desc versionDate="2007-06-12" xml:lang="fr">décrit les locuteurs, voix ou autres participants
+        identifiables d'une interaction linguistique.</desc>
+    <desc versionDate="2007-05-04" xml:lang="es">describe los hablantes identificables, voces u
+        otros participantes de una interacción lingüística.</desc>
+    <desc versionDate="2007-01-21" xml:lang="it">descrive parlanti, voci o altri parlanti
+        identificabili in una interazione linguistica.</desc>
+    <classes>
+        <memberOf key="att.global"/>
+        <memberOf key="model.profileDescPart"/>
+        <memberOf key="att.declarable"/>
+    </classes>
+    <content>
+        <alternate>
+            
+                <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
+            
+            
+                <alternate minOccurs="1" maxOccurs="unbounded">
+                    <classRef key="model.personLike"/>
+                    <elementRef key="listPerson"/>
+                    <elementRef key="listOrg"/>
+                </alternate>
+            
+        </alternate>
+    </content>
+    <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"> <particDesc> <listPerson> <person xml:id="P-1234" sex="2" age="mid"> <p>Female informant, well-educated, born in
+            Shropshire UK, 12 Jan 1950, of unknown occupation. Speaks French fluently.
+            Socio-Economic status B2.</p> </person> <person xml:id="P-4332" sex="1"> <persName>
+            <surname>Hancock</surname> <forename>Antony</forename> <forename>Aloysius</forename>
+            <forename>St John</forename> </persName> <residence notAfter="1959">
+            <address>
+                <street>Railway Cuttings</street>
+                <settlement>East Cheam</settlement>
+              </address>
+            </residence> <occupation>comedian</occupation> </person> <listRelation> <relation type="personal" name="spouse" mutual="#P-1234 #P-4332"/> </listRelation> </listPerson>
+            </particDesc> </egXML>
+        <p>This example shows both a very simple person description, and a very detailed one, using
+            some of the more specialized elements from the module for Names and Dates. </p>
+    </exemplum>
+    <exemplum versionDate="2008-04-06" xml:lang="fr">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"> <particDesc> <listPerson> <person xml:id="fr_P-1234" sex="2" age="mid"> <p>informateur, sexe féminin, bonne éducation, née
+            à Shropshire UK, 12 Jan 1950, commerçante parle français couramment., Statut
+            socio-économique (SSE) : commerçant.</p> </person> <person xml:id="fr_P-4332" sex="1">
+            <persName> <surname>Delaunay</surname> <forename>Liliane</forename>
+            <forename>Andrée</forename> <forename>Alberte</forename> </persName> <residence notAfter="1959">
+            <address>
+                <street>rue de Falaise</street>
+                <settlement>la Guérinière, Caen</settlement>
+              </address>
+            </residence> <occupation>serveuse</occupation> </person> <listRelation> <relation type="personal" name="spouse" mutual="#fr_P-1234 #fr_P-4332"/> </listRelation>
+            </listPerson> </particDesc> </egXML>
+        <p> Cet exemple montre une description très
+            simple d'une personne et une description très détaillée, utilisant quelques éléments
+            plus spécialisés du module pour les noms et les dates. </p>
+    </exemplum>
+    <exemplum xml:lang="zh-TW">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n25"> <particDesc>
+            <listPerson> <person xml:id="zh-tw_P-1234" sex="2" age="mid">
+            <p>女性，穿了一件黑紗金絲相間的緊身旗袍，一個大道士髻梳得烏光水滑的高聳在頭頂上；耳墜、項鍊、手串、髮針、金碧輝煌的掛滿了一身。</p> </person> <person xml:id="zh-tw_P-4332" sex="1"> <persName> <surname>金</surname> <forename>兆麗</forename>
+            <addName>金大班</addName> </persName> <residence notAfter="1970">
+            <address>
+                <street>西門町</street>
+                <settlement>台北</settlement>
+              </address>
+            </residence> <occupation>舞女</occupation> </person> <listRelation> <relation type="personal" name="spouse" mutual="#zh-tw_P-1234 #zh-tw_P-4332"/> </listRelation>
+            </listPerson> </particDesc> </egXML>
+    </exemplum>
+    <remarks versionDate="2005-01-14" xml:lang="en">
+        <p rend="dataDesc">May contain a prose description organized as paragraphs, or a structured
+            list of persons and person groups, with an optional formal specification of any
+            relationships amongst them.</p>
+    </remarks>
+    <remarks xml:lang="fr" versionDate="2007-06-12">
+        <p rend="dataDesc">Peut contenir un texte organisé en paragraphes ou une liste structurée de
+            personnes, ou encore de groupes de personne, avec facultativement des spécifications
+            formelles des rapports qui les unissent.</p>
+    </remarks>
+    <remarks xml:lang="ja" versionDate="2008-04-05">
+        <p rend="dataDesc"> 段落としてある散文の解説または，関連性の形式定義を選択的に持つ，人 物やグループの構造化リストが示されるかもしれない． </p>
+    </remarks>
+    <listRef>
+        <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAH">15.2. Contextual Information</ref>
+        
+    </listRef>
+</elementSpec><elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" module="corpus" ident="settingDesc">
+    <gloss versionDate="2005-01-14" xml:lang="en">setting description</gloss>
+    <gloss versionDate="2007-12-20" xml:lang="ko">무대 기술</gloss>
+    <gloss versionDate="2007-05-02" xml:lang="zh-TW">背景描述</gloss>
+    <gloss versionDate="2007-06-12" xml:lang="fr">description du contexte</gloss>
+    <gloss versionDate="2007-05-04" xml:lang="es">descripción de realización</gloss>
+    <gloss versionDate="2007-01-21" xml:lang="it">descrizione dello scenario</gloss>
+    <desc versionDate="2014-01-06" xml:lang="en">describes the setting or settings within which a
+        language interaction takes place, or other places otherwise referred to in a text, edition,
+        or metadata.</desc>
+    <desc versionDate="2007-12-20" xml:lang="ko">언어적 상호작용이 발생하는 무대 또는 배경을 산문적 기술로서 또는 일련의 무대 요소로서
+        기술한다.</desc>
+    <desc versionDate="2007-05-02" xml:lang="zh-TW">描述語言互動所發生的一個或多個背景，可用一段散文描述或是一系列的背景元素來表達。</desc>
+    <desc versionDate="2008-04-05" xml:lang="ja">言語交流が行われた状況設定を，散文または一連の要素<gi>setting</gi>に
+        より示す．</desc>
+    <desc versionDate="2009-04-16" xml:lang="fr">décrit le(s) contexte(s) dans lesquels se situe une
+        interaction linguistique, soit sous la forme d'une description en prose, soit sous celle
+        d'une série d'éléments décrivant le contexte.</desc>
+    <desc versionDate="2007-05-04" xml:lang="es">describe en prosa, o mediante una serie de
+        elementos de realización, la realización o realizaciones dentro de las cuales una
+        interacción lingüística tiene lugar.</desc>
+    <desc versionDate="2007-01-21" xml:lang="it">descrive lo scenario o gli scenari nei quali si
+        svolge l'interazione linuistica, sia in forma di prosa descrittiva sia con elementi di
+        scenario.</desc>
+    <classes>
+        <memberOf key="att.global"/>
+        <memberOf key="model.profileDescPart"/>
+        <memberOf key="att.declarable"/>
+    </classes>
+    <content>
+        <alternate>
+            
+                <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
+            
+            
+                <alternate minOccurs="1" maxOccurs="unbounded">
+                    <elementRef key="setting"/>
+                    <classRef key="model.placeLike"/>
+                    <elementRef key="listPlace"/>
+                </alternate>
+            
+        </alternate>
+    </content>
+    <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"> <settingDesc> <p>Texts recorded in the
+            Canadian Parliament building in Ottawa, between April and November 1988 </p>
+            </settingDesc> </egXML>
+    </exemplum>
+    <exemplum versionDate="2008-04-06" xml:lang="fr">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"> <settingDesc> <p>Pierre Mendès France,
+            Entretiens avec Jean Lacouture (1980-1981 )</p> </settingDesc> </egXML>
+    </exemplum>
+    <exemplum xml:lang="zh-TW">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"> <settingDesc>
+            <p>文本錄於渥太華的加拿大國會大廈，介於1988年4月至11月間</p> </settingDesc> </egXML>
+    </exemplum>
+    <remarks versionDate="2014-01-06" xml:lang="en">
+        <p rend="dataDesc">May contain a prose description organized as paragraphs, or a series of
+            <gi>setting</gi> elements. If used to record not settings of language interactions, but
+            other places mentioned in the text, then <gi>place</gi> optionally grouped by
+            <gi>listPlace</gi> should be preferred.</p>
+    </remarks>
+    <remarks xml:lang="fr" versionDate="2007-06-12">
+        <p rend="dataDesc">Peut contenir un texte organisé en paragraphes ou une série d'éléments
+            <gi>setting</gi>.</p>
+    </remarks>
+    <remarks xml:lang="ja" versionDate="2008-04-05">
+        <p rend="dataDesc"> 段落レベルの散文，または一連の要素<gi>setting</gi>を含むかもしれない． </p>
+    </remarks>
+    <listRef>
+        <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAH">15.2. Contextual Information</ref>
+        <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD4">2.4. The Profile Description</ref>
+    </listRef>
+</elementSpec><moduleSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" n="ST" xml:id="DSTTEI2" ident="tei" type="core"/><moduleSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" n="CO" xml:id="DCO" ident="core"/><moduleSpec xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" n="HD" xml:id="DHD" ident="header"/><moduleSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" n="DS" xml:id="DDS" ident="textstructure"/><moduleSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" n="ND" xml:id="DND" ident="namesdates"/><moduleSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" n="CC" xml:id="DCCHDR" ident="corpus"/></schemaSpec>
          </div>
       </body>
    </text>

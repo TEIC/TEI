@@ -70,8 +70,8 @@
       <div>
         <head>Processing an ODD</head>
         <p>Let's look more closely at the way the TEI defines a very light weight schema called
-            <ident>TEI Bare</ident>. Its schema specification element begins like this :
-          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <ident>TEI Bare</ident>. Its schema specification element begins like this : <egXML
+            xmlns="http://www.tei-c.org/ns/Examples">
             <schemaSpec ident="tei_bare" xml:lang="en">
               <moduleRef key="core" include="p list item label head author title"/>
               <moduleRef key="tei"/>
@@ -242,20 +242,26 @@
           completed documents, combining both kinds of data. And there are some features
           (paragraphs, titles, etc.) common to both, which suggests you will also need a third
           schema... ODD chaining is the answer! </p>
-        <p>(Before reading further, I suggest you download our little set of example files, and fire
-          up your favourite XML processor) </p>
+        <p>(Before reading further, I suggest you download our <ref target="chainingTuto.zip">little
+            set of example files</ref>, and fire up your favourite XML processor. Please note that
+          we these example files are just meant to demonstrate the effect of chaining : in a real
+          life application, we would of course customize our schemas much more precisely, for
+          example by removing un-needed attributes, simplifying content models, adding different
+          examples etc.) </p>
         <p>We will need to define the third schema, which contains everything likely to be useful to
           either of the other two, plus everything common to both. Let's call this one our
             <ident>motherODD</ident>. Open the file <ident>motherODD.xml</ident> and you will see a
-          typical ODD, with root element TEI, defined with reference to the full TEI Guidelines. It
-          contains such elements as <gi>pb</gi>, <gi>p</gi>, <gi>hi</gi>
-          <gi>div</gi> and <gi>name</gi>, plus the minimal metadata set needed for a valid TEI
-          document. </p>
+          typical ODD, with root element TEI, defined with reference to the full TEI Guidelines. In
+          addition to the infrastructural module <ident>tei</ident>, it contains such elements as
+            <gi>pb</gi>, <gi>p</gi>, <gi>hi</gi>
+          <gi>div</gi> and <gi>name</gi> from the <ident>core</ident> module, plus the metadata set
+          we plan to use for each valid TEI document, which takes components from modules
+            <ident>header</ident>, <ident>namesdates</ident> and <ident>corpus</ident>. </p>
         <p>We will be defining our two more specialised schemas with reference to this one. We
           therefore need to <soCalled>compile</soCalled> the motherODD, effectively transforming it
           to a collection or library of complete TEI specifications. We do this by running the
             <ident>odd2odd</ident> transformation referred to above: the results for our example
-          file are in the file <ident>motherODD.compiled.xml</ident>. </p>
+          file are in the file <ident>motherODD.compiled</ident>. </p>
         <p>Now take a look at the two different subset ODDs in our example: one
             (<ident>justTranscripts.xml</ident>) for the transcriptions, and one
             (<ident>justMetadata.xml</ident>) for the metadata. Note that each of these ODD files
@@ -267,11 +273,15 @@
           the usual way. Then compare the outputs. We've included a couple of example data files for
           you to check that the validation works in the way it should: the file
             <ident>transcript.xml</ident> should be valid against the schema generated from the
-            <ident>justTranscripts</ident> ODD and the file <ident>metadata.xml</ident> sould be
-          valid against the schema generated from the <ident>justTranscripts</ident> ODD. </p>
+            <ident>justTranscripts</ident> ODD and the file <ident>metadata.xml</ident> should be
+          valid against the schema generated from the <ident>justTranscripts</ident> ODD. Our
+          example assumes a particular workflow in which, for example, the <att>ref</att> attribute
+          is used to link <gi>name</gi> elements with a <gi>person</gi> or <gi>place</gi> element in
+          the header; your mileage may of course vary. </p>
         <p>Finally, take a look at the file <ident>driver.tei</ident> : this uses xInclude to
           combine the two sample data files into a complete TEI document, which should be valid
-          against a schema generated from the motherODD. </p>
+          against a schema generated from the motherODD. Again, feel free to modify as necessary to
+          suit your own envisaged working practices! </p>
         <!-- still to come:
             chaining two or more customisations not involving p5 subset
             class and attribute tweaking
