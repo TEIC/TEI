@@ -221,15 +221,50 @@
           </schemaSpec></egXML>
         <p>We can use this technique to put back an element which was deleted from the compiled
           schema. For example, the <gi>q</gi> element is not available in TEI Bare, but we can
-          easily get it back. We can even specify which version of the <gi>q</gi> element we want:
-          in this case, we will get the version defined in TEI P5 release 3.0.0 :</p>
+          easily get it back :</p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <schemaSpec ident="Bare-plus" source="tei_bare.compiled.odd" start="TEI">
             <moduleRef key="tei"/>
             <moduleRef key="header"/>
-            <elementRef key="q" source="tei:3.0.0"/>
+            <elementRef key="q" source="http://www.tei-c.org/release/xml/tei/odd/p5subset.xml"/>
             <moduleRef key="textstructure"/>
           </schemaSpec></egXML>
+        </div><div><head>A footnote on versioning</head>
+          <p>We mentioned above that, unless otherwise stated, the default source for TEI
+            definitions to be included in an ODD is the current release of the TEI Guidelines. If
+            you don't supply a <att>source</att> attribute at all, you are requesting the
+            definitions provided by the file <ident>p5subset.xml</ident> forming part of the current
+            release. As we've seen, you can vary this by specifying your own source library as the
+            value of the <att>source</att> attribute. But how do you go about requesting a different
+            version of the TEI Guidelines as source ? </p><p>(See <ref
+              target="purifyDoc.html">How to Update your ODD</ref> for some discussion of
+              circumstances in which you might need to make your ODD 
+              use something other than the current version of the TEI
+            Guidelines, if only temporarily.)
+            </p><p>Previous versions of all parts of the P5 Guidelines are all kept on the TEI web site in a
+              folder with the address <code>
+                http://www.tei-c.org/Vault/P5/x.y.z</code>, where x.y.z identifies the version
+              concerned. So, if for example we wanted to process our ODD not against the current
+              p5subset.xml but against the version of that file released as part of 3.0.0, we would
+              supply <code>http://www.tei-c.org/Vault/P5/3.0.0/xml/tei/odd/p5subset.xml</code> as
+              the value for the <att>source</att> attribute on the <gi>schemaSpec</gi> defining our
+              ODD. We could do the same thing (though I don't recommend it) even at the level of
+              individual elements, by specifying a different version as source for an
+              <gi>elementSpec</gi>.</p><p>And just to make life a little simpler, there is an
+                officially recognized short cut built into the current ODD processing stylesheets:
+                instead of the lengthy URL above, we could simply say <code>tei:3.0.0</code>. For
+                example, supposing that for some strange reason we don't want to add the current
+                definition for <gi>q</gi> in the preceding example, but instead add the version 
+                defined in release 3.0.0, we might use the following ODD :
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <schemaSpec ident="Bare-plus" source="tei_bare.compiled.odd" start="TEI">
+                    <moduleRef key="tei"/>
+                    <moduleRef key="header"/>
+                    <elementRef key="q" source="tei:3.0.0"/>
+                    <moduleRef key="textstructure"/>
+                  </schemaSpec></egXML>
+             </p><p>There is a useful table listing the dates and version numbers of all TEI P5 releases at
+               <ptr target="http://www.tei-c.org/Guidelines/P5/index.xml#previous"/>.  </p>
       </div>
       <div>
         <head>A use case</head>
@@ -244,7 +279,7 @@
           schema... ODD chaining is the answer! </p>
         <p>(Before reading further, I suggest you download our <ref target="chainingTuto.zip">little
             set of example files</ref>, and fire up your favourite XML processor. Please note that
-          we these example files are just meant to demonstrate the effect of chaining : in a real
+          these example files are just meant to demonstrate the effect of chaining : in a real
           life application, we would of course customize our schemas much more precisely, for
           example by removing un-needed attributes, simplifying content models, adding different
           examples etc.) </p>
