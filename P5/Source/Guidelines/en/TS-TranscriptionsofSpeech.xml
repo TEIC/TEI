@@ -6,10 +6,7 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-
-
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="TS" n="11">
 <head>Transcriptions of Speech</head>
 
@@ -183,7 +180,7 @@ collection made up of transcribed <soCalled>sound bites</soCalled>
 taken from speeches given by a politician on different occasions
 might be encoded.  Each extract is regarded as a distinct
 <gi>div</gi>, nested within a single composite <gi>div</gi> as
-follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="soundbites" subtype="conservative" org="composite">
+follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><div type="soundbites" subtype="conservative" org="composite">
    <div sample="medial">
    </div>
    <div sample="medial">
@@ -332,7 +329,7 @@ interviewees, script writers, directors, producers, etc.) should be specified us
 <p>When a broadcast contains several distinct recordings (for example a
 compilation), additional <gi>recording</gi> elements may be further
 nested within the <gi>broadcast</gi> element.
-<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><recording dur="P100M">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><recording dur="P100M">
    <broadcast>
       <recording>
       </recording>
@@ -346,7 +343,7 @@ punctuation, special characters etc.) used in making the transcription. A number
 within particular research communities, or by users of particular transcription tools. The attributes <att>ident</att>
 and <att>version</att> may be used to refer to such conventions in a machine tractable way, where this is appropriate.
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
 <transcriptionDesc ident="HIAT" version="2004"/>
 </egXML>
 
@@ -967,7 +964,7 @@ to nest within each other.
 <p>Where segments of different kinds are to be distinguished within the
 same stretch of speech, the <att>type</att> attribute may be used, as in
 the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="true" xmlns:ext="http://www.example.org/ns/nonTEI"><u who="#T1">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:ext="http://www.example.org/ns/nonTEI" valid="true"><u who="#T1">
 <seg type="C">I think </seg>
 <seg type="C">this chap was writing </seg>
 <seg type="C">and he <del type="repeated">said hello</del> said </seg>
@@ -990,7 +987,7 @@ or minor (<code>type="M"</code>) units.</p>
 
 <p>For some features, it may be 
 more appropriate or convenient to introduce a new element in a custom namespace:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="false" xmlns:ext="http://www.example.org/ns/nonTEI"><u who="#T1">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:ext="http://www.example.org/ns/nonTEI" valid="false"><u who="#T1">
 <!-- ... --> 
 <seg type="C">and he said </seg>
 <seg type="C">I'm going to a 
@@ -1034,7 +1031,7 @@ playscript:
 Stig: Yes
 Lou: (nods vigorously)</egXML>
 To encode this, we first define the participants:
-<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><listPerson>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><listPerson>
 <person xml:id="stig"> <!-- ... --> </person>
 <person xml:id="lou"> <!-- ... --> </person>
 <person xml:id="jane"> <!-- ... --> </person>
@@ -1080,7 +1077,7 @@ attributes which indicate its exact temporal position relative to other
 elements in the same timeline, in addition to the sequencing implied by
 its position within it.</p>
 <p>For example:
-<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><timeline unit="s" origin="#TS-P1">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><timeline unit="s" origin="#TS-P1">
    <when xml:id="TS-P1" absolute="12:20:01+01:00"/>
    <when xml:id="TS-P2" interval="4.5" since="#TS-P1"/>
    <when xml:id="TS-P6"/>
@@ -1126,7 +1123,7 @@ point <val>TS-P6A</val>, which is synchronous with point
 <val>TS-P6</val> on the timeline.</p>
 <p>The synchronization represented by the preceding examples could
 equally well be represented as follows:
-<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><timeline origin="#ts-p1" unit="s">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und"><timeline origin="#ts-p1" unit="s">
   <when xml:id="ts-p1" absolute="12:20:01+01:00"/>
   <when synch="#ts-u1" xml:id="ts-p2" interval="4.5" since="#ts-p1"/>
   <when synch="#ts-x1" xml:id="ts-p6"/>
@@ -1139,7 +1136,7 @@ utterance) has been aligned with two different points,
 that the utterance spans at least those two points.</p>
 <p>Finally, a <gi>linkGrp</gi> may be used as an alternative to the
 <att>synch</att> attribute:
-<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><timeline origin="#TS-p1" unit="s">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und"><timeline origin="#TS-p1" unit="s">
   <when xml:id="TS-p1" absolute="12:20:01"/>
   <when xml:id="TS-p2" interval="4.5" since="#TS-p1"/>
   <when xml:id="TS-p6"/>
@@ -1166,7 +1163,7 @@ Tom: (at the same time) a lot more than this.  But I never
 A commonly used convention might be to transcribe such a passage as
 follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"> (1) I used to smoke [ a lot more than this ]
-(2)&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;[ you used to smoke ]
+(2)                 [ you used to smoke ]
 (1) but I never inhaled the smoke</egXML>
 Such conventions have the drawback that they are hard to generalize or
 to extend beyond the very simple case presented here.  Their reliance on
@@ -1234,9 +1231,9 @@ without any need to disrupt the normal syntax of the text.</p>
 might be represented using a musical-score-like notation, in which
 points of synchronization are represented by vertical alignment of the
 text:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"> Stig: This is |my&#160;&#160;|turn
-Jane:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;|Balderdash
-Lou&#160;:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;|No, |it's mine</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"> Stig: This is |my  |turn
+Jane:         |Balderdash
+Lou :         |No, |it's mine</egXML>
 All three speakers are simultaneous at the words <mentioned>my</mentioned>,
 <mentioned>Balderdash</mentioned>, and <mentioned>No</mentioned>; speakers Stig and Lou are
 simultaneous at the words <mentioned>turn</mentioned> and <mentioned>it's</mentioned>.
@@ -1404,7 +1401,7 @@ the following way:
 points within a transcript where words have been omitted, for example
 because they are inaudible, as in the following example in which 5 seconds of
 speech is drowned out by an external event:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><gap reason="passing-truck" quantity="5" unit="s"/></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><gap reason="passing-truck" quantity="5" unit="s"/></egXML></p>
 <p>The <gi>unclear</gi> element may be used to mark words which have
 been included although the transcriber is unsure of their accuracy:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u>...and then <unclear reason="passing-truck">marbled queen</unclear></u></egXML></p>
@@ -1421,7 +1418,7 @@ These elements are further discussed in section <ptr target="#COEDCOR"/>.
 speaker switches from one language to another, may easily be
 represented in a transcript by using the <gi>foreign</gi> element
 provided by the core tagset:
-<egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul">
 <u who="#P1">I proposed that <foreign xml:lang="de"> wir können 
 <pause dur="PT1S"/> vielleicht </foreign> go to warsaw 
 and <emph>vienna</emph> </u>
