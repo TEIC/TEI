@@ -6,12 +6,8 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-
-
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="CE"
-     n="17"><head>Certainty, Precision, and Responsibility</head>
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="CE" n="17"><head>Certainty, Precision, and Responsibility</head>
 <p>Encoders of text often find it useful to indicate that some aspects
 of the encoded text are problematic or uncertain, and to indicate who is
 responsible for various aspects of the markup of the electronic text.
@@ -142,7 +138,7 @@ way, that <q>Essex</q> really is  a place name here. The
 <att>degree</att> attribute is used to indicate the degree of
 confidence associated with the <gi>certainty</gi> element, expressed as a
 number between 0 and 1:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
 <!-- ... -->
 <certainty target="#CE-pl1" locus="name" degree="0.6"/></egXML>
 This expresses the point of view that there is a 60 percent chance of <q>Essex</q>
@@ -219,8 +215,7 @@ as well as about which markup to use.  This state of affairs can be expressed us
 <certainty target="#CE-p2" locus="start" given="#cert1" degree="0.9"/>
 <certainty xml:id="cert2" target="#CE-p2" locus="name" assertedValue="placeName" degree="0.4"/>
 <certainty target="#CE-p2" locus="start" given="#cert2" degree="0.5"/>
-<certainty xml:id="cert3" target="#CE-p2" locus="start"
-	   assertedValue="#CE-a1" given="#cert1" degree="0.1"/>
+<certainty xml:id="cert3" target="#CE-p2" locus="start" assertedValue="#CE-a1" given="#cert1" degree="0.1"/>
 <certainty xml:id="cert4" target="#CE-p2" locus="start" assertedValue="#CE-a1" given="#cert2" degree="0.5"/></egXML>
 
 Note the use of the <att>assertedValue</att> on <gi>certainty</gi>
@@ -253,7 +248,7 @@ example, we wish to indicate a low degree of confidence
 that the <gi>persName</gi> elements used throughout the whole document
 have been correctly applied:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
 <certainty locus="name" degree="0.3" match="//persName"/>
 </egXML>
 
@@ -275,7 +270,7 @@ Similarly, we may indicate that we have more
 confidence in the <gi>persName</gi> tagging within those <gi>div</gi>
 elements which have a <att>type</att> value of <code>checked</code>:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
 <certainty locus="name" degree="0.7" match="//div[@type='checked']//persName"/>
 </egXML>
 
@@ -296,7 +291,7 @@ application using the <att>given</att> attribute mentioned above.
 <p>When the <att>match</att> attribute is processed, the namespace bindings in
 force are those in effect at that point in the document. 
 For example, 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
 <div xmlns:my="http://www.example.org/ns/nonTEI">
 <!-- ... -->
 <certainty match=".//my:*" locus="value" degree="0.9"/>
@@ -377,11 +372,9 @@ uncertain. In this case, the <att>locus</att> attribute
 takes the value <val>value</val>. For example, supposing there is only a 50 percent chance that the question was spoken by
 participant A:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u xml:id="CE-u1" who="#A">Have you heard the election results?</u>
-<certainty target="#CE-u1" match="@who" locus="value"
-	   degree="0.5"/></egXML> or, equivalently and without the
+<certainty target="#CE-u1" match="@who" locus="value" degree="0.5"/></egXML> or, equivalently and without the
 need to define a target,
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#A">Have you heard the election results?<certainty match="@who" locus="value"
-	   degree="0.5"/></u>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#A">Have you heard the election results?<certainty match="@who" locus="value" degree="0.5"/></u>
 </egXML> 
 
 </p>
@@ -391,14 +384,14 @@ provide a powerful mechanism which can be used to indicate precision for a
 large number of assertions throughout an encoded document in an
 economical way. Some further
 examples follow:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
 <certainty match="//p" locus="location" degree="0.2"/>
 </egXML>
 This encoding indicates that there is only a 0.2 certainty that the
 boundaries of all <gi>p</gi> elements in the document have been correctly
 identified.</p>
 <p>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
 <certainty target="#a101" match="p" locus="location" degree="0.2"/>
 </egXML>
 This encoding indicates that there is only a 0.2 certainty that the
@@ -416,21 +409,21 @@ value for the <att>resp</att> attribute on the given <gi>persName</gi>
 element
 is correct.</p>
 <p>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
 <certainty match="//*/@resp" locus="value" degree="0.2"/>
 </egXML>
 This encoding indicates that there is only a 0.2 certainty that any
 value for the <att>resp</att> attribute is correct, wherever it
 appears in the document.</p>
 
-<p><egXML xmlns="http://www.tei-c.org/ns/Examples">
+<p><egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
 <certainty target="#dd001" match="@resp" locus="value" degree="0.2"/>
 </egXML>
 This encoding indicates that there is only a 0.2 certainty that the
 value for the <att>resp</att> attribute of the element indicated by
 the pointer <val>#dd001</val> is correct</p>
 
-<p><egXML xmlns="http://www.tei-c.org/ns/Examples">
+<p><egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
 <certainty match="//*[@resp='#LB']" locus="value" degree="0.2"/>
 </egXML>
 This encoding indicates that there is only a 0.2 certainty that the
@@ -499,7 +492,7 @@ Equally, if we know that every page of a
 manuscript has a width of at least 10 cm but no more than 30, we can
 use the attributes <att>atLeast</att> and <att>atMost</att>, as in the
 following examples:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
 <width atLeast="10" atMost="30" unit="cm" scope="all"/></egXML>
 </p>
 <p>Suppose however that the precision with which the value
@@ -536,7 +529,7 @@ some time in April of 1857.
 <p>It may also be useful to indicate that the precisions given for 
 minimum and maximum quanta differ. For example, to indicate that all
 pages measure at least 10 cm wide, and at most <emph>about</emph> 30:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
 <width xml:id="w00t" atLeast="10" atMost="30" unit="cm" scope="all"/>
 <precision target="#w00t" match="@atMost" precision="low"/>
 </egXML>
@@ -549,9 +542,8 @@ number of characters per line in a typescript. If in addition we wish
 to record the standard deviation for the values summarized by that
 average, this would require an additional <gi>precision</gi> element,
 as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<dim xml:id="dim1"
-type="avgLineLength" unit="chars" quantity="62.4"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+<dim xml:id="dim1" type="avgLineLength" unit="chars" quantity="62.4"/>
 <precision target="#dim1" stdDeviation="4"/>
 </egXML>
 </p>
@@ -594,7 +586,7 @@ element at the location indicated:
 </list></egXML></p>
 <p>Similarly, in the following example, we indicate that RC is
 responsible for proposing the value of the <att>rend</att> attribute:  
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <respons target="#CE-p5" match="@rend" locus="value" resp="#RC"/>
     </egXML>
 </p>

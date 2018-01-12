@@ -9,16 +9,17 @@
         <author>Lou Burnard</author>
       </titleStmt>
       <publicationStmt>
-        <p> Unpublished draft</p>
+        <p>Discussion draft</p>
       </publicationStmt>
       <sourceDesc>
         <p>authored from scratch</p>
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
+      <change when="2018-01-04">Expanded and announced on TEI-L</change>
       <change when="2016-10-22">Uploaded for Council review</change>
-      <change when="2016-10-21">Drafted first part on train from Paris to La Souterraine;l then lost
-        half of it by shutting lid in a hurry without saving first : doh. </change>
+      <change when="2016-10-21">Drafted first part on train from Paris to La Souterraine; then lost
+        half of it by shutting lid in a hurry without saving first: doh. </change>
     </revisionDesc>
   </teiHeader>
   <text>
@@ -32,7 +33,7 @@
           in this way as much as you like. You can use this feature in several different ways: <list>
             <item>you can add additional restrictions to an existing ODD, for example by changing
               the value list of an attribute</item>
-            <item> you can further reduce the subset of elements provided by an existing ODD</item>
+            <item>you can further reduce the subset of elements provided by an existing ODD</item>
             <item>you can add new elements or modules to an existing ODD</item>
           </list></p>
       </div>
@@ -70,7 +71,7 @@
       <div>
         <head>Processing an ODD</head>
         <p>Let's look more closely at the way the TEI defines a very light weight schema called
-            <ident>TEI Bare</ident>. Its schema specification element begins like this : <egXML
+            <ident>TEI Bare</ident>. Its schema specification element begins like this: <egXML
             xmlns="http://www.tei-c.org/ns/Examples">
             <schemaSpec ident="tei_bare" xml:lang="en">
               <moduleRef key="core" include="p list item label head author title"/>
@@ -133,7 +134,7 @@
           oXygen transformation to do it. We leave this as an exercise for the reader.</p>
       </div>
       <div>
-        <head>Chaining : subsetting </head>
+        <head>Chaining: subsetting </head>
         <p>Suppose we now have a compiled version of TEI_bare in the file
             <ident>TEI_bare.compiled.xml</ident>. Processing the following schema specification
           should produce exactly the same results as we received from the uncompiled version. </p>
@@ -147,7 +148,7 @@
         <p>This works because each of the <gi>moduleRef</gi> elements here refers to the module
           (i.e. set of elements etc.) <emph>available in the compiled ODD</emph> rather than to the
           module as defined in the whole TEI. Note also that simply supplying the compiled ODD as
-          source for a schema is not enough : we must also specify which of the declarations it
+          source for a schema is not enough: we must also specify which of the declarations it
           contains we want to use: <foreign>nihil ex nihilo fit</foreign>...! </p>
         <p>However, the reason we started down this path was not to find yet another way of doing
           the same thing. Let's now make a reduced version of TEI Bare in which the <gi>head</gi>
@@ -179,7 +180,7 @@
         </p>
       </div>
       <div>
-        <head>Chaining : supersetting</head>
+        <head>Chaining: supersetting</head>
         <p>But ODD chaining is not restricted to subsetting. Suppose we want to take the
           pre-existing TEI Bare schema and <emph>add</emph> declarations from some other module. We
           could of course laboriously copy all the declarations we want into our
@@ -198,7 +199,7 @@
           attribute to specify where to find the declarations for that module. No sense looking for
           them in <ident>tei_bare.compiled.odd</ident>: they're not there. Instead, we will collect
           them from the online copy of the compiled ODD which provides the whole TEI Guidelines, as
-          noted above. Of course we can also do the usual kind of subsetting : for example </p>
+          noted above. Of course we can also do the usual kind of subsetting: for example </p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <schemaSpec ident="Bare-plus" source="tei_bare.compiled.odd" start="TEI">
             <moduleRef key="tei"/>
@@ -221,7 +222,7 @@
           </schemaSpec></egXML>
         <p>We can use this technique to put back an element which was deleted from the compiled
           schema. For example, the <gi>q</gi> element is not available in TEI Bare, but we can
-          easily get it back :</p>
+          easily get it back:</p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <schemaSpec ident="Bare-plus" source="tei_bare.compiled.odd" start="TEI">
             <moduleRef key="tei"/>
@@ -279,7 +280,7 @@
           schema... ODD chaining is the answer! </p>
         <p>(Before reading further, I suggest you download our <ref target="chainingTuto.zip">little
             set of example files</ref>, and fire up your favourite XML processor. Please note that
-          these example files are just meant to demonstrate the effect of chaining : in a real
+          these example files are just meant to demonstrate the effect of chaining: in a real
           life application, we would of course customize our schemas much more precisely, for
           example by removing un-needed attributes, simplifying content models, adding different
           examples etc.) </p>
@@ -313,7 +314,7 @@
           example assumes a particular workflow in which, for example, the <att>ref</att> attribute
           is used to link <gi>name</gi> elements with a <gi>person</gi> or <gi>place</gi> element in
           the header; your mileage may of course vary. </p>
-        <p>Finally, take a look at the file <ident>driver.tei</ident> : this uses xInclude to
+        <p>Finally, take a look at the file <ident>driver.tei</ident>: this uses xInclude to
           combine the two sample data files into a complete TEI document, which should be valid
           against a schema generated from the motherODD. Again, feel free to modify as necessary to
           suit your own working practices! </p>
