@@ -6,10 +6,7 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-
-
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="DS" n="7">
 <head>Default Text Structure</head>
 <p>This chapter describes the default high-level structure for TEI
@@ -33,8 +30,7 @@ permits the encoder to distinguish metadata applicable to the whole
 collection of encoded texts, which is represented by the outermost
 <gi>teiHeader</gi>, from that applicable to each of the individual
 <gi>TEI</gi> elements within the corpus. Further information about the
-organization and encoding of language corpora is given in chapter <ptr
-target="#CC"/>.</p>
+organization and encoding of language corpora is given in chapter <ptr target="#CC"/>.</p>
 
 <p>In summary, when the default structure module is included in a
 schema, the following elements are available for the
@@ -84,7 +80,7 @@ elements:
 <specList><specDesc key="front"/><specDesc key="body"/><specDesc key="group"/><specDesc key="back"/></specList>
  </p>
 <p>The overall structure of a unitary text is:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible"><TEI>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND"><TEI>
   <teiHeader> <!-- ... --> </teiHeader>
   <text>
     <front>
@@ -100,7 +96,7 @@ elements:
  </TEI></egXML></p>
 <p>The overall structure of a composite text made up of two unitary
 texts is:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible"><TEI>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND"><TEI>
   <teiHeader>   <!-- ... --> </teiHeader>
   <text>
     <front>
@@ -203,7 +199,7 @@ element has the following additional attributes: <specList><specDesc key="att.ty
  </p>
 <p>Using this style, the body of a text containing two parts, each
 composed of two chapters, might be represented as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><body>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><body>
   <div type="part" n="1">
     <div type="chapter" n="1">
       <!-- text of part 1, chapter 1 -->
@@ -252,7 +248,7 @@ divisions are in use, a division at any one level (say,
 level (in this case, <gi>div4</gi>).</p>
 <p>Using this style, the body of a text containing two parts, each
 composed of two chapters, might be represented as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><body>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><body>
   <div1 type="part" n="1">
     <div2 type="chapter" n="1">
       <!-- text of part 1, chapter 1 -->
@@ -440,10 +436,7 @@ Now, assuming a customization in which a new element
 
 And finally, assuming a customization in which three new elements have
 been added: <gi scheme="imaginary">diaryEntry</gi> to the <ident type="class">model.div1Like</ident> class, and <gi scheme="imaginary">amEntry</gi> and
-<gi scheme="imaginary">pmEntry</gi> both to the <ident
-type="class">model.div2Like</ident> class: <egXML
-xmlns="http://www.tei-c.org/ns/Examples"
-xmlns:my="http://www.example.org/ns/nonTEI"><body>
+<gi scheme="imaginary">pmEntry</gi> both to the <ident type="class">model.div2Like</ident> class: <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:my="http://www.example.org/ns/nonTEI"><body>
    <p><!-- ... --></p>
    <my:diaryEntry type="entry" n="1">
      <my:amEntry type="morning" n="1.1"><p>[...]</p></my:amEntry>
@@ -779,8 +772,7 @@ encoding the same argument:
 saying, or a motto,  appearing on a title page, or at the start of a
 division.  It may be encoded using the special-purpose
 <gi>epigraph</gi> element, as in the following example:
-<egXML
-xmlns="http://www.tei-c.org/ns/Examples" source="#DSAE-eg-38a">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#DSAE-eg-38a">
 <titlePage>
 <docAuthor>E. M. Forster</docAuthor>
 <docTitle><titlePart>Howards End</titlePart></docTitle>
@@ -790,9 +782,7 @@ xmlns="http://www.tei-c.org/ns/Examples" source="#DSAE-eg-38a">
 When an epigraph contains a quotation, this may often be associated
 with a bibliographic reference. In such cases, it is recommended
 additionally to group the quotation and its source together using the
-<gi>cit</gi> element, as in the following example: <egXML
-xmlns="http://www.tei-c.org/ns/Examples" source="#DSAE-eg-38"><div
-n="19" type="chap"><head>Chapter 19</head>
+<gi>cit</gi> element, as in the following example: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#DSAE-eg-38"><div n="19" type="chap"><head>Chapter 19</head>
  <epigraph>
  <cit><quote>I pity the man who can travel
      from Dan to Beersheba, and say <q>'Tis all
@@ -1171,7 +1161,7 @@ by Swift and one by the editor, or by treating the Montagu and Pope
 sections as <gi>text</gi> elements containing the editor's essays as
 front matter. Marked in the second way, the Pope section of the book
 would look like this:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible"><text>  <!-- Section on Alexander Pope starts -->
+<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND"><text>  <!-- Section on Alexander Pope starts -->
         <front> <!-- biographical notice by editor --> </front>
 	<group>
 	  <text>  <!-- first poem --> </text>
@@ -1373,13 +1363,13 @@ wherever a <gi>div</gi> or <gi>div1</gi> (<gi>div2</gi>, etc.)  element may appe
 derived by copying  the first <gi>head</gi> element from each
 <gi>div</gi> element in a text, it might be more easily encoded as
 follows:
-<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><divGen type="toc"/></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><divGen type="toc"/></egXML>
 Similarly, in a digital edition combining a transcribed version
 of some text with a translated version of it, it may be desired to
 represent  the transcript, the translation, and an aligned version of
 the two as three distinct divisions. This could be achieved by an
 encoding like the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><div>
 <!-- transcript here--></div>
 <div><!-- translation here --></div> <divGen type="alignment"/></egXML> The processing to be carried out when a
 <gi>divGen</gi> element is rendered will be determined by the
@@ -1725,7 +1715,7 @@ explicitly encoded, and given identifiers, the references to them in the
 above index can more usefully be recorded as links. For example,
 assuming that the encoding of page 461 of the original source starts
 like this:
-<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><pb xml:id="P461"/></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><pb xml:id="P461"/></egXML>
 then the last item above might be encoded more usefully in either
 of the following forms:
   <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#DSBACK-eg-83">  <item>Alehouses, the number of, not
