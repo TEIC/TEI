@@ -2212,9 +2212,9 @@
           <elementSpec ident="div" mode="change">
             <constraintSpec ident="jtei.sch-divtypes-front" scheme="isoschematron">
               <constraint>
-                <sch:rule context="tei:div[@type = ('abstract', 'acknowledgements')]">
+                <sch:rule context="tei:div[@type = $div.types.front]">
                   <sch:assert test="parent::tei:front">
-                    Abstracts (<sch:name/>[@type="abstract"]) and acknowledgements (<sch:name/>[@type="acknowledgements"]) may only occur inside front.
+                    A text division of type <sch:value-of select="@type"/> may only occur inside front.
                   </sch:assert>
                 </sch:rule>
               </constraint>
@@ -2222,8 +2222,8 @@
             <constraintSpec ident="jtei.sch-divtypes-front2" scheme="isoschematron">
               <constraint>
                 <sch:rule context="tei:front/tei:div">
-                  <sch:assert test="@type=('abstract', 'acknowledgements')">
-                    Only abstracts (div[@type="abstract"]) and acknowledgements (div[@type="acknowledgements"]) may appear in the &lt;front&gt;.
+                  <sch:assert test="@type = $div.types.front">
+                    Only text divisions of type <sch:value-of select="string-join(for $i in $div.types.front return concat(if (index-of($div.types.front, $i) = count($div.types.front)) then 'or ' else (), '&quot;', $i, '&quot;'), ', ')"/> may appear in the &lt;front&gt;.
                   </sch:assert>
                 </sch:rule>
               </constraint>
@@ -2248,7 +2248,7 @@
             </constraintSpec>
             <constraintSpec ident="jtei.sch-div-head" scheme="isoschematron">
               <constraint>
-                <sch:rule context="tei:div[not(@type = ('editorialIntroduction', 'bibliography', 'abstract', 'acknowledgements'))]">
+                <sch:rule context="tei:body//tei:div[not(@type = ('editorialIntroduction'))]">
                   <sch:assert test="tei:head">
                     A <sch:name/> must contain a head.
                   </sch:assert>
@@ -2271,6 +2271,16 @@
                       supporters, etc.), it should be as brief as possible, and must appear in the
                       &lt;front&gt; element and nowhere else.</desc>
                   </valItem>
+                  <valItem ident="authorNotes">
+                    <gloss xml:lang="en" versionDate="2017-08-31">Author's notes for the article, appearing inside &lt;front&gt;.</gloss>
+                    <desc xml:lang="en" versionDate="2017-08-31">If an article includes a section for author notes, it should be as brief as possible, and must appear in the
+                      &lt;front&gt; element and nowhere else.)</desc>
+                  </valItem>
+                  <valItem ident="dedication">
+                    <gloss xml:lang="en" versionDate="2017-08-31">A dedication for the article, appearing inside &lt;front&gt;.</gloss>
+                    <desc xml:lang="en" versionDate="2017-08-31">If an article includes a section for a dedication, it should be as brief as possible, and must appear in the
+                      &lt;front&gt; element and nowhere else.)</desc>
+                  </valItem>
                   <valItem ident="appendix">
                     <gloss xml:lang="en" versionDate="2015-03-03">Appendix to the article, appearing inside &lt;back&gt;.</gloss>
                     <desc xml:lang="en" versionDate="2015-03-03">Any appendices must appear in the &lt;back&gt; of the article, following
@@ -2283,9 +2293,19 @@
                   </valItem>
                   <valItem ident="editorialIntroduction">
                     <gloss xml:lang="en" versionDate="2015-03-03">Editorial introduction, appearing inside &lt;body&gt;.</gloss>
-                    <desc xml:lang="en" versionDate="2015-03-03">An editorial introduction to an issue must contain a &lt;div 
+                    <desc xml:lang="en" versionDate="2015-03-03">[Reserved <emph>for editors only</emph>: An editorial introduction to an issue must contain a &lt;div 
                       type="editorialIntroduction"&gt;, which must appear in the &lt;body&gt;
-                      element and may not appear anywhere else.</desc>
+                      element and may not appear anywhere else.]</desc>
+                  </valItem>
+                  <valItem ident="editorNotes">
+                    <gloss xml:lang="en" versionDate="2017-08-31">Editor notes for the article, appearing inside &lt;front&gt;.</gloss>
+                    <desc xml:lang="en" versionDate="2017-08-31">[Reserved <emph>for editors only</emph>: if an article includes a section for editor notes, it should be as brief as possible, and must appear in the
+                      &lt;front&gt; element and nowhere else.]</desc>
+                  </valItem>
+                  <valItem ident="corrections">
+                    <gloss xml:lang="en" versionDate="2017-08-31">Statement of corrections to the article, appearing inside &lt;front&gt;.</gloss>
+                    <desc xml:lang="en" versionDate="2017-08-31">[Reserved <emph>for editors only</emph>: if an article needs corrections, those must be stated in this section, which  must appear in the
+                      &lt;front&gt; element and nowhere else.]</desc>
                   </valItem>
                 </valList>
               </attDef>
@@ -2939,6 +2959,7 @@
                 <sch:let name="apos.typographic" value="'[‘’]'"/>
                 <sch:let name="apos.straight" value="''''"/>
                 <sch:let name="quotes" value="concat('[', $apos.straight, '&quot;]')"/>
+                <sch:let name="div.types.front" value="('abstract', 'acknowledgements', 'authorNotes', 'editorNotes', 'corrections', 'dedication')"/>
               </sch:pattern>
             </constraint>
           </constraintSpec>
