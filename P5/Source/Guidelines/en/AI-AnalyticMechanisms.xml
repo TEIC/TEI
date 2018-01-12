@@ -6,10 +6,7 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-
-
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="AI" n="15"><head>Simple Analytic Mechanisms</head>
 
 <p>This chapter describes a module for associating simple analyses and
@@ -60,15 +57,13 @@ constitutes a <soCalled>word</soCalled> or a
 <soCalled>sentence</soCalled>, these remain generally useful concepts.
 In this section we discuss elements provided for marking up linguistic
 units down to the word level, however defined. 
-<specList><specDesc key="s"/><specDesc key="cl"/><specDesc
-key="phr"/><specDesc key="w" atts="lemma lemmaRef"/>
+<specList><specDesc key="s"/><specDesc key="cl"/><specDesc key="phr"/><specDesc key="w" atts="lemma lemmaRef"/>
 </specList>
  </p>
 <p>As members of the <ident type="class">att.segLike</ident> class, these
 elements all share the following attribute:
 <specList><specDesc key="att.segLike" atts="function"/></specList>
-They also share attributes from <ident
-type="class">att.typed</ident>:
+They also share attributes from <ident type="class">att.typed</ident>:
 <specList><specDesc key="att.typed" atts="type subtype"/></specList>
 </p>
 <p>These elements are also all members of the <ident type="class">model.segLike</ident> class, which is a subclass of
@@ -408,10 +403,9 @@ a Bodleian Library musical manuscript
 two different punctuation marks are used to distinguish kinds of pause
 in the text. The <term>punctus elevatus</term> (which resembles an inverted
 semicolon) is not a Unicode character, but may still be encoded using
-the <gi>g</gi> element. As further described in chapter <ptr
-target="#WD"/>, this element points to a definition for the intended
+the <gi>g</gi> element. As further described in chapter <ptr target="#WD"/>, this element points to a definition for the intended
 character which may be stored either locally or elsewhere.
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"  source="#punctuseg">deus qui regis omnia
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#punctuseg">deus qui regis omnia
 <pc><g ref="#pelev">;</g></pc> natus est in bethlehem
 <pc>.</pc>o <pc>.</pc> mira gratia...
 <!-- elsewhere -->
@@ -433,8 +427,7 @@ between the punctuation mark and its adjacent word. </p>
 as a strong punctuation mark, preceding the unit it marks, which is
 named <soCalled>para</soCalled>:
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <p><pc unit="para" force="strong"
-	     pre="true">¶</pc>Incipit...</p>
+      <p><pc unit="para" force="strong" pre="true">¶</pc>Incipit...</p>
     </egXML>
 </p>
 
@@ -541,7 +534,7 @@ pointer from a <gi>link</gi> element or some similar mechanism.  The
 <p>The <gi>span</gi> element provides a simple way of indicating such
 features as phrasal verbs in a linguistic analysis, as in this
 example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" >
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <s><w>What</w><w>did</w><w>you</w><w xml:id="mk01">make</w><w xml:id="up01">up</w></s>
 <span from="#mk01" to="#up01">phrasal verb "make up"</span>
 </egXML>
@@ -549,14 +542,14 @@ Here the two components of the span follow each other, so the
 <att>to</att> and <att>from</att> attributes may be used. The
 same effect could however be achieved by using the <att>target</att>
 attribute:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" >
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <s><w>What</w><w>did</w><w>you</w><w xml:id="mk02">make</w><w xml:id="up02">up</w></s>
 <span target="#mk02 #up02">phrasal verb "make up"</span>
 </egXML>
 This second approach might be cumbersome if the number of components
 to be combined is very large. It is however essential if the 
 components do not follow each other, as in this example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" >
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <s><w>Did</w><w>you</w><w xml:id="mk03">make</w><w>it</w><w xml:id="up03">up</w></s>
 <span target="#mk03 #up03">phrasal verb "make up"</span>
 </egXML>
@@ -756,7 +749,7 @@ whose content is a set of <gi>link</gi> elements which point to each
 interpretive element and its corresponding text unit.  This method does
 not require the use of the <att>ana</att> attribute on the text
 units.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp targFunc="interpretation text">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><linkGrp targFunc="interpretation text">
   <link target="#INTRO    #SS1-SS3"/>
   <link target="#CONFLICT #SS4A"/>
   <link target="#CLIMAX   #SS4B"/>
@@ -895,7 +888,7 @@ sentence (the word class codes have been deleted): <eg xml:space="preserve"><![C
 <p>Treating the labels on the brackets as phrase or clause
 interpretations, this analysis of the structure of the example sentence
 can be combined with the word class analysis and represented as follows
-(the symbol <val>V&amp;"/></val> representing the first part of a coordinate
+(the symbol <val>V&amp;"/&gt;</val> representing the first part of a coordinate
 phrase, has been replaced by <val>V1</val>, and <val>V+</val>, representing the
 second part, has been replaced by <val>V2</val>).
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><s type="sentence">
@@ -972,7 +965,7 @@ In this case, each linguistic segment must be supplied with its own
 
 Each segment-interpretation pair may now be represented by means of a
 <gi>link</gi> element inside an appropriate <gi>linkGrp</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="POS-annotation">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><linkGrp type="POS-annotation">
 <link target="#word-1 #AT0"/>
 <link target="#word-2 #NN1"/>
 <link target="#word-3 #POS"/>
