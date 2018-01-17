@@ -3430,7 +3430,7 @@ although <seg xml:id="network"
             <elementSpec ident="text" mode="change">
               <constraintSpec xmlns="http://www.tei-c.org/ns/1.0"
                 xmlns:XSL="http://www.w3.org/1999/XSL/Transform" ident="headeronlyelement"
-                scheme="isoschematron">
+                scheme="schematron">
                 <constraint>
                   <!-- <rule xmlns="http://purl.oclc.org/dsdl/schematron"
                     context="tei:att | tei:biblFull | tei:biblStruct | tei:change | tei:charDecl | tei:charProp | tei:editor
@@ -3496,7 +3496,7 @@ although <seg xml:id="network"
             <classSpec type="atts" ident="att.pointing" mode="change">
               <attList>
                 <attDef ident="target" mode="change">
-                  <constraintSpec ident="validtarget" scheme="isoschematron">
+                  <constraintSpec ident="validtarget" scheme="schematron">
                     <constraint>
                       <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:*[@target]">
                         <let name="results"
@@ -3511,7 +3511,7 @@ although <seg xml:id="network"
               </attList>
             </classSpec>
             <classSpec type="atts" ident="att.global.rendition" mode="change">
-              <constraintSpec ident="renditionpointer" scheme="isoschematron">
+              <constraintSpec ident="renditionpointer" scheme="schematron">
                 <constraint>
                   <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:*[@rendition]">
                     <let name="results"
@@ -3522,7 +3522,7 @@ although <seg xml:id="network"
                   </rule>
                 </constraint>
               </constraintSpec>
-              <constraintSpec ident="corresppointer" scheme="isoschematron">
+              <constraintSpec ident="corresppointer" scheme="schematron">
                 <constraint>
                   <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:*[@corresp]">
                     <let name="results"
@@ -4012,7 +4012,7 @@ although <seg xml:id="network"
             </elementSpec>
             
             <elementSpec ident="bibl" mode="change">
-              <constraintSpec mode="add" ident="noEmptyBibl" scheme="isoschematron">
+              <constraintSpec mode="add" ident="noEmptyBibl" scheme="schematron">
                 <constraint>
                   <assert xmlns="http://purl.oclc.org/dsdl/schematron"
                     test="child::* or child::text()[normalize-space()]" role="ERROR"> Element
@@ -4130,13 +4130,13 @@ although <seg xml:id="network"
               </model>
             </elementSpec>
             <elementSpec ident="choice" mode="change">
-              <constraintSpec ident="choiceSize" scheme="isoschematron" mode="add">
+              <constraintSpec ident="choiceSize" scheme="schematron" mode="add">
                 <constraint>
                   <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="count(*) &gt; 1"
                     role="ERROR"> Element "<name/>" must have at least two child elements.</assert>
                 </constraint>
               </constraintSpec>
-              <constraintSpec ident="choiceContent" scheme="isoschematron" mode="add">
+              <constraintSpec ident="choiceContent" scheme="schematron" mode="add">
                 <constraint>
                   <assert xmlns="http://purl.oclc.org/dsdl/schematron"
                     test="(tei:corr or tei:sic or tei:expan or     tei:abbr or tei:reg or tei:orig) and ((tei:corr and tei:sic) or (tei:expan     and tei:abbr) or (tei:reg and tei:orig))"
@@ -4571,7 +4571,7 @@ although <seg xml:id="network"
                 </remarks>
             </elementSpec>
             <elementSpec ident="pb" mode="change">
-              <constraintSpec ident="pbposition" scheme="isoschematron">
+              <constraintSpec ident="pbposition" scheme="schematron">
                 <constraint>
                   <report xmlns="http://purl.oclc.org/dsdl/schematron"
                     test="parent::*/text() and not           (preceding-sibling::text() and           following-sibling::text())"
