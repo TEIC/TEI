@@ -328,7 +328,7 @@
   <!-- others -->
   <!-- ****** -->
   <xsl:template name="element-is-in-module">
-    <constraintSpec scheme="isoschematron" ident="element-is-in-module">
+    <constraintSpec scheme="schematron" ident="element-is-in-module">
       <constraint>
         <xsl:for-each select="//moduleSpec/@ident">
           <xsl:variable name="this" select="."/>
@@ -714,7 +714,7 @@
               <xsl:comment> allow tables, figures, and formulæ </xsl:comment>
               <moduleRef key="figures" except="notatedMusic"/>
               
-              <constraintSpec scheme="isoschematron" ident="mode-child-sanity">
+              <constraintSpec scheme="schematron" ident="mode-child-sanity">
                 <constraint>
                   <sch:rule context="*[ @mode eq 'delete' ]">
                     <sch:report test="child::*">The specification element ＜<sch:name/>＞ has both a
@@ -748,7 +748,7 @@
                     <classRef key="model.oddDecl"/>
                   </alternate>
                 </content>
-                <constraintSpec scheme="isoschematron" ident="required-modules">
+                <constraintSpec scheme="schematron" ident="required-modules">
                   <gloss>required modules</gloss>
                   <constraint>
                     <sch:assert test="
@@ -763,7 +763,7 @@
                       textstructure). </sch:assert>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="isoschematron" ident="no-outside-specs">
+                <constraintSpec scheme="schematron" ident="no-outside-specs">
                   <desc>A <tag>*Spec</tag> element should either be within <gi>schemaSpec</gi>,
                     or be in a <gi>specGrp</gi> referred to by a <gi>specGrpRef</gi> wihin
                     <gi>schemaSpec</gi>.</desc>
@@ -780,7 +780,7 @@
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="isoschematron" ident="only-one-schemaSpec">
+                <constraintSpec scheme="schematron" ident="only-one-schemaSpec">
                   <desc>TEI permits <gi>schemaSpec</gi> as a repeatable child of <gi>div</gi> (or
                       <gi>body</gi>) or of <gi>encodingDesc</gi>. But <name type="cmd">roma</name>
                     only processes the first <gi>schemaSpec</gi> found (in document order). So we
@@ -823,7 +823,7 @@
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="moduleRef" mode="change">
-                <constraintSpec scheme="isoschematron" ident="if-url-then-prefix">
+                <constraintSpec scheme="schematron" ident="if-url-then-prefix">
                   <desc>This is not strictly necessary. The TEI patterns have a default prefix (the
                     value of <att>ident</att> of <gi>schemaSpec</gi>), so if only one external
                     module is imported, it does not need a prefix — there will not be any collisions
@@ -838,7 +838,7 @@
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="isoschematron" ident="no-duplicate-modules">
+                <constraintSpec scheme="schematron" ident="no-duplicate-modules">
                   <constraint>
                     <sch:rule context="tei:moduleRef[ @key ]">
                       <sch:let name="mykey" value="@key"/>
@@ -856,7 +856,7 @@
                     <datatype minOccurs="0" maxOccurs="unbounded">
                       <dataRef key="teidata.enumerated"/>
                     </datatype>
-                    <constraintSpec scheme="isoschematron" ident="include-required">
+                    <constraintSpec scheme="schematron" ident="include-required">
                       <constraint>
                         <sch:rule context="tei:moduleRef[ @key eq 'textstructure' and @include ]">
                           <sch:let name="inclusions" value="tokenize( @include, '\s+' )"/>
@@ -908,7 +908,7 @@
                     <datatype minOccurs="0" maxOccurs="unbounded">
                       <dataRef key="teidata.enumerated"/>
                     </datatype>
-                    <constraintSpec scheme="isoschematron" ident="need-required">
+                    <constraintSpec scheme="schematron" ident="need-required">
                       <constraint>
                         <sch:let name="exceptions" value="tokenize( ., '\s+' )"/>
                         <xsl:comment> We could get away with using a single test, i.e. </xsl:comment>
@@ -1100,7 +1100,7 @@
                     <elementRef key="listRef"        minOccurs="0" maxOccurs="unbounded"/>
                   </sequence>
                 </content>
-                <constraintSpec scheme="isoschematron" ident="module-except-when-add">
+                <constraintSpec scheme="schematron" ident="module-except-when-add">
                   <constraint>
                     <sch:assert test="@mode">in a customization ODD, the mode= attribute of
                       ＜elementSpec＞ should be specified</sch:assert>
@@ -1110,14 +1110,14 @@
                       not 'add'</sch:report>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="isoschematron" ident="only-1-per">
+                <constraintSpec scheme="schematron" ident="only-1-per">
                   <constraint>
                     <sch:report test=
                       "//tei:elementSpec[ @ident eq current()/@ident  and  not( . is current() ) ]"
                       >Current ODD processors will not correctly handle more than one ＜elementSpec＞ with the same @ident</sch:report>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="isoschematron" ident="dont-delete-required">
+                <constraintSpec scheme="schematron" ident="dont-delete-required">
                   <constraint>
                     <sch:report test="@mode='delete' and @ident='TEI'">Removing ＜TEI＞ from your
                       schema guarantees it is not TEI conformant</sch:report>
@@ -1239,7 +1239,7 @@
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="altIdent" mode="change">
-                <constraintSpec scheme="isoschematron" ident="altIdent-only-NCName">
+                <constraintSpec scheme="schematron" ident="altIdent-only-NCName">
                   <constraint>
                     <!-- Would like to just test if value is castable as an -->
                     <!-- xs:NCName, but some Schematron processors object saying -->
@@ -1417,7 +1417,7 @@
               <classSpec ident="att.global.rendition" module="tei" mode="delete" type="atts"/>
               <classSpec ident="att.global.responsibility" module="tei" mode="delete" type="atts"/>
 
-              <constraintSpec scheme="isoschematron" ident="tei-source">
+              <constraintSpec scheme="schematron" ident="tei-source">
                 <desc>Constrains the <att>source</att> from <ident type="class">att.readFrom</ident>
                   to those values recommended by TEI</desc>
                 <!-- WARNING: this rule/@context is not auto-generated, and -->
