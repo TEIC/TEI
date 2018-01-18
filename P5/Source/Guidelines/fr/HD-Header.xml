@@ -1348,7 +1348,7 @@ dans l’en-tête</item>
 <specList>
 <specDesc key="rendition"/>
 <specDesc key="namespace"/> 
-   <specDesc key="tagUsage"/> 
+ <specDesc key="tagUsage"/> 
 </specList>
 </p>
 <p>L’élément <gi>tagsDecl</gi> est constitué d’une séquence facultative d’éléments <gi>
@@ -1360,25 +1360,22 @@ ultérieures un outil pour des spécifications plus détaillées de restitution 
 <p>Cette proposition autorise l’encodeur à saisir une description informelle de
 restitution, ou style, sous forme de prose suivie libre uniquement. Il est compris que la
 restitution s’applique, par défaut, à toutes les occurrences d’un élément qui nomme son
-identifiant comme étant la valeur de l’attribut <att>render</att> de l’élément <gi>tagUsage
-</gi> en question. Dans le cas d’occurrences d’un élément auxquelles la restitution par
+identifiant comme étant la valeur de l’attribut global <att>rendition</att>. Dans le cas d’occurrences d’un élément auxquelles la restitution par
 défaut ne s’applique pas, l’encodeur devrait en donner une description précise et
-explicite en utilisant l’attribut global <att>rend</att> pour les éléments en question.</p>
+explicite en utilisant l’attribut global <att>rendition</att> pour les éléments en question.</p>
 <p>L’exemple suivant montre comment un encodeur peut préciser que les éléments
 Paragraphe <gi>p</gi> doivent être restitués par défaut en utilisant un ensemble de
 spécifications identifiées par <val>style1</val> tandis que les éléments Mise en valeur <gi>hi</gi> doivent utiliser un ensemble différent de spécifications identifiées par <val>
 style2</val> :
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><tagsDecl>
-   <rendition xml:id="style1">   
-      ... description d’une restitution par défaut…
+   <rendition xml:id="style1" scheme="css" selector="p">   
+      font-size: 110%
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
    </rendition>
-   <rendition xml:id="style2">   
-      ... description d’une autre restitution par défaut…
+   <rendition xml:id="style2" scheme="css" selector="hi">   
+      font-weight: bold;
    </rendition>
-   <namespace name="http://www.tei-c.org/ns/1.0">
-   <tagUsage gi="p" render="#style1"> ... </tagUsage>
-   <tagUsage gi="hi" render="#style2"> ... </tagUsage>
-   </namespace>
 </tagsDecl></egXML>
 </p>
 <p>Aucune proposition détaillée n’a pour le moment été faite sur le contenu de l’élément
