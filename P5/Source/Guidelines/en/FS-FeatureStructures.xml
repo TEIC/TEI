@@ -6,10 +6,7 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-
-
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="FS" n="16"><head>Feature Structures</head>
 <!-- this para is repeated at the start of ISO std -->
 <p>A <term>feature structure</term> is a general purpose data
@@ -114,7 +111,7 @@ following for the English segment [s].
 +---          ---+</eg>
  </p>
 <p>This representation may be encoded in XML as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><fs type="phonological_segments">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fs type="phonological_segments">
    <f name="consonantal"> <binary value="true"/>  </f>
    <f name="vocalic">     <binary value="false"/> </f>
    <f name="voiced">      <binary value="false"/> </f>
@@ -175,7 +172,7 @@ representable as character strings.  For example, the following might
 be used to represent the claim that the Latin noun form
 <mentioned>mensas</mentioned><!-- mentioned>the&#225;s</mentioned -->
 (tables) has accusative case, feminine gender, and
-plural number:<egXML xmlns="http://www.tei-c.org/ns/Examples"><fs>
+plural number:<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fs>
    <f name="case">   <symbol value="accusative"/> </f>
    <f name="gender"> <symbol value="feminine"/> </f>
    <f name="number"> <symbol value="plural"/> </f>
@@ -191,7 +188,7 @@ etc.)  and it is therefore appropriate to represent the values taken
 in this instance as <gi>symbol</gi> elements.  Note that, instead of
 using a symbolic value for grammatical number, one could have named
 the feature <term>singular</term> or <term>plural</term> and given it
-an appropriate binary value, as in the following example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs> 
+an appropriate binary value, as in the following example: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fs> 
   <f name="case"><symbol value="accusative"/></f>
   <f name="gender"><symbol value="feminine"/></f>
   <f name="singular"><binary value="false"/></f>
@@ -227,11 +224,11 @@ range (for example an address that spans several numbers), the
 represented should (or should not) be truncated. For example, assuming
 that the daily rainfall in mm is a feature of interest for some
 address, one might represent this by an encoding like the following:
- <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs>
+ <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fs>
    <f name="dailyRainFall"><numeric value="0.0" max="1.3" trunc="false"/></f>
 </fs></egXML> This  represents any of the infinite
 number of numeric values falling between 0 and 1.3; by contrast
- <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs>
+ <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fs>
    <f name="dailyRainFall"><numeric value="0.0" max="1.3" trunc="true"/></f>
 </fs></egXML> represents only two possible values: 0 and 1.
 </p>
@@ -279,15 +276,10 @@ the feature <val>part_of_speech</val> and its value
 <val>#commonNoun</val> are aligned with the respective definitions
 provided by <ref target="#ISO-12620">ISO DCR (Data Category
 Registry)</ref>, as implemented by ISOcat.
-<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND">
 <fs xmlns:dcr="http://www.isocat.org/ns/dcr">
 <!--...-->
-<f
-name="part_of_speech"
-dcr:datcat="http://www.isocat.org/datcat/DC-1345"
-fVal="#commonNoun"
-dcr:valueDatcat="http://www.isocat.org/datcat/DC-1256"
-/>
+<f name="part_of_speech" dcr:datcat="http://www.isocat.org/datcat/DC-1345" fVal="#commonNoun" dcr:valueDatcat="http://www.isocat.org/datcat/DC-1256"/>
 <!-- ... -->
 </fs>
 </egXML></p>
@@ -314,7 +306,7 @@ the next section. The following elements  are used for representing feature libr
  </p>
 <p>For example, suppose a feature library for phonological feature
 specifications is set up as follows.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><fLib n="phonological features">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fLib n="phonological features">
    <f xml:id="CNS1" name="consonantal"> <binary value="true"/> </f>
    <f xml:id="CNS0" name="consonantal"> <binary value="false"/> </f>
    <f xml:id="VOC1" name="vocalic">     <binary value="true"/> </f>
@@ -335,7 +327,7 @@ specifications is set up as follows.
 <p>Then the feature structures that represent the analysis of the
 phonological segments (phonemes) <code>/t/</code>, <code>/d/</code>,
 <code>/s/</code>, and <code>/z/</code> may be defined as follows.
-   <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><fs feats="#CNS1 #VOC0 #VOI0 #ANT1 #COR1 #CNT0 #STR0"/>
+   <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><fs feats="#CNS1 #VOC0 #VOI0 #ANT1 #COR1 #CNT0 #STR0"/>
 <fs feats="#CNS1 #VOC0 #VOI1 #ANT1 #COR1 #CNT0 #STR0"/>
 <fs feats="#CNS1 #VOC0 #VOI0 #ANT1 #COR1 #CNT1 #STR1"/>
 <fs feats="#CNS1 #VOC0 #VOI1 #ANT1 #COR1 #CNT1 #STR1"/></egXML>
@@ -347,7 +339,7 @@ correspond to phonological segments (there are no strident vowels, for
 example).  The legal combinations, however, can be collected together,
 each one represented as an identifiable <gi>fs</gi> element within a
 <term>feature-value library</term>, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><fvLib xml:id="fsl1" n="phonological segment definitions">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fvLib xml:id="fsl1" n="phonological segment definitions">
    <!-- ... -->
    <fs xml:id="T.DF" feats="#CNS1 #VOC0 #VOI0 #ANT1 #COR1 #CNT0 #STR0"/>
    <fs xml:id="D.DF" feats="#CNS1 #VOC0 #VOI1 #ANT1 #COR1 #CNT0 #STR0"/>
@@ -359,7 +351,7 @@ each one represented as an identifiable <gi>fs</gi> element within a
 <p>Once defined, these feature structure values can also be reused.
 Other <gi>f</gi> elements may invoke them by reference, using the
 <att>fVal</att> attribute; for example, one might use them in a
-feature value pair such as: <egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="dental-fricative" fVal="#T.DF"/> </egXML> rather than expanding the hierarchy of the
+feature value pair such as: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><f name="dental-fricative" fVal="#T.DF"/> </egXML> rather than expanding the hierarchy of the
 component phonological features explicitly.  </p>
 <p>Feature structures stored in this way  may also be associated with
 the text which they are intended to annotate, either by a link from the text
@@ -416,7 +408,7 @@ symbols <code>verb</code> or <code>transitive</code>. It might be
 preferable to replace these atomic feature values by feature
 structures.  Suppose therefore that we maintain a feature-value
 library for each of the major syntactic categories (N, V, ADJ, PREP):
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><fvLib n="Major category definitions">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fvLib n="Major category definitions">
 <!-- ... -->
 <fs xml:id="N" type="noun">
   <!--  noun features defined here -->
@@ -444,7 +436,7 @@ attribute, as in these examples:
 structure definitions is an essential simplification in any realistic
 example.  In this case, we assume the existence of a feature library
 containing specifications for the basic feature categories like the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><fLib n="categorial features">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fLib n="categorial features">
    <f xml:id="NN-1" name="nominal"><binary value="true"/></f>
    <f xml:id="NN-0" name="nominal"><binary value="false"/></f>
    <f xml:id="VV-1" name="verbal"><binary value="true"/></f>
@@ -489,7 +481,7 @@ a single feature structure. Within the representation, the feature
 indicating (say) number appears more than once. To represent the fact
 that each occurrence is another appearance of the same feature (rather
 than a copy) one could use an encoding like the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><fs xml:id="NVA">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fs xml:id="NVA">
 <f name="nominal">
   <fs>
     <f name="nm-num">
@@ -523,7 +515,7 @@ names of any
 sharing points it may contain are implicitly prefixed by the identifier used
 for the imported feature structure, to avoid name clashes. Thus, if
 some other feature structure were to reference the <gi>fs</gi> element
-   given in the example above, for example in this way: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><f name="class" fVal="#NVA"/></egXML> then
+   given in the example above, for example in this way: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><f name="class" fVal="#NVA"/></egXML> then
 the labelled points in the example would be interpreted as if they had the
 name <code>NVAL1</code>. </p>
 </div>
@@ -598,7 +590,7 @@ following encoding of the English verb form
 <mentioned>agreement</mentioned> feature whose value is a feature
 structure which contains <mentioned>person</mentioned> and
 <mentioned>number</mentioned> features with symbolic values.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><fs type="word">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fs type="word">
   <f name="category"> <symbol value="verb"/> </f>
   <f name="tense"> <symbol value="present"/> </f>
   <f name="agreement">
@@ -613,7 +605,7 @@ structure which contains <mentioned>person</mentioned> and
 the <mentioned>agreement</mentioned> feature structure are
 of no particular significance, the following simpler representation
 may be used:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><fs type="word">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fs type="word">
   <f name="category"> <symbol value="verb"/> </f>
   <f name="tense"> <symbol value="present"/> </f>
   <f name="agreement">
@@ -630,7 +622,7 @@ word <mentioned>auxquels</mentioned> has a two-part analysis,
 represented as a list of two values. The first specifies that the word contains a
 preposition; the second that it contains a masculine plural relative
 pronoun: 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><fs>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fs>
       <f name="lex">
 	<symbol value="auxquels"/>
       </f>
@@ -657,7 +649,7 @@ referring to the null set, bag, or list, depending on the value of its
 <p>If, for example, the individual described by the
 feature structure with identifier <code>p027</code> (above) had no siblings, we might specify the
 <mentioned>siblings</mentioned> feature as follows.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="siblings"><vColl org="set"/></f></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><f name="siblings"><vColl org="set"/></f></egXML>
  </p>
 <p>A <gi>vColl</gi> element may also collect together one or more other
 <gi>vColl</gi> elements, if, for example one of the members of a set is
@@ -689,11 +681,11 @@ features as <mentioned>number.of.bathrooms</mentioned>. In a
 particular case, we might wish to represent uncertainty as to whether
 a house has two or three bathrooms. As we have already shown, one
 simple way to represent this would be with a numeric maximum:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="number.of.bathrooms"><numeric value="2" max="3"/></f></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><f name="number.of.bathrooms"><numeric value="2" max="3"/></f></egXML>
  </p>
 <p>A  more general way would be to represent the
 alternation explicitly, in this way:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="number.of.bathrooms"> <vAlt><numeric value="2"/><numeric value="3"/> </vAlt></f></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><f name="number.of.bathrooms"> <vAlt><numeric value="2"/><numeric value="3"/> </vAlt></f></egXML>
  </p>
 <p>The <gi>vAlt</gi> element represents alternation over feature
 values, not feature-value pairs. If therefore the uncertainty relates
@@ -702,7 +694,7 @@ as a feature structure, since a feature structure can always appear
 where a value is required. For example, suppose that it is uncertain
 as to whether the house being described has two bathrooms or two
 bedrooms, a structure like the following may be used:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="rooms">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><f name="rooms">
    <vAlt>
       <fs><f name="number.of.bathrooms"> <numeric value="2"/> </f></fs>
       <fs><f name="number.of.bedrooms"> <numeric value="2"/> </f></fs>
@@ -714,7 +706,7 @@ in the case above, the implication is that  having two bathrooms
 excludes the possibility of having two bedrooms and vice versa. If
 inclusive alternation is required, a <gi>vColl</gi> element may be
 included in the alternation as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="rooms">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><f name="rooms">
    <vAlt><fs><f name="number.of.bathrooms"> <numeric value="2"/> </f></fs>
           <fs><f name="number.of.bedrooms"> <numeric value="2"/> </f></fs>
       <vColl>
@@ -780,7 +772,7 @@ appear. It contains any feature value and returns the complement of
 its contents. For example, the feature
 <mentioned>number.of.bathrooms</mentioned> in the following example
 has any whole numeric value other than 2:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="number.of.bathrooms"> <vNot><numeric value="2"/> </vNot></f></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><f name="number.of.bathrooms"> <vNot><numeric value="2"/> </vNot></f></egXML>
  </p>
 <p>Strictly speaking, the effect of the <gi>vNot</gi> element is to
 provide the complement of the feature values it contains, rather than
@@ -835,7 +827,7 @@ possible values for a feature <soCalled>genders</soCalled> used to
 describe some language. It would be natural to represent the possible
 values  as a set, using the <gi>vColl</gi> element as in the following
 example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><fs>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fs>
 <f name="genders">
    <vColl org="set">
        <symbol value="masculine"/>
@@ -849,7 +841,7 @@ example:
 to add a new possible value, and to treat the value of the
 feature as a list rather than as a set. The <gi>vMerge</gi> element can
 be used to achieve this:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><fs>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fs>
 <f name="genders">
 <vMerge org="list">
    <vColl org="set">
@@ -887,7 +879,7 @@ element is provided for this purpose:
 attribute is understood to be the most general
 case, i.e. any of the available values. Thus, assuming the feature
 system defined above, the following two representations are equivalent. 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="gender"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><f name="gender"/>
 <f name="gender">
    <vAlt>
       <symbol value="feminine"/>
@@ -899,13 +891,13 @@ system defined above, the following two representations are equivalent.
 <p>If, however, the value is explicitly stated to be the default one,
 using the <gi>default</gi> element, then the  following two representations
 are equivalent: 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="gender"> <default/> </f></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="gender"> <symbol value="neuter"/> </f></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><f name="gender"> <default/> </f></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><f name="gender"> <symbol value="neuter"/> </f></egXML>
  </p>
 <p>Similarly, if the value is stated to be the negation of the
 default, then the following two representations are equivalent:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="gender"> <vNot><default/></vNot> </f></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="gender">    <vAlt>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><f name="gender"> <vNot><default/></vNot> </f></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><f name="gender">    <vAlt>
       <symbol value="feminine"/>
       <symbol value="masculine"/>
 </vAlt></f></egXML>
@@ -952,7 +944,7 @@ components of a feature-structure library, which represents all of the
 grammatical structures used by this encoding scheme. (For illustrative
 purposes, we cite here only the structures needed for the first six
 words of the sample sentence):
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><fvLib xml:id="C6" n="Claws 6 tags">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fvLib xml:id="C6" n="Claws 6 tags">
    <!-- ... -->
    <fs xml:id="ajs" type="grammatical_structure" feats="#wj #ds"/>
    <fs xml:id="at0" type="grammatical_structure" feats="#wl"/>
@@ -967,7 +959,7 @@ referenced in much the same way, using the
 <att>feats</att> attribute to  identify one or more <gi>f</gi>
 elements in the following feature library (again, only a few of the
 available features are quoted here):
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><fLib>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fLib>
    <!-- ... -->
    <f xml:id="fl-bv" name="verbbase"> <symbol value="main"/> </f>
    <f xml:id="fl-bp" name="prepbase"> <symbol value="lexical"/> </f>
@@ -1022,7 +1014,7 @@ given an identifier of some sort, as follows:
 <!-- ... --></s></egXML>
 It would then be possible to link each word to its intended
 annotation in the feature library quoted above, as follows:
-   <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="POS-codes">	<!-- ... -->
+   <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><linkGrp type="POS-codes">	<!-- ... -->
    <link target="#mds0901 #at0"/><link target="#mds0902 #ajs"/>
    <link target="#mds0903 #pnp"/><link target="#mds0904 #vvd"/>
    <link target="#mds0905 #prp"/><link target="#mds0906 #nn1"/>
@@ -1149,7 +1141,7 @@ contains feature structures of two types: <val>gpsg</val> and
 <val>lex</val>. We might simply embed an <gi>fsDecl</gi> element for
 each within the header attached to the document as follows:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND">
    <TEI>
    <teiHeader>
       <fileDesc> <!-- example --> </fileDesc>
@@ -1189,7 +1181,7 @@ pointing to them from this second document.  The easiest<note place="bottom">Way
 using an XML identifier are discussed in <ptr target="#SAUR"/></note>
 way of accomplishing this is to add an XML identifier to each
 <gi>fsDecl</gi> element in <ident type="file">example.xml</ident>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND">
            <!-- ... -->
            <fsdDecl>
            <fsDecl type="gpsg" xml:id="GPSG">
@@ -1207,7 +1199,7 @@ the standards required for identifiers, and that it be unique within
 the document containing it.)</p>
 <p>In the <gi>fsdDecl</gi> for the second document, we can now include
 pointers to the <gi>fsDecl</gi> elements in the first:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND">
    <TEI>
    <teiHeader>
       <fileDesc> <!-- doc2  --> </fileDesc>
@@ -1215,7 +1207,7 @@ pointers to the <gi>fsDecl</gi> elements in the first:
            <!-- ... -->
            <fsdDecl>
            <fsdLink type="gpsg" target="example.xml#GPSG"/>
-           <fsdLink type="lexx" target="example.xml#GPSG"/>
+           <fsdLink type="lexx" target="example.xml#LEX"/>
 	   </fsdDecl>
            <!-- ... -->
       </encodingDesc>
@@ -1736,12 +1728,12 @@ following elements make up the <gi>fsConstraints</gi> part of an FSD:
 <p>For an example of feature structure constraints, consider the
 following <soCalled>feature co-occurrence restrictions</soCalled>
 extracted from the feature system for English proposed by Gazdar, et al. (1985:246–247):
-<eg>[FCR 1:  [+INV] &#8594; [+AUX, FIN]</eg>
-<eg>FCR 7:  [BAR 0] &#x2261; [N] &amp; [V] &amp; [SUBCAT]</eg>
-<eg>FCR 8:  [BAR 1] &#8594; ~[SUBCAT]]</eg></p>
+<eg>[FCR 1:  [+INV] → [+AUX, FIN]</eg>
+<eg>FCR 7:  [BAR 0] ≡ [N] &amp; [V] &amp; [SUBCAT]</eg>
+<eg>FCR 8:  [BAR 1] → ~[SUBCAT]]</eg></p>
 <p>The first constraint says that if a construction is inverted, it must
 also have an auxiliary and a finite verb form.  That is,
-   <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><cond>
+   <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><cond>
    <fs><f name="INV"><binary value="true"/></f></fs>
  <then/>
    <fs><f name="AUX"><binary value="true"/></f>
@@ -1753,7 +1745,7 @@ zero (i.e., it is a sentence), then it must have a value for the
 features N, V, and SUBCAT.  By the same token, because it is a
 biconditional, if it has values for N, V, and SUBCAT, it must have
 BAR='0'.  That is,
-   <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><bicond>
+   <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><bicond>
    <fs><f name="BAR"><symbol value="0"/></f></fs>
    <iff/>
    <fs>
@@ -1767,7 +1759,7 @@ BAR='0'.  That is,
 (i.e., it is a phrase), then the SUBCAT feature should be absent (~).
 This is not biconditional, since there are other instances under which
 the SUBCAT feature is inappropriate.  That is,
-   <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><cond>
+   <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><cond>
    <fs><f name="BAR"><symbol value="1"/></f></fs>
   <then/>
     <fs><f name="SUBCAT"><binary value="false"/></f></fs>
