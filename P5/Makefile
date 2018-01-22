@@ -402,8 +402,8 @@ dependencies:
 	@echo	fonts-arphic-uming
 	@echo	ttf-baekmuk
 	@echo	ttf-junicode
-	@echo	ttf-kochi-gothic
-	@echo	ttf-kochi-mincho
+	@echo	fonts-ipafont-gothic
+	@echo	fonts-ipafont-mincho
 	@echo	zip
 	@echo   ttf-linux-libertine
 	@echo 	ttf-hannom
