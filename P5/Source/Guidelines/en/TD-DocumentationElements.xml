@@ -581,8 +581,10 @@ to mark any technical term, thus:
   </div>
   <div type="div3" xml:id="TDTAG">
     <head>Element Specifications</head>
-    <p>The <gi>elementSpec</gi> element is used to document an element type, together with its associated
-      attributes. In addition to the elements listed above, it may contain the following subcomponents: <specList>
+    <p>The <gi>elementSpec</gi> element is used to document an element
+    type, together with its associated attributes. In addition to the
+    elements listed above, it may contain the following subcomponents:
+    <specList>
         <specDesc key="content" atts="autoPrefix"/>
         <specDesc key="constraintSpec" atts="scheme"/>
         <specDesc key="attList" atts="org"/>
@@ -598,23 +600,26 @@ to mark any technical term, thus:
       what order they are permitted — is described by its
       <term>content model</term>. The content model is defined by the
       <gi>content</gi> child of <gi>elementSpec</gi>. There are three
-      distinctly different ways of specifying a content model.</p>
-      <p>The content model can be described using TEI elements defined
-      by this chapter, as discussed in <ptr target="#DEFCONTEI"/>
-      immediately below. Two such TEI elements that may be used to
-      define a content model are <gi>dataRef</gi> and
-      <gi>valList</gi>. But because these are most often used to
-      define attribute values, they are discussed separately near the
-      beginning and towards the end of <ptr target="#TDATTvs"/>,
-      respectively.</p>
-      <p>Alternatively, and primarily for backwards compatibility, the
-      content model may be expressed using a RELAX NG pattern. This is
-      discussed in <ptr target="#TDTAGCONT"/>, below.</p>
-      <p>Lastly, content models may be expressed using a schema
-      language other than TEI or RELAX NG. This requires the ODD
-      writer to re-define <code>macro.schemaPattern</code>, which as
-      provided by the module defined in this chapter constrains the
-      non-TEI schema language constructs to RELAX NG.</p>
+      distinctly different ways of specifying a content model:
+      <list rend="bulleted">
+	<item>The content model can be described using TEI elements
+	defined by this chapter, as discussed in <ptr
+	target="#DEFCONTEI"/> immediately below. Two such TEI elements
+	that may be used to define a content model are
+	<gi>dataRef</gi> and <gi>valList</gi>. But because these are
+	most often used to define attribute values, they are discussed
+	separately near the beginning and towards the end of <ptr
+	target="#TDATTvs"/>, respectively.</item>
+	<item>Alternatively, and primarily for backwards
+	compatibility, the content model may be expressed using a
+	RELAX NG pattern. This is discussed in <ptr
+	target="#TDTAGCONT"/>, below.</item>
+	<item>Lastly, content models may be expressed using a schema
+	language other than TEI or RELAX NG. This requires the ODD
+	writer to re-define <code>macro.schemaPattern</code>, which as
+	provided by the module defined in this chapter constrains the
+	non-TEI schema language constructs to RELAX NG.</item>
+      </list></p>
       <div xml:id="DEFCONTEI">
 	<head>Defining Content Models: TEI</head>
 	<p>In the simplest case, the content model of an element may
@@ -634,15 +639,23 @@ to mark any technical term, thus:
       to define a content model:
       <specList>
 	<specDesc key="elementRef"/>
+	<specDesc key="anyElement"/>
 	<specDesc key="classRef"/>
 	<specDesc key="macroRef"/>
       </specList>
       </p>
-      <p>An <gi>elementRef</gi> provides the name of an element which may
-      appear at a certain point in a content model. A <gi>classRef</gi>
-      provides the name of a class, members of which may appear at a
-      certain point in content model. A <gi>macroRef</gi> provides the
-      name of a predefined macro, the expansion of which may be inserted
+      <p>An <gi>elementRef</gi> provides the name of an element which
+      may appear at a certain point in a content model. An
+      <gi>anyElement</gi> also asserts that an element may appear at a
+      certain point in a content model, but rather than providing the
+      name of a particular element type that may appear, any element
+      regardless of its name may appear (and may have any attributes).
+      A <gi>classRef</gi> provides the name of a model class, members
+      of which may appear at a certain point in content model.<note
+      place="bottom">The <gi>classRef</gi> element may be used to
+      refer to attribute classes, but this should not be done within a
+      <gi>content</gi>.</note> A <gi>macroRef</gi> provides the name
+      of a predefined macro, the expansion of which is to be inserted
       at a certain point in a content model.</p>
       <p>These three elements are all members of an attribute class
       which provides attributes that further modify their significance
@@ -717,7 +730,7 @@ to mark any technical term, thus:
       </egXML>
       In the following example, which might be imagined as a clean
       replacement for the content of the <gi>address</gi> element, the
-      encoder is given a choice: either
+      encoder is given a choice of either:
       <list>
 	<item>a single <gi>street</gi> followed by a single
 	<gi>placeName</gi> followed by a single <gi>postCode</gi>
