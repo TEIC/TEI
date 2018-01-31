@@ -5,8 +5,8 @@ Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details.
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="WD" n="25">
 <head>Characters, Glyphs, and Writing Modes</head>
     <!-- to become : head>Characters, Glyphs, and Writing Systems</head-->
@@ -20,8 +20,7 @@ introduce markup which may be used to represent and document
 non-standard characters, that is, written symbols for which no
 codepoint exists in Unicode. The same markup may be used to annotate
 existing characters according to their visual or other properties, and
-thus process them as distinct glyphs (see section <ptr
-target="#D25-30"/>), or to define new characters or glyphs (section
+thus process them as distinct glyphs (see section <ptr target="#D25-30"/>), or to define new characters or glyphs (section
 <ptr target="#D25-40"/>).  We also provide recommendations concerning
 the Unicode Private Use Area (<ptr target="#D25-50"/>. Finally, in
 section <ptr target="#WDWM"/> we
@@ -152,8 +151,7 @@ encoding="iso-8859-1"?&gt;</code> any Unicode characters which are not
 in the ISO-8859-1 character set must be represented by NCRs. </p>
      <p>The <mentioned>gaiji</mentioned> module defined by this
      chapter adds a further way of representing specific characters
-     and glyphs in a document. (Gaiji is from Japanese <seg
-     xml:lang='ja'>外字</seg>, meaning <gloss>external
+     and glyphs in a document. (Gaiji is from Japanese <seg xml:lang="ja">外字</seg>, meaning <gloss>external
      characters</gloss>.) This allows the encoder to distinguish
      characters and glyphs which Unicode regards as identical, to add
      new nonstandard characters or glyphs, and to represent Unicode
@@ -197,8 +195,7 @@ below. It declares the following additional elements:
 <specDesc key="charDecl"/>
 <specDesc key="g" atts="ref"/>
 </specList>
-The <gi>charDecl</gi> element is a member of the class <ident
-type="class">model.encodingDescPart</ident>, and thus becomes
+The <gi>charDecl</gi> element is a member of the class <ident type="class">model.encodingDescPart</ident>, and thus becomes
 available within <gi>encodingDesc</gi> when this module is included in
 a schema.  The <gi>g</gi> element is the only member of the class
 <ident type="class">model.gLike</ident>: this class is referenced as
@@ -561,8 +558,7 @@ the letter we wish to distinguish: <egXML xmlns="http://www.tei-c.org/ns/Example
    <figure><graphic url="Filig.png"/></figure>
  </glyph>
 </egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p> ... <abbr><g
-ref="#per">per</g></abbr> ardua</p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><p> ... <abbr><g ref="#per">per</g></abbr> ardua</p>
 <!-- in the charDecl -->
   <glyph xml:id="per">
    <glyphName>LATIN ABBREVIATION PER</glyphName>  
@@ -639,7 +635,7 @@ represented as follows:<eg><![CDATA[<abbr>&r1;</abbr>]]></eg></p>
     multiple variants, none of which has been defined in Unicode. In
     this case, we need to define one as a new character using
     <gi>char</gi>, and the others as glyphs using <gi>glyph</gi>.
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <charDecl>
 	<char xml:id="newchar1">
 	  <!-- more properties here -->
@@ -688,8 +684,7 @@ loses the fact that the sequence of composed characters is regarded as
 a single object; the second is not reliably portable. 
 Therefore, the recommended
 representation is to use the <gi>g</gi> element defined by
-the module defined in this chapter: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><g
- ref="#ydotacute"/></egXML>. This makes it possible for the encoder to
+the module defined in this chapter: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><g ref="#ydotacute"/></egXML>. This makes it possible for the encoder to
 provide useful documentation for the particular character or glyph so referenced:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><char xml:id="ydotacute">
        <charName>LATIN SMALL LETTER Y WITH DOT ABOVE AND
@@ -713,7 +708,7 @@ provide useful documentation for the particular character or glyph so referenced
     entirely distinct  derived characters. For a given character
     (say that represented by the numeric-character reference <code>&amp;#x4EBA;</code>)
     the circled variant might conveniently be represented as
-    <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"> <g ref="#U4EBA-circled"/></egXML>, which references a
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"> <g ref="#U4EBA-circled"/></egXML>, which references a
     definition such as the following:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><char xml:id="U4EBA-circled">
   <charName>CIRCLED IDEOGRAPH</charName>
@@ -864,7 +859,7 @@ thus imply a particular default writing mode. </p>
 <p>Consider the case of an English text containing a few Arabic words : </p>
                <eg> The Arabic term قلم رصاص means "pencil".</eg>
 <p>A correct TEI encoding might read as follows: </p>
-               <egXML xmlns="http://www.tei-c.org/ns/Examples"> <s xml:lang="en" >The Arabic term
+               <egXML xmlns="http://www.tei-c.org/ns/Examples"> <s xml:lang="en">The Arabic term
 <term xml:lang="ar">قلم رصاص</term> means "pencil".</s></egXML>
 <p>We might assume that it is the presence of the <att>xml:lang</att> attribute with value <val>ar</val> that causes processing software to display the Arabic from right to left, but in fact, this is not the case. The order in which the Arabic characters appear when rendered would be the same, even if the markup were not present: </p>
                <egXML xmlns="http://www.tei-c.org/ns/Examples"> <s>The Arabic term قلم رصاص means "pencil".</s></egXML>
@@ -881,21 +876,17 @@ have weak or neutral settings because they may appear in several
 contexts. </p>
 
 <p>The Unicode Bidirectional Algorithm (<ref target="#WDBIDI">Unicode
-Consortium, 2013</ref>)
+Consortium, 2017</ref>)
  defines a number of
 rules enabling software to render sequences of characters which have
 differing directionality properties in a predictable and reliable way,
 using only those properties. <note place="foot"> Because this
 algorithm may not always give the desired result, Unicode also
-provides a set of "directional formatting characters" (<ptr
-target="http://www.unicode.org/reports/tr9/#Directional_Formatting_Codes"/>). These
+provides a set of "directional formatting characters" (<ptr target="http://www.unicode.org/reports/tr9/#Directional_Formatting_Characters"/>). These
 additional codepoints can be used to signal to rendering software that
 a specific directionality setting should be turned on or off. However,
-in the case of documents encoded in XML, there is no need to use such
-characters, and in fact the W3C explicitly advises against it. "In
-(X)HTML and XML do not use the paired Unicode bidi formatting code
-characters where equivalent markup is available." (<ptr
-target="http://www.w3.org/International/questions/qa-bidi-controls"/>)</note>. It
+in the case of documents encoded in XML, there is generally no need to use such
+characters, and the W3C advises against it unless markup is unavailable. (<ptr target="http://www.w3.org/International/questions/qa-bidi-controls"/>)</note>. It
 should be remembered however that individual sequences of characters
 are always stored in a file in the order in which they should be read,
 irrespective of the order in which the characters making up a sequence
@@ -913,7 +904,7 @@ explicitly in their encoding, we recommend using the global @style
 attribute to supply detail about the writing mode applicable to the
 content of any element. The <att>style</att> attribute (discussed in 
 <ptr target="#STGAre"/>) permits use of any formatting language; for
-these purposes however, we recommend use of CSS, which now includes a
+these purposes however, we recommend use of CSS, which  includes a
 Writing Modes module <note place="foot"> At the time of writing, this
 W3C module has the status of a candidate recommendation: see further
 <ptr target="#CSSWM"/> <!--
@@ -934,8 +925,7 @@ which it is specified (and in most cases, its descendants). Rather
 than specify it on every element, it will often be more efficient to
 express sets of commonly-used styling rules as <gi>rendition</gi>
 elements in the <gi>teiHeader</gi> and then point to them using the
-global <att>rendition</att> attribute, as further discussed in <ptr
-target="#HD57-1"/>. Although the CSS specifications are mainly used to
+global <att>rendition</att> attribute, as further discussed in <ptr target="#HD57-1"/>. Although the CSS specifications are mainly used to
 provide instructions for software when rendering a digital text, they
 also provide a useful means of describing the visual properties of a
 pre-existing document in a formal and standardized way. </p>
@@ -970,11 +960,9 @@ of a document will probably include many other properties of course. </p>
 			<head>Taken from p.42 of <title>Haiku: Japanese Art and Poetry</title>. Judith Patt, Michiko Warkentyne (calligraphy) and Barry Till. 2010. </head>
                </figure>
                   </p>
-   <p></p>
+   <p/>
    <p>We might encode this as follows: </p>
-                                 <egXML
-				     xmlns="http://www.tei-c.org/ns/Examples"
-	source="#WD-BASHO"><div>
+                                 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#WD-BASHO"><div>
  <lg xml:lang="ja" style="writing-mode: vertical-rl">
  <l>古池や</l>
  <l>蛙</l>
@@ -1033,8 +1021,7 @@ of a document will probably include many other properties of course. </p>
      that the list uses a <code>vertical-rl</code> writing mode, but that the orientation 
      of individual glyphs may vary: </p>
  
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#WD-VERT-IND"><list type="gloss" xml:lang="ja" 
- style="writing-mode: vertical-rl; text-orientation: mixed">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#WD-VERT-IND"><list type="gloss" xml:lang="ja" style="writing-mode: vertical-rl; text-orientation: mixed">
  <label xml:lang="id">hampir</label>
  <item>「近い、ほとんど」</item>
  <label xml:lang="id">baru</label>
@@ -1045,8 +1032,7 @@ of a document will probably include many other properties of course. </p>
    <quote>characters from horizontal-only scripts are set sideways, i.e. 90°
    clockwise from their standard orientation in horizontal
    text. Characters from vertical scripts are set with their intrinsic
-   orientation</quote> (<ref
-   target="http://www.w3.org/TR/css-writing-modes-3/#text-orientation">fantasai
+   orientation</quote> (<ref target="http://www.w3.org/TR/css-writing-modes-3/#text-orientation">fantasai
    2014</ref>). Since the default value for <code>text-orientation</code> is <code>mixed</code>, 
      this rule is not strictly required. However, if the Indonesian glyphs (which are roman 
      characters) had been set vertically, like this:</p>
@@ -1059,8 +1045,7 @@ of a document will probably include many other properties of course. </p>
 
                   </p>
    <p>then an encoding like the following could be used to make this explicit: </p>
-                                 <egXML xmlns="http://www.tei-c.org/ns/Examples"><list type="gloss" xml:lang="ja" 
- style="writing-mode: vertical-rl; text-orientation: upright">
+                                 <egXML xmlns="http://www.tei-c.org/ns/Examples"><list type="gloss" xml:lang="ja" style="writing-mode: vertical-rl; text-orientation: upright">
  <label xml:lang="id">hampir</label>
  <item>「近い、ほとんど」</item>
  <label xml:lang="id">baru</label>
@@ -1070,7 +1055,7 @@ of a document will probably include many other properties of course. </p>
    <p>The rule <code>text-orientation: upright</code> specifies that 
      <quote>characters from horizontal-only scripts are rendered upright, 
        i.e. in their standard horizontal orientation. Characters from vertical 
-       scripts are set with their intrinsic orientation and shaped normally</quote> (<ref    target="http://www.w3.org/TR/css-writing-modes-3/#text-orientation">fantasai
+       scripts are set with their intrinsic orientation and shaped normally</quote> (<ref target="http://www.w3.org/TR/css-writing-modes-3/#text-orientation">fantasai
 2014</ref>).</p>
    <p> </p>
                </div>
@@ -1155,8 +1140,7 @@ of a document will probably include many other properties of course. </p>
     parts of a document being displayed in unexpected ways that do
     not correspond to the natural reading order. A more detailed 
    discussion of this issue from an HTML perspective is provided by a
-   W3C Internationalization Working Group report <ref
-   target="http://www.w3.org/International/articles/inline-bidi-markup/#where">Inline
+   W3C Internationalization Working Group report <ref target="http://www.w3.org/International/articles/inline-bidi-markup/#where">Inline
    markup and bidirectional text in HTML</ref>. </p>
 
 
@@ -1186,8 +1170,7 @@ of a document will probably include many other properties of course. </p>
    in some ways appear very similar to those examined above, and even
    overlap with them. We can categorize these as text transformation
    features, and suggest some strategies for encoding them based on
-   the properties detailed in the <ref
-   target="#CSSTM">CSS Transforms (Fraser et al 2013)</ref> specification. 
+   the properties detailed in the <ref target="#CSSTM">CSS Transforms (Fraser et al 2013)</ref> specification. 
      This CSS module provides a complex array of properties, values and 
      functions which can be used to rotate, skew, translate and otherwise 
      transform textual and graphical objects. We can borrow this vocabulary 
@@ -1240,18 +1223,15 @@ of a document will probably include many other properties of course. </p>
      so that they represent a pair of wings:</p>
    <p>
                      <figure>
-                        <graphic
-			    url="Images/herbert_church_p35_sm.jpg" width="300px"/>
+                        <graphic url="Images/herbert_church_p35_sm.jpg" width="300px"/>
    <head>Page 35 of George Herbert's <title level="m">The Temple</title>
    (1633), from a copy in the Folger Library.</head>
                      </figure>
                   </p>
               
    <p>This could be encoded thus: </p>
-                                 <egXML
-				     xmlns="http://www.tei-c.org/ns/Examples">
-				   <lg
-				       style="transform:rotateZ(90deg)" >
+                                 <egXML xmlns="http://www.tei-c.org/ns/Examples">
+				   <lg style="transform:rotateZ(90deg)">
  <l>My tender age in ſorrow did beginne:</l>
  <l>And ſtill with ſickneſſes and ſhame</l>
  <!-- ... -->
@@ -1265,8 +1245,7 @@ of a document will probably include many other properties of course. </p>
    mode which is not covered by the CSS Writing Modes:
    <term>boustrophedon</term>. This is a writing mode common in
    inscriptions in Latin, Greek and other languages, in which
-   alternate lines run from left to right and from right to left<note
-   place="foot">The name is taken from the Greek βουστροφηδόν, meaning
+   alternate lines run from left to right and from right to left<note place="foot">The name is taken from the Greek βουστροφηδόν, meaning
    <q>ox-turning</q> from βοῦς (an ox) and στροφή (<q>turn</q>); that is,
    turning as an ox does when pulling a plough.</note>. Right-to-left
    lines in boustrophedon have another unexpected feature: their
@@ -1279,9 +1258,7 @@ precinct at Dodona. (L.H. Jeffery Archive)</head>
                      </figure>
                   </p>
    <p>This might be transcribed as follows (ignoring word boundaries for the moment): </p>
-                                 <egXML
-				     xmlns="http://www.tei-c.org/ns/Examples"
-			source="#WD-BOUS"	     > <ab>
+                                 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#WD-BOUS"> <ab>
  <lb/>ΗΕΡΜΟΝΤΙΝA
  <lb/><seg style="rotateY(180deg)">ΚΑΘΕΟΝΠΟΤΘΕΜ</seg>
  <lb/>ΕΝΟΣΥΕΝΕΑϜ
@@ -1314,8 +1291,7 @@ precinct at Dodona. (L.H. Jeffery Archive)</head>
 
    <p>As with other parts of the CSS specification, the intended
    effect of CSS Transforms properties and values is defined with
-   reference to a specific <ref
-   target="http://www.w3.org/TR/CSS2/visuren.html">Visual formatting
+   reference to a specific <ref target="http://www.w3.org/TR/CSS2/visuren.html">Visual formatting
    model</ref>; the language is designed to describe how an HTML
    document should be formatted. This is not, of course, the case for
    the TEI, which lacks any explicit processing or formatting model,

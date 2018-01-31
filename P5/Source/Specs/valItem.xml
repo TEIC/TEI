@@ -16,13 +16,19 @@ $Id$
     <memberOf key="att.global"/>
     <memberOf key="att.combinable"/>
   </classes>
+  <!-- ( gloss*, ( desc+, ( gloss, desc* )*, remarks* )?, paramList? ) -->
   <content>
     <sequence>
-      <alternate minOccurs="0" maxOccurs="unbounded">
-        <classRef key="model.descLike"/>
-        <classRef key="model.glossLike"/>
-      </alternate>
-      <elementRef key="paramList" minOccurs="0" maxOccurs="1"/>    
+      <classRef key="model.glossLike" minOccurs="0" maxOccurs="unbounded"/>
+      <sequence minOccurs="0">
+	<classRef key="model.descLike" minOccurs="1" maxOccurs="unbounded"/>
+	<sequence minOccurs="0" maxOccurs="unbounded">
+	  <classRef key="model.glossLike" minOccurs="1" maxOccurs="1"/>
+	  <classRef key="model.descLike" minOccurs="0" maxOccurs="unbounded"/>
+	</sequence>
+	<elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
+      </sequence>
+      <elementRef key="paramList" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </content>
   <attList>
@@ -59,6 +65,64 @@ $Id$
         <gloss>dubious（無把握的）</gloss>
         <desc>適用於無法確定或對該元素的使用存疑時</desc>
       </valItem>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en" versionDate="2018-01-21">
+    <p>The <gi>remarks</gi> element is only allowed within <gi>valItem</gi> if the <gi>desc</gi> element is also present:</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <valList type="closed">
+        <valItem ident="border">
+          <desc>used to signify that there is border around a page.</desc>
+        </valItem>
+        <valItem ident="border-rule">
+          <desc>used to signify that there is a border made of ruled lines.</desc>
+        </valItem>
+        <valItem ident="border-ornamental">
+          <desc>used to signify that there is an ornamental border.</desc>
+        </valItem>
+        <valItem ident="catch">
+          <gloss>catchword</gloss>
+          <desc>for catch words.</desc>
+        </valItem>
+        <valItem ident="lineNum">
+          <gloss>line number</gloss>
+          <desc>for printed line numbers (usually in poetry).</desc>
+        </valItem>
+        <valItem ident="listHead">
+          <gloss>list heading</gloss>
+          <desc>for headings of lists or similar constructs; often used in tables of contents for the
+            <q>page</q> heading.</desc>
+        </valItem>
+        <valItem ident="pageNum">
+          <gloss>page number</gloss>
+          <desc>for page numbers.</desc>
+        </valItem>
+        <valItem ident="pressFig">
+          <gloss>press figure</gloss>
+          <desc>for press figures. These are usually numbers, but are not sequential or regularly
+            printed like signatures.</desc>
+        </valItem>
+        <valItem ident="sig">
+          <gloss>signature</gloss>
+          <desc>for printed signatures.</desc>
+        </valItem>
+        <valItem ident="unknown">
+          <desc>for a metawork whose function you do not know.</desc>
+        </valItem>
+        <valItem ident="vol">
+          <gloss>volume number</gloss>
+          <desc>for printed volume numbers.</desc>
+        </valItem>
+        <valItem ident="other">
+          <desc>anything not covered by the above values.</desc>
+          <remarks>
+            <p>Used for an ornament, decorated tool line, or symbol(s) that is not officially a
+              delimiter (and thus there is no element on which to put <val>pre()</val> or
+              <val>post()</val>) but is used to fill space at the bottom of a page so that a
+              <gi>floatingText</gi> or similar can start at the top of the next.</p>
+          </remarks>
+        </valItem>
+      </valList>
     </egXML>
   </exemplum>
   <listRef>

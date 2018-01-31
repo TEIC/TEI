@@ -1,4 +1,4 @@
-#rend="none"/> Main makefile for TEI P5
+# Main makefile for TEI P5
 # $Id$
 VCS := git
 ALLLANGUAGES=en
@@ -20,6 +20,7 @@ XSL=/usr/share/xml/tei/stylesheet
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
 SAXONJAR=saxon9he.jar
+# Saxon-HE-9.4.0.6.jar is needed by the epubcheck program and is in Utilities/lib
 ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -q
 
 # The following will include a local (not in the repo) makefile
@@ -401,8 +402,8 @@ dependencies:
 	@echo	fonts-arphic-uming
 	@echo	ttf-baekmuk
 	@echo	ttf-junicode
-	@echo	ttf-kochi-gothic
-	@echo	ttf-kochi-mincho
+	@echo	fonts-ipafont-gothic
+	@echo	fonts-ipafont-mincho
 	@echo	zip
 	@echo   ttf-linux-libertine
 	@echo 	ttf-hannom

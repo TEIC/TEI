@@ -1,17 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" module="tagdocs" ident="content">
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" module="tagdocs" ident="content">
   <gloss versionDate="2007-07-04" xml:lang="en">content model</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">내용 모델</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">模型宣告</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">modèle de contenu</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">declaración del esquema</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">dichiarazione dello schema</gloss>
-  <desc versionDate="2005-01-14" xml:lang="en">contains the text of a declaration for the schema documented.</desc>
+  <desc versionDate="2018-01-20" xml:lang="en">contains a declaration of the intended content model for the element (or other construct) being specified.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">기록된 스키마에 대한 선언 텍스트를 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含所記錄之模型的宣告文字。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">当該スキーマの宣言を示す．</desc>
@@ -25,9 +28,9 @@ $Id$
     <memberOf key="att.global"/>
   </classes>
   <content>
-    <alternate minOccurs="0" maxOccurs="unbounded">  
-      <anyElement require="http://relaxng.org/ns/structure/1.0"/>
-      <classRef key="model.contentPart" />
+    <alternate>
+      <classRef key="model.contentPart" minOccurs="0" maxOccurs="unbounded"/>
+      <anyElement require="http://relaxng.org/ns/structure/1.0" minOccurs="1" maxOccurs="unbounded"/>
     </alternate>
   </content>
   <attList>
@@ -53,13 +56,13 @@ $Id$
   </attList>
   <exemplum xml:lang="en">
     <p>This <gi>content</gi> element indicates that the element being specified has no content: </p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <content/>
     </egXML></exemplum>
   <exemplum xml:lang="en">
     <p>This <gi>content</gi> element defines a content model allowing either a sequence of paragraphs or a series of msItem elements
       optionally preceded by a summary: </p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <content>
         <alternate>
             <classRef key="model.pLike" maxOccurs="unbounded"/>
@@ -74,7 +77,7 @@ $Id$
   <exemplum xml:lang="en">
     <p>This content model defines a content model allowing either a sequence of paragraphs or a series of msItem elements
       optionally preceded by a summary: </p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <content>
         <choice xmlns="http://relaxng.org/ns/structure/1.0">
           <oneOrMore>
@@ -96,7 +99,7 @@ $Id$
     <p xmlns:teix="http://www.tei-c.org/ns/Examples">Ce modèle de contenu permet d'introduire une
       suite de paragraphes ou une suite d'éléments <gi>msItem</gi> précédés éventuellement d'un
       résumé : </p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <content>
         <choice xmlns="http://relaxng.org/ns/structure/1.0">
           <oneOrMore>
@@ -115,7 +118,7 @@ $Id$
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <content>
         <choice xmlns="http://relaxng.org/ns/structure/1.0">
           <oneOrMore>
