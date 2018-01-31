@@ -6,8 +6,7 @@
     $Date: 2015-08-21 10:44:07 +0100 (Fri, 21 Aug 2015) $
     $Id:  $
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-  ident="model" module="tagdocs">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="model" module="tagdocs">
   <desc versionDate="2015-05-15" xml:lang="en">describes the processing intended for a specified
     element.</desc>
   <classes>
@@ -35,9 +34,7 @@
     <constraint>
       <sch:rule context="tei:model[ not( parent::tei:modelSequence ) ][ not( @predicate ) ]">
         <sch:let name="output" value="normalize-space( @output )"/>
-        <sch:report test="following-sibling::tei:model
-                            [ not( @predicate )]
-                            [ normalize-space( @output ) eq $output ]">
+        <sch:report test="following-sibling::tei:model                             [ not( @predicate )]                             [ normalize-space( @output ) eq $output ]">
           There are 2 (or more) 'model' elements in this '<sch:value-of select="local-name(..)"/>'
           that have no predicate, but are targeted to the same output
           ("<sch:value-of select="( $output, parent::modelGrp/@output, 'all')[1]"/>")</sch:report>
@@ -52,9 +49,7 @@
       <sch:rule context="tei:model[ not( parent::tei:modelSequence ) ][ @predicate ]">
         <sch:let name="predicate" value="normalize-space( @predicate )"/>
         <sch:let name="output" value="normalize-space( @output )"/>
-        <sch:report test="following-sibling::tei:model
-                            [ normalize-space( @predicate ) eq $predicate ]
-                            [ normalize-space( @output ) eq $output ]">
+        <sch:report test="following-sibling::tei:model                             [ normalize-space( @predicate ) eq $predicate ]                             [ normalize-space( @output ) eq $output ]">
           There are 2 (or more) 'model' elements in this
           '<sch:value-of select="local-name(..)"/>' that have
           the same predicate, and are targeted to the same output
@@ -345,7 +340,7 @@
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <model behaviour="inline"/>
     </egXML>
   </exemplum>
@@ -379,12 +374,12 @@
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <model behaviour="inline" output="print"/>
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <model predicate="ancestor::p" behaviour="inline">
         <param name="content" value="@n"/>
       </model>
@@ -396,7 +391,7 @@
     </egXML>
   </exemplum>-->
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <elementSpec mode="change" ident="date">
         <model output="print" predicate="text()" behaviour="inline"/>
         <model output="print" predicate="@when and  not(text())" behaviour="inline">
@@ -409,7 +404,7 @@
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <elementSpec mode="change" ident="choice">
         <model predicate="sic and corr" behaviour="alternate">
           <param name="default" value="corr"/>

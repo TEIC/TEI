@@ -11,10 +11,8 @@ $Id$
     <memberOf key="att.global"/>
     <memberOf key="model.editorialDeclPart"/>
   </classes>
-  <content>
-    
-      <classRef key="model.pLike" minOccurs="0" maxOccurs="unbounded"/>
-    
+  <content>    
+    <classRef key="model.pLike" minOccurs="0" maxOccurs="unbounded"/>
   </content>
   <attList>
     <attDef ident="marks" usage="opt">
@@ -33,15 +31,14 @@ $Id$
       </valList>
     </attDef>
     <attDef ident="placement" usage="opt">
-      <desc versionDate="2013-06-20" xml:lang="en">indicates whether punctation marks have been captured inside or outside of an adjacent
-        element.</desc>
+      <desc versionDate="2018-01-16" xml:lang="en"> indicates the positioning of punctuation marks that are associated with marked up text as being encoded within the element surrounding the text or immediately before or after it.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="closed">
         <valItem ident="internal">
-          <desc versionDate="2013-06-20" xml:lang="en">punctuation marks are captured inside adjacent elements</desc>
+          <desc versionDate="2018-01-16" xml:lang="en">punctuation marks found at the start or end of a marked up text component are included within its surrounding element;</desc>
         </valItem>
         <valItem ident="external">
-          <desc versionDate="2013-06-20" xml:lang="en">punctuation marks are captured outside adjacent elements</desc>
+          <desc versionDate="2018-01-16" xml:lang="en">punctuation marks found at the start or end of a marked up text component appear immediately before or after the surrounding element</desc>
         </valItem>
       </valList>
     </attDef>
@@ -52,9 +49,20 @@ $Id$
         <p>All punctuation marks in the source text have been retained and represented using the
           appropriate Unicode code point. In cases where a punctuation mark and nearby markup convey
           the same information (for example, a sentence ends with a question mark and is also tagged
-          as <gi>s</gi>) the punctuation mark is captured as content within the element.
-        </p>
+          as <gi>s</gi>) the punctuation mark is captured as content within the element.</p>
       </punctuation>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <p>External placement of punctuation:</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#MLK01">
+      <p>I would agree with Saint Augustine that “<quote>An unjust law is no law at all</quote>.”</p>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <p>Internal placement of punctuation:</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#MLK01">
+      <p>I would agree with Saint Augustine that <quote>“An unjust law is no law at all.”</quote></p>
     </egXML>
   </exemplum>
   <listRef>

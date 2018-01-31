@@ -1552,7 +1552,8 @@ which require a preprocess.
 		  <axsl:template match="@*|node()"
 				 priority="-2"
 				 mode="M{ count(preceding-sibling::*) }">
-		    <axsl:apply-templates select="{$context-xpath}" mode="M{count(preceding-sibling::*)}"/>
+		    <axsl:apply-templates select="{$context-xpath}" mode="M{count(preceding-sibling::*)}"
+		      xsl:use-when="true()"/>
 		  </axsl:template>
 		</xsl:if>
       </xsl:if>
@@ -1646,6 +1647,7 @@ which require a preprocess.
 				test="starts-with(@context,'text(')"/>
 			    <xsl:when
 				test="starts-with(@context,'@')"/>
+			      <xsl:when test="matches(@context, '.*/@[a-zA-Z0-9]+$')"/>
 			    <xsl:otherwise>
 			      <axsl:apply-templates
 				  select="{$context-xpath}"

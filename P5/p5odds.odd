@@ -388,7 +388,7 @@ $Id$
         <classSpec ident="att.translatable" mode="change" type="atts">
           <constraintSpec mode="add"
                           ident="require-translatability"
-                          scheme="isoschematron">
+                          scheme="schematron">
             <constraint>
                 <sch:rule context="tei:elementSpec/tei:desc
                                  | tei:elementSpec/tei:gloss
@@ -412,7 +412,7 @@ $Id$
                 </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="all-sibling-parent-desc" scheme="isoschematron">
+          <constraintSpec ident="all-sibling-parent-desc" scheme="schematron">
             <constraint>
               <sch:rule context="*[tei:desc[@versionDate]]">
                 <sch:report role="nonfatal" test="
@@ -425,7 +425,7 @@ $Id$
               </sch:rule>
 	    </constraint>
 	  </constraintSpec>
-          <constraintSpec ident="all-sibling-parent-gloss" scheme="isoschematron">
+          <constraintSpec ident="all-sibling-parent-gloss" scheme="schematron">
             <constraint>
               <sch:rule context="*[tei:gloss[@versionDate]]">
                 <sch:report role="nonfatal" test="
@@ -438,7 +438,7 @@ $Id$
               </sch:rule>
 	    </constraint>
 	  </constraintSpec>
-          <constraintSpec ident="all-sibling-parent-remarks" scheme="isoschematron">
+          <constraintSpec ident="all-sibling-parent-remarks" scheme="schematron">
             <constraint>
               <sch:rule context="*[tei:remarks[@versionDate]]">
                 <sch:report role="nonfatal" test="
@@ -451,7 +451,7 @@ $Id$
               </sch:rule>
 	    </constraint>
 	  </constraintSpec>
-          <constraintSpec ident="all-sibling-parent-valDesc" scheme="isoschematron">
+          <constraintSpec ident="all-sibling-parent-valDesc" scheme="schematron">
             <constraint>
               <sch:rule context="*[tei:valDesc[@versionDate]]">
                 <sch:report role="nonfatal" test="
@@ -553,7 +553,7 @@ $Id$
         </macroSpec>
 
 <elementSpec mode="change" ident="TEI">
-  <constraintSpec ident="must-have-attglobal" scheme="isoschematron" mode="add">
+  <constraintSpec ident="must-have-attglobal" scheme="schematron" mode="add">
     <constraint>
       <rule context="tei:elementSpec[not(@mode)]" xmlns="http://purl.oclc.org/dsdl/schematron">
         <assert test="tei:classes/tei:memberOf[@key='att.global']">Error: TEI element <value-of select="@ident"/> must be member of att.global class</assert>

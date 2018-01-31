@@ -98,7 +98,7 @@ the general case, however, a TEI-conformant text will contain a single
 <gi>facsimile</gi> element, or both.
 </p>
 <p>The header element has the following description:
-<specList><specDesc key="teiHeader" /></specList>
+<specList><specDesc key="teiHeader"/></specList>
 </p>
 <p>As discussed above, the <gi>teiHeader</gi> element has five principal
 components:
@@ -113,10 +113,9 @@ components:
 <p>Of these, only the <gi>fileDesc</gi> element is required in all TEI
 headers; the others are optional. That is, only one of the five
 components of the TEI header (the <gi>fileDesc</gi>) is mandatory, and
-it also has some mandatory components, as further discussed in <ptr
-target="#HD2"/> below. The smallest possible valid TEI Header thus
+it also has some mandatory components, as further discussed in <ptr target="#HD2"/> below. The smallest possible valid TEI Header thus
 looks like this:
-  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><teiHeader>
     <fileDesc>
       <titleStmt>
 	<title><!-- title of the resource --></title>
@@ -136,7 +135,7 @@ applies, and not necessarily English. As elsewhere, the
 to specify the language.
 For example, in the following schematic example, an
 English text has been given a French header:
-  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" valid="feasible" source="#UND">
 <TEI>
   <teiHeader xml:lang="fr">
     <!-- ... -->
@@ -152,7 +151,7 @@ components in the corpus or collection, or at the level of
 the corpus or collection itself (more details
 concerning the tagging of composite texts are given in section <ptr target="#CC"/>, which should be read in conjunction with the current
 chapter). A corpus may thus take the form:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND">
 <teiCorpus>
    <teiHeader>
      <!-- corpus-level metadata here -->
@@ -216,11 +215,9 @@ content are described in the following sections:
   Standard Bibliographic Description.<note place="bottom"> For more
   information on this highly influential family of standards, first
   proposed in 1969 by the International Federation of Library
-  Associations, see <ptr
-  target="http://www.ifla.org/VII/s13/pubs/isbd.htm"/>. On the
+  Associations, see <ptr target="http://www.ifla.org/VII/s13/pubs/isbd.htm"/>. On the
   relation between the TEI proposals and other standards for
-  bibliographic description, see further section <ptr
-  target="#HD8"/>.</note> In the case of the <gi>xenoData</gi>
+  bibliographic description, see further section <ptr target="#HD8"/>.</note> In the case of the <gi>xenoData</gi>
   element, the specialized elements are not TEI elements, but rather
   come from some other metadata scheme. In most cases grouping
   elements may contain prose descriptions as an alternative to the set
@@ -239,8 +236,7 @@ content are described in the following sections:
   header of each such text or subdivision. Instead, the
   <att>decls</att> attribute of each text (or subdivision of the text)
   to which the declaration applies may be used to supply a
-  cross-reference to it, as further described in section <ptr
-  target="#CCAS"/>.</item>
+  cross-reference to it, as further described in section <ptr target="#CCAS"/>.</item>
   <label>descriptions</label>
   <item>Elements whose names end with the suffix
   <mentioned>Desc</mentioned> (e.g. <gi>settingDesc</gi>,
@@ -287,8 +283,7 @@ to give standard bibliographic references to the electronic text, and
 to allow cataloguers to catalogue it. Bibliographic citations
 occurring elsewhere in the header, and also in the text itself, are
 derived from the same model (on bibliographic citations in general,
-see further section <ptr target="#COBI"/>). See further section <ptr
-target="#HD8"/>.</p>
+see further section <ptr target="#COBI"/>). See further section <ptr target="#HD8"/>.</p>
 <p>The bibliographic description of an electronic text should be
 supplied by the  mandatory <gi>fileDesc</gi> element:
 <specList>
@@ -304,7 +299,7 @@ are listed below in the order in which they must be given within the
 </p>
 <p>A complete file description containing all possible sub-elements
 might look like this:
-  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><teiHeader>
     <fileDesc>
          <titleStmt> <title><!-- title of the resource --></title> </titleStmt>
          <editionStmt> <p> <!-- information about the edition of the
@@ -579,8 +574,7 @@ words or sentences, citations, paragraphs)</item>
 blocks, disks, tapes)</item></list>
 </p>
 <p>The use of standard abbreviations for units of quantity is
-recommended where applicable, here as elsewhere (see <ptr
-target="http://physics.nist.gov/cuu/Units/binary.html"/>). </p>
+recommended where applicable, here as elsewhere (see <ptr target="http://physics.nist.gov/cuu/Units/binary.html"/>). </p>
 <p>Examples:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><extent>between 1 and
 2 Mb</extent>
@@ -613,8 +607,7 @@ more paragraphs, or the more specialised elements described below.
 </p>
 <p>A structured publication statement must begin with one of the following elements:
 <specList><specDesc key="publisher"/><specDesc key="distributor"/><specDesc key="authority"/></specList>
-These elements form the <ident
-type="class">model.publicationStmtPart.agency</ident> class; if the agency making the resource available is unknown, but other structured information about it is available, an explicit statement such as <soCalled>publisher unknown</soCalled> should be used.
+These elements form the <ident type="class">model.publicationStmtPart.agency</ident> class; if the agency making the resource available is unknown, but other structured information about it is available, an explicit statement such as <soCalled>publisher unknown</soCalled> should be used.
 </p>
 
 <p>The <term>publisher</term> is the person or institution by whose
@@ -625,8 +618,7 @@ published, but is nevertheless made available for circulation by some
 individual or organization, this person or institution is termed the
 <term>release authority</term>.
 </p>
-<p>Whichever of these elements is chosen, it may be followed by one or more of the following elements, which together form the <ident
-type="class">model.publicationStmtPart.detail</ident> class
+<p>Whichever of these elements is chosen, it may be followed by one or more of the following elements, which together form the <ident type="class">model.publicationStmtPart.detail</ident> class
  <specList><specDesc key="pubPlace"/><specDesc key="address"/><specDesc key="idno" atts="type"/><specDesc key="availability" atts="status"/><specDesc key="date"/><specDesc key="licence"/></specList>
 </p>
 <p>Here is a simple example:
@@ -637,8 +629,7 @@ type="class">model.publicationStmtPart.detail</ident> class
      <availability><p>Copyright 1989, Oxford University Press</p></availability></publicationStmt></egXML>
 </p>
 
-<p>The  <ident
-type="class">model.publicationStmtPart.detail</ident> elements all supply additional information relating to the
+<p>The  <ident type="class">model.publicationStmtPart.detail</ident> elements all supply additional information relating to the
 the publisher, distributor, or release authority immediately preceding them.
 In the following example, Benson is identified as responsible for distribution of some resource at the date and place cited:
  <egXML xmlns="http://www.tei-c.org/ns/Examples"><publicationStmt>
@@ -1288,8 +1279,7 @@ element to
 indicate its rendition, overriding or complementing any supplied default value</item>
 </list>
 The global <att>rend</att> and <att>style</att> attributes may also be
-used to  describe the rendering of an element. See further <ptr
-target="#STGAre"/>.
+used to  describe the rendering of an element. See further <ptr target="#STGAre"/>.
 </p>
   <p>The content of a <gi>rendition</gi> element may
 describe the appearance of the source material using prose, a
@@ -1305,18 +1295,14 @@ applies by default, and it may be overridden for one or more specific
   
   <p>The recommended way to indicate a default rendition on one or more elements is to use the <att>selector</att> attribute together with the <att>scheme</att> attribute on <gi>rendition</gi>. For example, suppose that all paragraphs in the <gi>front</gi> of a text appear in a large font, with significant top and bottom margins, while paragraphs in the main <gi>body</gi> are in regular font size and have no top and bottom margins. The use of <att>selector</att> together with <att>scheme</att> provides an efficient way to specify the distinct styling for distinct contexts of the paragraph by means of CSS selectors:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-  <rendition 
-    scheme="css" 
-    selector="front p">  
+  <rendition scheme="css" selector="front p">  
     font-size: 110%;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
   </rendition>
 </egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-  <rendition 
-    scheme="css" 
-    selector="body p">  
+  <rendition scheme="css" selector="body p">  
     font-size: 100%;
     margin-top: 0;
     margin-bottom: 0;
@@ -1337,19 +1323,18 @@ as font size and style, letter and line spacing, colour, etc. Note
 that the purpose of this encoding is to describe the original, rather
 than specify how it should be reproduced, although the two are
 obviously closely linked.
-  <egXML xml:lang="und"
-	 xmlns="http://www.tei-c.org/ns/Examples"><styleDefDecl scheme="css" schemeVersion="2.1"/>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und"><styleDefDecl scheme="css" schemeVersion="2.1"/>
 <!-- ... -->
 <tagsDecl>
-  <rendition xml:id="center" >text-align: center;</rendition>
-  <rendition xml:id="small" >font-size: small;</rendition>
-  <rendition xml:id="large" >font-size: large;</rendition>
-  <rendition xml:id="x-large" >font-size: x-large;</rendition>
-  <rendition xml:id="xx-large" >font-size: xx-large</rendition>
-  <rendition xml:id="expanded" >letter-spacing: +3pt;</rendition>
-  <rendition xml:id="x-space" >line-height: 150%;</rendition>
-  <rendition xml:id="xx-space" >line-height: 200%;</rendition>
-  <rendition xml:id="red" >color: red;</rendition>
+  <rendition xml:id="center">text-align: center;</rendition>
+  <rendition xml:id="small">font-size: small;</rendition>
+  <rendition xml:id="large">font-size: large;</rendition>
+  <rendition xml:id="x-large">font-size: x-large;</rendition>
+  <rendition xml:id="xx-large">font-size: xx-large</rendition>
+  <rendition xml:id="expanded">letter-spacing: +3pt;</rendition>
+  <rendition xml:id="x-space">line-height: 150%;</rendition>
+  <rendition xml:id="xx-space">line-height: 200%;</rendition>
+  <rendition xml:id="red">color: red;</rendition>
 </tagsDecl>             </egXML>
 </p>
 <p>The global <att>rendition</att> attribute can now be used to
@@ -1390,7 +1375,7 @@ make it more closely resemble the appearance of the source.</p>
 element to enclose passages in quotation marks, but the quotation
 marks themselves have been routinely omitted from the encoding, a set of
 renditions such as the following:
-  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und">
 <rendition xml:id="quoteBefore" scheme="css" scope="before">content:
 '“';</rendition>
 <rendition xml:id="quoteAfter" scheme="css" scope="after">content:
@@ -1431,8 +1416,7 @@ it to mark italicised English words only.</p>
 <p>The <att>withId</att> attribute may optionally be used to specify
 how many of the occurrences of the element in question bear a value
 for the global <att>xml:id</att> attribute, as in the following
-example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><tagUsage
-gi="pb" occurs="321" withId="321"> Marks page breaks in the York
+example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><tagUsage gi="pb" occurs="321" withId="321"> Marks page breaks in the York
 (1734) edition only </tagUsage></egXML> This indicates that the
 <gi>pb</gi> element occurs 321 times, on each of which an identifier
 is provided.</p>
@@ -1450,10 +1434,8 @@ with the number of such elements present in the associated
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/tagsDecl.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/tagUsage.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/namespace.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude"
-	 href="../../Specs/rendition.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude"
-	 href="../../Specs/styleDefDecl.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/rendition.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/styleDefDecl.xml"/>
 
 </specGrp></p></div>
 </div>
@@ -1485,8 +1467,7 @@ be expressed using whichever default style definition language is in
 force. If more than one occurrence of the <gi>styleDefDecl</gi> is
 provided, there will be more than one default available, and the
 <att>decls</att> attribute must be used to select which is applicable
-in a given context, as discussed in section <ptr
-target="#CCAS"/>. </p>
+in a given context, as discussed in section <ptr target="#CCAS"/>. </p>
 </div>
 
 <div type="div3" xml:id="HD54"><head>The Reference System Declaration</head>
@@ -1609,12 +1590,12 @@ on the <gi>milestone</gi> element, or it may be implied, if the
 the <mentioned>xx</mentioned> represents the page number in the first edition, and
 <mentioned>yyy</mentioned> the line number within this page, a reference system
 declaration such as the following would be appropriate:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><refsDecl>
    <refState ed="first" unit="page" length="2" delim="."/>
    <refState ed="first" unit="line" length="3"/>
 </refsDecl></egXML>
 This implies that milestone tags of the form
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><milestone n="II" ed="first" unit="page"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><milestone n="II" ed="first" unit="page"/>
 <milestone ed="first" unit="line"/></egXML>
 will be found throughout the text, marking the positions at which page
 and line numbers change. Note that no value has been specified for the
@@ -1679,8 +1660,7 @@ bibliographic citation. The description consists of a number of
 <gi>category</gi> elements, each defining a single category within the
 given typology. The category is defined by the contents of a nested
 <gi>catDesc</gi> element, which may contain either a phrase describing
-the category, or any number of elements from the <ident
-type="class">model.catDescPart</ident> class. When the corpus module
+the category, or any number of elements from the <ident type="class">model.catDescPart</ident> class. When the corpus module
 is included in a schema, this class provides the <gi>textDesc</gi>
 element whose components allow the definition of a text type in terms
 of a set of <soCalled>situational parameters</soCalled> (see further
@@ -1719,9 +1699,7 @@ particular <gi>catRef</gi>, as in the following example, which
 identifies a text with the sub-categories <q>Daily</q>, <q>National</q>,
 and <q>Political</q> within the category <q>Press Reportage</q> as
 defined above.
-  <egXML xml:lang="und"
-	 xmlns="http://www.tei-c.org/ns/Examples"><catRef
-	 target="#b.a1 #b.a3 #b.a5"/></egXML></p>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><catRef target="#b.a1 #b.a3 #b.a5"/></egXML></p>
 <p>A single <gi>category</gi> may contain more than one
 <gi>catDesc</gi> child, when for example the category is described in
 more than one language, as in the following example:
@@ -1772,8 +1750,7 @@ more than one language, as in the following example:
       supplying an external schema and/or ODD file; if the XML file becomes separated from its schema, the schema can be regenerated at
       any time using the information in the <gi>schemaSpec</gi> element. For example:
 
-      <egXML xml:lang="en"
-        xmlns="http://www.tei-c.org/ns/Examples"><encodingDesc>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#UND"><encodingDesc>
           <!-- Other encoding description elements... -->
           <schemaSpec ident="myTEICustomization" docLang="en" prefix="tei_" xml:lang="en">
             <moduleRef key="core"/>
@@ -1786,7 +1763,7 @@ more than one language, as in the following example:
     </p>
     <p>Alternatively, it is possible to point to an external ODD customization file or schema through use of the <gi>schemaRef</gi> element. More than one <gi>schemaRef</gi> element may be provided for different sources, stages in a workflow, or formats.
       
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
         <schemaRef type="interchangeODD" url="http://www.tei-c.org/release/xml/tei/custom/odd/tei_lite.odd"/>
         <schemaRef type="interchangeRNG" url="http://www.tei-c.org/release/xml/tei/custom/odd/tei_lite.rng"/>
         <schemaRef type="projectODD" url="file:///schema/project.odd"/>
@@ -1909,11 +1886,9 @@ schema, three further elements become available  within the
 <specDesc key="particDesc"/>
 <specDesc key="settingDesc"/>
 </specList>
-For descriptions of these elements, see section <ptr
-target="#CCAH"/>.</p>
+For descriptions of these elements, see section <ptr target="#CCAH"/>.</p>
 <p>When the <ident type="module">transcr</ident> module for the
-transcription of primary sources described in chapter <ptr
-target="#PH"/> is included in a schema, the following elements become
+transcription of primary sources described in chapter <ptr target="#PH"/> is included in a schema, the following elements become
 available within the <gi>profileDesc</gi> element:
 <specList>
 <specDesc key="handNotes"/>
@@ -1983,7 +1958,7 @@ important if extended language identifiers have been used as the
 value of <att>xml:lang</att> attributes elsewhere in the
 document. </p>
 <p>Here is an example of the use of this element:
-<egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples"><langUsage>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul"><langUsage>
    <language ident="fr-CA" usage="60">Québecois</language>
    <language ident="en-CA" usage="20">Canadian business English</language>
    <language ident="en-GB" usage="20">British English</language>
@@ -1996,7 +1971,7 @@ document. </p>
 <p>The
 <gi>textClass</gi> element is used to classify a text in some way.
 <specList>
-<specDesc key="textClass" />
+<specDesc key="textClass"/>
 </specList></p>
 <p>
 Text classification may be carried out
@@ -2079,8 +2054,7 @@ be omitted.</p>
 <p>Alternatively, if the keyword vocabulary itself is locally defined,
 the <att>scheme</att> attribute will point to the local definition, which will
 typically be held in a <gi>taxonomy</gi> element within the
-<gi>classDecl</gi> part of the encoding description (see section <ptr
-target="#HD55"/>).
+<gi>classDecl</gi> part of the encoding description (see section <ptr target="#HD55"/>).
 <!-- LC subject tracings on R Potter, ed., Literary           -->
 	<!-- Computing and Literary Criticism:  Theoretical and       -->
 	<!-- Practical Essays on Theme and Rhetoric (Philadelphia,    -->
@@ -2094,15 +2068,12 @@ as the Dewey Decimal Classification. On this element, the
 classification scheme in the same way as for keywords: this may be a
 pointer of any kind, either to a TEI element, possibly in the current
 document, as in the <gi>keywords</gi> examples above, or to some
-canonical source for the scheme, as in the following example: <egXML
-xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><classCode
-scheme="http://www.udcc.org/udcsummary/php/index.php">005.756</classCode>
+canonical source for the scheme, as in the following example: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und"><classCode scheme="http://www.udcc.org/udcsummary/php/index.php">005.756</classCode>
 </egXML>
 </p>
 <p>The <gi>catRef</gi> element categorizes an individual text by
 pointing to one or more <gi>category</gi> elements using the
-<att>target</att> attribute, which it inherits from the <ident
-type="class">att.pointing</ident> class.  The
+<att>target</att> attribute, which it inherits from the <ident type="class">att.pointing</ident> class.  The
 <gi>category</gi> element (which is fully described in section <ptr target="#HD55"/>) holds information about a particular classification or
 category within a given taxonomy.  Each such category must have a unique
 identifier, which may be supplied as the value of the <att>target</att>
@@ -2112,11 +2083,11 @@ within the category indicated.</p>
 case more than one identifier may be supplied as the value for
 the <att>target</att> attribute on the <gi>catRef</gi> element, as
 in the following example:
-  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><catRef target="#b.a4 #b.d2"/></egXML></p><p>The <att>scheme</att> attribute
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><catRef target="#b.a4 #b.d2"/></egXML></p><p>The <att>scheme</att> attribute
 may be supplied to specify the taxonomy to which the categories
 identified by the target attribute belong, if this is not adequately
 conveyed by the  resource pointed to. For example,
-    <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><catRef target="#b.a4 #b.d2" scheme="http://www.example.com/browncorpus"/>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><catRef target="#b.a4 #b.d2" scheme="http://www.example.com/browncorpus"/>
 <catRef target="http://www.example.com/SUC/#A45"/></egXML>
 Here the same text has been classified as of categories <val>b.a4</val> and
 <val>b.d2</val> within the Brown classification scheme (presumed to be
@@ -2139,7 +2110,7 @@ classification system.</p>
 
 <div type="div3" xml:id="HD4ABS"><head>Abstracts</head>
 <p>The main purpose of the <gi>abstract</gi> element is to supply a brief resume or abstract for an article which was originally published without such a component. An abstract or summary forming part of the document at its creation should usually appear in the front matter (<gi>front</gi>) of the document.
- <egXML  xml:lang="en" xmlns="http://www.tei-c.org/ns/Examples">
+ <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
 <profileDesc><abstract>
 <p>This paper is a draft studying 
    various aspects of using the TEI 
@@ -2192,7 +2163,7 @@ classification system.</p>
   </p>
 
 <p>The same element may be used to provide other summary information supplied by the encoder, perhaps grouped together into a list of discrete items:
- <egXML  xml:lang="en" xmlns="http://www.tei-c.org/ns/Examples">
+ <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
 <profileDesc><abstract>
 <list>
 <item>An annual HBC supply ship is 
@@ -2201,8 +2172,7 @@ classification system.</p>
     to ascertain the British Government's plans 
     for the lands associated with the Oregon Treaty; 
     he wants to know what will happen to the HBC's 
-    establishment on the southern <name type="place" 
-      key="vancouver_island">Vancouver Island</name>. 
+    establishment on the southern <name type="place" key="vancouver_island">Vancouver Island</name>. 
     He adds that a former Crown grant, an 1838 exclusive 
     trade-grant for the lands in question, has yet to 
     expire.</item>
@@ -2212,13 +2182,11 @@ classification system.</p>
     HBC's position. The majority council further 
     investigation, and to reply cautiously and 
     judiciously to the HBC inquiry.</item><item>A 
-      summary of a meeting with <name 
-        key="pelly_jh">Pelly</name> is offered in 
+      summary of a meeting with <name key="pelly_jh">Pelly</name> is offered in 
       order to elucidate the HBC's intentions.</item>
   <item><name key="grey_hg">Lord Grey</name> calls 
     for greater consideration on the issue of 
-    colonization; he asks that <name 
-      key="stephen_j">Stephen</name> write the Company, 
+    colonization; he asks that <name key="stephen_j">Stephen</name> write the Company, 
     asking them to detail their intentions, and to 
     state their legal opinion for entitlement.
   </item>
@@ -2233,8 +2201,7 @@ classification system.</p>
   <p>The <gi>calendarDesc</gi> element is used within the
   <gi>profileDesc</gi> element to document objects referenced by means of
 either the <att>calendar</att> attribute on <gi>date</gi> or the
-<att>datingMethod</att> attribute on any member of the <ident
-type="class">att.datable</ident> class.
+<att>datingMethod</att> attribute on any member of the <ident type="class">att.datable</ident> class.
     <specList>
       <specDesc key="calendarDesc"/>
     </specList></p>
@@ -2289,8 +2256,7 @@ expressed using that calendar system:
       <p>Acts of correspondence typically do not occur in isolation from each other. The
         <gi>correspContext</gi> element is used to group references relevant to the item
         of correspondence being described, typically to other items such as the item to which
-        it is a reply, or the item which replies to it: <egXML
-          xmlns="http://www.tei-c.org/ns/Examples">
+        it is a reply, or the item which replies to it: <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <correspContext>
             <ref type="prev" target="#CLF0102">Previous letter of <persName>Chamisso</persName> to <persName>de La
               Foye</persName>: <date when="1807-01-16">16 January 1807</date></ref>
@@ -2307,8 +2273,7 @@ expressed using that calendar system:
         such as those suggested above. </p>
       <p>The following simple example uses <gi>correspAction</gi> to describe the sending of a
         letter by Adelbert von Chamisso from Vertus on 29 January 1807 to Louis de La Foye at
-        Caen. The date of reception is unknown: <egXML
-          xmlns="http://www.tei-c.org/ns/Examples">
+        Caen. The date of reception is unknown: <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <correspAction type="sent">
             <persName>Adelbert von Chamisso</persName>
             <placeName>Vertus</placeName>
@@ -2359,7 +2324,7 @@ Note the use of the <att>when</att> attribute described in <ptr target="#CONADA"
         <att>sameAs</att> attribute defined in section <ptr target="#SAIE"/> may be used
         to indicate that the same name applies to many actions. Its value will usually be the
         identifier of an element defining the person or name concerned, which is supplied
-        elsewhere in the document. <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        elsewhere in the document. <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
           <correspAction type="sent">
             <name sameAs="#author"/>
           </correspAction>
@@ -2454,14 +2419,11 @@ of these are LESS-THAN SIGN (<q>&lt;</q>, U+003C) and AMPERSAND
     <code>rdf</code> is bound to the namespace <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>, the prefix
     <code>dc</code> is bound to the namespace <code>http://purl.org/dc/elements/1.1/</code>, and the prefix
     <code>cc</code> is bound to the namespace <code>http://web.resource.org/cc/</code>.
-    <egXML valid="feasible" xmlns="http://www.tei-c.org/ns/Examples"><xenoData 
-      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-      xmlns:cc="http://web.resource.org/cc/"
-      xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible"><xenoData xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cc="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <rdf:RDF>
     <cc:Work rdf:about="">
       <dc:title>Applied Software Project Management  - review</dc:title>
-      <dc:type rdf:resource="http://purl.org/dc/dcmitype/Text"></dc:type>
+      <dc:type rdf:resource="http://purl.org/dc/dcmitype/Text"/>
       <dc:license rdf:resource="http://creativecommons.org/licenses/by-sa/2.0/uk/"/>
     </cc:Work>
     <cc:License rdf:about="http://creativecommons.org/licenses/by-sa/2.0/uk/">

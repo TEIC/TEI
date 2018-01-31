@@ -55,7 +55,7 @@
       <p>This customization loads the modules and external
 schemata necessary for writing TEI ODD documents.</p>
       <schemaSpec ident="tei_odds" start="TEI schemaSpec elementSpec classSpec macroSpec div">
-        <moduleRef url="relaxng.rng"/>
+        <moduleRef url="http://www.tei-c.org/release/xml/tei/Exemplars/relaxng.rng"/>
         <moduleRef key="header"/>
         <moduleRef key="core"/>
         <moduleRef key="tei"/>
@@ -95,39 +95,6 @@ schemata necessary for writing TEI ODD documents.</p>
                     <anyName/>
                   </attribute>
                   <ref name="anySchematron"/>
-                  <text/>
-                </choice>
-              </zeroOrMore>
-            </element>
-          </content>
-        </macroSpec>
-
-        <elementSpec ident="content" mode="change" module="tagdocs">
-	  <content>
-	    <choice xmlns="http://relaxng.org/ns/structure/1.0">
-	      <group>
-		<ref name="valList"/>
-	      </group>
-	      <oneOrMore>
-		<ref name="anyRelax"/>
-	      </oneOrMore>
-	      <zeroOrMore>
-		<ref name="model.contentPart"/>
-	      </zeroOrMore>
-	    </choice>
-	  </content>
-	</elementSpec>
-
-        <macroSpec ident="anyRelax" mode="add">
-          <content>
-            <element xmlns="http://relaxng.org/ns/structure/1.0">
-              <nsName ns="http://relaxng.org/ns/structure/1.0"/>
-              <zeroOrMore>
-                <choice>
-                  <attribute>
-                    <anyName/>
-                  </attribute>
-                  <ref name="anyRelax"/>
                   <text/>
                 </choice>
               </zeroOrMore>
