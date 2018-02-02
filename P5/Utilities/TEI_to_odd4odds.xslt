@@ -12,7 +12,7 @@
 
   <xsl:variable name="myName" select="'TEI_to_odd4odds.xslt'"/>
   <xsl:variable name="version" select="'0.5.0a'"/>
-  <xsl:param name="versionDate" select="current-date()"/>
+  <xsl:param name="versionDate" select="format-date(current-date(),'[Y]-[M01]-[D01]')"/>
 
   <!--
       ** TOCTOC: TEI ODD Customization for writing TEI ODD Customizations,
@@ -50,6 +50,14 @@
 
   <xsl:variable name="revisionDesc">
     <revisionDesc>
+      <change who="#sbauman.emt" when="2018-02-02">
+        <list>
+          <item>update to use version 3.3.0 of P5</item>
+          <item>format $versionDate so it does not have the timezone appended</item>
+          <item>use $versionDate in <gi>date</gi> in TEI Header, too (instead of
+          calling current-date() again)</item>
+        </list>
+      </change>
       <change who="#sbauman.emt" when="2018-01-22">
         Per #1735, add constraints on <gi>content</gi> child of <gi>elementSpec</gi>:
         <list>
@@ -418,7 +426,7 @@
       xmlns:xi="http://www.w3.org/2001/XInclude"
       xmlns:rng="http://relaxng.org/ns/structure/1.0"
       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-      version="3.1.0">
+      version="3.3.0">
       <teiHeader>
         <fileDesc>
           <titleStmt>
@@ -430,7 +438,7 @@
           </titleStmt>
           <publicationStmt>
             <publisher>Text Encoding Initiative Consortium</publisher>
-            <date when="{current-date()}"/>
+            <date when="{$versionDate}"/>
             <availability status="restricted">
               <p>Copyright 2017 Syd Bauman and Northeastern WWP; some rights reserved.</p>
               <p>This TEI-encoded ODD file is available under the terms of the <ref
