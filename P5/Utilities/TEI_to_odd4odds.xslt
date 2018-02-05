@@ -11,8 +11,8 @@
   >
 
   <xsl:variable name="myName" select="'TEI_to_odd4odds.xslt'"/>
-  <xsl:variable name="version" select="'0.4.3a'"/>
-  <xsl:param name="versionDate" select="current-date()"/>
+  <xsl:variable name="version" select="'0.5.0a'"/>
+  <xsl:param name="versionDate" select="format-date(current-date(),'[Y]-[M01]-[D01]')"/>
 
   <!--
       ** TOCTOC: TEI ODD Customization for writing TEI ODD Customizations,
@@ -50,6 +50,25 @@
 
   <xsl:variable name="revisionDesc">
     <revisionDesc>
+      <change who="#sbauman.emt" when="2018-02-02">
+        <list>
+          <item>update to use version 3.3.0 of P5</item>
+          <item>format $versionDate so it does not have the timezone appended</item>
+          <item>use $versionDate in <gi>date</gi> in TEI Header, too (instead of
+          calling current-date() again)</item>
+        </list>
+      </change>
+      <change who="#sbauman.emt" when="2018-01-22">
+        Per #1735, add constraints on <gi>content</gi> child of <gi>elementSpec</gi>:
+        <list>
+          <item>if <att>mode</att> of <gi>elementSpec</gi> is
+          <val>add</val> or <val>replace</val>, require a
+          <gi>content</gi></item>
+          <item>if <att>mode</att> of <gi>elementSpec</gi> is
+          <val>delete</val>, require said <gi>elementSpec</gi> to be
+          empty</item>
+        </list>
+      </change>
       <change who="#sbauman.emt" when="2017-11-09">
         <list>
           <item>Add constraint to check that <att>xml:id</att> values are unique. We
@@ -407,7 +426,7 @@
       xmlns:xi="http://www.w3.org/2001/XInclude"
       xmlns:rng="http://relaxng.org/ns/structure/1.0"
       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-      version="3.1.0">
+      version="3.3.0">
       <teiHeader>
         <fileDesc>
           <titleStmt>
@@ -419,7 +438,7 @@
           </titleStmt>
           <publicationStmt>
             <publisher>Text Encoding Initiative Consortium</publisher>
-            <date when="{current-date()}"/>
+            <date when="{$versionDate}"/>
             <availability status="restricted">
               <p>Copyright 2017 Syd Bauman and Northeastern WWP; some rights reserved.</p>
               <p>This TEI-encoded ODD file is available under the terms of the <ref
@@ -490,8 +509,8 @@
             customization schema, but may not in your particular case.
             Thus this schema may well flag as invalid things that are
             perfectly reasonable to have in your ODD.</p>
-	    <div>
-	      <head>Background</head>
+            <div>
+              <head>Background</head>
             <p>The TEI ODD language was designed both for the creation
             and customization of the <title>TEI Guidelines</title>,
             and also for the creation (and perhaps customization) of
@@ -529,19 +548,19 @@
             file maintenance convenience. As always, any conforming
             TEI ODD must have either <gi>TEI</gi> or
             <gi>teiCorpus</gi> as the root element.</p>
-	    <p>REMINDER: This language is not canonical &#x2014; it is
-	    intended to be helpful, not definitive</p>
-	    </div>
-	  </div>
-	  
-	  <div>
-	    <head>Technical Information</head>
-	    <!-- combine indirection, differences, 2nd warning here;
-	    add a how-to-use section that says something like "While
-	    we can talk about TEI constraint as if it was only one
-	    step, in fact, like most TEI customizations, validation
-	    requires two distinct steps: RNC &amp; SCH. Here's how you
-	    can set oXygen to do both" kinda stuff. -->
+            <p>REMINDER: This language is not canonical &#x2014; it is
+            intended to be helpful, not definitive</p>
+            </div>
+          </div>
+          
+          <div>
+            <head>Technical Information</head>
+            <!-- combine indirection, differences, 2nd warning here;
+            add a how-to-use section that says something like "While
+            we can talk about TEI constraint as if it was only one
+            step, in fact, like most TEI customizations, validation
+            requires two distinct steps: RNC &amp; SCH. Here's how you
+            can set oXygen to do both" kinda stuff. -->
             <p>Of course the lists of elements, classes, and on rare
             occasion even modules change as TEI P5 matures. Rather
             than requiring that this customization be manually edited
@@ -583,116 +602,13 @@
                   target="http://oxygenxml.com/">oXygen</ref>, you will need to uncheck the <name
                   type="cmd">Check ID/IDREF</name> preference box. It can be found in <name
                   type="cmd">Options > Preferences > XML > XML Parser > RELAX NG</name>.</p>
-	  </div>
-	  <!-- NEW above; OLD below
-	  <div>
-	    <head>Goal</head>
-            <p>The primary intent of this schema is to help you and
-            your XML editor <emph>write</emph> a customization ODD.
-            Thus it makes lots of assumptions (read: enforces lots of
-            constraints) that <emph>probably</emph> make sense when
-            writing a customization schema, but may not in your
-            particular case. This schema in no way pretends to be the
-            last arbiter of what is or is not allowed in an ODD file
-            in general, nor even in a TEI ODD for customizing TEI.</p>
-            <p>Thus this schema may well flag as invalid things that
-            are perfectly reasonable to have in your customization
-            ODD.</p>
           </div>
-          <div>
-            <head>Rationale</head>
-            <p>The TEI ODD language was designed both for the creation and customization of the
-                <title>TEI Guidelines</title>, and also for the creation (and perhaps customization)
-              of other, non-TEI, markup languages. Thus the TEI ODD langauge is, by default, much
-              more flexible than needed for writing TEI customization ODDs. For example, the
-              Guidelines define the <att>key</att> attribute of the <gi>moduleRef</gi> as any XML
-              name (without a namespace prefix, i.e. an <code>xsd:NCName</code>), even though the
-              only possible values when used to customize TEI are the 20 or so module names defined
-              in the <title>TEI Guidelines</title>.</p>
-            <p>Of course, when using Roma<note>The canonical installation of Roma is available at
-                  <ref target="http://www.tei-c.org/Roma/">the TEI-C site</ref>, but it is an open
-                source tool available on <ref
-                  target="https://github.com/TEIC/Roma">GitHub</ref>, which
-                  may be installed on any GNU/Linux system.</note>,
-              a web-based front-end editor for ODD files, this is not a problem, as the web form
-              gives the user only the appropriate TEI values to choose from. However, when editing
-              ODD files by hand, and thus when teaching TEI customization, it is much more efficient
-              to catch errors like mis-spelled module names before handing the ODD file to an ODD
-              processor (e.g. the aforementioned <name
-                type="program">Roma</name> or <ref
-                  target="https://github.com/TEIC/Stylesheets/blob/dev/bin/teitorelaxng">teitorelaxng</ref>).</p>
-            <p>Thus the Women Writers Project has developed this TEI customization for the purpose
-              of having schemas to use while writing TEI customizations.</p>
-          </div>
-          <div>
-            <head>Indirection</head>
-            <p>Of course the lists of elements, classes, and on rare
-            occasion even modules change as TEI P5 matures. Rather
-            than requiring that this customization be manually edited
-            with each release of TEI P5, the ODD for this
-            customization is itself generated from a source file. To
-            generate this customization, an <ref
-            target="POINTER-TO-TEI_to_odd4odds.xslt-ON-GitHub-HERE">XSLT
-            stylesheet</ref> reads in the source to TEI P5, and from
-            it generates the lists of elements, classes, and modules
-            needed. The output of the stylesheet is the ODD file for this
-            customization.</p>
-          </div>
-          <div>
-            <head>Differences</head>
-            <p>We call this TEI language the <name>TEI ODD Customization for writing TEI ODD
-                Customizations</name> language, or TOCTOC for short. TOCTOC differs from <name
-                  type="file">tei_odds</name><note>Available in <ref
-                    target="https://raw.githubusercontent.com/TEIC/TEI/dev/P5/Exemplars/tei_odds.odd"
-                    >the main TEI P5 git repository
-                at GitHub</ref></note> in a variety of ways, including:
-              <list>
-                <item>constraining the elements available (e.g., <gi>gap</gi> and
-                    <gi>imprimatur</gi> are not available)</item>
-                <item>requiring some otherwise optional attributes (e.g., <att>mode</att> of
-                    <gi>classes</gi>, or <att>module</att> on <gi>elementSpec</gi> unless the
-                    <att>mode</att> is specified as <val>add</val>)</item>
-                <item>limiting the content of <gi>constraint</gi> to ISO Schematron, and thus
-                  permitting validation of the Schematron therein</item>
-                <item>constraining the values of several attributes</item>
-                <item>requiring that the four required modules be imported</item>
-                <item>requiring that <gi>altIdent</gi> be an NCName (i.e., not have a prefix) unless
-                it is the child of <gi>valItem</gi> (or <gi>taxonomy</gi>)</item>
-                <item>flagging <tag>*Spec</tag> elements that are neither in the <gi>schemaSpec</gi>
-                  nor referred to from a <gi>specGrpRef</gi> within it</item>
-                <item>warning if required elements (e.g., <gi>teiHeader</gi>) are deleted</item>
-                <item>using, and encouraging the use of, the
-                <att>prefix</att> attribute of
-                <gi>moduleRef</gi></item>
-              </list>
-            </p>
-          </div>
-          <div>
-            <head>Explanations</head>
-            <p>The prefix in this schema stands for <expan>TEI ODD Customization for writing TEI ODD
-                Customizations</expan>.</p>
-            <p>This schema permits a valid document to use a variety of elements as the root
-              element. This is for debugging and file maintenance convenience. As always, any
-              conforming TEI ODD must have either <gi>TEI</gi> or <gi>teiCorpus</gi> as the root
-              element.</p>
-          </div>
-          <div>
-            <head>Warnings</head>
-            <list>
-              <item>This language is not canonical &#x2014; it is intended to be helpful, not
-                definitive</item>
-              <item>If editing an XML document associated with this schema in <ref
-                  target="http://oxygenxml.com/">oXygen</ref>, you will need to uncheck the <name
-                  type="cmd">Check ID/IDREF</name> preference box. It can be found in <name
-                  type="cmd">Options > Preferences > XML > XML Parser > RELAX NG</name>.</item>
-            </list>
-          </div> -->
           <div>
             <head>Schema Specification</head>
             <schemaSpec ident="odd4odds" prefix="toctoc_"
               start="TEI body schemaSpec elementSpec classSpec macroSpec div">
               <xsl:text>&#x0A;</xsl:text>
-	      <desc>a schema to help <emph>writing</emph> TEI customization ODDs; will (incorrectly) flag extensions as invalid</desc>
+              <desc>a schema to help <emph>writing</emph> TEI customization ODDs; will (incorrectly) flag extensions as invalid</desc>
               <xsl:comment> required modules minus lots of elements that probably don't make sense in an ODD </xsl:comment>
               <xsl:text>&#x0A;</xsl:text>
               <moduleRef key="tei"/>
@@ -706,7 +622,7 @@
               <moduleRef key="tagdocs"/>
               <xsl:comment> access to the RELAX NG and ISO Schematron languages </xsl:comment>
               <xsl:comment> Note: end user may need to change paths </xsl:comment>
-	      <xsl:comment> (Here they are relative paths to where they would be found from TEIC/TEI/P5/Exmplars/.) </xsl:comment>
+              <xsl:comment> (Here they are relative paths to where they would be found from TEIC/TEI/P5/Exmplars/.) </xsl:comment>
               <moduleRef url="./relaxng.rng" prefix="rng_"/>
               <moduleRef url="../iso-schematron.rng" prefix="sch_"/>
               <xsl:comment> allow use of the specialized naming elements, as many people are used to them </xsl:comment>
@@ -1134,6 +1050,20 @@
                       conformant</sch:report>
                     <sch:report test="@mode='delete' and @ident='sourceDesc'">Removing ＜sourceDesc＞
                       from your schema guarantees it is not TEI conformant</sch:report>
+                  </constraint>
+                </constraintSpec>
+                <constraintSpec scheme="schematron" ident="content_when_adding">
+                  <constraint>
+                    <sch:rule context="tei:elementSpec[@mode = ('add','replace')]">
+                      <sch:assert test="tei:content">When adding a new element (whether replacing an old one or not), a content model must be specified; but this ＜elementSpec＞ does not have a ＜content＞ child.</sch:assert>
+                    </sch:rule>
+                  </constraint>
+                </constraintSpec>
+                <constraintSpec scheme="schematron" ident="empty_when_deleting">
+                  <constraint>
+                    <sch:rule context="tei:elementSpec[ @mode eq 'delete']">
+                      <sch:report test="*">When used to delete an element from your schema, the ＜elementSpec＞ should be empty</sch:report>
+                    </sch:rule>
                   </constraint>
                 </constraintSpec>
                 <attList>

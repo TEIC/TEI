@@ -8,21 +8,20 @@ $Id$
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" ident="alternate" module="tagdocs">
-          <desc versionDate="2013-11-21" xml:lang="en">an alternation of references</desc>
-          <classes>
-            <memberOf key="model.contentPart"/>
-            <memberOf key="att.global"/>
-            <memberOf key="att.repeatable"/>
-          </classes>
-          <content>
-	    <classRef key="model.contentPart" maxOccurs="unbounded"/>
-          </content>
+  <desc versionDate="2013-11-21" xml:lang="en">indicates that the constructs referenced by its children form an alternation</desc>
+  <classes>
+    <memberOf key="model.contentPart"/>
+    <memberOf key="att.global"/>
+    <memberOf key="att.repeatable"/>
+  </classes>
+  <content>
+    <classRef key="model.contentPart" maxOccurs="unbounded"/>
+  </content>
   <constraintSpec ident="alternatechilden" scheme="schematron">
     <constraint>
       <sch:assert test="count(*)&gt;1">The alternate element must have at least two child elements</sch:assert>
     </constraint>
   </constraintSpec>
-
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#UND"><content>
       <alternate>
@@ -34,7 +33,6 @@ $Id$
     <p>This example content model permits either a <gi>name</gi> or a
     <gi>persName</gi>. </p>
   </exemplum>
-
   <listRef>
     <ptr target="#DEFCON" type="div2"/>
   </listRef>

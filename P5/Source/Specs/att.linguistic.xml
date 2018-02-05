@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+$Date$
+$Id$
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" xml:id="ATTLING" type="atts" ident="att.linguistic">
+  <desc versionDate="2017-03-24" xml:lang="en">provides a set of attributes concerning linguistic features of tokens, for usage within token-level elements, specifically <gi>w</gi> and <gi>pc</gi> in the analysis module.</desc>
+  <classes/>
+  <attList>
+    <attDef ident="lemma" usage="opt">
+      <desc versionDate="2017-07-07" xml:lang="en">provides a lemma (base form) for the word, typically uninflected and serving both as an identifier (e.g. in dictionary contexts, as a headword), and as a basis for potential inflections.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">단어의 레마(사전의 표제 형식)를 명시한다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出在字典中該字的詞條形式。</desc>
+      <desc versionDate="2008-04-06" xml:lang="ja">当該語の，辞書の見出し形を示す．</desc>
+      <desc versionDate="2009-02-13" xml:lang="fr">fournit le lemme du mot (entrée du dictionnaire)</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">identifica el lema de una palabra (forma en que se encuentra como entrada en un diccionario).</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">identifica il lemma (la voce di un dizionario)</desc>
+      <datatype><dataRef key="teidata.text"/></datatype>
+      <exemplum versionDate="2017-03-20" xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <w lemma="wife">wives</w>
+        </egXML>
+      </exemplum>
+      <exemplum versionDate="2017-03-24" xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <w lemma="Arznei">Artzeneyen</w>
+        </egXML>
+      </exemplum>
+      <exemplum xml:lang="zh-TW">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <w type="動詞" lemma="hit">hitt<m type="字尾">ing</m>
+          </w>
+        </egXML>
+      </exemplum>
+    </attDef>
+    <attDef ident="lemmaRef">
+      <desc versionDate="2010-07-20" xml:lang="en">provides a pointer to a definition of the lemma for the
+        word, for example in an online lexicon.</desc>
+      <datatype maxOccurs="1"><dataRef key="teidata.pointer"/></datatype>
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <w type="verb" lemma="hit" lemmaRef="http://www.example.com/lexicon/hitvb.xml">hitt<m type="suffix">ing</m>
+          </w>
+        </egXML>
+      </exemplum>
+      <exemplum versionDate="2008-04-06" xml:lang="fr">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <w type="verb" lemma="nage" lemmaRef="http://www.example.com/lexicon/hitvb.xml">nag<m type="suffix">er</m>
+          </w>
+        </egXML>
+      </exemplum>
+    </attDef>
+    <attDef ident="pos" usage="opt">
+      <desc versionDate="2017-03-24" xml:lang="en">(part of speech) indicates the part of speech assigned to a token 
+        (i.e. information on whether it is a noun, adjective, or verb), usually according to some official reference 
+        vocabulary (e.g. for German: STTS, for English: CLAWS, for Polish: NKJP, etc.).</desc>
+      <datatype><dataRef key="teidata.text"/></datatype>
+      <exemplum xml:lang="en">
+        <p>The German sentence <q>Wir fahren in den Urlaub.</q> tagged with the Stuttgart-Tuebingen-Tagset (STTS).</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <p xmlns="">
+            <w pos="PPER">Wir</w>
+            <w pos="VVFIN">fahren</w>
+            <w pos="APPR">in</w>
+            <w pos="ART">den</w>
+            <w pos="NN">Urlaub</w>
+            <w pos="$.">.</w></p>
+        </egXML>
+      </exemplum>
+      <exemplum xml:lang="en">
+        <p>The English sentence <q>We're going to Brazil.</q> tagged with the <ref target="http://ucrel.lancs.ac.uk/claws5tags.html">CLAWS-5</ref> tagset, arranged inline (with significant whitespace).</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"  xml:space="preserve"><p xmlns=""><w pos="PNP">We</w><w pos="VBB">'re</w> <w pos="VVG">going</w> <w pos="PRP">to</w> <w pos="NP0">Brazil</w><pc pos="PUN">.</pc></p>
+        </egXML>
+      </exemplum>
+      <exemplum xml:lang="en">
+        <p>The English sentence <q>We're going on vacation to Brazil for a month!</q> tagged with the <ref target="http://ucrel.lancs.ac.uk/claws7tags.html">CLAWS-7</ref> tagset and arranged sequentially.</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <p xmlns="">
+            <w pos="PPIS2">We</w>
+            <w pos="VBR">'re</w>
+            <w pos="VVG">going</w>
+            <w pos="II">on</w>
+            <w pos="NN1">vacation</w>
+            <w pos="II">to</w>
+            <w pos="NP1">Brazil</w>
+            <w pos="IF">for</w>
+            <w pos="AT1">a</w>
+            <w pos="NNT1">month</w>
+            <pc pos="!">!</pc>
+          </p>
+        </egXML>
+      </exemplum>
+    </attDef>
+    <attDef ident="msd" usage="opt">
+      <desc versionDate="2005-10-10" xml:lang="en">(morphosyntactic description) supplies
+        morphosyntactic information for a token, usually according to some official reference
+        vocabulary (e.g. for German: <ref
+          target="http://www.ims.uni-stuttgart.de/forschung/ressourcen/lexika/TagSets/stts-1999.pdf"
+          >STTS-large tagset</ref>; for a feature description system designed as (pragmatically) universal, see <ref
+          target="http://universaldependencies.org/u/feat/index.html">Universal Features</ref>).
+      </desc>
+      <datatype><dataRef key="teidata.text"/></datatype>
+
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <ab xmlns="">
+            <w pos="PPER" msd="1.Pl.*.Nom">Wir</w>
+            <w pos="VVFIN" msd="1.Pl.Pres.Ind">fahren</w>
+            <w pos="APPR" msd="Akk">in</w>
+            <w pos="ART" msd="Def.Masc.Akk.Sg.">den</w>
+            <w pos="NN" msd="Masc.Akk.Sg.">Urlaub</w>
+            <pc pos="$." msd="--">.</pc>
+          </ab>
+        </egXML>
+      </exemplum>
+    </attDef>
+    <attDef ident="join" usage="opt">
+      <desc versionDate="2017-03-24" xml:lang="en">when present, it provides information on whether the token in question is adjacent to another, and if so, on which side. The definition of this attribute is adapted from ISO MAF (Morpho-syntactic Annotation Framework), ISO 24611:2012.</desc>
+      <datatype><dataRef key="teidata.text"/></datatype>
+      <valList type="closed">
+        <valItem ident="no">
+          <gloss xml:lang="en" versionDate="2017-07-07">the token is not adjacent to another</gloss>
+        </valItem>
+        <valItem ident="left">
+          <gloss xml:lang="en" versionDate="2017-07-07">there is no whitespace on the left side of the token</gloss>
+        </valItem>
+        <valItem ident="right">
+          <gloss xml:lang="en" versionDate="2017-07-07">there is no whitespace on the right side of the token</gloss>
+        </valItem>
+        <valItem ident="both">
+          <gloss xml:lang="en" versionDate="2017-07-07">there is no whitespace on either side of the token</gloss>
+        </valItem>
+        <valItem ident="overlap">
+          <gloss xml:lang="en" versionDate="2017-07-07">the token overlaps with another; other devices (specifying the extent and the area of overlap) are needed to more precisely locate this token in the character stream</gloss>
+        </valItem>
+      </valList>
+      <exemplum xml:lang="en">
+        <p>The example below assumes that the lack of whitespace is marked redundantly, by using the appropriate values of <att>join</att>.</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <s xmlns="">
+            <pc join="right">"</pc>
+            <w join="left">Friends</w>
+            <w>will</w>
+            <w>be</w>
+            <w join="right">friends</w>
+            <pc join="both">.</pc>
+            <pc join="left">"</pc>
+          </s>
+        </egXML>
+        <p>Note that a project may make a decision to only indicate lack of whitespace in one
+          direction, or do that non-redundantly. The existing proposal is the broadest possible,
+          on the assumption that we adopt the "streamable view", where all the information on the
+          current element needs to be represented locally.</p>
+      </exemplum>
+      <exemplum xml:lang="en">
+        <p>The English sentence <q>We're going on vacation.</q> tagged with the CLAWS-5 tagset,
+          arranged sequentially, tagged on the assumption that only the lack of the preceding
+          whitespace is indicated.</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <p xmlns="">
+            <w pos="PNP">We</w>
+            <w pos="VBB" join="left">'re</w>
+            <w pos="VVG">going</w>
+            <w pos="PRP">on</w>
+            <w pos="NN1">vacation</w>
+            <pc pos="PUN" join="left">.</pc>
+          </p>
+        </egXML>
+      </exemplum>
+    </attDef>
+  </attList>
+</classSpec>
