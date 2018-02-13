@@ -2959,6 +2959,8 @@
                 <sch:let name="apos.straight" value="''''"/>
                 <sch:let name="quotes" value="concat('[', $apos.straight, '&quot;]')"/>
                 <sch:let name="div.types.front" value="('abstract', 'acknowledgements', 'authorNotes', 'editorNotes', 'corrections', 'dedication')"/>
+                <sch:let name="tei.version.url" value="'http://www.tei-c.org/release/doc/tei-p5-doc/VERSION'"/>
+                <sch:let name="tei.version" value="if (unparsed-text-available($tei.version.url)) then normalize-space(unparsed-text($tei.version.url)) else ()"/>
               </sch:pattern>
             </constraint>
           </constraintSpec>
@@ -3236,14 +3238,37 @@
           <constraintSpec ident="jtei.sch-teiVersion" scheme="isoschematron">
             <constraint>
               <sch:rule context="@target[matches(., '^https?://www\.tei-c\.org/release/doc/tei-p5-doc')]">
-                <sch:assert test="false()">
-                  Please refer to the exact version of the TEI Guidelines, and link to the version that can be found in the Vault section. For an overview of all archived versions, see http://www.tei-c.org/Vault/P5/.
+                <sch:assert test="false()" sqf:fix="teiURL.fix">
+                  Please refer to the exact version of the TEI Guidelines<sch:value-of select="if (normalize-space($tei.version)) then concat(' (currently at version ', $tei.version, ')') else ()"/>, and link to the version that can be found in the Vault section. For an overview of all archived versions, see http://www.tei-c.org/Vault/P5/.
                   
                   If you're referring to the English version, the correct URL will likely take the form of http://www.tei-c.org/Vault/P5/{$version-number}/doc/tei-p5-doc/en/html/.
                 </sch:assert>
+                <sqf:fix id="teiURL.fix" use-when="normalize-space($tei.version)">
+                  <sqf:description>
+                    <sqf:title>Change TEI URL to a versioned URL in the Vault (currently at version <sch:value-of select="$tei.version"/>).</sqf:title>
+                  </sqf:description>
+                  <sqf:replace node-type="attribute"
+                    target="target"
+                    select="replace(., '^https?://www\.tei-c\.org/release/', concat('https://www.tei-c.org/Vault/P5/', $tei.version, '/'))"/>
+                </sqf:fix>
               </sch:rule>
             </constraint>
-          </constraintSpec>                 
+          </constraintSpec>
+          <constraintSpec ident="jtei.jtei-url" scheme="isoschematron">
+            <constraint>
+              <sch:rule context="@target[matches(., '^https?://(www\.)?jtei\.revues\.org/?')]">
+                <sch:assert test="false()" sqf:fix="jteiURL.fix">
+                  Please refer to the correct jTEI URL: https://journals.openedition.org/jtei/.
+                </sch:assert>
+                <sqf:fix id="jteiURL.fix">
+                  <sqf:description>
+                    <sqf:title>Change jTEI URL to https://journals.openedition.org/jtei/.</sqf:title>
+                  </sqf:description>
+                  <sqf:replace node-type="attribute" target="target" select="replace(., '^https?://(www\.)?jtei\.revues\.org/?', 'https://journals.openedition.org/jtei/')"/>
+                </sqf:fix>
+              </sch:rule>
+            </constraint>
+          </constraintSpec>
         </schemaSpec>
       </div>
     </back>
