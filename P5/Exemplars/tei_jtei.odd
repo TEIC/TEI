@@ -1897,7 +1897,7 @@
                 <elementRef key="author" minOccurs="1" maxOccurs="unbounded"/>
               </sequence>              
             </content>
-            <constraintSpec ident="jtei.sch-title" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-title" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:titleStmt">
                   <sch:assert test="tei:title[@type = 'main']" sqf:fix="type.add">
@@ -1938,7 +1938,7 @@
             </attList>
           </elementSpec>
           <elementSpec ident="att" module="tagdocs" mode="change">
-            <constraintSpec ident="jtei.sch-att" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-att" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:att">
                   <sch:assert test="not(matches(., '^@'))">
@@ -2113,7 +2113,7 @@
             </attList>
           </classSpec>
           <elementSpec ident="author" mode="change" module="core">
-            <constraintSpec ident="jtei.sch-author" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-author" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:titleStmt/tei:author">
                   <sch:assert test="tei:name and tei:affiliation and tei:email">
@@ -2132,7 +2132,7 @@
             </attList>
           </elementSpec>
           <elementSpec ident="bibl" mode="change" module="core">
-            <constraintSpec ident="jtei.sch-bibl-id" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-bibl-id" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl"
                   role="warning">
@@ -2142,7 +2142,7 @@
                 </sch:rule>
               </constraint>
             </constraintSpec>
-            <constraintSpec ident="jtei.sch-bibl-orphan" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-bibl-orphan" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl"
                   role="warning">
@@ -2185,7 +2185,7 @@
                 <classRef key="model.ptrLike"/>
               </alternate>
             </content>
-            <constraintSpec ident="jtei.sch-cit" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-cit" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:cit" role="warning">
                   <sch:assert test="tei:ref">
@@ -2209,7 +2209,7 @@
             </attList>
           </elementSpec>
           <elementSpec ident="div" mode="change">
-            <constraintSpec ident="jtei.sch-divtypes-front" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-divtypes-front" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:div[@type = $div.types.front]">
                   <sch:assert test="parent::tei:front">
@@ -2218,7 +2218,7 @@
                 </sch:rule>
               </constraint>
             </constraintSpec>
-            <constraintSpec ident="jtei.sch-divtypes-front2" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-divtypes-front2" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:front/tei:div">
                   <sch:assert test="@type = $div.types.front">
@@ -2227,7 +2227,7 @@
                 </sch:rule>
               </constraint>
             </constraintSpec>
-            <constraintSpec ident="jtei.sch-divtypes-back" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-divtypes-back" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:div[@type = ('bibliography', 'appendix')]">
                   <sch:assert test="parent::tei:back">
@@ -2236,7 +2236,7 @@
                 </sch:rule>
               </constraint>
             </constraintSpec>
-            <constraintSpec ident="jtei.sch-divtypes-body" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-divtypes-body" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:div[@type = ('editorialIntroduction')]">
                   <sch:assert test="parent::tei:body">
@@ -2245,7 +2245,7 @@
                 </sch:rule>
               </constraint>
             </constraintSpec>
-            <constraintSpec ident="jtei.sch-div-head" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-div-head" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:body//tei:div[not(@type = ('editorialIntroduction'))]">
                   <sch:assert test="tei:head">
@@ -2500,7 +2500,7 @@
             </attList>
           </elementSpec>
           <elementSpec ident="note" mode="change">
-            <constraintSpec ident="jtei.sch-note-punctuation" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-note-punctuation" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:note">
                   <sch:assert test="not(following::text()[not(ancestor::tei:note)][1][matches(., '^[,\.:;!?\]]')])">
@@ -2530,7 +2530,7 @@
                 </sch:rule>                
               </constraint>
             </constraintSpec>
-            <constraintSpec ident="jtei.sch-note-blocks" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-note-blocks" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:note">
                   <sch:report test=".//(tei:cit|tei:table|tei:list[not(tokenize(@rend, '\s+')[. eq 'inline'])]|tei:figure|eg:egXML|tei:eg)">
@@ -2549,7 +2549,7 @@
           </elementSpec>
           
           <elementSpec ident="head" module="core" mode="change">
-            <constraintSpec ident="jtei.sch-head-number" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-head-number" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:head">
                   <sch:report test="matches(., '^\s*((figure|table|example|section) )?\d', 'i')">
@@ -2558,7 +2558,7 @@
                 </sch:rule>
               </constraint>
             </constraintSpec>
-            <constraintSpec ident="jtei.sch-figure-head" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-figure-head" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:figure/tei:head">
                   <sch:assert test="@type = ('legend', 'license')">
@@ -2634,7 +2634,7 @@
             </attList>
           </elementSpec>
           <elementSpec ident="ptr" mode="change">
-            <constraintSpec ident="jtei.sch-ptr-multipleTargets" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-ptr-multipleTargets" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:ptr[not(@type='crossref')]">
                   <sch:report test="count(tokenize(normalize-space(@target), '\s+')) > 1">
@@ -2665,7 +2665,7 @@
             </attList>
           </elementSpec>
           <elementSpec ident="quote" mode="change" module="core">
-            <constraintSpec ident="jtei.sch-core" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-core" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:quote">
                   <sch:assert test="id(substring-after(@source, '#'))/(self::tei:ref[@type eq 'bibl']|self::tei:bibl[ancestor::tei:body])">
@@ -2679,7 +2679,7 @@
             </attList>
           </elementSpec>
           <elementSpec ident="ref" mode="change" module="core">
-            <constraintSpec ident="jtei.sch-ref-multipleTargets" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-ref-multipleTargets" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:ref">
                   <sch:report test="count(tokenize(normalize-space(@target), '\s+')) > 1">
@@ -2688,7 +2688,7 @@
                 </sch:rule>
               </constraint>
             </constraintSpec>
-            <constraintSpec ident="jtei.sch-biblref-parentheses" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-biblref-parentheses" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:ref[@type eq 'bibl']">
                   <sch:assert test="not(matches(., '^\(.*\)$'))">
@@ -2697,7 +2697,7 @@
                 </sch:rule>
               </constraint>
             </constraintSpec>
-            <constraintSpec ident="jtei.sch-biblref-target" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-biblref-target" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:ref[@type eq 'bibl']">
                   <sch:assert test="id(substring-after(@target, '#'))/(self::tei:bibl|self::tei:person[ancestor::tei:particDesc/parent::tei:profileDesc])">
@@ -2706,7 +2706,7 @@
                 </sch:rule>
               </constraint>
             </constraintSpec>
-            <constraintSpec ident="jtei.sch-biblref-type" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-biblref-type" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:ref[id(substring-after(@target, '#'))/self::tei:bibl]">
                   <sch:assert test="@type eq 'bibl'" sqf:fix="bibltype.add">
@@ -2743,7 +2743,7 @@
             </attList>
           </elementSpec>
           <elementSpec ident="rendition" mode="change" module="header">
-            <constraintSpec ident="jtei.sch-rendition" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-rendition" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:rendition">
                   <sch:assert test="some $i in //@rendition satisfies tokenize($i, '\s+')[replace(., '#', '') = current()/@xml:id]">
@@ -2789,7 +2789,7 @@
             <desc xml:lang="en" versionDate="2015-03-03">contains the complete text of the article. Must include a 
             <gi>front</gi> containing an abstract, a <gi>body</gi> containing the main 
             text, and a <gi>back</gi> containing the bibliography and any appendices.</desc>
-            <constraintSpec ident="jtei.sch-article-keywords" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-article-keywords" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:text[not(tei:body/tei:div[@type = ('editorialIntroduction')])]">
                   <sch:assert test="parent::tei:TEI/tei:teiHeader/tei:profileDesc/tei:textClass/tei:keywords">
@@ -2798,7 +2798,7 @@
                 </sch:rule>
               </constraint>
             </constraintSpec>
-            <constraintSpec ident="jtei.sch-article-abstract" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-article-abstract" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:text[not(tei:body/tei:div[@type = ('editorialIntroduction')])]">
                   <sch:assert test="tei:front/tei:div[@type='abstract']">
@@ -2807,7 +2807,7 @@
                 </sch:rule>
               </constraint>
             </constraintSpec>
-            <constraintSpec ident="jtei.sch-article-back" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-article-back" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:text[not(tei:body/tei:div[@type = ('editorialIntroduction')])]">
                   <sch:assert test="tei:back/tei:div[@type='bibliography']/tei:listBibl">
@@ -2918,7 +2918,7 @@
 -->              
               <!--</alternate>-->
             </content>
-            <constraintSpec ident="jtei.sch-body" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-body" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:body[child::tei:div[not(@type=('editorialIntroduction'))]]">
                   <sch:assert test="count(child::tei:div) gt 1">
@@ -2931,7 +2931,7 @@
             </constraintSpec>
           </elementSpec>
           <elementSpec ident="back" module="textstructure" mode="change">
-            <constraintSpec ident="jtei.sch-back" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-back" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:back">
                   <sch:assert test="tei:div[@type='bibliography']/tei:listBibl">
@@ -2942,7 +2942,7 @@
             </constraintSpec>
           </elementSpec>
           
-          <constraintSpec ident="jtei.sch-ns" scheme="isoschematron">
+          <constraintSpec ident="jtei.sch-ns" scheme="schematron">
             <constraint>
               <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
               <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
@@ -2951,7 +2951,7 @@
               <sch:ns prefix="eg" uri="http://www.tei-c.org/ns/Examples"/>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="jtei.sch-variables" scheme="isoschematron">
+          <constraintSpec ident="jtei.sch-variables" scheme="schematron">
             <constraint>
               <sch:pattern>
                 <sch:let name="double.quotes" value="'[&quot;“”]'"/>
@@ -2965,7 +2965,7 @@
             </constraint>
           </constraintSpec>
           <elementSpec ident="tag" module="tagdocs" mode="change">
-            <constraintSpec ident="jtei.sch-tag" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-tag" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:tag">
                   <sch:assert test="not(matches(., '^[&lt;!?-]|[&gt;/?\-]$'))">
@@ -2977,7 +2977,7 @@
           </elementSpec>
           
           <elementSpec ident="val" module="tagdocs" mode="change">
-            <constraintSpec ident="jtei.sch-att" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-att" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:val">
                   <sch:assert test="not(matches(., concat('^', $quotes, '|', $quotes, '$')))">
@@ -2988,7 +2988,7 @@
             </constraintSpec>
           </elementSpec>
           <elementSpec ident="supplied" module="transcr" mode="change">
-            <constraintSpec ident="jtei.sch-supplied" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-supplied" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:supplied">
                   <sch:assert test="not(matches(., '^\[|\]$'))">
@@ -3000,7 +3000,7 @@
           </elementSpec>
           
           <elementSpec ident="idno" module="header" mode="change">
-            <constraintSpec ident="jtei.sch-doi-order" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-doi-order" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:idno[@type eq 'doi']">
                   <sch:report test="following-sibling::tei:ref">
@@ -3011,7 +3011,7 @@
             </constraintSpec>
           </elementSpec>
           <elementSpec ident="graphic" module="core" mode="change">
-            <constraintSpec ident="jtei.sch-graphic-dimensions" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-graphic-dimensions" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:graphic">
                   <sch:assert test="matches(@width, '\d+px') and matches(@height, '\d+px')">
@@ -3020,7 +3020,7 @@
                 </sch:rule>
               </constraint>
             </constraintSpec>
-            <constraintSpec ident="jtei.sch-graphic-context" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-graphic-context" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:graphic">
                   <sch:assert test="parent::tei:figure">
@@ -3031,7 +3031,7 @@
             </constraintSpec>
           </elementSpec>
           <elementSpec ident="front" module="textstructure" mode="change">
-            <constraintSpec ident="jtei.sch-front-abstract" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-front-abstract" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:front">
                   <sch:assert test="tei:div[@type='abstract']">
@@ -3042,7 +3042,7 @@
             </constraintSpec>            
           </elementSpec>
           <elementSpec ident="table" module="figures" mode="change">
-            <constraintSpec ident="jtei.sch-table" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-table" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:table">
                   <sch:assert test="not(ancestor::tei:list)">
@@ -3053,7 +3053,7 @@
             </constraintSpec>
           </elementSpec>
           <elementSpec ident="gap" module="core" mode="change">
-            <constraintSpec ident="jtei.sch-gap" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-gap" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:gap-period">
                   <sch:report test="following-sibling::node()[1][self::text()] and starts-with(following-sibling::node()[1], '.')">
@@ -3062,7 +3062,7 @@
                 </sch:rule>
               </constraint>
             </constraintSpec>
-            <constraintSpec ident="jtei.sch-gap-ws" scheme="isoschematron">
+            <constraintSpec ident="jtei.sch-gap-ws" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:gap">
                   <sch:report test="preceding-sibling::node()[1][self::text()][matches(., '\.\s+$')]">
@@ -3073,7 +3073,7 @@
             </constraintSpec>
           </elementSpec>
           
-          <constraintSpec ident="jtei.sch-straightApos" scheme="isoschematron">
+          <constraintSpec ident="jtei.sch-straightApos" scheme="schematron">
             <constraint>
               <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag)]">
                 <sch:report test="matches(., $apos.straight)" sqf:fix="apostrophe.replace">
@@ -3091,7 +3091,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="jtei.sch-LRquotes" scheme="isoschematron">
+          <constraintSpec ident="jtei.sch-LRquotes" scheme="schematron">
             <constraint>
               <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag)][matches(., $apos.typographic)]">
                 <sch:report test="matches(., '\W[’]\D') or matches(., '[‘](\W|$)') or matches(., '\w[‘]\w')">
@@ -3100,7 +3100,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="jtei.sch-quotationMarks" scheme="isoschematron">
+          <constraintSpec ident="jtei.sch-quotationMarks" scheme="schematron">
             <constraint>
               <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag)]">
                 <sch:report test="matches(., $double.quotes) or matches(., '(^|\W)[‘][^‘’]+[’](\W|$)')">
@@ -3109,7 +3109,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="jtei.sch-doubleHyphens" scheme="isoschematron">
+          <constraintSpec ident="jtei.sch-doubleHyphens" scheme="schematron">
             <constraint>
               <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag|ancestor::tei:ref)]">
                 <sch:assert test="not(contains(., '--'))" sqf:fix="dash.replace">
@@ -3125,7 +3125,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="jtei.sch-rangeHyphen" scheme="isoschematron">
+          <constraintSpec ident="jtei.sch-rangeHyphen" scheme="schematron">
             <constraint>
               <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag|ancestor::tei:idno|ancestor::tei:date)][not(. = parent::*/@*)]">
                 <sch:assert test="not(matches(., '\d-\d'))" sqf:fix="hyphen.replace">
@@ -3141,7 +3141,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="jtei.sch-ieEg" scheme="isoschematron">
+          <constraintSpec ident="jtei.sch-ieEg" scheme="schematron">
             <constraint>
               <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag)]">
                 <sch:report test="matches(., '(i\.e\.|e\.g\.)[^,]', 'i')" sqf:fix="comma.add">
@@ -3156,7 +3156,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="jtei.sch-localLinkTarget" scheme="isoschematron">
+          <constraintSpec ident="jtei.sch-localLinkTarget" scheme="schematron">
             <constraint>
               <sch:rule context="@*[not(ancestor::eg:egXML)][name() = ('corresp', 'target', 'from', 'to', 'ref', 'rendition', 'resp', 'source')][some $i in tokenize(., '\s+') satisfies starts-with($i, '#')]">
                 <sch:assert test="every $i in tokenize(., '\s+')[starts-with(., '#')] satisfies id( substring-after($i, '#'))">
@@ -3165,7 +3165,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="jtei.sch-quoteDelim" scheme="isoschematron">
+          <constraintSpec ident="jtei.sch-quoteDelim" scheme="schematron">
             <constraint>
               <sch:rule context="tei:title[@level eq 'a']|tei:mentioned|tei:soCalled|tei:quote|tei:q">
                 <sch:assert test="not(matches(., concat('^', $double.quotes, '|', $double.quotes, '$')))" sqf:fix="quotation.remove">
@@ -3180,7 +3180,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="jtei.sch-crossref-id" scheme="isoschematron">
+          <constraintSpec ident="jtei.sch-crossref-id" scheme="schematron">
             <constraint>
               <sch:rule context="tei:body//tei:div[not(@type='editorialIntroduction')]|tei:figure|tei:table"
                 role="warning">
@@ -3191,7 +3191,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="jtei.sch-formalCrossref" scheme="isoschematron">
+          <constraintSpec ident="jtei.sch-formalCrossref" scheme="schematron">
             <constraint>
               <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag|ancestor::tei:ref[not(@type='crossref')])]"
                 role="warning">
@@ -3202,7 +3202,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="jtei.sch-crossrefTargetType" scheme="isoschematron">
+          <constraintSpec ident="jtei.sch-crossrefTargetType" scheme="schematron">
             <constraint>
               <sch:rule context="tei:ptr[@type='crossref']|tei:ref[@type='crossref']">
                 <sch:assert test="id(substring-after(@target, '#'))/(self::tei:div|self::tei:figure|self::tei:table|self::tei:note)">
@@ -3211,7 +3211,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="jtei.sch-crossrefType" scheme="isoschematron">
+          <constraintSpec ident="jtei.sch-crossrefType" scheme="schematron">
             <constraint>
               <sch:rule context="tei:ptr[not(@type='crossref')]|tei:ref[not(@type='crossref')]">
                 <sch:report test="id(substring-after(@target, '#'))/(self::tei:div|self::tei:figure|self::tei:table)" sqf:fix="crossreftype.add">
@@ -3226,7 +3226,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="jtei.sch-centuries" scheme="isoschematron">
+          <constraintSpec ident="jtei.sch-centuries" scheme="schematron">
             <constraint>
               <sch:rule context="text()[not(ancestor::tei:quote or ancestor::tei:title)]">
                 <sch:assert test="not(matches(., '\d\d?((th)|(st)|(rd)|(nd))[- ]centur((y)|(ies))', 'i'))">
@@ -3235,7 +3235,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="jtei.sch-teiVersion" scheme="isoschematron">
+          <constraintSpec ident="jtei.sch-teiVersion" scheme="schematron">
             <constraint>
               <sch:rule context="@target[matches(., '^https?://www\.tei-c\.org/release/doc/tei-p5-doc')]">
                 <sch:assert test="false()" sqf:fix="teiURL.fix">
@@ -3245,7 +3245,7 @@
                 </sch:assert>
                 <sqf:fix id="teiURL.fix" use-when="normalize-space($tei.version)">
                   <sqf:description>
-                    <sqf:title>Change TEI URL to a versioned URL in the Vault (currently at version <sch:value-of select="$tei.version"/>).</sqf:title>
+                    <sqf:title>Change TEI URL to a versioned URL in the Vault<!-- (currently at version <sch:value-of select="$tei.version"/>)-->.</sqf:title>
                   </sqf:description>
                   <sqf:replace node-type="attribute"
                     target="target"
@@ -3254,7 +3254,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="jtei.jtei-url" scheme="isoschematron">
+          <constraintSpec ident="jtei.jtei-url" scheme="schematron">
             <constraint>
               <sch:rule context="@target[matches(., '^https?://(www\.)?jtei\.revues\.org/?')]">
                 <sch:assert test="false()" sqf:fix="jteiURL.fix">
