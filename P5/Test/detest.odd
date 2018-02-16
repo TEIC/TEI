@@ -2,7 +2,6 @@
 <TEI xmlns="http://www.tei-c.org/ns/1.0"
      xmlns:rng="http://relaxng.org/ns/structure/1.0"
      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-     xmlns:s="http://www.ascc.net/xml/schematron"
      xml:lang="en" n="detest">
   <teiHeader>
     <fileDesc>
@@ -427,8 +426,6 @@
 		*   @scheme = the value of ../@scheme
 		*   content-language = whether ../* are Schematron 1.x ("schematron") or ISO Schematron elements
 		*   expected-result = OK, deprecated, or error
-		* On or about 2017-12-14 the @ident for isoschamtron_isoschematron_deprecated should be
-		* changed to isoschematron_isoschematron_error.
 	    -->
 	    <constraintSpec scheme="schematron" ident="schematron_isoschematron_OK">
 	      <!-- This should *not* raise an error, as ISO Schematron
@@ -437,28 +434,11 @@
 		<sch:assert test="true()"/>
 	      </constraint>
 	    </constraintSpec>
-	    <constraintSpec scheme="isoschematron" ident="isoschematron_isoschematron_deprecated">
- 	      <!-- This should raise a deprecation message until 2017-12-14, -->
-	      <!-- after which it should raise an error, as "isoschematron" -->
-	      <!-- will no longer be allowed. -->
+	    <constraintSpec scheme="isoschematron" ident="isoschematron_isoschematron_error">
+ 	      <!-- This should raise an error now, as "isoschematron" -->
+	      <!-- is no longer be allowed. -->
 	      <constraint>
 		<sch:assert test="true()"/>
-	      </constraint>
-	    </constraintSpec>
-	    <constraintSpec scheme="isoschematron" ident="isoschematron_schematron_error">
-	      <!-- This should just raise an error, as "isoschematron"
-	           is no longer a valid value of @scheme; and
-	           Schematron 1.x wouldn't be allowed in there even if
-	           it were. -->
-	      <constraint>
-		<s:assert test="false()"/>
-	      </constraint>
-	    </constraintSpec>
-	    <constraintSpec scheme="schematron" ident="schematron_schematron_deprecated">
-	      <!-- This should raise a warning, as Schematron 1.x is
-		   no longer allowed inside a "schematron" <constraintSpec>. -->
-	      <constraint>
-		<s:assert test="false()"/>
 	      </constraint>
 	    </constraintSpec>
 	  </elementSpec>
