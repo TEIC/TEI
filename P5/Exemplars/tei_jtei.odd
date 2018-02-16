@@ -3245,7 +3245,7 @@
                 </sch:assert>
                 <sqf:fix id="teiURL.fix" use-when="normalize-space($tei.version)">
                   <sqf:description>
-                    <sqf:title>Change TEI URL to a versioned URL in the Vault (currently at version <sch:value-of select="$tei.version"/>).</sqf:title>
+                    <sqf:title>Change TEI URL to a versioned URL in the Vault<!-- (currently at version <sch:value-of select="$tei.version"/>)-->.</sqf:title>
                   </sqf:description>
                   <sqf:replace node-type="attribute"
                     target="target"
@@ -3254,7 +3254,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="jtei.jtei-url" scheme="isoschematron">
+          <constraintSpec ident="jtei.jtei-url" scheme="schematron">
             <constraint>
               <sch:rule context="@target[matches(., '^https?://(www\.)?jtei\.revues\.org/?')]">
                 <sch:assert test="false()" sqf:fix="jteiURL.fix">
