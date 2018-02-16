@@ -87,22 +87,6 @@ $Id$
             </group>
           </content>
         </macroSpec>
-        <macroSpec ident="anySchematron" mode="add">
-          <content>
-            <element xmlns="http://relaxng.org/ns/structure/1.0">
-              <nsName ns="http://www.ascc.net/xml/schematron"/>
-              <zeroOrMore>
-                <choice>
-                  <attribute>
-                    <anyName/>
-                  </attribute>
-                  <ref name="anySchematron"/>
-                  <text/>
-                </choice>
-              </zeroOrMore>
-            </element>
-          </content>
-        </macroSpec>
         <macroSpec ident="anyISOSchematron" mode="add">
           <content>
             <element xmlns="http://relaxng.org/ns/structure/1.0">
@@ -130,6 +114,7 @@ $Id$
                     <anyName/>
                   </attribute>
                   <ref name="anySchematronQuickFix"/>
+		  <ref name="anyISOSchematron"/>
                   <text/>
                 </choice>
               </zeroOrMore>
@@ -141,7 +126,6 @@ $Id$
             <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
               <choice>
                 <text/>
-                <ref name="anySchematron"/>
                 <ref name="anyISOSchematron"/>
               </choice>
             </zeroOrMore>
