@@ -74,6 +74,55 @@ this chapter is included in a schema.</p>
 <p>The <gi>w</gi> and <gi>pc</gi> elements belong to the <ident type="class">att.linguistic</ident> class, which supplies 
   attributes that may be used for lightweight linguistic annotation: 
   <specList><specDesc key="att.linguistic" atts="lemma lemmaRef pos msd join"/></specList></p>
+  
+<p>"Lightweight linguistic annotation" is a term that describes the enrichment of word-level elements with the 
+basic grammatical information, sufficient for enhancing queries or improving the analysis of search results 
+by, for example, making it possible to distinguish between the noun <mentioned>cut</mentioned>  
+and the identically spelled verb <mentioned>cut</mentioned> in English, and further between e.g. the 
+present-tense form of <mentioned>cut</mentioned> and its past-tense or past-participial forms. For the former 
+contrast, the part-of-speech (<att>pos</att>) attribute should be used, whereas the latter may use <att>pos</att> 
+and/or <att>msd</att> attributes, depending on the annotation vocabulary adopted for the project in question. 
+The various grammatical realizations of the verb <mentioned>cut</mentioned> (including e.g. 
+<mentioned>cuts</mentioned> or <mentioned>cutting</mentioned>) can be captured by means of the attribute 
+<att>lemma</att>, which provides the common label for all surface forms of what is taken to be a single 
+"dictionary word". For example, English verbs are typically lemmatized as the "base form" or "bare 
+infinitive", so the value of <att>lemma</att> for the verbal forms <mentioned>write</mentioned>. <mentioned>writes</mentioned>, 
+<mentioned>wrote</mentioned>, <mentioned>written</mentioned>, and <mentioned>writing</mentioned> is
+typically <val>write</val>.</p>
+
+<p>Together with the span-delimiting elements mentioned in this section, such as <gi>s</gi> or <gi>phr</gi>, 
+lightweight grammatical annotation may be used to build basic syntactic constituency structures, where 
+hierarchical information is expressed through span containment rather than by relations among tree nodes. 
+This is however the limit of this kind of annotation: for the purpose of describing true 
+constituency or dependency syntactic structures, one needs to turn to more robust mechanisms offered by 
+the TEI, which may involve graph description (see chapter <ptr target="#GD"/>) or standoff techniques (see section 
+<ptr target="#SASO"/>), and where grammatical labels may need to be annotated by means of feature structures 
+(see chapter <ptr target="#FS"/>).</p>
+
+<p>Some of the above-mentioned robust methods will also prove handy in cases where more than one tagset 
+(label inventory) is used to label the words, or where automatic morphological analysis yields multiple 
+possibilities (for example, the form <mentioned>cutting</mentioned> is morphologically ambiguous between 
+verbal, adjectival, and nominal) and needs to be followed by (often also automatic) disambiguation in 
+morphosyntactic contexts, with varying probabilities that may also need to be recorded together with their 
+corresponding part-of-speech and morphosyntactic values.</p>
+
+<p>It should be borne in mind that tokenization, lemmatization, part-of-speech identification, and 
+morphosyntactic labelling, especially when performed automatically, should in most cases be seen as 
+involving pragmatic decisions, dictated by concrete practical goals, economy of description or the 
+demands of particular analytic and/or visualization tools. It comes therefore as no surprise that 
+numerous alternative (and often conflicting) lemmatization strategies and tagsets exist, in use by 
+various communities and various tools, and that they change with time (a case in point is the CLAWS 
+tagset for English, with several versions that merge the part-of-speech and morphosyntactic information 
+to various degrees). The nature and description of these systems is outside the scope of these 
+Guidelines, but it has to be stressed that all the strategies adopted for linguistic annotation, 
+even at the lightweight level of complexity, <emph>must</emph> be documented in the header of the 
+given electronic resource, not only for the purpose of guaranteeing successful data exchange, but 
+also for the sake of sustainability of the results of the given project.</p>
+  
+<p>The last of the att.linguistic attributes, <att>join</att>, has the most text-technological flavour. 
+It can be used to amend the loss of whitespace-related information in non-inline markup.</p>
+  <!-- an example should follow, but I don't know yet whether all this text should even remain in this very section
+  18-mar-2018, PB  -->
 
 <p>The <gi>s</gi> element may be used simply to segment a text
 end-to-end  into a series of non-overlapping segments, referred to here
