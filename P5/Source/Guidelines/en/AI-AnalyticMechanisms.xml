@@ -998,76 +998,144 @@ all depend to a greater or lesser degree on the use of pointing
 elements of various kinds.
 </p>
 </div>
-  <div type="div3" xml:id="AILALW"><head>Lightweight Linguistic Annotation</head>
-      <p>While the Guidelines offer a variety of means to add linguistic information to textual
-        units and much of that has been presented above, two kinds of use cases and two groups of
-        users that call for a dedicated set of specialized attributes to carry linguistic
-        information. One relevant use case is where basic linguistic information gets added to an
-        existing resource, in which generic attributes such as <att>type</att> or <att>ana</att>
-        have already been used to encode other categorizations and analyses. The other group of
-        users and use cases involves corpus linguists and resources built from scratch as lightly
-        annotated language corpora. In latter kind of projects, energy and person-hours are not
-        devoted to careful literary analysis and hand-encoding of the relevant phenomena, but rather
-        to the analysis of the final resources, and therefore the phase of resource-building must be
-        quick and relatively effortless, requiring minimal structural markup, well-established
-        containers for grammatical information and a standardized way of filling them in.</p>
+<div type="div3" xml:id="AILALW"><head>Lightweight Linguistic Annotation</head>
+<p>While these Guidelines offer a variety of means to add linguistic information to textual
+units and much of that has been presented above, two kinds of use cases and two groups of
+users call for a dedicated set of specialized attributes to carry linguistic
+information. One relevant use case is where basic linguistic information gets added to an
+existing resource, in which generic attributes such as <att>type</att> or <att>ana</att>
+have already been used to encode other categorizations and analyses. The other group of
+users and use cases involves corpus linguists and resources built from scratch as lightly
+annotated language corpora. In the latter kind of projects, energy and person-hours are not
+devoted to careful literary analysis and hand-encoding of the relevant phenomena, but rather
+to the analysis of the completed resources, and therefore the phase of resource-building must be
+quick and relatively effortless, requiring minimal structural markup, well-established
+containers for grammatical information, and a standardized way of filling them in.</p>
+
+<p>The aims defined above can be realized by means of lightweight linguistic annotation using
+attributes that belong to the <ident type="class">att.linguistic</ident> class: <specList>
+<specDesc key="att.linguistic" atts="lemma pos msd join"/>
+</specList></p>
     
-    <p>The aims defined above can be realized by means of attributes that belong to the <ident type="class">att.linguistic</ident> class: 
-      <specList><specDesc key="att.linguistic" atts="lemma lemmaRef pos msd join"/></specList></p>
+<p>The essence of lightweight linguistic annotation is that the basic grammatical information
+is encapsulated at the word level, together with the orthographic shape of the word. This
+has clear advantages for automatic processing but, on the other hand, this form of data
+encapsulation also imposes restrictions on the extent of information that can be encoded,
+essentially limiting it to a single tokenization and lemmatization schema, a single tagset,
+and a subset of the possible analyses (out from potentially many guesses at the
+part-of-speech or morphosyntactic descriptions, single values have to fit into the existing
+attributes). Another important principle that this kind of annotation is sensitive to is the
+need for (near)homomorphism between the assumed tokenization (division of the text stream
+into minimal units) and the division into minimal syntactic units (<term>word forms</term>,
+in the terminology of ISO Morpho-Syntactic Framework), because it is the former that results
+from the process of tokenization, but the latter that can be lemmatized and meaningfully
+described by means of grammatical features. Where tokens are only minimally mismatched with
+word forms, various repair strategies can be used (e.g., recursing <gi>w</gi> to capture
+multi-token compounds or using <ident type="class">att.fragmentable</ident> to point at
+disjoint tokens). Beyond that, more robust TEI mechanisms, based on standoff principles and
+feature structures, should replace lightweight annotation.</p>
+    <!-- I think it would be best to reference Bański, Haaf, and Mueller (2018) at this point, to avoid an in-depth discussion -->
+
+<p>The basic grammatical information encoded by means of 
+<ident type="class">att.linguistic</ident> is sufficient for the purpose of enhancing queries or improving
+the analysis of search results by, for example, making it possible to distinguish between
+the noun <mentioned>cut</mentioned> and the identically spelled verb
+<mentioned>cut</mentioned> in English, and further between e.g. the present-tense form of
+<mentioned>cut</mentioned> and its past-tense or past-participial forms. For the former
+contrast, the part-of-speech (<att>pos</att>) attribute should be used, whereas the latter
+may use <att>pos</att> and/or <att>msd</att> attributes, depending on the annotation
+vocabulary adopted for the project in question. The various grammatical realizations of a
+single "dictionary word" can be captured by means of the attribute <att>lemma</att>, which
+provides a common label for them. For example, English verbs are typically lemmatized as the
+base form (also called <term>bare infinitive</term>), so the value of <att>lemma</att> for
+the verbal forms <mentioned>write</mentioned>. <mentioned>writes</mentioned>,
+<mentioned>wrote</mentioned>, <mentioned>written</mentioned>, and
+<mentioned>writing</mentioned> is typically <val>write</val>.</p>
     
-    <p>"Lightweight linguistic annotation" is a term that describes the enrichment of word-level elements with the 
-      basic grammatical information, sufficient for enhancing queries or improving the analysis of search results 
-      by, for example, making it possible to distinguish between the noun <mentioned>cut</mentioned>  
-      and the identically spelled verb <mentioned>cut</mentioned> in English, and further between e.g. the 
-      present-tense form of <mentioned>cut</mentioned> and its past-tense or past-participial forms. For the former 
-      contrast, the part-of-speech (<att>pos</att>) attribute should be used, whereas the latter may use <att>pos</att> 
-      and/or <att>msd</att> attributes, depending on the annotation vocabulary adopted for the project in question. 
-      The various grammatical realizations of the verb <mentioned>cut</mentioned> (including e.g. 
-      <mentioned>cuts</mentioned> or <mentioned>cutting</mentioned>) can be captured by means of the attribute 
-      <att>lemma</att>, which provides the common label for all surface forms of what is taken to be a single 
-      "dictionary word". For example, English verbs are typically lemmatized as the "base form" or "bare 
-      infinitive", so the value of <att>lemma</att> for the verbal forms <mentioned>write</mentioned>. <mentioned>writes</mentioned>, 
-      <mentioned>wrote</mentioned>, <mentioned>written</mentioned>, and <mentioned>writing</mentioned> is
-      typically <val>write</val>.</p>
+<p>Together with the span-delimiting elements mentioned in this section, such as <gi>s</gi>,
+<gi>cl</gi>, or <gi>phr</gi>, lightweight grammatical annotation may be used to build
+basic syntactic constituency structures, where hierarchical information is expressed through
+span containment rather than by relations among tree nodes. This is however the limit of
+this kind of annotation: for the purpose of describing true constituency or dependency
+syntactic structures, one needs to turn to more robust mechanisms offered by the TEI, which
+may involve graph description (see chapter <ptr target="#GD"/>) or standoff techniques (see
+section <ptr target="#SASO"/>), and where grammatical labels may need to be annotated by
+means of feature structures (see chapter <ptr target="#FS"/>).</p>
     
-    <p>Together with the span-delimiting elements mentioned in this section, such as <gi>s</gi> or <gi>phr</gi>, 
-      lightweight grammatical annotation may be used to build basic syntactic constituency structures, where 
-      hierarchical information is expressed through span containment rather than by relations among tree nodes. 
-      This is however the limit of this kind of annotation: for the purpose of describing true 
-      constituency or dependency syntactic structures, one needs to turn to more robust mechanisms offered by 
-      the TEI, which may involve graph description (see chapter <ptr target="#GD"/>) or standoff techniques (see section 
-      <ptr target="#SASO"/>), and where grammatical labels may need to be annotated by means of feature structures 
-      (see chapter <ptr target="#FS"/>).</p>
+<p>Some of the above-mentioned robust methods will also prove handy in cases where more than one tagset 
+(label inventory) is used to label the words, or where automatic morphological analysis yields multiple 
+possibilities (for example, the form <mentioned>cutting</mentioned> is morphologically ambiguous between 
+verbal, adjectival, and nominal) and needs to be followed by (often also automatic) disambiguation in 
+morphosyntactic contexts, with varying probabilities that may also need to be recorded together with their 
+corresponding part-of-speech and morphosyntactic values.</p>
     
-    <p>Some of the above-mentioned robust methods will also prove handy in cases where more than one tagset 
-      (label inventory) is used to label the words, or where automatic morphological analysis yields multiple 
-      possibilities (for example, the form <mentioned>cutting</mentioned> is morphologically ambiguous between 
-      verbal, adjectival, and nominal) and needs to be followed by (often also automatic) disambiguation in 
-      morphosyntactic contexts, with varying probabilities that may also need to be recorded together with their 
-      corresponding part-of-speech and morphosyntactic values.</p>
+<p>It should be borne in mind that tokenization, lemmatization, part-of-speech identification, and 
+morphosyntactic labelling, especially when performed automatically, should in most cases be seen as 
+involving pragmatic decisions, dictated by concrete practical goals, economy of description, or the 
+demands of particular analytic and/or visualization tools. It comes therefore as no surprise that 
+numerous alternative (and often conflicting) lemmatization strategies and tagsets exist, in use by 
+various communities and various tools, and that they change with time (a case in point is the CLAWS 
+tagset for English, with several versions that merge the part-of-speech and morphosyntactic information 
+to various degrees).
+<note place="bottom">Given that the English language features relatively poor inflectional
+morphology, the decision to merge part-of-speech symbols with morphosyntactic features (as
+in, e.g., <val>PPHO1</val> that signals the 3rd person singular objective personal
+pronoun) is fully justified as the most economical approach. For languages with more
+robust inflection, the <att>pos</att> and <att>msd</att> attributes will either be used
+separately, or the part-of-speech information will be merged into the morphosyntactic
+description.</note> The nature and description of these systems is outside the scope of these 
+Guidelines, but it has to be stressed that all the strategies adopted for linguistic annotation, 
+even at the lightweight level of complexity, <emph>must</emph> be documented in the header of the 
+given electronic resource, not only for the purpose of guaranteeing successful data interpretation and exchange, but 
+also for the sake of sustainability of the results of the given project.</p>
     
-    <p>It should be borne in mind that tokenization, lemmatization, part-of-speech identification, and 
-      morphosyntactic labelling, especially when performed automatically, should in most cases be seen as 
-      involving pragmatic decisions, dictated by concrete practical goals, economy of description or the 
-      demands of particular analytic and/or visualization tools. It comes therefore as no surprise that 
-      numerous alternative (and often conflicting) lemmatization strategies and tagsets exist, in use by 
-      various communities and various tools, and that they change with time (a case in point is the CLAWS 
-      tagset for English, with several versions that merge the part-of-speech and morphosyntactic information 
-      to various degrees). The nature and description of these systems is outside the scope of these 
-      Guidelines, but it has to be stressed that all the strategies adopted for linguistic annotation, 
-      even at the lightweight level of complexity, <emph>must</emph> be documented in the header of the 
-      given electronic resource, not only for the purpose of guaranteeing successful data exchange, but 
-      also for the sake of sustainability of the results of the given project.</p>
+<p>The last of the att.linguistic attributes, <att>join</att>, has the most text-technological
+flavour. It can be used to amend the loss of whitespace-related information in non-inline
+markup.</p> 
+<p>Compare the following two listings. The first difference between them is in the
+tagset used (CLAWS-5 vs. CLAWS-7) and only serves to exemplify the need to document the
+choice of descriptive vocabulary in the header, lest the encoded information is unreadable or
+confusing. The second difference is the difference in the treatment of inter-token
+whitespace, and it is here that the <att>join</att> attribute proves indispensable.</p>
     
-    <p>The last of the att.linguistic attributes, <att>join</att>, has the most text-technological flavour. 
-      It can be used to amend the loss of whitespace-related information in non-inline markup.</p>
-    <!-- an example should follow, but I don't know yet whether all this text should even remain in this very section
-  18-mar-2018, PB  -->
+<p>The first example listing uses CLAWS-5 and inline annotation, where whitespace serves as
+part of the
+markup:<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:space="preserve">
+      <s><w pos="AT0">The</w> <w pos="NN1">victim</w><w pos="POS">'s</w> <w pos="NN2">friends</w> 
+    <w pos="VVD">told</w> <w pos="NN2">police</w> <w pos="CJT">that</w> <w pos="NP0">Kruger</w> 
+    <w pos="VVD">drove</w> <w pos="PRP">into</w> <w pos="AT0">the</w> <w pos="NN1">quarry</w> 
+    <w pos="CJC">and</w> <w pos="AV0">never</w> <w pos="SENT">surfaced</w><pc pos="PUN">.</pc></s>
+    </egXML></p>
     
-    
-    
-  </div>
-  <div type="div3" xml:id="AILASP"><head>Spoken Text</head>
+    <p>In the second example, the attribute <att>join</att> is the only way to encode whether two tokens are adjacent or not:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <s>
+            <w pos="AT">The</w>
+            <w pos="NN1">victim</w>
+            <w pos="GE" join="left">'s</w>
+            <w pos="NN2">friends</w>
+            <w pos="VVD">told</w>
+            <w pos="NN2">police</w>
+            <w pos="CST">that</w>
+            <w pos="NP1">Kruger</w>
+            <w pos="VVD">drove</w>
+            <w pos="II">into</w>
+            <w pos="AT">the</w>
+            <w pos="NN1">quarry</w>
+            <w pos="CC">and</w>
+            <w pos="RR">never</w>
+            <w pos="VVD">surfaced</w>
+            <pc pos="." join="left">.</pc>
+          </s>
+      </egXML></p>
+<p>Note that projects will need to decide whether they want to redundantly encode full
+information on the adjacency of each token (in which case, the above listing should also
+have <att>join</att> with the value <val>right</val> on the tokens
+<mentioned>victim</mentioned> and <mentioned>surfaced</mentioned>, or whether information
+on a single direction of adjacency is enough. Strategies vary, and it is important to
+document them in the TEI header.</p>
+</div>
+<div type="div3" xml:id="AILASP"><head>Spoken Text</head>
 <p>The mechanisms proposed in this chapter may also be used to encode
 analyses of an entirely different kind, for example discourse function.
 Here is an application of the span technique to record details of a sales
