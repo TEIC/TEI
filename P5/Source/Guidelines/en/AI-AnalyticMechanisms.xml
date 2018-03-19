@@ -1077,9 +1077,9 @@ numerous alternative (and often conflicting) lemmatization strategies and tagset
 various communities and various tools, and that they change with time (a case in point is the CLAWS 
 tagset for English, with several versions that merge the part-of-speech and morphosyntactic information 
 to various degrees).
-<note place="bottom">Given that the English language features relatively poor inflectional
+<note place="bottom">Given that the English language has relatively poor inflectional
 morphology, the decision to merge part-of-speech symbols with morphosyntactic features (as
-in, e.g., <val>PPHO1</val> that signals the 3rd person singular objective personal
+in, e.g., CLAWS-7, where the value <val>PPHO1</val> signals the 3rd person singular objective personal
 pronoun) is fully justified as the most economical approach. For languages with more
 robust inflection, the <att>pos</att> and <att>msd</att> attributes will either be used
 separately, or the part-of-speech information will be merged into the morphosyntactic
@@ -1132,6 +1132,24 @@ have <att>join</att> with the value <val>right</val> on the tokens
 <mentioned>victim</mentioned> and <mentioned>surfaced</mentioned>, or whether information
 on a single direction of adjacency is enough. Strategies vary, and it is important to
 document them in the TEI header.</p>
+<p>This section concludes with an example German sentence <mentioned>Wir fahren in den
+Urlaub</mentioned> ("We're going on vacation") annotated with all the attributes discussed
+here.<note place="bottom">The annotation values have been adapted from the <ref
+  target="https://weblicht.sfs.uni-tuebingen.de/weblicht/">CLARIN Weblicht service</ref>,
+where e.g. the full morphosyntactic description of the first item reads: <code>[cat pronoun,
+personal true, substituting true, person 1, case nominative, number plural]</code>, and has been
+mapped from an attribute-value format suitable for feature structure notation, into a
+compressed form that fits in an attribute value.</note>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><s>
+<w pos="PPER" lemma="wir" msd="pers:subst:p1:nom:pl">Wir</w>
+<w pos="VVFIN" lemma="fahren" msd="p1:pl:pres:ind">fahren</w>
+<w pos="APPR" lemma="in" msd="--">in</w>
+<w pos="ART" lemma="d" msd="def:acc:sg:masc">den</w>
+<w pos="NN" lemma="Urlaub" msd="acc:sg:masc">Urlaub</w>
+<pc pos="$." lemma="." msd="--" join="left">.</pc>
+</s>
+</egXML>
+</p>
 </div>
 <div type="div3" xml:id="AILASP"><head>Spoken Text</head>
 <p>The mechanisms proposed in this chapter may also be used to encode
