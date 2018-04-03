@@ -1348,19 +1348,23 @@ Conal -->
         members of other attribute classes, membership must be followed recursively.</p>
 
       <p>The effect of the concatenation of unidentifiable components should be considered
-        carefully. An original may have <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        carefully. An original may have
+	<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
           <elementSpec ident="p">
             <desc>marks paragraphs in prose.</desc>
             <!--…-->
           </elementSpec>
-        </egXML> which would usefully be extended with this: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="es">
+        </egXML> which would usefully be extended with this:
+	<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="es" source="#NONE">
           <elementSpec ident="p" mode="change">
             <desc xml:lang="es">marca párrafos en prosa.</desc>
             <!--…-->
           </elementSpec>
-        </egXML> to provide an alternate description in another language. Nothing prevents the user
-        from supplying <gi>desc</gi> several times in the same language, and subsequent applications
-        will have to decide what that may mean. </p>
+        </egXML>
+	to provide an alternate description in another language.
+	Nothing prevents the user from supplying <gi>desc</gi> several
+	times in the same language, and subsequent applications will
+	have to decide what that may mean.</p>
 
       <p>Similar considerations apply to multiple example elements, though these are less likely to
         cause problems in documentation. Note that existing examples can only be deleted by
@@ -1802,7 +1806,7 @@ head =
           indicate which of the available patterns is required by means of the <att>expand</att>
           attribute. </p>
         <p>Attribute classes work by producing a pattern containing definitions of the appropriate
-          attributes. So <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          attributes. So <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
             <classSpec module="verse" type="atts" ident="att.enjamb">
               <attList>
                 <attDef ident="enjamb" usage="opt">
@@ -1832,7 +1836,7 @@ head =
                 </attDef>
               </attList>
             </classSpec>
-          </egXML> produces <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          </egXML> produces <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
             <rng:define xmlns:rng="http://relaxng.org/ns/structure/1.0" name="att.enjamb.attributes">
               <rng:ref name="att.enjamb.attribute.enjamb"/>
               <rng:empty/>
@@ -1863,7 +1867,7 @@ head =
             <gi>rng:attribute</gi>. The body of the attribute is taken from the <gi>datatype</gi>
           child, unless there is a supporting <gi>valList</gi> with a <att>type</att> value of
             <val>closed</val>. In that case an <gi>rng:choice</gi> is created, listing the allowed
-          values. Thus the following attribute definition <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          values. Thus the following attribute definition <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
             <attDef ident="full" usage="opt">
               <defaultVal>yes</defaultVal>
               <valList type="closed">
@@ -1880,7 +1884,7 @@ head =
                 </valItem>
               </valList>
             </attDef>
-          </egXML> may generate this RELAX NG code: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          </egXML> may generate this RELAX NG code: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
             <define xmlns="http://relaxng.org/ns/structure/1.0" name="att.full">
               <optional>
                 <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="full" a:defaultValue="yes">
@@ -1933,7 +1937,7 @@ head =
         </list>
         <!-- The implementer who avoids careful study of this issue
 will come to grief.--></p>
-      <p>Let us consider a complete example, a simple element with no attributes of its own: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <p>Let us consider a complete example, a simple element with no attributes of its own: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
           <elementSpec module="namesdates" ident="faith">
             <desc>specifies the faith, religion, or belief set of a person.</desc>
             <classes>
