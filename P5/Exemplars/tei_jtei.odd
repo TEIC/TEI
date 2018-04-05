@@ -3257,14 +3257,15 @@
           <constraintSpec ident="jtei.jtei-url" scheme="isoschematron">
             <constraint>
               <sch:rule context="@target[matches(., '^https?://(www\.)?jtei\.revues\.org/?')]">
+                <sch:let name="URL.fixed" value="replace(., '^https?://(www\.)?jtei\.revues\.org/?', 'https://journals.openedition.org/jtei/')"/>
                 <sch:assert test="false()" sqf:fix="jteiURL.fix">
-                  Please refer to the correct jTEI URL: https://journals.openedition.org/jtei/.
+                  Please refer to the correct jTEI URL: <sch:value-of select="$URL.fixed"/>.
                 </sch:assert>
                 <sqf:fix id="jteiURL.fix">
                   <sqf:description>
-                    <sqf:title>Change jTEI URL to https://journals.openedition.org/jtei/.</sqf:title>
+                    <sqf:title>Change jTEI URL to <sch:value-of select="$URL.fixed"/>.</sqf:title>
                   </sqf:description>
-                  <sqf:replace node-type="attribute" target="target" select="replace(., '^https?://(www\.)?jtei\.revues\.org/?', 'https://journals.openedition.org/jtei/')"/>
+                  <sqf:replace node-type="attribute" target="target" select="$URL.fixed"/>
                 </sqf:fix>
               </sch:rule>
             </constraint>
