@@ -1321,7 +1321,7 @@ Conal -->
               <memberOf key="att.typed"/>
             </classes>
             <content>
-              <!--…-->
+              <!-- ... -->
             </content>
           </elementSpec>
         </egXML> The effect of its membership in the <ident type="class">att.typed</ident> class is
@@ -1333,7 +1333,7 @@ Conal -->
               <memberOf key="att.typed"/>
             </classes>
             <content>
-              <!--… -->
+              <!-- ... -->
             </content>
             <attList>
               <attDef ident="subtype" mode="delete"/>
@@ -1348,19 +1348,23 @@ Conal -->
         members of other attribute classes, membership must be followed recursively.</p>
 
       <p>The effect of the concatenation of unidentifiable components should be considered
-        carefully. An original may have <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        carefully. An original may have
+	<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
           <elementSpec ident="p">
             <desc>marks paragraphs in prose.</desc>
-            <!--…-->
+            <!-- ... -->
           </elementSpec>
-        </egXML> which would usefully be extended with this: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="es">
+        </egXML> which would usefully be extended with this:
+	<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="es" source="#NONE">
           <elementSpec ident="p" mode="change">
             <desc xml:lang="es">marca párrafos en prosa.</desc>
-            <!--…-->
+            <!-- ... -->
           </elementSpec>
-        </egXML> to provide an alternate description in another language. Nothing prevents the user
-        from supplying <gi>desc</gi> several times in the same language, and subsequent applications
-        will have to decide what that may mean. </p>
+        </egXML>
+	to provide an alternate description in another language.
+	Nothing prevents the user from supplying <gi>desc</gi> several
+	times in the same language, and subsequent applications will
+	have to decide what that may mean.</p>
 
       <p>Similar considerations apply to multiple example elements, though these are less likely to
         cause problems in documentation. Note that existing examples can only be deleted by
@@ -1375,7 +1379,7 @@ Conal -->
           forgiving than DTDs.</note> A content model like this: <!--<egXML xml:lang="und"
             xmlns="http://www.tei-c.org/ns/Examples">
           <elementSpec ident="person">
-            <!-\-…-\->
+            <!-\- ... -\->
             <content>
               <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
                 <rng:oneOrMore>
@@ -1389,7 +1393,7 @@ Conal -->
                 </rng:zeroOrMore>
               </rng:choice>
             </content>
-            <!-\-…-\->
+            <!-\- ... -\->
           </elementSpec>-->
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
           <elementSpec ident="person">
@@ -1416,7 +1420,7 @@ Conal -->
         simplification as a distinct stage during processing of ODD sources.</p>
       <p>If an element refers directly to an element child, like this: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
           <elementSpec ident="figure">
-            <!--…-->
+            <!-- ... -->
             <content>
               <alternate minOccurs="0" maxOccurs="unbounded">
                 <classRef key="model.pLike"/>
@@ -1428,7 +1432,7 @@ Conal -->
               </alternate>
             </content>
 
-            <!--…-->
+            <!-- ... -->
           </elementSpec>
         </egXML> and <gi>figDesc</gi> has been deleted,<note place="bottom">Note that deletion of
           required elements will cause the schema specification to accept as valid documents which
@@ -1561,7 +1565,7 @@ performance.attributes = att.global.attributes, empty
       <p>Thirdly, the problem of missing components must be resolved. For example, consider this
         (fictitious) model for <gi>sp</gi>: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
           <elementSpec ident="sp">
-            <!--…-->
+            <!-- ... -->
             <content>
               <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
               <sequence minOccurs="0" maxOccurs="1">
@@ -1569,18 +1573,18 @@ performance.attributes = att.global.attributes, empty
                 <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
               </sequence>
             </content>
-            <!--…-->
+            <!-- ... -->
           </elementSpec>
         </egXML> This proposes anything from the class <ident type="class">model.global</ident>,
         followed optionally by a <gi>speaker</gi> element followed by anything from the <ident type="class">model.global</ident> class. What happens if <gi>speaker</gi> is removed from
         the schema? The following would result: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" valid="false" source="#UND">
           <elementSpec ident="sp">
-            <!--…-->
+            <!-- ... -->
             <content>
               <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
               <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
             </content>
-            <!--…-->
+            <!-- ... -->
           </elementSpec>
         </egXML> which is illegal in DTD and W3C schema languages, since for a given member of
           <ident type="class">model.global</ident> it is impossible to be sure which rule is being
@@ -1802,7 +1806,7 @@ head =
           indicate which of the available patterns is required by means of the <att>expand</att>
           attribute. </p>
         <p>Attribute classes work by producing a pattern containing definitions of the appropriate
-          attributes. So <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          attributes. So <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
             <classSpec module="verse" type="atts" ident="att.enjamb">
               <attList>
                 <attDef ident="enjamb" usage="opt">
@@ -1832,7 +1836,7 @@ head =
                 </attDef>
               </attList>
             </classSpec>
-          </egXML> produces <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          </egXML> produces <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
             <rng:define xmlns:rng="http://relaxng.org/ns/structure/1.0" name="att.enjamb.attributes">
               <rng:ref name="att.enjamb.attribute.enjamb"/>
               <rng:empty/>
@@ -1863,7 +1867,7 @@ head =
             <gi>rng:attribute</gi>. The body of the attribute is taken from the <gi>datatype</gi>
           child, unless there is a supporting <gi>valList</gi> with a <att>type</att> value of
             <val>closed</val>. In that case an <gi>rng:choice</gi> is created, listing the allowed
-          values. Thus the following attribute definition <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          values. Thus the following attribute definition <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
             <attDef ident="full" usage="opt">
               <defaultVal>yes</defaultVal>
               <valList type="closed">
@@ -1880,7 +1884,7 @@ head =
                 </valItem>
               </valList>
             </attDef>
-          </egXML> may generate this RELAX NG code: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          </egXML> may generate this RELAX NG code: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
             <define xmlns="http://relaxng.org/ns/structure/1.0" name="att.full">
               <optional>
                 <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="full" a:defaultValue="yes">
@@ -1933,7 +1937,7 @@ head =
         </list>
         <!-- The implementer who avoids careful study of this issue
 will come to grief.--></p>
-      <p>Let us consider a complete example, a simple element with no attributes of its own: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <p>Let us consider a complete example, a simple element with no attributes of its own: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
           <elementSpec module="namesdates" ident="faith">
             <desc>specifies the faith, religion, or belief set of a person.</desc>
             <classes>
