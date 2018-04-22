@@ -29,34 +29,22 @@ $Id$
   </classes>
   <content>
     <sequence>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.glossLike"/>
-          <classRef key="model.descLike"/>
-        </alternate>
-      
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <elementRef key="content"/>
-          <elementRef key="valList"/>
-        </alternate>
-      
-      
-        <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
-      
-      
-        <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
-      
-      
-        <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
-      
-      
-        <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
-      
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.glossLike"/>
+        <classRef key="model.descLike"/>
+      </alternate>
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <elementRef key="content"/>
+        <elementRef key="valList"/>
+      </alternate>
+      <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
+      <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
+      <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
+      <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
   <attList>
-    <attDef ident="type" usage="opt">
+    <attDef ident="type" usage="opt" validUntil="2018-10-01">
       <desc versionDate="2007-10-08" xml:lang="en">indicates which type of entity should be generated, when an ODD
 	processor is generating a module using XML DTD syntax.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">ODD 프로세서는 XML DTD 통사규칙을 사용하는 모듈을 생성할 때, 개체의 유형이 생성됨을 나타낸다.</desc>
@@ -83,6 +71,11 @@ $Id$
           <gloss versionDate="2007-05-04" xml:lang="es">entidad tipo de datos</gloss>
         </valItem>
       </valList>
+      <remarks versionDate="2018-04-22" xml:lang="en">
+	<p>This attribute is deprecated. <soCalled>datatype
+	entity</soCalled> <gi>macroSpec</gi>s should be expressed
+	using <gi>dataSpec</gi> instead.</p>
+      </remarks>
     </attDef>
   </attList>
   <exemplum xml:lang="und">
