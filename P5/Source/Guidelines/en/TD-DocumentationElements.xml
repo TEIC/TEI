@@ -623,14 +623,16 @@ to mark any technical term, thus:
       <div xml:id="DEFCONTEI">
 	<head>Defining Content Models: TEI</head>
 	<p>In the simplest case, the content model of an element may
-	be expressed using an empty <gi>content</gi>. This describes
-	the element being defined as <term>empty</term>, meaning a
-	valid instance of said element can not have any content.<note
-	place="bottom">It would still be allowed to contain comments
-	or processing instructions, as these are not considered part
-	of the content model.</note> The same restriction can be
-	expressed more explicitly by using an empty <gi>empty</gi>
-	element as the only content of <gi>content</gi>.
+	be expressed using a single <gi>empty</gi> element as the only
+	child of <gi>content</gi>. This describes the element being
+	defined as <term>empty</term>, meaning a valid instance of
+	said element can not have any content.<note place="bottom">It
+	would still be allowed to contain comments or processing
+	instructions, as these are not considered part of the content
+	model.</note> The same restriction can currently be expressed
+	more succinctly but less explicitly by using an empty
+	<gi>content</gi> element; this usage is deprecated and will be
+	removed in a future release of these Guidelines.
 	<specList>
 	  <specDesc key="empty"/>
 	</specList>
@@ -1471,7 +1473,6 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
             parameter will provide that of the child <gi>sic</gi> elements. If neither <gi>param</gi> element was supplied, both elements would
             still be available to an application, but the application would need to distinguish them for itself.
         </p>
-       
         <p>A <gi>choice</gi> element might contain multiple corrections, each with differing values for their
             <att>cert</att> attribute. In the following processing model, we will accept as value of the <ident>default</ident> attribute only
             those child <gi>corr</gi> elements which have a value <val>high</val> for that attribute:
@@ -1857,7 +1858,6 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/textNode.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/anyElement.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/empty.xml"/>
-      
     </specGrp>
   </div>
   <div type="div3" xml:id="TDENT">
@@ -1966,7 +1966,6 @@ most recent version of the Guidelines would be used instead.--></p>
          Note that in this last case, there is no need to specify the name of the module from which the two
         element declarations are to be found; in the TEI scheme, element names are unique across all modules.
         The module is simply a convenient way of grouping together a number of related declarations. </p>
-      
       <p>In the same way, a schema may select a subset of the attributes available in a specific class, 
       using the <gi>classRef</gi> element to point to an attribute class:
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><schemaSpec ident="example">
@@ -1984,7 +1983,6 @@ most recent version of the Guidelines would be used instead.--></p>
           <!-- ... -->
         </schemaSpec></egXML>
       </p>
-      
       <p>A schema may also include declarations for new elements, as in the following example:
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><schemaSpec ident="example">
             <moduleRef key="header"/>
@@ -1997,7 +1995,6 @@ most recent version of the Guidelines would be used instead.--></p>
         scheme, will be added to the output schema. This element will also be added to the existing TEI class
           <ident type="class">model.pPart.data</ident>, and will thus be available in TEI conformant
         documents. Attributes from existing TEI classes could be added to the new element using <gi>attRef</gi>:
-      
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><schemaSpec ident="example">
           <moduleRef key="header"/>
           <moduleRef key="verse"/>
@@ -2011,9 +2008,6 @@ most recent version of the Guidelines would be used instead.--></p>
         This will provide the <att>source</att> attribute from the <ident type="class">att.global.source</ident> class on the new 
         <gi scheme="imaginary">soundClip</gi> element.
       </p>
-      
-      
-      
       <p>A schema might also include re-declarations of existing elements, as in the following example:
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><schemaSpec ident="example">
             <moduleRef key="header"/>
