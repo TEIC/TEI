@@ -3127,8 +3127,8 @@
           </constraintSpec>
           <constraintSpec ident="jtei.sch-rangeHyphen" scheme="schematron">
             <constraint>
-              <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag|ancestor::tei:idno|ancestor::tei:date)][not(. = parent::*/@*)]">
-                <sch:assert test="not(matches(., '\d-\d'))" sqf:fix="hyphen.replace">
+              <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag|ancestor::tei:idno|ancestor::tei:date)]">
+                <sch:assert test="not(matches(., '(^|[\W-[-]])\d+-\d+([\W-[-]]|$)'))" sqf:fix="hyphen.replace">
                   Numeric ranges should not be indicated with a hyphen. Please use 
                   the EN Dash (U+2013 or –) character instead.
                 </sch:assert>
@@ -3136,7 +3136,7 @@
                   <sqf:description>
                     <sqf:title>Replace hyphen with –.</sqf:title>
                   </sqf:description>
-                  <sqf:stringReplace regex="(\d)-(\d)">$1–$2</sqf:stringReplace>
+                  <sqf:stringReplace regex="((?:^|[\W-[-]])\d+)-(\d+(?:[\W-[-]]|$))">$1–$2</sqf:stringReplace>
                 </sqf:fix>
               </sch:rule>
             </constraint>
@@ -3257,14 +3257,15 @@
           <constraintSpec ident="jtei.jtei-url" scheme="isoschematron">
             <constraint>
               <sch:rule context="@target[matches(., '^https?://(www\.)?jtei\.revues\.org/?')]">
+                <sch:let name="URL.fixed" value="replace(., '^https?://(www\.)?jtei\.revues\.org/?', 'https://journals.openedition.org/jtei/')"/>
                 <sch:assert test="false()" sqf:fix="jteiURL.fix">
-                  Please refer to the correct jTEI URL: https://journals.openedition.org/jtei/.
+                  Please refer to the correct jTEI URL: <sch:value-of select="$URL.fixed"/>.
                 </sch:assert>
                 <sqf:fix id="jteiURL.fix">
                   <sqf:description>
-                    <sqf:title>Change jTEI URL to https://journals.openedition.org/jtei/.</sqf:title>
+                    <sqf:title>Change jTEI URL to <sch:value-of select="$URL.fixed"/>.</sqf:title>
                   </sqf:description>
-                  <sqf:replace node-type="attribute" target="target" select="replace(., '^https?://(www\.)?jtei\.revues\.org/?', 'https://journals.openedition.org/jtei/')"/>
+                  <sqf:replace node-type="attribute" target="target" select="$URL.fixed"/>
                 </sqf:fix>
               </sch:rule>
             </constraint>
