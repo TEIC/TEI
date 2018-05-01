@@ -15,6 +15,8 @@ element.</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">要素<gi>surface</gi>にある表面上の矩形範囲を定義する．</desc>
   <desc versionDate="2008-03-30" xml:lang="fr">définit une zone rectangulaire contenue dans un élément <gi>surface</gi>.</desc>
   <desc versionDate="2007-11-06" xml:lang="it">definisce un'area rettangolare contenuta all'interno di un lemento surface</desc>
+  <desc versionDate="2018-04-15" xml:lang="de">beschreibt eine beliebige zweidimensionale Fläche innerhalb eines
+    <gi>surface</gi>-Elements</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.coordinated"/>
@@ -41,6 +43,11 @@ element.</desc>
          dimensions given in the <gi>msDesc</gi> element or by the
          coordinates of the <gi>surface</gi> itself. The orientation
          is expressed in arc degrees.</desc>
+      <desc versionDate="2018-04-15" xml:lang="de">gibt das Ausmaß der Drehung (im Uhrzeigersinn) dieser <gi>zone</gi> an.
+        Als Bezugspunkt gilt dabei die natürliche Ausrichtung des <gi>surface</gi>-Elternelements, die entweder
+        im <gi>msDesc</gi>-Element beschrieben ist oder durch die Koordinaten des <gi>surface</gi>-Elements selbst.
+        Die Drehung wird in Bogengrad angegeben. 
+      </desc>
       <datatype minOccurs="1" maxOccurs="1"><dataRef key="teidata.count"/></datatype>
       <defaultVal>0</defaultVal>
     </attDef>
@@ -87,6 +94,17 @@ by its parent surface.</p>
 当該要素<gi>zone</gi>に含まれる要素<gi>graphic</gi>は，当該要素
 <gi>zone</gi>が表す面全体を示す．
 </p>
+  </remarks>
+  <remarks xml:lang="de" versionDate="2018-04-15">
+    <p>Die Position jeder <gi>zone</gi> einer <gi>surface</gi> ist
+      immer durch Bezugnahme auf das Koordinatensystem dieser
+      <gi>surface</gi> definiert. </p>
+    <p>Ein <gi>graphic</gi>-Element innerhalb eines <gi>zone</gi>-Elements
+      repräsentiert stets die gesamte <gi>zone</gi>. </p>
+    <p>Eine <gi>zone</gi> kann jede beliebige Form haben.
+      Das <att>points</att>-Attribute kann genutzt werden, um ein Polygon 
+      zu beschreiben. Hierbei gilt das Koordinatensystem des 
+      <gi>surface</gi>-Elternelements als Referenz. </p>
   </remarks>
   <listRef>
     <ptr target="#PHFAX"/>
