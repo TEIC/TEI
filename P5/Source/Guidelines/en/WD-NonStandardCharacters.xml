@@ -612,7 +612,7 @@ represented as follows:<eg><![CDATA[<abbr>&r1;</abbr>]]></eg></p>
     advantage of this information. To achieve this, we simply define
     within a <gi>charDecl</gi> element a <gi>glyph</gi> that has two
     <gi>mapping</gi> elements, as shown here:
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="zh">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="zh" source="#NONE">
       <charDecl>
 	<glyph xml:id="u8aaa">
 	  <mapping type="Unicode">說</mapping>
@@ -627,7 +627,7 @@ represented as follows:<eg><![CDATA[<abbr>&r1;</abbr>]]></eg></p>
     given in the content of the element. We could then use this
     <gi>glyph</gi> element's unique identifier <val>u8aaa</val> to
     refer to it from within a text as follows.
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="zh">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="zh" source="#NONE">
       <g ref="#u8aaa">說</g>
     </egXML>
     </p>
@@ -1036,23 +1036,23 @@ of a document will probably include many other properties of course. </p>
  <!-- ... -->
 </list></egXML>
    <p>The rule <code>text-orientation: mixed</code> specifies that
-   <quote>characters from horizontal-only scripts are set sideways, i.e. 90°
-   clockwise from their standard orientation in horizontal
+   <quote>characters from horizontal-only scripts are set sideways,
+   i.e. 90° clockwise from their standard orientation in horizontal
    text. Characters from vertical scripts are set with their intrinsic
-   orientation</quote> (<ref target="http://www.w3.org/TR/css-writing-modes-3/#text-orientation">fantasai
-   2014</ref>). Since the default value for <code>text-orientation</code> is <code>mixed</code>, 
-     this rule is not strictly required. However, if the Indonesian glyphs (which are roman 
-     characters) had been set vertically, like this:</p>
+   orientation</quote> (<ref
+   target="http://www.w3.org/TR/css-writing-modes-3/#text-orientation">fantasai
+   2014</ref>). Since the default value for
+   <code>text-orientation</code> is <code>mixed</code>, this rule is
+   not strictly required. However, if the Indonesian glyphs (which are
+   roman characters) had been set vertically, like this:</p>
    <p>
-                     <figure>
-                        <graphic width="150px" url="Images/ja_vertical_indonesian_frag.rotated.jpg"/>
-   <head>Fragment of previous image with Indonesian glyphs upright.</head>
-                     </figure>
-
-
-                  </p>
+     <figure>
+       <graphic width="150px" url="Images/ja_vertical_indonesian_frag.rotated.jpg"/>
+       <head>Fragment of previous image with Indonesian glyphs upright.</head>
+     </figure>
+   </p>
    <p>then an encoding like the following could be used to make this explicit: </p>
-   <egXML xmlns="http://www.tei-c.org/ns/Examples">
+   <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
      <list type="gloss" xml:lang="ja" style="writing-mode: vertical-rl; text-orientation: upright">
        <label xml:lang="id">hampir</label>
        <item>「近い、ほとんど」</item>
@@ -1061,27 +1061,29 @@ of a document will probably include many other properties of course. </p>
        <!-- ... -->
      </list>
    </egXML>
-   <p>The rule <code>text-orientation: upright</code> specifies that 
-     <quote>characters from horizontal-only scripts are rendered upright, 
-       i.e. in their standard horizontal orientation. Characters from vertical 
-       scripts are set with their intrinsic orientation and shaped normally</quote> (<ref target="http://www.w3.org/TR/css-writing-modes-3/#text-orientation">fantasai
-2014</ref>).</p>
-   <p> </p>
-               </div>
-               <div type="div3" xml:id="WDWMEG3">
-                  <head>Vertical Orientation in Horizontal Scripts</head>
-   <p>It is not unusual to see text from horizontal languages written vertically 
-     even where no vertically-written script is involved. This example is a 
-     fragment from a table of information about agricultural development 
-     on Vancouver Island, written in 1855: </p>
-   <p>
-                     <figure>
-                        <graphic width="450px" url="Images/bcgenesis_co_305_06_00131v_table_extract.jpg"/>
-   <head>Enclosure with <title>Despatch to London</title> 10048, CO
-   305/6, p. 131v from <ptr target="http://bcgenesis.uvic.ca/getDoc.htm?id=V55116.scx"/></head>
-                     </figure>
-                  </p>
-   <p>Four of the subheading cells in this fragment contain English text written vertically, 
+   <p>The rule <code>text-orientation: upright</code> specifies that
+   <quote>characters from horizontal-only scripts are rendered
+   upright, i.e. in their standard horizontal orientation. Characters
+   from vertical scripts are set with their intrinsic orientation and
+   shaped normally</quote> (<ref
+   target="http://www.w3.org/TR/css-writing-modes-3/#text-orientation">fantasai
+   2014</ref>).</p>
+   </div>
+   <div type="div3" xml:id="WDWMEG3">
+     <head>Vertical Orientation in Horizontal Scripts</head>
+     <p>It is not unusual to see text from horizontal languages
+     written vertically even where no vertically-written script is
+     involved. This example is a fragment from a table of information
+     about agricultural development on Vancouver Island, written in
+     1855: </p>
+     <p>
+       <figure>
+	 <graphic width="450px" url="Images/bcgenesis_co_305_06_00131v_table_extract.jpg"/>
+	 <head>Enclosure with <title>Despatch to London</title> 10048, CO
+	 305/6, p. 131v from <ptr target="http://bcgenesis.uvic.ca/getDoc.htm?id=V55116.scx"/></head>
+       </figure>
+     </p>
+     <p>Four of the subheading cells in this fragment contain English text written vertically, 
      bottom-to-top, to conserve space on the page. To describe this sort of phenomenon, 
      we can use the <code>text-orientation</code> property again: </p>
                  
