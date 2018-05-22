@@ -8,7 +8,7 @@ $Id$
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" 
      schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="TD" n="27"
+<div xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="TD" n="27"
   xmlns:rng="http://relaxng.org/ns/structure/1.0">
   <head>Documentation Elements</head>
   <p>This chapter describes a module which may be used for the documentation of the XML elements and element
@@ -85,7 +85,7 @@ an XML Document Type Declaration.</item-->
         in a schema.</p>
       <p>The <gi>code</gi> and <gi>ident</gi> elements are intended for use when citing brief passages in some
         formal language such as a programming language, as in the following example:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
           <p>If the variable <ident>z</ident> has a value of zero, a statement such as <code>x=y/z</code> will
             usually cause a fatal error.</p>
         </egXML>
@@ -103,7 +103,7 @@ an XML Document Type Declaration.</item-->
         also a subclass of <ident type="class">model.phrase</ident>. They are also available anywhere that
         running prose is permitted when the module defined by this chapter is included in a schema. </p>
       <p>As an example of the recommended use of these elements, we quote from an imaginary TEI working paper:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The <gi>gi</gi> element is used to tag element
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p>The <gi>gi</gi> element is used to tag element
             names when they appear in the text; the <gi>tag</gi> element however is used to show how a tag as
             such might appear. So one might talk of an occurrence of the <gi>blort</gi> element which had been
             tagged <tag>blort type='runcible'</tag>. The <att>type</att> attribute may take any name token as
@@ -140,14 +140,15 @@ an XML Document Type Declaration.</item-->
       <p>TEI practice recommends that a <gi>specList</gi> listing the elements under discussion introduce each
         subsection of a module's documentation. The source for the present section, for example, begins as
         follows:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SELF">
           <div>
             <head>Element and Attribute Descriptions</head>
-            <p>Within the body of a document using this module, the following elements… <specList>
+            <p>Within the body of a document using this module, the … the brief prose descriptions these provide for elements and attributes.
+              <specList>
                 <specDesc key="specList"/>
                 <specDesc key="specDesc" atts="atts"/>
               </specList></p>
-            <p>TEI practice recommends that a <gi>specList</gi> listing the elements… </p>
+            <p>TEI practice recommends that a <gi>specList</gi> listing the elements under … </p>
             <!-- ... -->
           </div>
         </egXML>
@@ -206,7 +207,7 @@ an XML Document Type Declaration.</item-->
       recommendations of this chapter will generate such fragments for each <gi>moduleSpec</gi> element found.
       For example, the chapter documenting the TEI module for names and dates contains a module specification
       like the following:
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SELF">
         <moduleSpec ident="namesdates">
           <altIdent type="FPI">Names and Dates</altIdent>
           <desc>Additional elements for names and dates</desc>
@@ -243,7 +244,7 @@ an XML Document Type Declaration.</item-->
     <p>An ODD processor will generate a piece of schema code corresponding with the declarations contained by
       a <gi>specGrp</gi> element in the documentation being output, and a cross-reference to such a piece of
       schema code when processing a <gi>specGrpRef</gi>. For example, if the input text reads
-      <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>This module contains three red elements: <specGrp
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p>This module contains three red elements: <specGrp
             xml:id="RED">
             <elementSpec ident="beetroot"><!-- ... --></elementSpec>
             <elementSpec ident="east"><!-- ... --></elementSpec>
@@ -258,7 +259,7 @@ an XML Document Type Declaration.</item-->
         scheme="imaginary">east</gi>, and <gi scheme="imaginary">rose</gi> and that declaring the elements <gi
         scheme="imaginary">sky</gi> and <gi scheme="imaginary">bayou</gi> respectively. Similarly, if the
       input text contains elsewhere a passage such as
-      <egXML xmlns="http://www.tei-c.org/ns/Examples"><div>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><div>
           <head>An overview of the imaginary module</head>
           <p>The imaginary module contains declarations for coloured things: <specGrpRef target="#RED"/>
             <specGrpRef target="#BLUE"/>

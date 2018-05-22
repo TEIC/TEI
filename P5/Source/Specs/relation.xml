@@ -31,33 +31,31 @@ $Id$
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    
-      <elementRef key="desc" minOccurs="0"/>
-    
+    <elementRef key="desc" minOccurs="0"/>
   </content>
   <constraintSpec ident="reforkeyorname" scheme="schematron">
     <constraint>
       <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="@ref or @key or @name">One of the attributes  'name', 'ref' or 'key' must be supplied</assert>
     </constraint>
   </constraintSpec>
-
   <constraintSpec ident="activemutual" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@active and @mutual">Only one of the attributes
-@active and @mutual may be supplied</report>
+      <!-- Note: this constraint is pointless in RELAX NG land, where the
+	   org=choice works. It is useful in DTD land, where the attList/@org
+	   has no effect. It looks to me like it is useful in W3C XML Schema
+	   land, too, which I find suprising, as I thought XSD could express
+	   a disjuntion like that w/o difficulty. (But I may be reading the
+	   XSD incorrectly.) — Syd, 2018-05-01 -->
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@active and @mutual">Only one of the attributes @active and @mutual may be supplied</report>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="activepassive" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@passive and not(@active)">the attribute 'passive'
-	may be supplied only if the attribute 'active' is
-	supplied</report>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@passive and not(@active)">the attribute 'passive' may be supplied only if the attribute 'active' is supplied</report>
     </constraint>
   </constraintSpec>
   <attList>
-    
-  <!-- removed local definition for @type since it is both vacuous and inconsistent with the text : see bug #680 -->
-  
+  <!-- removed local definition for @type since it is both vacuous and inconsistent with the text : see bug #680 -->  
     <attDef ident="name">
       <desc versionDate="2005-10-27" xml:lang="en">supplies a name for the kind of relationship of which this is an instance.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">이것이 실례인 관련성 종류에 대한 이름을 제공한다.</desc>

@@ -258,7 +258,7 @@ that practice. -->
           identifiers for the same markup construct, and an ODD processor may choose which of them
           to use for a given purpose. Each such alternative name is supplied by means of an
             <gi>altIdent</gi> element within the specification element concerned.</p>
-        <p>For example, the following declaration converts <gi>note</gi> to <gi scheme="imaginary">annotation</gi>: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und"><elementSpec ident="note" module="core" mode="change">
+        <p>For example, the following declaration converts <gi>note</gi> to <gi scheme="imaginary">annotation</gi>: <egXML source="#NONE" xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und"><elementSpec ident="note" module="core" mode="change">
               <altIdent>annotation</altIdent>
             </elementSpec></egXML> Note that the <att>mode</att> attribute on the
             <gi>elementSpec</gi> now takes the value <val>change</val> to indicate that those parts
@@ -373,7 +373,7 @@ that practice. -->
             <gi>eg</gi> element in fact has no local attributes defined for it at all: we will
           therefore need to add not only an <gi>attDef</gi> element to define the new attribute, but
           also an <gi>attList</gi> to hold it. </p>
-        <p>We begin by adding the new <att>valid</att> attribute: <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="eg" module="tagdocs" mode="change">
+        <p>We begin by adding the new <att>valid</att> attribute: <egXML source="#NONE" xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="eg" module="tagdocs" mode="change">
               <attList>
                 <attDef ident="valid" mode="add" ns="http://www.example.com/ns/nonTEI">
                   <desc>indicates whether or not the example is considered to be valid</desc>
@@ -415,7 +415,7 @@ that practice. -->
             <gi>attDef</gi> element. Suppose for example that, rather than simply indicating whether
           or not the example is considered valid by means of the values <val>true</val> and
             <val>false</val> we wish to provide a more nuanced indication, using encoded values such
-          as A, B, and C. A declaration like the following might be appropriate: <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full">
+          as A, B, and C. A declaration like the following might be appropriate: <egXML source="#NONE" xmlns="http://www.tei-c.org/ns/Examples" rend="full">
             <elementSpec ident="eg" module="tagdocs" mode="change">
               <attList>
                 <attDef ident="valid" ns="http://www.example.com/ns/nonTEI" mode="add">
@@ -592,7 +592,7 @@ that practice. -->
       <p>Suppose, for example, that we wish to add a new attribute <att scheme="imaginary">topic</att> to the existing TEI element <gi>p</gi>. In the absence of namespace
         considerations, this would be an unclean modification, since <gi>p</gi> does not currently
         have such an attribute. The most appropriate action is to explicitly attach the new
-        attribute to a new namespace by a declaration such as the following: <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full" valid="false"><elementSpec ident="p" mode="change">
+        attribute to a new namespace by a declaration such as the following: <egXML source="#NONE" xmlns="http://www.tei-c.org/ns/Examples" rend="full" valid="false"><elementSpec ident="p" mode="change">
             <attList>
               <attDef ident="topic" mode="add" ns="http://www.example.org/ns/nonTEI">
                 <desc>indicates the topic of a TEI paragraph</desc>
@@ -601,7 +601,7 @@ that practice. -->
             </attList>
           </elementSpec></egXML></p>
       <p>Document instances using a schema derived from this ODD can now indicate clearly the status
-        of this attribute: <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full">
+        of this attribute: <egXML source="#NONE" xmlns="http://www.tei-c.org/ns/Examples" rend="full">
           <div xmlns:my="http://www.example.org/ns/nonTEI">
             <!-- ... -->
             <p n="12" my:topic="rabbits">Flopsy, Mopsy, Cottontail, and Peter...</p>
@@ -1650,7 +1650,7 @@ xsi:schemaLocation { list { data.namespace, data.pointer }+ }]]></eg> inside the
             these elements, it should be used regardless, but if there are several, local processing
             rules will need to be applied. For example, if there are several with different values
             of <att>xml:lang</att>, a locale indication in the processing environment might be used
-            to decide which to use. For example, <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul">
+            to decide which to use. For example, <egXML source="#SELF" xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul">
               <elementSpec module="core" ident="head">
                 <equiv/>
                 <gloss>heading</gloss>
@@ -1802,7 +1802,7 @@ head =
           indicate which of the available patterns is required by means of the <att>expand</att>
           attribute. </p>
         <p>Attribute classes work by producing a pattern containing definitions of the appropriate
-          attributes. So <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+          attributes. So <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SELF">
             <classSpec module="verse" type="atts" ident="att.enjamb">
               <attList>
                 <attDef ident="enjamb" usage="opt">
