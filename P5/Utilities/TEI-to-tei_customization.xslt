@@ -1163,12 +1163,12 @@
               </elementSpec>
               <xsl:comment> of course &lt;xi:include> refers to &lt;xi:fallback>, so we need to declare</xsl:comment>
               <xsl:comment> that, too, just in case. </xsl:comment>
-              <elementSpec ident="fallback" ns="http://www.example.org/cannot/really/use/XInclude"
-                mode="add">
+              <elementSpec ns="http://www.example.org/cannot/really/use/XInclude"
+			   ident="fallback" mode="add" >
                 <content>
                   <alternate minOccurs="1" maxOccurs="unbounded">
                     <textNode/>
-                    <classRef key="macro.anyXML"/>
+                    <anyElement/>
                   </alternate>
                 </content>
               </elementSpec>
