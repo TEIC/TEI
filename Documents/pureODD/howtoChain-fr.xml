@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:s="http://www.ascc.net/xml/schematron" xmlns:rng="http://relaxng.org/ns/structure/1.0"
+    xml:lang="en" >
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>Chaînage ODD pour les débutants</title>
+                <author>Lou Burnard</author>
+            </titleStmt>
+            <publicationStmt>
+                <p> Unpublished draft</p>
+            </publicationStmt>
+            <sourceDesc>
+                <p>authored from scratch</p>
+            </sourceDesc>
+        </fileDesc>
+        <revisionDesc>
+            <change when="2017-02-25">French translation by Emmanuel Château</change>
+            <change when="2016-10-22">Uploaded for Council review</change>
+            <change when="2016-10-21">Drafted first part on train from Paris to La Souterraine;l then lost half of it by shutting lid in a hurry without saving first : doh.
+            </change></revisionDesc>
+    </teiHeader>
+    <text>
+        <body xml:lang="fr">
+            <div>
+                <head>À quoi ça sert ?</head>
+                <p>Ce court guide est destiné à expliquer le mécanisme du <term>ODD chaining</term>. Un fichier ODD spécifie une utilisation de la TEI en sélectionnant des éléments ou des attributs particuliers, etc. dans l’ensemble de la TEI. Mais il est également possible de rafiner encore plus cette spécification en faisant dériver votre ODD les uns des autres. En principe, vous pouvez chaîner des ODDs ensemble de cette manière autant que vous le souhaitez. Vous pouvez employer cette fonctionnalité de différentes manières : <list>
+                    <item>vous pouvez ajouter des restrictions additionnelles à un ODD existant, par exemple pour modifier la liste des valeurs possibles d’un attribut</item>
+                    <item>vous pouvez réduire le sous-ensemble d’éléments produits par un ODD existant</item>
+                    <item>vous pouvez ajouter de nouveaux éléments ou des modules à un ODD existant</item>
+                    </list></p>
+            </div>
+            <div>
+                <head>Comment ça marche ?</head>
+                <p>Un ODD peu bien sûr contenir rien d’autre que des déclarations indépendantes en employant seulement des éléments <gi>elementSpec</gi>, <gi>classSpec</gi>. Mais la plupart des ODDs se composent de plusieurs références à l’énorme quantité de déclarations déjà fournies par les <title>Guidelines</title> de la TEI. Des ODDs comme <ident>TEI Lite</ident> ou <ident>TEI Bare</ident> se composent de <emph>référérences</emph> aux objets qu’ils utilisent, exprimés au moyens d’éléments tels que <gi>moduleRef</gi>, <gi>elementRef</gi>, ou <gi>classRef</gi>. Ces références (ainsi que toutes les déclarations indépendantes) sont réunies au sein d’un élément <gi>schemaSpec</gi> qui spécifie le schéma que l’ODD est destiné à générer. Cet élément dispose d’un attribut <att>source</att> utile mais peu connu dont l’objectif est de déclarer où les objets référencés par la spécification du schéma (les déclarations indépendantes) peuvent être trouvées. Par défaut, quand un ODD ne spécifie aucune source, on assume que celles-ci doivent être collectées dans la livraison la plus récente des Guidelines TEI. Vous pouvez modifier ce comportement en renseignant une URI différente. Par exemple, un <gi> schemaSpec</gi> avec l’attribut <att>source</att> disposant de la valeur <val>tei:2.4.0</val> irait chercher ses déclarations dans la livraison 2.4.0 des Guidelines. Un autre avec la valeur <val>mySuperODD.subset.xml</val> irait rechercher les déclarations dans un fichier de ce nom dans le répertoire courant. Et un autre encore avec la valeur <val>http://example.com/superODDs/anotherSubset.xml</val> irait le chercher à la valeur d’URL renseignée. </p>
+                <p>Il est important de comprendre que la ressource indiquée par l’attribut <att>source</att> doit contenir une spécificiation explicite et complète des éléments : c’est-à-dire des <gi>elementSpec</gi> plutôt que des <gi>elementRef</gi>, des <gi>classSpec</gi> plutôt que des <gi>classRef</gi>, et ainsi de suite. Elle peut bien sûr contenir d’autres élements TEI, mais ceux-ci seront ignorés entièrement au cours de la construction d’un schéma. Un fichier dénommé <ident>p5subset.xml</ident>, faisant partie de chaque livraison de la TEI, est un exemple d’une ressource de ce genre : il contient une spécification de chaque élément TEI, de toutes les classes, macro et type de données, et rien d’autre. Lorsque le paramètre de l’attribut <att>source</att> n’est pas fourni, c’est la version la plus récente de ce fichier qui est employée lors du traitement d’un ODD.</p>
+            </div>
+            <div>
+                <head>Traitement d’un ODD</head>
+                <p>Regardons d’un peu plus près la manière dont la TEI définit un schéma très léger appelé <ident>TEI Bare</ident>. Son élément de spécification de schéma commence comme suit : <egXML
+                    xmlns="http://www.tei-c.org/ns/Examples"> <schemaSpec ident="tei_bare"
+                    xml:lang="en"> <moduleRef key="core"
+                    include="p list item label head author title"/> <moduleRef key="tei"/>
+                    <moduleRef key="header"
+                    include="teiHeader fileDesc titleStmt publicationStmt sourceDesc"/> <moduleRef
+                    key="textstructure" include="TEI text body div front back"/> <classSpec
+                    ident="att.global" mode="change" module="tei" type="atts"> <attList> <attDef
+                    ident="xml:space" mode="delete"/> <attDef ident="rend" mode="delete"/> <attDef
+                    ident="xml:base" mode="delete"/> </attList> </classSpec> <classSpec
+                    ident="att.fragmentable" mode="delete" module="tei" type="atts"/> </schemaSpec>
+                    </egXML> </p>
+                <p>Aucune attribut <att>source</att> n’est spécifié, ainsi la les déclarations des éléments demandés seront prises dans le fichier courant <ident>p5subset.xml</ident>. </p>
+                <p>Notez que cet ODD contient à la fois des références et des spécifications : il continet des références à des modèles (qui peuvent être conçues comme des raccourcis pour des références à des éléments ou des classes, dès lors qu’un module n’est rien d’autre qu’une collection de spécifications d’éléments et de classes) et des spécifications pour deux classes (<gi>classSpec</gi>), plutôt que des références (<gi>classRef</gi>). La référence au module <ident>tei</ident> contenue dans cette spécification icnlue la plupart des classes de la TEI, y compris ces deux classes-là. Un processeur ODD devra alors résoudre les spécifications de classe dupliquées pour les classes <ident>att.global</ident> et <ident>att.fragmentable</ident>. La solution requise est indiquée par la valeur de l’attribut <att>mode</att> : si celle-ci est <val>delete</val> alors les deux déclarations seront ignorées, et la classe est supprimée ; si sa valeur est <val>change</val> alors les deux déclarations seront mélangées de sorte que les parties spécification présentes dans la seconde spécification écrasent les premières. Dans ce cas, l’effet sera de supprimer les trois attributs mentionnés. </p>
+                <p>Vous pouvez vérifier que cet ODD fait bien ce que vous attendez, si vous avez une d’oXygen installée avec une version récente du TEI Frameworks, téléchargez simplement le fichier <ident>tei_bare.odd</ident>, et demandez à oXygen de lui appliquer la transformation prédéfinie <ident>TEI ODD to HTML</ident>. Cela va produire un mini-manuel pour la personnalisation TEI Bare au format HTML au début de laquelle vous pourrez consulter la liste des éléments que le schéma contient. <!--like this: </p>
+        <p><graphic url="teibare-1.png"/>--> </p>
+                <p>Vous pouvez alors vérifier que les modifications de la classe d’attribut <ident>att.global</ident> indiquées ci-dessus ont bien été exécutées en consultant cette documentation.</p>
+            </div>
+            <div>
+                <head>Maintenir votre propre sous-ensemble</head>
+                <p>Nous venons de traiter un ODD utilisant une référence au sous-ensemble par défaut <ident>p5subset</ident>, c’est-à-dire d’après l’ensmeble de la TEI. Supposez cependant que vous voudriez utiliser TEI Bare comme point de départ d’une autre personnalisation. Nous pourrions simplement éditer la source de TEI Bare, et ajouter nos propres modifications dans ce fichier, mais cela deviendrait bientôt ingérable si nous devions faire avec des personnalisations plus importantes comme point de départ. Au lieu de cela, nous allons utiliser TEI Bare lui-même comme source. Pour cela, comme noté ci-dessus, nous allons devoir générer une version <soCalled>compilée</soCalled> de TEI Bare qui contient seulement des éléments de spécification dans laquelle toutes les références ont été résolues. Cela peut être effectué facilement en employant la feuille de style <ident>odd2odd.xsl</ident> qui fait partie du paquet TEI Stylesheet, mais n’est pas actuellement incluse dans le framework d’oXygen. Il existe toutefois un utilitaire en ligne de commande <ident>teitoodd</ident> qui fait ce travail, et qu’il est aussi facile d’installer dans votre propre transformation oXygen. Nous laissons cela comme un exercice pour le lecteur.</p>
+            </div>
+            <div>
+                <head>Chaînage : sous-ensemble </head>
+                <p>Supposez maintenant que nous avons une version compilée de TEI_bare dans un fichier nommé <ident>TEI_bare.compiled.xml</ident>. Le traitement de la spécification de schéma suivante produirait alors exactement le même résultat que nous aurions obtenu d’une version non compilée. </p>
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                    <schemaSpec ident="Bare-prime" source="tei_bare.compiled.xml" start="TEI">
+                        <moduleRef key="tei"/>
+                        <moduleRef key="header"/>
+                        <moduleRef key="core"/>
+                        <moduleRef key="textstructure"/>
+                    </schemaSpec></egXML>
+                <p>Cela fonctionne car chaqu’une des éléments <gi>moduleRef</gi> ici réfèrent au module (i.e. ensemble d’éléments, etc.) <emph>disponible dans l’ODD compilé</emph> plutôt qu’aux modules définis dans l’ensemble de la TEI. Notez aussi que seulement fournir l’ODD compilé comme source d’un schema n’est pas suffisant : nous devons aussi spécifier laquelle des déclarations elle contient nous voulons utiliser : <foreign>nihil ex nihilo fit</foreign>...! </p>
+                <p>Cependant, la raison pour laquelle nous nous sommes engagés sur cette voie n’était pas de pouvoir faire d’une autre manière ce que nous pouvions déjà faire autrement. Produisons maintenant une version réduite de TEI Bare dans laquelle l’élément <gi>head</gi> serait manquant. </p>
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                    <schemaSpec ident="Bare-minus" source="tei_bare.compiled.odd" start="TEI">
+                        <moduleRef key="tei"/>
+                        <moduleRef key="header"/>
+                        <moduleRef key="core" except="head"/>
+                        <moduleRef key="textstructure"/>
+                    </schemaSpec></egXML>
+                <p>Et juste pour la complétude, voici une autre manière d’arriver au même effet : </p>
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                    <schemaSpec ident="Bare-minus" source="tei_bare.compiled.odd" start="TEI">
+                        <moduleRef key="tei"/>
+                        <moduleRef key="header"/>
+                        <moduleRef key="core"/>
+                        <moduleRef key="textstructure"/>
+                        <elementSpec module="core" ident="head" mode="delete"/>
+                    </schemaSpec></egXML>
+                <p>Notez qu’on ne peut supprimer ou modifier que les choses qui sont déjà présentes dans l’ODD compilé spécifié par l’attribut <att>source</att>. Cette approche du chaînage est bien adaptée dans une situation où nous définissons d’æbrod un DODD qui combine tous les éléments (etc.) que nous envisageons d’utiliser et que nous dérivons ensuite un sous-ensemble particulier à partir d’eux. Par exemple, un pour les manuscrits, un pour les imprimés de la Renaissance, un pour les imprimés contemporains, etc. (Cette approche a, par exemple, été adoptée par la Deutsches Text Archive.) <!--: see <ptr
+            target="I dont know where"/>.--> </p>
+            </div>
+            <div>
+                <head>Chaînage : super-ensemble</head>
+                
+                <p>Mais le chaînage ODD n’est pas restreint à la définition de sous-ensembles. Supposez que nous voulions prendre le schéma existant TEI Bare et <emph>ajouter</emph> des déclarations d’autres modules. Nous pourrions bien sûr laborieusement copier toutes les déclarations dont nous avons besoin dans notre <gi>schemaSpec</gi>, mais cela serait bien plus élégant d’avoir de ne pas avoir à faire ça. Supposez, par exemple, que nous voulions ajouter tout ce qui est founi par le module <ident>gaiji</ident>. Ce module n’était pas inclus lorsque nous avons défini notre version compilée de TEI Bare, toutefois il est évidemment disponible dans l’ensemble de la TEI. Voici une manière de faire :</p>
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                    <schemaSpec ident="Bare-plus" source="tei_bare.compiled.odd" start="TEI">
+                        <moduleRef key="tei"/>
+                        <moduleRef key="header"/>
+                        <moduleRef key="gaiji" source="http://www.tei-c.org/release/xml/tei/odd/p5subset.xml"/>
+                        <moduleRef key="textstructure"/>
+                    </schemaSpec></egXML>
+                <p>Le <gi>moduleRef</gi> qui va cherche le module <ident>gaiji</ident> utilise son propre attribut <att>source</att> pour spécifier où aller cherche les déclarations de ce module. Cele ne ferait pas sens d’aller les chercher dans <ident>tei_bare.compiled.odd</ident> : ils n’y sont pas. Au lieu de cela, ici celles-ci sont collectées depuis une copie en ligne d’un ODD compilé qui fournit l’ensemble des Guidelines TEI. Bien sûr, nous aurions aussi pu également réaliser la définition d’un sous-ensemble. Par exemple :</p>
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                    <schemaSpec ident="Bare-plus" source="tei_bare.compiled.odd" start="TEI">
+                        <moduleRef key="tei"/>
+                        <moduleRef key="header"/>
+                        <moduleRef key="gaiji" source="http://www.tei-c.org/release/xml/tei/odd/p5subset.xml" include="g char glyph"/>
+                        <moduleRef key="textstructure"/>
+                    </schemaSpec></egXML>
+                <p>Cet ODD nous donnera tout ce qui est disponible dans tei_bare avec les <gi>g</gi>, <gi>char</gi>, et <gi>glyph</gi> tirés par défaut du module <ident>gaiji</ident>. Nous pourrions parvenir au même effet en nommant explicitement les élements dont nous avions besoin, de nouveau en spécifiant où ceux-ci devraient être trouvés : </p>
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                    <schemaSpec ident="Bare-plus" source="tei_bare.compiled.odd" start="TEI">
+                        <moduleRef key="tei"/>
+                        <moduleRef key="header"/>
+                        <elementRef key="g" source="http://www.tei-c.org/release/xml/tei/odd/p5subset.xml"/>
+                        <elementRef key="char" source="http://www.tei-c.org/release/xml/tei/odd/p5subset.xml"/>
+                        <elementRef key="glyph" source="http://www.tei-c.org/release/xml/tei/odd/p5subset.xml"/>
+                        <moduleRef key="textstructure"/>
+                    </schemaSpec></egXML>
+                <p>On peut employer cette technique pour ramener un élément qui a été effacé du schéma compilé. Par exemple, l’élément <gi>q</gi> n’est pas disponible avec TEI Bare, mais il peut facilement être rétabli. Nous pouvons même spécifier quelle version de l’élément <gi>q</gi> est souhaitée : dans ce cas, nous irons chercher la version définie dans la distribution 3.0.0 de la TEI P5 :</p>
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                    <schemaSpec ident="Bare-plus" source="tei_bare.compiled.odd" start="TEI">
+                        <moduleRef key="tei"/>
+                        <moduleRef key="header"/>
+                        <elementRef key="q" source="tei:3.0.0"/>
+                        <moduleRef key="textstructure"/>
+                    </schemaSpec></egXML>
+                <!-- still to come:
+            chaining two or more customisations not involving p5 subset
+            class and attribute tweaking
+            what else? -->
+            </div>
+        </body>
+    </text>
+</TEI>
