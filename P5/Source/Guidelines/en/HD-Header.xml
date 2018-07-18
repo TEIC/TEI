@@ -990,6 +990,7 @@ class. By default, this class makes available the following elements:
   <specDesc key="refsDecl"/>
   <specDesc key="classDecl"/>
   <specDesc key="geoDecl"/>
+  <specDesc key="unitDecl"/>
   <specDesc key="schemaSpec"/>
   <specDesc key="schemaRef"/>
 </specList>Each of these elements is further described
@@ -1005,6 +1006,7 @@ extend this class; examples are noted in section <ptr target="#HDENCOTH"/>
 <specGrpRef target="#DHD57"/>
 <specGrpRef target="#D2254"/>
 <specGrpRef target="#D2255"/>
+<specGrpRef target="#D2256"/>
 <specGrpRef target="#DHDAPP"/>
 </specGrp>
 
@@ -1782,8 +1784,40 @@ more than one language, as in the following example:
     </p>
     <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/geoDecl.xml"/>
   </div>
-
-
+  <div type="div3" xml:id="HDUDECL"><head>The Unit Declaration</head>
+    <p>When documents feature units of measurement that are not listed in the <ref target="https://www.bipm.org/en/publications/si-brochure/">International System of Units</ref>, the <gi>unitDecl</gi> element may be used in the encoding description to provide definitions and information about origins and equivalents.
+    </p>
+    <specGrp xml:id="D2256" n="The unit declaration"><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unitDecl.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unitDef.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unit.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.labelLike.xml"/>
+    </specGrp>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NONE"><!--2018-07-18 ebb: The source was on our GitHub ticket #1707...Do we want to modify this or provide more/different examples? Can we explain/discuss the context for this example? -->
+      <unitDecl>
+        <unitDef name="斤" xml:id="斤" type="weight">
+          <label xml:lang="ja">斤</label>
+          <label xml:lang="ja-Ltn">kin</label>
+          <unit ref="#両" factor="16" />
+          <desc>A description here </desc>
+        </unitDef>
+        <unitDef name="両" xml:id="両" type="weight">
+          <label xml:lang="ja">両</label>
+          <label xml:lang="ja-Ltn">ryo</label>
+          <unit ref="#分" factor="4" />
+          <desc>A description here </desc>
+        </unitDef>
+        <unitDef name="分" xml:id="分" type="weight">
+          <label xml:lang="ja">分</label>
+          <label xml:lang="ja-Ltn">Bu</label>
+          <unit ref="#銖" factor="6" />
+          <desc>A description here </desc>
+        </unitDef>
+        <unitDef name="銖" xml:id="銖" type="weight">
+          <label xml:lang="ja">銖</label>
+          <label xml:lang="ja-Ltn">Shu</label>
+          <unit factor="1" />
+          <desc>A description here </desc>
+        </unitDef>
+      </unitDecl>
+    </egXML>
+  </div>
   <div type="div3" xml:id="HDSCHSPEC"><head>The Schema Specification</head>
     <p>The <gi>schemaSpec</gi> element contains a schema specification. When this element appears inside <gi>encodingDesc</gi>, it allows embedding of a TEI ODD customization file inside a TEI header; alternatively, this element may be used in the <gi>body</gi> of an ODD document. The use of ODD files, and their relationship to schemas, is described in detail in <ptr target="#TD"/>.</p>
 

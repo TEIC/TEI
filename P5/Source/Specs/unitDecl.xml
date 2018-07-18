@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright TEI Consortium.
+    Dual-licensed under CC-by and BSD2 licences
+    See the file COPYING.txt for details
+    $Date$
+    $Id$
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="unitDecl">
+  <gloss versionDate="2018-07-18" xml:lang="en">unit declarations</gloss>
+  <desc versionDate="2018-07-18" xml:lang="en">provides information about units of measurement that are not members of the International System of Units.</desc>
+  <classes>
+    <memberOf key="model.encodingDescPart"/>
+    <memberOf key="att.canonical"/>
+    <memberOf key="att.datable"/>
+    <memberOf key="att.global"/>
+  </classes>
+  <content>
+    <elementRef key="unitDef" minOccurs="1" maxOccurs="unbounded"/>
+  </content>
+  <!--ebb: This is a placeholder example from our ticket #1707 https://github.com/TEIC/TEI/issues/1707#issuecomment-345464670 -->
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <unitDecl>
+        <unitDef name="斤" xml:id="斤" type="weight">
+          <label xml:lang="ja">斤</label>
+          <label xml:lang="ja-Ltn">kin</label>
+          <unit ref="#両" factor="16" />
+          <desc>A description here </desc>
+        </unitDef>
+        <unitDef name="両" xml:id="両" type="weight">
+          <label xml:lang="ja">両</label>
+          <label xml:lang="ja-Ltn">ryo</label>
+          <unit ref="#分" factor="4" />
+          <desc>A description here </desc>
+        </unitDef>
+        <unitDef name="分" xml:id="分" type="weight">
+          <label xml:lang="ja">分</label>
+          <label xml:lang="ja-Ltn">Bu</label>
+          <unit ref="#銖" factor="6" />
+          <desc>A description here </desc>
+        </unitDef>
+        <unitDef name="銖" xml:id="銖" type="weight">
+          <label xml:lang="ja">銖</label>
+          <label xml:lang="ja-Ltn">Shu</label>
+          <unit factor="1" />
+          <desc>A description here </desc>
+        </unitDef>
+      </unitDecl>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#HDUDECL" type="div3"/><!--ebb: NOTE: I've prepared a place unitDecl (and unitDef) in section 2.3 (encodingDesc section) of the HD chapter, and I've tentatively placed it after geoDecl.-->
+  </listRef>
+</elementSpec>
