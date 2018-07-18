@@ -1693,7 +1693,60 @@ target for <gi>catRef</gi> elements referring to it.
 taxonomy is made by means of the <gi>catRef</gi> element within the
 <gi>textClass</gi> element, as described in section <ptr target="#HD43"/>.  
 Where finer-grained analysis is desired, a <att>ana</att> attribute on an
-element in the text could point to a category.  Where the taxonomy permits of classification along more
+element in the text could point to a category, as in the following example:
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#UND">
+      <taxonomy>
+        <category xml:id="literature">
+          <catDesc>Literature</catDesc>
+          <category xml:id="poetry">
+            <catDesc>Poetry</catDesc>
+            <category xml:id="sonnet">
+              <catDesc>Sonnet</catDesc>
+              <category xml:id="shakesSonnet">
+                <catDesc>Shakespearean Sonnet</catDesc>
+              </category>
+              <category xml:id="petraSonnet">
+                <catDesc>Petrarchan Sonnet</catDesc>
+              </category>
+            </category>
+            <category xml:id="haiku">
+              <catDesc>Haiku</catDesc>
+            </category>
+          </category>
+          <category xml:id="drama">
+            <catDesc>Drama</catDesc>
+          </category>
+        </category>
+        <category xml:id="meter">
+          <catDesc>Metrical Categories</catDesc>
+          <category xml:id="feet">
+            <catDesc>Metrical Feet</catDesc>
+            <category xml:id="iambic">
+              <catDesc>Iambic</catDesc>
+            </category>
+            <category xml:id="trochaic">
+              <catDesc>trochaic</catDesc>
+            </category>
+          </category>
+          <category xml:id="feetNumber">
+            <catDesc>Number of feet</catDesc>
+            <category xml:id="pentameter">
+              <catDesc>&gt;Pentameter</catDesc>
+            </category>
+            <category xml:id="tetrameter">
+              <catDesc>&gt;Tetrameter</catDesc>
+            </category>
+          </category>
+        </category>
+      </taxonomy>
+      <!-- elsewhere in document --> 
+      <lg ana="#shakesSonnet #iambic #pentameter">
+        <l>Shall I compare thee to a summer's day</l>
+        <!-- ... -->
+      </lg>
+    </egXML>
+</p> 
+<p>Where the taxonomy permits of classification along more
 than one dimension, more than one category will be referenced by a
 particular <gi>catRef</gi>, as in the following example, which
 identifies a text with the sub-categories <q>Daily</q>, <q>National</q>,
@@ -1721,8 +1774,6 @@ more than one language, as in the following example:
 </category>
 </category>
     </egXML>
-
-
 </p>
 <specGrp xml:id="D2255" n="The classification declaration"><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/classDecl.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/taxonomy.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/category.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/catDesc.xml"/>
 </specGrp>
