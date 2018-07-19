@@ -33,18 +33,11 @@ $Id$
         <moduleRef key="tei"/>
         <moduleRef key="gaiji"/>
         <moduleRef key="namesdates"/>
-        <moduleRef key="textstructure"/>
+        <moduleRef key="textstructure" except="div1 div2 div3 div4 div5 div6 div7"/>
         <moduleRef key="tagdocs"/>
         <moduleRef key="dictionaries"/>
         <moduleRef key="linking"/>
         <moduleRef key="figures"/>
-        <elementSpec ident="div1" module="textstructure" mode="delete"/>
-        <elementSpec ident="div2" module="textstructure" mode="delete"/>
-        <elementSpec ident="div3" module="textstructure" mode="delete"/>
-        <elementSpec ident="div4" module="textstructure" mode="delete"/>
-        <elementSpec ident="div5" module="textstructure" mode="delete"/>
-        <elementSpec ident="div6" module="textstructure" mode="delete"/>
-        <elementSpec ident="div7" module="textstructure" mode="delete"/>
         <moduleRef url="Exemplars/svg11.rng">
           <content>
             <define xmlns="http://relaxng.org/ns/structure/1.0" combine="choice" name="tei_model.graphicLike">
@@ -54,39 +47,21 @@ $Id$
         </moduleRef>
         <moduleRef url="Exemplars/mathml2-main.rng"/>
         <moduleRef url="Exemplars/relaxng.rng"/>
-        <elementSpec ident="egXML" mode="change" module="tagdocs" ns="http://www.tei-c.org/ns/Examples">
+        <elementSpec ident="egXML" mode="change" module="tagdocs"
+		     ns="http://www.tei-c.org/ns/Examples">
+	  <!-- 
+	       This definition of <teix:egXML> overrides that of P5 which, for
+	       some reason I don't grok, does not allow a <teix:egXML> descendant.
+	       —Syd, 2018-06-13
+	  -->
           <content>
-            <rng:zeroOrMore>
-              <rng:group>
-                <rng:choice>
-                  <rng:text/>
-                  <rng:ref name="egXML"/>
-                  <rng:ref name="macro.anyXML"/>
-                </rng:choice>
-              </rng:group>
-            </rng:zeroOrMore>
+	    <alternate minOccurs="1" maxOccurs="unbounded">
+	      <textNode/>
+	      <elementRef key="egXML"/>
+	      <anyElement/>
+	    </alternate>
           </content>
         </elementSpec>
-        <macroSpec ident="macro.anyThing" mode="add">
-          <content>
-            <?NameList?>
-          </content>
-        </macroSpec>
-        <macroSpec ident="macro.schemaPattern" mode="change" module="tagdocs">
-          <content>
-            <group xmlns="http://relaxng.org/ns/structure/1.0">
-              <choice>
-                <text/>
-                <oneOrMore>
-                  <choice>
-                    <ref name="pattern"/>
-                    <ref name="define"/>
-                  </choice>
-                </oneOrMore>
-              </choice>
-            </group>
-          </content>
-        </macroSpec>
         <macroSpec ident="anyISOSchematron" mode="add">
           <content>
             <element xmlns="http://relaxng.org/ns/structure/1.0">
@@ -285,8 +260,7 @@ $Id$
             </attDef>
           </attList>
         </elementSpec>
-        <elementSpec ident="list" mode="change">
-          
+        <elementSpec ident="list" mode="change">          
           <!-- MDH 2014-07-29: per https://sourceforge.net/p/tei/bugs/460, 
           changes made to specs should be reflected in Guidelines usage, so 
           the values for @type and @rend below should be reviewed. -->
@@ -389,6 +363,9 @@ $Id$
                                  | tei:valItem/tei:desc
                                  | tei:valItem/tei:gloss
                                  | tei:valItem/tei:remarks
+                                 | tei:moduleSpec/tei:desc
+                                 | tei:moduleSpec/tei:gloss
+                                 | tei:moduleSpec/tei:remarks
                                  ">
                   <sch:report test="not( @xml:lang and @versionDate )">
                     Error: both the versionDate and xml:lang attributes on "<sch:name/>" are required when it is a child of "<sch:value-of select="local-name(..)"/>".

@@ -85,7 +85,7 @@ an XML Document Type Declaration.</item-->
         in a schema.</p>
       <p>The <gi>code</gi> and <gi>ident</gi> elements are intended for use when citing brief passages in some
         formal language such as a programming language, as in the following example:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
           <p>If the variable <ident>z</ident> has a value of zero, a statement such as <code>x=y/z</code> will
             usually cause a fatal error.</p>
         </egXML>
@@ -103,7 +103,7 @@ an XML Document Type Declaration.</item-->
         also a subclass of <ident type="class">model.phrase</ident>. They are also available anywhere that
         running prose is permitted when the module defined by this chapter is included in a schema. </p>
       <p>As an example of the recommended use of these elements, we quote from an imaginary TEI working paper:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The <gi>gi</gi> element is used to tag element
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p>The <gi>gi</gi> element is used to tag element
             names when they appear in the text; the <gi>tag</gi> element however is used to show how a tag as
             such might appear. So one might talk of an occurrence of the <gi>blort</gi> element which had been
             tagged <tag>blort type='runcible'</tag>. The <att>type</att> attribute may take any name token as
@@ -140,14 +140,15 @@ an XML Document Type Declaration.</item-->
       <p>TEI practice recommends that a <gi>specList</gi> listing the elements under discussion introduce each
         subsection of a module's documentation. The source for the present section, for example, begins as
         follows:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SELF">
           <div>
             <head>Element and Attribute Descriptions</head>
-            <p>Within the body of a document using this module, the following elements… <specList>
+            <p>Within the body of a document using this module, the … the brief prose descriptions these provide for elements and attributes.
+              <specList>
                 <specDesc key="specList"/>
                 <specDesc key="specDesc" atts="atts"/>
               </specList></p>
-            <p>TEI practice recommends that a <gi>specList</gi> listing the elements… </p>
+            <p>TEI practice recommends that a <gi>specList</gi> listing the elements under … </p>
             <!-- ... -->
           </div>
         </egXML>
@@ -206,7 +207,7 @@ an XML Document Type Declaration.</item-->
       recommendations of this chapter will generate such fragments for each <gi>moduleSpec</gi> element found.
       For example, the chapter documenting the TEI module for names and dates contains a module specification
       like the following:
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SELF">
         <moduleSpec ident="namesdates">
           <altIdent type="FPI">Names and Dates</altIdent>
           <desc>Additional elements for names and dates</desc>
@@ -243,7 +244,7 @@ an XML Document Type Declaration.</item-->
     <p>An ODD processor will generate a piece of schema code corresponding with the declarations contained by
       a <gi>specGrp</gi> element in the documentation being output, and a cross-reference to such a piece of
       schema code when processing a <gi>specGrpRef</gi>. For example, if the input text reads
-      <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>This module contains three red elements: <specGrp
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p>This module contains three red elements: <specGrp
             xml:id="RED">
             <elementSpec ident="beetroot"><!-- ... --></elementSpec>
             <elementSpec ident="east"><!-- ... --></elementSpec>
@@ -258,7 +259,7 @@ an XML Document Type Declaration.</item-->
         scheme="imaginary">east</gi>, and <gi scheme="imaginary">rose</gi> and that declaring the elements <gi
         scheme="imaginary">sky</gi> and <gi scheme="imaginary">bayou</gi> respectively. Similarly, if the
       input text contains elsewhere a passage such as
-      <egXML xmlns="http://www.tei-c.org/ns/Examples"><div>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><div>
           <head>An overview of the imaginary module</head>
           <p>The imaginary module contains declarations for coloured things: <specGrpRef target="#RED"/>
             <specGrpRef target="#BLUE"/>
@@ -2137,26 +2138,29 @@ most recent version of the Guidelines would be used instead.--></p>
   </div>
   <div type="div2" xml:id="TDformal">
     <head>Module for Documentation Elements</head>
-    <p>The module described in this chapter makes available the following components: <moduleSpec
-        xml:id="DTDDTD" ident="tagdocs">
+    <p>The module described in this chapter makes available the following components:
+    <moduleSpec xml:id="DTDDTD" ident="tagdocs">
         <altIdent type="FPI">Documentation Elements</altIdent>
-        <desc>Documentation of TEI modules</desc>
-        <desc xml:lang="fr">Éléments de déclaration d’un modèle</desc>
-        <desc xml:lang="zh-TW">TEI模組說明</desc>
-        <desc xml:lang="it">Documentazione dei moduli TEI</desc><desc xml:lang="pt">Documentação dos módulos
-          TEI</desc><desc xml:lang="ja">タグ定義モジュール</desc></moduleSpec> The selection and combination of modules
-      to form a TEI schema is described in <ptr target="#STIN"/>. </p>
-    <p>The elements described in this chapter are all members of one
-    of three classes: <ident type="class" >model.oddDecl</ident>,
-    <ident type="class">model.oddRef</ident>, or <ident type="class"
+        <desc xml:lang="en" versionDate="2006-09-13">Documentation of TEI modules</desc>
+        <desc xml:lang="fr" versionDate="2018-07-12">Éléments de déclaration d’un modèle</desc>
+        <desc xml:lang="zh-TW" versionDate="2018-07-12">TEI模組說明</desc>
+        <desc xml:lang="it" versionDate="2018-07-12">Documentazione dei moduli TEI</desc>
+	<desc xml:lang="pt" versionDate="2018-07-12">Documentação dos módulos TEI</desc>
+	<desc xml:lang="ja" versionDate="2018-07-12">タグ定義モジュール</desc>
+    </moduleSpec>
+    The selection and combination of modules to form a TEI schema is
+    described in <ptr target="#STIN"/>.</p> <p>The elements described
+    in this chapter are all members of one of three classes: <ident
+    type="class" >model.oddDecl</ident>, <ident
+    type="class">model.oddRef</ident>, or <ident type="class"
     >model.phrase.xml</ident>, with the exceptions of
     <gi>schemaSpec</gi> (a member of <ident type="class"
     >model.divPart</ident>) and both <gi>eg</gi> and <gi>egXML</gi>
     (members of <ident type="class" >model.common</ident> and <ident
     type="class">model.egLike</ident>). All of these classes are
     declared along with the other general TEI classes, in the basic
-    structure module documented in <ptr target="#ST" />.</p>
-    <p>In addition, some elements are members of the <ident
+    structure module documented in <ptr target="#ST" />. </p> <p>In
+    addition, some elements are members of the <ident
     type="class">att.identified</ident> class, which is documented in
     <ptr target="#TDbuild"/> above.</p>
     <specGrp>
