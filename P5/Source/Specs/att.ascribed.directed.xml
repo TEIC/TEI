@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+$Date$
+$Id$
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" ident="att.ascribed.directed">
+    <desc versionDate="2018-07-19" xml:lang="en">provides attributes for elements representing speech or action that can be directed at a
+        group or individual.</desc>
+    <classes>
+        <memberOf key="att.ascribed"/>
+    </classes>
+    <attList>
+        <attDef ident="toWhom">
+            <desc versionDate="2018-07-19" xml:lang="en">indicates the person, or group of people, to whom a speech act or action is directed.</desc>
+            
+            <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
+            <exemplum xml:lang="en">
+                <p>In the following example from Mary Pix's The False Friend, speeches (<gi>sp</gi>) in the body of the play 
+                    are linked to <gi>castItem</gi> elements in the <gi>castList</gi> using the <att>toWhom</att>
+                    attribute, which is used to specify who the speech is directed to. Additionally, the <gi>stage</gi>
+                    includes <att>toWhom</att> to indicate the directionality of the action. 
+                </p>
+                <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" valid="feasible" source="#toWhom-eg-1">
+                    <castItem type="role">
+                        <role xml:id="emil">Emilius.</role>
+                    </castItem>
+                    <castItem type="role">
+                        <role xml:id="lov">Lovisa</role>
+                    </castItem>
+                    <castItem type="role">
+                        <role xml:id="serv">A servant</role>
+                    </castItem>
+                    <!-- ... -->
+                    <sp who="#emil" toWhom="#lov">
+                        <speaker>Emil.</speaker>
+                        <l n="1">My love!</l>
+                    </sp>
+                    <sp who="#lov" toWhom="#emil">
+                        <speaker>Lov.</speaker>
+                        <l n="2">I have no Witness of my Noble Birth</l>
+                        <stage who="emil" toWhom="#serv">Pointing to her Woman.</stage>
+                        <l>But that poor helpless wretch——</l>
+                    </sp>
+                </egXML>
+            </exemplum>
+            <remarks versionDate="2013-11-22" xml:lang="en"><p>To indicate the recipient of written correspondence, use the elements used in section <ptr target="#HD44CD"/>, rather than a <att>toWhom</att> attribute.</p></remarks>
+        </attDef>
+    </attList>
+    <listRef>
+        <ptr target="#COHQQ"/>
+        <ptr target="#TSBA"/>
+    </listRef>
+</classSpec>
