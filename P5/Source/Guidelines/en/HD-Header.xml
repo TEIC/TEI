@@ -709,7 +709,7 @@ example.
     <title level="s">Machine-Readable Texts for the Study of
       Indian Literature</title>
     <respStmt> <resp>ed. by</resp> <name>Jan Gonda</name> </respStmt>
-    <biblScope unit="vol">1.2</biblScope>
+    <biblScope unit="volume">1.2</biblScope>
     <idno type="ISSN">0 345 6789</idno>
 </seriesStmt></egXML>
 <specGrp xml:id="D2225" n="The series statement"><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/seriesStmt.xml"/>
@@ -1692,8 +1692,52 @@ target for <gi>catRef</gi> elements referring to it.
 <p>Linkage between a particular text and a category within such a
 taxonomy is made by means of the <gi>catRef</gi> element within the
 <gi>textClass</gi> element, as described in section <ptr target="#HD43"/>.  
-Where finer-grained analysis is desired, a <att>ana</att> attribute on an
-element in the text could point to a category.  Where the taxonomy permits of classification along more
+Where finer-grained analysis is desired, the <att>ana</att> attribute on an
+element in the text could point to a category, as in the following abbreviated example:
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#UND">
+      <taxonomy>
+        <category xml:id="poe">
+          <catDesc>Poetry</catDesc>
+          <category xml:id="sonn">
+            <catDesc>Sonnet</catDesc>
+            <category xml:id="shakesSonn">
+              <catDesc>Shakespearean Sonnet</catDesc>
+            </category>
+            <category xml:id="petraSonn">
+              <catDesc>Petrarchan Sonnet</catDesc>
+            </category>
+          </category>
+          <category xml:id="met">
+            <catDesc>Metrical Categories</catDesc>
+            <category xml:id="ft">
+              <catDesc>Metrical Feet</catDesc>
+              <category xml:id="iamb">
+                <catDesc>Iambic</catDesc>
+              </category>
+              <category xml:id="troch">
+                <catDesc>trochaic</catDesc>
+              </category>
+            </category>
+            <category xml:id="ftNm">
+              <catDesc>Number of feet</catDesc>
+              <category xml:id="penta">
+                <catDesc>&gt;Pentameter</catDesc>
+              </category>
+              <category xml:id="tetra">
+                <catDesc>&gt;Tetrameter</catDesc>
+              </category>
+            </category>
+          </category>
+        </category>
+      </taxonomy>
+      <!-- elsewhere in document --> 
+      <lg ana="#shakesSonnet #iamb #penta">
+        <l>Shall I compare thee to a summer's day</l>
+        <!-- ... -->
+      </lg>
+    </egXML>
+</p> 
+<p>Where the taxonomy permits of classification along more
 than one dimension, more than one category will be referenced by a
 particular <gi>catRef</gi>, as in the following example, which
 identifies a text with the sub-categories <q>Daily</q>, <q>National</q>,
@@ -1721,8 +1765,6 @@ more than one language, as in the following example:
 </category>
 </category>
     </egXML>
-
-
 </p>
 <specGrp xml:id="D2255" n="The classification declaration"><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/classDecl.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/taxonomy.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/category.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/catDesc.xml"/>
 </specGrp>
@@ -2106,7 +2148,7 @@ externally-defined scheme, and therefore may be taken from
 classification system.</p>
 <specGrp xml:id="D2243" n="Text Classification"><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/textClass.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/keywords.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/classCode.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/catRef.xml"/>
-</specGrp></div>
+</specGrp></div> 
 
 <div type="div3" xml:id="HD4ABS"><head>Abstracts</head>
 <p>The main purpose of the <gi>abstract</gi> element is to supply a brief resume or abstract for an article which was originally published without such a component. An abstract or summary forming part of the document at its creation should usually appear in the front matter (<gi>front</gi>) of the document.
@@ -2806,19 +2848,21 @@ for subject headings nor require the use of subject headings.</item>
 </list></p>
 </div>
 
-<div><head>The TEI Header Module</head>
-<p>The module described in this chapter makes available the following components:
-<moduleSpec xml:id="DHD" ident="header">
-  <altIdent type="FPI">Common Metadata</altIdent>
-  <desc>The TEI Header</desc>
-  <desc xml:lang="fr">En-tête TEI</desc>
-  <desc xml:lang="zh-TW">TEI標頭</desc>
-  <desc xml:lang="it">L'intestazione TEI (TEI Header)</desc>
-  <desc xml:lang="pt">O cabeçalho TEI</desc>
-  <desc xml:lang="ja">ヘダーモジュール</desc>
-</moduleSpec>
-<!--publicID:  -//TEI P5//ELEMENTS TEI Header//EN-->
-The selection and combination of modules to form a TEI schema is described in
-<ptr target="#STIN"/>.</p>
+<div>
+  <head>The TEI Header Module</head>
+  <p>The module described in this chapter makes available the
+  following components:
+  <moduleSpec xml:id="DHD" ident="header">
+    <altIdent type="FPI">Common Metadata</altIdent>
+    <desc xml:lang="en" versionDate="2006-09-13">The TEI Header</desc>
+    <desc xml:lang="fr" versionDate="2018-07-12">En-tête TEI</desc>
+    <desc xml:lang="zh-TW" versionDate="2018-07-12">TEI標頭</desc>
+    <desc xml:lang="it" versionDate="2018-07-12">L'intestazione TEI (TEI Header)</desc>
+    <desc xml:lang="pt" versionDate="2018-07-12">O cabeçalho TEI</desc>
+    <desc xml:lang="ja" versionDate="2018-07-12">ヘダーモジュール</desc>
+  </moduleSpec>
+  <!--publicID:  -//TEI P5//ELEMENTS TEI Header//EN-->
+  The selection and combination of modules to form a TEI schema is
+  described in <ptr target="#STIN"/>.</p>
 </div>
 </div>
