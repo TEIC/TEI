@@ -870,15 +870,15 @@ which case the same section might simply be tagged:
 
 
 
-<p>As  members of the <ident type="class">att.ascribed</ident> class,
- elements <gi>said</gi> and <gi>q</gi>  share the following attribute:
-<specList><specDesc key="att.ascribed" atts="who"/></specList>
-This may be used to make explicit who is speaking:
+<p>As  members of the <ident type="class">att.ascribed.directed</ident> class,
+ elements <gi>said</gi> and <gi>q</gi> share the following attributes:
+<specList><specDesc key="att.ascribed" atts="who"/><specDesc key="att.ascribed.directed" atts="toWhom"/></specList>
+These may be used to make explicit who is speaking and who is being spoken to:
  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COHQQ-eg-23" xml:lang="fr">Adolphe se tourna vers lui :
- <said who="#Adolphe">— Alors, Albert,
+ <said who="#Adolphe" toWhom="#Albert">— Alors, Albert,
  quoi de neuf?</said>
- <said who="#Albert">— Pas grand-chose.</said>
- <said who="#Robert">— Il fait beau,</said>
+ <said who="#Albert" toWhom="#Adolphe">— Pas grand-chose.</said>
+ <said who="#Robert" toWhom="#Albert #Adolphe">— Il fait beau,</said>
  dit Robert.
 <!-- ... elsewhere in the document -->
  <list type="speakers">
@@ -889,10 +889,11 @@ This may be used to make explicit who is speaking:
 
  The <att>who</att> attribute may be supplied whether
  or not an indication of the speaker is given explicitly in the
- text. It may take the form (as above) of  a
- normalized form of the speaker's name, but its role is to act as a
+ text. Likewise, the <att>toWhom</att> attribute may be supplied to indicate the encoder's interpretation
+ of the intended recipient of the speech. They may take the form (as above) of  a
+ normalized form of the speaker's name, but the role of these attributes is to act as a
  pointer to a location elsewhere in the text, or another document, where data about each
- speaker may be supplied. While this attribute could point to any source of information about the speaker available by a URI, the most appropriate place to place such
+ party may be supplied. While these attributes could point to any source of information about the parties involved, the most appropriate place for such
  information is within the <term>participant description</term>
  component of the TEI header, as further discussed in <ptr target="#CCAHPA"/> but for simple cases like the above, a simple list
  of speakers located in the front or back matter of the text may
