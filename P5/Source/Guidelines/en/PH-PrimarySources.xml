@@ -112,6 +112,7 @@ Physical Bibliography workgroup.</p-->
             <specDesc key="surface"/>
             <specDesc key="surfaceGrp"/>
             <specDesc key="zone" atts="points"/>
+            <specDesc key="path" atts="points"/>
          </specList>
       </p>
 
@@ -347,18 +348,39 @@ used to define a polygon of any shape using this coordinate system:-->
             </facsimile></egXML>
       </p>
 
-      <p>In this example a single <gi>graphic</gi> element has been associated directly with the
+
+      <p>In the examples above a single <gi>graphic</gi> element has been associated directly with the
          surface of the page rather than nesting it within a zone. However, it is also possible to
          include multiple <gi>zone</gi> elements which contain a <gi>graphic</gi> element, if for
          example a detailed image is available. Since all <gi>zone</gi> elements use the same
          coordinate system (that defined by their parent <gi>surface</gi>), there is no need to
          demonstrate enclosure of one zone within another by means of nesting. To continue the
-         current example, supposing that we have an additional image called <ident type="file">Bovelles49r-detail.png</ident> containing an additional image of the figure in the
+         current example, supposing that we have an additional image called 
+         <ident type="file">Bovelles49r-detail.png</ident> containing an additional image of the figure in the
          third zone above, we might encode that zone as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
             <zone ulx="105" uly="76" lrx="175" lry="160">
                <graphic url="Bovelles49r-detail.png"/>
             </zone>
          </egXML>
+      </p>
+      
+      
+      <p>Within a <gi>surface</gi> or <gi>zone</gi>, individual lines can be identified using the 
+         <gi>path</gi> element, which also carries the <att>points</att>
+         attribute:
+         <figure xml:id="facs-fig3">
+            <graphic url="Images/facs-fig3.jpg"/>
+            <head>Smaller detail of p 49r from Bovelles highlighting two specific lines</head>
+         </figure>
+         <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <surface ulx="0" uly="0" lrx="443" lry="272">
+               <graphic url="facs-fig3.jpg"/>
+               <path points="74,73 171,244" xml:id="balan"/>
+               <path points="71,203 173,116" xml:id="dindan"/>
+            </surface></egXML>
+         
+         This is useful for linking an annotation or explanation to a specific line on
+         an object surface. Any number of coordinates can be included to specify lines which are not straight.
       </p>
 
    </div>
@@ -457,6 +479,7 @@ used to define a polygon of any shape using this coordinate system:-->
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/surfaceGrp.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.coordinated.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/zone.xml"/>
+            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/path.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.resourceLike.xml"/>
          </specGrp>
 
