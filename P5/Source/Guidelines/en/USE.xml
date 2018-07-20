@@ -86,7 +86,18 @@ that practice. -->
       rules and constraints. Many (though not all) of the semantic recommendations are provided
       solely as informal descriptive prose, though some of them are also enforced by means of such
       constructs as datatypes (see <ptr target="#DTYPES"/>), or by schema constraints expressed
-      using the Schematron language. Although the descriptions have been written with care, there
+      using the Schematron language. Schematron constraints provide information about special kinds of validation errors dependent on contextual relationships, such as the invalidity of an attribute name or value on one element when another is present, or when, given a pair of attributes such as <att>minOccurs</att>  and <att>maxOccurs</att>, a minimum value and a maximum value in a range conflict with one another. Schematron constraints also provide warnings when a particular element, attribute, or combination is to be deprecated in future releases of the TEI scheme, to alert users that the feature in question is no longer to be used after a certain date. Very rarely, TEI Schematron constraints offer warnings that do not explicitly break with the TEI but suggest a more efficient or less ambiguous encoding. <!--2018-07-20 ebb: Example here: the one and only Schematron constraint with role="warning": 
+      <constraintSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                   scheme="schematron"
+                   ident="no_outputs_nor_predicates_4_my_kids">
+      <constraint>
+         <sch:report test="tei:model[@output]" role="warning">The 'model' children
+      of a 'modelSequence' element inherit the @output attribute of the
+      parent 'modelSequence', and thus should not have their own</sch:report>
+      </constraint>
+  </constraintSpec>
+     
+      --> Although the descriptions, validation errors, and warnings have been written with care, there
       will inevitably be cases where the intention of the contributors has not been conveyed with
       sufficient clarity to prevent users of these Guidelines from <soCalled>extending</soCalled>
       them in the sense of attaching slightly variant semantics to them. </p>
@@ -116,7 +127,7 @@ that practice. -->
       schemas, extensive use is made of patterns. In either case, the names of elements and,
       wherever possible, their attributes and content models are defined indirectly. The syntax used
       to implement this indirection also varies with the schema language used, but the underlying
-      constructs in the TEI Abstract Model are given the same names. </p>
+      constructs in the TEI Abstract Model are given the same names. <!--2018-07-20 ebb: ?? Readers may be confused about what we mean by "defined indirectly" in this paragraph, and why that's important. I suspect we can explain this a little more clearly by introducing ODD explicitly here, earlier than its first introduction in the paragraph after next. Maybe we could explain here that indirect definition should prioritize efficient, human-readable customizations of the TEI schema. --></p>
 
     <p>As further discussed in section <ptr target="#ST"/>, the TEI encoding scheme comprises a set
       of class and macro declarations, and a number of <term>modules</term>. Each module is made up
@@ -592,7 +603,8 @@ that practice. -->
       <p>Suppose, for example, that we wish to add a new attribute <att scheme="imaginary">topic</att> to the existing TEI element <gi>p</gi>. In the absence of namespace
         considerations, this would be an unclean modification, since <gi>p</gi> does not currently
         have such an attribute. The most appropriate action is to explicitly attach the new
-        attribute to a new namespace by a declaration such as the following: <egXML source="#NONE" xmlns="http://www.tei-c.org/ns/Examples" rend="full" valid="false"><elementSpec ident="p" mode="change">
+        attribute to a new namespace by a declaration such as the following:
+        <!--2018-07-20 ebb: Can we indicate explicitly why the example below is rendered is invalid (because it describes an unclean modification, presumably)? Usually when things "look" invalid, we're warning against them in the Guidelines, aren't we? Is that our intention here?--><egXML source="#NONE" xmlns="http://www.tei-c.org/ns/Examples" rend="full" valid="false"><elementSpec ident="p" mode="change">
             <attList>
               <attDef ident="topic" mode="add" ns="http://www.example.org/ns/nonTEI">
                 <desc>indicates the topic of a TEI paragraph</desc>
