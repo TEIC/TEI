@@ -12,7 +12,7 @@ $Id$
 <p>This chapter describes elements which may appear in any kind of text
 and the tags used to mark them in all TEI documents. Most of these
 elements are freely floating phrases, which can appear at any point
-within the textual structure, although they must generally be contained
+within the textual structure, although they should generally be contained
 by a higher-level element of some kind (such as a paragraph). A few of
 the elements described in this chapter (for example, bibliographic
 citations and lists) have a comparatively well-defined internal
@@ -69,8 +69,8 @@ Guidelines may be found in chapters <ptr target="#FT"/> and <ptr target="#SA"/>.
 <p>Next, section <ptr target="#CORS"/>, describes methods of
 encoding within a text the conventional system or systems used when
 making references to the text. Some reference systems have attained
-canonical authority and must be recorded to make the text useable in
-normal work; in other cases, a convenient reference system must be
+canonical authority and should be recorded to make the text useable in
+normal work; in other cases, a convenient reference system should be
 created by the creator or analyst of an electronic text.</p>
 <p>Like lists and notes, the bibliographic citations discussed in
 section <ptr target="#COBI"/>, may be regarded as structural elements in
@@ -94,7 +94,7 @@ text.</p>
 <p>Paragraphs can contain any of the other elements described within
 this chapter, as well as some other elements which are specific to
 individual text types. We distinguish <term>phrase-level</term>
-elements, which must be entirely contained within a paragraph and
+elements, which must be entirely contained within a paragraph or similar structure and
 cannot appear except within one, from <term>chunks</term>, which can
 appear between, but not within, paragraphs, and from
 <term>inter-level</term> elements, which can appear either within a
@@ -235,7 +235,7 @@ text contained by <gi>q</gi> or <gi>quote</gi> elements on editorial
 grounds, or they may be marked in a variety of ways; see
 the discussion of quotation and related features in section <ptr target="#COHQQ"/>.</p>
 
-<p><term rend="noindex">Apostrophes</term> must be distinguished from
+<p><term rend="noindex">Apostrophes</term> should be distinguished from
 single quote marks. As with hyphens, this disambiguation is best
 performed by selecting the appropriate Unicode character, though  it may
 also be represented by using appropriate XML markup for quotations as
@@ -1193,7 +1193,7 @@ manuscripts.</p>
 
 <p>The tags described here handle most common types of editorial
 intervention and stereotyped comment; where less structured commentary
-of other types is to be included, it should be marked using the
+of other types is to be included, it may be marked using the
 <gi>note</gi> element described in section <ptr target="#CONO"/>.
 Systematic interpretive annotation is also possible using the various
 methods described in chapter <ptr target="#SA"/>. The examples given
@@ -1446,7 +1446,7 @@ where words or phrases have been added or deleted in the copy text.
 They are not appropriate where longer passages have been added or
 deleted, which span several elements; for these, the elements
 <gi>addSpan</gi> and <gi>delSpan</gi> described in
-chapter <ptr target="#PHAD"/> must be used.</p>
+chapter <ptr target="#PHAD"/> should be used.</p>
 <p>Additions to a text may be recorded for a number of reasons.
 Sometimes they are marked in a distinctive way in the source text, for
 example by brackets or insertion above the line (<term rend="noindex">supralinear</term> insertion),<index><term>additions</term><index><term>supralinear</term></index></index><index><term>insertions</term><index><term>supralinear</term></index></index><index><term>supralinear insertions</term></index> as in
@@ -1633,7 +1633,7 @@ as provided by a standard reference source.
 <p><name key="LHR" type="airport">Heathrow</name> </p></egXML>
 </p>
  
-<p>The standard reference source should be documented using a <gi>taxonomy</gi> element in the TEI header.</p>
+<p>The standard reference source should be documented, for example using a <gi>taxonomy</gi> element in the TEI header.</p>
 
 <p>The <att>ref</att> attribute can be used to point directly
 to  some other resource providing more information about the
@@ -1684,7 +1684,7 @@ At the time of the events which led to
 investigations, the local population consisted of between 200 and 250 inhabitants.</p></egXML>
 Although adequate for many simple applications, these methods have two
 inconveniences: if the name occurs many times, then its regularized
-form must be repeated many times; and the burden of additional XML
+form would be repeated many times; and the burden of additional XML
 markup in the body of the text may be inconvenient to maintain and
 complex to process. For applications such as onomastics, relating to
 persons or places named rather than the name itself, or wherever a
@@ -1977,7 +1977,7 @@ of the <ident type="class">att.datable.w3c</ident> and <ident type="class">att.d
 <p>Dates can occur virtually anywhere in a text, but in some contexts
 (e.g. bibliographic citations) their encoding is recommended or
 required rather than optional.  Times can also appear anywhere but
-are generally optional.
+encoding these is more generally optional.
  </p>
 <p>Partial dates or times (e.g. <mentioned>1990</mentioned>,
 <mentioned>September 1990</mentioned>,
@@ -2291,7 +2291,7 @@ their constituent items, and the labels or headings associated
 with them:
 <specList><specDesc key="list"/><specDesc key="item"/><specDesc key="label"/><specDesc key="head"/><specDesc key="headLabel"/><specDesc key="headItem"/></specList>
  </p>
-<p>The <gi>list</gi> element should be used to mark any kind of
+<p>The <gi>list</gi> element may be used to mark any kind of
 <term rend="noindex">list</term>:
 numbered, lettered, bulleted, or unmarked. Lists formatted as such in
 the copy text should in general be encoded using this element, with an
@@ -2592,7 +2592,7 @@ The spell begins to break</note>
 <note place="bottom" resp="#JLL">The turning point of the poem...</note>
 </l>
 </lg></egXML>
-For this to be valid, the codes <code>#JLL</code> and
+For this to be valid<!-- JC: 2018-07-20: Is 'valid' really the right word here? -->, the codes <code>#JLL</code> and
 <code>#STC</code> must point to some more information identifying the
 agency concerned. The syntax used is identical to that used for other
 cross-references, as discussed in <ptr target="#COXR"/>; thus in this
@@ -3601,7 +3601,7 @@ properties.
 
 <p>It should be emphasized that for references as for other textual
 features, the primary or sole consideration is not how the text should
-be formatted when it is printed.  The distinctions permitted by the
+be formatted when it is printed or displayed.  The distinctions permitted by the
 scheme outlined here may not necessarily be all that particular
 formatters or bibliographic styles require, although they should prove
 adequate to the needs of many such commonly used software
@@ -5169,7 +5169,8 @@ two typographic lines, with a break at the point indicated. Note that
 this encoding makes no attempt to preserve information about the
 whitespace or indentation associated with either kind of line; if regarded
 as essential, this information would be recorded using the
-<att>rend</att> or <att>rendition</att> attributes discussed in <ptr target="#STGA"/>. </p><p>The <gi>l</gi> element should not be used to represent typographic
+<att>rend</att> or <att>rendition</att> attributes discussed in <ptr target="#STGA"/>. </p>
+  <p>The <gi>l</gi> element should not be used to represent typographic
 lines in non-verse materials: if the line-breaking points in a prose
 text are considered important for analysis, they should be marked with
 the <gi>lb</gi> element. Alternatively, a neutral segmentation element
