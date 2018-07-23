@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" 
+  xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="path" module="transcr"  
+  xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+  <desc versionDate="2018-03-28" xml:lang="en">defines any line passing through two or more points within a <gi>surface</gi>
+element.</desc>
+  <gloss versionDate="2018-07-13" xml:lang="de">Pfad</gloss>
+  <desc versionDate="2018-07-13" xml:lang="de">definiert eine beliebige Linie, die durch zwei oder mehr Punkte innerhalb eines <gi>surface</gi> Elements verläuft.</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="att.coordinated"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.written"/>
+    <memberOf key="model.linePart"/>
+  </classes>
+  <content>
+    <empty/>
+  </content>
+  
+<!-- Thanks to Syd B for this approach -->
+  <constraintSpec ident="pathmustnotbeclosed" scheme="schematron">
+    <constraint>
+      <sch:rule context="tei:path[@points]">
+        <!--
+        For a <path> element, we should ensure that the last coordinate does not
+        repeat the first coordinate, otherwise we have a closed polygon, not a
+        path.
+      -->
+        <sch:let name="firstPair" value="tokenize( normalize-space( @points ), '&#x20;')[1]"/>
+        <sch:let name="lastPair"  value="tokenize( normalize-space( @points ), '&#x20;')[last()]"/>
+        <sch:let name="firstX"  value="xs:float( substring-before( $firstPair, ',') )"/>
+        <sch:let name="firstY" value="xs:float( substring-after( $firstPair, ',') )"/>
+        <sch:let name="lastX"   value="xs:float( substring-before( $lastPair, ',') )"/>
+        <sch:let name="lastY"  value="xs:float( substring-after( $lastPair, ',') )"/>
+        <sch:report test="$firstX eq $lastX  and  $firstY eq $lastY">The first and
+          last elements of this path are the same. To specify a closed polygon, use
+          the zone element rather than the path element. </sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
+  
+  <attList>
+    <attDef ident="points" mode="change">
+      <desc versionDate="2018-03-28" xml:lang="en">identifies a line 
+        within the container or bounding box
+        specified by the parent element by means of
+        a series of two or more pairs of numbers, each of which 
+        gives the x,y coordinates
+        of a point on the line.</desc>
+      <desc versionDate="2018-07-13" xml:lang="de">beschreibt eine Linie innerhalb eines Begrenzungsrahmens, der durch das Elternelement definiert ist, über eine Reihe von zwei oder mehr Zahlenpaaren, die jeweils die X- und Y-Koordinaten eines Punktes dieser Linie angeben.</desc>
+      <datatype minOccurs="2" maxOccurs="unbounded"><dataRef key="teidata.point"/></datatype>
+    </attDef>
+  </attList>
+  
+  
+  <exemplum xml:lang="und">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+      <surface ulx="0" uly="0" lrx="443" lry="272">
+        <graphic url="facs-fig3.jpg"/>
+        <path points="74,73 171,244"/>
+        <path points="71,203 173,116"/>
+      </surface>
+    </egXML>
+  </exemplum>
+    
+    <remarks versionDate="2018-04-20" xml:lang="en">
+      <p>To specify a closed polygon, use
+        the zone element rather than the path element. </p>
+    </remarks>
+
+  <listRef>
+    <ptr target="#PHFAX"/>
+    <ptr target="#PHZLAB"/>
+  </listRef>
+</elementSpec>

@@ -97,37 +97,39 @@ within it is the <gi>fileDesc</gi>, which contains only the following elements:
       </div>
       <div>
         <head>Class modifications</head>
-        <p>Finally three of  the TEI attribute
-classes are simplified. The attributes xml:space, rend, and xml:base
-are removed from the att.global class, so that this now makes
-available to all elements only the following attributes:
-<att>xml:id</att>, <att>n</att>, and
-<att>xml:lang</att>.
-</p>
-        <p>Three un-needed attributes are removed from the  att.divLike class so that
-the <gi>div</gi> element inherits from it only
-the following attributes: <att>xml:id</att>,
-<att>n</att>,
-<att>xml:lang</att>.
-The attribute class <ident>att.declaring</ident> is deleted
-completely, so that none of its members inherit the <att>decls</att>
-attribute defined in the unmodified TEI.</p>
+        <p>Seven of the TEI attribute
+          classes are simplified. The attributes <code>xml:space</code>, and <code>xml:base</code>
+          are removed from the <code>att.global class</code>, so that this now makes
+          available to all member elements only the following attributes:
+          <att>xml:id</att>, <att>n</att>, and <att>xml:lang</att>.</p>
+        <p>From <code>att.global.rendition</code> the attributes 
+          <code>rend</code>, and <code>style</code> are removed, leaving 
+          <code>rendition</code> as the sole attribute within this class.</p>
+        <p>Finally, the classes <code>att.fragmentable</code>, <code>att.divLike</code>, 
+          <code>att.declaring</code>, <code>att.global.source</code>, and <code>att.global.responsibility</code> 
+          are removed completely, so that none of its 
+          members inherit the <code>part</code>, <code>org</code>, <code>sample</code>, <code>decls</code>,
+          <code>source</code>, <code>cert</code>, nor <code>resp</code>
+          attributes defined in the unmodified TEI.</p>
         <specGrp xml:id="classmods">
           <classSpec ident="att.global" mode="change" module="tei" type="atts">
             <attList>
               <attDef ident="xml:space" mode="delete"/>
-              <attDef ident="rend" mode="delete"/>
               <attDef ident="xml:base" mode="delete"/>
             </attList>
           </classSpec>
-        <classSpec ident="att.fragmentable" mode="delete" module="tei" type="atts"/>
-          <classSpec ident="att.divLike" mode="change" module="tei" type="atts">
+          <classSpec ident="att.global.rendition" mode="change" module="tei" type="atts">
             <attList>
-              <attDef ident="org" mode="delete"/>
-              <attDef ident="sample" mode="delete"/>
+              <attDef ident="rend" mode="delete"/>
+              <attDef ident="style" mode="delete"/>
             </attList>
           </classSpec>
+          <classSpec ident="att.fragmentable" mode="delete" module="tei" type="atts"/>
+          <classSpec ident="att.divLike" mode="delete" module="tei" type="atts"/>
           <classSpec ident="att.declaring" mode="delete" module="tei" type="atts"/>
+          <classSpec ident="att.written" mode="delete" module="tei" type="atts"/>
+          <classSpec ident="att.global.source" mode="delete" module="tei" type="atts"/>
+          <classSpec ident="att.global.responsibility" mode="delete" module="tei" type="atts"/>
         </specGrp>
       </div>
       <div>

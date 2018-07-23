@@ -10,13 +10,14 @@
   xmlns:sch="http://purl.oclc.org/dsdl/schematron"  
   >
 
-  <xsl:variable name="myName" select="'TEI_to_odd4odds.xslt'"/>
-  <xsl:variable name="version" select="'0.5.0a'"/>
-  <xsl:param name="versionDate" select="current-date()"/>
+  <xsl:variable name="myName" select="'TEI-to-tei_customization.xslt'"/>
+  <xsl:variable name="version" select="'0.6.0b'"/>
+  <xsl:param name="versionDate" select="format-date(current-date(),'[Y]-[M01]-[D01]')"/>
 
   <!--
-      ** TOCTOC: TEI ODD Customization for writing TEI ODD Customizations,
-      ** aka odd4odds
+      ** generator for tei_customization,
+      ** aka TOCTOC (TEI ODD Customization for writing TEI ODD Customizations),
+      ** aka odd4odds (ODD for writing ODDs)
       ** Written by Syd Bauman
       ** Copyleft 2016 Syd Bauman, TEI Consortium, and Women Writers Project
       ** 
@@ -39,19 +40,38 @@
   <!-- 2017-11-05 by Syd: Harumph. Found that our output is not valid against      -->
   <!--   p5odds.rng because ident/@type is not allowed to be "test", so I removed  -->
   <!--   the attribute. -->
+  <!-- 2017-04-07 by Syd: bug fixes:                                               -->
+  <!--   * allow <classSpec> to be empty                                           -->
+  <!--   * actually enforce constraints listed in remarks for <schemaSpec>         -->
   <!-- 2017-01-16 by Syd: embarrassing — copy over useful bits from last time I    -->
   <!--   did the exact same thing. That was 2016-06-10/12, immediately before the  -->
   <!--   advanced TEI class James & I did at DHSI. I had entirely forgotten I had  -->
   <!--   already done this. Sigh.                                                  -->
-  <!-- 2017-04-07 by Syd: bug fixes:                                               -->
-  <!--   * allow <classSpec> to be empty                                           -->
-  <!--   * actually enforce constraints listed in remarks for <schemaSpec>         -->
   <!-- *********************** segnahc TLSX rof GOL EGNAHC *********************** -->
 
   <xsl:variable name="revisionDesc">
     <revisionDesc>
+      <change who="#sbauman.emt" when="2018-07-19">
+	Further addressing <ref
+	target="https://github.com/TEIC/TEI/issues/1735">TEI ticket
+	#1735</ref>: constrain content of both <gi>dataSpec</gi> and
+	<gi>macroSpec</gi> so that at most 1 <gi>content</gi> or 1
+	<gi>valList</gi> child is permitted. While there give the
+	<att>ident</att> attribute a semi-controlled vocabulary.
+      </change>
+      <change who="#sbauman.emt" when="2018-02-02">
+        <list>
+          <item>update to use version 3.3.0 of P5</item>
+          <item>format $versionDate so it does not have the timezone appended</item>
+          <item>use $versionDate in <gi>date</gi> in TEI Header, too (instead of
+          calling current-date() again)</item>
+        </list>
+      </change>
       <change who="#sbauman.emt" when="2018-01-22">
-        Per #1735, add constraints on <gi>content</gi> child of <gi>elementSpec</gi>:
+        Per <ref
+        target="https://github.com/TEIC/TEI/issues/1735">#1735</ref>,
+        add constraints on <gi>content</gi> child of
+        <gi>elementSpec</gi>:
         <list>
           <item>if <att>mode</att> of <gi>elementSpec</gi> is
           <val>add</val> or <val>replace</val>, require a
@@ -418,7 +438,7 @@
       xmlns:xi="http://www.w3.org/2001/XInclude"
       xmlns:rng="http://relaxng.org/ns/structure/1.0"
       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-      version="3.1.0">
+      version="3.3.0">
       <teiHeader>
         <fileDesc>
           <titleStmt>
@@ -430,7 +450,7 @@
           </titleStmt>
           <publicationStmt>
             <publisher>Text Encoding Initiative Consortium</publisher>
-            <date when="{current-date()}"/>
+            <date when="{$versionDate}"/>
             <availability status="restricted">
               <p>Copyright 2017 Syd Bauman and Northeastern WWP; some rights reserved.</p>
               <p>This TEI-encoded ODD file is available under the terms of the <ref
@@ -466,7 +486,7 @@
             </availability>
           </publicationStmt>
           <sourceDesc>
-            <p>Generated from <name type="file">TEI_to_odd4odds.xslt</name>, which is based on
+            <p>Generated from <name type="file">TEI-to-tei_customization.xslt</name>, which is based on
               the Women Writers Project’s <name type="file">odd4odds_driver.odd</name>, itself based on
               the TEI Consoritum’s <name type="file">tei_odds.odd</name> by Sebastian Rahtz,
               which can be found on <ref
@@ -559,13 +579,15 @@
             with each release of TEI P5, the ODD for this
             customization is itself generated from a source file. To
             generate this customization, an <ref
-            target="POINTER-TO-TEI_to_odd4odds.xslt-ON-GitHub-HERE">XSLT
+            target="https://github.com/TEIC/TEI/blob/dev/P5/Utilities/TEI-to-tei_customization.xslt">XSLT
             stylesheet</ref> reads in the source to TEI P5, and from
             it generates the lists of elements, classes, and modules
             needed. The output of the stylesheet is the ODD file for this
             customization.</p>
             <p>We call this TEI language the <name>TEI ODD Customization for writing TEI ODD
-                Customizations</name> language, or TOCTOC for short. TOCTOC differs from <name
+                Customizations</name> language (or TOCTOC for short).
+              It is instantited in the TEI exemplar <name type="file">tei_customization</name>,
+              which differs from <name
                   type="file">tei_odds</name><note>Available in <ref
                     target="https://raw.githubusercontent.com/TEIC/TEI/dev/P5/Exemplars/tei_odds.odd"
                     >the main TEI P5 git repository
@@ -597,10 +619,12 @@
           </div>
           <div>
             <head>Schema Specification</head>
-            <schemaSpec ident="odd4odds" prefix="toctoc_"
+            <schemaSpec ident="tei_customization" prefix="cust_"
               start="TEI body schemaSpec elementSpec classSpec macroSpec div">
               <xsl:text>&#x0A;</xsl:text>
-              <desc>a schema to help <emph>writing</emph> TEI customization ODDs; will (incorrectly) flag extensions as invalid</desc>
+              <desc>a schema to help <emph>writing</emph> TEI
+              customization ODDs; will (incorrectly) flag extensions
+              as invalid</desc>
               <xsl:comment> required modules minus lots of elements that probably don't make sense in an ODD </xsl:comment>
               <xsl:text>&#x0A;</xsl:text>
               <moduleRef key="tei"/>
@@ -716,7 +740,7 @@
                   </attDef>
                 </attList>
                 <remarks xml:lang="en" versionDate="{$versionDate}">
-                  <p>The content of the TOCTOC <gi>schemaSpec</gi> is somewhat more restrictive than
+                  <p>The content of the tei_customization <gi>schemaSpec</gi> is somewhat more restrictive than
                     TEI. To wit, <list>
                       <item>neither <gi>altIdent</gi> nor <gi>equiv</gi> are permitted</item>
                       <item>there can be at most one <gi>gloss</gi>, which (if present) must precede
@@ -894,6 +918,43 @@
                 </attList>
               </elementSpec>
 
+              <elementSpec module="tagdocs" ident="macroSpec" mode="change">
+		<content>
+		  <sequence>
+		    <alternate minOccurs="0" maxOccurs="unbounded">
+		      <classRef key="model.glossLike"/>
+		      <classRef key="model.descLike"/>
+		    </alternate>
+		    <alternate minOccurs="0" maxOccurs="1">
+		      <elementRef key="content"/>
+		      <elementRef key="valList"/>
+		    </alternate>
+		    <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
+		    <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
+		    <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
+		    <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
+		  </sequence>
+		</content>
+                <attList>
+                  <attDef ident="ident" mode="replace" usage="req">
+                    <datatype minOccurs="1" maxOccurs="1">
+                      <dataRef key="teidata.enumerated"/>
+                    </datatype>
+                    <valList type="semi">
+                      <xsl:copy-of select="$macros"/>
+                    </valList>
+                  </attDef>
+                </attList>
+                <remarks xml:lang="en" versionDate="{$versionDate}">
+		  <p>In tei_customization the <gi>macroSpec</gi>
+		  element (and the <gi>dataSpec</gi> element) allows
+		  at most one <gi>content</gi> or one <gi>valList</gi>
+		  child (not both). TEI P5 permits any number of
+		  either or both, but does not define what multiples mean,
+		  and current ODD processors only process one.</p>
+		</remarks>
+              </elementSpec>
+
               <elementSpec module="tagdocs" ident="macroRef" mode="change">
                 <attList>
                   <attDef ident="key" mode="replace" usage="req">
@@ -926,19 +987,56 @@
                       <dataRef key="teidata.enumerated"/>
                     </datatype>
                     <valList type="semi">
-                      <xsl:copy-of select="$macros"/>
+                      <xsl:copy-of select="$classes"/>
                     </valList>
                   </attDef>
                 </attList>
                 <remarks xml:lang="en" versionDate="{$versionDate}">
-                  <p>The content of the TOCTOC <gi>classSpec</gi> is somewhat more restrictive than
+                  <p>The content of the tei_customization <gi>classSpec</gi> is somewhat more restrictive than
                     TEI. To wit, neither <gi>altIdent</gi> nor <gi>equiv</gi> are permitted, there
                     can be at most one <gi>gloss</gi> and must be one and only one
                     <gi>desc</gi>.</p>
                 </remarks>
               </elementSpec>
 
-              <elementSpec module="tagdocs" ident="dataRef" mode="change">
+              <elementSpec module="tagdocs" ident="dataSpec" mode="change">
+		<content>
+		  <sequence>
+		    <alternate minOccurs="0" maxOccurs="unbounded">
+		      <classRef key="model.glossLike"/>
+		      <classRef key="model.descLike"/>
+		    </alternate>
+		    <alternate minOccurs="0" maxOccurs="1">
+		      <elementRef key="content"/>
+		      <elementRef key="valList"/>
+		    </alternate>
+		    <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
+		    <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
+		    <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
+		    <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
+		  </sequence>
+		</content>
+                <attList>
+                  <attDef ident="ident" mode="replace">
+                    <datatype minOccurs="1" maxOccurs="1">
+                      <dataRef key="teidata.enumerated"/>
+                    </datatype>
+                    <valList type="semi">
+                      <xsl:copy-of select="$datatypes"/>
+                    </valList>
+                  </attDef>
+                </attList>
+                <remarks xml:lang="en" versionDate="{$versionDate}">
+		  <p>In tei_customization the <gi>dataSpec</gi>
+		  element (and the <gi>macroSpec</gi> element) allows
+		  at most one <gi>content</gi> or one <gi>valList</gi>
+		  child (not both). TEI P5 permits any number of
+		  either or both, but does not define what multiples mean,
+		  and current ODD processors only process one.</p>
+		</remarks>
+              </elementSpec>
+
+	      <elementSpec module="tagdocs" ident="dataRef" mode="change">
                 <attList>
                   <attDef ident="key" mode="replace">
                     <datatype minOccurs="1" maxOccurs="1">
@@ -1150,12 +1248,12 @@
               </elementSpec>
               <xsl:comment> of course &lt;xi:include> refers to &lt;xi:fallback>, so we need to declare</xsl:comment>
               <xsl:comment> that, too, just in case. </xsl:comment>
-              <elementSpec ident="fallback" ns="http://www.example.org/cannot/really/use/XInclude"
-                mode="add">
+              <elementSpec ns="http://www.example.org/cannot/really/use/XInclude"
+			   ident="fallback" mode="add" >
                 <content>
                   <alternate minOccurs="1" maxOccurs="unbounded">
                     <textNode/>
-                    <classRef key="macro.anyXML"/>
+                    <anyElement/>
                   </alternate>
                 </content>
               </elementSpec>
