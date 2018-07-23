@@ -569,7 +569,7 @@
       </div>
       <div xml:id="figures">
         <head>Figures and Graphics</head>
-        <p>Illustrative figures are encoded using the<gi>figure</gi> element, along with a mandatory
+        <p>Illustrative figures are encoded using the <gi>figure</gi> element, along with a mandatory
               <tag>head type="legend"</tag> element providing the caption for the figure, as in this
             example:</p>
         
@@ -2959,6 +2959,8 @@
                 <sch:let name="apos.straight" value="''''"/>
                 <sch:let name="quotes" value="concat('[', $apos.straight, '&quot;]')"/>
                 <sch:let name="div.types.front" value="('abstract', 'acknowledgements', 'authorNotes', 'editorNotes', 'corrections', 'dedication')"/>
+                <sch:let name="tei.version.url" value="'http://www.tei-c.org/release/doc/tei-p5-doc/VERSION'"/>
+                <sch:let name="tei.version" value="if (unparsed-text-available($tei.version.url)) then normalize-space(unparsed-text($tei.version.url)) else ()"/>
               </sch:pattern>
             </constraint>
           </constraintSpec>
@@ -3125,8 +3127,8 @@
           </constraintSpec>
           <constraintSpec ident="jtei.sch-rangeHyphen" scheme="schematron">
             <constraint>
-              <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag|ancestor::tei:idno|ancestor::tei:date)][not(. = parent::*/@*)]">
-                <sch:assert test="not(matches(., '\d-\d'))" sqf:fix="hyphen.replace">
+              <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag|ancestor::tei:idno|ancestor::tei:date)]">
+                <sch:assert test="not(matches(., '(^|[\W-[-]])\d+-\d+([\W-[-]]|$)'))" sqf:fix="hyphen.replace">
                   Numeric ranges should not be indicated with a hyphen. Please use 
                   the EN Dash (U+2013 or –) character instead.
                 </sch:assert>
@@ -3134,7 +3136,7 @@
                   <sqf:description>
                     <sqf:title>Replace hyphen with –.</sqf:title>
                   </sqf:description>
-                  <sqf:stringReplace regex="(\d)-(\d)">$1–$2</sqf:stringReplace>
+                  <sqf:stringReplace regex="((?:^|[\W-[-]])\d+)-(\d+(?:[\W-[-]]|$))">$1–$2</sqf:stringReplace>
                 </sqf:fix>
               </sch:rule>
             </constraint>
@@ -3236,14 +3238,38 @@
           <constraintSpec ident="jtei.sch-teiVersion" scheme="schematron">
             <constraint>
               <sch:rule context="@target[matches(., '^https?://www\.tei-c\.org/release/doc/tei-p5-doc')]">
-                <sch:assert test="false()">
-                  Please refer to the exact version of the TEI Guidelines, and link to the version that can be found in the Vault section. For an overview of all archived versions, see http://www.tei-c.org/Vault/P5/.
+                <sch:assert test="false()" sqf:fix="teiURL.fix">
+                  Please refer to the exact version of the TEI Guidelines<sch:value-of select="if (normalize-space($tei.version)) then concat(' (currently at version ', $tei.version, ')') else ()"/>, and link to the version that can be found in the Vault section. For an overview of all archived versions, see http://www.tei-c.org/Vault/P5/.
                   
                   If you're referring to the English version, the correct URL will likely take the form of http://www.tei-c.org/Vault/P5/{$version-number}/doc/tei-p5-doc/en/html/.
                 </sch:assert>
+                <sqf:fix id="teiURL.fix" use-when="normalize-space($tei.version)">
+                  <sqf:description>
+                    <sqf:title>Change TEI URL to a versioned URL in the Vault (currently at version <sch:value-of select="$tei.version"/>).</sqf:title>
+                  </sqf:description>
+                  <sqf:replace node-type="attribute"
+                    target="target"
+                    select="replace(., '^https?://www\.tei-c\.org/release/', concat('https://www.tei-c.org/Vault/P5/', $tei.version, '/'))"/>
+                </sqf:fix>
               </sch:rule>
             </constraint>
-          </constraintSpec>                 
+          </constraintSpec>
+          <constraintSpec ident="jtei.jtei-url" scheme="isoschematron">
+            <constraint>
+              <sch:rule context="@target[matches(., '^https?://(www\.)?jtei\.revues\.org/?')]">
+                <sch:let name="URL.fixed" value="replace(., '^https?://(www\.)?jtei\.revues\.org/?', 'https://journals.openedition.org/jtei/')"/>
+                <sch:assert test="false()" sqf:fix="jteiURL.fix">
+                  Please refer to the correct jTEI URL: <sch:value-of select="$URL.fixed"/>.
+                </sch:assert>
+                <sqf:fix id="jteiURL.fix">
+                  <sqf:description>
+                    <sqf:title>Change jTEI URL to <sch:value-of select="$URL.fixed"/>.</sqf:title>
+                  </sqf:description>
+                  <sqf:replace node-type="attribute" target="target" select="$URL.fixed"/>
+                </sqf:fix>
+              </sch:rule>
+            </constraint>
+          </constraintSpec>
         </schemaSpec>
       </div>
     </back>

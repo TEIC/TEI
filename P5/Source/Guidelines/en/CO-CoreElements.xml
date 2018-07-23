@@ -12,7 +12,7 @@ $Id$
 <p>This chapter describes elements which may appear in any kind of text
 and the tags used to mark them in all TEI documents. Most of these
 elements are freely floating phrases, which can appear at any point
-within the textual structure, although they must generally be contained
+within the textual structure, although they should generally be contained
 by a higher-level element of some kind (such as a paragraph). A few of
 the elements described in this chapter (for example, bibliographic
 citations and lists) have a comparatively well-defined internal
@@ -69,8 +69,8 @@ Guidelines may be found in chapters <ptr target="#FT"/> and <ptr target="#SA"/>.
 <p>Next, section <ptr target="#CORS"/>, describes methods of
 encoding within a text the conventional system or systems used when
 making references to the text. Some reference systems have attained
-canonical authority and must be recorded to make the text useable in
-normal work; in other cases, a convenient reference system must be
+canonical authority and should be recorded to make the text useable in
+normal work; in other cases, a convenient reference system should be
 created by the creator or analyst of an electronic text.</p>
 <p>Like lists and notes, the bibliographic citations discussed in
 section <ptr target="#COBI"/>, may be regarded as structural elements in
@@ -94,7 +94,7 @@ text.</p>
 <p>Paragraphs can contain any of the other elements described within
 this chapter, as well as some other elements which are specific to
 individual text types. We distinguish <term>phrase-level</term>
-elements, which must be entirely contained within a paragraph and
+elements, which must be entirely contained within a paragraph or similar structure and
 cannot appear except within one, from <term>chunks</term>, which can
 appear between, but not within, paragraphs, and from
 <term>inter-level</term> elements, which can appear either within a
@@ -235,7 +235,7 @@ text contained by <gi>q</gi> or <gi>quote</gi> elements on editorial
 grounds, or they may be marked in a variety of ways; see
 the discussion of quotation and related features in section <ptr target="#COHQQ"/>.</p>
 
-<p><term rend="noindex">Apostrophes</term> must be distinguished from
+<p><term rend="noindex">Apostrophes</term> should be distinguished from
 single quote marks. As with hyphens, this disambiguation is best
 performed by selecting the appropriate Unicode character, though  it may
 also be represented by using appropriate XML markup for quotations as
@@ -859,27 +859,22 @@ which case the same section might simply be tagged:
  about me in the dark.
 <!-- in the header: -->
 <tagsDecl partial="true">
-  <rendition xml:id="prequote" scheme="css" selector="said" scope="before">content:"‘";</rendition>
-  <rendition xml:id="postquote" scheme="css" selector="said" scope="after">content:"’";</rendition>
-  <namespace name="http://www.tei-c.org/ns/1.0">    
-    <tagUsage gi="said"/>
-  </namespace>
+  <rendition scheme="css" selector="said" scope="before">content:"‘";</rendition>
+  <rendition scheme="css" selector="said" scope="after">content:"’";</rendition>
 </tagsDecl>
 </egXML>
 </p>
 
 
 
-<p>As  members of the <ident type="class">att.ascribed</ident> class,
- elements <gi>said</gi> and <gi>q</gi>  share the following attribute:
-<specList><specDesc key="att.ascribed" atts="who"/></specList>
-This may be used to make explicit who is speaking:
+<p>As  members of the <ident type="class">att.ascribed.directed</ident> class,
+ elements <gi>said</gi> and <gi>q</gi> share the following attributes:
+<specList><specDesc key="att.ascribed" atts="who"/><specDesc key="att.ascribed.directed" atts="toWhom"/></specList>
+These may be used to make explicit who is speaking and who is being spoken to:
  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COHQQ-eg-23" xml:lang="fr">Adolphe se tourna vers lui :
- <said who="#Adolphe">— Alors, Albert,
- quoi de neuf?</said>
+ <said who="#Adolphe">— Alors, Albert, quoi de neuf?</said>
  <said who="#Albert">— Pas grand-chose.</said>
- <said who="#Robert">— Il fait beau,</said>
- dit Robert.
+ <said who="#Robert">— Il fait beau,</said> dit Robert.
 <!-- ... elsewhere in the document -->
  <list type="speakers">
    <item xml:id="Adolphe"/>
@@ -889,10 +884,11 @@ This may be used to make explicit who is speaking:
 
  The <att>who</att> attribute may be supplied whether
  or not an indication of the speaker is given explicitly in the
- text. It may take the form (as above) of  a
- normalized form of the speaker's name, but its role is to act as a
+ text. Likewise, the <att>toWhom</att> attribute may be supplied to indicate the encoder's interpretation
+ of the intended recipient of the speech. They may take the form (as above) of  a
+ normalized form of the speaker's name, but the role of these attributes is to act as a
  pointer to a location elsewhere in the text, or another document, where data about each
- speaker may be supplied. While this attribute could point to any source of information about the speaker available by a URI, the most appropriate place to place such
+ party may be supplied. While these attributes could point to any source of information about the parties involved, the most appropriate place for such
  information is within the <term>participant description</term>
  component of the TEI header, as further discussed in <ptr target="#CCAHPA"/> but for simple cases like the above, a simple list
  of speakers located in the front or back matter of the text may
@@ -1192,7 +1188,7 @@ manuscripts.</p>
 
 <p>The tags described here handle most common types of editorial
 intervention and stereotyped comment; where less structured commentary
-of other types is to be included, it should be marked using the
+of other types is to be included, it may be marked using the
 <gi>note</gi> element described in section <ptr target="#CONO"/>.
 Systematic interpretive annotation is also possible using the various
 methods described in chapter <ptr target="#SA"/>. The examples given
@@ -1445,7 +1441,7 @@ where words or phrases have been added or deleted in the copy text.
 They are not appropriate where longer passages have been added or
 deleted, which span several elements; for these, the elements
 <gi>addSpan</gi> and <gi>delSpan</gi> described in
-chapter <ptr target="#PHAD"/> must be used.</p>
+chapter <ptr target="#PHAD"/> should be used.</p>
 <p>Additions to a text may be recorded for a number of reasons.
 Sometimes they are marked in a distinctive way in the source text, for
 example by brackets or insertion above the line (<term rend="noindex">supralinear</term> insertion),<index><term>additions</term><index><term>supralinear</term></index></index><index><term>insertions</term><index><term>supralinear</term></index></index><index><term>supralinear insertions</term></index> as in
@@ -1632,7 +1628,7 @@ as provided by a standard reference source.
 <p><name key="LHR" type="airport">Heathrow</name> </p></egXML>
 </p>
  
-<p>The standard reference source should be documented using a <gi>taxonomy</gi> element in the TEI header.</p>
+<p>The standard reference source should be documented, for example using a <gi>taxonomy</gi> element in the TEI header.</p>
 
 <p>The <att>ref</att> attribute can be used to point directly
 to  some other resource providing more information about the
@@ -1683,7 +1679,7 @@ At the time of the events which led to
 investigations, the local population consisted of between 200 and 250 inhabitants.</p></egXML>
 Although adequate for many simple applications, these methods have two
 inconveniences: if the name occurs many times, then its regularized
-form must be repeated many times; and the burden of additional XML
+form would be repeated many times; and the burden of additional XML
 markup in the body of the text may be inconvenient to maintain and
 complex to process. For applications such as onomastics, relating to
 persons or places named rather than the name itself, or wherever a
@@ -1927,11 +1923,32 @@ avoid the need to repeat all the normalizing attributes:
 </egXML>
 <!-- better example needed -->
 </p>
+<p>The <gi>unit</gi> element may be applied when units of measurement require more detailed encoding about the system they belong to or the what kind of phenomenon they designate. 
+The <gi>unit</gi> element may carry the <att>unit</att> attribute to indicate a standard value, as well as other optional attributes for indicating type, language, and other distinguishing characteristics.
+  <specList>
+    <specDesc key="unit"/>
+    <specDesc key="att.measurement" atts="unit"/>
+    <specDesc key="att.typed"/>
+    <specDesc key="att.global"/>
+  </specList>
+A <gi>measure</gi> element may contain a combination of <gi>num</gi> and <gi>unit</gi> elements:
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="fr" source="#NONE">
+    <measure type="list"><num>1</num>, <num>2</num>, <num>5</num>, <num>7</num>
+      <unit type="length" unit="mm">millimètres</unit></measure>
+</egXML>
+The unit element may also be nested to indicate a complex unit and its component parts, for example, to indicate that rate combines space and time:
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NONE">
+    <p>Light travels at <num value="3E10">3×10^10</num>
+      <unit type="rate" unit="cm/s">
+        <unit type="space">cm</unit> per <unit type="time">second</unit>
+      </unit>.</p>
+  </egXML>
+</p>
 <specGrp xml:id="DCONU" n="Numbers and measures">
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/num.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/measure.xml"/>
-
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/measureGrp.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unit.xml"/>
 </specGrp>
 </div>
 <div type="div3" xml:id="CONADA"><head>Dates and Times</head>
@@ -1955,7 +1972,7 @@ of the <ident type="class">att.datable.w3c</ident> and <ident type="class">att.d
 <p>Dates can occur virtually anywhere in a text, but in some contexts
 (e.g. bibliographic citations) their encoding is recommended or
 required rather than optional.  Times can also appear anywhere but
-are generally optional.
+encoding these is more generally optional.
  </p>
 <p>Partial dates or times (e.g. <mentioned>1990</mentioned>,
 <mentioned>September 1990</mentioned>,
@@ -2269,7 +2286,7 @@ their constituent items, and the labels or headings associated
 with them:
 <specList><specDesc key="list"/><specDesc key="item"/><specDesc key="label"/><specDesc key="head"/><specDesc key="headLabel"/><specDesc key="headItem"/></specList>
  </p>
-<p>The <gi>list</gi> element should be used to mark any kind of
+<p>The <gi>list</gi> element may be used to mark any kind of
 <term rend="noindex">list</term>:
 numbered, lettered, bulleted, or unmarked. Lists formatted as such in
 the copy text should in general be encoded using this element, with an
@@ -2570,7 +2587,7 @@ The spell begins to break</note>
 <note place="bottom" resp="#JLL">The turning point of the poem...</note>
 </l>
 </lg></egXML>
-For this to be valid, the codes <code>#JLL</code> and
+For this to be valid<!-- JC: 2018-07-20: Is 'valid' really the right word here? -->, the codes <code>#JLL</code> and
 <code>#STC</code> must point to some more information identifying the
 agency concerned. The syntax used is identical to that used for other
 cross-references, as discussed in <ptr target="#COXR"/>; thus in this
@@ -3579,7 +3596,7 @@ properties.
 
 <p>It should be emphasized that for references as for other textual
 features, the primary or sole consideration is not how the text should
-be formatted when it is printed.  The distinctions permitted by the
+be formatted when it is printed or displayed.  The distinctions permitted by the
 scheme outlined here may not necessarily be all that particular
 formatters or bibliographic styles require, although they should prove
 adequate to the needs of many such commonly used software
@@ -3787,7 +3804,7 @@ element, though the following example combines both fully structured
             <pubPlace>Amsterdam</pubPlace>
             <date when="1980"/>
          </imprint>
-         <biblScope unit="pp" from="1013" to="1023">1013–23</biblScope>
+         <biblScope unit="page" from="1013" to="1023">1013–23</biblScope>
       </monogr>
       <note>Apparently a draft of section 4 of 
           <title level="m">Literary Machines</title>.</note>
@@ -3913,7 +3930,7 @@ the series. </p>
         <title level="a">A propos de la rue de la Femme-sans-Tête</title>,
         <bibl type="monogr">
           <title level="j">La Cité</title>,
-          <date when="1911-01">janvier 1911</date>, pp. <biblScope unit="pp" from="5" to="17">5-17</biblScope>.
+          <date when="1911-01">janvier 1911</date>, pp. <biblScope unit="page" from="5" to="17">5-17</biblScope>.
         </bibl>
       </bibl>
       </egXML>
@@ -3960,7 +3977,7 @@ Supplements</title>:
 <monogr>
 <title level="m">Herakles to Poseidon</title>
 <imprint><date>1986</date></imprint>
-<biblScope unit="pp">64-70</biblScope>
+<biblScope unit="page">64-70</biblScope>
 </monogr>
 <monogr>
 <title level="m">Cults of Boiotia</title>
@@ -3971,7 +3988,7 @@ Supplements</title>:
 <series>
 <title level="s">Bulletin of the Institute of Classical Studies
 Supplements</title>
-<biblScope unit="vol">38</biblScope>
+<biblScope unit="volume">38</biblScope>
 </series>
 </biblStruct>
 </egXML>
@@ -3996,8 +4013,8 @@ German language series.
       <imprint>
          <date when="1986-10">October 1986</date>
       </imprint>
-         <biblScope unit="vol">40</biblScope>
-         <biblScope unit="pp" from="3" to="46">3-46</biblScope>   </monogr>
+         <biblScope unit="volume">40</biblScope>
+         <biblScope unit="page" from="3" to="46">3-46</biblScope>   </monogr>
    <monogr>
       <title level="m">Modelling Historical Data:
                        Towards a Standard for Encoding and 
@@ -4021,7 +4038,7 @@ German language series.
          <name type="org">Max-Planck-Institut für Geschichte</name>
       </respStmt>
       <title level="s">Serie A: Historische Quellenkunden</title>
-      <biblScope unit="vol">11</biblScope>
+      <biblScope unit="volume">11</biblScope>
    </series>
 </biblStruct></egXML>
  </p>
@@ -4060,9 +4077,9 @@ Processing</title>
 <monogr>
 <title level="j">Communications of the ACM</title>
 <imprint><date>1987</date></imprint>
-<biblScope unit="vol">30</biblScope>
+<biblScope unit="volume">30</biblScope>
 <biblScope unit="issue">11</biblScope>
-<biblScope unit="pp">933–947</biblScope>
+<biblScope unit="page">933–947</biblScope>
 </monogr>
 <ref type="url">http://xml.coverpages.org/coombs.html</ref>
 </biblStruct>
@@ -4098,7 +4115,7 @@ to include punctuation.
 	<surname>Lavington</surname>
       </persName>
     </editor>,
-    <biblScope unit="pp">1013-23</biblScope>.
+    <biblScope unit="page">1013-23</biblScope>.
     <pubPlace>Amsterdam</pubPlace>: <publisher>North-
     Holland</publisher>. (<note>Apparently a draft of section 4 of
     <ref target="#NELSON_88"><title level="m">Literary
@@ -4171,8 +4188,8 @@ following example:
    <monogr>
       <title level="j">PMLA</title>
          <imprint><date>1913</date></imprint>
-         <biblScope unit="vol">8</biblScope>
-         <biblScope unit="pp">122</biblScope>   </monogr>
+         <biblScope unit="volume">8</biblScope>
+         <biblScope unit="page">122</biblScope>   </monogr>
 </biblStruct></egXML>
 In this case, the analytic title <q>Notes on Manuscripts of the
 <title level="m" xml:lang="fr">Prophécies de Merlin</title></q> needs no <att>level</att>
@@ -4198,8 +4215,8 @@ components of the reference (notably the authors).
      brown adipose tissue</title>
    <title level="j">Ann. Acad. Sci. Fenn., Ser. A4</title>
    <date>1972</date> 
-   <biblScope unit="vol">187</biblScope>
-   <biblScope unit="pp" to="4">1-4</biblScope>
+   <biblScope unit="volume">187</biblScope>
+   <biblScope unit="page" to="4">1-4</biblScope>
 </bibl></egXML>
 <!-- example from ANSI Z39.29, sec. A.2.2.1, p.34 -->
  </p>
@@ -4339,7 +4356,7 @@ responsibility.
 	<publisher>S. Hirzel Verlag</publisher>
 	<date>1977</date>
       </imprint>
-      <biblScope unit="vol">I Texte</biblScope>
+      <biblScope unit="volume">I Texte</biblScope>
 </monogr>
 </biblStruct></egXML><!-- reference taken from book in hand by MSM. -->
 	<!-- note that from the book it is impossible to -->
@@ -4651,11 +4668,11 @@ cited</emph> may be found in particular volumes, issues, pages, etc. For example
        <publisher>Society of Genealogists</publisher>
        <date when="1968"/>
      </imprint>
-     <biblScope unit="pp" from="155" to="167">155–167</biblScope>
+     <biblScope unit="page" from="155" to="167">155–167</biblScope>
    </monogr>
    <series>
      <title level="s">National index of parish registers</title>
-     <biblScope unit="vol">1</biblScope>
+     <biblScope unit="volume">1</biblScope>
    </series>
 </biblStruct></egXML>
  </p>
@@ -4673,9 +4690,9 @@ both the following are legal examples:
       <imprint>
          <date>1992</date>
       </imprint>
-         <biblScope unit="vol">7</biblScope>
+         <biblScope unit="volume">7</biblScope>
          <biblScope unit="issue">2</biblScope>
-         <biblScope unit="pp">110-112</biblScope>
+         <biblScope unit="page">110-112</biblScope>
    </monogr>
 </biblStruct></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
@@ -4712,7 +4729,7 @@ reference would be encoded using <gi>biblStruct</gi> as follows:
         <date when="1991-12">(December, 1991):</date>
       </imprint>
       <biblScope>25.6</biblScope>
-      <biblScope unit="pp" from="377" to="280">377–380</biblScope>
+      <biblScope unit="page" from="377" to="380">377–380</biblScope>
     </monogr>
     <citedRange>378</citedRange>
   </biblStruct></egXML>
@@ -4994,7 +5011,7 @@ Encoding</title>
 <title level="j">D-Lib</title>
 <ref type="url">http://www.dlib.org/dlib/january02/sukovic/01sukovic.html</ref>
 <imprint>
-<biblScope unit="vol">8</biblScope>
+<biblScope unit="volume">8</biblScope>
 <biblScope unit="issue">1</biblScope>
 <date>2002</date>
 </imprint>
@@ -5147,7 +5164,8 @@ two typographic lines, with a break at the point indicated. Note that
 this encoding makes no attempt to preserve information about the
 whitespace or indentation associated with either kind of line; if regarded
 as essential, this information would be recorded using the
-<att>rend</att> or <att>rendition</att> attributes discussed in <ptr target="#STGA"/>. </p><p>The <gi>l</gi> element should not be used to represent typographic
+<att>rend</att> or <att>rendition</att> attributes discussed in <ptr target="#STGA"/>. </p>
+  <p>The <gi>l</gi> element should not be used to represent typographic
 lines in non-verse materials: if the line-breaking points in a prose
 text are considered important for analysis, they should be marked with
 the <gi>lb</gi> element. Alternatively, a neutral segmentation element
@@ -5440,36 +5458,38 @@ were dialogue in a play.  The following example is taken  from a 19th century
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/stage.xml"/>
 </specGrp>
 </div></div>
- <div type="div2" xml:id="COOV"><head>Overview of the Core Module </head>
-<p>All the elements described in this chapter
-are provided by the
-<ident type="module">core</ident> module.
-<moduleSpec xml:id="DCO" ident="core">
-<altIdent type="FPI">Common Core</altIdent>
-<desc>Elements common to all TEI documents</desc>
-<desc xml:lang="fr">Éléments disponibles pour tous les documents
-TEI</desc>
-<desc xml:lang="zh-TW">所有TEI文件所通用的元素</desc>
-<desc xml:lang="it">Elementi comuni a tutti i documenti TEI</desc><desc xml:lang="pt">Elementos comuns a todos os documentos TEI</desc><desc xml:lang="ja">コアモジュール</desc></moduleSpec>
-The selection and combination of modules to form a TEI schema is described in
-<ptr target="#STIN"/>.
-</p>
-<specGrpRef target="#DCOPA"/>
-<specGrpRef target="#DCOHQ"/>
-<specGrpRef target="#DCONA"/>
-<specGrpRef target="#DCONU"/>
-<specGrpRef target="#DCODA"/>
-<specGrpRef target="#DCOAB"/>
-<specGrpRef target="#DCOEDC"/>
-<specGrpRef target="#DCOEDR"/>
-<specGrpRef target="#DCOEDA"/>
-<specGrpRef target="#DCOAD"/>
-<specGrpRef target="#DCOXR"/>
-<specGrpRef target="#DCOLI"/>
-<specGrpRef target="#DCONO"/>
-<specGrpRef target="#DCOGR"/>
-<specGrpRef target="#DCORSM"/>
-<specGrpRef target="#DCOBI"/>
-<specGrpRef target="#DCOVE"/>
-<specGrpRef target="#DCODR"/>
- </div></div>
+ <div type="div2" xml:id="COOV">
+   <head>Overview of the Core Module </head>
+   <p>All the elements described in this chapter are provided by the
+   <ident type="module">core</ident> module.
+   <moduleSpec xml:id="DCO" ident="core">
+     <altIdent type="FPI">Common Core</altIdent>
+     <desc xml:lang="en" versionDate="2006-09-13">Elements common to all TEI documents</desc>
+     <desc xml:lang="fr" versionDate="2018-07-12">Éléments disponibles pour tous les documents TEI</desc>
+     <desc xml:lang="zh-TW" versionDate="2018-07-12">所有TEI文件所通用的元素</desc>
+     <desc xml:lang="it" versionDate="2018-07-12">Elementi comuni a tutti i documenti TEI</desc>
+     <desc xml:lang="pt" versionDate="2018-07-12">Elementos comuns a todos os documentos TEI</desc>
+     <desc xml:lang="ja" versionDate="2018-07-12">コアモジュール</desc>
+   </moduleSpec>
+   The selection and combination of modules to form a TEI schema is
+   described in <ptr target="#STIN"/>.</p>
+   <specGrpRef target="#DCOPA"/>
+   <specGrpRef target="#DCOHQ"/>
+   <specGrpRef target="#DCONA"/>
+   <specGrpRef target="#DCONU"/>
+   <specGrpRef target="#DCODA"/>
+   <specGrpRef target="#DCOAB"/>
+   <specGrpRef target="#DCOEDC"/>
+   <specGrpRef target="#DCOEDR"/>
+   <specGrpRef target="#DCOEDA"/>
+   <specGrpRef target="#DCOAD"/>
+   <specGrpRef target="#DCOXR"/>
+   <specGrpRef target="#DCOLI"/>
+   <specGrpRef target="#DCONO"/>
+   <specGrpRef target="#DCOGR"/>
+   <specGrpRef target="#DCORSM"/>
+   <specGrpRef target="#DCOBI"/>
+   <specGrpRef target="#DCOVE"/>
+   <specGrpRef target="#DCODR"/>
+ </div>
+</div>

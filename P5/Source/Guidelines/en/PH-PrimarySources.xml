@@ -112,6 +112,7 @@ Physical Bibliography workgroup.</p-->
             <specDesc key="surface"/>
             <specDesc key="surfaceGrp"/>
             <specDesc key="zone" atts="points"/>
+            <specDesc key="path" atts="points"/>
          </specList>
       </p>
 
@@ -347,18 +348,39 @@ used to define a polygon of any shape using this coordinate system:-->
             </facsimile></egXML>
       </p>
 
-      <p>In this example a single <gi>graphic</gi> element has been associated directly with the
+
+      <p>In the examples above a single <gi>graphic</gi> element has been associated directly with the
          surface of the page rather than nesting it within a zone. However, it is also possible to
          include multiple <gi>zone</gi> elements which contain a <gi>graphic</gi> element, if for
          example a detailed image is available. Since all <gi>zone</gi> elements use the same
          coordinate system (that defined by their parent <gi>surface</gi>), there is no need to
          demonstrate enclosure of one zone within another by means of nesting. To continue the
-         current example, supposing that we have an additional image called <ident type="file">Bovelles49r-detail.png</ident> containing an additional image of the figure in the
+         current example, supposing that we have an additional image called 
+         <ident type="file">Bovelles49r-detail.png</ident> containing an additional image of the figure in the
          third zone above, we might encode that zone as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
             <zone ulx="105" uly="76" lrx="175" lry="160">
                <graphic url="Bovelles49r-detail.png"/>
             </zone>
          </egXML>
+      </p>
+      
+      
+      <p>Within a <gi>surface</gi> or <gi>zone</gi>, individual lines can be identified using the 
+         <gi>path</gi> element, which also carries the <att>points</att>
+         attribute:
+         <figure xml:id="facs-fig3">
+            <graphic url="Images/facs-fig3.jpg"/>
+            <head>Smaller detail of p 49r from Bovelles highlighting two specific lines</head>
+         </figure>
+         <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <surface ulx="0" uly="0" lrx="443" lry="272">
+               <graphic url="facs-fig3.jpg"/>
+               <path points="74,73 171,244" xml:id="balan"/>
+               <path points="71,203 173,116" xml:id="dindan"/>
+            </surface></egXML>
+         
+         This is useful for linking an annotation or explanation to a specific line on
+         an object surface. Any number of coordinates can be included to specify lines which are not straight.
       </p>
 
    </div>
@@ -457,6 +479,7 @@ used to define a polygon of any shape using this coordinate system:-->
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/surfaceGrp.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.coordinated.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/zone.xml"/>
+            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/path.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.resourceLike.xml"/>
          </specGrp>
 
@@ -2929,45 +2952,47 @@ following ...-->
    </div>
 
    <div>
-      <head>Module for Transcription of Primary Sources</head>
-
-      <p>The module described in this chapter makes available the following components: <moduleSpec xml:id="DPH" ident="transcr">
-            <altIdent type="FPI">Transcription of Primary Sources</altIdent>
-            <desc>Transcription of primary sources</desc>
-            <desc xml:lang="zh-TW">原文轉錄</desc>
-            <desc xml:lang="fr">Représentation de sources primaires</desc>
-            <desc xml:lang="it">Trascrizione di fonti primarie</desc>
-            <desc xml:lang="pt">Transcrição de fontes primárias</desc>
-            <desc xml:lang="ja">転記モジュール</desc>
-         </moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Additional Element Set for Transcription of Primary Sources//EN-->
-         The selection and combination of modules to form a TEI schema is described in <ptr target="#STIN"/>. </p>
-      <specGrp xml:id="DTCHD">
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/addSpan.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/damage.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/damageSpan.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/delSpan.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/ex.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/fw.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/handNotes.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/handShift.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/am.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/restore.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/space.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/subst.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/substJoin.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/supplied.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/surplus.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/secl.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/line.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/listChange.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/listTranspose.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/metamark.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/mod.xml"/>
-         <!--<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/patch.xml"/>-->
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/redo.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/retrace.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/transpose.xml"/>
-         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/undo.xml"/>
-      </specGrp>
+     <head>Module for Transcription of Primary Sources</head>
+     <p>The module described in this chapter makes available the following components:
+     <moduleSpec xml:id="DPH" ident="transcr">
+       <altIdent type="FPI">Transcription of Primary Sources</altIdent>
+       <desc xml:lang="en" versionDate="2006-09-13">Transcription of primary sources</desc>
+       <desc xml:lang="zh-TW" versionDate="2018-07-12">原文轉錄</desc>
+       <desc xml:lang="fr" versionDate="2018-07-12">Représentation de sources primaires</desc>
+       <desc xml:lang="it" versionDate="2018-07-12">Trascrizione di fonti primarie</desc>
+       <desc xml:lang="pt" versionDate="2018-07-12">Transcrição de fontes primárias</desc>
+       <desc xml:lang="ja" versionDate="2018-07-12">転記モジュール</desc>
+     </moduleSpec>
+     <!--publicID:  -//TEI P5//ELEMENTS Additional Element Set for Transcription of Primary Sources//EN-->
+     The selection and combination of modules to form a TEI schema
+     is described in <ptr target="#STIN"/>.</p>
+     <specGrp xml:id="DTCHD">
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/addSpan.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/damage.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/damageSpan.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/delSpan.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/ex.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/fw.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/handNotes.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/handShift.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/am.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/restore.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/space.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/subst.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/substJoin.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/supplied.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/surplus.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/secl.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/line.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/listChange.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/listTranspose.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/metamark.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/mod.xml"/>
+       <!--<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/patch.xml"/>-->
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/redo.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/retrace.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/transpose.xml"/>
+       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/undo.xml"/>
+     </specGrp>
    </div>
-</div>
+ </div>

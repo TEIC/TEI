@@ -149,7 +149,7 @@ identity transform
       </row>
       
       <xsl:variable name="rows">
-        <xsl:for-each select="//macroSpec[@type='pe']">
+        <xsl:for-each select="//macroSpec">
           <xsl:variable name="ident" select="@ident"/>
           
           <row>
