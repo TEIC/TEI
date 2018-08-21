@@ -2147,7 +2147,7 @@
                 <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl"
                   role="warning">
                   <sch:let name="currId" value="@xml:id"/>
-                  <sch:assert test="some $i in //tei:ref[@type='bibl'] satisfies tokenize($i/@target, '\s+')[replace(., '#', '') = $currId]">
+                  <sch:assert test="key('idrefs', @xml:id)/parent::tei:ref[@type='bibl']">
                     This bibliographic entry is an orphan: no ref[@type="bibl"] references to it occur in the text.
                   </sch:assert>
                 </sch:rule>
@@ -2746,7 +2746,7 @@
             <constraintSpec ident="jtei.sch-rendition" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:rendition">
-                  <sch:assert test="some $i in //@rendition satisfies tokenize($i, '\s+')[replace(., '#', '') = current()/@xml:id]">
+                  <sch:assert test="key('idrefs', @xml:id)[name() = 'rendition']">
                     Please remove all <sch:name/> definitions that aren't actually being used in the article.
                   </sch:assert>
                 </sch:rule>
@@ -2954,6 +2954,7 @@
           <constraintSpec ident="jtei.sch-variables" scheme="schematron">
             <constraint>
               <sch:pattern>
+                <xsl:key name="idrefs" match="@target[starts-with(., '#')]|@rendition[starts-with(., '#')]" use="for $i in tokenize(., '\s+') return substring-after($i, '#')"/>
                 <sch:let name="double.quotes" value="'[&quot;“”]'"/>
                 <sch:let name="apos.typographic" value="'[‘’]'"/>
                 <sch:let name="apos.straight" value="''''"/>
@@ -3055,7 +3056,7 @@
           <elementSpec ident="gap" module="core" mode="change">
             <constraintSpec ident="jtei.sch-gap" scheme="schematron">
               <constraint>
-                <sch:rule context="tei:gap-period">
+                <sch:rule context="tei:gap">
                   <sch:report test="following-sibling::node()[1][self::text()] and starts-with(following-sibling::node()[1], '.')">
                     A <sch:name/> element should follow a period rather than precede it when an ellipsis follows the end of a sentence.
                   </sch:report>
@@ -3254,7 +3255,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="jtei.jtei-url" scheme="isoschematron">
+          <constraintSpec ident="jtei.jtei-url" scheme="schematron">
             <constraint>
               <sch:rule context="@target[matches(., '^https?://(www\.)?jtei\.revues\.org/?')]">
                 <sch:let name="URL.fixed" value="replace(., '^https?://(www\.)?jtei\.revues\.org/?', 'https://journals.openedition.org/jtei/')"/>
