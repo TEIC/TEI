@@ -416,9 +416,7 @@ clean:
 	rm -f *.isosch.xsl
 	rm -f *.stamp
 	rm -f *.xsd
-	rm -f Exemplars/stdout Exemplars/isofs.xsl
-	rm -rf Exemplars/oNVDL
-	rm -rf oNVDL
+	rm -f Exemplars/stdout
 	rm -f Test/*.isosch
 	rm -f Test/detest.dtd Test/detest.rnc Test/detest.rng Test/detest.xsl
 	rm -f Test/stdout
