@@ -410,13 +410,15 @@ dependencies:
 clean:
 	(cd Exemplars; make clean)
 	(cd Test; make clean)
-	rm -rf repodate.xml
+	rm -f repodate.xml
 	rm -rf release Guidelines Guidelines-web Schema DTD dtd Split
 	rm -rf Guidelines.??? Guidelines-*
 	rm -f *.isosch.xsl
 	rm -f *.stamp
 	rm -f *.xsd
-	rm -f Exemplars/stdout
+	rm -f Exemplars/stdout Exemplars/isofs.xsl
+	rm -rf Exemplars/oNVDL
+	rm -rf oNVDL
 	rm -f Test/*.isosch
 	rm -f Test/detest.dtd Test/detest.rnc Test/detest.rng Test/detest.xsl
 	rm -f Test/stdout
