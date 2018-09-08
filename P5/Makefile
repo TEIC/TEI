@@ -390,9 +390,6 @@ install-database: dist-database
 
 install: clean install-schema install-doc install-test install-exemplars install-source install-database
 
-changelog:
-	../write_changelog
-
 dependencies:
 	@echo to make this thing build under Ubuntu/Debian, here are all the packages you will need:
 	@echo	msttcorefonts
