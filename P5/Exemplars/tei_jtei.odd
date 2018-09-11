@@ -1913,6 +1913,17 @@
               </constraint>
             </constraintSpec>
           </elementSpec>
+          <elementSpec ident="respStmt" module="header" mode="change">
+            <constraintSpec ident="jtei.sch-respSmt" scheme="schematron">
+              <constraint>
+                <sch:rule context="tei:respStmt">
+                  <sch:assert test="ancestor::tei:sourceDesc">
+                    <sch:name/> can only be used in the context of sourceDesc.
+                  </sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
+          </elementSpec>
           <elementSpec ident="textClass" module="header" mode="change">
             <content>
               <!-- [RvdB] sequence wrapper seems necessary to keep ODD2DTD happy -->
