@@ -2965,7 +2965,7 @@
           <constraintSpec ident="jtei.sch-variables" scheme="schematron">
             <constraint>
               <sch:pattern>
-                <xsl:key name="idrefs" match="@target[starts-with(., '#')]|@rendition[starts-with(., '#')]" use="for $i in tokenize(., '\s+') return substring-after($i, '#')"/>
+                <xsl:key name="idrefs" match="@target[starts-with(normalize-space(.), '#')]|@rendition[starts-with(normalize-space(.), '#')]" use="for $i in tokenize(., '\s+') return substring-after($i, '#')"/>
                 <sch:let name="double.quotes" value="'[&quot;“”]'"/>
                 <sch:let name="apos.typographic" value="'[‘’]'"/>
                 <sch:let name="apos.straight" value="''''"/>
