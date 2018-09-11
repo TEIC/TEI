@@ -1,7 +1,0 @@
-#!/bin/bash
-
-mv $(dirname $0)/P5/ReleaseNotes/ChangeLog $(dirname $0)/P5/ReleaseNotes/ChangeLog.tmp
-git log --since="`head -1 $(dirname $0)/P5/ReleaseNotes/ChangeLog.tmp | awk '{print $1}'`" --date=short --name-status --pretty=format:"%ad  %an <%aE>  %h%n%n        %s%n" > $(dirname $0)/P5/ReleaseNotes/ChangeLog
-printf "\n" >> $(dirname $0)/P5/ReleaseNotes/ChangeLog
-cat $(dirname $0)/P5/ReleaseNotes/ChangeLog.tmp >> $(dirname $0)/P5/ReleaseNotes/ChangeLog
-rm $(dirname $0)/P5/ReleaseNotes/ChangeLog.tmp

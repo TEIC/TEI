@@ -68,7 +68,7 @@ those consisting primarily of verse (chapter <ptr target="#VE"/>),
 drama (chapter <ptr target="#DR"/>), transcriptions of spoken text
 (chapter <ptr target="#TS"/>), etc.  Chapter <ptr target="#ST"/>
 should be reviewed for details of how these and other components of
-these Guidelines should be tailored to create a document type definition
+these Guidelines should be tailored to create a TEI customization 
 appropriate to a given application.  In sum, it should not be assumed 
 that only the matters specifically addressed in this chapter are of
 importance for corpus creators.
@@ -210,15 +210,15 @@ nor cyclic works:  they are otherwise unitary texts within which other
 texts are embedded.  In general, they may be treated in the same way as
 unitary texts, using the normal <gi>TEI</gi> and
 <gi>body</gi> elements.  The embedded text itself may be encoded using
-the <gi>text</gi> element, which may occur within quotations or between
+the <gi>text</gi> element<!--, which may occur within quotations or between
 paragraphs or other chunk-level elements inside the sections of a larger
-text.  For further discussion, see chapter <ptr target="#DS"/>.
+text--><!-- JC: 2018-07-20 ... uh no it can't! -->.  For further discussion, see chapter <ptr target="#DS"/>.
  </p>
 <p>All composite texts share the characteristic that their different
 component texts may be of structurally similar or dissimilar types.  If
 all  component texts may all be encoded using the same  module,
 then no problem arises. If however they require
-different modules, then these must be included in the schema. This
+different modules, then these must be included in the TEI customization. This
 process is described in more detail in section <ptr target="#STMA"/>.
 </p></div>
 <div type="div2" xml:id="CCAH"><head>Contextual Information</head>
@@ -917,7 +917,7 @@ specified as the default, by means of the <att>default</att> attribute
 <p>In the following example, an editorial declaration contains two
 possible <gi>correction</gi> policies, one identified as
 <val>CorPol1</val> and the other as <val>CorPol2</val>.  Since there
-are two, one of them (in this case <val>CorPol1</val>) must be
+are two, one of them (in this case <val>CorPol1</val>) should be
 specified as the default: <egXML xmlns="http://www.tei-c.org/ns/Examples"><editorialDecl>
    <correction xml:id="CorPol1" default="true">
       <p> ... </p>
@@ -1018,7 +1018,7 @@ within either corpus or text header,
 <item>each must have a unique value specified as the value
 of its <att>xml:id</att> attribute;</item>
 <item>one only must bear a <att>default</att> attribute with
-the value <val>YES</val>.</item></list></item>
+the value <!-- JC: 2018-07-20: This should be changed to 'true' --><val>YES</val>.</item></list></item>
 <item>It is a semantic error for an element to be associated
 with more than one occurrence of any declarable element.</item>
 <item>Selecting an element which contains multiple occurrences of a
@@ -1074,7 +1074,7 @@ ease and accuracy with which analysis may be automated may vary with the
 level at which the annotation is attached.  The method employed should
 be documented in the <gi>interpretation</gi> element within the encoding
 description of the TEI header, as described in section <ptr target="#HD53"/>.  Where different parts of a corpus have used different
-annotation methods, the <att>decls</att> attribute may be used to
+annotation methods, the <att>decls</att> attribute should be used to
 indicate the fact, as further discussed in section <ptr target="#CCAS"/>.
  </p>
 <p>An extended example of one form of linguistic analysis commonly
@@ -1116,18 +1116,23 @@ transcribed as unmarked up text, or represented as <gi>gap</gi>
 elements, or silently omitted, as appropriate.</item></list>
 </p> 
 </div>
-<div><head>Module for Language Corpora</head>
-<p>The module described in this chapter makes available the following components:
-
-<moduleSpec xml:id="DCCHDR" ident="corpus">
-<altIdent type="FPI">Metadata for Language Corpora</altIdent>
-<desc>Corpus texts</desc>
-<desc xml:lang="fr">Corpus linguistiques</desc>
-<desc xml:lang="zh-TW">文集文本</desc>
-<desc xml:lang="it">Corpus di testi</desc><desc xml:lang="pt">Textos do corpora</desc><desc xml:lang="ja">コーパスモジュール</desc></moduleSpec><!--publicID: -//TEI
-P5//ELEMENTS Additional Element Set for Language Corpora//EN--> The
-selection and combination of modules to form a TEI schema is described
-in <ptr target="#STIN"/>.</p>
+<div>
+  <head>Module for Language Corpora</head>
+  <p>The module described in this chapter makes available the
+  following components:
+  <moduleSpec xml:id="DCCHDR" ident="corpus">
+    <altIdent type="FPI">Metadata for Language Corpora</altIdent>
+    <desc xml:lang="en" versionDate="2018-07-12">Corpus texts</desc>
+    <desc xml:lang="fr" versionDate="2018-07-09">Corpus linguistiques</desc>
+    <desc xml:lang="zh-TW" versionDate="2018-07-09">文集文本</desc>
+    <desc xml:lang="it" versionDate="2018-07-09">Corpus di testi</desc>
+    <desc xml:lang="pt" versionDate="2018-07-09">Textos do corpora</desc>
+    <desc xml:lang="ja" versionDate="2018-07-09">コーパスモジュール</desc>
+  </moduleSpec>
+  <!--publicID: -//TEI P5//ELEMENTS Additional Element Set for Language Corpora//EN-->
+  
+  The selection and combination of modules to form a TEI schema is
+  described in <ptr target="#STIN"/>.</p>
 </div>
 
 </div>

@@ -673,8 +673,8 @@
       <xsl:when test="$googleAnalytics=''">    
       </xsl:when>
       <xsl:otherwise>
-	<xsl:apply-templates
-	    select="document('teic-index.xml')//html:ul[@id='udm']" mode="copyhtml"/>
+	<xsl:apply-templates xpath-default-namespace=""
+	    select="document('teic-index.xml')//ul[@id='udm']" mode="copyhtml"/>
       </xsl:otherwise>
     </xsl:choose>
   </div>
@@ -805,17 +805,17 @@
 			    then $lang else 'en'"/>
   </xsl:function>
 
-  <xsl:template match="html:*"  mode="copyhtml">
+  <xsl:template match="*" mode="copyhtml">
     <xsl:copy>
-      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()"  mode="copyhtml"/>
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="copyhtml"/>
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="comment()|@*|processing-instruction()|text()"  mode="copyhtml">
+  <xsl:template match="comment()|@*|processing-instruction()|text()" mode="copyhtml">
     <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template match="html:a/@href"  mode="copyhtml">
+  <xsl:template match="a/@href"  mode="copyhtml">
     <xsl:attribute name="href">
       <xsl:if test="starts-with(.,'/')">
 	<xsl:text>http://www.tei-c.org</xsl:text>

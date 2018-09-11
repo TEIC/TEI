@@ -11,7 +11,7 @@
   >
 
   <xsl:variable name="myName" select="'TEI-to-tei_customization.xslt'"/>
-  <xsl:variable name="version" select="'0.5.1b'"/>
+  <xsl:variable name="version" select="'0.6.0b'"/>
   <xsl:param name="versionDate" select="format-date(current-date(),'[Y]-[M01]-[D01]')"/>
 
   <!--
@@ -40,17 +40,25 @@
   <!-- 2017-11-05 by Syd: Harumph. Found that our output is not valid against      -->
   <!--   p5odds.rng because ident/@type is not allowed to be "test", so I removed  -->
   <!--   the attribute. -->
+  <!-- 2017-04-07 by Syd: bug fixes:                                               -->
+  <!--   * allow <classSpec> to be empty                                           -->
+  <!--   * actually enforce constraints listed in remarks for <schemaSpec>         -->
   <!-- 2017-01-16 by Syd: embarrassing — copy over useful bits from last time I    -->
   <!--   did the exact same thing. That was 2016-06-10/12, immediately before the  -->
   <!--   advanced TEI class James & I did at DHSI. I had entirely forgotten I had  -->
   <!--   already done this. Sigh.                                                  -->
-  <!-- 2017-04-07 by Syd: bug fixes:                                               -->
-  <!--   * allow <classSpec> to be empty                                           -->
-  <!--   * actually enforce constraints listed in remarks for <schemaSpec>         -->
   <!-- *********************** segnahc TLSX rof GOL EGNAHC *********************** -->
 
   <xsl:variable name="revisionDesc">
     <revisionDesc>
+      <change who="#sbauman.emt" when="2018-07-19">
+	Further addressing <ref
+	target="https://github.com/TEIC/TEI/issues/1735">TEI ticket
+	#1735</ref>: constrain content of both <gi>dataSpec</gi> and
+	<gi>macroSpec</gi> so that at most 1 <gi>content</gi> or 1
+	<gi>valList</gi> child is permitted. While there give the
+	<att>ident</att> attribute a semi-controlled vocabulary.
+      </change>
       <change who="#sbauman.emt" when="2018-02-02">
         <list>
           <item>update to use version 3.3.0 of P5</item>
@@ -60,7 +68,10 @@
         </list>
       </change>
       <change who="#sbauman.emt" when="2018-01-22">
-        Per #1735, add constraints on <gi>content</gi> child of <gi>elementSpec</gi>:
+        Per <ref
+        target="https://github.com/TEIC/TEI/issues/1735">#1735</ref>,
+        add constraints on <gi>content</gi> child of
+        <gi>elementSpec</gi>:
         <list>
           <item>if <att>mode</att> of <gi>elementSpec</gi> is
           <val>add</val> or <val>replace</val>, require a
@@ -907,6 +918,43 @@
                 </attList>
               </elementSpec>
 
+              <elementSpec module="tagdocs" ident="macroSpec" mode="change">
+		<content>
+		  <sequence>
+		    <alternate minOccurs="0" maxOccurs="unbounded">
+		      <classRef key="model.glossLike"/>
+		      <classRef key="model.descLike"/>
+		    </alternate>
+		    <alternate minOccurs="0" maxOccurs="1">
+		      <elementRef key="content"/>
+		      <elementRef key="valList"/>
+		    </alternate>
+		    <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
+		    <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
+		    <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
+		    <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
+		  </sequence>
+		</content>
+                <attList>
+                  <attDef ident="ident" mode="replace" usage="req">
+                    <datatype minOccurs="1" maxOccurs="1">
+                      <dataRef key="teidata.enumerated"/>
+                    </datatype>
+                    <valList type="semi">
+                      <xsl:copy-of select="$macros"/>
+                    </valList>
+                  </attDef>
+                </attList>
+                <remarks xml:lang="en" versionDate="{$versionDate}">
+		  <p>In tei_customization the <gi>macroSpec</gi>
+		  element (and the <gi>dataSpec</gi> element) allows
+		  at most one <gi>content</gi> or one <gi>valList</gi>
+		  child (not both). TEI P5 permits any number of
+		  either or both, but does not define what multiples mean,
+		  and current ODD processors only process one.</p>
+		</remarks>
+              </elementSpec>
+
               <elementSpec module="tagdocs" ident="macroRef" mode="change">
                 <attList>
                   <attDef ident="key" mode="replace" usage="req">
@@ -951,7 +999,44 @@
                 </remarks>
               </elementSpec>
 
-              <elementSpec module="tagdocs" ident="dataRef" mode="change">
+              <elementSpec module="tagdocs" ident="dataSpec" mode="change">
+		<content>
+		  <sequence>
+		    <alternate minOccurs="0" maxOccurs="unbounded">
+		      <classRef key="model.glossLike"/>
+		      <classRef key="model.descLike"/>
+		    </alternate>
+		    <alternate minOccurs="0" maxOccurs="1">
+		      <elementRef key="content"/>
+		      <elementRef key="valList"/>
+		    </alternate>
+		    <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
+		    <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
+		    <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
+		    <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
+		  </sequence>
+		</content>
+                <attList>
+                  <attDef ident="ident" mode="replace">
+                    <datatype minOccurs="1" maxOccurs="1">
+                      <dataRef key="teidata.enumerated"/>
+                    </datatype>
+                    <valList type="semi">
+                      <xsl:copy-of select="$datatypes"/>
+                    </valList>
+                  </attDef>
+                </attList>
+                <remarks xml:lang="en" versionDate="{$versionDate}">
+		  <p>In tei_customization the <gi>dataSpec</gi>
+		  element (and the <gi>macroSpec</gi> element) allows
+		  at most one <gi>content</gi> or one <gi>valList</gi>
+		  child (not both). TEI P5 permits any number of
+		  either or both, but does not define what multiples mean,
+		  and current ODD processors only process one.</p>
+		</remarks>
+              </elementSpec>
+
+	      <elementSpec module="tagdocs" ident="dataRef" mode="change">
                 <attList>
                   <attDef ident="key" mode="replace">
                     <datatype minOccurs="1" maxOccurs="1">
@@ -1163,12 +1248,12 @@
               </elementSpec>
               <xsl:comment> of course &lt;xi:include> refers to &lt;xi:fallback>, so we need to declare</xsl:comment>
               <xsl:comment> that, too, just in case. </xsl:comment>
-              <elementSpec ident="fallback" ns="http://www.example.org/cannot/really/use/XInclude"
-                mode="add">
+              <elementSpec ns="http://www.example.org/cannot/really/use/XInclude"
+			   ident="fallback" mode="add" >
                 <content>
                   <alternate minOccurs="1" maxOccurs="unbounded">
                     <textNode/>
-                    <classRef key="macro.anyXML"/>
+                    <anyElement/>
                   </alternate>
                 </content>
               </elementSpec>
@@ -1238,6 +1323,9 @@
                       </valItem>
                       <valItem ident="modelclasscat">
                         <gloss xml:lang="en" versionDate="{$versionDate}">Catalogue of Model Classes</gloss>
+                      </valItem>
+                      <valItem ident="deprecationcat">
+                        <gloss xml:lang="en" versionDate="{$versionDate}">Catalogue of Deprecations</gloss>
                       </valItem>
                       <valItem ident="toc">
                         <gloss xml:lang="en" versionDate="{$versionDate}">Table of Contents</gloss>

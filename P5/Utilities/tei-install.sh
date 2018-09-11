@@ -29,7 +29,7 @@ install()
 	TEIP5)
 	    ${ECHO} rm -f teiwebsiteguidelines.zip;
 	    echo Get special HTML pages for TEI web site;
-	    ${ECHO} curl -O -s $jenkinsdir/teiwebsiteguidelines.zip || die "Unable to fetch package $jenkinsdir/teiwebsiteguidelines.zip";
+	    ${ECHO} curl -L -O -s $jenkinsdir/teiwebsiteguidelines.zip || die "Unable to fetch package $jenkinsdir/teiwebsiteguidelines.zip";
 	    echo Copy oxygen folder with updateSite.oxygen to ${Vault}/${name}/${version}
 	    ${ECHO} cp -r ${Vault}/${name}/current/oxygen ${Vault}/${name}/${version}
 	    echo unpack web guidelines to ${Vault}/${name}/${version};
@@ -105,7 +105,7 @@ case $package in
 esac
 echo Try to fetch version $version of $package from $jenkinsdir
 rm -f ${pname}-${version}.zip
-${ECHO} curl -O -s $jenkinsdir/${pname}-${version}.zip || \
+${ECHO} curl -L -O -s $jenkinsdir/${pname}-${version}.zip || \
     die "Unable to fetch package $jenkinsdir/${pname}-${version}.zip"
 
 echo Selected task is $JOB
