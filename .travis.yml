@@ -8,8 +8,8 @@ services:
 before_install:
   - docker pull teic/jenkins:dev
   - curl https://jenkins.tei-c.org/view/TEI%20dev/job/Stylesheets-dev/lastStableBuild/artifact/tei-xsl-7.46.0a.zip -o stylesheets.zip
-  - mkdir -p /var/stylesheets
-  - unzip stylesheets.zip -d /var/stylesheets
+  - mkdir stylesheets
+  - unzip stylesheets.zip -d stylesheets
 
 script:
-  - docker run --rm -w /var/tei/P5 -it -v `pwd`:/var/tei -v /var/stylesheets:/usr/share/xml/tei/stylesheet -u $UID --entrypoint "make" teic/jenkins:dev clean validate test
+  - docker run --rm -w /var/tei/P5 -it -v `pwd`:/var/tei -v $TRAVIS_BUILD_DIR/stylesheets:/usr/share/xml/tei/stylesheet -u $UID --entrypoint "make" teic/jenkins:dev clean validate test
