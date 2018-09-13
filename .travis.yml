@@ -12,4 +12,4 @@ before_install:
   - unzip stylesheets.zip -d stylesheets
 
 script:
-  - docker run --rm -w /var/tei/P5 -it -v `pwd`:/var/tei -v $TRAVIS_BUILD_DIR/stylesheets:/usr/share/xml/tei/stylesheet -u $UID --entrypoint "make" teic/jenkins:dev clean validate test
+  - docker run --rm -w /var/tei/P5 -it -v `pwd`:/var/tei -v $TRAVIS_BUILD_DIR/stylesheets/xml/tei/stylesheet:/usr/share/xml/tei/stylesheet -u $UID --entrypoint "make" teic/jenkins:dev clean validate test
