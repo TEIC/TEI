@@ -1869,7 +1869,7 @@
         <schemaSpec ident="tei_jtei" start="TEI" defaultExceptions="http://www.tei-c.org/ns/1.0 eg:egXML">
           <moduleRef key="tei"/>
           <moduleRef key="core"
-            include="abbr author bibl biblScope cit date desc editor email emph foreign gap graphic head hi item label lb list listBibl mentioned name note num p pubPlace publisher q quote ptr ref series soCalled term title"/>
+            include="abbr author bibl biblScope cit date desc editor email emph foreign gap graphic head hi item label lb list listBibl mentioned name note num p pubPlace publisher q quote ptr ref resp respStmt series soCalled term title"/>
           <moduleRef key="corpus" include="particDesc"/>
           <moduleRef key="figures" include="cell figure row table"/>
           <moduleRef key="header"
@@ -1909,6 +1909,17 @@
                     </sqf:description>
                     <sqf:add match="tei:title[not(@type='main')][1]" node-type="attribute" target="type">main</sqf:add>
                   </sqf:fix>                  
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
+          </elementSpec>
+          <elementSpec ident="respStmt" module="header" mode="change">
+            <constraintSpec ident="jtei.sch-respSmt" scheme="schematron">
+              <constraint>
+                <sch:rule context="tei:respStmt">
+                  <sch:assert test="ancestor::tei:sourceDesc">
+                    <sch:name/> can only be used in the context of sourceDesc.
+                  </sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -2146,7 +2157,6 @@
               <constraint>
                 <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl"
                   role="warning">
-                  <sch:let name="currId" value="@xml:id"/>
                   <sch:assert test="key('idrefs', @xml:id)/parent::tei:ref[@type='bibl']">
                     This bibliographic entry is an orphan: no ref[@type="bibl"] references to it occur in the text.
                   </sch:assert>
@@ -2718,7 +2728,6 @@
                     </sqf:description>
                     <sqf:add match="." node-type="attribute" target="type" select="'bibl'"/>
                   </sqf:fix>
-                  
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -2954,7 +2963,7 @@
           <constraintSpec ident="jtei.sch-variables" scheme="schematron">
             <constraint>
               <sch:pattern>
-                <xsl:key name="idrefs" match="@target[starts-with(., '#')]|@rendition[starts-with(., '#')]" use="for $i in tokenize(., '\s+') return substring-after($i, '#')"/>
+                <xsl:key name="idrefs" match="@target[starts-with(normalize-space(.), '#')]|@rendition[starts-with(normalize-space(.), '#')]" use="for $i in tokenize(., '\s+') return substring-after($i, '#')"/>
                 <sch:let name="double.quotes" value="'[&quot;“”]'"/>
                 <sch:let name="apos.typographic" value="'[‘’]'"/>
                 <sch:let name="apos.straight" value="''''"/>
@@ -3160,9 +3169,22 @@
           <constraintSpec ident="jtei.sch-localLinkTarget" scheme="schematron">
             <constraint>
               <sch:rule context="@*[not(ancestor::eg:egXML)][name() = ('corresp', 'target', 'from', 'to', 'ref', 'rendition', 'resp', 'source')][some $i in tokenize(., '\s+') satisfies starts-with($i, '#')]">
-                <sch:assert test="every $i in tokenize(., '\s+')[starts-with(., '#')] satisfies id( substring-after($i, '#'))">
-                  There's no local target for this link. Please make sure you use an existing @xml:id value.
-                </sch:assert>
+                <sch:let name="orphan.pointers"
+                  value="for $p in tokenize(., '\s+')[starts-with(., '#')] return if (not(id(substring-after($p, '#')))) then $p else ()"/>
+                <sch:report test="exists($orphan.pointers)">
+                  There's no local target for <sch:value-of select="if (count($orphan.pointers) > 1) then 'these pointers' else 'this pointer'"/>: <sch:value-of select="string-join($orphan.pointers, ', ')"/>. Please make sure you're referring to an existing @xml:id value.
+                </sch:report>
+              </sch:rule>
+            </constraint>
+          </constraintSpec>
+          <constraintSpec ident="jtei.sch-renditionTarget" scheme="schematron">
+            <constraint>
+              <sch:rule context="@rendition">
+                <sch:let name="orphan.pointers"
+                  value="for $p in tokenize(., '\s+')[starts-with(., '#')] return for $id in id(substring-after($p, '#'))[not(self::tei:rendition)] return $p"/>
+                <sch:report test="exists($orphan.pointers)">
+                  <sch:value-of select="if (count($orphan.pointers) > 1) then 'These pointers don''t' else 'This pointer doesn''t'"/> point to a &lt;rendition&gt; target: <sch:value-of select="string-join($orphan.pointers, ', ')"/>.
+                </sch:report>
               </sch:rule>
             </constraint>
           </constraintSpec>
@@ -3206,9 +3228,11 @@
           <constraintSpec ident="jtei.sch-crossrefTargetType" scheme="schematron">
             <constraint>
               <sch:rule context="tei:ptr[@type='crossref']|tei:ref[@type='crossref']">
-                <sch:assert test="id(substring-after(@target, '#'))/(self::tei:div|self::tei:figure|self::tei:table|self::tei:note)">
-                  Cross-links (<sch:name/>[@type="crossref"]) should be targeted at div, figure, table, or note elements.
-                </sch:assert>
+                <sch:let name="orphan.pointers"
+                  value="for $p in tokenize(@target, '\s+')[starts-with(., '#')] return for $id in id(substring-after($p, '#'))[not(self::tei:div or self::tei:figure or self::tei:table or self::tei:note)] return $p"/>
+                <sch:report test="exists($orphan.pointers)">
+                  Cross-links (<sch:name/>[@type="crossref"]) should be targeted at div, figure, table, or note elements. The target of <sch:value-of select="if (count($orphan.pointers) > 1) then 'these pointers' else 'this pointer'"/> doesn't satisfy this condition: <sch:value-of select="string-join($orphan.pointers, ', ')"/>.
+                </sch:report>
               </sch:rule>
             </constraint>
           </constraintSpec>

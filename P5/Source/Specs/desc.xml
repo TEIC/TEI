@@ -1,10 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
   Copyright TEI Consortium. 
   Dual-licensed under CC-by and BSD2 licences 
   See the file COPYING.txt for details
   $Date$
   $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="desc">
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+	     module="core" ident="desc">
   <gloss versionDate="2005-01-14" xml:lang="en">description</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">기술</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">描述</gloss>
@@ -13,8 +18,9 @@
   <gloss versionDate="2007-01-21" xml:lang="it">descrizione</gloss>
   <gloss versionDate="2008-12-09" xml:lang="fr">description</gloss>
   <gloss versionDate="2017-06-04" xml:lang="de">Beschreibung</gloss>
-  <desc versionDate="2016-09-25" xml:lang="en">contains a brief description of the object documented by its parent element, typically a documentation
-    element or an entity.</desc>
+  <desc versionDate="2016-09-25" xml:lang="en">contains a brief
+  description of the object documented by its parent element,
+  typically a documentation element or an entity.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">요소, 속성, 또는 속성 값의 목적과 적용에 대한 간단한 기술을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含一段簡短描述，說明一元素、屬性、或屬性值的應用與目的。</desc>
   <desc versionDate="2008-04-06" xml:lang="ja">当該要素，属性，属性値を採用した目的の簡単な解説を示す．</desc>
@@ -25,8 +31,10 @@
     aplicación de un elemento, atributo o valor de un atributo.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una breve descrizione dello scopo o
     dell'applicazione di un elemento, attributo, o valore di attributo.</desc>
-  <desc versionDate="2017-06-04" xml:lang="de">enthält eine kurze Beschreibung des Objekts, das von seinem übergeordneten Element annotiert
-    wird, üblicherweise einem Dokumentationselement oder einer Einheit.</desc>
+  <desc versionDate="2017-06-04" xml:lang="de">enthält eine kurze
+  Beschreibung des Objekts, das von seinem übergeordneten Element
+  annotiert wird, üblicherweise einem Dokumentationselement oder einer
+  Einheit.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.descLike"/>
@@ -37,6 +45,54 @@
   <content>
     <macroRef key="macro.limitedContent"/>
   </content>
+  <constraintSpec ident="deprecationInfo-only-in-deprecated" scheme="schematron">
+    <desc versionDate="2018-09-13" xml:lang="en">A <gi>desc</gi> with
+    a <att>type</att> of <val>deprecationInfo</val> should only occur
+    when its parent element is being deprecated. Furthermore, it
+    should always occur in an element that is being deprecated when
+    <gi>desc</gi> is a valid child of that element.</desc>
+    <constraint>
+      <sch:rule context="tei:desc[ @type eq 'deprecationInfo']">
+	<sch:assert test="../@validUntil">Information about a
+	deprecation should only be present in a specification element
+	that is being deprecated: that is, only an element that has a
+	@validUntil attribute should have a child &lt;desc
+	type="deprecationInfo">.</sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
+  <attList>
+    <attDef ident="type" mode="change">
+      <valList type="semi">
+	<valItem ident="deprecationInfo">
+	  <gloss versionDate="2018-09-14" xml:lang="en">deprecation
+	  information</gloss>
+	  <desc versionDate="2018-09-14" xml:lang="en">This element
+	  describes why or how its parent element is being deprecated,
+	  typically including recommendations for alternate
+	  encoding.</desc>
+	</valItem>
+      </valList>
+      <exemplum xml:lang="en">
+	<egXML xmlns="http://www.tei-c.org/ns/Examples">
+	  <elementSpec module="core" ident="teiCorpus" validUntil="2027-10-20">
+	    <desc versionDate="2017-02-07" xml:lang="en">contains the
+	    whole of a TEI encoded corpus, comprising a single corpus
+	    header and one or more <gi>TEI</gi> elements, each
+	    containing a single text header and a text.</desc>
+	    <desc type="deprecationInfo" xml:lang="en">The
+	    <gi>TEI</gi> element is now permitted to nest directly
+	    within a <gi>TEI</gi> element. Thus the recommended
+	    encoding of a corpus is to use <gi>TEI</gi> with a
+	    <att>type</att> of <val>corpus</val> as the outermost
+	    element of a set of TEI documents that are to be treated
+	    as a single corpus.</desc>
+	    <!-- ... -->
+	  </elementSpec>
+	</egXML>
+      </exemplum>
+    </attDef>
+  </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <desc>contains a brief description of the purpose and intended use  of a documentation element,  or a brief characterisation of a parent entity </desc>

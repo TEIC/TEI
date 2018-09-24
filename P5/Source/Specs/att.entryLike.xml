@@ -1,21 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" xml:id="ENTRIES" type="atts" ident="att.entryLike">
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" xml:id="ENTRIES" type="atts" ident="att.entryLike">
   <desc versionDate="2016-02-15" xml:lang="en">provides an attribute used to distinguish 
     different styles of dictionary entries.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">사전 표제 항목의 다른 형식을 모아 놓는다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">匯集不同格式的字典辭條</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">辞書項目，各種スタイルをまとめる．</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">regroupe les différents types d’entrées de dictionnaire.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">agrupa las diferentes modalidades de entradas de
-    diccionarios</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">agrupa las diferentes modalidades de entradas de diccionarios</desc>
   <desc versionDate="2007-01-21" xml:lang="it">raggruppa differenti stili di voci di dizionario.</desc>
+  <!-- Seems we can't just use:
+  <classes>
+    <memberOf key="att.typed"/>
+  </classes>
+  and then modify @type with <attDef>, below, as the Stylesheets
+  generate RELAX NG with 2 @types defined -->
   <attList>
-    <attDef ident="type" usage="opt">
+    <attRef class="att.typed" name="subtype"/>
+    <attDef ident="type" usage="opt" mode="add">
       <desc versionDate="2005-10-10" xml:lang="en">indicates type of entry, in dictionaries with multiple types.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">다중 유형을 포함하는 사전에서, 표제 항목 유형을 나타낸다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指出複合類型字典中的辭條類型。</desc>
