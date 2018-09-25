@@ -131,7 +131,7 @@ mobi:  Guidelines.mobi
 
 Guidelines.mobi: check.stamp p5.xml
 	${ANT}  -f ${XSL}/epub/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=teikindle -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines-kindle.epub -Dcoverimage=`pwd`/Utilities/cover.jpg
-	-command -v  kindlegen && kindlegen Guidelines-kindle.epub -o Guidelines.mobi
+	-export PATH=/usr/share/kindlegen:$$PATH ; command -v  kindlegen && kindlegen Guidelines-kindle.epub -o Guidelines.mobi
 	rm Guidelines-kindle.epub
 
 fonttest:
