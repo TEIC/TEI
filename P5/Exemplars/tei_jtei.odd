@@ -2755,7 +2755,7 @@
             <constraintSpec ident="jtei.sch-rendition" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:rendition">
-                  <sch:assert test="key('idrefs', @xml:id)[name() = 'rendition']">
+                  <sch:assert test="key('idrefs', @xml:id) instance of attribute(rendition)">
                     Please remove all <sch:name/> definitions that aren't actually being used in the article.
                   </sch:assert>
                 </sch:rule>
@@ -3146,7 +3146,7 @@
                   <sqf:description>
                     <sqf:title>Replace hyphen with –.</sqf:title>
                   </sqf:description>
-                  <sqf:stringReplace regex="((?:^|[\W-[-]])\d+)-(\d+(?:[\W-[-]]|$))">$1–$2</sqf:stringReplace>
+                  <sqf:stringReplace regex="((^|[\W-[-]])\d+)-(\d+([\W-[-]]|$))">$1–$3</sqf:stringReplace>
                 </sqf:fix>
               </sch:rule>
             </constraint>
@@ -3168,7 +3168,7 @@
           </constraintSpec>
           <constraintSpec ident="jtei.sch-localLinkTarget" scheme="schematron">
             <constraint>
-              <sch:rule context="@*[not(ancestor::eg:egXML)][name() = ('corresp', 'target', 'from', 'to', 'ref', 'rendition', 'resp', 'source')][some $i in tokenize(., '\s+') satisfies starts-with($i, '#')]">
+              <sch:rule context="@*[self::attribute(corresp)|self::attribute(target)|self::attribute(from)|self::attribute(to)|self::attribute(ref)|self::attribute(rendition)|self::attribute(resp)|self::attribute(source)][not(ancestor::eg:egXML)][some $i in tokenize(., '\s+') satisfies starts-with($i, '#')]">
                 <sch:let name="orphan.pointers"
                   value="for $p in tokenize(., '\s+')[starts-with(., '#')] return if (not(id(substring-after($p, '#')))) then $p else ()"/>
                 <sch:report test="exists($orphan.pointers)">
