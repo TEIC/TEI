@@ -1,0 +1,21 @@
+sudo: required
+
+language: java
+
+services:
+  - docker
+
+# before we can run the docker image for the tests, we need to 
+# * pull the docker image
+# * get the current VERSION file of the stylesheets from the artifacts server
+# * get the latest stylesheets zip file from the artifacts server
+# * install the stylesheets within our working dir in a dedicated sub dir
+before_install:
+  - docker pull teic/jenkins:dev
+  - curl https://jenkins.tei-c.org/view/TEI%20dev/job/Stylesheets-dev/lastSuccessfulBuild/artifact/dist/doc/tei-xsl/VERSION -o XSLVERSION
+  - curl https://jenkins.tei-c.org/view/TEI%20dev/job/Stylesheets-dev/lastStableBuild/artifact/tei-xsl-`head -1 XSLVERSION`.zip -o stylesheets.zip
+  - mkdir stylesheets
+  - unzip stylesheets.zip -d stylesheets
+
+script:
+  - docker run --rm -w /var/tei/P5 -it -v `pwd`:/var/tei -v $TRAVIS_BUILD_DIR/stylesheets/xml/tei/stylesheet:/usr/share/xml/tei/stylesheet -u $UID --entrypoint "make" teic/jenkins:dev clean validate test
