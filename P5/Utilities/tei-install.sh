@@ -7,6 +7,12 @@
 # license: GPL
 #
 
+# changed 2018-09-28 by Syd & Raff while working on Stylesheets
+# release 7.46.0:
+# New feature (already falsely documented in TCW 22 :-) --
+# Add commandline switch --Jenkins so the server URL can be specified
+# at run time. E.g., --Jenkins==http://jenkins17.tei-c.org/
+
 # changed 2014-09-16 by Syd in the middle of trying to release 2.7.0:
 # bug fix: changed $dir to $jenkinsdir in the "Get special HTML pages
 # for TEI web site" section of install() function.
@@ -29,7 +35,7 @@ install()
 	TEIP5)
 	    ${ECHO} rm -f teiwebsiteguidelines.zip;
 	    echo Get special HTML pages for TEI web site;
-	    ${ECHO} curl -O -s $jenkinsdir/teiwebsiteguidelines.zip || die "Unable to fetch package $jenkinsdir/teiwebsiteguidelines.zip";
+	    ${ECHO} curl -L -O -s $jenkinsdir/teiwebsiteguidelines.zip || die "Unable to fetch package $jenkinsdir/teiwebsiteguidelines.zip";
 	    echo Copy oxygen folder with updateSite.oxygen to ${Vault}/${name}/${version}
 	    ${ECHO} cp -r ${Vault}/${name}/current/oxygen ${Vault}/${name}/${version}
 	    echo unpack web guidelines to ${Vault}/${name}/${version};
@@ -61,7 +67,7 @@ die()
 }
 
 Vault=/projects/tei/web/Vault
-Jenkins=http://jenkins.tei-c.org/job
+Jenkins=http://jenkins.tei-c.org/
 ECHO=
 SFUSER=rahtz
 version=
@@ -70,6 +76,7 @@ JOB=all
 while test $# -gt 0; do
   case $1 in
       --sfuser=*)   SFUSER=`echo $1 | sed 's/.*=//'`;;
+      --Jenkins=*)  Jenkins=`echo $1 | sed 's/.*=//'`;; # Warning: if there is an '=' in the supplied URL this will fail
       --dummy)      ECHO=echo;;
       --package=*)  package=`echo $1 | sed 's/.*=//'`;;
       --version=*)  version=`echo $1 | sed 's/.*=//'`;;
@@ -94,7 +101,7 @@ then
  echo You must use the --package option to specify which package you are installing
  exit 1
 fi
-jenkinsdir=${Jenkins}/${package}/lastSuccessfulBuild/artifact
+jenkinsdir=${Jenkins}/job/${package}/lastSuccessfulBuild/artifact
 SFNAME=$package
 case $package in
   TEIP5)         name=P5;           pname=tei;      SFNAME=TEI-P5-all; jenkinsdir=${jenkinsdir}/P5;;
@@ -105,7 +112,7 @@ case $package in
 esac
 echo Try to fetch version $version of $package from $jenkinsdir
 rm -f ${pname}-${version}.zip
-${ECHO} curl -O -s $jenkinsdir/${pname}-${version}.zip || \
+${ECHO} curl -L -O -s $jenkinsdir/${pname}-${version}.zip || \
     die "Unable to fetch package $jenkinsdir/${pname}-${version}.zip"
 
 echo Selected task is $JOB
