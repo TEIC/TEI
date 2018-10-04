@@ -1,0 +1,1117 @@
+<?xml version="1.0"?>
+<?oxygen RNGSchema="http://www.tei-c.org/cms/system/modules/org.tei.www/_common/schemas/teilite.rnc" type="compact"?>
+<!-- $Date: 2007-09-29 13:23:01 +0100 (Sat, 29 Sep 2007) $, $Author: rahtz $, $Revision: 1739 $ -->
+<TEI xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Getting Started with P5 ODDs</title>
+        <author>Sebastian Rahtz</author>
+      </titleStmt>
+
+      <publicationStmt>
+        <p> </p>
+      </publicationStmt>
+      <sourceDesc>
+        <p/>
+      </sourceDesc>
+    </fileDesc>
+    <profileDesc>
+
+    </profileDesc>
+<revisionDesc>
+    <change when="2013-12-08" who="KSH">Updated discussion of processing your ODD specification</change>
+    <change when="2013-04-01" who="MDH">Updates following from ticket <ref target="http://sourceforge.net/p/tei/bugs/442/">http://sourceforge.net/p/tei/bugs/442/</ref>.</change>
+<change when="2012-09-01" who="KSH">Corrected link for downloading modules from the TEI website</change>
+<change when="2008-01-29" who="CJR">Changed links to point to new Roma server</change>
+	<change when="2007-09-29" who="JHF">Adapted document from Sebastian Rahtz's original</change>
+</revisionDesc>
+  </teiHeader>
+  <text>
+<body>
+<div>
+<head>Introduction</head>
+<p>This document describes how to produce a customization of the TEI
+P5 schema. From the start, the TEI was intended to be used as a set of
+building blocks for creating a schema suitable for a particular
+project. This is in keeping with the TEI philosophy of providing a
+vocabulary for describing texts, not dictating precisely what those
+texts must contain or might have contained. This means that it is
+<emph>likely</emph>, not just <emph>possible</emph>, that you will
+want to have a tailored view of the TEI.</p>
+
+<p>What do we mean by a <soCalled>customization</soCalled>? It is
+important to understand that there is no single DTD or schema which is
+the TEI; you always choose from the available modules (there are
+currently 22 of them, listed in <ptr target="#tab_modlist"/>) those
+that you want, with the caveat that the three modules
+<ident>core</ident>, <ident>header</ident> and
+<ident>textstructure</ident> (and <ident>tei</ident>, when using
+RELAX NG) should always be chosen unless you are certain you know what you are doing. Elements in these modules are referred to throughout
+the other modules, and hence these modules cannot be eliminated without careful adjustments. </p>
+
+<p>There are three ways of customizing the TEI:
+<list type="ordered">
+<item>Writing a high-level specification for a view of the TEI, and generating
+an <foreign>ad hoc</foreign> DTD or schema; this is the preferred method.
+</item>
+<item>Using the DTD modules, and specifying 
+in the document DTD subset which features you want activated. </item>
+<item>Using the RELAX NG modules, and writing a wrapper schema.</item>
+</list>
+Note that it is not possible at present to use W3C Schema modules
+for customization.</p>
+
+<p>Although there is no default schema, TEI P5 does provide a number
+of example customizations which may very well meet your needs, which can be downloaded from <ref target="./index.xml">the TEI web site</ref> or from within the <ref target="http://www.tei-c.org/Roma/">Roma interface</ref>:
+
+<list type="unordered">
+<item>tei_bare: TEI Absolutely Bare</item>
+<item>teilite: TEI Lite</item>
+<item>tei_corpus: TEI for Linguistic Corpora</item>
+<item>tei_ms: TEI for Manuscript Description</item>
+<item>tei_drama: TEI with Drama</item>
+<item>tei_speech: TEI for Speech Representation</item>
+<item>tei_odds: TEI for authoring ODD</item>
+<item>tei_allPlus: TEI with maximal setup, plus external additions</item>
+<item>tei_svg: TEI with SVG</item>
+<item>tei_math: TEI with MathML</item>
+<item>tei_xinclude: TEI with XInclude (experimental)</item>
+</list>
+</p>
+
+<p>Choosing the basic set of modules may be sufficient, but it's also possible that you may want to tailor your TEI schema more tightly. For instance, once you have decided that your
+application will make use of the <ident>msdescription</ident> and
+<ident>linking</ident> modules, you may also want to
+
+<list type="unordered">
+<item>remove elements from some of the modules which you do not expect
+to use, to reduce confusion and avoid the accidental use of elements you don't need</item>
+<item>rename elements (see <ptr target="#i18n"/> for more discussion of
+this)</item>
+	<item>add, delete or change attributes for existing elements, perhaps to make the datatype stricter
+</item>
+<item>add new elements, and insert them into the TEI class
+system</item>
+</list>
+We will be seeing examples of each of these in the following sections.</p>
+
+<p>Below is a table of all of the TEI modules. More information about each one is given in the TEI Guidelines; each module corresponds to a single chapter. </p>
+
+<tei:table xmlns:tei="http://www.tei-c.org/ns/1.0" rend="rules" xml:id="tab_modlist" xml:base="examples/modules.xml">
+  <tei:head>The TEI modules.</tei:head>
+  <tei:row>
+    <tei:cell>analysis</tei:cell>
+    <tei:cell>Simple analytic mechanisms</tei:cell>
+  </tei:row>
+  <tei:row>
+    <tei:cell>certainty</tei:cell>
+
+    <tei:cell>Certainty and uncertainty</tei:cell>
+  </tei:row>
+  <tei:row>
+    <tei:cell>
+      <tei:hi>core</tei:hi>
+    </tei:cell>
+    <tei:cell>Elements common to all TEI documents</tei:cell>
+
+  </tei:row>
+  <tei:row>
+    <tei:cell>corpus</tei:cell>
+    <tei:cell>Header extensions for corpus texts</tei:cell>
+  </tei:row>
+  <tei:row>
+    <tei:cell>declarefs</tei:cell>
+
+    <tei:cell>Feature system declarations</tei:cell>
+  </tei:row>
+  <tei:row>
+    <tei:cell>dictionaries</tei:cell>
+    <tei:cell>Dictionaries and other lexical resources</tei:cell>
+  </tei:row>
+  <tei:row>
+
+    <tei:cell>drama</tei:cell>
+    <tei:cell>Performance texts</tei:cell>
+  </tei:row>
+  <tei:row>
+    <tei:cell>figures</tei:cell>
+    <tei:cell>Tables, formulae, and figures</tei:cell>
+  </tei:row>
+
+  <tei:row>
+    <tei:cell>gaiji</tei:cell>
+    <tei:cell>Character and glyph documentation</tei:cell>
+  </tei:row>
+  <tei:row>
+    <tei:cell>
+      <tei:hi>header</tei:hi>
+
+    </tei:cell>
+    <tei:cell>The TEI Header</tei:cell>
+  </tei:row>
+  <tei:row>
+    <tei:cell>iso-fs</tei:cell>
+    <tei:cell>Feature structures</tei:cell>
+  </tei:row>
+
+  <tei:row>
+    <tei:cell>linking</tei:cell>
+    <tei:cell>Linking, segmentation and alignment</tei:cell>
+  </tei:row>
+  <tei:row>
+    <tei:cell>msdescription</tei:cell>
+    <tei:cell>Manuscript Description</tei:cell>
+
+  </tei:row>
+  <tei:row>
+    <tei:cell>namesdates</tei:cell>
+    <tei:cell>Names and dates</tei:cell>
+  </tei:row>
+  <tei:row>
+    <tei:cell>nets</tei:cell>
+
+    <tei:cell>Graphs, networks and trees</tei:cell>
+  </tei:row>
+  <tei:row>
+    <tei:cell>spoken</tei:cell>
+    <tei:cell>Transcribed Speech</tei:cell>
+  </tei:row>
+  <tei:row>
+
+    <tei:cell>tagdocs</tei:cell>
+    <tei:cell>Documentation of TEI modules</tei:cell>
+  </tei:row>
+  <tei:row>
+    <tei:cell>
+      <tei:hi>tei</tei:hi>
+    </tei:cell>
+
+    <tei:cell>Declarations for datatypes, classes, and macros available to all
+TEI modules</tei:cell>
+  </tei:row>
+  <tei:row>
+    <tei:cell>textcrit</tei:cell>
+    <tei:cell>Text criticism</tei:cell>
+  </tei:row>
+  <tei:row>
+
+    <tei:cell>
+      <tei:hi>textstructure</tei:hi>
+    </tei:cell>
+    <tei:cell>Default
+text structure</tei:cell>
+  </tei:row>
+  <tei:row>
+    <tei:cell>transcr</tei:cell>
+
+    <tei:cell>Transcription of primary sources</tei:cell>
+  </tei:row>
+  <tei:row>
+    <tei:cell>verse</tei:cell>
+    <tei:cell>Verse structures</tei:cell>
+  </tei:row>
+</tei:table>
+</div>
+
+
+<div>
+<head>Writing ODD specifications</head>
+<p>The TEI is written in a source format called <soCalled>ODD</soCalled> (<q>One Document Does it All</q>) which includes the schema fragments, prose documentation, and reference documentation for the TEI Guidelines in a single document.<note place="foot">The concepts of ODD were devised and implemented by Lou
+		Burnard and Michael Sperberg-McQueen early in the development of the
+		TEI. The language developed over time as the TEI was put together, and
+		one form of it was documented in the TEI Guidelines (versions 3 and
+		4); unfortunately, that version of the markup was not what was
+		actually used to write the TEI Guidelines, which diverged into a more
+		complex scheme. For version 5 of the TEI, the entire ODD language was
+		heavily revised and simplified by a working group led by Sebastian
+		Rahtz, and the Guidelines themselves brought into conformance with
+		it.</note>) An ODD specification is a normal TEI XML document which
+	makes use of the <ident>tagdocs</ident> module. This adds a series of
+	elements which are used to specify a new schema, and modifications to
+	the TEI element structure. It is described in detail in the TEI
+	Guidelines chapter <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/TD.html"><title>Documentation Elements</title></ref>, so only a
+	brief summary will be given here.
+
+</p>
+	<p>
+	The recommended way to customize the TEI is to create a formal
+specification expressing your customizations, as an XML document using TEI ODD markup;
+this can then be compiled into a suitable DTD, RELAX NG schema or W3C Schema (together 
+with the appropriate reference documentation), using the <ref target="http://www.tei-c.org/Roma/">Roma</ref> program. 
+<ident type="software">Roma</ident> is a web-based interface for creating TEI customizations,
+which allows you to fill in simple forms to choose modules, add and delete elements, change 
+attributes, and make other customizations. Advanced users can also create the ODD by hand using normal XML editing
+tools.</p>
+
+<p>If, however, you intend to make extensive use of the TEI in
+conjunction with other schemas written in RELAX NG, working directly
+with the RELAX NG modules is probably the best skill to learn. Typical
+TEI users are more likely to work solely within the confines of the
+TEI, and may need to use DTDs or W3C Schema as well as RELAX NG, and so
+writing customizations in the TEI's own language is usually
+better.</p>
+
+
+<p>There are several
+important reasons why this high-level method is recommended:
+<list type="ordered">
+<item>It is independent of the schema type (DTD, RELAX NG schema, 
+W3C schema) and the resulting specification can be used to generate 
+a schema in any of these schema languages.</item>
+
+<item>It lets you document your work using the familiar TEI markup.</item>
+<item>It provides full access to the TEI class system.</item>
+<item>The <ident type="software">Roma</ident> utilities generate a single,
+portable, schema file which you can transfer to other people without
+worrying about link dependencies.</item>
+</list>
+</p>
+    
+    <div>
+        <head>Key concepts</head>
+        
+        <p>There are several core components in the TEI infrastructure which 
+            you should understand before creating your own ODD files. The concept
+        of <emph>modules</emph> has been explained above: TEI elements and attributes
+        are organized into a set of modules which group them according to their purpose.</p>
+        
+        <p><emph>Elements</emph> are normally defined in the context of modules. For 
+            example, the <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-castList.html">castList</ref> 
+            element is defined in the <ident>drama</ident>
+        module. An element is defined (or <soCalled>declared</soCalled>) using the <gi>elementSpec</gi> element.</p>
+        
+        <p>In addition to being defined in modules, elements are also organized into <emph>model classes</emph>.
+        A model class is a method of grouping a number of elements together so that they can be referred to 
+        easily as a group. For example, <ident>model.graphicLike</ident> <q>groups elements containing 
+            images, formulae, and similar objects</q>, such as <gi>formula</gi> and <gi>graphic</gi>. Other 
+            elements (for instance <gi>figure</gi>) can then make use of this model 
+            as part of their content definition. Model classes are defined using the <gi>classSpec</gi> element,
+            with the attribute <code>type="model"</code>.
+        The <gi>classSpec</gi> does not contain a list of elements which belong to the class; instead, elements 
+        "claim membership" of the class through <gi>memberOf</gi> elements in their own <gi>elementSpec</gi>s.</p>
+        
+        <p><emph>Attributes</emph> are always defined using the <gi>attDef</gi> element, but they 
+            may be defined in two different contexts. Some attributes
+        are defined directly on elements; in other words, their definition forms part of the
+        definition of the element on which they appear. For example, the <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-age.html">age</ref> element,
+        which is used to specify the age of a person, has an attribute called <att>value</att>, 
+        which holds the numeric value of the person's age. This attribute is defined directly 
+        as part of the definition of the <gi>age</gi> element itself.</p>
+        
+        <p>Other attributes are used on a range of different elements. It is not efficient 
+        or practical to define the same attribute multiple times, once on each element, so 
+        these attributes are defined as part of <emph>attribute classes</emph>. The Guidelines 
+            provides a <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/REF-CLASSES-ATTS.html">list</ref> 
+        of all the TEI attribute classes. Each class provides one or more attributes which are 
+        likely to be useful in a particular context or for a particular purpose. For example, the 
+        <att>source</att> attribute, which is used to provide a pointer to a bibliographical source
+            for a quotation or reference, is defined in the <ident>att.source</ident> class. The 
+            elements <gi>quote</gi>, <gi>q</gi>, <gi>writing</gi> and <gi>egXML</gi> each declare 
+            membership of the <ident>att.source</ident> class, and thus acquire the <att>source</att> 
+            attribute.</p>
+        
+        <p>Attribute classes may be nested. In other words, one attribute class may be a member of
+        another. This is a convenient way of grouping similar classes of attributes so that an element
+        can claim membership of all of them in one operation. For example, there are three base attribute 
+        classes relating to dating attributes: <ident>att.datable.iso</ident> (providing attribute for 
+        expression of dates in ISO format), <ident>att.database.w3c</ident> (providing attributes for 
+        dates in W3C format), and <ident>att.datable.custom</ident> (for dates in non-Gregorian calendars).
+        There is also the <ident>att.datable</ident> class, of which the other three are all members. 
+        An element which claims membership of <ident>att.datable</ident> (such as <gi>date</gi>) will
+        acquire all the attributes in the three base classes. Attribute classes are defined using the 
+        <ident>classSpec</ident> element, with the attribute <code>type="atts"</code>.</p>
+        
+        <p>The final important concept is the idea of a <ident>macro</ident>. A macro is basically a 
+        method of re-using the same block of content in multiple places. The most common macros are those
+        which define datatypes for TEI attributes. For example, the <ident>data.count</ident> macro 
+        provides the definition of a positive integer, which is used as the datatype for more than
+        20 different attributes. Defining this datatype in one location avoids duplication and provides 
+        consistency. Other macros are used to define content models which are useful in the definition of 
+        many different elements; for instance, the <ident>macro.paraContent</ident> macro <q>defines 
+        the content of paragraphs and similar elements</q>, and is used in the definition of 50 
+        different elements. Macros are defined using the <gi>macroSpec</gi> element. </p>
+        
+        <p>With this basic introduction to how elements, attributes and their components and 
+        relationships are defined, you may now want to take a look at some example specifications 
+        from the TEI repository:
+        
+        <list>
+            <item>The <ref target="https://sourceforge.net/p/tei/code/HEAD/tree/trunk/P5/Source/Specs/age.xml"><gi>age</gi></ref> element
+                contains one attribute definition, as mentioned above; it is also a member of three 
+                attribute classes, and one model class. If you look at the root <gi>elementSpec</gi> 
+                element, you'll see the attribute <code>module="namesdates"</code>; this is what 
+                determines that this element is part of the <ident>namesdates</ident> (Names and Dates) 
+                module.</item>
+            
+            <item>The <ref target="https://sourceforge.net/p/tei/code/HEAD/tree/trunk/P5/Source/Specs/att.typed.xml"><ident>att.typed</ident></ref>
+                attribute class defines two attributes, <att>type</att> and <att>subtype</att>. It is 
+            part of the <ident>tei</ident> module.</item>
+            
+            <item>The <ref target="https://sourceforge.net/p/tei/code/HEAD/tree/trunk/P5/Source/Specs/model.orgPart.xml"><ident>model.orgPart</ident></ref> specification demonstrates how simple a model class specification can be.</item>
+            
+        </list>
+        
+        </p>
+        
+    </div>
+    
+    
+    <div>
+        <head>The basic structure of a <gi>schemaSpec</gi></head>
+
+<p>A TEI schema is defined by a <gi>schemaSpec</gi>
+element containing an arbitrary mixture of explicit declarations for
+objects (i.e. elements, classes, or macro specifications)
+and references to other objects containing such declarations. In
+simplified form, the data model is
+<eg>schemaSpec = 
+  (moduleRef | elementSpec | macroSpec | classSpec )*</eg>
+
+where <gi>elementSpec</gi>, <gi>macroSpec</gi> and  <gi>classSpec</gi>
+contain definitions of TEI objects. <gi>moduleRef</gi> references groups
+of existing definitions, in one of two ways:
+<list type="ordered">
+<item>If the <ident>key</ident> attribute is provided, it refers to
+the TEI name for a module, and details of that are accessed from the
+TEI web service database (which may be a local installation).</item>
+
+<item>If the <ident>url</ident> attribute is provided, it refers to an
+external file of schema definitions in the RELAX NG language (this is
+used to pull in non-TEI schemas)</item>
+</list>
+</p>
+
+<p>In the simplest case, a user-defined schema might simply combine
+all the declarations from some nominated modules:
+<eg>
+&lt;TEI>
+  &lt;teiHeader>
+    &lt;fileDesc>
+      &lt;titleStmt>
+
+        &lt;title>TEI with simple setup&lt;/title>
+        &lt;author>Sebastian Rahtz&lt;/author>
+      &lt;/titleStmt>
+      &lt;publicationStmt>&lt;p>freely available&lt;/p>&lt;/publicationStmt>
+      &lt;sourceDesc>
+        &lt;p>Written from scratch.&lt;/p>
+      &lt;/sourceDesc>
+
+    &lt;/fileDesc>
+  &lt;/teiHeader>
+  &lt;text>
+    &lt;body>
+      &lt;schemaSpec ident="oddex1" start="TEI">
+        &lt;moduleRef key="header"/>
+        &lt;moduleRef key="core"/>
+        &lt;moduleRef key="tei"/>
+        &lt;moduleRef key="textstructure"/>
+
+      &lt;/schemaSpec>
+    &lt;/body>
+  &lt;/text>
+  &lt;/TEI></eg>
+Note that this is a normal TEI document, with a metadata header.
+In the other examples that follow, we will usually omit the outer TEI 
+wrapper and just show the <gi>schemaSpec</gi> element.</p>
+
+<p>An ODD processor, given such a document, will combine the
+declarations which belong to the named modules, and deliver the result
+as a schema of some requested type. It might also generate documentation for
+all (and only) the elements declared by those modules.
+The <ident>start</ident> attribute of <gi>schemaSpec</gi> is used to
+specify in a RELAX NG schema which elements are valid entry points.</p>
+
+<p>You can address individual elements or classes of modules by the
+adding <gi>elementSpec</gi>, <gi>classSpec</gi> or <gi>macroSpec</gi>
+elements after <gi>moduleRef</gi>. Each of these must have a
+<ident>mode</ident> attribute on it, which can take four values:
+<list type="gloss">
+<label>add</label><item>the object is entirely new. </item>
+
+<label>replace</label><item>the object entirely replaces the existing
+object with the same <ident>ident</ident>.</item>
+<label>delete</label><item>all references to the  original object with the same 
+<ident>ident</ident> are removed from the schema.</item>
+<label>change</label><item>child elements of the
+object which appear in the original specification are replaced by 
+the versions in the new specification. This may be at any level, as we
+will see in examples below.</item>
+</list>
+It is
+an error to provide <val>replace</val>, <val>delete</val> or
+
+<val>change</val> versions for objects which do not already exist
+in the TEI, and an error to add something with the same
+<ident>ident</ident> attribute as an existing object in the TEI.</p></div>
+
+<div>
+<head>Adding new elements</head>
+<p>A schema can include declarations for new elements, as in
+the following example:
+<eg>
+  &lt;schemaSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" 
+        ident="oddex1.5" start="TEI" xml:base="examples/odd1.5.xml">
+  &lt;moduleRef key="header"/>
+
+  &lt;moduleRef key="core"/>
+  &lt;moduleRef key="tei"/>
+  &lt;moduleRef key="textstructure"/>
+  &lt;elementSpec ident="soundClip" mode="add">
+    &lt;classes>
+      &lt;memberOf key="model.pPart.data"/>
+    &lt;/classes>
+    &lt;content>
+      &lt;rng:text/>
+
+    &lt;/content>
+  &lt;/elementSpec>
+&lt;/schemaSpec>
+</eg>
+A declaration for the element <gi>soundClip</gi>, which is not defined in the TEI
+scheme, will be added to the output schema. This element will also be added to
+the existing TEI class <ident>model.pPart.data</ident>, and will thus be
+avilable in TEI conformant documents.</p>
+
+<p>In the following example
+we add a new element <gi>rebirth</gi> which is modelled on the existing
+
+<gi>birth</gi> element:
+<eg>
+&lt;schemaSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" 
+          ident="oddex4" start="TEI" xml:base="examples/odd4.xml">
+  &lt;moduleRef key="header"/>
+  &lt;moduleRef key="core"/>
+  &lt;moduleRef key="tei"/>
+  &lt;moduleRef key="textstructure"/>
+  &lt;moduleRef key="corpus"/>
+  &lt;elementSpec ident="rebirth" mode="add">
+
+    &lt;gloss>Rebirth details&lt;/gloss>
+    &lt;desc>contains information about a soul's rebirth, such as its date
+    and place.&lt;/desc>
+    &lt;classes>
+      &lt;memberOf key="model.persEventLike"/>
+      &lt;memberOf key="att.editLike"/>
+      &lt;memberOf key="att.datable"/>
+      &lt;memberOf key="att.naming"/>
+    &lt;/classes>
+
+    &lt;content>
+      &lt;rng:ref name="macro.phraseSeq"/> 
+    &lt;/content>
+  &lt;/elementSpec>
+&lt;/schemaSpec>
+</eg>
+There are usually four parts to such an
+element definition:
+<list type="ordered">
+<item>An identifier (in this case the value <val>rebirth</val> for
+the <ident>ident</ident> attribute).</item>
+
+<item>Documentation (the <gi>gloss</gi> and <gi>desc</gi>
+elements)</item>
+<item>Declaration of which classes this element is to be a member of
+(<ident>att.datable</ident>
+and <ident>att.naming</ident>); this is the same as <gi>birth</gi>,
+which we have to find out by looking at the definition of that </item>
+
+<item>The content model for the element, here the general purpose
+pattern <ident>macro.phraseSeq</ident></item>
+</list>
+There is no need to specify a module for the element to appear in, as
+this would not be used for anything.</p>
+</div>
+
+<div>
+<head>Removing elements</head>
+<p>Specifing that we do not want  some of the elements to appear in
+our final schema is easy:
+<eg>
+&lt;schemaSpec ident="oddex2" start="TEI" xml:base="examples/odd2.xml">
+  &lt;moduleRef key="header"/>
+  &lt;moduleRef key="core"/>
+
+  &lt;moduleRef key="tei"/>
+  &lt;moduleRef key="textstructure"/>
+  &lt;elementSpec ident="headItem" mode="delete" module="core"/>
+  &lt;elementSpec ident="headLabel" mode="delete" module="core"/>
+  &lt;elementSpec ident="hyphenation" mode="delete" module="header"/>
+&lt;/schemaSpec>
+</eg>
+Note that no child elements of the deleted object are needed, or  taken
+notice of. </p>
+</div>
+
+<div>
+
+<head>Changing existing elements</head>
+
+<p>When we come to <emph>changing</emph> existing elements, the
+specification looks a little more complex:
+<eg>
+  &lt;schemaSpec ident="oddex3" start="TEI" xml:base="examples/odd3.xml">
+  &lt;moduleRef key="header"/>
+  &lt;moduleRef key="core"/>
+  &lt;moduleRef key="tei"/>
+  &lt;moduleRef key="textstructure"/>
+
+  &lt;elementSpec ident="div" mode="change">
+    &lt;attList>
+      &lt;attDef ident="type" usage="req" mode="change">
+	&lt;gloss>You must indicate the level of the
+	section&lt;/gloss>
+	&lt;datatype>
+	  &lt;rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Code"/>
+	&lt;/datatype>
+	&lt;valList type="closed" mode="replace">
+
+	  &lt;valItem ident="section">
+	    &lt;gloss>1st level section&lt;/gloss>
+	  &lt;/valItem>
+	  &lt;valItem ident="subsection">
+	    &lt;gloss>2nd level section&lt;/gloss>
+	  &lt;/valItem>
+	  &lt;valItem ident="subsubsection">
+	    &lt;gloss>3rd level section&lt;/gloss>
+
+	  &lt;/valItem>
+	&lt;/valList>
+      &lt;/attDef>
+    &lt;/attList>
+  &lt;/elementSpec>
+&lt;/schemaSpec>
+</eg>
+In this example, we are changing the behaviour of the <gi>div</gi>
+element so that the <ident>type</ident> attribute (inherited from the
+class <ident>att.divLike</ident>) is mandatory and chosen from a fixed
+set of values. The <val>change</val> value for <ident>mode</ident>
+
+must be supplied on each identifiable part of the object which is to
+change. So the <gi>elementSpec</gi> itself is in <val>change</val>
+mode, plus the <gi>attDef</gi> for <ident>type</ident>, while the
+<gi>valList</gi> is in <val>replace</val> mode. The elements we
+have <emph>not</emph> specified any change for 
+(examples, references, etc) are copied from the
+original.</p>
+
+<p>Change mode can apply to classes as well as elements. In the
+following example, we remove a set of attributes which are provided
+for any element which is a member of the <ident>att.linking</ident> class:
+<eg>
+  &lt;schemaSpec ident="oddex5" start="TEI" xml:base="examples/odd5.xml">
+  &lt;moduleRef key="header"/>
+  &lt;moduleRef key="core"/>
+  &lt;moduleRef key="tei"/>
+  &lt;moduleRef key="textstructure"/>
+  &lt;moduleRef key="linking"/>
+
+  &lt;classSpec module="linking" ident="att.global.linking" mode="change">
+    &lt;attList>
+      &lt;attDef ident="corresp" mode="delete"/>
+      &lt;attDef ident="synch" mode="delete"/>
+      &lt;attDef ident="sameAs" mode="delete"/>
+      &lt;attDef ident="copyOf" mode="delete"/>
+      &lt;attDef ident="next" mode="delete"/>
+      &lt;attDef ident="prev" mode="delete"/>
+      &lt;attDef ident="exclude" mode="delete"/>
+
+      &lt;attDef ident="select" mode="delete"/>
+    &lt;/attList>
+  &lt;/classSpec>
+&lt;/schemaSpec>
+</eg>
+If you want to change which elements <emph>belong</emph> to 
+<ident>add.linking</ident>, you must change the <gi>classes</gi>
+element of each of the elements separately.</p>
+
+</div>
+
+<div>
+<head>Adding new elements in in a different namespace</head>
+
+<p>A good example of this would be if you wanted to use the W3C XInclude
+scheme in your XML. This is a way of referring to  external files to be 
+transcluded (DTD users will be familiar with the use of file entities
+to perform this job). This document, for example, pulls in a 
+table (created by an automatic process) by using this piece of code:
+<eg><![CDATA[<include href="examples/modules.xml" xmlns="http://www.w3.org/2001/XInclude"/>]]></eg>
+Since the <gi>include</gi> could occur anywhere, we want to add it to
+a TEI class which is referenced almost everywhere;
+<ident>model.inter</ident> does this job nicely. We could pull in an
+external schema which defines <gi>include</gi>, but it may be amusing
+to define it ourselves using this <gi>elementSpec</gi>:
+
+<eg>
+&lt;elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" 
+       ident="xinclude" mode="add" ns="http://www.w3.org/2001/XInclude" xml:base="examples/odd6.xml">
+  &lt;altIdent>include&lt;/altIdent>
+  &lt;classes>
+    &lt;memberOf key="model.inter"/>
+  &lt;/classes>
+  &lt;content>
+    &lt;rng:optional>
+      &lt;rng:element name="fallback" ns="http://www.w3.org/2001/XInclude">
+
+	&lt;rng:zeroOrMore>
+	  &lt;rng:element>
+	    &lt;rng:anyName/>
+	    &lt;rng:zeroOrMore>
+	      &lt;rng:attribute>
+		&lt;rng:anyName/>
+	      &lt;/rng:attribute>
+	    &lt;/rng:zeroOrMore>
+	  &lt;/rng:element>
+
+	&lt;/rng:zeroOrMore>
+      &lt;/rng:element>
+    &lt;/rng:optional>
+  &lt;/content>
+  &lt;attList>
+    &lt;attDef ident="href" usage="req">
+      &lt;datatype>
+	&lt;rng:data type="anyURI"/>
+      &lt;/datatype>
+
+    &lt;/attDef>
+    &lt;attDef ident="parse">
+      &lt;datatype>
+	&lt;rng:choice>
+	  &lt;rng:value>xml&lt;/rng:value>
+	  &lt;rng:value>text&lt;/rng:value>
+	&lt;/rng:choice>
+      &lt;/datatype>
+
+      &lt;defaultVal>xml&lt;/defaultVal>
+    &lt;/attDef>
+    &lt;attDef ident="xpointer">
+      &lt;datatype>
+	&lt;rng:text/>
+      &lt;/datatype>
+    &lt;/attDef>
+    &lt;attDef ident="encoding">
+
+      &lt;datatype>
+	&lt;rng:text/>
+      &lt;/datatype>
+    &lt;/attDef>
+    &lt;attDef ident="accept">
+      &lt;datatype>
+	&lt;rng:text/>
+      &lt;/datatype>
+    &lt;/attDef>
+
+    &lt;attDef ident="accept-charset">
+      &lt;datatype>
+	&lt;rng:text/>
+      &lt;/datatype>
+    &lt;/attDef>
+    &lt;attDef ident="accept-language">
+      &lt;datatype>
+	&lt;rng:text/>
+      &lt;/datatype>
+
+    &lt;/attDef>
+  &lt;/attList>
+&lt;/elementSpec>
+</eg>
+Note the new <ident>ns</ident> attribute on <gi>elementSpec</gi> 
+which says that this element is not to be defined in the default (TEI)
+namespace, and the use of the shorthand RELAX NG method of inline
+element definition of <gi>fallback</gi> within the <gi>include</gi>
+
+element. </p>
+</div>
+
+<div>
+<head>Processing your ODD specification</head>
+
+<p>When you have finished writing your customization, you can turn your ODD into schemas
+or DTDs for use with XML editors or validators, or create schema
+documentation showing the specification for your elements and
+classes. <!-- Both of these tasks are the job of the
+<ident type="software">Roma</ident> family of software. This consists of a set
+of XSLT transformations to manipulate ODD XML files, a script to run
+them in the right way (see <ptr target="#romacommandline"/>), and a
+<ref target="http://www.tei-c.org/Roma/">web-based application</ref> to help
+you develop the ODD XML and run the transformations. --> There are a few options for 
+carrying out both of these tasks:
+<list type="bulleted">
+  <item>the <ref target="http://www.tei-c.org/oxgarage/">OxGarage web-based application</ref></item>
+  <item>the <ref target="use_roma.xml">Roma web-based application</ref></item>
+  <item>the <ref target="#romacommandline">command-line version of Roma</ref></item>
+  <item>the <ref target="http://www.tei-c.org/release/doc/tei-xsl/#commandline">command-line scripts that are part of the TEI stylesheet package</ref></item>
+  <item><ref target="http://www.tei-c.org/release/doc/tei-xsl/#oxygen">&lt;oXygen/&gt; XML Editor version 13.1 or later</ref></item>
+</list>
+</p>
+</div>
+
+</div>
+
+<div>
+<head>Working with RELAX NG schema modules</head>
+<p>If you want to use the RELAX NG schema modules,<note place="foot">Examples of RELAX NG in this section are presented
+using the compact syntax; when you write TEI customizations in the
+ODD system, it is necessary to use the XML syntax.</note> you must always
+write a wrapper schema, selecting the appropriate modules. Thus a minimal TEI
+schema might look like this:
+<eg>
+namespace ns1 = "http://www.tei-c.org/ns/1.0"
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+
+include "http://www.tei-c.org/schema/relaxng/header.rnc" inherit = ns1
+include "http://www.tei-c.org/schema/relaxng/core.rnc" inherit = ns1
+include "http://www.tei-c.org/schema/relaxng/tei.rnc" inherit = ns1
+include "http://www.tei-c.org/schema/relaxng/textstructure.rnc" inherit = ns1
+start = TEI
+
+</eg>
+This is clearer than the DTD method, as it loads files
+containing definitions from explicit URLs. It is then possible to override
+any patterns in the included files; so the following schema
+<eg>
+namespace ns1 = "http://www.tei-c.org/ns/1.0"
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+
+include "http://www.tei-c.org/schema/relaxng/header.rnc" inherit = ns1
+[ define [ name = "mentioned" notAllowed [ ] ] ]
+include "http://www.tei-c.org/schema/relaxng/core.rnc" inherit = ns1
+include "http://www.tei-c.org/schema/relaxng/tei.rnc" inherit = ns1
+include "http://www.tei-c.org/schema/relaxng/textstructure.rnc" inherit = ns1
+start = TEI
+
+</eg>
+loads the <ident>header</ident> module, but then redefines the meaning of
+
+<gi>mentioned</gi> to be the special RELAX NG pattern
+<val>notAllowed</val>. This is a powerful and elegant mechanism; the
+only downside is that you must understand the inner structure of the
+TEI modules.</p>
+<p>RELAX NG patterns are defined for the TEI as follows:
+<list type="unordered">
+<item>Each element, macro and class identifies the module it is part
+of; this determines which schema file its definition is written to.</item>
+<item>Every macro (defined by a <gi>macroSpec</gi> in the source) has
+a RELAX NG pattern of the same name. e.g.
+<eg>macro.glossSeq = altIdent?, equiv*, gloss?, desc?</eg>
+This can be redefined as desired.
+
+</item>
+<item>Class specifications generate a number of patterns, depending on
+their type:
+<list type="ordered"><item>An attribute class generates a pattern which references
+the definition of each of the class attributes.</item>
+<item>Each attribute generates a pattern.</item>
+<item>A model class generates a pattern with an initial value of
+<val>notAllowed</val></item>
+</list>
+Thus the <ident>att.timed</ident> attribute class generates
+<eg>
+tei.timed.attributes =
+  tei.timed.attribute.start,
+  tei.timed.attribute.end,
+  tei.timed.attribute.dur
+tei.timed.attribute.start =
+  attribute start { datatype.uri }?
+tei.timed.attribute.end =
+  attribute end { datatype.uri }?
+tei.timed.attribute.dur =
+  attribute dur { xsd:duration }?
+</eg>
+
+while the
+<ident>model.listLike</ident> model class generates 
+<eg>model.listLike = notAllowed</eg>
+</item>
+<item>Every element generates at least three patterns; the first
+defines the element itself, the second defines its content, and the third its
+attributes. For example, the top-level element <gi>TEI</gi> is defined with:
+<eg>
+TEI =
+  element TEI { TEI.content, TEI.attributes }
+TEI.content = tei.teiHeader, tei.teiText
+TEI.attributes =
+  [ a:defaultValue = "5.0" ] attribute version { xsd:decimal }?,
+  [ a:defaultValue = "TEI" ] attribute TEIform { text }?
+
+</eg>
+Each of these can be redefined
+separately. In addition, for each model class of which the element is
+a member, it generates an addition to the class pattern. Thus
+<gi>biblItem</gi> is a member of the 
+
+<ident>model.biblLike</ident>, 
+<ident>att.declarable</ident>, and 
+<ident>att.typed</ident> classes, so it produces:
+<eg>
+tei.bibl |= biblItem
+tei.declarable |= biblItem
+tei.typed |= biblItem
+</eg>
+so that any reference to <code>model.biblLike</code> will now allow for
+<gi>biblItem</gi> too.
+
+</item>
+</list>
+</p>
+</div>
+
+<div>
+<head>Working with the DTD subset</head>
+<p>It is also possible to work with DTD modules,
+although the TEI does not recommend this any more.
+You specify which modules of the TEI you want
+to use by means of the DTD internal subset. A minimal TEI
+document using this method might start as follows:
+<eg><![CDATA[<!DOCTYPE TEI SYSTEM "http://www.tei-c.org/release/xml/tei/schema/dtd/tei.dtd" [
+<!ENTITY % TEI.header "INCLUDE">
+<!ENTITY % TEI.core "INCLUDE">
+<!ENTITY % TEI.textstructure "INCLUDE">
+]>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">]]></eg>
+This loads the obligatory modules <ident>header</ident>,
+
+<ident>core</ident>, and <ident>textstructure</ident> by setting the
+corresponding parameter entity to <val>INCLUDE</val>.
+</p>
+
+<p> There is a parameter entity for each module(created by prefixing
+the module name with <code>TEI.</code>, so we could request
+the <ident>linking</ident> module to be loaded by adding
+<eg><![CDATA[<!ENTITY % TEI.linking "INCLUDE">]]></eg> to the DTD
+subset. It is also possible to disable particular elements from the
+modules by setting a parameter corresponding to the element. So
+
+<eg><![CDATA[<!ENTITY % ab "IGNORE" >]]></eg> would remove
+<gi>ab</gi> from the list of allowed elements. Although this type of
+customization is useful, it is not possible to use the method to add
+new elements, change attributes, or manipulate classes. That sort of
+change requires a deeper understanding of writing DTD extensions,
+beyond the scope of this introduction.</p>
+</div>
+
+
+
+<div xml:id="romacommandline">
+<head>Roma (command line)</head>
+<p>An ODD specification can be processed in a scripting environment
+by using the <ident type="software">roma</ident> command-line script. This takes
+the form:
+
+<eg>  
+Usage: roma [options] schemaspec [output_directory]
+  options, shown with defaults:
+  --xsl=/usr/share/xml/tei/stylesheet
+  --teiserver=http://www.tei-c.org/Query/
+  --localsource=  # local copy of P5 sources
+  options, binary switches:
+  --doc              # create expanded documented ODD (TEI Lite XML)
+  --lang=LANG        # language for names of attrbutes and elements
+  --doclang=LANG     # language for documentation
+  --dochtml          # create HTML version of doc
+  --patternprefix=STRING # prefix relax patterns with STRING
+  --docpdf           # create PDF version of doc
+  --nodtd            # suppress DTD creation
+  --norelax          # suppress RELAX NG creation
+  --noxsd            # suppress W3C XML Schema creation
+  --noteic           # suppress TEI-specific features
+  --debug            # leave temporary files, etc.
+
+</eg>
+By default the script creates DTD, XSD and RELAX NG schemas, each
+of these can be suppressed if needed, and a set of summary
+documentation can be created. The <ident>xsl</ident> and
+<ident>teiserver</ident>
+options point to resources which <ident type="software">roma</ident> needs to do
+its job; if you have a local copy of the TEI XSL stylesheets, or a
+local TEI eXist database, you can make the script independent of web access.
+</p>
+	<p>For information on using the web-based interface to <ident type="software">roma</ident>, see <ref target="use_roma.xml">Creating Customizations with Roma</ref>.</p>
+
+</div>
+
+
+<div>
+<head>Making use of non-TEI schemas</head>
+<p>The TEI was designed to capture all the vagaries of literary and
+linguistic <emph>text</emph>; it does not attempt to describe other
+specialised descriptive languages, such as those for chemistry,
+mathematics, and vector graphics, or the technical vocabulary of
+fields like law, health care and computer science. Some of the areas
+have been addressed as thoroughly as the TEI in their own
+standards. But what if we want to write a composite document mixing
+material from two fields? Since all the TEI elements are in their own
+XML namespace, it is easy to write a document which interleaves TEI
+markup with markup from another namespace, as in this example of TEI
+and Docbook:
+<eg>
+&lt;p>
+The button on our web page shows the the date of the manuscript:
+&lt;guibutton xmlns:dbk="http://docbook.org/docbook-ng">
+  &lt;date calendar="Julian" when="1732-02-22">Feb. 11, 1731/32, O.S.&lt;/date>
+&lt;/guibutton>
+
+Note that the representation is as found in the text, not normalized.
+&lt;/p>
+</eg>
+But what about validating this XML against a schema? Using the
+Namespace-based Validation Dispatching Language (see <ptr target="http://www.nvdl.org/"/>), we can validate the two languages
+separately, but we also want
+a TEI customization which checks where insert of
+<soCalled>foreign</soCalled>
+elements is permitted.
+This means importing another schema, and changing one or more TEI
+classes to allow for the new element(s). If it is also required that 
+TEI elements be allowed inside the elements of the other namespace,
+we also have to modify the other namespace. </p>
+<p>Two common cases which do not require interleaving are:
+<list type="ordered">
+<item>redefining the  content of <gi>formula</gi> to 
+allow for MathML markup.</item>
+<item>redefining the content of <gi>figure</gi> to allow SVG
+markup.</item>
+
+</list>
+In each case, we first need a <gi>moduleRef</gi> which loads the
+external schema in RELAX NG format: <eg><![CDATA[<moduleRef
+url="mathml2-main.rng"/> <moduleRef url="svg-main.rng"/>]]></eg>
+These schemas can be downloaded from <ptr target="http://www.w3.org/Math/"/> and <ptr target="http://www.w3.org/TR/SVG11/"/>; note that they may each need a
+small fix to remove the RELAX NG <gi>start</gi> pattern, as this causes
+a conflict with the TEI definition. These define respectively two
+patterns called <val>mathml.math</val> and <val>svg.svg</val>, which we
+can proceed to add to TEI content models.
+
+<list type="unordered">
+<item>For MathML, we can redefine an existing macro which
+is already provided as a hook inside the content of <gi>formula</gi>:
+<eg>
+&lt;macroSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" type="pe" 
+       ident="datatype.Formula" mode="change" xml:base="examples/addmath.xml">
+  &lt;content>
+    &lt;rng:ref name="mathml.math"/>
+  &lt;/content>
+&lt;/macroSpec>
+</eg>
+</item>
+<item>For SVG, we need to change the model of <gi>figure</gi>, simply
+adding a reference to <val>svg.svg</val> at the end of a <gi>choice</gi> list:
+
+<eg>
+&lt;elementSpec ident="figure" mode="change" xml:base="examples/addsvg.xml">
+  &lt;content>
+    &lt;rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      &lt;rng:choice>
+	&lt;rng:ref name="model.Incl"/>
+	&lt;rng:ref name="figure"/>
+	&lt;rng:ref name="figDesc"/>
+	&lt;rng:ref name="graphic"/>
+	&lt;rng:ref name="head"/>
+
+	&lt;rng:ref name="p"/>
+	&lt;rng:ref name="svg.svg"/>
+      &lt;/rng:choice>
+    &lt;/rng:zeroOrMore>
+  &lt;/content>
+&lt;/elementSpec>
+</eg>
+</item>
+</list>
+</p>
+</div>
+
+<div xml:id="i18n">
+<head>Internationalisation</head>
+<p>A common requirement for changing existing elements is
+to make  the visible names suit a local language.
+If we want to use the TEI in an entirely Spanish-speaking
+environment, it can be useful to have a copy of the TEI schema
+with all the names converted to Spanish. Documents can be created
+and edited using this schema, and then translated back to the
+canonical form for long-term archiving or distribution.</p>
+
+<p>These translations are possible because the TEI
+defines names in English for elements and attributes, but does not use
+these names directly in content models for other elements. This means
+that the names can be changed without breaking the rest of the
+system. For example, the content model for <gi>series</gi> is
+<eg>series.content =
+  (text
+   | model.gLike
+   | title
+   | editor
+   | respStmt
+   | biblScope
+   | model.global)*
+</eg>
+but the <q>title</q> here refers to the <emph>pattern</emph> called
+
+<q>title</q>; this is defined with:
+<eg>title =  element title { title.content, title.attributes }</eg>
+If we change it to 
+<eg>title =  element titulo { title.content, title.attributes }</eg>
+the definition for <gi>series</gi> will still work, and the pointers
+to the content and attributes of <q>title</q> remain correct. </p>
+<p>If we create documents using this schema, how can we be
+sure the back translation is easy? Because we can always
+go back to the source of the customization to find the original name.</p>
+
+<p>The translation process in ODD is simple. Each element or attribute
+affected must be supplied in <val>change</val> mode, with simply
+an <gi>altIdent</gi> provided. For example, here are some translations
+into Spanish:
+<eg>
+&lt;schemaSpec xml:base="examples/spanish.xml">
+&lt;elementSpec ident="quote" module="core" mode="change">
+  &lt;altIdent type="lang">cita&lt;/altIdent>
+&lt;/elementSpec>
+&lt;elementSpec ident="cit" module="core" mode="change">
+  &lt;altIdent type="lang">citaCompl&lt;/altIdent>
+
+&lt;/elementSpec>
+&lt;elementSpec ident="mentioned" module="core" mode="change">
+  &lt;altIdent type="lang">mencionado&lt;/altIdent>
+&lt;/elementSpec>
+&lt;elementSpec ident="when" module="linking" mode="change">
+  &lt;altIdent type="lang">cuando&lt;/altIdent>
+  &lt;attList>
+    &lt;attDef mode="change" ident="unit">
+      &lt;altIdent type="lang">unidad&lt;/altIdent>
+
+    &lt;/attDef>
+  &lt;/attList>
+&lt;/elementSpec>
+&lt;/schemaSpec>
+</eg>
+Notice that each <gi>attDef</gi> element must also specify
+<val>change</val> mode, as well as the parent <gi>elementSpec</gi>.</p>
+
+<p>Constructing specifications like this by hand is both tedious and
+error-prone, and it would be unwise for each separate project to make
+its own translations. The TEI Consortium therefore maintains a set of
+translated names,<note place="foot">A project initiated by Alejandro
+Bia, and extended by Sebastian Rahtz and Arno Mittelbach.</note> and a utility to generate the appropriate ODD code for
+elements from all the modules you have selected.  The
+<ident type="software">Roma</ident> application automates this to choosing from a drop
+down list as shown in the figure below.
+<figure xml:id="roma_lang_select">
+  <graphic width="6in" url="roma_lang_select.png"/>
+  <head>Choosing language for names in <ident>Roma</ident></head>
+</figure>
+The effect of using a translated schema is shown in the image below; the <ident>oXygen</ident> editor is
+shown editing <title>Hamlet</title> with Spanish element and attribute
+names. 
+
+<figure xml:id="oxygen_edit_spanish">
+  <graphic width="6in" url="oxygen_edit_spanish.png"/>
+  <head>Editing TEI text using a schema translated to Spanish</head>
+</figure>
+</p>
+</div>
+
+
+</body>
+
+</text>
+</TEI>
+
