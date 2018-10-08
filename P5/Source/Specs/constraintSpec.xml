@@ -27,7 +27,7 @@ $Id$
     </sequence>
   </content>    
   <constraintSpec ident="sch_no_more" scheme="schematron">
-    <desc>Relationship between scheme attribute and contents: Schematron 1.x</desc>
+    <desc xml:lang="en" versionDate="2018-07-06">Relationship between scheme attribute and contents: Schematron 1.x</desc>
     <constraint>
       <sch:ns prefix="s" uri="http://www.ascc.net/xml/schematron"/>
       <sch:report test="tei:constraint/s:*  and  @scheme = ('isoschematron','schematron')">Rules
@@ -37,7 +37,7 @@ $Id$
     </constraint>
   </constraintSpec>
   <constraintSpec ident="isosch" scheme="schematron">
-    <desc>Relationship between scheme attribute and contents: ISO Schematron</desc>
+    <desc xml:lang="en" versionDate="2018-07-06">Relationship between scheme attribute and contents: ISO Schematron</desc>
     <constraint>
       <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
       <sch:report test="tei:constraint/sch:*  and  not( @scheme eq 'schematron')">Rules
@@ -71,6 +71,20 @@ $Id$
         <val>schematron</val> is used to indicate that ISO Schematron
         is used within the <gi>constraintSpec</gi>.</p>
       </remarks>
+    </attDef>
+    <attDef ident="type" mode="replace">
+      <desc versionDate="2018-09-17" xml:lang="en">characterizes the
+      <gi>constraintSpec</gi> element in some sense; used to indicate
+      when a <gi>constraintSpec</gi> warns about a deprecated
+      construct.</desc>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
+      <valList type="semi">
+	<valItem ident="deprecationWarning">
+	  <desc xml:lang="en" versionDate="2018-09-17">Indicates that
+	  this constraint specification warns that some other
+	  construct in the schema is deprecated.</desc>
+	</valItem>
+      </valList>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
