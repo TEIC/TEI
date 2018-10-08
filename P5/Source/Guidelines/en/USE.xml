@@ -258,7 +258,7 @@ that practice. -->
           identifiers for the same markup construct, and an ODD processor may choose which of them
           to use for a given purpose. Each such alternative name is supplied by means of an
             <gi>altIdent</gi> element within the specification element concerned.</p>
-        <p>For example, the following declaration converts <gi>note</gi> to <gi scheme="imaginary">annotation</gi>: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und"><elementSpec ident="note" module="core" mode="change">
+        <p>For example, the following declaration converts <gi>note</gi> to <gi scheme="imaginary">annotation</gi>: <egXML source="#NONE" xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und"><elementSpec ident="note" module="core" mode="change">
               <altIdent>annotation</altIdent>
             </elementSpec></egXML> Note that the <att>mode</att> attribute on the
             <gi>elementSpec</gi> now takes the value <val>change</val> to indicate that those parts
@@ -289,7 +289,7 @@ that practice. -->
             <gi>content</gi> element within the <gi>elementSpec</gi> which specifies it. For
           example, the specification for the element <gi>term</gi> provided by these Guidelines
           contains a <gi>content</gi> element like the following: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
-            <content>
+          <content>
               <macroRef key="macro.phraseSeq"/>
             </content>
           </egXML> This indicates that the content model consists of a reference to a macro called
@@ -373,7 +373,7 @@ that practice. -->
             <gi>eg</gi> element in fact has no local attributes defined for it at all: we will
           therefore need to add not only an <gi>attDef</gi> element to define the new attribute, but
           also an <gi>attList</gi> to hold it. </p>
-        <p>We begin by adding the new <att>valid</att> attribute: <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="eg" module="tagdocs" mode="change">
+        <p>We begin by adding the new <att>valid</att> attribute: <egXML source="#NONE" xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="eg" module="tagdocs" mode="change">
               <attList>
                 <attDef ident="valid" mode="add" ns="http://www.example.com/ns/nonTEI">
                   <desc>indicates whether or not the example is considered to be valid</desc>
@@ -415,7 +415,7 @@ that practice. -->
             <gi>attDef</gi> element. Suppose for example that, rather than simply indicating whether
           or not the example is considered valid by means of the values <val>true</val> and
             <val>false</val> we wish to provide a more nuanced indication, using encoded values such
-          as A, B, and C. A declaration like the following might be appropriate: <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full">
+          as A, B, and C. A declaration like the following might be appropriate: <egXML source="#NONE" xmlns="http://www.tei-c.org/ns/Examples" rend="full">
             <elementSpec ident="eg" module="tagdocs" mode="change">
               <attList>
                 <attDef ident="valid" ns="http://www.example.com/ns/nonTEI" mode="add">
@@ -592,7 +592,7 @@ that practice. -->
       <p>Suppose, for example, that we wish to add a new attribute <att scheme="imaginary">topic</att> to the existing TEI element <gi>p</gi>. In the absence of namespace
         considerations, this would be an unclean modification, since <gi>p</gi> does not currently
         have such an attribute. The most appropriate action is to explicitly attach the new
-        attribute to a new namespace by a declaration such as the following: <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full" valid="false"><elementSpec ident="p" mode="change">
+        attribute to a new namespace by a declaration such as the following: <egXML source="#NONE" xmlns="http://www.tei-c.org/ns/Examples" rend="full" valid="false"><elementSpec ident="p" mode="change">
             <attList>
               <attDef ident="topic" mode="add" ns="http://www.example.org/ns/nonTEI">
                 <desc>indicates the topic of a TEI paragraph</desc>
@@ -601,7 +601,7 @@ that practice. -->
             </attList>
           </elementSpec></egXML></p>
       <p>Document instances using a schema derived from this ODD can now indicate clearly the status
-        of this attribute: <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full">
+        of this attribute: <egXML source="#NONE" xmlns="http://www.tei-c.org/ns/Examples" rend="full">
           <div xmlns:my="http://www.example.org/ns/nonTEI">
             <!-- ... -->
             <p n="12" my:topic="rabbits">Flopsy, Mopsy, Cottontail, and Peter...</p>
@@ -1320,9 +1320,7 @@ Conal -->
             <classes>
               <memberOf key="att.typed"/>
             </classes>
-            <content>
-              <!--…-->
-            </content>
+            <!-- ... -->
           </elementSpec>
         </egXML> The effect of its membership in the <ident type="class">att.typed</ident> class is
         to provide <gi>p</gi> with a <att>type</att> attribute and a <att>subtype</att> attribute.
@@ -1332,9 +1330,7 @@ Conal -->
             <classes>
               <memberOf key="att.typed"/>
             </classes>
-            <content>
-              <!--… -->
-            </content>
+            <!-- ... -->
             <attList>
               <attDef ident="subtype" mode="delete"/>
             </attList>
@@ -1348,19 +1344,23 @@ Conal -->
         members of other attribute classes, membership must be followed recursively.</p>
 
       <p>The effect of the concatenation of unidentifiable components should be considered
-        carefully. An original may have <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        carefully. An original may have
+	<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
           <elementSpec ident="p">
             <desc>marks paragraphs in prose.</desc>
-            <!--…-->
+            <!-- ... -->
           </elementSpec>
-        </egXML> which would usefully be extended with this: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="es">
+        </egXML> which would usefully be extended with this:
+	<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="es" source="#NONE">
           <elementSpec ident="p" mode="change">
             <desc xml:lang="es">marca párrafos en prosa.</desc>
-            <!--…-->
+            <!-- ... -->
           </elementSpec>
-        </egXML> to provide an alternate description in another language. Nothing prevents the user
-        from supplying <gi>desc</gi> several times in the same language, and subsequent applications
-        will have to decide what that may mean. </p>
+        </egXML>
+	to provide an alternate description in another language.
+	Nothing prevents the user from supplying <gi>desc</gi> several
+	times in the same language, and subsequent applications will
+	have to decide what that may mean.</p>
 
       <p>Similar considerations apply to multiple example elements, though these are less likely to
         cause problems in documentation. Note that existing examples can only be deleted by
@@ -1375,7 +1375,7 @@ Conal -->
           forgiving than DTDs.</note> A content model like this: <!--<egXML xml:lang="und"
             xmlns="http://www.tei-c.org/ns/Examples">
           <elementSpec ident="person">
-            <!-\-…-\->
+            <!-\- ... -\->
             <content>
               <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
                 <rng:oneOrMore>
@@ -1389,7 +1389,7 @@ Conal -->
                 </rng:zeroOrMore>
               </rng:choice>
             </content>
-            <!-\-…-\->
+            <!-\- ... -\->
           </elementSpec>-->
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
           <elementSpec ident="person">
@@ -1416,7 +1416,7 @@ Conal -->
         simplification as a distinct stage during processing of ODD sources.</p>
       <p>If an element refers directly to an element child, like this: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
           <elementSpec ident="figure">
-            <!--…-->
+            <!-- ... -->
             <content>
               <alternate minOccurs="0" maxOccurs="unbounded">
                 <classRef key="model.pLike"/>
@@ -1428,7 +1428,7 @@ Conal -->
               </alternate>
             </content>
 
-            <!--…-->
+            <!-- ... -->
           </elementSpec>
         </egXML> and <gi>figDesc</gi> has been deleted,<note place="bottom">Note that deletion of
           required elements will cause the schema specification to accept as valid documents which
@@ -1561,7 +1561,7 @@ performance.attributes = att.global.attributes, empty
       <p>Thirdly, the problem of missing components must be resolved. For example, consider this
         (fictitious) model for <gi>sp</gi>: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
           <elementSpec ident="sp">
-            <!--…-->
+            <!-- ... -->
             <content>
               <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
               <sequence minOccurs="0" maxOccurs="1">
@@ -1569,18 +1569,18 @@ performance.attributes = att.global.attributes, empty
                 <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
               </sequence>
             </content>
-            <!--…-->
+            <!-- ... -->
           </elementSpec>
         </egXML> This proposes anything from the class <ident type="class">model.global</ident>,
         followed optionally by a <gi>speaker</gi> element followed by anything from the <ident type="class">model.global</ident> class. What happens if <gi>speaker</gi> is removed from
         the schema? The following would result: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" valid="false" source="#UND">
           <elementSpec ident="sp">
-            <!--…-->
+            <!-- ... -->
             <content>
               <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
               <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
             </content>
-            <!--…-->
+            <!-- ... -->
           </elementSpec>
         </egXML> which is illegal in DTD and W3C schema languages, since for a given member of
           <ident type="class">model.global</ident> it is impossible to be sure which rule is being
@@ -1650,7 +1650,7 @@ xsi:schemaLocation { list { data.namespace, data.pointer }+ }]]></eg> inside the
             these elements, it should be used regardless, but if there are several, local processing
             rules will need to be applied. For example, if there are several with different values
             of <att>xml:lang</att>, a locale indication in the processing environment might be used
-            to decide which to use. For example, <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul">
+            to decide which to use. For example, <egXML source="#SELF" xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul">
               <elementSpec module="core" ident="head">
                 <equiv/>
                 <gloss>heading</gloss>
@@ -1705,7 +1705,7 @@ head =
         <head>Macros</head>
         <p>An ODD macro generates a corresponding RELAX NG pattern by processing the body of the
             <gi>content</gi> element in the same way as elsewhere. Thus <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
-            <macroSpec module="tei" type="pe" ident="macro.phraseSeq">
+            <macroSpec module="tei" ident="macro.phraseSeq">
               <content>
                 <alternate minOccurs="0" maxOccurs="unbounded">
                   <textNode/>
@@ -1802,7 +1802,7 @@ head =
           indicate which of the available patterns is required by means of the <att>expand</att>
           attribute. </p>
         <p>Attribute classes work by producing a pattern containing definitions of the appropriate
-          attributes. So <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          attributes. So <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SELF">
             <classSpec module="verse" type="atts" ident="att.enjamb">
               <attList>
                 <attDef ident="enjamb" usage="opt">
@@ -1832,7 +1832,7 @@ head =
                 </attDef>
               </attList>
             </classSpec>
-          </egXML> produces <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          </egXML> produces <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
             <rng:define xmlns:rng="http://relaxng.org/ns/structure/1.0" name="att.enjamb.attributes">
               <rng:ref name="att.enjamb.attribute.enjamb"/>
               <rng:empty/>
@@ -1863,7 +1863,7 @@ head =
             <gi>rng:attribute</gi>. The body of the attribute is taken from the <gi>datatype</gi>
           child, unless there is a supporting <gi>valList</gi> with a <att>type</att> value of
             <val>closed</val>. In that case an <gi>rng:choice</gi> is created, listing the allowed
-          values. Thus the following attribute definition <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          values. Thus the following attribute definition <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
             <attDef ident="full" usage="opt">
               <defaultVal>yes</defaultVal>
               <valList type="closed">
@@ -1880,7 +1880,7 @@ head =
                 </valItem>
               </valList>
             </attDef>
-          </egXML> may generate this RELAX NG code: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          </egXML> may generate this RELAX NG code: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
             <define xmlns="http://relaxng.org/ns/structure/1.0" name="att.full">
               <optional>
                 <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="full" a:defaultValue="yes">
@@ -1933,7 +1933,7 @@ head =
         </list>
         <!-- The implementer who avoids careful study of this issue
 will come to grief.--></p>
-      <p>Let us consider a complete example, a simple element with no attributes of its own: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <p>Let us consider a complete example, a simple element with no attributes of its own: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
           <elementSpec module="namesdates" ident="faith">
             <desc>specifies the faith, religion, or belief set of a person.</desc>
             <classes>

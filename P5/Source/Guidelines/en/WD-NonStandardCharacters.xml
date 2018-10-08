@@ -292,7 +292,7 @@ characters. The type of association is indicated by the
 uppercase equivalences, <code>lowercase</code> for lowercase
 equivalences, <code>standard</code> for standardized forms, and
 <code>simplified</code> for simplified characters, etc., as in the
-following example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><charDecl>
+following example: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><charDecl>
 <char xml:id="aenl">
 <charName>LATIN LETTER ENLARGED SMALL A</charName>
 <charProp>
@@ -307,7 +307,7 @@ following example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><charDecl>
 <p>The mapping element may also be used to represent a mapping of the
 character or (more likely) glyph under discussion onto a character
 from the private use area as in this example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><charDecl>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><charDecl>
 <glyph xml:id="z103">
 <glyphName>LATIN LETTER Z WITH TWO STROKES</glyphName>
 <mapping type="standard">Z</mapping>
@@ -521,7 +521,7 @@ which are not specified by the Unicode Standard.</p>
 <p>Assuming that we wish to distinguish the variant glyphs from the
 standard representation for the character concerned, we will need to
 define distinct <gi>glyph</gi> elements, one for each of the forms of
-the letter we wish to distinguish: <egXML xmlns="http://www.tei-c.org/ns/Examples"><charDecl>
+the letter we wish to distinguish: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><charDecl>
   <glyph xml:id="r1">
   <glyphName>LATIN SMALL LETTER R WITH ONE FUNNY STROKE</glyphName>
    <charProp>
@@ -541,7 +541,7 @@ the letter we wish to distinguish: <egXML xmlns="http://www.tei-c.org/ns/Example
 </charDecl> </egXML>
      With these definitions in place, occurrences of these two special
      "r"s in the text can be annotated using the element <gi>g</gi>:
-     <egXML xmlns="http://www.tei-c.org/ns/Examples">
+     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
     <p>Wo<g ref="#r1">r</g>ds in this 
       manusc<g ref="#r2">r</g>ipt are sometimes
       written in a funny way.</p> </egXML></p>
@@ -551,14 +551,14 @@ the letter we wish to distinguish: <egXML xmlns="http://www.tei-c.org/ns/Example
      annotation on the content of the element <gi>g</gi>.  This mechanism
      can be used to represent common manuscript abbreviations or ligatures, as in the
      following examples:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p> ... <g ref="#Filig">Fi</g>lthy riches...</p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p> ... <g ref="#Filig">Fi</g>lthy riches...</p>
 <!-- in the charDecl -->
   <glyph xml:id="Filig">
    <glyphName>LATIN UPPER F AND LATIN LOWER I LIGATURE</glyphName>  
    <figure><graphic url="Filig.png"/></figure>
  </glyph>
 </egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p> ... <abbr><g ref="#per">per</g></abbr> ardua</p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p> ... <abbr><g ref="#per">per</g></abbr> ardua</p>
 <!-- in the charDecl -->
   <glyph xml:id="per">
    <glyphName>LATIN ABBREVIATION PER</glyphName>  
@@ -612,7 +612,7 @@ represented as follows:<eg><![CDATA[<abbr>&r1;</abbr>]]></eg></p>
     advantage of this information. To achieve this, we simply define
     within a <gi>charDecl</gi> element a <gi>glyph</gi> that has two
     <gi>mapping</gi> elements, as shown here:
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="zh">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="zh" source="#NONE">
       <charDecl>
 	<glyph xml:id="u8aaa">
 	  <mapping type="Unicode">說</mapping>
@@ -627,7 +627,7 @@ represented as follows:<eg><![CDATA[<abbr>&r1;</abbr>]]></eg></p>
     given in the content of the element. We could then use this
     <gi>glyph</gi> element's unique identifier <val>u8aaa</val> to
     refer to it from within a text as follows.
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="zh">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="zh" source="#NONE">
       <g ref="#u8aaa">說</g>
     </egXML>
     </p>
@@ -635,7 +635,7 @@ represented as follows:<eg><![CDATA[<abbr>&r1;</abbr>]]></eg></p>
     multiple variants, none of which has been defined in Unicode. In
     this case, we need to define one as a new character using
     <gi>char</gi>, and the others as glyphs using <gi>glyph</gi>.
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
       <charDecl>
 	<char xml:id="newchar1">
 	  <!-- more properties here -->
@@ -684,9 +684,9 @@ loses the fact that the sequence of composed characters is regarded as
 a single object; the second is not reliably portable. 
 Therefore, the recommended
 representation is to use the <gi>g</gi> element defined by
-the module defined in this chapter: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><g ref="#ydotacute"/></egXML>. This makes it possible for the encoder to
+the module defined in this chapter: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#NONE"><g ref="#ydotacute"/></egXML>. This makes it possible for the encoder to
 provide useful documentation for the particular character or glyph so referenced:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><char xml:id="ydotacute">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><char xml:id="ydotacute">
        <charName>LATIN SMALL LETTER Y WITH DOT ABOVE AND
        ACUTE</charName>
      <charProp>
@@ -708,9 +708,9 @@ provide useful documentation for the particular character or glyph so referenced
     entirely distinct  derived characters. For a given character
     (say that represented by the numeric-character reference <code>&amp;#x4EBA;</code>)
     the circled variant might conveniently be represented as
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"> <g ref="#U4EBA-circled"/></egXML>, which references a
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#NONE"> <g ref="#U4EBA-circled"/></egXML>, which references a
     definition such as the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><char xml:id="U4EBA-circled">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><char xml:id="U4EBA-circled">
   <charName>CIRCLED IDEOGRAPH</charName>
   <charProp>
     <unicodeName>character-decomposition-mapping</unicodeName>
@@ -806,7 +806,7 @@ presented from left to right (English, Russian, Greek), but there are
 also several widely-used scripts which run right-to-left (Arabic,
 Hebrew). Writing in which the lines of glyphs are presented vertically
 and read from right to left is also often encountered, notably in
-older East Asian scripts (Sinitic characters, Japanese Kana, Korean
+East Asian scripts (Sinitic characters, Japanese Kana, Korean
 Hangul, Vietnamese chữ nôm). In many cases, a language normally uses
 the same <term>writing mode</term> (we use this term to
 refer to the orientation of individual glyphs within a line and the
@@ -856,15 +856,22 @@ default writing mode. Even where this attribute is not used, passages
 in different scripts will use different Unicode characters, and will
 thus imply a particular default writing mode. </p>
 
-<p>Consider the case of an English text containing a few Arabic words : </p>
-               <eg> The Arabic term قلم رصاص means "pencil".</eg>
-<p>A correct TEI encoding might read as follows: </p>
-               <egXML xmlns="http://www.tei-c.org/ns/Examples"> <s xml:lang="en">The Arabic term
-<term xml:lang="ar">قلم رصاص</term> means "pencil".</s></egXML>
-<p>We might assume that it is the presence of the <att>xml:lang</att> attribute with value <val>ar</val> that causes processing software to display the Arabic from right to left, but in fact, this is not the case. The order in which the Arabic characters appear when rendered would be the same, even if the markup were not present: </p>
-               <egXML xmlns="http://www.tei-c.org/ns/Examples"> <s>The Arabic term قلم رصاص means "pencil".</s></egXML>
-
-<p>This is because Arabic glyphs are always displayed right to left,
+<p>Consider the case of an English text containing a few Arabic words:
+<eg> The Arabic term قلم رصاص means "pencil".</eg>
+A correct TEI encoding might read as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+  <s xml:lang="en">The Arabic term
+  <term xml:lang="ar">قلم رصاص</term> means "pencil".</s>
+</egXML>
+We might assume that it is the presence of the <att>xml:lang</att>
+attribute with value <val>ar</val> that causes processing software to
+display the Arabic from right to left, but in fact, this is not the
+case. The order in which the Arabic characters appear when rendered
+would be the same, even if the markup were not present:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+  <s>The Arabic term قلم رصاص means "pencil".</s>
+</egXML>
+This is because Arabic glyphs are always displayed right to left,
 even when they appear within a left-to-right English sentence. Like
 most other codepoints in the Unicode standard, they have a specific
 directionality setting which helps any rendering software determine
@@ -873,7 +880,7 @@ left-to-right bidirectionality setting, as do the digits 0 to 9; the
 Hebrew א (alef) is strongly right-to-left. Of course, some glyphs
 (common punctuation marks such as the period or comma for example)
 have weak or neutral settings because they may appear in several
-contexts. </p>
+contexts.</p>
 
 <p>The Unicode Bidirectional Algorithm (<ref target="#WDBIDI">Unicode
 Consortium, 2017</ref>)
@@ -1011,7 +1018,7 @@ of a document will probably include many other properties of course. </p>
    form of a glossary list: </p>
    <p>
                      <figure>
-                        <graphic width="250px" url="Images/ja_vertical_indonesian_frag.png"/>
+                        <graphic width="500px" height="624px" url="Images/ja_vertical_indonesian_frag.jpg"/>
 <head>Detail from p.62 of <title xml:lang="ja">インドネシア語". 崎山理. 1985. 外国語との対照  II. 講座日本語学 11.</title></head>
                      </figure>
                   </p>
@@ -1029,50 +1036,54 @@ of a document will probably include many other properties of course. </p>
  <!-- ... -->
 </list></egXML>
    <p>The rule <code>text-orientation: mixed</code> specifies that
-   <quote>characters from horizontal-only scripts are set sideways, i.e. 90°
-   clockwise from their standard orientation in horizontal
+   <quote>characters from horizontal-only scripts are set sideways,
+   i.e. 90° clockwise from their standard orientation in horizontal
    text. Characters from vertical scripts are set with their intrinsic
-   orientation</quote> (<ref target="http://www.w3.org/TR/css-writing-modes-3/#text-orientation">fantasai
-   2014</ref>). Since the default value for <code>text-orientation</code> is <code>mixed</code>, 
-     this rule is not strictly required. However, if the Indonesian glyphs (which are roman 
-     characters) had been set vertically, like this:</p>
+   orientation</quote> (<ref
+   target="http://www.w3.org/TR/css-writing-modes-3/#text-orientation">fantasai
+   2014</ref>). Since the default value for
+   <code>text-orientation</code> is <code>mixed</code>, this rule is
+   not strictly required. However, if the Indonesian glyphs (which are
+   roman characters) had been set vertically, like this:</p>
    <p>
-                     <figure>
-                        <graphic width="150px" url="Images/ja_vertical_indonesian_frag.rotated.jpg"/>
-   <head>Fragment of previous image with Indonesian glyphs upright.</head>
-                     </figure>
-
-
-                  </p>
+     <figure>
+       <graphic width="150px" url="Images/ja_vertical_indonesian_frag_rotated.jpg"/>
+       <head>Fragment of previous image with Indonesian glyphs upright.</head>
+     </figure>
+   </p>
    <p>then an encoding like the following could be used to make this explicit: </p>
-                                 <egXML xmlns="http://www.tei-c.org/ns/Examples"><list type="gloss" xml:lang="ja" style="writing-mode: vertical-rl; text-orientation: upright">
- <label xml:lang="id">hampir</label>
- <item>「近い、ほとんど」</item>
- <label xml:lang="id">baru</label>
- <item>「新しい、ばかい」</item>
- <!-- ... -->
-</list></egXML>
-   <p>The rule <code>text-orientation: upright</code> specifies that 
-     <quote>characters from horizontal-only scripts are rendered upright, 
-       i.e. in their standard horizontal orientation. Characters from vertical 
-       scripts are set with their intrinsic orientation and shaped normally</quote> (<ref target="http://www.w3.org/TR/css-writing-modes-3/#text-orientation">fantasai
-2014</ref>).</p>
-   <p> </p>
-               </div>
-               <div type="div3" xml:id="WDWMEG3">
-                  <head>Vertical Orientation in Horizontal Scripts</head>
-   <p>It is not unusual to see text from horizontal languages written vertically 
-     even where no vertically-written script is involved. This example is a 
-     fragment from a table of information about agricultural development 
-     on Vancouver Island, written in 1855: </p>
-   <p>
-                     <figure>
-                        <graphic width="450px" url="Images/bcgenesis_co_305_06_00131v_table_extract.jpg"/>
-   <head>Enclosure with <title>Despatch to London</title> 10048, CO
-   305/6, p. 131v from <ptr target="http://bcgenesis.uvic.ca/getDoc.htm?id=V55116.scx"/></head>
-                     </figure>
-                  </p>
-   <p>Four of the subheading cells in this fragment contain English text written vertically, 
+   <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+     <list type="gloss" xml:lang="ja" style="writing-mode: vertical-rl; text-orientation: upright">
+       <label xml:lang="id">hampir</label>
+       <item>「近い、ほとんど」</item>
+       <label xml:lang="id">baru</label>
+       <item>「新しい、ばかい」</item>
+       <!-- ... -->
+     </list>
+   </egXML>
+   <p>The rule <code>text-orientation: upright</code> specifies that
+   <quote>characters from horizontal-only scripts are rendered
+   upright, i.e. in their standard horizontal orientation. Characters
+   from vertical scripts are set with their intrinsic orientation and
+   shaped normally</quote> (<ref
+   target="http://www.w3.org/TR/css-writing-modes-3/#text-orientation">fantasai
+   2014</ref>).</p>
+   </div>
+   <div type="div3" xml:id="WDWMEG3">
+     <head>Vertical Orientation in Horizontal Scripts</head>
+     <p>It is not unusual to see text from horizontal languages
+     written vertically even where no vertically-written script is
+     involved. This example is a fragment from a table of information
+     about agricultural development on Vancouver Island, written in
+     1855: </p>
+     <p>
+       <figure>
+	 <graphic width="450px" url="Images/bcgenesis_co_305_06_00131v_table_extract.jpg"/>
+	 <head>Enclosure with <title>Despatch to London</title> 10048, CO
+	 305/6, p. 131v from <ptr target="http://bcgenesis.uvic.ca/getDoc.htm?id=V55116.scx"/></head>
+       </figure>
+     </p>
+     <p>Four of the subheading cells in this fragment contain English text written vertically, 
      bottom-to-top, to conserve space on the page. To describe this sort of phenomenon, 
      we can use the <code>text-orientation</code> property again: </p>
                  
@@ -1082,11 +1093,13 @@ of a document will probably include many other properties of course. </p>
      For the present example, we will make use only of the <soCalled>sideways-left</soCalled> value, 
      which <quote>causes text to be set as if in a horizontal layout, but rotated 90° counter-clockwise.</quote> 
      We might encode the third of the four cells containing vertical text like this: </p>
-                                 <egXML xmlns="http://www.tei-c.org/ns/Examples"> <cell style="writing-mode: vertical-lr; text-orientation: sideways-left">
- <lb/>Cash Value
- <lb/>of
- <lb/>Farms
- </cell></egXML>
+     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+       <cell style="writing-mode: vertical-lr; text-orientation: sideways-left">
+	 <lb/>Cash Value
+	 <lb/>of
+	 <lb/>Farms
+       </cell>
+     </egXML>
    <p>The <code>writing-mode</code> property captures the fact that the script is written vertically, and 
      its lines are to be read from left to right (so the line containing <quote>of</quote> 
      is to the right of that containing <quote>Cash value</quote>), while the <code>text-orientation</code> 
@@ -1119,8 +1132,10 @@ of a document will probably include many other properties of course. </p>
                   <eg> The Arabic term قلم رصاص means "pencil".</eg>
    <p>we could use the direction property to make directionality explicit:</p>
    <p><code>direction: ltr | rtl</code></p>
-                                 <egXML xmlns="http://www.tei-c.org/ns/Examples"> <s xml:lang="en" style="direction: ltr">The Arabic term
- <term xml:lang="ar" style="direction: rtl; unicode-bidi: embed">قلم رصاص</term> means "pencil".</s></egXML>
+   <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+     <s xml:lang="en" style="direction: ltr">The Arabic term
+     <term xml:lang="ar" style="direction: rtl; unicode-bidi: embed">قلم رصاص</term> means "pencil".</s>
+   </egXML>
    <p>The use of the <code>direction</code> property to record the observed directionality 
      of the text is unambiguous, even though it is (as we noted above) superfluous. 
      The use of the <code>unicode-bidi</code> property here may require some explanation. 
@@ -1197,7 +1212,7 @@ of a document will probably include many other properties of course. </p>
    <p>The <code>transform</code> property takes as its value one or more of the transform functions, 
      one of which is the function <code>rotateZ()</code>:</p>
               
-                           <egXML xmlns="http://www.tei-c.org/ns/Examples"><ab style="transform:rotateZ(-45deg)">TEI-C.ORG</ab></egXML>
+                           <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><ab style="transform:rotateZ(-45deg)">TEI-C.ORG</ab></egXML>
               
    <p>Any rotation must take place clockwise around an axis positioned relative 
      to the element being rotated, and the <code>transform-origin</code> property 
@@ -1215,7 +1230,7 @@ of a document will probably include many other properties of course. </p>
                         <graphic url="Images/rotation_on_y_axis.png"/>
                      </figure>
                   </p>
-                                 <egXML xmlns="http://www.tei-c.org/ns/Examples"> <ab style="transform:rotateY(45deg)">TEI-C.ORG</ab></egXML>
+                                 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"> <ab style="transform:rotateY(45deg)">TEI-C.ORG</ab></egXML>
               
    <p>These are obviously trivial examples, but similar features do appear in historical texts. 
      George Herbert's <title level="m">The Temple</title> includes two stanzas headed 
@@ -1230,7 +1245,7 @@ of a document will probably include many other properties of course. </p>
                   </p>
               
    <p>This could be encoded thus: </p>
-                                 <egXML xmlns="http://www.tei-c.org/ns/Examples">
+   <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 				   <lg style="transform:rotateZ(90deg)">
  <l>My tender age in ſorrow did beginne:</l>
  <l>And ſtill with ſickneſſes and ſhame</l>
@@ -1252,13 +1267,13 @@ of a document will probably include many other properties of course. </p>
    glyphs are reversed, so that these lines appear as <soCalled>mirror
    writing</soCalled>, as in the following ancient Greek inscription:
                      <figure>
-                        <graphic url="Images/boustrophedon_small_J.NW.Epeiros.13.p03.jpg"/>
+                        <graphic width="592px" height="502px" url="Images/boustrophedon_small_J_NW_Epeiros_13_p03.jpg"/>
 <head>Leaden plaque bearing an inquiry by Hermon from the oracular
 precinct at Dodona. (L.H. Jeffery Archive)</head>
                      </figure>
                   </p>
    <p>This might be transcribed as follows (ignoring word boundaries for the moment): </p>
-                                 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#WD-BOUS"> <ab>
+   <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#WD-BOUS"> <ab>
  <lb/>ΗΕΡΜΟΝΤΙΝA
  <lb/><seg style="rotateY(180deg)">ΚΑΘΕΟΝΠΟΤΘΕΜ</seg>
  <lb/>ΕΝΟΣΥΕΝΕΑϜ
@@ -1317,11 +1332,14 @@ precinct at Dodona. (L.H. Jeffery Archive)</head>
 <p>The gaiji module described in this chapter makes available the following
 components:
 <moduleSpec xml:id="DWD" ident="gaiji">
-<altIdent type="FPI">Character and Glyph
-Documentation</altIdent><desc>Character and glyph documentation</desc>
-<desc xml:lang="fr">Représentation des caractères et des glyphes non standard</desc>
-  <desc xml:lang="zh-TW">文字與字體說明</desc>
-<desc xml:lang="it">Documentazione di caratteri non standard e glifi</desc><desc xml:lang="pt">Documentação dos carateres</desc><desc xml:lang="ja">外字モジュール</desc></moduleSpec>
+  <altIdent type="FPI">Character and Glyph Documentation</altIdent>
+  <desc xml:lang="en" versionDate="2006-09-13">Character and glyph documentation</desc>
+  <desc xml:lang="fr" versionDate="2018-07-12">Représentation des caractères et des glyphes non standard</desc>
+  <desc xml:lang="zh-TW" versionDate="2018-07-12">文字與字體說明</desc>
+  <desc xml:lang="it" versionDate="2018-07-12">Documentazione di caratteri non standard e glifi</desc>
+  <desc xml:lang="pt" versionDate="2018-07-12">Documentação dos carateres</desc>
+  <desc xml:lang="ja" versionDate="2018-07-12">外字モジュール</desc>
+</moduleSpec>
 
 The selection and combination of modules to form a TEI schema is described in
 <ptr target="#STIN"/>.
