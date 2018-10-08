@@ -407,6 +407,7 @@ dependencies:
 clean:
 	(cd Exemplars; make clean)
 	(cd Test; make clean)
+	rm -f repodate.xml
 	rm -rf release Guidelines Guidelines-web Schema DTD dtd Split
 	rm -rf Guidelines.??? Guidelines-*
 	rm -f *.isosch.xsl
