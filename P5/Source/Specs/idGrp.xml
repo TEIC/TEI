@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+$Date$
+$Id$
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" xml:id="idGrp" ident="idGrp">
+  <gloss versionDate="2018-10-26" xml:lang="en">identifier group</gloss>
+   <desc versionDate="2018-10-26" xml:lang="en" xml:id="idGrp.desc">groups one or more locators or identifiers concerning a single object or resource</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="model.biblPart"/>
+  </classes>
+  <content>
+    <alternate minOccurs="0" maxOccurs="unbounded">
+      <classRef key="model.placeNamePart"/>
+      <elementRef key="institution"/>
+      <elementRef key="repository"/>
+      <elementRef key="collection"/>
+      <elementRef key="idno"/>
+      <elementRef key="msName"/>
+      <elementRef key="objectName"/>
+      <elementRef key="altIdentifier"/>
+    </alternate>
+   </content>
+  <constraintSpec scheme="schematron" ident="idGrp_minimal">
+    <constraint>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" 
+        test="not(count(*) gt 0)">An idGrp must contain at minimum a single piece of locating or identifying information.</report>
+    </constraint>
+  </constraintSpec>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <idGrp>
+        <country>United Kingdom</country>
+        <region>Oxfordshire</region>
+        <settlement>Oxford</settlement>
+        <institution>University of Oxford</institution>
+        <repository>Ashmolean Museum</repository>
+        <collection>English Treasures</collection>
+        <idno type="ashmolean">AN1836p.135.371</idno>
+        <idno type="wikipedia">https://en.wikipedia.org/wiki/Alfred_Jewel</idno>
+        <objectName>Alfred Jewel</objectName>
+      </idGrp>
+    </egXML>
+  </exemplum>
+  
+  <listRef>
+    <ptr target="#NDOBJ"/>
+  </listRef>
+  
+</elementSpec>

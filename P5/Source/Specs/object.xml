@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+$Date$
+$Id$
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="object">
+  <desc versionDate="2018-07-15" xml:lang="en">contains a description of a single identifiable object.</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="att.sortable"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.declaring"/>
+    <memberOf key="att.docStatus"/>
+    <memberOf key="att.canonical"/>
+    <memberOf key="model.objectLike"/>
+  </classes>
+  <content>
+    <sequence>
+      <elementRef key="idGrp"/>
+      <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      <alternate>
+        <classRef key="model.pLike" minOccurs="0" maxOccurs="unbounded"/>
+        <sequence>
+          <elementRef key="msContents" minOccurs="0"/>
+          <elementRef key="physDesc" minOccurs="0"/>
+          <elementRef key="history" minOccurs="0"/>
+          <elementRef key="additional" minOccurs="0"/>
+        </sequence>
+      </alternate>
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.noteLike"/>
+        <classRef key="model.biblLike"/>
+        <elementRef key="linkGrp"/>
+        <elementRef key="link"/>
+      </alternate>
+      <elementRef key="object" minOccurs="0"/>
+    </sequence>
+  </content>
+    <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listObject>
+        <object xml:id="AlfredJewel">
+          <idGrp>
+            <country>United Kingdom</country>
+            <region>Oxfordshire</region>
+            <settlement>Oxford</settlement>
+            <institution>University of Oxford</institution>
+            <repository>Ashmolean Museum</repository>
+            <collection>English Treasures</collection>
+            <idno type="ashmolean">AN1836p.135.371</idno>
+            <idno type="wikipedia">https://en.wikipedia.org/wiki/Alfred_Jewel</idno>
+            <objectName>Alfred Jewel</objectName>
+          </idGrp>
+          <physDesc>
+            <p> The Alfred Jewel is about 6.4 cm in length and is made of combination of filigreed <material>gold</material>
+              surrounding a polished teardrop shaped piece of transparent <material>quartz</material>. Underneath the rock
+              crystal is a cloisonné enamel image of a man with ecclesiastical symbols. The sides of the jewel holding the
+              crystal in place contain an openwork inscription saying "AELFRED MEC HEHT GEWYRCAN", meaning 'Alfred ordered
+              me made'. </p>
+          </physDesc>
+          <history>
+            <origin>It is generally accepted that the Alfred Jewel dates from the <origDate>late 9th Century</origDate> and
+              was most likely made in <origPlace>England</origPlace>. </origin>
+            <provenance when="1693">The jewel was discovered in 1693 at Petherton Park, North Petherton in the English
+              county of Somerset, on land owned by Sir Thomas Wroth. North Petherton is about 8 miles away from Athelney,
+              where King Alfred founded a monastery. </provenance>
+            <provenance when="1698">A description of the Alfred Jewel was first published in 1698, in the Philosophical
+              Transactions of the Royal Society.</provenance>
+            <acquisition> It was bequeathed to Oxford University by Colonel Nathaniel Palmer (c. 1661-1718) and today is in
+              the Ashmolean Museum in Oxford. </acquisition>
+          </history>
+        </object>
+        
+      </listObject>
+      
+      <!-- Elsewhere in document -->
+      <p> The <objectName ref="#MinsterLovellJewel">Minster Lovell Jewel</objectName> is probably the most similar to the
+        <objectName ref="#AlfredJewel">Alfred Jewel</objectName> and was found in <placeName ref="#MinsterLovell">Minster
+          Lovell</placeName> in <placeName ref="#Oxfordshire">Oxfordshire</placeName> and is kept at the <orgName
+            ref="#AshmoleanMuseum">Ashmolean Museum</orgName>. 
+      </p>
+      
+      
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#NDOBJ"/>
+  </listRef>
+ </elementSpec>
