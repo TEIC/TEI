@@ -7,10 +7,14 @@
     <memberOf key="model.common"/>
   </classes>
   <content>
-    
+    <elementRef key="fallback" minOccurs="0" maxOccurs="1"/>
+    </content>
+   <!-- 
+    </elementRef>
     <rng:optional>
       <rng:element name="fallback"
 		   ns="http://www.w3.org/2001/XInclude">
+        
 	<rng:zeroOrMore>
 	  <rng:element>
 	    <rng:anyName/>
@@ -23,7 +27,7 @@
 	</rng:zeroOrMore>
       </rng:element>
     </rng:optional>
-  </content>
+  </content>-->
   <attList>
     <attDef ident="href" usage="req">
       <datatype>
@@ -66,4 +70,11 @@
       </datatype>
     </attDef>
   </attList>
+</elementSpec>
+
+<elementSpec ident="fallback" ns="http://www.w3.org/2001/XInclude">
+ <content>
+   <anyElement except="http://www.w3.org/2001/XInclude"
+   minOccurs="1" maxOccurs="unlimited"/>
+   </content>
 </elementSpec>
