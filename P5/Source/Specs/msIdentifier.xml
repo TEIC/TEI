@@ -38,12 +38,13 @@ the  manuscript being described.</desc>
           <elementRef key="collection" minOccurs="0" maxOccurs="unbounded"/>
         
         
-          <elementRef key="idno" minOccurs="0"/>
+          <elementRef key="idno" minOccurs="0" maxOccurs="unbounded"/>
         
       </sequence>
       
         <alternate minOccurs="0" maxOccurs="unbounded">
           <elementRef key="msName"/>
+          <elementRef key="objectName"/>
           <elementRef key="altIdentifier"/>
         </alternate>
       
@@ -51,7 +52,7 @@ the  manuscript being described.</desc>
   </content>
   <constraintSpec scheme="schematron" ident="msId_minimal">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="not(parent::tei:msPart) and       (local-name(*[1])='idno' or       local-name(*[1])='altIdentifier' or       normalize-space(.)='')">An msIdentifier must contain either a repository or location of some type, or a manuscript name</report>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="not(parent::tei:msPart) and (local-name(*[1])='idno' or local-name(*[1])='altIdentifier' or normalize-space(.)='')">An msIdentifier must contain either a repository or location.</report>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">

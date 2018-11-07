@@ -27,8 +27,16 @@ typically by means of annotations at the foot of the page.</desc>
     <macroRef key="macro.phraseSeq"/>
   </content>
   <constraintSpec ident="catchword_in_msDesc" scheme="schematron">
+    <!-- 
+         The <egXML> referred to in the constraint below is, of
+         course, in the teix: namespace, not the tei: namespace.
+         However, at the point in the processing pipeline when we want
+         to test this the content of <egXML>s have been extracted and
+         put in the TEI namespace for testing.
+         At least, that's what I think is going on. —Syd, 2018-10-01
+      -->
     <constraint>
-      <sch:assert test="ancestor::tei:msDesc" role="nonfatal">WARNING: deprecated use of element — The <sch:name/> element will not be allowed outside of msDesc as of 2018-10-01.</sch:assert>
+      <sch:assert test="ancestor::tei:msDesc or ancestor::tei:egXML">The <sch:name/> element should not be used outside of msDesc.</sch:assert>
     </constraint> 
   </constraintSpec>
   <exemplum xml:lang="en">
