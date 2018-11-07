@@ -922,7 +922,40 @@ structure itself may be represented using feature structures (<ptr target="#FS"/
 </p>
 </div>
 
+  
 </div>
+  
+  <div type="div3" xml:id="NDOBJN"><head>Object Names</head>
+    <!-- JC: Expand this prose! -->
+    
+    <p><specList><specDesc key="objectName"/></specList></p>
+    
+    <p>As with other proper nouns or noun phrases used as names, the names of objects  
+      may be marked up simply with the <gi>name</gi> element. For those working with a variety of 
+      named objects the <gi>objectName</gi> element provides more flexibility. 
+      
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <p> The <objectName ref="#MinsterLovellJewel">Minster Lovell Jewel</objectName> is probably the most similar to the
+          <objectName ref="#AlfredJewel">Alfred Jewel</objectName> and was found in <placeName ref="#MinsterLovell">Minster
+            Lovell</placeName> in <placeName ref="#Oxfordshire">Oxfordshire</placeName> and is kept at the <orgName
+              ref="#AshmoleanMuseum">Ashmolean Museum</orgName>. 
+        </p>
+        
+      </egXML>
+      </p>
+    <p>The <gi>objectName</gi> element may be used to encode any named object whether or not this is a text-bearing object. 
+      The use of <gi>objectName</gi> by itself does not categorize 
+      the object referenced, but this may be done further with the <att>type</att> and <att>subtype</att> attributes or through reference to a <gi>taxonomy</gi>. 
+      Additionally, the use of the <gi>objectName</gi> element says nothing about 
+      the physical reality of the object – that is whether it is real, fictional, purported, or missing – and this may be one aspect that some 
+      may wish to record through the <att>type</att> attribute. Where more detailed information is available for a named object the <att>ref</att> attribute should be used to point to an <gi>object</gi> element or other source of information 
+      about this object. The <gi>objectName</gi> element is intended for named objects; where an object 
+      is mentioned through a descriptive phrase but not named explicitly the <gi>rs</gi> element should be used.
+      
+      
+    </p>
+  </div>
+  
 </div>
 
 <div type="div2" xml:id="NDPERS">
@@ -2402,6 +2435,125 @@ occupation and residence.</p>
 </specGrp>
 </div>
 </div>
+  
+  
+  <div xml:id="NDOBJ">
+    <head>Objects</head>
+    <!-- JC: Expand prose here! -->
+    
+    <p>
+      <specList>
+      <specDesc key="object"/>
+      <specDesc key="objectName"/>
+      <specDesc key="listObject"/>
+      </specList>
+    
+    An object is any material thing whether real, in existence, fictional, missing, or purported about which more information is known. 
+      
+      Where objects have proper names the <gi>objectName</gi> element may be used to encode these. However, many objects are not 
+      named but the <gi>object</gi> element may still be used to provide a description of them. 
+      The <gi>object</gi> element is a more general descriptive form of the <gi>msDesc</gi> element. The latter should be used 
+      for describing manuscripts and similar text-bearing objects but can be viewed as a more specific form of the <gi>object</gi> element.
+      </p>
+    
+   
+    
+    <p>
+      The <gi>object</gi> element usually appears inside the <gi>listObject</gi> element which is used to group descriptions of 
+      identifiable objects. This is a member of <ident type="class">model.listLike</ident> and so <gi>listObject</gi> may appear 
+      anywhere that <gi>list</gi> is allowed. This enables the flexibility of using <gi>listObject</gi> to contain a set of 
+      metadata descriptions stored in the header, or as a list of objects from a source document.
+    </p>
+   
+   <p>
+     <specList>
+       <specDesc key="idGrp"/>
+       <specDesc key="msContents"/>
+       <specDesc key="physDesc"/>
+       <specDesc key="history"/>
+       <specDesc key="additional"/>
+     </specList>
+     
+     
+     
+     Overall, the basic structure of an object element is akin to that of <gi>msDesc</gi> in that after a group of identifying information, it has the option of 
+     paragraphs or,  if the <ident type="module">msdescription</ident> module is loaded, <gi>msContents</gi>, <gi>physDesc</gi>, <gi>history</gi>, and 
+     <gi>additional</gi> elements for descriptive metadata about this object. Although these elements originate from manuscript description 
+     the <gi>object</gi> element may be used for all forms of object (whether text-bearing or not).
+     The <gi>idGrp</gi> element is a general-purpose grouping element for location or identification information relating to a single object 
+     or resource. It is very similar to an <gi>msIdentifier</gi> element with less contraints on the order of its contents.
+     The <gi>msContents</gi> element is used to provide a description 
+     of the intellectual contents of any text on an object and, being optional, is not necessary if there are no 
+     intellectual contents to describe. (Such contents, especially in the case of artistic objects, may not always be textual.) 
+     The <gi>physDesc</gi> element may be used to give a physical description of the object either in prose or using more structured elements 
+     as and where they apply to that kind of object. The <gi>history</gi> element provides the option to describe the history of the 
+     object as paragraphs or with more structure using the <gi>origin</gi> element, as many <gi>provenance</gi> stages 
+     as are appropriate, and <gi>acquisition</gi> to describe its current ownership. The <gi>additional</gi> element may be used to provide 
+     information about surrogates for the object (such as digital facsimiles) as well as administrative and curatorial information. 
+     
+       
+       <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <listObject>
+           <object xml:id="Alfred-Jewel">
+             <idGrp>
+               <country>United Kingdom</country>
+               <region>Oxfordshire</region>
+               <settlement>Oxford</settlement>
+               <institution>University of Oxford</institution>
+               <repository>Ashmolean Museum</repository>
+               <collection>English Treasures</collection>
+               <idno type="ashmolean">AN1836p.135.371</idno>
+               <idno type="wikipedia">https://en.wikipedia.org/wiki/Alfred_Jewel</idno>
+               <objectName>Alfred Jewel</objectName>
+             </idGrp>
+             <physDesc>
+               <p> The Alfred Jewel is about 6.4 cm in length and is made of combination of filigreed <material>gold</material>
+                 surrounding a polished teardrop shaped piece of transparent <material>quartz</material>. Underneath the rock
+                 crystal is a cloisonné enamel image of a man with ecclesiastical symbols. The sides of the jewel holding the
+                 crystal in place contain an openwork inscription saying "AELFRED MEC HEHT GEWYRCAN", meaning 'Alfred ordered
+                 me made'. </p>
+             </physDesc>
+             <history>
+               <origin>It is generally accepted that the Alfred Jewel dates from the <origDate>late 9th Century</origDate> and
+                 was most likely made in <origPlace>England</origPlace>. </origin>
+               <provenance when="1693">The jewel was discovered in 1693 at Petherton Park, North Petherton in the English
+                 county of Somerset, on land owned by Sir Thomas Wroth. North Petherton is about 8 miles away from Athelney,
+                 where King Alfred founded a monastery. </provenance>
+               <provenance when="1698">A description of the Alfred Jewel was first published in 1698, in the Philosophical
+                 Transactions of the Royal Society.</provenance>
+               <acquisition> It was bequeathed to Oxford University by Colonel Nathaniel Palmer (c. 1661-1718) and today is in
+                 the Ashmolean Museum in Oxford. </acquisition>
+             </history>
+           </object>
+           
+         </listObject>
+         
+         <!-- Elsewhere in document -->
+         <p> The <objectName ref="#MinsterLovellJewel">Minster Lovell Jewel</objectName> is probably the most similar to the
+           <objectName ref="#Alfred-Jewel">Alfred Jewel</objectName> and was found in <placeName ref="#MinsterLovell">Minster
+             Lovell</placeName> in <placeName ref="#Oxfordshire">Oxfordshire</placeName> and is kept at the <orgName
+               ref="#AshmoleanMuseum">Ashmolean Museum</orgName>. 
+         </p>
+         
+         
+       </egXML>
+       
+   </p>
+   
+        
+<!-- Include all the necessary object-related elements  -->    
+      <specGrp xml:id="DNDOBJ" n="Names for objects">
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/objectName.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/object.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/listObject.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.objectLike.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/idGrp.xml"/>
+      </specGrp>
+    
+  </div>
+  
+  
+  
 <div xml:id="NDNYM"><head>Names and Nyms</head>
 <p>So far we have discussed ways in which a name or referring string
 encountered in running text may be resolved by considering the object
@@ -2787,8 +2939,9 @@ express the same normalized value in any of the following additional ways:
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.personal.xml"/>    
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.placeLike.xml"/>    
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.datable.iso.xml"/> 
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.temporal.iso.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.duration.iso.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.duration.iso.xml"/> 
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.temporal.iso.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.duration.iso.xml"/>
     <specGrpRef target="#DNDPER"/>
     <specGrpRef target="#DNDPLAC"/>
     <specGrpRef target="#DCCAHPA"/>
