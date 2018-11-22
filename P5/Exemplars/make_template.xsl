@@ -35,7 +35,7 @@
 	schematypens="http://purl.oclc.org/dsdl/schematron"</xsl:text>
       </xsl:processing-instruction>
         <xsl:text>&#10;</xsl:text>
-        <xsl:apply-templates select="* | text() | comment | processing-instruction()"/>
+        <xsl:apply-templates select="* | text() | comment() | processing-instruction()"/>
       </xsl:result-document>
 
       <xsl:result-document href="{$Name}.properties"> smallIcon=../icons/TEI_16.gif
@@ -49,11 +49,11 @@
 
   <xsl:template match="*">
     <xsl:copy>
-      <xsl:apply-templates select="@* | * | text() | comment | processing-instruction()"/>
+      <xsl:apply-templates select="@* | * | text() | comment() | processing-instruction()"/>
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="@* | text() | comment | processing-instruction()">
+  <xsl:template match="@* | text() | comment() | processing-instruction()">
     <xsl:copy-of select="."/>
   </xsl:template>
 
