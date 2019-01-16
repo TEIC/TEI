@@ -1137,14 +1137,16 @@ not for those for elements nested within.--></p>
       structures cannot occur at the same level. Similarly, it is an error if the contents of an 
       apparatus entry place a <gi>p</gi> inside another <gi>p</gi> or an <gi>l</gi> inside an <gi>l</gi>.</p>
     <p>Phenomena such as omissions and transpositions in witnesses will require some encoding strategies
-      that differ from those in the examples above. An omission in one witness may be encoded using an
-      empty <gi>rdg</gi>, thus:
+      that differ from those in the examples above. An editor wishing to signal an omission in one witness 
+      should encode the omission using an empty <gi>rdg</gi>, thus:
       <egXML xmlns="http://www.tei-c.org/ns/Examples"><app xml:id="d1e372">
   <lem xml:id="d1e373" source="#Heyworth"><l n="18">Hypsipyle uacuo constitit in thalamo:</l></lem>
   <rdg xml:id="d1e376" wit="#J" cause="homeoarchon"/>
 </app></egXML>
       Notice that in this example, the variation occurs at the unit of the verse line. The scribe of MS J has 
-      skipped line 18 (probably by mistake) because, like line 19, it begins with the name "Hypsipyle."
+      skipped line 18 (probably by mistake) because, like line 19, it begins with the name "Hypsipyle." If a witness 
+      contains an interpolation that the editor does not wish to show in the base text, an empty
+      <gi>lem</gi> should be used, in the same fashion.
     </p>
     <p>Transpositions are harder to encode, because they involve variation that occurs in different 
       locations. A single <gi>app</gi> will therefore not be sufficient, and the variants must be linked. 
@@ -1167,7 +1169,7 @@ not for those for elements nested within.--></p>
       Note that both <gi>app</gi>s are linked via the <att>exclude</att> attribute, because they are mutually
       exclusive: if one reading is chosen for display in a reading interface, for example, the other must 
       disappear and vice versa. To avoid repetition, the second pair of lines can make use of the <att>copyOf</att> 
-      attribute. If they were both transposed and somewhat different, then both sets would be written in full.
+      attribute. If they were both transposed and somewhat different, then both sets should be written in full.
     </p>
     <p>Apparatus entries may nest when there is variation at both higher and lower structural levels, e.g.:
       <egXML xmlns="http://www.tei-c.org/ns/Examples"><app xml:id="d1e275">
