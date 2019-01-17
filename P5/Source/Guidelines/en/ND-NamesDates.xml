@@ -1959,8 +1959,6 @@ occupation and residence.</p>
 
     <div xml:id="NDOBJ">
       <head>Objects</head>
-      <!-- JC: Expand prose here! -->
-
       <p>
         <specList>
           <specDesc key="object"/>
@@ -1971,14 +1969,21 @@ occupation and residence.</p>
         However, many objects are not named but the <gi>object</gi> element may still be used to provide a description of them.
         The <gi>object</gi> element is a more general descriptive form of the <gi>msDesc</gi> element. The latter should be used
         for describing manuscripts and similar text-bearing objects but can be viewed as a more specific form of the
-          <gi>object</gi> element. </p>
+          <gi>object</gi> element. There is no restriction on the form, size, or type of object that may be described by an 
+        <gi>object</gi> element, however, objects over a certain size may be more adequately described by a <gi>place</gi> 
+        element depending on context.  
+	<!-- JC: Update after a couple of releases -->
+        <emph>Please note:</emph> The <gi>object</gi> element is a recent addition to the TEI Guidelines and as such may 
+        be more prone to further revision as its use develops. This may be particularly evident where its contents borrowed from <gi>msDesc</gi>
+        have yet to be generalized from their use in the context of manuscript descriptions.  </p>
 
 
 
       <p> The <gi>object</gi> element usually appears inside the <gi>listObject</gi> element which is used to group descriptions
         of identifiable objects. This is a member of <ident type="class">model.listLike</ident> and so <gi>listObject</gi> may
         appear anywhere that <gi>list</gi> is allowed. This enables the flexibility of using <gi>listObject</gi> to contain a set
-        of metadata descriptions stored in the header, or as a list of objects from a source document. </p>
+        of metadata descriptions stored in the header, or as a list of objects transcribed from a source document. The equivalent list 
+        for manuscript descriptions is <gi>listBibl</gi>. </p>
 
       <p>
         <specList>
@@ -1987,11 +1992,20 @@ occupation and residence.</p>
           <specDesc key="physDesc"/>
           <specDesc key="history"/>
           <specDesc key="additional"/>
-        </specList> Overall, the basic structure of an object element is akin to that of <gi>msDesc</gi> in that after a group of
+        </specList> 
+        Overall, the basic structure of an <gi>object</gi> element is akin to that of <gi>msDesc</gi> in that it is providing a 
+        structured description of an object. After a group of
         identifying information, it has the option of paragraphs or, if the <ident type="module">msdescription</ident> module is
         loaded, <gi>msContents</gi>, <gi>physDesc</gi>, <gi>history</gi>, and <gi>additional</gi> elements for descriptive
         metadata about this object. Although these elements originate from manuscript description the <gi>object</gi> element may
-        be used for all forms of object (whether text-bearing or not). The <gi>objectIdentifier</gi> element is a general-purpose
+        be used for all forms of object (whether text-bearing or not).  
+
+	<!-- JC: Update after a couple of releases -->
+        Where descendents of <gi>object</gi> still have the hallmarks 
+        of their use in manuscript description, the descriptions as relating to manuscripts should be interpreted as applying to all 
+        forms of object (text-bearing) or not. 
+	</p><p>
+       The <gi>objectIdentifier</gi> element is a general-purpose
         grouping element for location or identification information relating to a single object or resource. It is very similar to
         an <gi>msIdentifier</gi> element with less contraints on the order of its contents. The <gi>objectIdentifier</gi> may be more
         or less detailed dependent on the needs of the encoder. In some cases an <gi>object</gi> may be used mostly as a common
