@@ -53,17 +53,17 @@ check.stamp:
 p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml p5odds.odd check.stamp
 	@echo get latest date:
 	@echo VCS is ${VCS}
-	if [ "${VCS}" = "svn" ] ; \
-	then \
-		if [ ${INJENKINS} = "true" ] ; \
-		then svn info --xml svn://svn.code.sf.net/p/tei/code/trunk/P5 ; \
-			else svn info --xml  ; \
-		fi > repodate.xml ; \
-	fi
-	if [ ${VCS} = "git" ] ; \
-	then \
-		git log --max-count=1 --pretty=format:"<info type=\"git\"><entry><commit revision=\"%h\"><date>%ai</date></commit></entry></info>" > repodate.xml ; \
-	fi
+	case ${VCS} in \
+	   svn) if [ ${INJENKINS} = "true" ] ; \
+	           then svn info --xml svn://svn.code.sf.net/p/tei/code/trunk/P5 ; \
+	           else svn info --xml  ; \
+           fi > repodate.xml ; \
+           ;; \
+       git) git log --max-count=1 --pretty=format:"<info type=\"git\"><entry><commit revision=\"%h\"><date>%ai</date></commit></entry></info>" > repodate.xml \
+            ;; \
+        *) echo "<info type=\"local_build\"><entry><commit revision=\"local_build\"><date>"`date '+%Y-%m-%d %H:%M:%S %z'`"</date></commit></entry></info>" > repodate.xml \
+            ;; \
+    esac
 	@echo BUILD: Generate modular DTDs, Schemas, Schematron and miscellaneous outputs
 	${ANT} -lib Utilities/lib/jing.jar:Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DDRIVER=${DRIVER} base subset outputs
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
@@ -131,7 +131,7 @@ mobi:  Guidelines.mobi
 
 Guidelines.mobi: check.stamp p5.xml
 	${ANT}  -f ${XSL}/epub/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=teikindle -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines-kindle.epub -Dcoverimage=`pwd`/Utilities/cover.jpg
-	-command -v  kindlegen && kindlegen Guidelines-kindle.epub -o Guidelines.mobi
+	-export PATH=/usr/share/kindlegen:$$PATH ; command -v  kindlegen && kindlegen Guidelines-kindle.epub -o Guidelines.mobi
 	rm Guidelines-kindle.epub
 
 fonttest:
@@ -390,9 +390,6 @@ install-database: dist-database
 
 install: clean install-schema install-doc install-test install-exemplars install-source install-database
 
-changelog:
-	../write_changelog
-
 dependencies:
 	@echo to make this thing build under Ubuntu/Debian, here are all the packages you will need:
 	@echo	msttcorefonts
@@ -410,6 +407,7 @@ dependencies:
 clean:
 	(cd Exemplars; make clean)
 	(cd Test; make clean)
+	rm -f repodate.xml
 	rm -rf release Guidelines Guidelines-web Schema DTD dtd Split
 	rm -rf Guidelines.??? Guidelines-*
 	rm -f *.isosch.xsl

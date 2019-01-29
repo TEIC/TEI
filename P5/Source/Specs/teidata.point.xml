@@ -15,8 +15,14 @@ See the file COPYING.txt for details
     <!-- Replace the above @restriction attribute with the one below on 2019-02-25, per issue #1727 -->
     <!-- restriction="(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)"-->
   </content>
-  <constraintSpec validUntil="2019-02-25" scheme="schematron" ident="deprecate_trailing_decimal_point">
+  <constraintSpec validUntil="2019-02-25" scheme="schematron"
+		  type="deprecationWarning" ident="deprecate_trailing_decimal_point">
     <!-- Remove this <constraintSpec> entirely on 2019-02-25 -->
+    <desc type="deprecationInfo" versionDate="2018-09-14"
+    xml:lang="en">Several standards bodies, including NIST in the USA,
+    strongly recommend against ending the representation of a number
+    with a decimal point. So instead of <q>3.</q> use either <q>3</q>
+    or <q>3.0</q>.</desc>
     <constraint>
     <!-- WARNING: this constraint should be examining all elements and attributes
      whose value or content is defined with teidata.point. However, we have
