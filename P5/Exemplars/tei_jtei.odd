@@ -764,9 +764,9 @@
         <!-- [RvdB] The use of <ident> in the current articles should be evaluated (should it be used for file names etc, or is <code> the right tag for those?). -->
         <p>The <gi>ident</gi> element should be used to encode identifiers in a formal language, such as variable, class, and function names in a programming language. When discussing the TEI encoding scheme or customizations, the names of model and attribute classes, datatypes, macros, and TEI customizations should be encoded with <gi>ident</gi>:
           <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <p>For example <ident>data.duration.iso</ident>, <ident>data.outputMeasurement</ident>,
-              <ident>data.pattern</ident>, <ident>data.point</ident>, <ident>data.version</ident>, 
-              and <ident>data.word</ident> all map to the same datatype CDATA in XML DTD, and to 
+            <p>For example <ident>teidata.duration.iso</ident>, <ident>teidata.outputMeasurement</ident>,
+              <ident>teidata.pattern</ident>, <ident>teidata.point</ident>, <ident>teidata.version</ident>, 
+              and <ident>teidata.word</ident> all map to the same datatype CDATA in XML DTD, and to 
               various TEI-defined regular expressions in RELAX NG or W3C Schema.</p>
           </egXML>
         </p>
@@ -1869,7 +1869,7 @@
         <schemaSpec ident="tei_jtei" start="TEI" defaultExceptions="http://www.tei-c.org/ns/1.0 eg:egXML">
           <moduleRef key="tei"/>
           <moduleRef key="core"
-            include="abbr author bibl biblScope cit date desc editor email emph foreign gap graphic head hi item label lb list listBibl mentioned name note num p pubPlace publisher q quote ptr ref series soCalled term title"/>
+            include="abbr author bibl biblScope cit date desc editor email emph foreign gap graphic head hi item label lb list listBibl mentioned name note num p pubPlace publisher q quote ptr ref resp respStmt series soCalled term title"/>
           <moduleRef key="corpus" include="particDesc"/>
           <moduleRef key="figures" include="cell figure row table"/>
           <moduleRef key="header"
@@ -1909,6 +1909,17 @@
                     </sqf:description>
                     <sqf:add match="tei:title[not(@type='main')][1]" node-type="attribute" target="type">main</sqf:add>
                   </sqf:fix>                  
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
+          </elementSpec>
+          <elementSpec ident="respStmt" module="header" mode="change">
+            <constraintSpec ident="jtei.sch-respSmt" scheme="schematron">
+              <constraint>
+                <sch:rule context="tei:respStmt">
+                  <sch:assert test="ancestor::tei:sourceDesc">
+                    <sch:name/> can only be used in the context of sourceDesc.
+                  </sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -2146,8 +2157,7 @@
               <constraint>
                 <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl"
                   role="warning">
-                  <sch:let name="currId" value="@xml:id"/>
-                  <sch:assert test="some $i in //tei:ref[@type='bibl'] satisfies tokenize($i/@target, '\s+')[replace(., '#', '') = $currId]">
+                  <sch:assert test="key('idrefs', @xml:id)/parent::tei:ref[@type='bibl']">
                     This bibliographic entry is an orphan: no ref[@type="bibl"] references to it occur in the text.
                   </sch:assert>
                 </sch:rule>
@@ -2718,7 +2728,6 @@
                     </sqf:description>
                     <sqf:add match="." node-type="attribute" target="type" select="'bibl'"/>
                   </sqf:fix>
-                  
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -2746,7 +2755,7 @@
             <constraintSpec ident="jtei.sch-rendition" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:rendition">
-                  <sch:assert test="some $i in //@rendition satisfies tokenize($i, '\s+')[replace(., '#', '') = current()/@xml:id]">
+                  <sch:assert test="key('idrefs', @xml:id) instance of attribute(rendition)">
                     Please remove all <sch:name/> definitions that aren't actually being used in the article.
                   </sch:assert>
                 </sch:rule>
@@ -2954,6 +2963,7 @@
           <constraintSpec ident="jtei.sch-variables" scheme="schematron">
             <constraint>
               <sch:pattern>
+                <xsl:key name="idrefs" match="@target[starts-with(normalize-space(.), '#')]|@rendition[starts-with(normalize-space(.), '#')]" use="for $i in tokenize(., '\s+') return substring-after($i, '#')"/>
                 <sch:let name="double.quotes" value="'[&quot;“”]'"/>
                 <sch:let name="apos.typographic" value="'[‘’]'"/>
                 <sch:let name="apos.straight" value="''''"/>
@@ -3055,7 +3065,7 @@
           <elementSpec ident="gap" module="core" mode="change">
             <constraintSpec ident="jtei.sch-gap" scheme="schematron">
               <constraint>
-                <sch:rule context="tei:gap-period">
+                <sch:rule context="tei:gap">
                   <sch:report test="following-sibling::node()[1][self::text()] and starts-with(following-sibling::node()[1], '.')">
                     A <sch:name/> element should follow a period rather than precede it when an ellipsis follows the end of a sentence.
                   </sch:report>
@@ -3136,7 +3146,7 @@
                   <sqf:description>
                     <sqf:title>Replace hyphen with –.</sqf:title>
                   </sqf:description>
-                  <sqf:stringReplace regex="((?:^|[\W-[-]])\d+)-(\d+(?:[\W-[-]]|$))">$1–$2</sqf:stringReplace>
+                  <sqf:stringReplace regex="((^|[\W-[-]])\d+)-(\d+([\W-[-]]|$))">$1–$3</sqf:stringReplace>
                 </sqf:fix>
               </sch:rule>
             </constraint>
@@ -3158,10 +3168,23 @@
           </constraintSpec>
           <constraintSpec ident="jtei.sch-localLinkTarget" scheme="schematron">
             <constraint>
-              <sch:rule context="@*[not(ancestor::eg:egXML)][name() = ('corresp', 'target', 'from', 'to', 'ref', 'rendition', 'resp', 'source')][some $i in tokenize(., '\s+') satisfies starts-with($i, '#')]">
-                <sch:assert test="every $i in tokenize(., '\s+')[starts-with(., '#')] satisfies id( substring-after($i, '#'))">
-                  There's no local target for this link. Please make sure you use an existing @xml:id value.
-                </sch:assert>
+              <sch:rule context="@*[self::attribute(corresp)|self::attribute(target)|self::attribute(from)|self::attribute(to)|self::attribute(ref)|self::attribute(rendition)|self::attribute(resp)|self::attribute(source)][not(ancestor::eg:egXML)][some $i in tokenize(., '\s+') satisfies starts-with($i, '#')]">
+                <sch:let name="orphan.pointers"
+                  value="for $p in tokenize(., '\s+')[starts-with(., '#')] return if (not(id(substring-after($p, '#')))) then $p else ()"/>
+                <sch:report test="exists($orphan.pointers)">
+                  There's no local target for <sch:value-of select="if (count($orphan.pointers) > 1) then 'these pointers' else 'this pointer'"/>: <sch:value-of select="string-join($orphan.pointers, ', ')"/>. Please make sure you're referring to an existing @xml:id value.
+                </sch:report>
+              </sch:rule>
+            </constraint>
+          </constraintSpec>
+          <constraintSpec ident="jtei.sch-renditionTarget" scheme="schematron">
+            <constraint>
+              <sch:rule context="@rendition">
+                <sch:let name="orphan.pointers"
+                  value="for $p in tokenize(., '\s+')[starts-with(., '#')] return for $id in id(substring-after($p, '#'))[not(self::tei:rendition)] return $p"/>
+                <sch:report test="exists($orphan.pointers)">
+                  <sch:value-of select="if (count($orphan.pointers) > 1) then 'These pointers don''t' else 'This pointer doesn''t'"/> point to a &lt;rendition&gt; target: <sch:value-of select="string-join($orphan.pointers, ', ')"/>.
+                </sch:report>
               </sch:rule>
             </constraint>
           </constraintSpec>
@@ -3205,9 +3228,11 @@
           <constraintSpec ident="jtei.sch-crossrefTargetType" scheme="schematron">
             <constraint>
               <sch:rule context="tei:ptr[@type='crossref']|tei:ref[@type='crossref']">
-                <sch:assert test="id(substring-after(@target, '#'))/(self::tei:div|self::tei:figure|self::tei:table|self::tei:note)">
-                  Cross-links (<sch:name/>[@type="crossref"]) should be targeted at div, figure, table, or note elements.
-                </sch:assert>
+                <sch:let name="orphan.pointers"
+                  value="for $p in tokenize(@target, '\s+')[starts-with(., '#')] return for $id in id(substring-after($p, '#'))[not(self::tei:div or self::tei:figure or self::tei:table or self::tei:note)] return $p"/>
+                <sch:report test="exists($orphan.pointers)">
+                  Cross-links (<sch:name/>[@type="crossref"]) should be targeted at div, figure, table, or note elements. The target of <sch:value-of select="if (count($orphan.pointers) > 1) then 'these pointers' else 'this pointer'"/> doesn't satisfy this condition: <sch:value-of select="string-join($orphan.pointers, ', ')"/>.
+                </sch:report>
               </sch:rule>
             </constraint>
           </constraintSpec>
@@ -3254,7 +3279,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="jtei.jtei-url" scheme="isoschematron">
+          <constraintSpec ident="jtei.jtei-url" scheme="schematron">
             <constraint>
               <sch:rule context="@target[matches(., '^https?://(www\.)?jtei\.revues\.org/?')]">
                 <sch:let name="URL.fixed" value="replace(., '^https?://(www\.)?jtei\.revues\.org/?', 'https://journals.openedition.org/jtei/')"/>

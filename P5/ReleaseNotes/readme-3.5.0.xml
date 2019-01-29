@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright TEI Consortium.
+Dual-licensed under CC-by and BSD2 licences
+See the file COPYING.txt for details
+-->
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI P5 version 3.5.0 and Stylesheets version 7.47.0 release notes</title>
+      </titleStmt>
+      <editionStmt>
+        <edition>
+          <date when="2019-01-29">Monday, 29 January 2019</date>
+        </edition>
+      </editionStmt>
+      <publicationStmt>
+        <authority>The Text Encoding Initiative</authority>
+      </publicationStmt>
+      <sourceDesc>
+        <p>created retrospectively from ChangeLog and GitHub trackers</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+
+      <p>Release 3.5.0, the “Raven Release” (so named because Poe’s famous poem was first published
+        under his name on January 29th) of the TEI Guidelines introduces new features and resolves a
+        number of issues raised by the TEI community. As always, the majority of these changes and
+        corrections are a consequence of feature requests or bugs reported by the TEI community
+        using the GitHub tracking system. A full list of the issues resolved in the course of this
+        release cycle may be found under the <ref
+          target="https://github.com/TEIC/TEI/issues?q=is%3Aissue+milestone%3A%22Guidelines+3.5.0%22+is%3Aclosed"
+          >3.5.0 milestone</ref>.</p>
+
+      <p>Highlights of this release include: <list>
+
+          <item>New elements have been introduced to name, describe, identify and list objects (<ref
+              target="https://github.com/TEIC/TEI/issues/327">#327</ref>): <list>
+
+              <item>The <gi>objectName</gi> element contains a proper noun or noun phrase used to
+                refer to an object.</item>
+
+              <item>The <gi>listObject</gi> element contains a list of descriptions, each of which
+                provides information about an identifiable physical object.</item>
+
+              <item>The <gi>object</gi> element contains a description of a single identifiable
+                physical object.</item>
+
+              <item>The <gi>objectIdentifier</gi> element groups one or more identifiers or pieces
+                of locating information concerning a single object.</item>
+
+              <item>Guidelines prose has been created for <title>Objects</title> in chapter <ref
+                  target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDOBJ"
+                  >13.3.5</ref> and for <title>Object names</title> in chapter <ref
+                  target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDOBJN"
+                  >13.2.4</ref>.</item>
+
+              <item>Minor modifications have been made to the descriptions of
+                <gi>msDesc</gi>-related items to enable use for 'other objects'.</item>
+            </list>
+            <note>The object element is a recent addition to the TEI P5 Guidelines as of version
+              3.5.0 and as such may be more prone to further revision in the next few releases as
+              its use develops. This may be particularly evident where its contents have been
+              borrowed from <gi>msDesc</gi> and have yet to be generalized from their use in the
+              context of manuscript descriptions.</note></item>
+
+          <item>The Schematron deprecation warning on <gi>secFol</gi>, <gi>signatures</gi>, and
+              <gi>catchwords</gi> has been changed to an outright error when used outside of
+              <gi>msDesc</gi> (<ref target="https://github.com/TEIC/TEI/issues/1479"
+            >#1479</ref>).</item>
+
+          <item>The attribute class <ident type="class">att.tableDecoration</ident> has been moved
+            from the tei module to the figures module (<ref
+              target="https://github.com/TEIC/TEI/issues/1528">#1528</ref>).</item>
+
+
+          <item><ident type="class">model.qLike</ident> has been added to <ref
+              target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-macro.phraseSeq.html"
+              >macro.phraseSeq</ref> (<ref target="https://github.com/TEIC/TEI/issues/1531"
+              >#1531</ref>).</item>
+
+          <item>A new example using the <att>source</att> attribute on <gi>schemaSpec</gi> has been
+            added (<ref target="https://github.com/TEIC/TEI/issues/1593">#1593</ref>).</item>
+
+          <item>The description of <gi>seal</gi> and <gi>sealDesc</gi> has been revised (<ref
+              target="https://github.com/TEIC/TEI/issues/1655">#1655</ref>).</item>
+
+          <item>A new Guidelines <ref
+              target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/DEPRECATIONS.html"
+              >Appendix G: Deprecations</ref> was introduced which includes a list of pending
+            deprecations (<ref target="https://github.com/TEIC/TEI/issues/1657">#1657</ref>) and an
+            explanation of alternative encoding strategies (<ref
+              target="https://github.com/TEIC/TEI/issues/1815">#1815</ref>).</item>
+
+          <item>The <att>type</att> attribute on <gi>tech</gi> has been changed from a closed to a
+            semi-open value list (<ref target="https://github.com/TEIC/TEI/issues/1662"
+            >#1662</ref>).</item>
+
+          <item>The description on <ident type="class">att.lexicographic</ident> has been improved
+              (<ref target="https://github.com/TEIC/TEI/issues/1720">#1720</ref>).</item>
+
+          <item>With the addition of model.qLike to macro.phraseSeq (<ref
+              target="https://github.com/TEIC/TEI/issues/1531">#1531</ref>), <gi>incipit</gi> can
+            now contain <gi>quote</gi>, <gi>q</gi>, and <gi>cit</gi> (<ref
+              target="https://github.com/TEIC/TEI/issues/1755">#1755</ref>).</item>
+
+          <item>A more complex example on the <gi>path</gi> element has been added alongside an
+            improved explanation (<ref target="https://github.com/TEIC/TEI/issues/1797"
+            >#1797</ref>).</item>
+
+          <item>A warning about XPath injection attacks has been added to teidata.xpath (<ref
+              target="https://github.com/TEIC/TEI/issues/11811">#1811</ref>).</item>
+
+          <item>The elements <gi>respStmt</gi> and <gi>resp</gi> are now available in the jTEI
+            schema (<ref target="https://github.com/TEIC/TEI/issues/1812">#1812</ref>).</item>
+
+          <item>The <att>subtype</att> attribute has been added to the <ident type="class"
+              >att.entryLike</ident> class. Thus, the attribute is available for the elements
+              <gi>entry</gi>, <gi>entryFree</gi>, and <gi>superEntry</gi> (<ref
+              target="https://github.com/TEIC/TEI/issues/1819">#1819</ref>).</item>
+
+          <item>The Framework build process no longer strips comments from templates in Oxygen <ref
+              target="https://github.com/TEIC/TEI/issues/1828">#1828</ref>.</item>
+
+          <item>The <gi>witDetail</gi> element has been removed from <ident type="class"
+              >model.noteLike</ident> along with the clarification on the use of <att>source</att>
+            rather than <att>resp</att> and the <gi>wit</gi> element vs. the <att>wit</att>
+            attribute (<ref target="https://github.com/TEIC/TEI/issues/1845">#1845</ref>).</item>
+
+          <item>The build process has been cleaned up slightly (<ref
+              target="https://github.com/TEIC/TEI/issues/1802">#1802</ref>, thanks to Duncan
+            Paterson; and <ref target="https://github.com/TEIC/TEI/issues/1757">#1757</ref>).</item>
+
+          <item>The element children of a <gi>constraint</gi> no longer need be Schematron (<ref
+              target="https://github.com/TEIC/TEI/issues/1607">#1607</ref>; this change was part of
+            3.4.0, but did not make it into those release notes).</item>
+
+          <item>Corrections of typographic errors, improvements on explanations, and corrections of
+            examples have been conducted in various sections of the <title>Guidelines</title>.
+            (Including <ref target="https://github.com/TEIC/TEI/issues/1846">#1846</ref>, <ref
+              target="https://github.com/TEIC/TEI/issues/1801">#1801</ref>, and <ref
+              target="https://github.com/TEIC/TEI/issues/1794">#1794</ref>.)</item>
+
+        </list>
+      </p>
+      <p>Furthermore, a number of translations have been added or updated. For the Japanese
+        translations we especially thank Kiyonori Nagasaki and Martin Holmes.</p>
+
+      <p>In addition, many improvements have been made to the XSLT stylesheets (which provide
+        processing of TEI ODD files for <ref target="https://roma.tei-c.org/">Roma</ref> and <ref
+          target="http://oxgarage.tei-c.org/">OxGarage</ref> as well as other TEI conversions). The
+        Stylesheets are maintained separately from the Guidelines and are at <ref
+          target="https://github.com/TEIC/Stylesheets">https://github.com/TEIC/Stylesheets</ref>. A
+        full list of the issues resolved in the course of this release cycle may be found under the
+          <ref
+          target="https://github.com/TEIC/Stylesheets/issues?q=is%3Aissue+milestone%3A%22Guidelines+3.5.0+%2F+Stylesheets+7.47.0%22+is%3Aclosed"
+          >7.47.0 milestone</ref>.</p>
+
+      <p>Highlights of this release include: <list>
+
+          <item>The tests on processing <att>minOccurs</att> and <att>maxOccurs</att> have been
+            improved (<ref target="https://github.com/TEIC/Stylesheets/issues/354"
+            >#354</ref>).</item>
+
+          <item>The elements <gi>cb</gi>, <gi>gb</gi>, and <gi>milestone</gi> are now ignored in the
+            processing of FO (<ref target="https://github.com/TEIC/Stylesheets/issues/334"
+              >#334</ref>).</item>
+
+          <item>A CSS declaration that caused an error in the epub output has been removed (<ref
+              target="https://github.com/TEIC/Stylesheets/issues/115">#115</ref>).</item>
+
+          <item>Better automated processing of release notes in <ident type="file">readme</ident>
+            files like this one.</item>
+
+        </list>
+      </p>
+    </body>
+  </text>
+</TEI>

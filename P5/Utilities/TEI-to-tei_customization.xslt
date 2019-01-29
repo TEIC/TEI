@@ -1324,6 +1324,9 @@
                       <valItem ident="modelclasscat">
                         <gloss xml:lang="en" versionDate="{$versionDate}">Catalogue of Model Classes</gloss>
                       </valItem>
+                      <valItem ident="deprecationcat">
+                        <gloss xml:lang="en" versionDate="{$versionDate}">Catalogue of Deprecations</gloss>
+                      </valItem>
                       <valItem ident="toc">
                         <gloss xml:lang="en" versionDate="{$versionDate}">Table of Contents</gloss>
                       </valItem>

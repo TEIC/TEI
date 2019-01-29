@@ -11,30 +11,59 @@ $Id$
       <desc versionDate="2013-05-16" xml:lang="en">provides a date before which the construct being defined
       will not be removed.</desc>
       <datatype minOccurs="1" maxOccurs="1"><dataRef name="date"/></datatype>
-      <constraintSpec scheme="schematron" ident="deprecated">
+      <constraintSpec scheme="schematron" ident="deprecation-two-month-warning">
         <constraint>
           <sch:rule context="tei:*[@validUntil]">
-            <sch:assert test="@validUntil cast as xs:date ge          current-date()"><sch:value-of select="if          (@ident) then concat('The ',@ident) else          concat('This ',local-name(.),' of          ',ancestor::tei:*[@ident][1]/@ident)"/>
-	    construct is outdated (as of <sch:value-of select="@validUntil"/>); ODD processors may ignore it, and its use is no longer supported</sch:assert>
-            <sch:assert role="nonfatal" test="@validUntil cast as xs:date ge          (current-date() + (60*xs:dayTimeDuration('P1D')))"><sch:value-of select="if (@ident) then concat('The ',@ident) else concat('This ',local-name(.),' of ',ancestor::tei:*[@ident][1]/@ident)"/>  construct becomes outdated on <sch:value-of select="@validUntil"/></sch:assert>
+            <sch:let name="advance_warning_period"
+                     value="current-date() + xs:dayTimeDuration('P60D')"/>
+            <sch:let name="me_phrase" value="if (@ident)
+                                               then concat('The ', @ident )
+                                               else concat('This ',
+                                                           local-name(.),
+                                                           ' of ',
+                                                           ancestor::tei:*[@ident][1]/@ident )"/>
+            <sch:assert test="@validUntil cast as xs:date  ge  current-date()">
+              <sch:value-of select="
+                 concat( $me_phrase,
+                         'construct is outdated (as of ',
+                         @validUntil,
+                         '); ODD processors may ignore it, and its use is no longer supported'
+                       )"/></sch:assert>
+              <sch:assert role="nonfatal"
+                          test="@validUntil cast as xs:date  ge  $advance_warning_period">
+                <sch:value-of select="concat( $me_phrase, ' construct becomes outdated on ', @validUntil )"/>
+              </sch:assert>
+          </sch:rule>
+        </constraint>
+      </constraintSpec>
+      <constraintSpec scheme="schematron" ident="deprecation-should-be-explained">
+        <constraint>
+          <sch:rule context="tei:*[@validUntil][ not( self::valDesc | self::valList | self::defaultVal )]">
+            <sch:assert test="child::tei:desc[ @type eq 'deprecationInfo']">
+              A deprecated construct should include, whenever possible, an explanation, but this <sch:value-of
+              select="name(.)"
+              /> does not have a child &lt;desc type="deprecationInfo"></sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
       <remarks versionDate="2013-05-16" xml:lang="en">
-        <p>The value of this attribute should represent a date (in standard <code>yyyy-mm-dd</code> format) which is later than the date on which the attribute is added to an ODD. Technically, this attribute asserts only the intent to
-	leave a construct in future releases of the markup language
-	being defined up to at least the specified date, and makes no
-	assertion about what happens past that date. In practice, the
-	expectation is that the construct will be removed from future
-	releases of the markup language being defined sometime shortly
-	after the <att>validUntil</att> date.</p>
+        <p>The value of this attribute should represent a date (in
+        standard <code>yyyy-mm-dd</code> format) which is later than
+        the date on which the attribute is added to an ODD.
+        Technically, this attribute asserts only the intent to leave a
+        construct in future releases of the markup language being
+        defined up to at least the specified date, and makes no
+        assertion about what happens past that date. In practice, the
+        expectation is that the construct will be removed from future
+        releases of the markup language being defined sometime shortly
+        after the <att>validUntil</att> date.</p>
         <p>An ODD processor will typically not process a specification
-	element which has a <att>validUntil</att> date that is in the
-	past. An ODD processor will typically warn users about
-	constructs which have a <att>validUntil</att> date that is in
-	the future. E.g., the documentation for such a construct might
-	include the phrase <mentioned>warning: deprecated</mentioned>
-	in red.</p>
+        element which has a <att>validUntil</att> date that is in the
+        past. An ODD processor will typically warn users about
+        constructs which have a <att>validUntil</att> date that is in
+        the future. E.g., the documentation for such a construct might
+        include the phrase <mentioned>warning: deprecated</mentioned>
+        in red.</p>
       </remarks>
     </attDef>
   </attList>
