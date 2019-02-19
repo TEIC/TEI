@@ -10,6 +10,7 @@
   <desc versionDate="2009-05-25" xml:lang="fr">fournit des attributs qui peuvent être utilisés pour
     associer une représentation telle qu'un nom ou un titre à l'information canonique concernant
     l'objet nommé ou auquel il est fait référence.</desc>
+  <desc xml:lang="ja" versionDate="2018-12-31">名前やタイトルのような表現を参照対象についての典拠情報と関連付けるのに利用する属性を提供する．</desc>
   <attList>
     <attDef ident="key" usage="opt">
       <desc versionDate="2008-09-05" xml:lang="en">provides an externally-defined means of identifying the entity (or entities) being
@@ -17,6 +18,7 @@
       <desc versionDate="2009-05-25" xml:lang="fr"> fournit un moyen, défini de façon externe,
         d'identifier l'entité (ou les entités) nommé(es), en utilisant une valeur codée
         d'un certain type.</desc>
+      <desc xml:lang="ja" versionDate="2018-12-31">何らかのコード化された値を用いて，名付けられたエンティティを識別する外部的に定義された手段を提供する．</desc>
       <datatype><dataRef key="teidata.text"/></datatype>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NONE">
@@ -47,14 +49,17 @@
         <p>La valeur peut être un identifiant unique dans une base de données, ou toute autre chaîne
           définie de façon externe identifiant le référent. </p>
       </remarks>
+      <remarks xml:lang="ja" versionDate="2018-12-31"><p>値はデータベースにおけるユニークな識別子や、外部で定義された指示対象を特定するなんらかの文字列であってよい。<att>key</att>属性の値に関してさだまった構文は提案されていない。なぜならば、それぞれのプロジェクトのやりかたに完全に依存するからである。同様の理由によって、データの相互交換においてこの属性は推奨されない。在るプロジェクトで用いられた値が他のプロジェクトの値と異なることを保証できないからである。そのような場面における魔法石的対処は、<ref target="#RFC4151">RFC4151</ref>に定義されるタグURIを値とする<att>ref</att>属性を用いて、標準的なウェブにおける習慣にしたがってmagic tokenを使うことである。</p></remarks>
     </attDef>
     <attDef ident="ref" usage="opt">
       <gloss versionDate="2008-09-05" xml:lang="en">reference</gloss>
       <gloss versionDate="2009-05-25" xml:lang="fr">référence</gloss>
+      <gloss xml:lang="ja" versionDate="2018-12-31">参照</gloss>
       <desc versionDate="2008-09-05" xml:lang="en">provides an explicit means of locating a full definition or identity for the entity being named by
         means of one or more URIs.</desc>
       <desc versionDate="2009-05-25" xml:lang="fr">fournit un moyen explicite de localiser une
         définition complète de l'entité nommée au moyen d'un ou plusieurs URIs.</desc>
+      <desc xml:lang="ja" versionDate="2018-12-31">一つ以上のURIを用いて，名付けられたエンティティの完全な定義かIDを参照するための明確な手段を提供する．</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
         <exemplum xml:lang="en">
           <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NONE">
@@ -67,6 +72,7 @@
       <remarks versionDate="2009-05-25" xml:lang="fr">
         <p>La valeur doit pointer directement vers un ou plusieurs éléments XML au moyen d'un ou plusieurs URIs, séparés par un espace. Si plus d'un URI est fourni, cela implique que le nom identifie plusieurs entités distinctes.</p>
       </remarks>
+      <remarks xml:lang="ja" versionDate="2018-12-31"><p>値は1つまたは複数のXML要素あるいは、空白によって区切られた1つまたは複数のURIを指し示すものでなければならない。1つ以上の値が与えられているときは、その名前が複数の異るエンティティに対応することを示唆する。</p></remarks>
     </attDef>
   </attList>
   <listRef>

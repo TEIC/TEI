@@ -7,9 +7,12 @@
 --><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" xml:id="DATABLECUSTOM" type="atts" predeclare="true" ident="att.datable.custom">
   <desc versionDate="2011-11-11" xml:lang="en">provides attributes for normalization of elements that contain datable events to a custom dating system
     (i.e. other than the Gregorian used by W3 and ISO).</desc>
+  <desc xml:lang="ja" versionDate="2019-02-03">年代を特定できるイベントを含む要素を（たとえば、
+    W3CやISOで用いられるグレゴリオ暦以外の）なんらかの暦システムで正規化する属性を提供する．</desc>
   <attList>
     <attDef ident="when-custom" usage="opt">
       <desc versionDate="2014-11-19" xml:lang="en">supplies the value of a date or time in some custom standard form.</desc>
+      <desc xml:lang="ja" versionDate="2019-02-03">何らかの標準的な準形式で、日付や時刻の値を示す．</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
       <exemplum xml:lang="en">
         <p>The following are examples of custom date or time formats that are <emph>not</emph> valid ISO or W3C format
@@ -34,14 +37,17 @@
     </attDef>
     <attDef ident="notBefore-custom" usage="opt">
       <desc versionDate="2011-11-11" xml:lang="en">specifies the earliest possible date for the event in some custom standard form.</desc>
+      <desc xml:lang="ja" versionDate="2019-02-03">何らかの標準的な形式で、あるイベントに関して「この時点より前ではない」という日付を示す．</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
     </attDef>
     <attDef ident="notAfter-custom" usage="opt">
       <desc versionDate="2011-11-11" xml:lang="en">specifies the latest possible date for the event in some custom standard form.</desc>
+      <desc xml:lang="ja" versionDate="2019-02-03">何らかの標準的な形式で、あるイベントに関して「この時点より後ではない」という日付を示す．</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
     </attDef>
     <attDef ident="from-custom" usage="opt">
       <desc versionDate="2014-11-19" xml:lang="en">indicates the starting point of the period in some custom standard form.</desc>
+      <desc xml:lang="ja" versionDate="2019-02-03">何らかの標準的な形式で期間の開始時点を示す．</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -55,15 +61,18 @@
     </attDef>
     <attDef ident="to-custom" usage="opt">
       <desc versionDate="2014-11-19" xml:lang="en">indicates the ending point of the period in some custom standard form.</desc>
+      <desc xml:lang="ja" versionDate="2019-02-03">何らかの標準的な形式で期間の終了時点を示す．</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
     </attDef>
     <attDef ident="datingPoint" usage="opt">
       <desc versionDate="2011-11-25" xml:lang="en">supplies a pointer to some location defining a named point in time with reference to which the datable item is understood to have occurred</desc>
+      <desc xml:lang="ja" versionDate="2019-02-03">ここで提供するポインタは，年代測定可能な事柄が起きたとされる名前付の時間幅を定義する場所を指す.</desc>
       <datatype><dataRef key="teidata.pointer"/></datatype>
     </attDef>
     <attDef ident="datingMethod" usage="opt">
       <desc versionDate="2012-08-15" xml:lang="en">supplies a pointer to a <gi>calendar</gi> element or other
         means of interpreting the values of the custom dating attributes.</desc>
+      <desc xml:lang="ja" versionDate="2019-02-03">ここで提供するポインタは，<gi>calendar</gi> 要素や慣習的な日付をあらわす属性値を解釈する方法を指す.</desc>
       <datatype><dataRef key="teidata.pointer"/></datatype>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#STOW">Contayning the Originall, Antiquity, Increaſe, Moderne 
@@ -90,6 +99,9 @@
         the calendar or dating system to which the date described by the parent element is normalized (i.e. in the  
         <att>when-custom</att> or other <att>X-custom</att> attributes), <emph>not</emph> the calendar of the
         original date in the element.</p></remarks>
+      <remarks versionDate="2019-02-13" xml:lang="ja"><p>（<ident type="class">att.datable</ident>で定義される<att>calendar</att> 属性とは違って）
+        <att>datingMethod</att>属性が定義するのは，親要素で記述された日付を正規化した暦や暦法であり，
+        当該要素中のオリジナルの日付の暦<emph>ではない</emph>．</p></remarks>
     </attDef>
   </attList>
   <listRef>
