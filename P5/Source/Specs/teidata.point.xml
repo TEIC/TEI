@@ -6,63 +6,30 @@ See the file COPYING.txt for details
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <dataSpec xmlns="http://www.tei-c.org/ns/1.0"
-          xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-          module="tei"
-          ident="teidata.point">
+	  xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+	  module="tei"
+	  ident="teidata.point">
   <desc versionDate="2010-10-17" xml:lang="en">defines the data type used to express a point in cartesian space.</desc>
   <content>
-    <dataRef name="token" restriction="(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)"/>
-    <!-- Replace the above @restriction attribute with the one below on 2019-02-25, per issue #1727 -->
-    <!-- restriction="(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)"-->
+    <dataRef name="token" restriction="(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)"/>
   </content>
-  <constraintSpec validUntil="2019-02-25" scheme="schematron"
-		  type="deprecationWarning" ident="deprecate_trailing_decimal_point">
-    <!-- Remove this <constraintSpec> entirely on 2019-02-25 -->
-    <desc type="deprecationInfo" versionDate="2018-09-14"
-    xml:lang="en">Several standards bodies, including NIST in the USA,
-    strongly recommend against ending the representation of a number
-    with a decimal point. So instead of <q>3.</q> use either <q>3</q>
-    or <q>3.0</q>.</desc>
-    <constraint>
-    <!-- WARNING: this constraint should be examining all elements and attributes
-     whose value or content is defined with teidata.point. However, we have
-     no easy access to that list (which would need to be generated
-     dynamically), so instead it is looking at all @points attributes, which
-     (as of this writing) is the only member of that list. I.e., if you add
-     an attribute or element that uses (or change an existing one to use)
-     teidata.pointer, you likely need to change the @context below to match. -->
-      <sch:rule context="*[@points]">
-        <sch:report test="matches( @points, '\.[, ]|\.$')">It is considered poor 
-          practice to end a number with a decimal point; as of 2019-02-25 TEI will 
-          consider this @points attribute of <sch:name/> invalid</sch:report>
-      </sch:rule>
-    </constraint>
-  </constraintSpec>
   <exemplum xml:lang="en">
-      <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
-         <facsimile>
-            <surface ulx="0" uly="0" lrx="400" lry="280">
-               <zone points="220,100 300,210 170,250 123,234">
-                  <graphic url="handwriting.png "/>
-               </zone>
-            </surface>
-         </facsimile>
-      </egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+      <facsimile>
+	<surface ulx="0" uly="0" lrx="400" lry="280">
+	  <zone points="220,100 300,210 170,250 123,234">
+	    <graphic url="handwriting.png "/>
+	  </zone>
+	</surface>
+      </facsimile>
+    </egXML>
   </exemplum>
-  <remarks versionDate="2010-10-17" xml:lang="en">
-      <p>A point is defined by two numeric values, which should be
-      expressed as decimal numbers.</p>
-      <!-- following para validUntil="2019-02-25", then needs overhaul -->
-      <p>Currently, this datatype permits either of the two numeric
-      values to end in a decimal point. This practice is <emph
-      style="color:red;font-style:normal;">deprecated</emph>, and as
-      of <emph style="color:red;font-style:normal;">2019-02-25</emph>
-      this datatype will no longer permit a <emph
-      style="font-weight:bold;">number</emph> to <emph
-      style="font-weight:bold;">end in a decimal</emph>
-      point. E.g., both <val>0.0,84.2</val> and <val>0,84</val> are
-      allowed, but <val>0.,84.</val> will not be.
-      <!-- 51°45'45.63"N,  1°16'11.81"W -->
-      </p>
+  <remarks versionDate="2019-02-24" xml:lang="en">
+    <p>A point is defined by two numeric values, which should be
+    expressed as decimal numbers. Neither number can end in a decimal
+    point. E.g., both <val>0.0,84.2</val> and <val>0,84</val> are
+    allowed, but <val>0.,84.</val> is not.
+    <!-- 51°45'45.63"N,  1°16'11.81"W -->
+    </p>
   </remarks>
 </dataSpec>
