@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema xmlns="http://purl.oclc.org/dsdl/schematron" queryBinding="xslt2">
+   <title>ISO Schematron rules</title>
+   <!-- This file generated 2019-01-21T23:50:09Z by 'extract-isosch.xsl'. -->
+
+   <!-- ********************* -->
+   <!-- namespaces, declared: -->
+   <!-- ********************* -->
+   <ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
+   <ns prefix="xs" uri="http://www.w3.org/2001/XMLSchema"/>
+   <ns prefix="rng" uri="http://relaxng.org/ns/structure/1.0"/>
+
+   <!-- ********************* -->
+   <!-- namespaces, implicit: -->
+   <!-- ********************* -->
+
+
+   <!-- ************ -->
+   <!-- constraints: -->
+   <!-- ************ -->
+   <pattern id="schematron-constraint-testp4compat-att.datable.w3c-att-datable-w3c-when-1">
+      <rule context="tei:*[@when]">
+        <report test="@notBefore|@notAfter|@from|@to" role="nonfatal">The @when attribute cannot be used with any other att.datable.w3c attributes.</report>
+      </rule>
+    </pattern>
+   <pattern id="schematron-constraint-testp4compat-att.datable.w3c-att-datable-w3c-from-2">
+      <rule context="tei:*[@from]">
+        <report test="@notBefore" role="nonfatal">The @from and @notBefore attributes cannot be used together.</report>
+      </rule>
+    </pattern>
+   <pattern id="schematron-constraint-testp4compat-att.datable.w3c-att-datable-w3c-to-3">
+      <rule context="tei:*[@to]">
+        <report test="@notAfter" role="nonfatal">The @to and @notAfter attributes cannot be used together.</report>
+      </rule>
+    </pattern>
+   <pattern id="schematron-constraint-testp4compat-att.datable-calendar-calendar-4">
+          <rule context="tei:*[@calendar]">
+            <assert test="string-length(.) gt 0">
+@calendar indicates the system or calendar to which the date represented by the content of this element
+belongs, but this <name/> element has no textual content.</assert>
+          </rule>
+        </pattern>
+   <pattern id="schematron-constraint-testp4compat-att.typed-subtypeTyped-5">
+      <rule context="tei:*[@subtype]">
+        <assert test="@type">The <name/> element should not be categorized in detail with @subtype unless also categorized in general with @type</assert>
+      </rule>
+    </pattern>
+   <pattern id="schematron-constraint-testp4compat-att.pointing-targetLang-targetLang-6">
+          <rule context="tei:*[not(self::tei:schemaSpec)][@targetLang]">
+            <assert test="@target">@targetLang should only be used on <name/> if @target is specified.</assert>
+          </rule>
+        </pattern>
+   <pattern id="schematron-constraint-testp4compat-att.spanning-spanTo-spanTo-2-7">
+          <rule context="tei:*[@spanTo]">
+            <assert test="id(substring(@spanTo,2)) and following::*[@xml:id=substring(current()/@spanTo,2)]">
+The element indicated by @spanTo (<value-of select="@spanTo"/>) must follow the current element <name/>
+                  </assert>
+          </rule>
+        </pattern>
+   <pattern id="schematron-constraint-testp4compat-att.styleDef-schemeVersion-schemeVersionRequiresScheme-8">
+          <rule context="tei:*[@schemeVersion]">
+            <assert test="@scheme and not(@scheme = 'free')">
+              @schemeVersion can only be used if @scheme is specified.
+            </assert>
+          </rule>
+        </pattern>
+   <pattern id="schematron-constraint-testp4compat-p-abstractModel-structure-p-9">
+      <rule context="p">
+         <report test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )">
+        Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.
+      </report>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-testp4compat-p-abstractModel-structure-l-10">
+      <rule context="p">
+         <report test="ancestor::tei:l[not(.//tei:note//tei:p[. = current()])]">
+        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab.
+      </report>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-testp4compat-desc-deprecationInfo-only-in-deprecated-11">
+      <rule context="tei:desc[ @type eq 'deprecationInfo']">
+	        <assert test="../@validUntil">Information about a
+	deprecation should only be present in a specification element
+	that is being deprecated: that is, only an element that has a
+	@validUntil attribute should have a child &lt;desc
+	type="deprecationInfo"&gt;.</assert>
+      </rule>
+    </pattern>
+   <pattern id="schematron-constraint-testp4compat-ptr-ptrAtts-12">
+      <rule context="ptr">
+         <report test="@target and @cRef">Only one of the
+attributes @target and @cRef may be supplied on <name/>.</report>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-testp4compat-ref-refAtts-13">
+      <rule context="ref">
+         <report test="@target and @cRef">Only one of the
+	attributes @target' and @cRef' may be supplied on <name/>
+         </report>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-testp4compat-list-gloss-list-must-have-labels-14">
+      <rule context="tei:list[@type='gloss']">
+	        <assert test="tei:label">The content of a "gloss" list should include a sequence of one or more pairs of a label element followed by an item element</assert>
+      </rule>
+    </pattern>
+   <pattern id="schematron-constraint-testp4compat-relatedItem-targetorcontent1-15">
+      <rule context="relatedItem">
+         <report test="@target and count( child::* ) &gt; 0">
+If the @target attribute on <name/> is used, the
+relatedItem element must be empty</report>
+         <assert test="@target or child::*">A relatedItem element should have either a 'target' attribute
+        or a child element to indicate the related bibliographic item</assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-testp4compat-l-abstractModel-structure-l-16">
+      <rule context="l">
+         <report test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">
+        Abstract model violation: Lines may not contain lines or lg elements.
+      </report>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-testp4compat-lg-atleast1oflggapl-17">
+      <rule context="lg">
+         <assert test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element
+        must contain at least one child l, lg or gap element.</assert>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-testp4compat-lg-abstractModel-structure-l-18">
+      <rule context="lg">
+         <report test="ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]">
+        Abstract model violation: Lines may not contain line groups.
+      </report>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-testp4compat-quotation-quotationContents-19">
+      <rule context="quotation">
+         <report test="not(@marks) and not (tei:p)">
+On <name/>, either the @marks attribute should be used, or a paragraph of description provided</report>
+      </rule>
+   </pattern>
+      
+      
+    
+      
+    <pattern id="schematron-constraint-testp4compat-div-abstractModel-structure-l-22">
+      <rule context="div">
+         <report test="ancestor::tei:l">
+        Abstract model violation: Lines may not contain higher-level structural elements such as div.
+      </report>
+      </rule>
+   </pattern>
+   <pattern id="schematron-constraint-testp4compat-div-abstractModel-structure-p-23">
+      <rule context="div">
+         <report test="ancestor::tei:p or ancestor::tei:ab and not(ancestor::tei:floatingText)">
+        Abstract model violation: p and ab may not contain higher-level structural elements such as div.
+      </report>
+      </rule>
+   </pattern>
+</schema>

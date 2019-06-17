@@ -1,0 +1,122 @@
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace tei = "http://www.tei-c.org/ns/1.0"
+namespace teix = "http://www.tei-c.org/ns/Examples"
+
+# Schema generated 2019-01-21T23:48:03Z
+# Edition: Version 3.5.0a. Last updated on
+#	19th January 2019, revision e6ccc03
+# This material is dual-licensed.
+# [http://creativecommons.org/licenses/by/3.0/] Distributed under a Creative Commons Attribution 3.0 Unported License.  [http://www.opensource.org/licenses/BSD-2-Clause] Copyright 2019 TEI Consortium. All rights reserved. Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. This software is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright holder or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage. TEI material can be licensed differently depending on the use you intend to make of it. Hence it is made available under both the CC+BY and BSD-2 licences. The CC+BY licence is generally appropriate for usages which treat TEI content as data or documentation. The BSD-2 licence is generally appropriate for usage of TEI content in a software environment. For further information or clarification, please contact the TEI Consortium. Tables, formulæ, notated music, and figures
+
+# Definitions from module figures
+
+# Set global predeclared macros
+
+# Set predeclared macros
+
+# 0. predeclared macros
+
+# 1. classes
+att.tableDecoration.attributes =
+  att.tableDecoration.attribute.role,
+  att.tableDecoration.attribute.rows,
+  att.tableDecoration.attribute.cols
+att.tableDecoration.attribute.role =
+  
+  ## indicates the kind of information held in this cell or in each cell of this row.
+  ## Suggested values include: 1] label; 2] data
+  [ a:defaultValue = "data" ]
+  attribute role {
+    
+    ## labelling or descriptive information only.
+    "label"
+    | 
+      ## data values.
+      "data"
+    | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?
+att.tableDecoration.attribute.rows =
+  
+  ## indicates the number of rows occupied by this cell or row.
+  [ a:defaultValue = "1" ] attribute rows { xsd:nonNegativeInteger }?
+att.tableDecoration.attribute.cols =
+  
+  ## (columns) indicates the number of columns occupied by this cell or row.
+  [ a:defaultValue = "1" ] attribute cols { xsd:nonNegativeInteger }?
+# 2. elements
+cell =
+  
+  ## contains one cell of a table. []
+  element cell { cell.content, cell.localattributes }
+cell.content = macro.specialPara
+cell.localattributes =
+  att.global.attributes, att.tableDecoration.attributes, empty
+figDesc =
+  
+  ## (description of figure) contains a brief prose description of the appearance or content of a graphic figure, for use when documenting an image without displaying it. []
+  element figDesc { figDesc.content, figDesc.localattributes }
+figDesc.content = macro.limitedContent
+figDesc.localattributes = att.global.attributes, empty
+figure =
+  
+  ## groups elements representing or containing graphic information such as an illustration, formula, or figure. []
+  element figure { figure.content, figure.localattributes }
+figure.content =
+  (model.headLike
+   | model.common
+   | figDesc
+   | model.graphicLike
+   | model.global
+   | model.divBottom)*
+figure.localattributes =
+  att.global.attributes,
+  att.placement.attributes,
+  att.typed.attributes,
+  att.written.attributes,
+  empty
+formula =
+  
+  ## contains a mathematical or other formula. []
+  element formula { formula.content, formula.localattributes }
+formula.content = (text | model.graphicLike | model.hiLike)*
+formula.localattributes =
+  att.global.attributes, att.notated.attributes, empty
+notatedMusic =
+  
+  ## encodes the presence of music notation in a text []
+  element notatedMusic {
+    notatedMusic.content, notatedMusic.localattributes
+  }
+notatedMusic.content =
+  (model.labelLike | model.ptrLike | graphic | binaryObject | seg)*
+notatedMusic.localattributes =
+  att.global.attributes,
+  att.placement.attributes,
+  att.typed.attributes,
+  empty
+row =
+  
+  ## contains one row of a table. []
+  element row { row.content, row.localattributes }
+row.content = cell+
+row.localattributes =
+  att.global.attributes, att.tableDecoration.attributes, empty
+table =
+  
+  ## contains text displayed in tabular form, in rows and columns. []
+  element table { table.content, table.localattributes }
+table.content =
+  (model.headLike | model.global)*,
+  ((row, model.global*)+ | (model.graphicLike, model.global*)+),
+  (model.divBottom, model.global*)*
+table.localattributes =
+  att.global.attributes,
+  att.typed.attributes,
+  
+  ## indicates the number of rows in the table.
+  attribute rows { xsd:nonNegativeInteger }?,
+  
+  ## (columns) indicates the number of columns in each row of the table.
+  attribute cols { xsd:nonNegativeInteger }?,
+  empty
+# 3. macros

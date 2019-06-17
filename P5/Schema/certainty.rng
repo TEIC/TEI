@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         xmlns:tei="http://www.tei-c.org/ns/1.0"
+         xmlns:teix="http://www.tei-c.org/ns/Examples"
+         datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"><!--Schema generated 2019-01-21T23:48:03Z
+Edition: Version 3.5.0a. Last updated on
+	19th January 2019, revision e6ccc03
+This material is dual-licensed.
+[http://creativecommons.org/licenses/by/3.0/] Distributed under a Creative Commons Attribution 3.0 Unported License.  [http://www.opensource.org/licenses/BSD-2-Clause] Copyright 2019 TEI Consortium. All rights reserved. Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. This software is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright holder or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage. TEI material can be licensed differently depending on the use you intend to make of it. Hence it is made available under both the CC+BY and BSD-2 licences. The CC+BY licence is generally appropriate for usages which treat TEI content as data or documentation. The BSD-2 licence is generally appropriate for usage of TEI content in a software environment. For further information or clarification, please contact the TEI Consortium. Certainty and uncertainty--><!--Definitions from module certainty--><!--Set global predeclared macros--><!--Set predeclared macros--><!--0. predeclared macros--><!--1. classes--><!--2. elements-->
+   <define name="certainty">
+      <element name="certainty">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the degree of certainty associated with some aspect of the text markup. []</a:documentation>
+         <ref name="certainty.content"/>
+         <ref name="certainty.localattributes"/>
+      </element>
+   </define>
+   <define name="certainty.content">
+      <zeroOrMore>
+         <choice>
+            <ref name="model.descLike"/>
+            <ref name="model.certLike"/>
+         </choice>
+      </zeroOrMore>
+   </define>
+   <define name="certainty.localattributes">
+      <ref name="att.scoping.attributes"/>
+      <ref name="att.global.attribute.xmlid"/>
+      <ref name="att.global.attribute.n"/>
+      <ref name="att.global.attribute.xmllang"/>
+      <ref name="att.global.attribute.xmlbase"/>
+      <ref name="att.global.attribute.xmlspace"/>
+      <ref name="att.global.rendition.attribute.rend"/>
+      <ref name="att.global.rendition.attribute.style"/>
+      <ref name="att.global.rendition.attribute.rendition"/>
+      <ref name="att.global.linking.attribute.corresp"/>
+      <ref name="att.global.linking.attribute.synch"/>
+      <ref name="att.global.linking.attribute.sameAs"/>
+      <ref name="att.global.linking.attribute.copyOf"/>
+      <ref name="att.global.linking.attribute.next"/>
+      <ref name="att.global.linking.attribute.prev"/>
+      <ref name="att.global.linking.attribute.exclude"/>
+      <ref name="att.global.linking.attribute.select"/>
+      <ref name="att.global.analytic.attribute.ana"/>
+      <ref name="att.global.facs.attribute.facs"/>
+      <ref name="att.global.change.attribute.change"/>
+      <ref name="att.global.responsibility.attribute.resp"/>
+      <ref name="att.global.source.attribute.source"/>
+      <optional>
+         <attribute name="cert">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(certainty) signifies the degree of certainty associated with the object pointed to by the certainty element.</a:documentation>
+            <choice>
+               <value>high</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>medium</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>low</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>unknown</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+            </choice>
+         </attribute>
+      </optional>
+      <attribute name="locus">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates more exactly the aspect concerning which certainty is being expressed: specifically, whether the markup is correctly located, whether the correct element or attribute name has been used, or whether the content of the element or attribute is correct, etc.</a:documentation>
+         <choice>
+            <value>name</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">uncertainty concerns whether the name of the element or attribute used is correctly applied.</a:documentation>
+            <value>start</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">uncertainty concerns whether the start of the element is correctly identified.</a:documentation>
+            <value>end</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">uncertainty concerns whether the end of the element is correctly identified.</a:documentation>
+            <value>location</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">uncertainty concerns both the start and the end of the element.</a:documentation>
+            <value>value</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">uncertainty concerns the content (for an element) or the value (for an attribute)</a:documentation>
+         </choice>
+      </attribute>
+      <optional>
+         <attribute name="assertedValue">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides an alternative value for the aspect of the markup in question—an alternative generic identifier, transcription, or attribute value, or the identifier of an anchor element (to indicate an alternative starting or ending location). If an assertedValue is given, the confidence level specified by degree applies to the alternative markup specified by assertedValue; if none is given, it applies to the markup in the text.</a:documentation>
+            <data type="token">
+               <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+            </data>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="given">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates one or more element(s) characterizing the conditions which are assumed in the assignment of a degree of confidence.</a:documentation>
+            <list>
+               <oneOrMore>
+                  <data type="anyURI"/>
+               </oneOrMore>
+            </list>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="degree">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the degree of confidence assigned to the aspect of the markup named by the locus attribute.</a:documentation>
+            <data type="double"/>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="precision">
+      <element name="precision">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the numerical accuracy or precision associated with some aspect of the text markup. []</a:documentation>
+         <ref name="precision.content"/>
+         <ref name="precision.localattributes"/>
+      </element>
+   </define>
+   <define name="precision.content">
+      <zeroOrMore>
+         <choice>
+            <ref name="model.descLike"/>
+            <ref name="model.certLike"/>
+         </choice>
+      </zeroOrMore>
+   </define>
+   <define name="precision.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.scoping.attributes"/>
+      <ref name="att.ranging.attributes"/>
+      <ref name="att.datable.attributes"/>
+      <optional>
+         <attribute name="precision">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">characterizes the precision of the element or attribute pointed to by the precision element.</a:documentation>
+            <choice>
+               <value>high</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>medium</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>low</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>unknown</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+            </choice>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="stdDeviation">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">supplies a standard deviation associated with the value in question</a:documentation>
+            <choice>
+               <data type="double"/>
+               <data type="token">
+                  <param name="pattern">(\-?[\d]+/\-?[\d]+)</param>
+               </data>
+               <data type="decimal"/>
+            </choice>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="respons">
+      <element name="respons">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(responsibility) identifies the individual(s) responsible for some aspect of the content or markup of particular element(s). []</a:documentation>
+         <ref name="respons.content"/>
+         <ref name="respons.localattributes"/>
+      </element>
+   </define>
+   <define name="respons.content">
+      <zeroOrMore>
+         <choice>
+            <ref name="model.descLike"/>
+            <ref name="model.certLike"/>
+         </choice>
+      </zeroOrMore>
+   </define>
+   <define name="respons.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.scoping.attributes"/>
+      <attribute name="locus">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the specific aspect of the encoding (markup or content) for which responsibility is being assigned.</a:documentation>
+         <list>
+            <oneOrMore>
+               <choice>
+                  <value>name</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">responsibility is being assigned concerning the name of the element or attribute used.</a:documentation>
+                  <value>start</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">responsibility is being assigned concerning the start of the element concerned.</a:documentation>
+                  <value>end</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">responsibility is being assigned concerning the end of the element concerned.</a:documentation>
+                  <value>location</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">responsibility is being assigned concerning the location of the element concerned.</a:documentation>
+                  <value>value</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">responsibility is being assigned concerning the content (for an element) or the value (for an attribute)</a:documentation>
+               </choice>
+            </oneOrMore>
+         </list>
+      </attribute>
+      <empty/>
+   </define>
+   <!--3. macros-->
+</grammar>

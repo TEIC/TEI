@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         xmlns:tei="http://www.tei-c.org/ns/1.0"
+         xmlns:teix="http://www.tei-c.org/ns/Examples"
+         datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"><!--Schema generated 2019-01-21T23:48:03Z
+Edition: Version 3.5.0a. Last updated on
+	19th January 2019, revision e6ccc03
+This material is dual-licensed.
+[http://creativecommons.org/licenses/by/3.0/] Distributed under a Creative Commons Attribution 3.0 Unported License.  [http://www.opensource.org/licenses/BSD-2-Clause] Copyright 2019 TEI Consortium. All rights reserved. Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. This software is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright holder or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage. TEI material can be licensed differently depending on the use you intend to make of it. Hence it is made available under both the CC+BY and BSD-2 licences. The CC+BY licence is generally appropriate for usages which treat TEI content as data or documentation. The BSD-2 licence is generally appropriate for usage of TEI content in a software environment. For further information or clarification, please contact the TEI Consortium. Graphs, networks, and trees--><!--Definitions from module nets--><!--Set global predeclared macros--><!--Set predeclared macros--><!--0. predeclared macros--><!--1. classes--><!--2. elements-->
+   <define name="arc">
+      <element name="arc">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">encodes an arc, the connection from one node to another in a graph. []</a:documentation>
+         <ref name="arc.content"/>
+         <ref name="arc.localattributes"/>
+      </element>
+   </define>
+   <define name="arc.content">
+      <optional>
+         <group>
+            <ref name="label"/>
+      
+            <optional>
+               <ref name="label"/>
+            </optional>
+      
+         </group>
+      </optional>
+   </define>
+   <define name="arc.localattributes">
+      <ref name="att.global.attributes"/>
+      <attribute name="from">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives the identifier of the node which is adjacent from this arc.</a:documentation>
+         <data type="anyURI"/>
+      </attribute>
+      <attribute name="to">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives the identifier of the node which is adjacent to this arc.</a:documentation>
+         <data type="anyURI"/>
+      </attribute>
+      <empty/>
+   </define>
+   <define name="eLeaf">
+      <element name="eLeaf">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(leaf or terminal node of an embedding tree) provides explicitly for a leaf of an embedding tree, which may also be encoded with the eTree element. []</a:documentation>
+         <ref name="eLeaf.content"/>
+         <ref name="eLeaf.localattributes"/>
+      </element>
+   </define>
+   <define name="eLeaf.content">
+      <group>
+      
+        <optional>
+            <ref name="label"/>
+         </optional>
+      
+      
+        <optional>
+            <ref name="model.ptrLike"/>
+         </optional>
+      
+      </group>
+   </define>
+   <define name="eLeaf.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <optional>
+         <attribute name="value">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the value of an embedding leaf, which is a feature structure or other analytic element.</a:documentation>
+            <data type="anyURI"/>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="eTree">
+      <element name="eTree">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(embedding tree) provides an alternative to the tree element for representing ordered rooted tree structures. []</a:documentation>
+         <ref name="eTree.content"/>
+         <ref name="eTree.localattributes"/>
+      </element>
+   </define>
+   <define name="eTree.content">
+      <group>
+      
+        <optional>
+            <ref name="label"/>
+         </optional>
+      
+      
+        <zeroOrMore>
+            <choice>
+               <ref name="eTree"/>
+               <ref name="triangle"/>
+               <ref name="eLeaf"/>
+               <ref name="model.ptrLike"/>
+            </choice>
+         </zeroOrMore>
+      
+      </group>
+   </define>
+   <define name="eTree.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <optional>
+         <attribute name="value">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides the value of an embedding tree, which is a feature structure or other analytic element.</a:documentation>
+            <data type="anyURI"/>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="forest">
+      <element name="forest">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides for groups of rooted trees. []</a:documentation>
+         <ref name="forest.content"/>
+         <ref name="forest.localattributes"/>
+      </element>
+   </define>
+   <define name="forest.content">
+      <oneOrMore>
+         <choice>
+            <ref name="tree"/>
+            <ref name="eTree"/>
+            <ref name="triangle"/>
+         </choice>
+      </oneOrMore>
+   </define>
+   <define name="forest.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <empty/>
+   </define>
+   <define name="graph">
+      <element name="graph">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">encodes a graph, which is a collection of nodes, and arcs which connect the nodes. []</a:documentation>
+         <ref name="graph.content"/>
+         <ref name="graph.localattributes"/>
+      </element>
+   </define>
+   <define name="graph.content">
+      <group>
+         <optional>
+            <group>
+               <ref name="label"/>
+        
+               <zeroOrMore>
+                  <ref name="model.global"/>
+               </zeroOrMore>
+        
+            </group>
+         </optional>
+         <choice>
+            <group>
+               <oneOrMore>
+                  <group>
+                     <ref name="node"/>
+            
+                     <zeroOrMore>
+                        <ref name="model.global"/>
+                     </zeroOrMore>
+            
+                  </group>
+               </oneOrMore>
+               <zeroOrMore>
+                  <group>
+                     <ref name="arc"/>
+            
+                     <zeroOrMore>
+                        <ref name="model.global"/>
+                     </zeroOrMore>
+            
+                  </group>
+               </zeroOrMore>
+            </group>
+            <group>
+               <oneOrMore>
+                  <group>
+                     <ref name="arc"/>
+            
+                     <zeroOrMore>
+                        <ref name="model.global"/>
+                     </zeroOrMore>
+            
+                  </group>
+               </oneOrMore>
+               <oneOrMore>
+                  <group>
+                     <ref name="node"/>
+            
+                     <zeroOrMore>
+                        <ref name="model.global"/>
+                     </zeroOrMore>
+            
+                  </group>
+               </oneOrMore>
+            </group>
+         </choice>
+      </group>
+   </define>
+   <define name="graph.localattributes">
+      <ref name="att.global.attributes"/>
+      <optional>
+         <attribute name="type">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">describes the type of graph.
+Suggested values include: 1] undirected; 2] directed; 3] transitionNetwork; 4] transducer</a:documentation>
+            <choice>
+               <value>undirected</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">undirected graph</a:documentation>
+               <value>directed</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">directed graph</a:documentation>
+               <value>transitionNetwork</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">a directed graph with distinguished initial and final nodes</a:documentation>
+               <value>transducer</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">a transition network with up to two labels on each arc</a:documentation>
+               <data type="token">
+                  <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+               </data>
+            </choice>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="order">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">states the order of the graph, i.e., the number of its nodes.</a:documentation>
+            <data type="nonNegativeInteger"/>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="size">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">states the size of the graph, i.e., the number of its arcs.</a:documentation>
+            <data type="nonNegativeInteger"/>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="iNode">
+      <element name="iNode">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(intermediate (or internal) node) represents an intermediate (or internal) node of a tree. []</a:documentation>
+         <ref name="iNode.content"/>
+         <ref name="iNode.localattributes"/>
+      </element>
+   </define>
+   <define name="iNode.content">
+      <optional>
+         <ref name="label"/>
+      </optional>
+   </define>
+   <define name="iNode.localattributes">
+      <ref name="att.global.attributes"/>
+      <optional>
+         <attribute name="value">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates an intermediate node, which is a feature structure or other analytic element.</a:documentation>
+            <data type="anyURI"/>
+         </attribute>
+      </optional>
+      <attribute name="children">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides a list of identifiers of the elements which are the children of the intermediate node.</a:documentation>
+         <list>
+            <oneOrMore>
+               <data type="anyURI"/>
+            </oneOrMore>
+         </list>
+      </attribute>
+      <optional>
+         <attribute name="parent">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides the identifier of the element which is the parent of this node.</a:documentation>
+            <data type="anyURI"/>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="ord">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(ordered) indicates whether or not the internal node is ordered.</a:documentation>
+            <choice>
+               <data type="boolean"/>
+               <choice>
+                  <value>unknown</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                  <value>inapplicable</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               </choice>
+            </choice>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="follow">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides the identifier of an element which this node follows.</a:documentation>
+            <data type="anyURI"/>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="outDegree">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives the out degree of an intermediate node, the number of its children.</a:documentation>
+            <data type="nonNegativeInteger"/>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="leaf">
+      <element name="leaf">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">encodes the leaves (terminal nodes) of a tree. []</a:documentation>
+         <ref name="leaf.content"/>
+         <ref name="leaf.localattributes"/>
+      </element>
+   </define>
+   <define name="leaf.content">
+      <optional>
+         <ref name="label"/>
+      </optional>
+   </define>
+   <define name="leaf.localattributes">
+      <ref name="att.global.attributes"/>
+      <optional>
+         <attribute name="value">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides a pointer to a feature structure or other analytic element.</a:documentation>
+            <data type="anyURI"/>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="parent">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides the identifier of parent of a leaf.</a:documentation>
+            <data type="anyURI"/>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="follow">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides an identifier of an element which this leaf follows.</a:documentation>
+            <data type="anyURI"/>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="listForest">
+      <element name="listForest">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides for lists of forests. []</a:documentation>
+         <ref name="listForest.content"/>
+         <ref name="listForest.localattributes"/>
+      </element>
+   </define>
+   <define name="listForest.content">
+      <oneOrMore>
+         <ref name="forest"/>
+      </oneOrMore>
+   </define>
+   <define name="listForest.localattributes">
+      <ref name="att.global.attributes"/>
+      <optional>
+         <attribute name="type">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">identifies the type of the forest group.</a:documentation>
+            <data type="token">
+               <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+            </data>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="node">
+      <element name="node">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">encodes a node, a possibly labeled point in a graph. []</a:documentation>
+         <ref name="node.content"/>
+         <ref name="node.localattributes"/>
+      </element>
+   </define>
+   <define name="node.content">
+      <optional>
+         <group>
+            <ref name="label"/>
+      
+            <optional>
+               <ref name="label"/>
+            </optional>
+      
+         </group>
+      </optional>
+   </define>
+   <define name="node.localattributes">
+      <ref name="att.global.attributes"/>
+      <optional>
+         <attribute name="value">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides the value of a node, which is a feature structure or other analytic element.</a:documentation>
+            <data type="anyURI"/>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="type">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides a type for a node.
+Suggested values include: 1] initial; 2] final</a:documentation>
+            <choice>
+               <value>initial</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">initial node in a transition network</a:documentation>
+               <value>final</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">final node in a transition network</a:documentation>
+               <data type="token">
+                  <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+               </data>
+            </choice>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="adjTo">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(adjacent to) gives the identifiers of the nodes which are adjacent to the current node.</a:documentation>
+            <list>
+               <oneOrMore>
+                  <data type="anyURI"/>
+               </oneOrMore>
+            </list>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="adjFrom">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(adjacent from) gives the identifiers of the nodes which are adjacent from the current node.</a:documentation>
+            <list>
+               <oneOrMore>
+                  <data type="anyURI"/>
+               </oneOrMore>
+            </list>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="adj">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(adjacent) gives the identifiers of the nodes which are both adjacent to and adjacent from the current node.</a:documentation>
+            <list>
+               <oneOrMore>
+                  <data type="anyURI"/>
+               </oneOrMore>
+            </list>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="inDegree">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives the in degree of the node, the number of nodes which are adjacent from the given node.</a:documentation>
+            <data type="nonNegativeInteger"/>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="outDegree">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives the out degree of the node, the number of nodes which are adjacent to the given node.</a:documentation>
+            <data type="nonNegativeInteger"/>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="degree">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives the degree of the node, the number of arcs with which the node is incident.</a:documentation>
+            <data type="nonNegativeInteger"/>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="root">
+      <element name="root">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(root node) represents the root node of a tree. []</a:documentation>
+         <ref name="root.content"/>
+         <ref name="root.localattributes"/>
+      </element>
+   </define>
+   <define name="root.content">
+      <optional>
+         <ref name="label"/>
+      </optional>
+   </define>
+   <define name="root.localattributes">
+      <ref name="att.global.attributes"/>
+      <optional>
+         <attribute name="value">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">identifies the root node of the network by pointing to a feature structure or other analytic element.</a:documentation>
+            <data type="anyURI"/>
+         </attribute>
+      </optional>
+      <attribute name="children">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">identifies the elements which are the children of the root node.</a:documentation>
+         <list>
+            <oneOrMore>
+               <data type="anyURI"/>
+            </oneOrMore>
+         </list>
+      </attribute>
+      <optional>
+         <attribute name="ord">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(ordered) indicates whether or not the root is ordered.</a:documentation>
+            <choice>
+               <data type="boolean"/>
+               <choice>
+                  <value>unknown</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                  <value>inapplicable</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               </choice>
+            </choice>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="outDegree">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives the out degree of the root, the number of its children.</a:documentation>
+            <data type="nonNegativeInteger"/>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="tree">
+      <element name="tree">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">encodes a tree, which is made up of a root, internal nodes, leaves, and arcs from root to leaves. []</a:documentation>
+         <ref name="tree.content"/>
+         <ref name="tree.localattributes"/>
+      </element>
+   </define>
+   <define name="tree.content">
+      <group>
+      
+        <optional>
+            <ref name="label"/>
+         </optional>
+      
+         <group>
+        
+            <zeroOrMore>
+               <choice>
+                  <ref name="leaf"/>
+                  <ref name="iNode"/>
+               </choice>
+            </zeroOrMore>
+        
+            <ref name="root"/>
+        
+            <zeroOrMore>
+               <choice>
+                  <ref name="leaf"/>
+                  <ref name="iNode"/>
+               </choice>
+            </zeroOrMore>
+        
+         </group>
+      </group>
+   </define>
+   <define name="tree.localattributes">
+      <ref name="att.global.attributes"/>
+      <optional>
+         <attribute name="arity">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives the maximum number of children of the root and internal nodes of the tree.</a:documentation>
+            <data type="nonNegativeInteger"/>
+         </attribute>
+      </optional>
+      <attribute name="ord">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(ordered) indicates whether or not the tree is ordered, or if it is partially ordered.</a:documentation>
+         <choice>
+            <value>true</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates that all of the branching nodes of the tree are ordered.</a:documentation>
+            <value>partial</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates that some of the branching nodes of the tree are ordered and some are unordered.</a:documentation>
+            <value>false</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates that all of the branching nodes of the tree are unordered.</a:documentation>
+         </choice>
+      </attribute>
+      <optional>
+         <attribute name="order">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives the order of the tree, i.e., the number of its nodes.</a:documentation>
+            <data type="nonNegativeInteger"/>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="triangle">
+      <element name="triangle">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(underspecified embedding tree, so called because of its
+  characteristic shape when drawn) provides for an underspecified eTree, that is, an eTree with information left out. []</a:documentation>
+         <ref name="triangle.content"/>
+         <ref name="triangle.localattributes"/>
+      </element>
+   </define>
+   <define name="triangle.content">
+      <group>
+      
+        <optional>
+            <ref name="label"/>
+         </optional>
+      
+      
+        <zeroOrMore>
+            <choice>
+               <ref name="eTree"/>
+               <ref name="triangle"/>
+               <ref name="eLeaf"/>
+            </choice>
+         </zeroOrMore>
+      
+      </group>
+   </define>
+   <define name="triangle.localattributes">
+      <ref name="att.global.attributes"/>
+      <optional>
+         <attribute name="value">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">supplies a value for the triangle, in the form of the identifier of a feature structure or other analytic element.</a:documentation>
+            <data type="anyURI"/>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <!--3. macros-->
+</grammar>

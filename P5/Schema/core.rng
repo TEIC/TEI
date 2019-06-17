@@ -1,0 +1,2369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         xmlns:tei="http://www.tei-c.org/ns/1.0"
+         xmlns:teix="http://www.tei-c.org/ns/Examples"
+         datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"><!--Schema generated 2019-01-21T23:48:03Z
+Edition: Version 3.5.0a. Last updated on
+	19th January 2019, revision e6ccc03
+This material is dual-licensed.
+[http://creativecommons.org/licenses/by/3.0/] Distributed under a Creative Commons Attribution 3.0 Unported License.  [http://www.opensource.org/licenses/BSD-2-Clause] Copyright 2019 TEI Consortium. All rights reserved. Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. This software is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright holder or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage. TEI material can be licensed differently depending on the use you intend to make of it. Hence it is made available under both the CC+BY and BSD-2 licences. The CC+BY licence is generally appropriate for usages which treat TEI content as data or documentation. The BSD-2 licence is generally appropriate for usage of TEI content in a software environment. For further information or clarification, please contact the TEI Consortium. Elements common to all TEI documents--><!--Definitions from module core--><!--Set global predeclared macros--><!--Set predeclared macros--><!--0. predeclared macros--><!--1. classes-->
+   <define name="att.milestoneUnit.attributes">
+      <ref name="att.milestoneUnit.attribute.unit"/>
+   </define>
+   <define name="att.milestoneUnit.attribute.unit">
+      <attribute name="unit">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides a conventional name for the kind of section changing at this milestone.
+Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] canto; 7] speaker; 8] stanza; 9] act; 10] scene; 11] section; 12] absent; 13] unnumbered</a:documentation>
+         <choice>
+            <value>page</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">physical page breaks (synonymous with the pb element).</a:documentation>
+            <value>column</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">column breaks.</a:documentation>
+            <value>line</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">line breaks (synonymous with the lb element).</a:documentation>
+            <value>book</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">any units termed book, liber, etc.</a:documentation>
+            <value>poem</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">individual poems in a collection.</a:documentation>
+            <value>canto</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">cantos or other major sections of a poem.</a:documentation>
+            <value>speaker</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">changes of speaker or narrator.</a:documentation>
+            <value>stanza</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">stanzas within a poem, book, or canto.</a:documentation>
+            <value>act</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">acts within a play.</a:documentation>
+            <value>scene</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">scenes within a play or act.</a:documentation>
+            <value>section</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">sections of any kind.</a:documentation>
+            <value>absent</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">passages not present in the reference edition.</a:documentation>
+            <value>unnumbered</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">passages present in the text, but not to be included as part of the reference.</a:documentation>
+            <data type="token">
+               <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+            </data>
+         </choice>
+      </attribute>
+   </define>
+   <!--2. elements-->
+   <define name="abbr">
+      <element name="abbr">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(abbreviation) contains an abbreviation of any sort. []</a:documentation>
+         <ref name="abbr.content"/>
+         <ref name="abbr.localattributes"/>
+      </element>
+   </define>
+   <define name="abbr.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="abbr.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.typed.attribute.subtype"/>
+      <optional>
+         <attribute name="type">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">allows the encoder to classify the abbreviation according to some convenient typology.
+Sample values include: 1] suspension; 2] contraction; 3] brevigraph; 4] superscription; 5] acronym; 6] title; 7] organization; 8] geographic</a:documentation>
+            <data type="token">
+               <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+            </data>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="add">
+      <element name="add">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(addition) contains letters, words, or phrases inserted in the source text by an author, scribe, or a previous annotator or corrector. []</a:documentation>
+         <ref name="add.content"/>
+         <ref name="add.localattributes"/>
+      </element>
+   </define>
+   <define name="add.content">
+      <ref name="macro.paraContent"/>
+   </define>
+   <define name="add.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.transcriptional.attributes"/>
+      <ref name="att.placement.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.dimensions.attributes"/>
+      <empty/>
+   </define>
+   <define name="addrLine">
+      <element name="addrLine">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(address line) contains one line of a postal address. [  ]</a:documentation>
+         <ref name="addrLine.content"/>
+         <ref name="addrLine.localattributes"/>
+      </element>
+   </define>
+   <define name="addrLine.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="addrLine.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="address">
+      <element name="address">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a postal address, for example of a publisher, an organization, or an individual. [  ]</a:documentation>
+         <ref name="address.content"/>
+         <ref name="address.localattributes"/>
+      </element>
+   </define>
+   <define name="address.content">
+      <group>
+      
+        <zeroOrMore>
+            <ref name="model.global"/>
+         </zeroOrMore>
+      
+         <oneOrMore>
+            <group>
+        
+               <ref name="model.addrPart"/>
+        
+        
+               <zeroOrMore>
+                  <ref name="model.global"/>
+               </zeroOrMore>
+        
+            </group>
+         </oneOrMore>
+      </group>
+   </define>
+   <define name="address.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="analytic">
+      <element name="analytic">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(analytic level) contains bibliographic elements describing an item (e.g. an article or poem) published within a monograph or journal and not as an independent publication. []</a:documentation>
+         <ref name="analytic.content"/>
+         <ref name="analytic.localattributes"/>
+      </element>
+   </define>
+   <define name="analytic.content">
+      <zeroOrMore>
+         <choice>
+            <ref name="author"/>
+            <ref name="editor"/>
+            <ref name="respStmt"/>
+            <ref name="title"/>
+            <ref name="model.ptrLike"/>
+            <ref name="date"/>
+            <ref name="textLang"/>
+            <ref name="idno"/>
+            <ref name="availability"/>
+         </choice>
+      </zeroOrMore>
+   </define>
+   <define name="analytic.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="author">
+      <element name="author">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">in a bibliographic reference, contains the name(s) of an author, personal or corporate, of a work; for example in the same form as that provided by a recognized bibliographic name authority. [ ]</a:documentation>
+         <ref name="author.content"/>
+         <ref name="author.localattributes"/>
+      </element>
+   </define>
+   <define name="author.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="author.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.naming.attributes"/>
+      <empty/>
+   </define>
+   <define name="bibl">
+      <element name="bibl">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(bibliographic citation) contains a loosely-structured bibliographic citation of which the sub-components may or may not be explicitly tagged. [  ]</a:documentation>
+         <ref name="bibl.content"/>
+         <ref name="bibl.localattributes"/>
+      </element>
+   </define>
+   <define name="bibl.content">
+      <zeroOrMore>
+         <choice>
+            <text/>
+            <ref name="model.gLike"/>
+            <ref name="model.highlighted"/>
+            <ref name="model.pPart.data"/>
+            <ref name="model.pPart.edit"/>
+            <ref name="model.segLike"/>
+            <ref name="model.ptrLike"/>
+            <ref name="model.biblPart"/>
+            <ref name="model.global"/>
+         </choice>
+      </zeroOrMore>
+   </define>
+   <define name="bibl.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.declarable.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.sortable.attributes"/>
+      <ref name="att.docStatus.attributes"/>
+      <empty/>
+   </define>
+   <define name="biblScope">
+      <element name="biblScope">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(scope of bibliographic reference) defines the scope of a bibliographic reference, for example as a list of page numbers, or a named subdivision of a larger work. []</a:documentation>
+         <ref name="biblScope.content"/>
+         <ref name="biblScope.localattributes"/>
+      </element>
+   </define>
+   <define name="biblScope.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="biblScope.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.citing.attributes"/>
+      <empty/>
+   </define>
+   <define name="biblStruct">
+      <element name="biblStruct">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(structured bibliographic citation) contains a structured bibliographic citation, in which only bibliographic sub-elements appear and in a specified order. [  ]</a:documentation>
+         <ref name="biblStruct.content"/>
+         <ref name="biblStruct.localattributes"/>
+      </element>
+   </define>
+   <define name="biblStruct.content">
+      <group>
+         <zeroOrMore>
+            <ref name="analytic"/>
+         </zeroOrMore>      
+         <oneOrMore>
+            <group>
+               <ref name="monogr"/>
+               <zeroOrMore>
+                  <ref name="series"/>
+               </zeroOrMore>
+            </group>
+         </oneOrMore>
+         <zeroOrMore>
+            <choice>
+               <ref name="model.noteLike"/>
+               <ref name="model.ptrLike"/>
+               <ref name="relatedItem"/>
+               <ref name="citedRange"/>
+            </choice>
+         </zeroOrMore>
+      </group>
+   </define>
+   <define name="biblStruct.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.declarable.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.sortable.attributes"/>
+      <ref name="att.docStatus.attributes"/>
+      <empty/>
+   </define>
+   <define name="binaryObject">
+      <element name="binaryObject">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides encoded binary data representing an inline graphic, audio, video or other object. []</a:documentation>
+         <ref name="binaryObject.content"/>
+         <ref name="binaryObject.localattributes"/>
+      </element>
+   </define>
+   <define name="binaryObject.content">
+      <text/>
+   </define>
+   <define name="binaryObject.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.media.attributes"/>
+      <ref name="att.timed.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <optional>
+         <attribute name="encoding">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The encoding used to encode the binary data. If not specified, this is assumed to be Base64.</a:documentation>
+            <list>
+               <oneOrMore>
+                  <data type="token">
+                     <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+                  </data>
+               </oneOrMore>
+            </list>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="cb">
+      <element name="cb">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(column beginning) marks the beginning of a new column of a text on a multi-column page. []</a:documentation>
+         <ref name="cb.content"/>
+         <ref name="cb.localattributes"/>
+      </element>
+   </define>
+   <define name="cb.content">
+      <empty/>
+   </define>
+   <define name="cb.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.edition.attributes"/>
+      <ref name="att.spanning.attributes"/>
+      <ref name="att.breaking.attributes"/>
+      <empty/>
+   </define>
+   <define name="choice">
+      <element name="choice">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">groups a number of alternative encodings for the same point in a text. []</a:documentation>
+         <ref name="choice.content"/>
+         <ref name="choice.localattributes"/>
+      </element>
+   </define>
+   <define name="choice.content">
+      <oneOrMore>
+         <choice>
+            <ref name="model.choicePart"/>
+            <ref name="choice"/>
+         </choice>
+      </oneOrMore>
+   </define>
+   <define name="choice.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="cit">
+      <element name="cit">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(cited quotation) contains a quotation from some other document, together with a bibliographic reference to its source. In a dictionary it may contain an example text with at least one occurrence of the word form, used in the sense being described, or a translation of the headword, or an example. [  ]</a:documentation>
+         <ref name="cit.content"/>
+         <ref name="cit.localattributes"/>
+      </element>
+   </define>
+   <define name="cit.content">
+      <oneOrMore>
+         <choice>
+            <ref name="model.qLike"/>
+            <ref name="model.egLike"/>
+            <ref name="model.biblLike"/>
+            <ref name="model.ptrLike"/>
+            <ref name="model.global"/>
+            <ref name="model.entryPart"/>
+         </choice>
+      </oneOrMore>
+   </define>
+   <define name="cit.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <empty/>
+   </define>
+   <define name="citedRange">
+      <element name="citedRange">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(cited range) defines the range of cited content, often represented by pages or other units []</a:documentation>
+         <ref name="citedRange.content"/>
+         <ref name="citedRange.localattributes"/>
+      </element>
+   </define>
+   <define name="citedRange.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="citedRange.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.pointing.attributes"/>
+      <ref name="att.citing.attributes"/>
+      <empty/>
+   </define>
+   <define name="corr">
+      <element name="corr">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(correction) contains the correct form of a passage apparently erroneous in the copy text. []</a:documentation>
+         <ref name="corr.content"/>
+         <ref name="corr.localattributes"/>
+      </element>
+   </define>
+   <define name="corr.content">
+      <ref name="macro.paraContent"/>
+   </define>
+   <define name="corr.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.editLike.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <empty/>
+   </define>
+   <define name="date">
+      <element name="date">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a date in any format. [     ]</a:documentation>
+         <ref name="date.content"/>
+         <ref name="date.localattributes"/>
+      </element>
+   </define>
+   <define name="date.content">
+      <zeroOrMore>
+         <choice>
+            <text/>
+            <ref name="model.gLike"/>
+            <ref name="model.phrase"/>
+            <ref name="model.global"/>
+         </choice>
+      </zeroOrMore>
+   </define>
+   <define name="date.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.canonical.attributes"/>
+      <ref name="att.datable.attributes"/>
+      <ref name="att.duration.attributes"/>
+      <ref name="att.editLike.attributes"/>
+      <ref name="att.dimensions.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <empty/>
+   </define>
+   <define name="del">
+      <element name="del">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(deletion) contains a letter, word, or passage deleted, marked as deleted, or otherwise indicated as superfluous or spurious in the copy text by an author, scribe, or a previous annotator or corrector. []</a:documentation>
+         <ref name="del.content"/>
+         <ref name="del.localattributes"/>
+      </element>
+   </define>
+   <define name="del.content">
+      <ref name="macro.paraContent"/>
+   </define>
+   <define name="del.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.transcriptional.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.dimensions.attributes"/>
+      <empty/>
+   </define>
+   <define name="desc">
+      <element name="desc">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(description) contains a brief description of the object documented by its parent element, typically a documentation element or an entity. []</a:documentation>
+         <ref name="desc.content"/>
+         <ref name="desc.localattributes"/>
+      </element>
+   </define>
+   <define name="desc.content">
+      <ref name="macro.limitedContent"/>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+               id="desc-deprecationInfo-only-in-deprecated-constraint-rule-10">
+         <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                   xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                   xmlns="http://www.tei-c.org/ns/1.0"
+                   context="tei:desc[ @type eq 'deprecationInfo']">
+	           <sch:assert test="../@validUntil">Information about a
+	deprecation should only be present in a specification element
+	that is being deprecated: that is, only an element that has a
+	@validUntil attribute should have a child &lt;desc
+	type="deprecationInfo"&gt;.</sch:assert>
+         </sch:rule>
+      </pattern>
+   </define>
+   <define name="desc.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.translatable.attributes"/>
+      <ref name="att.typed.attribute.subtype"/>
+      <optional>
+         <attribute name="type">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">characterizes the element in some sense, using any convenient classification scheme or typology.</a:documentation>
+            <data type="token">
+               <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+            </data>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="distinct">
+      <element name="distinct">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">identifies any word or phrase which is regarded as linguistically distinct, for example as archaic, technical, dialectal, non-preferred, etc., or as forming part of a sublanguage. []</a:documentation>
+         <ref name="distinct.content"/>
+         <ref name="distinct.localattributes"/>
+      </element>
+   </define>
+   <define name="distinct.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="distinct.localattributes">
+      <ref name="att.global.attributes"/>
+      <optional>
+         <attribute name="type">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies the sublanguage or register to which the word or phrase is being assigned</a:documentation>
+            <data type="token">
+               <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+            </data>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="time">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies how the phrase is distinct diachronically</a:documentation>
+            <data type="string"/>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="space">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies how the phrase is distinct diatopically</a:documentation>
+            <data type="string"/>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="social">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies how the phrase is distinct diastratically</a:documentation>
+            <data type="string"/>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="divGen">
+      <element name="divGen">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(automatically generated text division) indicates the location at which a textual division generated automatically by a text-processing application is to appear. []</a:documentation>
+         <ref name="divGen.content"/>
+         <ref name="divGen.localattributes"/>
+      </element>
+   </define>
+   <define name="divGen.content">
+      <zeroOrMore>
+         <ref name="model.headLike"/>
+      </zeroOrMore>
+   </define>
+   <define name="divGen.localattributes">
+      <ref name="att.global.attributes"/>
+      <optional>
+         <attribute name="type">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies what type of generated text division (e.g. index, table of contents, etc.) is to appear.
+Sample values include: 1] index; 2] toc; 3] figlist; 4] tablist</a:documentation>
+            <data type="token">
+               <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+            </data>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="editor">
+      <element name="editor">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a secondary statement of responsibility for a bibliographic item, for example the name of an individual, institution or organization, (or of several such) acting as editor, compiler, translator, etc. []</a:documentation>
+         <ref name="editor.content"/>
+         <ref name="editor.localattributes"/>
+      </element>
+   </define>
+   <define name="editor.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="editor.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.naming.attributes"/>
+      <empty/>
+   </define>
+   <define name="email">
+      <element name="email">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(electronic mail address) contains an email address identifying a location to which email messages can be delivered. []</a:documentation>
+         <ref name="email.content"/>
+         <ref name="email.localattributes"/>
+      </element>
+   </define>
+   <define name="email.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="email.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="emph">
+      <element name="emph">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(emphasized) marks words or phrases which are stressed or emphasized for linguistic or rhetorical effect. [ ]</a:documentation>
+         <ref name="emph.content"/>
+         <ref name="emph.localattributes"/>
+      </element>
+   </define>
+   <define name="emph.content">
+      <ref name="macro.paraContent"/>
+   </define>
+   <define name="emph.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="expan">
+      <element name="expan">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(expansion) contains the expansion of an abbreviation. []</a:documentation>
+         <ref name="expan.content"/>
+         <ref name="expan.localattributes"/>
+      </element>
+   </define>
+   <define name="expan.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="expan.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.editLike.attributes"/>
+      <empty/>
+   </define>
+   <define name="foreign">
+      <element name="foreign">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">identifies a word or phrase as belonging to some language other than that of the surrounding text. []</a:documentation>
+         <ref name="foreign.content"/>
+         <ref name="foreign.localattributes"/>
+      </element>
+   </define>
+   <define name="foreign.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="foreign.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="gap">
+      <element name="gap">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates a point where material has been omitted in a transcription, whether for editorial reasons described in the TEI header, as part of sampling practice, or because the material is illegible, invisible, or inaudible. []</a:documentation>
+         <ref name="gap.content"/>
+         <ref name="gap.localattributes"/>
+      </element>
+   </define>
+   <define name="gap.content">
+      <zeroOrMore>
+         <choice>
+            <ref name="model.descLike"/>
+            <ref name="model.certLike"/>
+         </choice>
+      </zeroOrMore>
+   </define>
+   <define name="gap.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.timed.attributes"/>
+      <ref name="att.editLike.attributes"/>
+      <ref name="att.dimensions.attributes"/>
+      <optional>
+         <attribute name="reason">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives the reason for omission
+Suggested values include: 1] cancelled; 2] deleted; 3] editorial; 4] illegible; 5] inaudible; 6] irrelevant; 7] sampling</a:documentation>
+            <list>
+               <oneOrMore>
+                  <choice>
+                     <value>cancelled</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                     <value>deleted</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                     <value>editorial</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">for features omitted from transcription due to editorial policy</a:documentation>
+                     <value>illegible</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                     <value>inaudible</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                     <value>irrelevant</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                     <value>sampling</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                     <data type="token">
+                        <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+                     </data>
+                  </choice>
+               </oneOrMore>
+            </list>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="agent">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">in the case of text omitted because of damage, categorizes the cause of the damage, if it can be identified.
+Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
+            <data type="token">
+               <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+            </data>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="gb">
+      <element name="gb">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(gathering beginning) marks the beginning of a new gathering or quire in a transcribed codex. []</a:documentation>
+         <ref name="gb.content"/>
+         <ref name="gb.localattributes"/>
+      </element>
+   </define>
+   <define name="gb.content">
+      <empty/>
+   </define>
+   <define name="gb.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.spanning.attributes"/>
+      <ref name="att.breaking.attributes"/>
+      <ref name="att.edition.attributes"/>
+      <empty/>
+   </define>
+   <define name="gloss">
+      <element name="gloss">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">identifies a phrase or word used to provide a gloss or definition for some other word or phrase. [ ]</a:documentation>
+         <ref name="gloss.content"/>
+         <ref name="gloss.localattributes"/>
+      </element>
+   </define>
+   <define name="gloss.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="gloss.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.declaring.attributes"/>
+      <ref name="att.translatable.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.pointing.attributes"/>
+      <ref name="att.cReferencing.attributes"/>
+      <empty/>
+   </define>
+   <define name="graphic">
+      <element name="graphic">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the location of a graphic or illustration, either forming part of a text, or providing an image of it. [ ]</a:documentation>
+         <ref name="graphic.content"/>
+         <ref name="graphic.localattributes"/>
+      </element>
+   </define>
+   <define name="graphic.content">
+      <zeroOrMore>
+         <ref name="model.descLike"/>
+      </zeroOrMore>
+   </define>
+   <define name="graphic.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.media.attributes"/>
+      <ref name="att.resourced.attributes"/>
+      <ref name="att.declaring.attributes"/>
+      <empty/>
+   </define>
+   <define name="head">
+      <element name="head">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(heading) contains any type of heading, for example the title of a section, or the heading of a list, glossary, manuscript description, etc. []</a:documentation>
+         <ref name="head.content"/>
+         <ref name="head.localattributes"/>
+      </element>
+   </define>
+   <define name="head.content">
+      <zeroOrMore>
+         <choice>
+            <text/>
+            <ref name="lg"/>
+            <ref name="model.gLike"/>
+            <ref name="model.phrase"/>
+            <ref name="model.inter"/>
+            <ref name="model.lLike"/>
+            <ref name="model.global"/>
+         </choice>
+      </zeroOrMore>
+   </define>
+   <define name="head.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.placement.attributes"/>
+      <ref name="att.written.attributes"/>
+      <empty/>
+   </define>
+   <define name="headItem">
+      <element name="headItem">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(heading for list items) contains the heading for the item or gloss column in a glossary list or similar structured list. []</a:documentation>
+         <ref name="headItem.content"/>
+         <ref name="headItem.localattributes"/>
+      </element>
+   </define>
+   <define name="headItem.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="headItem.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="headLabel">
+      <element name="headLabel">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(heading for list labels) contains the heading for the label or term column in a glossary list or similar structured list. []</a:documentation>
+         <ref name="headLabel.content"/>
+         <ref name="headLabel.localattributes"/>
+      </element>
+   </define>
+   <define name="headLabel.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="headLabel.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="hi">
+      <element name="hi">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(highlighted) marks a word or phrase as graphically distinct from the surrounding text, for reasons concerning which no claim is made. [ ]</a:documentation>
+         <ref name="hi.content"/>
+         <ref name="hi.localattributes"/>
+      </element>
+   </define>
+   <define name="hi.content">
+      <ref name="macro.paraContent"/>
+   </define>
+   <define name="hi.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.written.attributes"/>
+      <empty/>
+   </define>
+   <define name="imprint">
+      <element name="imprint">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">groups information relating to the publication or distribution of a bibliographic item. []</a:documentation>
+         <ref name="imprint.content"/>
+         <ref name="imprint.localattributes"/>
+      </element>
+   </define>
+   <define name="imprint.content">
+      <group>
+      
+        <zeroOrMore>
+            <choice>
+               <ref name="classCode"/>
+               <ref name="catRef"/>
+            </choice>
+         </zeroOrMore>
+      
+         <oneOrMore>
+            <group>
+               <choice>
+          
+            
+                  <ref name="model.imprintPart"/>
+          
+          
+            
+                  <ref name="model.dateLike"/>
+          
+               </choice>
+        
+               <zeroOrMore>
+                  <ref name="respStmt"/>
+               </zeroOrMore>
+        
+        
+               <zeroOrMore>
+                  <ref name="model.global"/>
+               </zeroOrMore>
+        
+            </group>
+         </oneOrMore>
+      </group>
+   </define>
+   <define name="imprint.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="index">
+      <element name="index">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(index entry) marks a location to be indexed for whatever purpose. []</a:documentation>
+         <ref name="index.content"/>
+         <ref name="index.localattributes"/>
+      </element>
+   </define>
+   <define name="index.content">
+      <zeroOrMore>
+         <group>
+            <ref name="term"/>
+        
+            <optional>
+               <ref name="index"/>
+            </optional>
+        
+         </group>
+      </zeroOrMore>
+   </define>
+   <define name="index.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.spanning.attributes"/>
+      <optional>
+         <attribute name="indexName">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">a single word which follows the rules defining a legal XML name (see ), supplying a name to specify which index (of several) the index entry belongs to.</a:documentation>
+            <data type="Name"/>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="item">
+      <element name="item">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains one component of a list. [ ]</a:documentation>
+         <ref name="item.content"/>
+         <ref name="item.localattributes"/>
+      </element>
+   </define>
+   <define name="item.content">
+      <ref name="macro.specialPara"/>
+   </define>
+   <define name="item.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.sortable.attributes"/>
+      <empty/>
+   </define>
+   <define name="l">
+      <element name="l">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(verse line) contains a single, possibly incomplete, line of verse. [  ]</a:documentation>
+         <ref name="l.content"/>
+         <ref name="l.localattributes"/>
+      </element>
+   </define>
+   <define name="l.content">
+      <zeroOrMore>
+         <choice>
+            <text/>
+            <ref name="model.gLike"/>
+            <ref name="model.phrase"/>
+            <ref name="model.inter"/>
+            <ref name="model.global"/>
+         </choice>
+      </zeroOrMore>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+               id="l-abstractModel-structure-l-constraint-report-11">
+         <rule context="tei:l">
+            <report test="ancestor::tei:l[not(.//tei:note//tei:l[. = current()])]">
+        Abstract model violation: Lines may not contain lines or lg elements.
+      </report>
+         </rule>
+      </pattern>
+   </define>
+   <define name="l.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.metrical.attributes"/>
+      <ref name="att.enjamb.attributes"/>
+      <ref name="att.fragmentable.attributes"/>
+      <empty/>
+   </define>
+   <define name="label">
+      <element name="label">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains any label or heading used to identify part of a text, typically but not exclusively in a list or glossary. []</a:documentation>
+         <ref name="label.content"/>
+         <ref name="label.localattributes"/>
+      </element>
+   </define>
+   <define name="label.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="label.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.placement.attributes"/>
+      <ref name="att.written.attributes"/>
+      <empty/>
+   </define>
+   <define name="lb">
+      <element name="lb">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(line beginning) marks the beginning of a new (typographic) line in some edition or version of a text. [ ]</a:documentation>
+         <ref name="lb.content"/>
+         <ref name="lb.localattributes"/>
+      </element>
+   </define>
+   <define name="lb.content">
+      <empty/>
+   </define>
+   <define name="lb.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.edition.attributes"/>
+      <ref name="att.spanning.attributes"/>
+      <ref name="att.breaking.attributes"/>
+      <empty/>
+   </define>
+   <define name="lg">
+      <element name="lg">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(line group) contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain, verse paragraph, etc. [  ]</a:documentation>
+         <ref name="lg.content"/>
+         <ref name="lg.localattributes"/>
+      </element>
+   </define>
+   <define name="lg.content">
+      <group>
+      
+        <zeroOrMore>
+            <choice>
+               <ref name="model.divTop"/>
+               <ref name="model.global"/>
+            </choice>
+         </zeroOrMore>
+      
+         <choice>
+            <ref name="model.lLike"/>
+            <ref name="model.stageLike"/>
+            <ref name="model.labelLike"/>
+            <ref name="lg"/>
+         </choice>
+      
+        <zeroOrMore>
+            <choice>
+               <ref name="model.lLike"/>
+               <ref name="model.stageLike"/>
+               <ref name="model.labelLike"/>
+               <ref name="model.global"/>
+               <ref name="lg"/>
+            </choice>
+         </zeroOrMore>
+      
+         <zeroOrMore>
+            <group>
+        
+               <ref name="model.divBottom"/>
+        
+        
+               <zeroOrMore>
+                  <ref name="model.global"/>
+               </zeroOrMore>
+        
+            </group>
+         </zeroOrMore>
+      </group>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+               id="lg-atleast1oflggapl-constraint-assert-9">
+         <rule context="tei:lg">
+            <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                        xmlns="http://www.tei-c.org/ns/1.0"
+                        test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element
+        must contain at least one child l, lg or gap element.</sch:assert>
+         </rule>
+      </pattern>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+               id="lg-abstractModel-structure-l-constraint-report-12">
+         <rule context="tei:lg">
+            <report test="ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]">
+        Abstract model violation: Lines may not contain line groups.
+      </report>
+         </rule>
+      </pattern>
+   </define>
+   <define name="lg.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.divLike.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.declaring.attributes"/>
+      <empty/>
+   </define>
+   <define name="list">
+      <element name="list">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains any sequence of items organized as a list. []</a:documentation>
+         <ref name="list.content"/>
+         <ref name="list.localattributes"/>
+      </element>
+   </define>
+   <define name="list.content">
+      <group>
+      
+        <zeroOrMore>
+            <choice>
+          
+               <ref name="model.divTop"/>
+          
+          
+               <ref name="model.global"/>
+          
+            </choice>
+         </zeroOrMore>
+      
+         <choice>
+            <oneOrMore>
+               <group>
+                  <ref name="item"/>
+          
+                  <zeroOrMore>
+                     <ref name="model.global"/>
+                  </zeroOrMore>
+          
+               </group>
+            </oneOrMore>
+            <group>
+          
+               <optional>
+                  <ref name="headLabel"/>
+               </optional>
+          
+          
+               <optional>
+                  <ref name="headItem"/>
+               </optional>
+          
+               <oneOrMore>
+                  <group>
+                     <ref name="label"/>
+            
+                     <zeroOrMore>
+                        <ref name="model.global"/>
+                     </zeroOrMore>
+            
+                     <ref name="item"/>
+            
+                     <zeroOrMore>
+                        <ref name="model.global"/>
+                     </zeroOrMore>
+            
+                  </group>
+               </oneOrMore>
+            </group>
+         </choice>
+      
+        <zeroOrMore>
+            <group>
+          
+               <ref name="model.divBottom"/>
+          
+          
+               <zeroOrMore>
+                  <ref name="model.global"/>
+               </zeroOrMore>
+          
+            </group>
+         </zeroOrMore>
+      
+      </group>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+               id="list-gloss-list-must-have-labels-constraint-rule-11">
+         <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                   xmlns="http://www.tei-c.org/ns/1.0"
+                   context="tei:list[@type='gloss']">
+	           <sch:assert test="tei:label">The content of a "gloss" list should include a sequence of one or more pairs of a label element followed by an item element</sch:assert>
+         </sch:rule>
+      </pattern>
+   </define>
+   <define name="list.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.sortable.attributes"/>
+      <ref name="att.typed.attribute.subtype"/>
+      <optional>
+         <attribute name="type">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">describes the nature of the items in the list.
+Suggested values include: 1] gloss; 2] index; 3] instructions; 4] litany; 5] syllogism</a:documentation>
+            <choice>
+               <value>gloss</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">each list item glosses some term or concept, which is given by a label element preceding the list item.</a:documentation>
+               <value>index</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">each list item is an entry in an index such as the alphabetical topical index at the back of a print volume.</a:documentation>
+               <value>instructions</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">each list item is a step in a sequence of instructions, as in a recipe.</a:documentation>
+               <value>litany</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">each list item is one of a sequence of petitions, supplications or invocations, typically in a religious ritual.</a:documentation>
+               <value>syllogism</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">each list item is part of an argument consisting of two or more propositions and a final conclusion derived from them.</a:documentation>
+               <data type="token">
+                  <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+               </data>
+            </choice>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="listBibl">
+      <element name="listBibl">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(citation list) contains a list of bibliographic citations of any kind. [  ]</a:documentation>
+         <ref name="listBibl.content"/>
+         <ref name="listBibl.localattributes"/>
+      </element>
+   </define>
+   <define name="listBibl.content">
+      <group>
+      
+        <zeroOrMore>
+            <ref name="model.headLike"/>
+         </zeroOrMore>
+      
+      
+        <oneOrMore>
+            <choice>
+               <ref name="model.biblLike"/>
+               <ref name="model.milestoneLike"/>
+            </choice>
+         </oneOrMore>
+      
+      
+        <zeroOrMore>
+            <choice>
+               <ref name="relation"/>
+               <ref name="listRelation"/>
+            </choice>
+         </zeroOrMore>
+      
+      </group>
+   </define>
+   <define name="listBibl.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.sortable.attributes"/>
+      <ref name="att.declarable.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <empty/>
+   </define>
+   <define name="measure">
+      <element name="measure">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a word or phrase referring to some quantity of an object or commodity, usually comprising a number, a unit, and a commodity name. []</a:documentation>
+         <ref name="measure.content"/>
+         <ref name="measure.localattributes"/>
+      </element>
+   </define>
+   <define name="measure.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="measure.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.measurement.attributes"/>
+      <optional>
+         <attribute name="type">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies the type of measurement in any convenient typology.</a:documentation>
+            <data type="token">
+               <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+            </data>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="measureGrp">
+      <element name="measureGrp">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(measure group) contains a group of dimensional specifications which relate to the same object, for example the height and width of a manuscript page. []</a:documentation>
+         <ref name="measureGrp.content"/>
+         <ref name="measureGrp.localattributes"/>
+      </element>
+   </define>
+   <define name="measureGrp.content">
+      <zeroOrMore>
+         <choice>
+            <text/>
+            <ref name="model.gLike"/>
+            <ref name="model.measureLike"/>
+         </choice>
+      </zeroOrMore>
+   </define>
+   <define name="measureGrp.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.measurement.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <empty/>
+   </define>
+   <define name="media">
+      <element name="media">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the location of any form of external media such as an audio or video clip etc. []</a:documentation>
+         <ref name="media.content"/>
+         <ref name="media.localattributes"/>
+      </element>
+   </define>
+   <define name="media.content">
+      <zeroOrMore>
+         <ref name="model.descLike"/>
+      </zeroOrMore>
+   </define>
+   <define name="media.localattributes">
+      <ref name="att.typed.attributes"/>
+      <ref name="att.global.attributes"/>
+      <ref name="att.resourced.attributes"/>
+      <ref name="att.declaring.attributes"/>
+      <ref name="att.timed.attributes"/>
+      <ref name="att.media.attribute.width"/>
+      <ref name="att.media.attribute.height"/>
+      <ref name="att.media.attribute.scale"/>
+      <attribute name="mimeType">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(MIME media type) specifies the applicable multimedia internet mail extension (MIME) media type</a:documentation>
+         <list>
+            <oneOrMore>
+               <data type="token">
+                  <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+               </data>
+            </oneOrMore>
+         </list>
+      </attribute>
+      <empty/>
+   </define>
+   <define name="meeting">
+      <element name="meeting">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains the formalized descriptive title for a meeting or conference, for use in a bibliographic description for an item derived from such a meeting, or as a heading or preamble to publications emanating from it. []</a:documentation>
+         <ref name="meeting.content"/>
+         <ref name="meeting.localattributes"/>
+      </element>
+   </define>
+   <define name="meeting.content">
+      <ref name="macro.limitedContent"/>
+   </define>
+   <define name="meeting.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.canonical.attributes"/>
+      <empty/>
+   </define>
+   <define name="mentioned">
+      <element name="mentioned">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">marks words or phrases mentioned, not used. []</a:documentation>
+         <ref name="mentioned.content"/>
+         <ref name="mentioned.localattributes"/>
+      </element>
+   </define>
+   <define name="mentioned.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="mentioned.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="milestone">
+      <element name="milestone">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">marks a boundary point separating any kind of section of a text, typically but not necessarily indicating a point at which some part of a standard reference system changes, where the change is not represented by a structural element. []</a:documentation>
+         <ref name="milestone.content"/>
+         <ref name="milestone.localattributes"/>
+      </element>
+   </define>
+   <define name="milestone.content">
+      <empty/>
+   </define>
+   <define name="milestone.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.milestoneUnit.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.edition.attributes"/>
+      <ref name="att.spanning.attributes"/>
+      <ref name="att.breaking.attributes"/>
+      <empty/>
+   </define>
+   <define name="monogr">
+      <element name="monogr">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(monographic level) contains bibliographic elements describing an item (e.g. a book or journal) published as an independent item (i.e. as a separate physical object). []</a:documentation>
+         <ref name="monogr.content"/>
+         <ref name="monogr.localattributes"/>
+      </element>
+   </define>
+   <define name="monogr.content">
+      <group>
+      
+        <optional>
+            <choice>
+               <group>
+                  <choice>
+                     <ref name="author"/>
+                     <ref name="editor"/>
+                     <ref name="meeting"/>
+                     <ref name="respStmt"/>
+                  </choice>
+            
+                  <zeroOrMore>
+                     <choice>
+                        <ref name="author"/>
+                        <ref name="editor"/>
+                        <ref name="meeting"/>
+                        <ref name="respStmt"/>
+                     </choice>
+                  </zeroOrMore>
+            
+            
+                  <oneOrMore>
+                     <ref name="title"/>
+                  </oneOrMore>
+            
+            
+                  <zeroOrMore>
+                     <choice>
+                        <ref name="model.ptrLike"/>
+                        <ref name="idno"/>
+                        <ref name="textLang"/>
+                        <ref name="editor"/>
+                        <ref name="respStmt"/>
+                     </choice>
+                  </zeroOrMore>
+            
+               </group>
+               <group>
+            
+                  <oneOrMore>
+                     <choice>
+                        <ref name="title"/>
+                        <ref name="model.ptrLike"/>
+                        <ref name="idno"/>
+                     </choice>
+                  </oneOrMore>
+            
+            
+                  <zeroOrMore>
+                     <choice>
+                        <ref name="textLang"/>
+                        <ref name="author"/>
+                        <ref name="editor"/>
+                        <ref name="meeting"/>
+                        <ref name="respStmt"/>
+                     </choice>
+                  </zeroOrMore>
+            
+               </group>
+               <group>
+            
+                  <ref name="authority"/>
+                  <ref name="idno"/>
+               </group>
+            </choice>
+         </optional>
+      
+      
+        <zeroOrMore>
+            <ref name="availability"/>
+         </zeroOrMore>
+      
+      
+        <zeroOrMore>
+            <ref name="model.noteLike"/>
+         </zeroOrMore>
+      
+         <zeroOrMore>
+            <group>
+               <ref name="edition"/>
+        
+               <zeroOrMore>
+                  <choice>
+                     <ref name="idno"/>
+                     <ref name="model.ptrLike"/>
+                     <ref name="editor"/>
+                     <ref name="sponsor"/>
+                     <ref name="funder"/>
+                     <ref name="respStmt"/>
+                  </choice>
+               </zeroOrMore>
+        
+            </group>
+         </zeroOrMore>
+         <ref name="imprint"/>
+      
+        <zeroOrMore>
+            <choice>
+               <ref name="imprint"/>
+               <ref name="extent"/>
+               <ref name="biblScope"/>
+            </choice>
+         </zeroOrMore>
+      
+      </group>
+   </define>
+   <define name="monogr.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="name">
+      <element name="name">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(name, proper noun) contains a proper noun or noun phrase. []</a:documentation>
+         <ref name="name.content"/>
+         <ref name="name.localattributes"/>
+      </element>
+   </define>
+   <define name="name.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="name.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.personal.attributes"/>
+      <ref name="att.datable.attributes"/>
+      <ref name="att.editLike.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <empty/>
+   </define>
+   <define name="note">
+      <element name="note">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a note or annotation. [   ]</a:documentation>
+         <ref name="note.content"/>
+         <ref name="note.localattributes"/>
+      </element>
+   </define>
+   <define name="note.content">
+      <ref name="macro.specialPara"/>
+   </define>
+   <define name="note.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.placement.attributes"/>
+      <ref name="att.pointing.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.written.attributes"/>
+      <optional>
+         <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                    name="anchored"
+                    a:defaultValue="true">
+            <a:documentation>indicates whether the copy text shows the exact place of reference for the note.</a:documentation>
+            <data type="boolean"/>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="targetEnd">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to the end of the span to which the note is attached, if the note is not embedded in the text at that point.</a:documentation>
+            <list>
+               <oneOrMore>
+                  <data type="anyURI"/>
+               </oneOrMore>
+            </list>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="num">
+      <element name="num">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(number) contains a number, written in any form. []</a:documentation>
+         <ref name="num.content"/>
+         <ref name="num.localattributes"/>
+      </element>
+   </define>
+   <define name="num.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="num.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.ranging.attributes"/>
+      <optional>
+         <attribute name="type">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the type of numeric value.
+Suggested values include: 1] cardinal; 2] ordinal; 3] fraction; 4] percentage</a:documentation>
+            <choice>
+               <value>cardinal</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">absolute number, e.g. 21, 21.5</a:documentation>
+               <value>ordinal</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">ordinal number, e.g. 21st</a:documentation>
+               <value>fraction</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">fraction, e.g. one half or three-quarters</a:documentation>
+               <value>percentage</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">a percentage</a:documentation>
+               <data type="token">
+                  <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+               </data>
+            </choice>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="value">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">supplies the value of the number in standard form.</a:documentation>
+            <choice>
+               <data type="double"/>
+               <data type="token">
+                  <param name="pattern">(\-?[\d]+/\-?[\d]+)</param>
+               </data>
+               <data type="decimal"/>
+            </choice>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="orig">
+      <element name="orig">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(original form) contains a reading which is marked as following the original, rather than being normalized or corrected. [ ]</a:documentation>
+         <ref name="orig.content"/>
+         <ref name="orig.localattributes"/>
+      </element>
+   </define>
+   <define name="orig.content">
+      <ref name="macro.paraContent"/>
+   </define>
+   <define name="orig.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="p">
+      <element name="p">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(paragraph) marks paragraphs in prose. [ ]</a:documentation>
+         <ref name="p.content"/>
+         <ref name="p.localattributes"/>
+      </element>
+   </define>
+   <define name="p.content">
+      <ref name="macro.paraContent"/>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+               id="p-abstractModel-structure-p-constraint-report-6">
+         <rule context="tei:p">
+            <report test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )">
+        Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.
+      </report>
+         </rule>
+      </pattern>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+               id="p-abstractModel-structure-l-constraint-report-7">
+         <rule context="tei:p">
+            <report test="ancestor::tei:l[not(.//tei:note//tei:p[. = current()])]">
+        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab.
+      </report>
+         </rule>
+      </pattern>
+   </define>
+   <define name="p.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.declaring.attributes"/>
+      <ref name="att.fragmentable.attributes"/>
+      <ref name="att.written.attributes"/>
+      <empty/>
+   </define>
+   <define name="pb">
+      <element name="pb">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(page beginning) marks the beginning of a new page in a paginated document. []</a:documentation>
+         <ref name="pb.content"/>
+         <ref name="pb.localattributes"/>
+      </element>
+   </define>
+   <define name="pb.content">
+      <empty/>
+   </define>
+   <define name="pb.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.edition.attributes"/>
+      <ref name="att.spanning.attributes"/>
+      <ref name="att.breaking.attributes"/>
+      <empty/>
+   </define>
+   <define name="postBox">
+      <element name="postBox">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(postal box or post office box) contains a number or other identifier for some postal delivery point other than a street address. []</a:documentation>
+         <ref name="postBox.content"/>
+         <ref name="postBox.localattributes"/>
+      </element>
+   </define>
+   <define name="postBox.content">
+      <text/>
+   </define>
+   <define name="postBox.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="postCode">
+      <element name="postCode">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(postal code) contains a numerical or alphanumeric code used as part of a postal address to simplify sorting or delivery of mail. []</a:documentation>
+         <ref name="postCode.content"/>
+         <ref name="postCode.localattributes"/>
+      </element>
+   </define>
+   <define name="postCode.content">
+      <text/>
+   </define>
+   <define name="postCode.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="ptr">
+      <element name="ptr">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(pointer) defines a pointer to another location. [ ]</a:documentation>
+         <ref name="ptr.content"/>
+         <ref name="ptr.localattributes"/>
+      </element>
+   </define>
+   <define name="ptr.content">
+      <empty/>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+               id="ptr-ptrAtts-constraint-report-8">
+         <rule context="tei:ptr">
+            <report test="@target and @cRef">Only one of the
+attributes @target and @cRef may be supplied on <name/>.</report>
+         </rule>
+      </pattern>
+   </define>
+   <define name="ptr.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.pointing.attributes"/>
+      <ref name="att.internetMedia.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.declaring.attributes"/>
+      <ref name="att.cReferencing.attributes"/>
+      <empty/>
+   </define>
+   <define name="pubPlace">
+      <element name="pubPlace">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(publication place) contains the name of the place where a bibliographic item was published. []</a:documentation>
+         <ref name="pubPlace.content"/>
+         <ref name="pubPlace.localattributes"/>
+      </element>
+   </define>
+   <define name="pubPlace.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="pubPlace.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.naming.attributes"/>
+      <empty/>
+   </define>
+   <define name="publisher">
+      <element name="publisher">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides the name of the organization responsible for the publication or distribution of a bibliographic item. [ ]</a:documentation>
+         <ref name="publisher.content"/>
+         <ref name="publisher.localattributes"/>
+      </element>
+   </define>
+   <define name="publisher.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="publisher.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.canonical.attributes"/>
+      <empty/>
+   </define>
+   <define name="q">
+      <element name="q">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(quoted) contains material which is distinguished from the surrounding text using quotation marks or a similar method, for any one of a variety of reasons including, but not limited to: direct speech or thought, technical terms or jargon, authorial distance, quotations from elsewhere, and passages that are mentioned but not used. []</a:documentation>
+         <ref name="q.content"/>
+         <ref name="q.localattributes"/>
+      </element>
+   </define>
+   <define name="q.content">
+      <ref name="macro.specialPara"/>
+   </define>
+   <define name="q.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.ascribed.directed.attributes"/>
+      <optional>
+         <attribute name="type">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">may be used to indicate whether the offset passage is spoken or thought, or to characterize it more finely.
+Suggested values include: 1] spoken; 2] thought; 3] written; 4] soCalled; 5] foreign; 6] distinct; 7] term; 8] emph; 9] mentioned</a:documentation>
+            <choice>
+               <value>spoken</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">representation of speech</a:documentation>
+               <value>thought</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">representation of thought, e.g. internal monologue</a:documentation>
+               <value>written</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">quotation from a written source</a:documentation>
+               <value>soCalled</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">authorial distance</a:documentation>
+               <value>foreign</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>distinct</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">linguistically distinct</a:documentation>
+               <value>term</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">technical term</a:documentation>
+               <value>emph</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">rhetorically emphasized</a:documentation>
+               <value>mentioned</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">refering to itself, not its normal referent</a:documentation>
+               <data type="token">
+                  <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+               </data>
+            </choice>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="quote">
+      <element name="quote">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(quotation) contains a phrase or passage attributed by the narrator or author to some agency external to the text. [ ]</a:documentation>
+         <ref name="quote.content"/>
+         <ref name="quote.localattributes"/>
+      </element>
+   </define>
+   <define name="quote.content">
+      <ref name="macro.specialPara"/>
+   </define>
+   <define name="quote.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.msExcerpt.attributes"/>
+      <ref name="att.notated.attributes"/>
+      <empty/>
+   </define>
+   <define name="ref">
+      <element name="ref">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(reference) defines a reference to another location, possibly modified by additional text or comment. [ ]</a:documentation>
+         <ref name="ref.content"/>
+         <ref name="ref.localattributes"/>
+      </element>
+   </define>
+   <define name="ref.content">
+      <ref name="macro.paraContent"/>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+               id="ref-refAtts-constraint-report-9">
+         <rule context="tei:ref">
+            <report test="@target and @cRef">Only one of the
+	attributes @target' and @cRef' may be supplied on <name/>
+            </report>
+         </rule>
+      </pattern>
+   </define>
+   <define name="ref.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.pointing.attributes"/>
+      <ref name="att.internetMedia.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.declaring.attributes"/>
+      <ref name="att.cReferencing.attributes"/>
+      <empty/>
+   </define>
+   <define name="reg">
+      <element name="reg">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(regularization) contains a reading which has been regularized or normalized in some sense. [ ]</a:documentation>
+         <ref name="reg.content"/>
+         <ref name="reg.localattributes"/>
+      </element>
+   </define>
+   <define name="reg.content">
+      <ref name="macro.paraContent"/>
+   </define>
+   <define name="reg.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.editLike.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <empty/>
+   </define>
+   <define name="relatedItem">
+      <element name="relatedItem">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains or references some other bibliographic item which is related to the present one in some specified manner, for example as a constituent or alternative version of it. []</a:documentation>
+         <ref name="relatedItem.content"/>
+         <ref name="relatedItem.localattributes"/>
+      </element>
+   </define>
+   <define name="relatedItem.content">
+      <optional>
+         <choice>
+            <ref name="model.biblLike"/>
+            <ref name="model.ptrLike"/>
+         </choice>
+      </optional>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+               id="relatedItem-targetorcontent1-constraint-report-10">
+         <rule context="tei:relatedItem">
+            <sch:report xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                        xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                        xmlns="http://www.tei-c.org/ns/1.0"
+                        test="@target and count( child::* ) &gt; 0">
+If the @target attribute on <sch:name/> is used, the
+relatedItem element must be empty</sch:report>
+         </rule>
+      </pattern>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+               id="relatedItem-targetorcontent1-constraint-assert-8">
+         <rule context="tei:relatedItem">
+            <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                        xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                        xmlns="http://www.tei-c.org/ns/1.0"
+                        test="@target or child::*">A relatedItem element should have either a 'target' attribute
+        or a child element to indicate the related bibliographic item</sch:assert>
+         </rule>
+      </pattern>
+   </define>
+   <define name="relatedItem.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <optional>
+         <attribute name="target">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to the related bibliographic element by means of an absolute or relative URI reference</a:documentation>
+            <data type="anyURI"/>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="resp">
+      <element name="resp">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(responsibility) contains a phrase describing the nature of a person's intellectual responsibility, or an organization's role in the production or distribution of a work. [   ]</a:documentation>
+         <ref name="resp.content"/>
+         <ref name="resp.localattributes"/>
+      </element>
+   </define>
+   <define name="resp.content">
+      <ref name="macro.phraseSeq.limited"/>
+   </define>
+   <define name="resp.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.canonical.attributes"/>
+      <ref name="att.datable.attributes"/>
+      <empty/>
+   </define>
+   <define name="respStmt">
+      <element name="respStmt">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(statement of responsibility) supplies a statement of responsibility for the intellectual content of a text, edition, recording, or series, where the specialized elements for authors, editors, etc. do not suffice or do not apply. May also be used to encode information about individuals or organizations which have played a role in the production or distribution of a bibliographic work. [   ]</a:documentation>
+         <ref name="respStmt.content"/>
+         <ref name="respStmt.localattributes"/>
+      </element>
+   </define>
+   <define name="respStmt.content">
+      <group>
+         <choice>
+            <group>
+          
+               <oneOrMore>
+                  <ref name="resp"/>
+               </oneOrMore>
+          
+          
+               <oneOrMore>
+                  <ref name="model.nameLike.agent"/>
+               </oneOrMore>
+          
+            </group>
+            <group>
+          
+               <oneOrMore>
+                  <ref name="model.nameLike.agent"/>
+               </oneOrMore>
+          
+          
+               <oneOrMore>
+                  <ref name="resp"/>
+               </oneOrMore>
+          
+            </group>
+         </choice>
+         <zeroOrMore>
+            <ref name="note"/>
+         </zeroOrMore>
+      </group>
+   </define>
+   <define name="respStmt.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.canonical.attributes"/>
+      <empty/>
+   </define>
+   <define name="rs">
+      <element name="rs">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(referencing string) contains a general purpose name or referring string. [ ]</a:documentation>
+         <ref name="rs.content"/>
+         <ref name="rs.localattributes"/>
+      </element>
+   </define>
+   <define name="rs.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="rs.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.naming.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <empty/>
+   </define>
+   <define name="said">
+      <element name="said">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(speech or thought) indicates passages thought or spoken aloud, whether explicitly indicated in the source or not, whether directly or indirectly reported, whether by real people or fictional characters. []</a:documentation>
+         <ref name="said.content"/>
+         <ref name="said.localattributes"/>
+      </element>
+   </define>
+   <define name="said.content">
+      <ref name="macro.specialPara"/>
+   </define>
+   <define name="said.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.ascribed.directed.attributes"/>
+      <optional>
+         <attribute name="aloud">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">may be used to indicate whether the quoted matter is regarded as having been vocalized or signed.</a:documentation>
+            <choice>
+               <data type="boolean"/>
+               <choice>
+                  <value>unknown</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                  <value>inapplicable</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               </choice>
+            </choice>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                    name="direct"
+                    a:defaultValue="true">
+            <a:documentation>may be used to indicate whether the quoted matter is regarded as direct or indirect speech.</a:documentation>
+            <choice>
+               <data type="boolean"/>
+               <choice>
+                  <value>unknown</value>
+                  <a:documentation/>
+                  <value>inapplicable</value>
+                  <a:documentation/>
+               </choice>
+            </choice>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="series">
+      <element name="series">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(series information) contains information about the series in which a book or other bibliographic item has appeared. []</a:documentation>
+         <ref name="series.content"/>
+         <ref name="series.localattributes"/>
+      </element>
+   </define>
+   <define name="series.content">
+      <zeroOrMore>
+         <choice>
+            <text/>
+            <ref name="model.gLike"/>
+            <ref name="title"/>
+            <ref name="model.ptrLike"/>
+            <ref name="editor"/>
+            <ref name="respStmt"/>
+            <ref name="biblScope"/>
+            <ref name="idno"/>
+            <ref name="textLang"/>
+            <ref name="model.global"/>
+            <ref name="availability"/>
+         </choice>
+      </zeroOrMore>
+   </define>
+   <define name="series.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="sic">
+      <element name="sic">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Latin for thus or so) contains text reproduced although apparently incorrect or inaccurate. []</a:documentation>
+         <ref name="sic.content"/>
+         <ref name="sic.localattributes"/>
+      </element>
+   </define>
+   <define name="sic.content">
+      <ref name="macro.paraContent"/>
+   </define>
+   <define name="sic.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="soCalled">
+      <element name="soCalled">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a word or phrase for which the author or narrator indicates a disclaiming of responsibility, for example by the use of scare quotes or italics. []</a:documentation>
+         <ref name="soCalled.content"/>
+         <ref name="soCalled.localattributes"/>
+      </element>
+   </define>
+   <define name="soCalled.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="soCalled.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="sp">
+      <element name="sp">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(speech) contains an individual speech in a performance text, or a passage presented as such in a prose or verse text. [  ]</a:documentation>
+         <ref name="sp.content"/>
+         <ref name="sp.localattributes"/>
+      </element>
+   </define>
+   <define name="sp.content">
+      <group>
+      
+        <zeroOrMore>
+            <ref name="model.global"/>
+         </zeroOrMore>
+      
+         <optional>
+            <group>
+               <ref name="speaker"/>
+        
+               <zeroOrMore>
+                  <ref name="model.global"/>
+               </zeroOrMore>
+        
+            </group>
+         </optional>
+         <oneOrMore>
+            <group>
+               <choice>
+                  <ref name="lg"/>
+                  <ref name="model.lLike"/>
+                  <ref name="model.pLike"/>
+                  <ref name="model.listLike"/>
+                  <ref name="model.stageLike"/>
+                  <ref name="model.qLike"/>
+               </choice>
+        
+               <zeroOrMore>
+                  <ref name="model.global"/>
+               </zeroOrMore>
+        
+            </group>
+         </oneOrMore>
+      </group>
+   </define>
+   <define name="sp.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.ascribed.directed.attributes"/>
+      <empty/>
+   </define>
+   <define name="speaker">
+      <element name="speaker">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a specialized form of heading or label, giving the name of one or more speakers in a dramatic text or fragment. []</a:documentation>
+         <ref name="speaker.content"/>
+         <ref name="speaker.localattributes"/>
+      </element>
+   </define>
+   <define name="speaker.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="speaker.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="stage">
+      <element name="stage">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(stage direction) contains any kind of stage direction within a dramatic text or fragment. [  ]</a:documentation>
+         <ref name="stage.content"/>
+         <ref name="stage.localattributes"/>
+      </element>
+   </define>
+   <define name="stage.content">
+      <ref name="macro.specialPara"/>
+   </define>
+   <define name="stage.localattributes">
+      <ref name="att.ascribed.directed.attributes"/>
+      <ref name="att.global.attributes"/>
+      <ref name="att.placement.attributes"/>
+      <optional>
+         <attribute name="type">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the kind of stage direction.
+Suggested values include: 1] setting; 2] entrance; 3] exit; 4] business; 5] novelistic; 6] delivery; 7] modifier; 8] location; 9] mixed</a:documentation>
+            <list>
+               <zeroOrMore>
+                  <choice>
+                     <value>setting</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">describes a setting.</a:documentation>
+                     <value>entrance</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">describes an entrance.</a:documentation>
+                     <value>exit</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">describes an exit.</a:documentation>
+                     <value>business</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">describes stage business.</a:documentation>
+                     <value>novelistic</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">is a narrative, motivating stage direction.</a:documentation>
+                     <value>delivery</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">describes how a character speaks.</a:documentation>
+                     <value>modifier</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives some detail about a character.</a:documentation>
+                     <value>location</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">describes a location.</a:documentation>
+                     <value>mixed</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">more than one of the above</a:documentation>
+                     <data type="token">
+                        <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+                     </data>
+                  </choice>
+               </zeroOrMore>
+            </list>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="street">
+      <element name="street">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a full street address including any name or number identifying a building as well as the name of the street or route on which it is located. []</a:documentation>
+         <ref name="street.content"/>
+         <ref name="street.localattributes"/>
+      </element>
+   </define>
+   <define name="street.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="street.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="teiCorpus">
+      <element name="teiCorpus">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains the whole of a TEI encoded corpus, comprising a single corpus header and one or more TEI elements, each containing a single text header and a text. [ ]</a:documentation>
+         <ref name="teiCorpus.content"/>
+         <ref name="teiCorpus.localattributes"/>
+      </element>
+   </define>
+   <define name="teiCorpus.content">
+      <group>
+         <ref name="teiHeader"/>
+         <choice>
+            <group>
+          
+               <oneOrMore>
+                  <ref name="model.resourceLike"/>
+               </oneOrMore>
+          
+          
+               <zeroOrMore>
+                  <choice>
+                     <ref name="TEI"/>
+                     <ref name="teiCorpus"/>
+                  </choice>
+               </zeroOrMore>
+          
+            </group>
+        
+            <oneOrMore>
+               <choice>
+                  <ref name="TEI"/>
+                  <ref name="teiCorpus"/>
+               </choice>
+            </oneOrMore>
+        
+         </choice>
+      </group>
+   </define>
+   <define name="teiCorpus.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <optional>
+         <attribute name="version">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies the version number of the TEI Guidelines against which this document is valid.</a:documentation>
+            <data type="token">
+               <param name="pattern">[\d]+(\.[\d]+){0,2}</param>
+            </data>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="term">
+      <element name="term">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a single-word, multi-word, or symbolic designation which is regarded as a technical term. []</a:documentation>
+         <ref name="term.content"/>
+         <ref name="term.localattributes"/>
+      </element>
+   </define>
+   <define name="term.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="term.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.declaring.attributes"/>
+      <ref name="att.pointing.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.canonical.attributes"/>
+      <ref name="att.sortable.attributes"/>
+      <ref name="att.cReferencing.attributes"/>
+      <empty/>
+   </define>
+   <define name="textLang">
+      <element name="textLang">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(text language) describes the languages and writing systems identified within the bibliographic work being described, rather than its description. [ ]</a:documentation>
+         <ref name="textLang.content"/>
+         <ref name="textLang.localattributes"/>
+      </element>
+   </define>
+   <define name="textLang.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="textLang.localattributes">
+      <ref name="att.global.attributes"/>
+      <optional>
+         <attribute name="mainLang">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(main language) supplies a code which identifies the chief language used in the bibliographic work.</a:documentation>
+            <choice>
+               <data type="language"/>
+               <choice>
+                  <value/>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               </choice>
+            </choice>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="otherLangs">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(other languages) one or more codes identifying any other languages used in the bibliographic work.</a:documentation>
+            <list>
+               <zeroOrMore>
+                  <choice>
+                     <data type="language"/>
+                     <choice>
+                        <value/>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                     </choice>
+                  </choice>
+               </zeroOrMore>
+            </list>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="time">
+      <element name="time">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a phrase defining a time of day in any format. []</a:documentation>
+         <ref name="time.content"/>
+         <ref name="time.localattributes"/>
+      </element>
+   </define>
+   <define name="time.content">
+      <zeroOrMore>
+         <choice>
+            <text/>
+            <ref name="model.gLike"/>
+        
+            <ref name="model.phrase"/>
+            <ref name="model.global"/>
+         </choice>
+      </zeroOrMore>
+   </define>
+   <define name="time.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.datable.attributes"/>
+      <ref name="att.duration.attributes"/>
+      <ref name="att.editLike.attributes"/>
+      <ref name="att.dimensions.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <empty/>
+   </define>
+   <define name="title">
+      <element name="title">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a title for any kind of work. [  ]</a:documentation>
+         <ref name="title.content"/>
+         <ref name="title.localattributes"/>
+      </element>
+   </define>
+   <define name="title.content">
+      <ref name="macro.paraContent"/>
+   </define>
+   <define name="title.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.canonical.attributes"/>
+      <ref name="att.datable.attributes"/>
+      <ref name="att.typed.attribute.subtype"/>
+      <optional>
+         <attribute name="type">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">classifies the title according to some convenient typology.
+Sample values include: 1] main; 2] sub (subordinate) ; 3] alt (alternate) ; 4] short; 5] desc (descriptive) </a:documentation>
+            <data type="token">
+               <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+            </data>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="level">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates the bibliographic level for a title, that is, whether it identifies an article, book, journal, series, or unpublished material.</a:documentation>
+            <choice>
+               <value>a</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(analytic) the title applies to an analytic item, such as an article, poem, or other work published as part of a larger item.</a:documentation>
+               <value>m</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(monographic) the title applies to a monograph such as a book or other item considered to be a distinct publication, including single volumes of multi-volume works</a:documentation>
+               <value>j</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(journal) the title applies to any serial or periodical publication such as a journal, magazine, or newspaper</a:documentation>
+               <value>s</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(series) the title applies to a series of otherwise distinct publications such as a collection</a:documentation>
+               <value>u</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(unpublished) the title applies to any unpublished material (including theses and dissertations unless published by a commercial press)</a:documentation>
+            </choice>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="unclear">
+      <element name="unclear">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a word, phrase, or passage which cannot be transcribed with certainty because it is illegible or inaudible in the source. [ ]</a:documentation>
+         <ref name="unclear.content"/>
+         <ref name="unclear.localattributes"/>
+      </element>
+   </define>
+   <define name="unclear.content">
+      <ref name="macro.paraContent"/>
+   </define>
+   <define name="unclear.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.editLike.attributes"/>
+      <ref name="att.dimensions.attributes"/>
+      <optional>
+         <attribute name="reason">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates why the material is hard to transcribe.
+Suggested values include: 1] illegible; 2] inaudible; 3] faded; 4] background_noise; 5] eccentric_ductus</a:documentation>
+            <list>
+               <oneOrMore>
+                  <choice>
+                     <value>illegible</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                     <value>inaudible</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                     <value>faded</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                     <value>background_noise</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                     <value>eccentric_ductus</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                     <data type="token">
+                        <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+                     </data>
+                  </choice>
+               </oneOrMore>
+            </list>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute name="agent">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Where the difficulty in transcription arises from damage, categorizes the cause of the damage, if it can be identified.
+Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
+            <data type="token">
+               <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+            </data>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="unit">
+      <element name="unit">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a symbol, a word or a phrase referring to a unit of measurement in any kind of formal or informal system. []</a:documentation>
+         <ref name="unit.content"/>
+         <ref name="unit.localattributes"/>
+      </element>
+   </define>
+   <define name="unit.content">
+      <ref name="macro.phraseSeq"/>
+   </define>
+   <define name="unit.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.measurement.attributes"/>
+      <empty/>
+   </define>
+   <!--3. macros-->
+</grammar>

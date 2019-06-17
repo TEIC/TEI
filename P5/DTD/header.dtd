@@ -1,0 +1,790 @@
+
+<!--
+DTD module header. generated from ODD source 2019-01-21T23:48:00Z. This material is dual-licensed.
+[http://creativecommons.org/licenses/by/3.0/] Distributed under a Creative Commons Attribution 3.0 Unported License.  [http://www.opensource.org/licenses/BSD-2-Clause] Copyright 2019 TEI Consortium. All rights reserved. Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. This software is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright holder or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage. TEI material can be licensed differently depending on the use you intend to make of it. Hence it is made available under both the CC+BY and BSD-2 licences. The CC+BY licence is generally appropriate for usages which treat TEI content as data or documentation. The BSD-2 licence is generally appropriate for usage of TEI content in a software environment. For further information or clarification, please contact the TEI Consortium.
+Edition: Version 3.5.0a. Last updated on
+	19th January 2019, revision e6ccc03
+The TEI Header
+-->
+
+<!ENTITY % abstract 'INCLUDE' >
+<![ %abstract; [
+
+<!--doc:contains a summary or formal abstract prefixed to an existing source document by the encoder. [] -->
+<!ELEMENT %n.abstract; %om.RR; (%model.pLike;|%model.listLike;)+>
+<!ATTLIST %n.abstract; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.abstract;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % appInfo 'INCLUDE' >
+<![ %appInfo; [
+
+<!--doc:(application information) records information about an application which has edited the TEI file. [] -->
+<!ELEMENT %n.appInfo; %om.RR; (%model.applicationLike;)+>
+<!ATTLIST %n.appInfo; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.appInfo;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % application 'INCLUDE' >
+<![ %application; [
+
+<!--doc:provides information about an application which has acted upon the document. [] -->
+<!ELEMENT %n.application; %om.RR; (((%model.labelLike;)+,((%model.ptrLike;)*|(%model.pLike;)*)))>
+<!ATTLIST %n.application; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.application;
+ %att.global.attributes;
+ %att.typed.attributes;
+ %att.datable.attributes;
+ident %teidata.name;  #REQUIRED
+version %teidata.versionNumber;  #REQUIRED >
+]]>
+
+<!ENTITY % authority 'INCLUDE' >
+<![ %authority; [
+
+<!--doc:(release authority) supplies the name of a person or other agency responsible for making a work available, other than a publisher or distributor. [] -->
+<!ELEMENT %n.authority; %om.RR; %macro.phraseSeq.limited;>
+<!ATTLIST %n.authority; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.authority;
+ %att.global.attributes;
+ %att.canonical.attributes; >
+]]>
+
+<!ENTITY % availability 'INCLUDE' >
+<![ %availability; [
+
+<!--doc:supplies information about the availability of a text, for example any restrictions on its use or distribution, its copyright status, any licence applying to it, etc. [] -->
+<!ELEMENT %n.availability; %om.RR; (%model.availabilityPart;|%model.pLike;)+>
+<!ATTLIST %n.availability; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.availability;
+ %att.global.attributes;
+ %att.declarable.attributes;
+status (free|unknown|restricted) #IMPLIED >
+]]>
+
+<!ENTITY % biblFull 'INCLUDE' >
+<![ %biblFull; [
+
+<!--doc:(fully-structured bibliographic citation) contains a fully-structured bibliographic citation, in which all components of the TEI file description are present. [   ] -->
+<!ELEMENT %n.biblFull; %om.RR; (((%n.titleStmt;,(%n.editionStmt;)?,(%n.extent;)?,%n.publicationStmt;,(%n.seriesStmt;)?,(%n.notesStmt;)?),(%n.sourceDesc;)*)|(%n.fileDesc;,%n.profileDesc;))>
+<!ATTLIST %n.biblFull; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.biblFull;
+ %att.global.attributes;
+ %att.declarable.attributes;
+ %att.sortable.attributes;
+ %att.docStatus.attributes; >
+]]>
+
+<!ENTITY % cRefPattern 'INCLUDE' >
+<![ %cRefPattern; [
+
+<!--doc:(canonical reference pattern) specifies an expression and replacement pattern for transforming a canonical reference into a URI. [  ] -->
+<!ELEMENT %n.cRefPattern; %om.RR; (%model.pLike;)*>
+<!ATTLIST %n.cRefPattern; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.cRefPattern;
+ %att.global.attributes;
+ %att.patternReplacement.attributes; >
+]]>
+
+<!ENTITY % calendar 'INCLUDE' >
+<![ %calendar; [
+
+<!--doc:describes a calendar or dating system used in a dating formula in the text. [] -->
+<!ELEMENT %n.calendar; %om.RR; (%model.pLike;)+>
+<!ATTLIST %n.calendar; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.calendar;
+ %att.global.attributes;
+ %att.pointing.attributes; >
+]]>
+
+<!ENTITY % calendarDesc 'INCLUDE' >
+<![ %calendarDesc; [
+
+<!--doc:(calendar description) contains a description of the calendar system used in any dating expression found in the text. [ ] -->
+<!ELEMENT %n.calendarDesc; %om.RR; (%n.calendar;)+>
+<!ATTLIST %n.calendarDesc; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.calendarDesc;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % catDesc 'INCLUDE' >
+<![ %catDesc; [
+
+<!--doc:(category description) describes some category within a taxonomy or text typology, either in the form of a brief prose description or in terms of the situational parameters used by the TEI formal textDesc. [] -->
+<!ELEMENT %n.catDesc; %om.RR; (#PCDATA|%model.limitedPhrase;|%model.catDescPart;)*>
+<!ATTLIST %n.catDesc; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.catDesc;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % catRef 'INCLUDE' >
+<![ %catRef; [
+
+<!--doc:(category reference) specifies one or more defined categories within some taxonomy or text typology. [] -->
+<!ELEMENT %n.catRef; %om.RR;  EMPTY>
+<!ATTLIST %n.catRef; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.catRef;
+ %att.global.attributes;
+ %att.pointing.attributes;
+scheme %teidata.pointer;  #IMPLIED >
+]]>
+
+<!ENTITY % category 'INCLUDE' >
+<![ %category; [
+
+<!--doc:contains an individual descriptive category, possibly nested within a superordinate category, within a user-defined taxonomy. [] -->
+<!ELEMENT %n.category; %om.RR; ((((%n.catDesc;)+|(%model.descLike;|%model.glossLike;)*),(%n.category;)*))>
+<!ATTLIST %n.category; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.category;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % change 'INCLUDE' >
+<![ %change; [
+
+<!--doc:documents a change or set of changes made during the production of a source document, or during the revision of an electronic file. [  ] -->
+<!ELEMENT %n.change; %om.RR; %macro.specialPara;>
+<!ATTLIST %n.change; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.change;
+ %att.ascribed.attributes;
+ %att.datable.attributes;
+ %att.docStatus.attributes;
+ %att.global.attributes;
+ %att.typed.attributes;
+target CDATA  #IMPLIED >
+]]>
+
+<!ENTITY % classCode 'INCLUDE' >
+<![ %classCode; [
+
+<!--doc:(classification code) contains the classification code used for this text in some standard classification system. [] -->
+<!ELEMENT %n.classCode; %om.RR; %macro.phraseSeq.limited;>
+<!ATTLIST %n.classCode; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.classCode;
+ %att.global.attributes;
+scheme %teidata.pointer;  #REQUIRED >
+]]>
+
+<!ENTITY % classDecl 'INCLUDE' >
+<![ %classDecl; [
+
+<!--doc:(classification declarations) contains one or more taxonomies defining any classificatory codes used elsewhere in the text. [ ] -->
+<!ELEMENT %n.classDecl; %om.RR; (%n.taxonomy;)+>
+<!ATTLIST %n.classDecl; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.classDecl;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % correction 'INCLUDE' >
+<![ %correction; [
+
+<!--doc:(correction principles) states how and under what circumstances corrections have been made in the text. [ ] -->
+<!ELEMENT %n.correction; %om.RR; (%model.pLike;)+>
+<!ATTLIST %n.correction; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.correction;
+ %att.global.attributes;
+ %att.declarable.attributes;
+status (high|medium|low|unknown) #IMPLIED
+method (silent|markup) "silent"  >
+]]>
+
+<!ENTITY % correspAction 'INCLUDE' >
+<![ %correspAction; [
+
+<!--doc:(correspondence action) contains a structured description of the place, the name of a person/organization and the date related to the sending/receiving of a message or any other action related to the correspondence. [] -->
+<!ELEMENT %n.correspAction; %om.RR; ((%model.correspActionPart;)+|(%model.pLike;)+)>
+<!ATTLIST %n.correspAction; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.correspAction;
+ %att.global.attributes;
+ %att.sortable.attributes;
+ %att.typed.attribute.subtype;
+type %teidata.enumerated;  #IMPLIED >
+]]>
+
+<!ENTITY % correspContext 'INCLUDE' >
+<![ %correspContext; [
+
+<!--doc:(correspondence context) provides references to preceding or following correspondence related to this piece of correspondence. [] -->
+<!ELEMENT %n.correspContext; %om.RR; (%model.correspContextPart;)+>
+<!ATTLIST %n.correspContext; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.correspContext;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % correspDesc 'INCLUDE' >
+<![ %correspDesc; [
+
+<!--doc:(correspondence
+    description) contains a description of the actions related to one act of correspondence. [] -->
+<!ELEMENT %n.correspDesc; %om.RR; ((%model.correspDescPart;)+|(%model.pLike;)+)>
+<!ATTLIST %n.correspDesc; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.correspDesc;
+ %att.declarable.attributes;
+ %att.canonical.attributes;
+ %att.global.attributes;
+ %att.typed.attributes; >
+]]>
+
+<!ENTITY % creation 'INCLUDE' >
+<![ %creation; [
+
+<!--doc:contains information about the creation of a text. [ ] -->
+<!ELEMENT %n.creation; %om.RR; (#PCDATA|%model.limitedPhrase;|%n.listChange;)*>
+<!ATTLIST %n.creation; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.creation;
+ %att.global.attributes;
+ %att.datable.attributes; >
+]]>
+
+<!ENTITY % distributor 'INCLUDE' >
+<![ %distributor; [
+
+<!--doc:supplies the name of a person or other agency responsible for the distribution of a text. [] -->
+<!ELEMENT %n.distributor; %om.RR; %macro.phraseSeq;>
+<!ATTLIST %n.distributor; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.distributor;
+ %att.global.attributes;
+ %att.canonical.attributes; >
+]]>
+
+<!ENTITY % edition 'INCLUDE' >
+<![ %edition; [
+
+<!--doc:describes the particularities of one edition of a text. [] -->
+<!ELEMENT %n.edition; %om.RR; %macro.phraseSeq;>
+<!ATTLIST %n.edition; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.edition;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % editionStmt 'INCLUDE' >
+<![ %editionStmt; [
+
+<!--doc:(edition statement) groups information relating to one edition of a text. [ ] -->
+<!ELEMENT %n.editionStmt; %om.RR; ((%model.pLike;)+|(%n.edition;,(%model.respLike;)*))>
+<!ATTLIST %n.editionStmt; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.editionStmt;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % editorialDecl 'INCLUDE' >
+<![ %editorialDecl; [
+
+<!--doc:(editorial practice declaration) provides details of editorial principles and practices applied during the encoding of a text. [  ] -->
+<!ELEMENT %n.editorialDecl; %om.RR; (%model.pLike;|%model.editorialDeclPart;)+>
+<!ATTLIST %n.editorialDecl; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.editorialDecl;
+ %att.global.attributes;
+ %att.declarable.attributes; >
+]]>
+
+<!ENTITY % encodingDesc 'INCLUDE' >
+<![ %encodingDesc; [
+
+<!--doc:(encoding description) documents the relationship between an electronic text and the source or sources from which it was derived. [ ] -->
+<!ELEMENT %n.encodingDesc; %om.RR; (%model.encodingDescPart;|%model.pLike;)+>
+<!ATTLIST %n.encodingDesc; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.encodingDesc;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % extent 'INCLUDE' >
+<![ %extent; [
+
+<!--doc:describes the approximate size of a text stored on some carrier medium or of some other object, digital or non-digital, specified in any convenient units. [   ] -->
+<!ELEMENT %n.extent; %om.RR; %macro.phraseSeq;>
+<!ATTLIST %n.extent; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.extent;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % fileDesc 'INCLUDE' >
+<![ %fileDesc; [
+
+<!--doc:(file description) contains a full bibliographic description of an electronic file. [ ] -->
+<!ELEMENT %n.fileDesc; %om.RR; (((%n.titleStmt;,(%n.editionStmt;)?,(%n.extent;)?,%n.publicationStmt;,(%n.seriesStmt;)?,(%n.notesStmt;)?),(%n.sourceDesc;)+))>
+<!ATTLIST %n.fileDesc; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.fileDesc;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % funder 'INCLUDE' >
+<![ %funder; [
+
+<!--doc:(funding body) specifies the name of an individual, institution, or organization responsible for the funding of a project or text. [] -->
+<!ELEMENT %n.funder; %om.RR; %macro.phraseSeq.limited;>
+<!ATTLIST %n.funder; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.funder;
+ %att.global.attributes;
+ %att.canonical.attributes; >
+]]>
+
+<!ENTITY % geoDecl 'INCLUDE' >
+<![ %geoDecl; [
+
+<!--doc:(geographic coordinates declaration) documents the notation and the datum used for geographic coordinates expressed as content of the geo element elsewhere within the document. [] -->
+<!ELEMENT %n.geoDecl; %om.RR; %macro.phraseSeq;>
+<!ATTLIST %n.geoDecl; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.geoDecl;
+ %att.global.attributes;
+ %att.declarable.attributes;
+datum %teidata.enumerated;  "WGS84"  >
+]]>
+
+<!ENTITY % handNote 'INCLUDE' >
+<![ %handNote; [
+
+<!--doc:(note on hand) describes a particular style or hand distinguished within a manuscript. [] -->
+<!ELEMENT %n.handNote; %om.RR; %macro.specialPara;>
+<!ATTLIST %n.handNote; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.handNote;
+ %att.global.attributes;
+ %att.handFeatures.attributes; >
+]]>
+
+<!ENTITY % hyphenation 'INCLUDE' >
+<![ %hyphenation; [
+
+<!--doc:summarizes the way in which hyphenation in a source text has been treated in an encoded version of it. [ ] -->
+<!ELEMENT %n.hyphenation; %om.RR; (%model.pLike;)+>
+<!ATTLIST %n.hyphenation; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.hyphenation;
+ %att.global.attributes;
+ %att.declarable.attributes;
+eol (all|some|hard|none) "some"  >
+]]>
+
+<!ENTITY % idno 'INCLUDE' >
+<![ %idno; [
+
+<!--doc:(identifier) supplies any form of identifier used to identify some object, such as a bibliographic item, a person, a title, an organization, etc. in a standardized way. [  ] -->
+<!ELEMENT %n.idno; %om.RR; (#PCDATA|%model.gLike;|%n.idno;)*>
+<!ATTLIST %n.idno; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.idno;
+ %att.global.attributes;
+ %att.sortable.attributes;
+ %att.datable.attributes;
+ %att.typed.attribute.subtype;
+type %teidata.enumerated;  #IMPLIED >
+]]>
+
+<!ENTITY % interpretation 'INCLUDE' >
+<![ %interpretation; [
+
+<!--doc:describes the scope of any analytic or interpretive information added to the text in addition to the transcription. [] -->
+<!ELEMENT %n.interpretation; %om.RR; (%model.pLike;)+>
+<!ATTLIST %n.interpretation; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.interpretation;
+ %att.global.attributes;
+ %att.declarable.attributes; >
+]]>
+
+<!ENTITY % keywords 'INCLUDE' >
+<![ %keywords; [
+
+<!--doc:contains a list of keywords or phrases identifying the topic or nature of a text. [] -->
+<!ELEMENT %n.keywords; %om.RR; ((%n.term;)+|%n.list;)>
+<!ATTLIST %n.keywords; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.keywords;
+ %att.global.attributes;
+scheme %teidata.pointer;  #IMPLIED >
+]]>
+
+<!ENTITY % langUsage 'INCLUDE' >
+<![ %langUsage; [
+
+<!--doc:(language usage) describes the languages, sublanguages, registers, dialects, etc. represented within a text. [  ] -->
+<!ELEMENT %n.langUsage; %om.RR; ((%model.pLike;)+|(%n.language;)+)>
+<!ATTLIST %n.langUsage; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.langUsage;
+ %att.global.attributes;
+ %att.declarable.attributes; >
+]]>
+
+<!ENTITY % language 'INCLUDE' >
+<![ %language; [
+
+<!--doc:characterizes a single language or sublanguage used within a text. [] -->
+<!ELEMENT %n.language; %om.RR; %macro.phraseSeq.limited;>
+<!ATTLIST %n.language; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.language;
+ %att.global.attributes;
+ident %teidata.language;  #REQUIRED
+usage CDATA #IMPLIED >
+]]>
+
+<!ENTITY % licence 'INCLUDE' >
+<![ %licence; [
+
+<!--doc:contains information about a licence or other legal agreement applicable to the text. [] -->
+<!ELEMENT %n.licence; %om.RR; %macro.specialPara;>
+<!ATTLIST %n.licence; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.licence;
+ %att.global.attributes;
+ %att.pointing.attributes;
+ %att.datable.attributes; >
+]]>
+
+<!ENTITY % listChange 'INCLUDE' >
+<![ %listChange; [
+
+<!--doc:groups a number of change descriptions associated with either the creation of a source text or the revision of an encoded text. [ ] -->
+<!ELEMENT %n.listChange; %om.RR; (%n.listChange;|%n.change;)+>
+<!ATTLIST %n.listChange; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.listChange;
+ %att.global.attributes;
+ %att.sortable.attributes;
+ %att.typed.attributes;
+ordered %teidata.truthValue;  "true"  >
+]]>
+
+<!ENTITY % listPrefixDef 'INCLUDE' >
+<![ %listPrefixDef; [
+
+<!--doc:(list of prefix definitions) contains a list of definitions of prefixing schemes used in data.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [] -->
+<!ELEMENT %n.listPrefixDef; %om.RR; (%n.prefixDef;|%n.listPrefixDef;)+>
+<!ATTLIST %n.listPrefixDef; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.listPrefixDef;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % namespace 'INCLUDE' >
+<![ %namespace; [
+
+<!--doc:supplies the formal name of the namespace to which the elements documented by its children belong. [] -->
+<!ELEMENT %n.namespace; %om.RR; (%n.tagUsage;)+>
+<!ATTLIST %n.namespace; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.namespace;
+ %att.global.attributes;
+name %teidata.namespace;  #REQUIRED >
+]]>
+
+<!ENTITY % normalization 'INCLUDE' >
+<![ %normalization; [
+
+<!--doc:indicates the extent of normalization or regularization of the original source carried out in converting it to electronic form. [ ] -->
+<!ELEMENT %n.normalization; %om.RR; (%model.pLike;)+>
+<!ATTLIST %n.normalization; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.normalization;
+ %att.global.attributes;
+ %att.declarable.attributes;
+method (silent|markup) "silent"  >
+]]>
+
+<!ENTITY % notesStmt 'INCLUDE' >
+<![ %notesStmt; [
+
+<!--doc:(notes statement) collects together any notes providing information about a text additional to that recorded in other parts of the bibliographic description. [ ] -->
+<!ELEMENT %n.notesStmt; %om.RR; (%model.noteLike;|%n.relatedItem;)+>
+<!ATTLIST %n.notesStmt; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.notesStmt;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % prefixDef 'INCLUDE' >
+<![ %prefixDef; [
+
+<!--doc:(prefix definition) defines a prefixing scheme used in data.pointer values, showing how abbreviated URIs using the scheme may be expanded into full URIs. [] -->
+<!ELEMENT %n.prefixDef; %om.RR; (%model.pLike;)*>
+<!ATTLIST %n.prefixDef; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.prefixDef;
+ %att.global.attributes;
+ %att.patternReplacement.attributes;
+ident %teidata.prefix;  #REQUIRED >
+]]>
+
+<!ENTITY % principal 'INCLUDE' >
+<![ %principal; [
+
+<!--doc:(principal researcher) supplies the name of the principal researcher responsible for the creation of an electronic text. [] -->
+<!ELEMENT %n.principal; %om.RR; %macro.phraseSeq.limited;>
+<!ATTLIST %n.principal; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.principal;
+ %att.global.attributes;
+ %att.canonical.attributes; >
+]]>
+
+<!ENTITY % profileDesc 'INCLUDE' >
+<![ %profileDesc; [
+
+<!--doc:(text-profile description) provides a detailed description of non-bibliographic aspects of a text, specifically the languages and sublanguages used, the situation in which it was produced, the participants and their setting. [ ] -->
+<!ELEMENT %n.profileDesc; %om.RR; (%model.profileDescPart;)*>
+<!ATTLIST %n.profileDesc; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.profileDesc;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % projectDesc 'INCLUDE' >
+<![ %projectDesc; [
+
+<!--doc:(project description) describes in detail the aim or purpose for which an electronic file was encoded, together with any other relevant information concerning the process by which it was assembled or collected. [  ] -->
+<!ELEMENT %n.projectDesc; %om.RR; (%model.pLike;)+>
+<!ATTLIST %n.projectDesc; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.projectDesc;
+ %att.global.attributes;
+ %att.declarable.attributes; >
+]]>
+
+<!ENTITY % publicationStmt 'INCLUDE' >
+<![ %publicationStmt; [
+
+<!--doc:(publication statement) groups information concerning the publication or distribution of an electronic or other text. [ ] -->
+<!ELEMENT %n.publicationStmt; %om.RR; (((%model.publicationStmtPart.agency;),(%model.publicationStmtPart.detail;)*)+|(%model.pLike;)+)>
+<!ATTLIST %n.publicationStmt; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.publicationStmt;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % punctuation 'INCLUDE' >
+<![ %punctuation; [
+
+<!--doc:specifies editorial practice adopted with respect to punctuation marks in the original. [ ] -->
+<!ELEMENT %n.punctuation; %om.RR; (%model.pLike;)*>
+<!ATTLIST %n.punctuation; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.punctuation;
+ %att.declarable.attributes;
+ %att.global.attributes;
+marks (none|some|all) #IMPLIED
+placement (internal|external) #IMPLIED >
+]]>
+
+<!ENTITY % quotation 'INCLUDE' >
+<![ %quotation; [
+
+<!--doc:specifies editorial practice adopted with respect to quotation marks in the original. [ ] -->
+<!ELEMENT %n.quotation; %om.RR; (%model.pLike;)*>
+<!ATTLIST %n.quotation; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.quotation;
+ %att.global.attributes;
+ %att.declarable.attributes;
+marks (none|some|all) #IMPLIED >
+]]>
+
+<!ENTITY % refState 'INCLUDE' >
+<![ %refState; [
+
+<!--doc:(reference state) specifies one component of a canonical reference defined by the milestone method. [ ] -->
+<!ELEMENT %n.refState; %om.RR;  EMPTY>
+<!ATTLIST %n.refState; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.refState;
+ %att.global.attributes;
+ %att.milestoneUnit.attributes;
+ %att.edition.attributes;
+length %teidata.count;  #IMPLIED
+delim %teidata.text;  #IMPLIED >
+]]>
+
+<!ENTITY % refsDecl 'INCLUDE' >
+<![ %refsDecl; [
+
+<!--doc:(references declaration) specifies how canonical references are constructed for this text. [  ] -->
+<!ELEMENT %n.refsDecl; %om.RR; ((%model.pLike;)+|(%n.cRefPattern;)+|(%n.refState;)+)>
+<!ATTLIST %n.refsDecl; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.refsDecl;
+ %att.global.attributes;
+ %att.declarable.attributes; >
+]]>
+
+<!ENTITY % rendition 'INCLUDE' >
+<![ %rendition; [
+
+<!--doc:supplies information about the rendition or appearance of one or more elements in the source text. [] -->
+<!ELEMENT %n.rendition; %om.RR; %macro.limitedContent;>
+<!ATTLIST %n.rendition; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.rendition;
+ %att.global.attributes;
+ %att.styleDef.attributes;
+scope %teidata.enumerated;  #IMPLIED
+selector %teidata.text;  #IMPLIED >
+]]>
+
+<!ENTITY % revisionDesc 'INCLUDE' >
+<![ %revisionDesc; [
+
+<!--doc:(revision description) summarizes the revision history for a file. [ ] -->
+<!ELEMENT %n.revisionDesc; %om.RR; (%n.list;|%n.listChange;|(%n.change;)+)>
+<!ATTLIST %n.revisionDesc; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.revisionDesc;
+ %att.global.attributes;
+ %att.docStatus.attributes; >
+]]>
+
+<!ENTITY % samplingDecl 'INCLUDE' >
+<![ %samplingDecl; [
+
+<!--doc:(sampling declaration) contains a prose description of the rationale and methods used in sampling texts in the creation of a corpus or collection. [  ] -->
+<!ELEMENT %n.samplingDecl; %om.RR; (%model.pLike;)+>
+<!ATTLIST %n.samplingDecl; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.samplingDecl;
+ %att.global.attributes;
+ %att.declarable.attributes; >
+]]>
+
+<!ENTITY % schemaRef 'INCLUDE' >
+<![ %schemaRef; [
+
+<!--doc:(schema reference) describes or points to a related customization or schema file [] -->
+<!ELEMENT %n.schemaRef; %om.RR; (((%model.descLike;)?))>
+<!ATTLIST %n.schemaRef; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.schemaRef;
+ %att.global.attributes;
+ %att.typed.attributes;
+ %att.resourced.attributes;
+key %teidata.xmlName;  #IMPLIED >
+]]>
+
+<!ENTITY % scriptNote 'INCLUDE' >
+<![ %scriptNote; [
+
+<!--doc:describes a particular script distinguished within the description of a manuscript or similar resource. [] -->
+<!ELEMENT %n.scriptNote; %om.RR; %macro.specialPara;>
+<!ATTLIST %n.scriptNote; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.scriptNote;
+ %att.global.attributes;
+ %att.handFeatures.attributes; >
+]]>
+
+<!ENTITY % segmentation 'INCLUDE' >
+<![ %segmentation; [
+
+<!--doc:describes the principles according to which the text has been segmented, for example into sentences, tone-units, graphemic strata, etc. [ ] -->
+<!ELEMENT %n.segmentation; %om.RR; (%model.pLike;)+>
+<!ATTLIST %n.segmentation; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.segmentation;
+ %att.global.attributes;
+ %att.declarable.attributes; >
+]]>
+
+<!ENTITY % seriesStmt 'INCLUDE' >
+<![ %seriesStmt; [
+
+<!--doc:(series statement) groups information about the series, if any, to which a publication belongs. [ ] -->
+<!ELEMENT %n.seriesStmt; %om.RR; ((%model.pLike;)+|((%n.title;)+,(%n.editor;|%n.respStmt;)*,(%n.idno;|%n.biblScope;)*))>
+<!ATTLIST %n.seriesStmt; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.seriesStmt;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % sourceDesc 'INCLUDE' >
+<![ %sourceDesc; [
+
+<!--doc:(source description) describes the source from which an electronic text was derived or generated, typically a bibliographic description in the case of a digitized text, or a phrase such as "born digital" for a text which has no previous existence. [] -->
+<!ELEMENT %n.sourceDesc; %om.RR; ((%model.pLike;)+|(%model.biblLike;|%model.sourceDescPart;|%model.listLike;)+)>
+<!ATTLIST %n.sourceDesc; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.sourceDesc;
+ %att.global.attributes;
+ %att.declarable.attributes; >
+]]>
+
+<!ENTITY % sponsor 'INCLUDE' >
+<![ %sponsor; [
+
+<!--doc:specifies the name of a sponsoring organization or institution. [] -->
+<!ELEMENT %n.sponsor; %om.RR; %macro.phraseSeq.limited;>
+<!ATTLIST %n.sponsor; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.sponsor;
+ %att.global.attributes;
+ %att.canonical.attributes; >
+]]>
+
+<!ENTITY % stdVals 'INCLUDE' >
+<![ %stdVals; [
+
+<!--doc:(standard values) specifies the format used when standardized date or number values are supplied. [ ] -->
+<!ELEMENT %n.stdVals; %om.RR; (%model.pLike;)+>
+<!ATTLIST %n.stdVals; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.stdVals;
+ %att.global.attributes;
+ %att.declarable.attributes; >
+]]>
+
+<!ENTITY % styleDefDecl 'INCLUDE' >
+<![ %styleDefDecl; [
+
+<!--doc:(style definition language declaration) specifies the name of the formal language in which style or renditional information is supplied elsewhere in the document. The specific version of the scheme may also be supplied. [] -->
+<!ELEMENT %n.styleDefDecl; %om.RR; (%model.pLike;)*>
+<!ATTLIST %n.styleDefDecl; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.styleDefDecl;
+ %att.global.attributes;
+ %att.declarable.attributes;
+ %att.styleDef.attributes; >
+]]>
+
+<!ENTITY % tagUsage 'INCLUDE' >
+<![ %tagUsage; [
+
+<!--doc:documents the usage of a specific element within a specified document. [] -->
+<!ELEMENT %n.tagUsage; %om.RR; %macro.limitedContent;>
+<!ATTLIST %n.tagUsage; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.tagUsage;
+ %att.global.attributes;
+gi %teidata.name;  #REQUIRED
+occurs %teidata.count;  #IMPLIED
+withId %teidata.count;  #IMPLIED >
+]]>
+
+<!ENTITY % tagsDecl 'INCLUDE' >
+<![ %tagsDecl; [
+
+<!--doc:(tagging declaration) provides detailed information about the tagging applied to a document. [ ] -->
+<!ELEMENT %n.tagsDecl; %om.RR; (((%n.rendition;)*,(%n.namespace;)*))>
+<!ATTLIST %n.tagsDecl; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.tagsDecl;
+ %att.global.attributes;
+partial %teidata.truthValue;  #IMPLIED >
+]]>
+
+<!ENTITY % taxonomy 'INCLUDE' >
+<![ %taxonomy; [
+
+<!--doc:defines a typology either implicitly, by means of a bibliographic citation, or explicitly by a structured taxonomy. [] -->
+<!ELEMENT %n.taxonomy; %om.RR; (((%n.category;|%n.taxonomy;)+|((%model.glossLike;|%model.descLike;)+,(%n.category;|%n.taxonomy;)*))|((%model.biblLike;),(%n.category;|%n.taxonomy;)*))>
+<!ATTLIST %n.taxonomy; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.taxonomy;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % teiHeader 'INCLUDE' >
+<![ %teiHeader; [
+
+<!--doc:(TEI header) supplies descriptive and declarative metadata associated with a digital resource or set of resources. [ ] -->
+<!ELEMENT %n.teiHeader; %om.RR; ((%n.fileDesc;,(%model.teiHeaderPart;)*,(%n.revisionDesc;)?))>
+<!ATTLIST %n.teiHeader; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.teiHeader;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % textClass 'INCLUDE' >
+<![ %textClass; [
+
+<!--doc:(text classification) groups information which describes the nature or topic of a text in terms of a standard classification scheme, thesaurus, etc. [] -->
+<!ELEMENT %n.textClass; %om.RR; (%n.classCode;|%n.catRef;|%n.keywords;)*>
+<!ATTLIST %n.textClass; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.textClass;
+ %att.global.attributes;
+ %att.declarable.attributes; >
+]]>
+
+<!ENTITY % titleStmt 'INCLUDE' >
+<![ %titleStmt; [
+
+<!--doc:(title statement) groups information about the title of a work and those responsible for its content. [ ] -->
+<!ELEMENT %n.titleStmt; %om.RR; (((%n.title;)+,(%model.respLike;)*))>
+<!ATTLIST %n.titleStmt; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.titleStmt;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % xenoData 'INCLUDE' >
+<![ %xenoData; [
+
+<!--doc:(non-TEI metadata) provides a container element into which metadata in non-TEI formats may be placed. [] -->
+<!ELEMENT %n.xenoData; %om.RR; (#PCDATA)*>
+<!ATTLIST %n.xenoData; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.xenoData;
+ %att.global.attributes;
+ %att.declarable.attributes;
+ %att.typed.attributes; >
+]]>

@@ -1,0 +1,503 @@
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace ns1 = "http://purl.oclc.org/dsdl/schematron"
+namespace tei = "http://www.tei-c.org/ns/1.0"
+namespace teix = "http://www.tei-c.org/ns/Examples"
+
+# Schema generated 2019-01-21T23:48:03Z
+# Edition: Version 3.5.0a. Last updated on
+#	19th January 2019, revision e6ccc03
+# This material is dual-licensed.
+# [http://creativecommons.org/licenses/by/3.0/] Distributed under a Creative Commons Attribution 3.0 Unported License.  [http://www.opensource.org/licenses/BSD-2-Clause] Copyright 2019 TEI Consortium. All rights reserved. Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. This software is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright holder or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage. TEI material can be licensed differently depending on the use you intend to make of it. Hence it is made available under both the CC+BY and BSD-2 licences. The CC+BY licence is generally appropriate for usages which treat TEI content as data or documentation. The BSD-2 licence is generally appropriate for usage of TEI content in a software environment. For further information or clarification, please contact the TEI Consortium. Default text structure
+
+# Definitions from module textstructure
+
+# Set global predeclared macros
+
+# Set predeclared macros
+
+# 0. predeclared macros
+
+# 1. classes
+
+# 2. elements
+TEI =
+  
+  ## (TEI document) contains a single TEI-conformant document, combining a single TEI header with one or more members of the model.resourceLike class. Multiple TEI elements may be combined to form a teiCorpus element. [ ]
+  element TEI { TEI.content, TEI.localattributes }
+TEI.content =
+  (teiHeader, model.resourceLike+)
+  >> ns1:ns [ prefix = "tei" uri = "http://www.tei-c.org/ns/1.0" ]
+  >> ns1:ns [ prefix = "xs" uri = "http://www.w3.org/2001/XMLSchema" ]
+  >> ns1:ns [
+       prefix = "rng"
+       uri = "http://relaxng.org/ns/structure/1.0"
+     ]
+TEI.localattributes =
+  att.global.attributes,
+  att.typed.attributes,
+  
+  ## specifies the version number of the TEI Guidelines against which this document is valid.
+  attribute version {
+    xsd:token { pattern = "[\d]+(\.[\d]+){0,2}" }
+  }?,
+  empty
+argument =
+  
+  ## contains a formal list or prose description of the topics addressed by a subdivision of a text. [ ]
+  element argument { argument.content, argument.localattributes }
+argument.content =
+  (model.global | model.headLike)*, (model.common, model.global*)+
+argument.localattributes = att.global.attributes, empty
+back =
+  
+  ## (back matter) contains any appendixes, etc. following the main part of a text. [ ]
+  element back { back.content, back.localattributes }
+back.content =
+  (model.frontPart
+   | model.pLike.front
+   | model.pLike
+   | model.listLike
+   | model.global)*,
+  ((model.div1Like, (model.frontPart | model.div1Like | model.global)*)
+   | (model.divLike,
+      (model.frontPart | model.divLike | model.global)*))?,
+  (model.divBottomPart, (model.divBottomPart | model.global)*)?
+back.localattributes =
+  att.global.attributes, att.declaring.attributes, empty
+body =
+  
+  ## (text body) contains the whole body of a single unitary text, excluding any front or back matter. []
+  element body { body.content, body.localattributes }
+body.content =
+  model.global*,
+  (model.divTop, (model.global | model.divTop)*)?,
+  (model.divGenLike, (model.global | model.divGenLike)*)?,
+  ((model.divLike, (model.global | model.divGenLike)*)+
+   | (model.div1Like, (model.global | model.divGenLike)*)+
+   | ((model.common, model.global*)+,
+      ((model.divLike, (model.global | model.divGenLike)*)+
+       | (model.div1Like, (model.global | model.divGenLike)*)+)?)),
+  (model.divBottom, model.global*)*
+body.localattributes =
+  att.global.attributes, att.declaring.attributes, empty
+byline =
+  
+  ## contains the primary statement of responsibility given for a work on its title page or at the head or end of the work. [ ]
+  element byline { byline.content, byline.localattributes }
+byline.content =
+  (text | model.gLike | model.phrase | docAuthor | model.global)*
+byline.localattributes = att.global.attributes, empty
+closer =
+  
+  ## groups together salutations, datelines, and similar phrases appearing as a final group at the end of a division, especially of a letter. [ ]
+  element closer { closer.content, closer.localattributes }
+closer.content =
+  (text
+   | model.gLike
+   | signed
+   | dateline
+   | salute
+   | model.phrase
+   | model.global)*
+closer.localattributes =
+  att.global.attributes, att.written.attributes, empty
+dateline =
+  
+  ## contains a brief description of the place, date, time, etc. of production of a letter, newspaper story, or other work, prefixed or suffixed to it as a kind of heading or trailer. []
+  element dateline { dateline.content, dateline.localattributes }
+dateline.content =
+  (text | model.gLike | model.phrase | model.global | docDate)*
+dateline.localattributes = att.global.attributes, empty
+\div =
+  
+  ## (text division) contains a subdivision of the front, body, or back of a text. []
+  element div { div.content, div.localattributes }
+div.content =
+  ((model.divTop | model.global)*,
+   ((((model.divLike | model.divGenLike), model.global*)+
+     | ((model.common, model.global*)+,
+        ((model.divLike | model.divGenLike), model.global*)*)),
+    (model.divBottom, model.global*)*)?)
+  >> ns1:pattern [
+       id = "div-abstractModel-structure-l-constraint-report-13"
+       "\x{a}" ~
+       "         "
+       ns1:rule [
+         context = "tei:div"
+         "\x{a}" ~
+         "            "
+         ns1:report [
+           test = "ancestor::tei:l"
+           "\x{a}" ~
+           "        Abstract model violation: Lines may not contain higher-level structural elements such as div.\x{a}" ~
+           "      "
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+  >> ns1:pattern [
+       id = "div-abstractModel-structure-p-constraint-report-14"
+       "\x{a}" ~
+       "         "
+       ns1:rule [
+         context = "tei:div"
+         "\x{a}" ~
+         "            "
+         ns1:report [
+           test =
+             "ancestor::tei:p or ancestor::tei:ab and not(ancestor::tei:floatingText)"
+           "\x{a}" ~
+           "        Abstract model violation: p and ab may not contain higher-level structural elements such as div.\x{a}" ~
+           "      "
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+div.localattributes =
+  att.global.attributes,
+  att.divLike.attributes,
+  att.typed.attributes,
+  att.declaring.attributes,
+  att.written.attributes,
+  empty
+div1 =
+  
+  ## (level-1 text division) contains a first-level subdivision of the front, body, or back of a text. []
+  element div1 { div1.content, div1.localattributes }
+div1.content =
+  (model.divTop | model.global)*,
+  ((((model.div2Like | model.divGenLike), model.global*)+
+    | ((model.common, model.global*)+,
+       ((model.div2Like | model.divGenLike), model.global*)*)),
+   (model.divBottom, model.global*)*)?
+div1.localattributes =
+  att.global.attributes,
+  att.divLike.attributes,
+  att.typed.attributes,
+  att.declaring.attributes,
+  empty
+div2 =
+  
+  ## (level-2 text division) contains a second-level subdivision of the front, body, or back of a text. []
+  element div2 { div2.content, div2.localattributes }
+div2.content =
+  (model.divTop | model.global)*,
+  ((((model.div3Like | model.divGenLike), model.global*)+
+    | ((model.common, model.global*)+,
+       ((model.div3Like | model.divGenLike), model.global*)*)),
+   (model.divBottom, model.global*)*)?
+div2.localattributes =
+  att.global.attributes,
+  att.divLike.attributes,
+  att.typed.attributes,
+  att.declaring.attributes,
+  empty
+div3 =
+  
+  ## (level-3 text division) contains a third-level subdivision of the front, body, or back of a text. []
+  element div3 { div3.content, div3.localattributes }
+div3.content =
+  (model.divTop | model.global)*,
+  ((((model.div4Like | model.divGenLike), model.global*)+
+    | ((model.common, model.global*)+,
+       ((model.div4Like | model.divGenLike), model.global*)*)),
+   (model.divBottom, model.global*)*)?
+div3.localattributes =
+  att.global.attributes,
+  att.divLike.attributes,
+  att.typed.attributes,
+  att.declaring.attributes,
+  empty
+div4 =
+  
+  ## (level-4 text division) contains a fourth-level subdivision of the front, body, or back of a text. []
+  element div4 { div4.content, div4.localattributes }
+div4.content =
+  (model.divTop | model.global)*,
+  ((((model.div5Like | model.divGenLike), model.global*)+
+    | ((model.common, model.global*)+,
+       ((model.div5Like | model.divGenLike), model.global*)*)),
+   (model.divBottom, model.global*)*)?
+div4.localattributes =
+  att.global.attributes,
+  att.divLike.attributes,
+  att.typed.attributes,
+  att.declaring.attributes,
+  empty
+div5 =
+  
+  ## (level-5 text division) contains a fifth-level subdivision of the front, body, or back of a text. []
+  element div5 { div5.content, div5.localattributes }
+div5.content =
+  (model.divTop | model.global)*,
+  ((((model.div6Like | model.divGenLike), model.global*)+
+    | ((model.common, model.global*)+,
+       ((model.div6Like | model.divGenLike), model.global*)*)),
+   (model.divBottom, model.global*)*)?
+div5.localattributes =
+  att.global.attributes,
+  att.divLike.attributes,
+  att.typed.attributes,
+  att.declaring.attributes,
+  empty
+div6 =
+  
+  ## (level-6 text division) contains a sixth-level subdivision of the front, body, or back of a text. []
+  element div6 { div6.content, div6.localattributes }
+div6.content =
+  (model.divTop | model.global)*,
+  ((((model.div7Like | model.divGenLike), model.global*)+
+    | ((model.common, model.global*)+,
+       ((model.div7Like | model.divGenLike), model.global*)*)),
+   (model.divBottom, model.global*)*)?
+div6.localattributes =
+  att.global.attributes,
+  att.divLike.attributes,
+  att.typed.attributes,
+  att.declaring.attributes,
+  empty
+div7 =
+  
+  ## (level-7 text division) contains the smallest possible subdivision of the front, body or back of a text, larger than a paragraph. []
+  element div7 { div7.content, div7.localattributes }
+div7.content =
+  (model.divTop | model.global)*,
+  ((model.common, model.global*)+, (model.divBottom, model.global*)*)?
+div7.localattributes =
+  att.global.attributes,
+  att.divLike.attributes,
+  att.typed.attributes,
+  att.declaring.attributes,
+  empty
+docAuthor =
+  
+  ## (document author) contains the name of the author of the document, as given on the title page (often but not always contained in a byline). []
+  element docAuthor { docAuthor.content, docAuthor.localattributes }
+docAuthor.content = macro.phraseSeq
+docAuthor.localattributes =
+  att.global.attributes, att.canonical.attributes, empty
+docDate =
+  
+  ## (document date) contains the date of a document, as given on a title page or in a dateline. []
+  element docDate { docDate.content, docDate.localattributes }
+docDate.content = macro.phraseSeq
+docDate.localattributes =
+  att.global.attributes,
+  
+  ## gives the value of the date in standard form, i.e. YYYY-MM-DD.
+  attribute when {
+    xsd:date
+    | xsd:gYear
+    | xsd:gMonth
+    | xsd:gDay
+    | xsd:gYearMonth
+    | xsd:gMonthDay
+    | xsd:time
+    | xsd:dateTime
+  }?,
+  empty
+docEdition =
+  
+  ## (document edition) contains an edition statement as presented on a title page of a document. []
+  element docEdition { docEdition.content, docEdition.localattributes }
+docEdition.content = macro.paraContent
+docEdition.localattributes = att.global.attributes, empty
+docImprint =
+  
+  ## (document imprint) contains the imprint statement (place and date of publication, publisher name), as given (usually) at the foot of a title page. []
+  element docImprint { docImprint.content, docImprint.localattributes }
+docImprint.content =
+  (text
+   | model.gLike
+   | model.phrase
+   | pubPlace
+   | docDate
+   | publisher
+   | model.global)*
+docImprint.localattributes = att.global.attributes, empty
+docTitle =
+  
+  ## (document title) contains the title of a document, including all its constituents, as given on a title page. []
+  element docTitle { docTitle.content, docTitle.localattributes }
+docTitle.content = model.global*, (titlePart, model.global*)+
+docTitle.localattributes =
+  att.global.attributes, att.canonical.attributes, empty
+epigraph =
+  
+  ## contains a quotation, anonymous or attributed, appearing at the start or end of a section or on a title page. [  ]
+  element epigraph { epigraph.content, epigraph.localattributes }
+epigraph.content = (model.common | model.global)*
+epigraph.localattributes = att.global.attributes, empty
+floatingText =
+  
+  ## contains a single text of any kind, whether unitary or composite, which interrupts the text containing it at any point and after which the surrounding text resumes. []
+  element floatingText {
+    floatingText.content, floatingText.localattributes
+  }
+floatingText.content =
+  model.global*,
+  (front, model.global*)?,
+  (body | group),
+  model.global*,
+  (back, model.global*)?
+floatingText.localattributes =
+  att.global.attributes,
+  att.declaring.attributes,
+  att.typed.attributes,
+  empty
+front =
+  
+  ## (front matter) contains any prefatory matter (headers, abstracts, title page, prefaces, dedications, etc.) found at the start of a document, before the main body. [ ]
+  element front { front.content, front.localattributes }
+front.content =
+  (model.frontPart | model.pLike | model.pLike.front | model.global)*,
+  (((model.div1Like, (model.div1Like | model.frontPart | model.global)*)
+    | (model.divLike,
+       (model.divLike | model.frontPart | model.global)*)),
+   (model.divBottom, (model.divBottom | model.global)*)?)?
+front.localattributes =
+  att.global.attributes, att.declaring.attributes, empty
+group =
+  
+  ## contains the body of a composite text, grouping together a sequence of distinct texts (or groups of such texts) which are regarded as a unit for some purpose, for example the collected works of an author, a sequence of prose essays, etc. [  ]
+  element group { group.content, group.localattributes }
+group.content =
+  (model.divTop | model.global)*,
+  ((\text | group), (\text | group | model.global)*),
+  model.divBottom*
+group.localattributes =
+  att.global.attributes,
+  att.declaring.attributes,
+  att.typed.attributes,
+  empty
+imprimatur =
+  
+  ## contains a formal statement authorizing the publication of a work, sometimes required to appear on a title page or its verso. []
+  element imprimatur { imprimatur.content, imprimatur.localattributes }
+imprimatur.content = macro.paraContent
+imprimatur.localattributes = att.global.attributes, empty
+opener =
+  
+  ## groups together dateline, byline, salutation, and similar phrases appearing as a preliminary group at the start of a division, especially of a letter. []
+  element opener { opener.content, opener.localattributes }
+opener.content =
+  (text
+   | model.gLike
+   | model.phrase
+   | argument
+   | byline
+   | dateline
+   | epigraph
+   | salute
+   | signed
+   | model.global)*
+opener.localattributes =
+  att.global.attributes, att.written.attributes, empty
+postscript =
+  
+  ## contains a postscript, e.g. to a letter. []
+  element postscript { postscript.content, postscript.localattributes }
+postscript.content =
+  (model.global | model.divTopPart)*,
+  model.common,
+  (model.global | model.common)*,
+  (model.divBottomPart, model.global*)*
+postscript.localattributes =
+  att.global.attributes, att.written.attributes, empty
+salute =
+  
+  ## (salutation) contains a salutation or greeting prefixed to a foreword, dedicatory epistle, or other division of a text, or the salutation in the closing of a letter, preface, etc. []
+  element salute { salute.content, salute.localattributes }
+salute.content = macro.paraContent
+salute.localattributes =
+  att.global.attributes, att.written.attributes, empty
+signed =
+  
+  ## (signature) contains the closing salutation, etc., appended to a foreword, dedicatory epistle, or other division of a text. []
+  element signed { signed.content, signed.localattributes }
+signed.content = macro.paraContent
+signed.localattributes =
+  att.global.attributes, att.written.attributes, empty
+\text =
+  
+  ## contains a single text of any kind, whether unitary or composite, for example a poem or drama, a collection of essays, a novel, a dictionary, or a corpus sample. [ ]
+  element text { text.content, text.localattributes }
+text.content =
+  model.global*,
+  (front, model.global*)?,
+  (body | group),
+  model.global*,
+  (back, model.global*)?
+text.localattributes =
+  att.global.attributes,
+  att.declaring.attributes,
+  att.typed.attributes,
+  att.written.attributes,
+  empty
+titlePage =
+  
+  ## (title page) contains the title page of a text, appearing within the front or back matter. []
+  element titlePage { titlePage.content, titlePage.localattributes }
+titlePage.content =
+  model.global*,
+  model.titlepagePart,
+  (model.titlepagePart | model.global)*
+titlePage.localattributes =
+  att.global.attributes,
+  
+  ## classifies the title page according to any convenient typology.
+  attribute type {
+    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?,
+  empty
+titlePart =
+  
+  ## contains a subsection or division of the title of a work, as indicated on a title page. []
+  element titlePart { titlePart.content, titlePart.localattributes }
+titlePart.content = macro.paraContent
+titlePart.localattributes =
+  att.global.attributes,
+  
+  ## specifies the role of this subdivision of the title.
+  ## Suggested values include: 1] main; 2] sub (subordinate) ; 3] alt (alternate) ; 4] short; 5] desc (descriptive) 
+  [ a:defaultValue = "main" ]
+  attribute type {
+    
+    ## main title of the work
+    "main"
+    | 
+      ## (subordinate) subtitle of the work
+      "sub"
+    | 
+      ## (alternate) alternative title of the work
+      "alt"
+    | 
+      ## abbreviated form of title
+      "short"
+    | 
+      ## (descriptive) descriptive paraphrase of the work
+      "desc"
+    | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?,
+  empty
+trailer =
+  
+  ## contains a closing title or footer appearing at the end of a division of a text. [ ]
+  element trailer { trailer.content, trailer.localattributes }
+trailer.content =
+  (text
+   | lg
+   | model.gLike
+   | model.phrase
+   | model.inter
+   | model.lLike
+   | model.global)*
+trailer.localattributes =
+  att.global.attributes, att.typed.attributes, empty
+# 3. macros

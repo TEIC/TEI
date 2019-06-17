@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         xmlns:tei="http://www.tei-c.org/ns/1.0"
+         xmlns:teix="http://www.tei-c.org/ns/Examples"
+         datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"><!--Schema generated 2019-01-21T23:48:03Z
+Edition: Version 3.5.0a. Last updated on
+	19th January 2019, revision e6ccc03
+This material is dual-licensed.
+[http://creativecommons.org/licenses/by/3.0/] Distributed under a Creative Commons Attribution 3.0 Unported License.  [http://www.opensource.org/licenses/BSD-2-Clause] Copyright 2019 TEI Consortium. All rights reserved. Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. This software is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright holder or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage. TEI material can be licensed differently depending on the use you intend to make of it. Hence it is made available under both the CC+BY and BSD-2 licences. The CC+BY licence is generally appropriate for usages which treat TEI content as data or documentation. The BSD-2 licence is generally appropriate for usage of TEI content in a software environment. For further information or clarification, please contact the TEI Consortium. Transcribed Speech--><!--Definitions from module spoken--><!--Set global predeclared macros--><!--Set predeclared macros--><!--0. predeclared macros--><!--1. classes-->
+   <define name="att.duration.attributes">
+      <ref name="att.duration.w3c.attributes"/>
+      <ref name="att.duration.iso.attributes"/>
+   </define>
+   <define name="model.global.spoken">
+      <choice>
+         <ref name="pause"/>
+         <ref name="vocal"/>
+         <ref name="kinesic"/>
+         <ref name="incident"/>
+         <ref name="writing"/>
+         <ref name="shift"/>
+      </choice>
+   </define>
+   <define name="model.global.spoken_alternation">
+      <choice>
+         <ref name="pause"/>
+         <ref name="vocal"/>
+         <ref name="kinesic"/>
+         <ref name="incident"/>
+         <ref name="writing"/>
+         <ref name="shift"/>
+      </choice>
+   </define>
+   <define name="model.global.spoken_sequence">
+      <ref name="pause"/>
+      <ref name="vocal"/>
+      <ref name="kinesic"/>
+      <ref name="incident"/>
+      <ref name="writing"/>
+      <ref name="shift"/>
+   </define>
+   <define name="model.global.spoken_sequenceOptional">
+      <optional>
+         <ref name="pause"/>
+      </optional>
+      <optional>
+         <ref name="vocal"/>
+      </optional>
+      <optional>
+         <ref name="kinesic"/>
+      </optional>
+      <optional>
+         <ref name="incident"/>
+      </optional>
+      <optional>
+         <ref name="writing"/>
+      </optional>
+      <optional>
+         <ref name="shift"/>
+      </optional>
+   </define>
+   <define name="model.global.spoken_sequenceOptionalRepeatable">
+      <zeroOrMore>
+         <ref name="pause"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="vocal"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="kinesic"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="incident"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="writing"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="shift"/>
+      </zeroOrMore>
+   </define>
+   <define name="model.global.spoken_sequenceRepeatable">
+      <oneOrMore>
+         <ref name="pause"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="vocal"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="kinesic"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="incident"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="writing"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="shift"/>
+      </oneOrMore>
+   </define>
+   <define name="model.recordingPart">
+      <choice>
+         <ref name="model.dateLike"/>
+         <ref name="media"/>
+         <ref name="respStmt"/>
+         <ref name="equipment"/>
+         <ref name="broadcast"/>
+      </choice>
+   </define>
+   <define name="model.recordingPart_alternation">
+      <choice>
+         <ref name="model.dateLike_alternation"/>
+         <ref name="media"/>
+         <ref name="respStmt"/>
+         <ref name="equipment"/>
+         <ref name="broadcast"/>
+      </choice>
+   </define>
+   <define name="model.recordingPart_sequence">
+      <ref name="model.dateLike_sequence"/>
+      <ref name="media"/>
+      <ref name="respStmt"/>
+      <ref name="equipment"/>
+      <ref name="broadcast"/>
+   </define>
+   <define name="model.recordingPart_sequenceOptional">
+      <optional>
+         <ref name="model.dateLike_sequenceOptional"/>
+      </optional>
+      <optional>
+         <ref name="media"/>
+      </optional>
+      <optional>
+         <ref name="respStmt"/>
+      </optional>
+      <optional>
+         <ref name="equipment"/>
+      </optional>
+      <optional>
+         <ref name="broadcast"/>
+      </optional>
+   </define>
+   <define name="model.recordingPart_sequenceOptionalRepeatable">
+      <zeroOrMore>
+         <ref name="model.dateLike_sequenceOptionalRepeatable"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="media"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="respStmt"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="equipment"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="broadcast"/>
+      </zeroOrMore>
+   </define>
+   <define name="model.recordingPart_sequenceRepeatable">
+      <oneOrMore>
+         <ref name="model.dateLike_sequenceRepeatable"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="media"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="respStmt"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="equipment"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="broadcast"/>
+      </oneOrMore>
+   </define>
+   <define name="model.divPart.spoken">
+      <choice>
+         <ref name="u"/>
+         <ref name="annotationBlock"/>
+      </choice>
+   </define>
+   <define name="model.divPart.spoken_alternation">
+      <choice>
+         <ref name="u"/>
+         <ref name="annotationBlock"/>
+      </choice>
+   </define>
+   <define name="model.divPart.spoken_sequence">
+      <ref name="u"/>
+      <ref name="annotationBlock"/>
+   </define>
+   <define name="model.divPart.spoken_sequenceOptional">
+      <optional>
+         <ref name="u"/>
+      </optional>
+      <optional>
+         <ref name="annotationBlock"/>
+      </optional>
+   </define>
+   <define name="model.divPart.spoken_sequenceOptionalRepeatable">
+      <zeroOrMore>
+         <ref name="u"/>
+      </zeroOrMore>
+      <zeroOrMore>
+         <ref name="annotationBlock"/>
+      </zeroOrMore>
+   </define>
+   <define name="model.divPart.spoken_sequenceRepeatable">
+      <oneOrMore>
+         <ref name="u"/>
+      </oneOrMore>
+      <oneOrMore>
+         <ref name="annotationBlock"/>
+      </oneOrMore>
+   </define>
+   <!--2. elements-->
+   <define name="annotationBlock">
+      <element name="annotationBlock">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">groups together various annotations, e.g. for parallel interpretations of a spoken segment. []</a:documentation>
+         <ref name="annotationBlock.content"/>
+         <ref name="annotationBlock.localattributes"/>
+      </element>
+   </define>
+   <define name="annotationBlock.content">
+      <zeroOrMore>
+         <choice>
+            <ref name="u"/>
+            <ref name="spanGrp"/>
+            <ref name="model.global.spoken"/>
+        </choice>
+      </zeroOrMore>
+   </define>
+   <define name="annotationBlock.localattributes">
+      <ref name="att.ascribed.attributes"/>
+      <ref name="att.timed.attributes"/>
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="broadcast">
+      <element name="broadcast">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">describes a broadcast used as the source of a spoken text. [ ]</a:documentation>
+         <ref name="broadcast.content"/>
+         <ref name="broadcast.localattributes"/>
+      </element>
+   </define>
+   <define name="broadcast.content">
+      <choice>
+      
+        <oneOrMore>
+            <ref name="model.pLike"/>
+         </oneOrMore>
+      
+         <ref name="model.biblLike"/>
+         <ref name="recording"/>
+      </choice>
+   </define>
+   <define name="broadcast.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.declarable.attributes"/>
+      <empty/>
+   </define>
+   <define name="equipment">
+      <element name="equipment">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides technical details of the equipment and media used for an audio or video recording used as the source for a spoken text. [ ]</a:documentation>
+         <ref name="equipment.content"/>
+         <ref name="equipment.localattributes"/>
+      </element>
+   </define>
+   <define name="equipment.content">
+      <oneOrMore>
+         <ref name="model.pLike"/>
+      </oneOrMore>
+   </define>
+   <define name="equipment.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.declarable.attributes"/>
+      <empty/>
+   </define>
+   <define name="incident">
+      <element name="incident">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">marks any phenomenon or occurrence, not necessarily vocalized or communicative, for example incidental noises or other events affecting communication. []</a:documentation>
+         <ref name="incident.content"/>
+         <ref name="incident.localattributes"/>
+      </element>
+   </define>
+   <define name="incident.content">
+      <zeroOrMore>
+         <ref name="model.descLike"/>
+      </zeroOrMore>
+   </define>
+   <define name="incident.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.timed.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.ascribed.attributes"/>
+      <empty/>
+   </define>
+   <define name="kinesic">
+      <element name="kinesic">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">marks any communicative phenomenon, not necessarily vocalized, for example a gesture, frown, etc. []</a:documentation>
+         <ref name="kinesic.content"/>
+         <ref name="kinesic.localattributes"/>
+      </element>
+   </define>
+   <define name="kinesic.content">
+      <zeroOrMore>
+         <ref name="model.descLike"/>
+      </zeroOrMore>
+   </define>
+   <define name="kinesic.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.timed.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.ascribed.directed.attributes"/>
+      <optional>
+         <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                    name="iterated"
+                    a:defaultValue="false">
+            <a:documentation>indicates whether or not the phenomenon is repeated.</a:documentation>
+            <choice>
+               <data type="boolean"/>
+               <choice>
+                  <value>unknown</value>
+                  <a:documentation/>
+                  <value>inapplicable</value>
+                  <a:documentation/>
+               </choice>
+            </choice>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="pause">
+      <element name="pause">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">marks a pause either between or within utterances. []</a:documentation>
+         <ref name="pause.content"/>
+         <ref name="pause.localattributes"/>
+      </element>
+   </define>
+   <define name="pause.content">
+      <empty/>
+   </define>
+   <define name="pause.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.timed.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.ascribed.directed.attributes"/>
+      <empty/>
+   </define>
+   <define name="recording">
+      <element name="recording">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(recording event) provides details of an audio or video recording event used as the source of a spoken text, either directly or from a public broadcast. [ ]</a:documentation>
+         <ref name="recording.content"/>
+         <ref name="recording.localattributes"/>
+      </element>
+   </define>
+   <define name="recording.content">
+      <zeroOrMore>
+         <choice>
+            <ref name="model.recordingPart"/>
+            <ref name="model.pLike"/>
+         </choice>
+      </zeroOrMore>
+   </define>
+   <define name="recording.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.declarable.attributes"/>
+      <ref name="att.duration.attributes"/>
+      <ref name="att.typed.attribute.subtype"/>
+      <optional>
+         <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                    name="type"
+                    a:defaultValue="audio">
+            <a:documentation>the kind of recording.</a:documentation>
+            <choice>
+               <value>audio</value>
+               <a:documentation>audio recording</a:documentation>
+               <value>video</value>
+               <a:documentation>audio and video recording</a:documentation>
+            </choice>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="recordingStmt">
+      <element name="recordingStmt">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(recording statement) describes a set of recordings used as the basis for transcription of a spoken text. [ ]</a:documentation>
+         <ref name="recordingStmt.content"/>
+         <ref name="recordingStmt.localattributes"/>
+      </element>
+   </define>
+   <define name="recordingStmt.content">
+      <choice>
+      
+        <oneOrMore>
+            <ref name="model.pLike"/>
+         </oneOrMore>
+      
+      
+        <oneOrMore>
+            <ref name="recording"/>
+         </oneOrMore>
+      
+      </choice>
+   </define>
+   <define name="recordingStmt.localattributes">
+      <ref name="att.global.attributes"/>
+      <empty/>
+   </define>
+   <define name="scriptStmt">
+      <element name="scriptStmt">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(script statement) contains a citation giving details of the script used for a spoken text. [  ]</a:documentation>
+         <ref name="scriptStmt.content"/>
+         <ref name="scriptStmt.localattributes"/>
+      </element>
+   </define>
+   <define name="scriptStmt.content">
+      <choice>
+      
+        <oneOrMore>
+            <ref name="model.pLike"/>
+         </oneOrMore>
+      
+         <ref name="model.biblLike"/>
+      </choice>
+   </define>
+   <define name="scriptStmt.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.declarable.attributes"/>
+      <empty/>
+   </define>
+   <define name="shift">
+      <element name="shift">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">marks the point at which some paralinguistic feature of a series of utterances by any one speaker changes. []</a:documentation>
+         <ref name="shift.content"/>
+         <ref name="shift.localattributes"/>
+      </element>
+   </define>
+   <define name="shift.content">
+      <empty/>
+      <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+               id="shift-shiftNew-constraint-assert-10">
+         <rule context="tei:shift">
+            <assert test="@new" role="warning">              
+The @new attribute should always be supplied; use the special value
+"normal" to indicate that the feature concerned ceases to be
+remarkable at this point.</assert>
+         </rule>
+      </pattern>
+   </define>
+   <define name="shift.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.ascribed.attributes"/>
+      <optional>
+         <attribute name="feature">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">a paralinguistic feature.
+Suggested values include: 1] tempo; 2] loud; 3] pitch; 4] tension; 5] rhythm; 6] voice</a:documentation>
+            <choice>
+               <value>tempo</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">speed of utterance.</a:documentation>
+               <value>loud</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">loudness.</a:documentation>
+               <value>pitch</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">pitch range.</a:documentation>
+               <value>tension</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">tension or stress pattern.</a:documentation>
+               <value>rhythm</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">rhythmic qualities.</a:documentation>
+               <value>voice</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">voice quality.</a:documentation>
+               <data type="token">
+                  <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+               </data>
+            </choice>
+         </attribute>
+      </optional>
+      <optional>
+         <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                    name="new"
+                    a:defaultValue="normal">
+            <a:documentation>specifies the new state of the paralinguistic feature specified.</a:documentation>
+            <data type="token">
+               <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
+            </data>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="transcriptionDesc">
+      <element name="transcriptionDesc">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">describes the set of transcription conventions used, particularly for spoken material. []</a:documentation>
+         <ref name="transcriptionDesc.content"/>
+         <ref name="transcriptionDesc.localattributes"/>
+      </element>
+   </define>
+   <define name="transcriptionDesc.content">
+      <zeroOrMore>
+         <choice>
+            <ref name="model.labelLike"/>
+            <ref name="model.ptrLike"/>
+            <ref name="model.pLike"/>
+        </choice>
+      </zeroOrMore>
+   </define>
+   <define name="transcriptionDesc.localattributes">
+      <ref name="att.global.attributes"/>
+      <attribute name="ident">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">supplies an identifier for the encoding convention, independent of any version number.</a:documentation>
+         <data type="Name"/>
+      </attribute>
+      <optional>
+         <attribute name="version">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">supplies a version number for the encoding conventions used, if any.</a:documentation>
+            <data type="token">
+               <param name="pattern">[\d]+[a-z]*[\d]*(\.[\d]+[a-z]*[\d]*){0,3}</param>
+            </data>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="u">
+      <element name="u">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(utterance) contains a stretch of speech usually preceded and followed by silence or by a change of speaker. []</a:documentation>
+         <ref name="u.content"/>
+         <ref name="u.localattributes"/>
+      </element>
+   </define>
+   <define name="u.content">
+      <ref name="macro.paraContent"/>
+   </define>
+   <define name="u.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.timed.attributes"/>
+      <ref name="att.declaring.attributes"/>
+      <ref name="att.ascribed.directed.attributes"/>
+      <ref name="att.notated.attributes"/>
+      <optional>
+         <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                    name="trans"
+                    a:defaultValue="smooth">
+            <a:documentation>(transition) indicates the nature of the transition between this utterance and the previous one.</a:documentation>
+            <choice>
+               <value>smooth</value>
+               <a:documentation>this utterance begins without unusual pause or rapidity.</a:documentation>
+               <value>latching</value>
+               <a:documentation>this utterance begins with a markedly shorter pause than normal.</a:documentation>
+               <value>overlap</value>
+               <a:documentation>this utterance begins before the previous one has finished.</a:documentation>
+               <value>pause</value>
+               <a:documentation>this utterance begins after a noticeable pause.</a:documentation>
+            </choice>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="vocal">
+      <element name="vocal">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">marks any vocalized but not necessarily lexical phenomenon, for example voiced pauses, non-lexical backchannels, etc. []</a:documentation>
+         <ref name="vocal.content"/>
+         <ref name="vocal.localattributes"/>
+      </element>
+   </define>
+   <define name="vocal.content">
+      <zeroOrMore>
+         <ref name="model.descLike"/>
+      </zeroOrMore>
+   </define>
+   <define name="vocal.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.timed.attributes"/>
+      <ref name="att.ascribed.directed.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <optional>
+         <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                    name="iterated"
+                    a:defaultValue="false">
+            <a:documentation>indicates whether or not the phenomenon is repeated.</a:documentation>
+            <choice>
+               <data type="boolean"/>
+               <choice>
+                  <value>unknown</value>
+                  <a:documentation/>
+                  <value>inapplicable</value>
+                  <a:documentation/>
+               </choice>
+            </choice>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <define name="writing">
+      <element name="writing">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a passage of written text revealed to participants in the course of a spoken text. []</a:documentation>
+         <ref name="writing.content"/>
+         <ref name="writing.localattributes"/>
+      </element>
+   </define>
+   <define name="writing.content">
+      <ref name="macro.paraContent"/>
+   </define>
+   <define name="writing.localattributes">
+      <ref name="att.global.attributes"/>
+      <ref name="att.ascribed.directed.attributes"/>
+      <ref name="att.typed.attributes"/>
+      <ref name="att.timed.attributes"/>
+      <optional>
+         <attribute name="gradual">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates whether the writing is revealed all at once or gradually.</a:documentation>
+            <choice>
+               <data type="boolean"/>
+               <choice>
+                  <value>unknown</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+                  <value>inapplicable</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               </choice>
+            </choice>
+         </attribute>
+      </optional>
+      <empty/>
+   </define>
+   <!--3. macros-->
+</grammar>

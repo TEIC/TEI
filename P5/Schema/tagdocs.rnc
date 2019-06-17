@@ -1,0 +1,1883 @@
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+namespace sch = "http://purl.oclc.org/dsdl/schematron"
+namespace tei = "http://www.tei-c.org/ns/1.0"
+namespace teix = "http://www.tei-c.org/ns/Examples"
+
+# Schema generated 2019-01-21T23:48:03Z
+# Edition: Version 3.5.0a. Last updated on
+#	19th January 2019, revision e6ccc03
+# This material is dual-licensed.
+# [http://creativecommons.org/licenses/by/3.0/] Distributed under a Creative Commons Attribution 3.0 Unported License.  [http://www.opensource.org/licenses/BSD-2-Clause] Copyright 2019 TEI Consortium. All rights reserved. Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. This software is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright holder or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage. TEI material can be licensed differently depending on the use you intend to make of it. Hence it is made available under both the CC+BY and BSD-2 licences. The CC+BY licence is generally appropriate for usages which treat TEI content as data or documentation. The BSD-2 licence is generally appropriate for usage of TEI content in a software environment. For further information or clarification, please contact the TEI Consortium. Documentation of TEI modules
+
+# Definitions from module tagdocs
+
+# Set global predeclared macros
+
+# Set predeclared macros
+
+# 0. predeclared macros
+
+# 1. classes
+att.repeatable.attributes =
+  att.repeatable.attribute.minOccurs, att.repeatable.attribute.maxOccurs
+att.repeatable.attribute.minOccurs =
+  
+  ## (minimum number of occurences) indicates the smallest number of times this component may occur.
+  [ a:defaultValue = "1" ]
+  attribute minOccurs { xsd:nonNegativeInteger }?
+att.repeatable.attribute.maxOccurs =
+  
+  ## (maximum number of occurences) indicates the largest number of times this component may occur.
+  [ a:defaultValue = "1" ]
+  attribute maxOccurs {
+    xsd:nonNegativeInteger
+    | (
+       ##
+       "unbounded")
+  }?
+sch:pattern [
+  id = "att.repeatable-MINandMAXoccurs-constraint-rule-18"
+  "\x{a}" ~
+  "      "
+  sch:rule [
+    context = "*[ @minOccurs  and  @maxOccurs ]"
+    "\x{a}" ~
+    "        "
+    sch:let [ name = "min" value = "@minOccurs cast as xs:integer" ]
+    "\x{a}" ~
+    "        "
+    sch:let [
+      name = "max"
+      value =
+        "if ( normalize-space( @maxOccurs ) eq 'unbounded')                         then -1                         else @maxOccurs cast as xs:integer"
+    ]
+    "\x{a}" ~
+    "        "
+    sch:assert [
+      test = "$max eq -1  or  $max ge $min"
+      "@maxOccurs should be greater than or equal to @minOccurs"
+    ]
+    "\x{a}" ~
+    "      "
+  ]
+  "\x{a}" ~
+  "   "
+]
+sch:pattern [
+  id = "att.repeatable-MINandMAXoccurs-constraint-rule-19"
+  "\x{a}" ~
+  "      "
+  sch:rule [
+    context = "*[ @minOccurs  and  not( @maxOccurs ) ]"
+    "\x{a}" ~
+    "        "
+    sch:assert [
+      test = "@minOccurs cast as xs:integer lt 2"
+      "When @maxOccurs is not specified, @minOccurs must be 0 or 1"
+    ]
+    "\x{a}" ~
+    "      "
+  ]
+  "\x{a}" ~
+  "   "
+]
+model.contentPart =
+  classRef
+  | elementRef
+  | macroRef
+  | sequence
+  | alternate
+  | dataRef
+  | valList
+  | textNode
+  | anyElement
+  | \empty
+model.contentPart_alternation =
+  classRef
+  | elementRef
+  | macroRef
+  | sequence
+  | alternate
+  | dataRef
+  | valList
+  | textNode
+  | anyElement
+  | \empty
+model.contentPart_sequence =
+  classRef,
+  elementRef,
+  macroRef,
+  sequence,
+  alternate,
+  dataRef,
+  valList,
+  textNode,
+  anyElement,
+  \empty
+model.contentPart_sequenceOptional =
+  classRef?,
+  elementRef?,
+  macroRef?,
+  sequence?,
+  alternate?,
+  dataRef?,
+  valList?,
+  textNode?,
+  anyElement?,
+  \empty?
+model.contentPart_sequenceOptionalRepeatable =
+  classRef*,
+  elementRef*,
+  macroRef*,
+  sequence*,
+  alternate*,
+  dataRef*,
+  valList*,
+  textNode*,
+  anyElement*,
+  \empty*
+model.contentPart_sequenceRepeatable =
+  classRef+,
+  elementRef+,
+  macroRef+,
+  sequence+,
+  alternate+,
+  dataRef+,
+  valList+,
+  textNode+,
+  anyElement+,
+  \empty+
+att.combinable.attributes =
+  att.deprecated.attributes, att.combinable.attribute.mode
+att.combinable.attribute.mode =
+  
+  ## specifies the effect of this declaration on its parent object.
+  [ a:defaultValue = "add" ]
+  attribute mode {
+    
+    ## this declaration is added to the current definitions
+    "add"
+    | 
+      ## if present already, the whole of the declaration for this object is removed from the current setup
+      "delete"
+    | 
+      ## this declaration changes the declaration of the same name in the current definition
+      "change"
+    | 
+      ## this declaration replaces the declaration of the same name in the current definition
+      "replace"
+  }?
+att.identified.attributes =
+  att.combinable.attributes,
+  att.identified.attribute.ident,
+  att.identified.attribute.predeclare,
+  att.identified.attribute.module
+att.identified.attribute.ident =
+  
+  ## supplies the identifier by which this element may be referenced.
+  attribute ident { xsd:Name }
+att.identified.attribute.predeclare =
+  
+  ## says whether this object should be predeclared in the tei infrastructure module.
+  [ a:defaultValue = "false" ] attribute predeclare { xsd:boolean }?
+att.identified.attribute.module =
+  
+  ## supplies a name for the module in which this object is to be declared.
+  attribute module { xsd:NCName }?
+sch:pattern [
+  id = "att.identified-spec-in-module-constraint-rule-26"
+  "\x{a}" ~
+  "      "
+  sch:rule [
+    context =
+      "tei:elementSpec[@module]|tei:classSpec[@module]|tei:macroSpec[@module]"
+    "\x{a}" ~
+    "        "
+    sch:assert [
+      test =
+        "         (not(ancestor::tei:schemaSpec | ancestor::tei:TEI | ancestor::tei:teiCorpus)) or         (not(@module) or          (not(//tei:moduleSpec) and not(//tei:moduleRef))  or         (//tei:moduleSpec[@ident = current()/@module]) or          (//tei:moduleRef[@key = current()/@module]))         "
+      "\x{a}" ~
+      "        Specification "
+      sch:value-of [ select = "@ident" ]
+      ': the value of the module attribute ("'
+      sch:value-of [ select = "@module" ]
+      '") \x{a}' ~
+      "should correspond to an existing module, via a moduleSpec or\x{a}" ~
+      "      moduleRef"
+    ]
+    "\x{a}" ~
+    "      "
+  ]
+  "\x{a}" ~
+  "   "
+]
+att.deprecated.attributes = att.deprecated.attribute.validUntil
+att.deprecated.attribute.validUntil =
+  
+  ## provides a date before which the construct being defined will not be removed.
+  attribute validUntil { xsd:date }?
+sch:pattern [
+  id =
+    "att.deprecated-validUntil-deprecation-two-month-warning-constraint-rule-27"
+  "\x{a}" ~
+  "      "
+  sch:rule [
+    context = "tei:*[@validUntil]"
+    "\x{a}" ~
+    "            "
+    sch:let [
+      name = "advance_warning_period"
+      value = "current-date() + xs:dayTimeDuration('P60D')"
+    ]
+    "\x{a}" ~
+    "            "
+    sch:let [
+      name = "me_phrase"
+      value =
+        "if (@ident)                                                then concat('The ', @ident )                                                else concat('This ',                                                            local-name(.),                                                            ' of ',                                                            ancestor::tei:*[@ident][1]/@ident )"
+    ]
+    "\x{a}" ~
+    "            "
+    sch:assert [
+      test = "@validUntil cast as xs:date  ge  current-date()"
+      "\x{a}" ~
+      "              "
+      sch:value-of [
+        select =
+          "                  concat( $me_phrase,                          'construct is outdated (as of ',                          @validUntil,                          '); ODD processors may ignore it, and its use is no longer supported'                        )"
+      ]
+      "\x{a}" ~
+      "         "
+    ]
+    "\x{a}" ~
+    "              "
+    sch:assert [
+      role = "nonfatal"
+      test = "@validUntil cast as xs:date  ge  $advance_warning_period"
+      "\x{a}" ~
+      "                "
+      sch:value-of [
+        select =
+          "concat( $me_phrase, ' construct becomes outdated on ', @validUntil )"
+      ]
+      "\x{a}" ~
+      "              "
+    ]
+    "\x{a}" ~
+    "          "
+  ]
+  "\x{a}" ~
+  "   "
+]
+sch:pattern [
+  id =
+    "att.deprecated-validUntil-deprecation-should-be-explained-constraint-rule-28"
+  "\x{a}" ~
+  "      "
+  sch:rule [
+    context =
+      "tei:*[@validUntil][ not( self::valDesc | self::valList | self::defaultVal )]"
+    "\x{a}" ~
+    "            "
+    sch:assert [
+      test = "child::tei:desc[ @type eq 'deprecationInfo']"
+      "\x{a}" ~
+      "              A deprecated construct should include, whenever possible, an explanation, but this "
+      sch:value-of [ select = "name(.)" ]
+      ' does not have a child <desc type="deprecationInfo">'
+    ]
+    "\x{a}" ~
+    "          "
+  ]
+  "\x{a}" ~
+  "   "
+]
+att.namespaceable.attributes = att.namespaceable.attribute.ns
+att.namespaceable.attribute.ns =
+  
+  ## (namespace) specifies the namespace to which this element belongs
+  [ a:defaultValue = "http://www.tei-c.org/ns/1.0" ]
+  attribute ns { xsd:anyURI }?
+# 2. elements
+altIdent =
+  
+  ## (alternate identifier) supplies the recommended XML name for an element, class, attribute, etc. in some language. [ ]
+  element altIdent { altIdent.content, altIdent.localattributes }
+altIdent.content = text
+altIdent.localattributes =
+  att.global.attributes, att.typed.attributes, empty
+alternate =
+  
+  ## indicates that the constructs referenced by its children form an alternation []
+  element alternate { alternate.content, alternate.localattributes }
+alternate.content =
+  (model.contentPart+)
+  >> sch:pattern [
+       id = "alternate-alternatechilden-constraint-assert-30"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context = "tei:alternate"
+         "\x{a}" ~
+         "            "
+         sch:assert [
+           test = "count(*)>1"
+           "The alternate element must have at least two child elements"
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+alternate.localattributes =
+  att.global.attributes, att.repeatable.attributes, empty
+anyElement =
+  
+  ## indicates the presence of any elements in a content model []
+  element anyElement { anyElement.content, anyElement.localattributes }
+anyElement.content = empty
+anyElement.localattributes =
+  att.global.attributes,
+  att.repeatable.attributes,
+  
+  ## supplies a list of namespaces to one of which the permitted elements must belong. 
+  attribute require {
+    list { xsd:anyURI+ }
+  }?,
+  
+  ## supplies a list of namespaces or prefixed element names which are not permitted.
+  attribute except {
+    list {
+      (xsd:anyURI { pattern = "[^/]+:.*" }
+       | xsd:Name { pattern = ".+:.+" })+
+    }
+  }?,
+  empty
+att =
+  
+  ## (attribute) contains the name of an attribute appearing within running text. []
+  element att { att.content, att.localattributes }
+att.content = xsd:Name
+att.localattributes =
+  att.global.attributes,
+  
+  ## supplies an identifier for the scheme in which this name is defined.
+  ## Sample values include: 1] TEI (Text Encoding Initiative) ; 2] DBK (Docbook) ; 3] XX (unknown) ; 4] imaginary; 5] XHTML; 6] XML; 7] XI
+  [ a:defaultValue = "TEI" ]
+  attribute scheme {
+    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?,
+  empty
+attDef =
+  
+  ## (attribute definition) contains the definition of a single attribute. []
+  element attDef { attDef.content, attDef.localattributes }
+attDef.content =
+  ((model.glossLike | model.descLike)*,
+   datatype?,
+   constraintSpec*,
+   defaultVal?,
+   (valList | valDesc+)?,
+   exemplum*,
+   remarks*)
+  >> sch:ns [ prefix = "teix" uri = "http://www.tei-c.org/ns/Examples" ]
+  >> sch:pattern [
+       id = "attDef-attDefContents-constraint-assert-33"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context = "tei:attDef"
+         "\x{a}" ~
+         "            "
+         sch:assert [
+           test =
+             "ancestor::teix:egXML[@valid='feasible'] or @mode eq 'change' or @mode eq 'delete' or tei:datatype or tei:valList[@type='closed']"
+           "Attribute: the definition of the @"
+           sch:value-of [ select = "@ident" ]
+           " attribute in the "
+           sch:value-of [ select = "ancestor::*[@ident][1]/@ident" ]
+           "\x{a}" ~
+           "               "
+           sch:value-of [ select = "' '" ]
+           "\x{a}" ~
+           "               "
+           sch:value-of [
+             select = "local-name(ancestor::*[@ident][1])"
+           ]
+           " should have a closed valList or a datatype"
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+  >> sch:pattern [
+       id = "attDef-noDefault4Required-constraint-rule-21"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context = "tei:attDef[@usage eq 'req']"
+         "\x{a}" ~
+         "            "
+         sch:report [
+           test = "tei:defaultVal"
+           'It does not make sense to make "'
+           sch:value-of [ select = "normalize-space(tei:defaultVal)" ]
+           '" the default value of @'
+           sch:value-of [ select = "@ident" ]
+           ", because that attribute is required."
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+  >> sch:pattern [
+       id = "attDef-defaultIsInClosedList-twoOrMore-constraint-rule-22"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context =
+           "tei:attDef[   tei:defaultVal   and   tei:valList[@type eq 'closed']   and   tei:datatype[    @maxOccurs > 1    or    @minOccurs > 1    or    @maxOccurs = 'unbounded'    ]   ]"
+         "\x{a}" ~
+         "            "
+         sch:assert [
+           test =
+             "     tokenize(normalize-space(tei:defaultVal),' ')     =     tei:valList/tei:valItem/@ident"
+           "In the "
+           sch:value-of [
+             select = "local-name(ancestor::*[@ident][1])"
+           ]
+           " defining\x{a}" ~
+           "        "
+           sch:value-of [ select = "ancestor::*[@ident][1]/@ident" ]
+           " the default value of the\x{a}" ~
+           "        @"
+           sch:value-of [ select = "@ident" ]
+           " attribute is not among the closed list of possible\x{a}" ~
+           "        values"
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+  >> sch:pattern [
+       id = "attDef-defaultIsInClosedList-one-constraint-rule-23"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context =
+           "tei:attDef[   tei:defaultVal   and   tei:valList[@type eq 'closed']   and   tei:datatype[    not(@maxOccurs)    or (    if ( @maxOccurs castable as xs:integer )     then ( @maxOccurs cast as xs:integer eq 1 )     else false()    )]   ]"
+         "\x{a}" ~
+         "            "
+         sch:assert [
+           test =
+             "string(tei:defaultVal)      =      tei:valList/tei:valItem/@ident"
+           "In the "
+           sch:value-of [
+             select = "local-name(ancestor::*[@ident][1])"
+           ]
+           " defining\x{a}" ~
+           "        "
+           sch:value-of [ select = "ancestor::*[@ident][1]/@ident" ]
+           " the default value of the\x{a}" ~
+           "        @"
+           sch:value-of [ select = "@ident" ]
+           " attribute is not among the closed list of possible\x{a}" ~
+           "        values"
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+attDef.localattributes =
+  att.global.attributes,
+  att.identified.attributes,
+  
+  ## specifies the optionality of the attribute.
+  [ a:defaultValue = "opt" ]
+  attribute usage {
+    
+    ## (required) 
+    "req"
+    | 
+      ## (recommended ) 
+      "rec"
+    | 
+      ## (optional ) 
+      "opt"
+  }?,
+  
+  ## (namespace) specifies the namespace to which this attribute belongs
+  [ a:defaultValue = "http://www.tei-c.org/ns/1.0" ]
+  attribute ns { xsd:anyURI }?,
+  empty
+attList =
+  
+  ## contains documentation for all the attributes associated with this element, as a series of attDef elements. [ ]
+  element attList { attList.content, attList.localattributes }
+attList.content = (attRef | attDef | attList)+
+attList.localattributes =
+  att.global.attributes,
+  
+  ## (organization) specifies whether all the attributes in the list are available (org="group") or only one of them (org="choice")
+  [ a:defaultValue = "group" ]
+  attribute org {
+    
+    ## grouped
+    "group"
+    | 
+      ## alternated
+      "choice"
+  }?,
+  empty
+attRef =
+  
+  ## (attribute pointer) points to the definition of an attribute or group of attributes. []
+  element attRef { attRef.content, attRef.localattributes }
+attRef.content = empty
+attRef.localattributes =
+  att.global.attributes,
+  
+  ## the name of the attribute class
+  attribute class {
+    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?,
+  
+  ## the name of the attribute
+  attribute name { xsd:string }?,
+  empty
+classRef =
+  
+  ## points to the specification for an attribute or model class which is to be included in a schema []
+  element classRef { classRef.content, classRef.localattributes }
+classRef.content = empty
+classRef.localattributes =
+  att.global.attributes,
+  att.repeatable.attributes,
+  
+  ## the identifier used for the required class within the source indicated.
+  attribute key { xsd:NCName },
+  
+  ## indicates how references to this class within a content model should be interpreted.
+  attribute expand {
+    
+    ## any one member of the class may appear
+    "alternate"
+    | 
+      ## a single occurrence of all members of the class may appear in sequence
+      "sequence"
+    | 
+      ## a single occurrence of one or more members of the class may appear in sequence 
+      "sequenceOptional"
+    | 
+      ## one or more occurrences of one or more members of the class may appear in sequence. 
+      "sequenceOptionalRepeatable"
+    | 
+      ## one or more occurrences of all members of the class may appear in sequence
+      "sequenceRepeatable"
+  }?,
+  (
+   ## supplies a list of class members which are to be included in the schema being defined.
+   attribute include {
+     list { xsd:NCName* }
+   }?
+   | 
+     ## supplies a list of class members which are to be excluded from the schema being defined.
+     attribute except {
+       list { xsd:NCName* }
+     }?),
+  empty
+classSpec =
+  
+  ## (class specification) contains reference information for a TEI element class; that is a group of elements which appear together in content models, or which share some common attribute, or both. [ ]
+  element classSpec { classSpec.content, classSpec.localattributes }
+classSpec.content =
+  (model.glossLike | model.descLike)*,
+  classes?,
+  constraintSpec*,
+  attList?,
+  exemplum*,
+  remarks*,
+  listRef*
+classSpec.localattributes =
+  att.global.attributes,
+  att.identified.attributes,
+  
+  ## indicates whether this is a model class or an attribute class
+  attribute type {
+    
+    ## (content model) members of this class appear in the same content models
+    "model"
+    | 
+      ## (attributes) members of this class share common attributes
+      "atts"
+  },
+  
+  ## indicates which alternation and sequence instantiations of a model class may be referenced. By default, all variations are permitted.
+  attribute generate {
+    list {
+      (
+       ## members of the class are alternatives
+       "alternation"
+       | 
+         ## members of the class are to be provided in sequence
+         "sequence"
+       | 
+         ## members of the class may be provided, in sequence, but are optional
+         "sequenceOptional"
+       | 
+         ## members of the class may be provided one or more times, in sequence, but are optional.
+         "sequenceOptionalRepeatable"
+       | 
+         ## members of the class may be provided one or more times, in sequence
+         "sequenceRepeatable"),
+      (
+       ## members of the class are alternatives
+       "alternation"
+       | 
+         ## members of the class are to be provided in sequence
+         "sequence"
+       | 
+         ## members of the class may be provided, in sequence, but are optional
+         "sequenceOptional"
+       | 
+         ## members of the class may be provided one or more times, in sequence, but are optional.
+         "sequenceOptionalRepeatable"
+       | 
+         ## members of the class may be provided one or more times, in sequence
+         "sequenceRepeatable")?,
+      (
+       ## members of the class are alternatives
+       "alternation"
+       | 
+         ## members of the class are to be provided in sequence
+         "sequence"
+       | 
+         ## members of the class may be provided, in sequence, but are optional
+         "sequenceOptional"
+       | 
+         ## members of the class may be provided one or more times, in sequence, but are optional.
+         "sequenceOptionalRepeatable"
+       | 
+         ## members of the class may be provided one or more times, in sequence
+         "sequenceRepeatable")?,
+      (
+       ## members of the class are alternatives
+       "alternation"
+       | 
+         ## members of the class are to be provided in sequence
+         "sequence"
+       | 
+         ## members of the class may be provided, in sequence, but are optional
+         "sequenceOptional"
+       | 
+         ## members of the class may be provided one or more times, in sequence, but are optional.
+         "sequenceOptionalRepeatable"
+       | 
+         ## members of the class may be provided one or more times, in sequence
+         "sequenceRepeatable")?,
+      (
+       ## members of the class are alternatives
+       "alternation"
+       | 
+         ## members of the class are to be provided in sequence
+         "sequence"
+       | 
+         ## members of the class may be provided, in sequence, but are optional
+         "sequenceOptional"
+       | 
+         ## members of the class may be provided one or more times, in sequence, but are optional.
+         "sequenceOptionalRepeatable"
+       | 
+         ## members of the class may be provided one or more times, in sequence
+         "sequenceRepeatable")?
+    }
+  }?,
+  empty
+classes =
+  
+  ## specifies all the classes of which the documented element or class is a member or subclass. [ ]
+  element classes { classes.content, classes.localattributes }
+classes.content = memberOf*
+classes.localattributes =
+  att.global.attributes,
+  
+  ## specifies the effect of this declaration on its parent module.
+  [ a:defaultValue = "replace" ]
+  attribute mode {
+    
+    ## this declaration changes the declaration of the same name in the current definition
+    "change"
+    | 
+      ## this declaration replaces the declaration of the same name in the current definition
+      "replace"
+  }?,
+  empty
+code =
+  
+  ## contains literal code from some formal language such as a programming language. []
+  element code { code.content, code.localattributes }
+code.content = text
+code.localattributes =
+  att.global.attributes,
+  
+  ## (formal language) a name identifying the formal language in which the code is expressed
+  attribute lang {
+    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?,
+  empty
+constraint =
+  
+  ## (constraint rules) the formal rules of a constraint []
+  element constraint { constraint.content, constraint.localattributes }
+constraint.content = (text | anyElement-constraint)*
+constraint.localattributes = att.global.attributes, empty
+constraintSpec =
+  
+  ## (constraint on schema) contains a formal constraint, typically expressed in a rule-based schema language, to which a construct must conform in order to be considered valid []
+  element constraintSpec {
+    constraintSpec.content, constraintSpec.localattributes
+  }
+constraintSpec.content =
+  ((model.glossLike | model.descLike)*, constraint?)
+  >> sch:ns [ prefix = "s" uri = "http://www.ascc.net/xml/schematron" ]
+  >> sch:pattern [
+       id = "constraintSpec-sch_no_more-constraint-report-35"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context = "tei:constraintSpec"
+         "\x{a}" ~
+         "            "
+         sch:report [
+           test =
+             "tei:constraint/s:*  and  @scheme = ('isoschematron','schematron')"
+           "Rules\x{a}" ~
+           "        in the Schematron 1.* language must be inside a constraintSpec\x{a}" ~
+           "        with a value other than 'schematron' or 'isoschematron' on the\x{a}" ~
+           "        scheme attribute"
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+  >> sch:ns [
+       prefix = "sch"
+       uri = "http://purl.oclc.org/dsdl/schematron"
+     ]
+  >> sch:pattern [
+       id = "constraintSpec-isosch-constraint-report-36"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context = "tei:constraintSpec"
+         "\x{a}" ~
+         "            "
+         sch:report [
+           test =
+             "tei:constraint/sch:*  and  not( @scheme eq 'schematron')"
+           "Rules\x{a}" ~
+           "        in the ISO Schematron language must be inside a constraintSpec\x{a}" ~
+           "        with the value 'schematron' on the scheme attribute"
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+  >> sch:ns [
+       prefix = "sch"
+       uri = "http://purl.oclc.org/dsdl/schematron"
+     ]
+  >> sch:pattern [
+       id = "constraintSpec-needrules-constraint-rule-20"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context =
+           "tei:macroSpec/tei:constraintSpec[@scheme eq 'schematron']/tei:constraint"
+         "\x{a}" ~
+         "            "
+         sch:report [
+           test = "sch:assert|sch:report"
+           "An ISO Schematron constraint specification for a macro should not\x{a}" ~
+           "        have an 'assert' or 'report' element without a parent 'rule' element"
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+constraintSpec.localattributes =
+  att.global.attributes,
+  att.identified.attributes,
+  att.typed.attribute.subtype,
+  
+  ## characterizes the constraintSpec element in some sense; used to indicate when a constraintSpec warns about a deprecated construct.
+  ## Suggested values include: 1] deprecationWarning
+  attribute type {
+    
+    ## Indicates that this constraint specification warns that some other construct in the schema is deprecated.
+    "deprecationWarning"
+    | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?,
+  
+  ## supplies the name of the language in which the constraints are defined
+  ## Suggested values include: 1] schematron (ISO Schematron) 
+  attribute scheme {
+    
+    ## (ISO Schematron) 
+    "schematron"
+    | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  },
+  empty
+content =
+  
+  ## (content model) contains a declaration of the intended content model for the element (or other construct) being specified. []
+  element content { content.content, content.localattributes }
+content.content =
+  (model.contentPart* | anyElement-content+)
+  >> sch:pattern [
+       id = "content-empty-content-deprecated-constraint-assert-26"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context = "tei:content"
+         "\x{a}" ~
+         "            "
+         sch:assert [
+           test = "*"
+           "The use of the <content> element\x{a}" ~
+           "      without any child elements is deprecated, and will be considered\x{a}" ~
+           "      invalid after 2019-08-25. Use a child <empty> element to\x{a}" ~
+           "      indicate that the element being specified is not allowed to have\x{a}" ~
+           "      content."
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+content.localattributes =
+  att.global.attributes,
+  
+  ## controls whether or not pattern names generated in the corresponding RELAX NG schema source are automatically prefixed to avoid potential nameclashes.
+  [ a:defaultValue = "true" ]
+  attribute autoPrefix {
+    
+    ## Each name referenced in e.g. a rng:ref element within a content model is automatically prefixed by the value of the prefix attribute on the current schemaSpec
+    "true"
+    | 
+      ## No prefixes are added: any prefix required by the value of the prefix attribute on the current schemaSpec must therefore be supplied explicitly, as appropriate.
+      "false"
+  }?,
+  empty
+dataFacet =
+  
+  ## Restricts the value of the strings used to represent values of a datatype, according to XML Schemas: Part 2: Datatypes. []
+  element dataFacet { dataFacet.content, dataFacet.localattributes }
+dataFacet.content = empty
+dataFacet.localattributes =
+  att.global.attributes,
+  
+  ## the name of the facet.
+  attribute name {
+    
+    ##
+    "length"
+    | 
+      ##
+      "minLength"
+    | 
+      ##
+      "maxLength"
+    | 
+      ##
+      "pattern"
+    | 
+      ##
+      "enumeration"
+    | 
+      ##
+      "whiteSpace"
+    | 
+      ##
+      "maxInclusive"
+    | 
+      ##
+      "minInclusive"
+    | 
+      ##
+      "maxExclusive"
+    | 
+      ##
+      "minExclusive"
+    | 
+      ##
+      "totalDigits"
+    | 
+      ##
+      "fractionDigits"
+  },
+  
+  ## the facet value.
+  attribute value { xsd:string },
+  empty
+dataRef =
+  
+  ## identifies the datatype of an attribute value, either by referencing an item in an externally defined datatype library, or by pointing to a TEI-defined data specification []
+  element dataRef { dataRef.content, dataRef.localattributes }
+dataRef.content =
+  (dataFacet*)
+  >> sch:pattern [
+       id = "dataRef-restrictDataFacet-constraint-rule-24"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context = "tei:dataRef[tei:dataFacet]"
+         "\x{a}" ~
+         "            "
+         sch:assert [
+           test = "@name"
+           role = "nonfatal"
+           "Data facets can only be specified for references to datatypes specified by\x{a}" ~
+           "          XML Schemas: Part 2: Datatypes"
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+  >> sch:pattern [
+       id = "dataRef-restrictAttRestriction-constraint-rule-25"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context = "tei:dataRef[tei:dataFacet]"
+         "\x{a}" ~
+         "            "
+         sch:report [
+           test = "@restriction"
+           role = "nonfatal"
+           "The attribute restriction cannot be used when dataFacet elements are present."
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+dataRef.localattributes =
+  att.global.attributes,
+  (
+   ## the identifier used for this datatype specification
+   attribute key { xsd:NCName }?
+   | 
+     ## the name of a datatype in the list provided by XML Schemas: Part 2: Datatypes
+     attribute name { xsd:NCName }?
+   | 
+     ## a pointer to a datatype defined in some datatype library
+     attribute ref { xsd:anyURI }?),
+  
+  ## supplies a string representing a regular expression providing additional constraints on the strings used to represent values of this datatype
+  attribute restriction { xsd:token }?,
+  empty
+dataSpec =
+  
+  ## (datatype specification) documents a datatype. [ ]
+  element dataSpec { dataSpec.content, dataSpec.localattributes }
+dataSpec.content =
+  (model.glossLike | model.descLike)*,
+  (content | valList)*,
+  constraintSpec*,
+  exemplum*,
+  remarks*,
+  listRef*
+dataSpec.localattributes =
+  att.global.attributes, att.identified.attributes, empty
+datatype =
+  
+  ## specifies the declared value for an attribute, by referring to any datatype defined by the chosen schema language. [ ]
+  element datatype { datatype.content, datatype.localattributes }
+datatype.content = dataRef | anyElement-datatype
+datatype.localattributes =
+  att.global.attributes,
+  
+  ## (minimum number of occurences) indicates the minimum number of times this datatype may occur in the specification of the attribute being defined
+  [ a:defaultValue = "1" ]
+  attribute minOccurs { xsd:nonNegativeInteger }?,
+  
+  ## (maximum number of occurences) indicates the maximum number of times this datatype may occur in the specification of the attribute being defined
+  [ a:defaultValue = "1" ]
+  attribute maxOccurs {
+    xsd:nonNegativeInteger
+    | (
+       ##
+       "unbounded")
+  }?,
+  empty
+defaultVal =
+  
+  ## (default value) specifies the default declared value for an attribute. []
+  element defaultVal { defaultVal.content, defaultVal.localattributes }
+defaultVal.content = text
+defaultVal.localattributes =
+  att.global.attributes, att.deprecated.attributes, empty
+eg =
+  
+  ## (example) contains any kind of illustrative example. [ ]
+  element eg { eg.content, eg.localattributes }
+eg.content = macro.phraseSeq
+eg.localattributes = att.global.attributes, empty
+egXML =
+  
+  ## (example of XML) a single XML fragment demonstrating the use of some XML, such as elements, attributes, or processing instructions, etc., in which the egXML element functions as the root element. []
+  element teix:egXML { egXML.content, egXML.localattributes }
+egXML.content = (text | anyElement-egXML)*
+egXML.localattributes =
+  att.global.attributes,
+  
+  ## indicates the intended validity of the example with respect to a schema.
+  [ a:defaultValue = "true" ]
+  attribute valid {
+    
+    ## the example is intended to be fully valid, assuming that its root element, or a provided root element, could have been used as a possible root element in the schema concerned.
+    "true"
+    | 
+      ## the example could be transformed into a valid document by inserting any number of valid attributes and child elements anywhere within it; or it is valid against a version of the schema concerned in which the provision of character data, list, element, or attribute values has been made optional.
+      "feasible"
+    | 
+      ## the example is not intended to be valid, and contains deliberate errors.
+      "false"
+  }?,
+  empty
+elementRef =
+  
+  ## points to the specification for some element which is to be included in a schema []
+  element elementRef { elementRef.content, elementRef.localattributes }
+elementRef.content = empty
+elementRef.localattributes =
+  att.global.attributes,
+  att.repeatable.attributes,
+  
+  ## the identifier used for the required element within the source indicated.
+  attribute key { xsd:NCName },
+  empty
+elementSpec =
+  
+  ## (element specification) documents the structure, content, and purpose of a single element type. [ ]
+  element elementSpec {
+    elementSpec.content, elementSpec.localattributes
+  }
+elementSpec.content =
+  (model.glossLike | model.descLike)*,
+  classes?,
+  content?,
+  valList?,
+  constraintSpec*,
+  attList?,
+  (model | modelGrp | modelSequence)*,
+  exemplum*,
+  remarks*,
+  listRef*
+elementSpec.localattributes =
+  att.global.attributes,
+  att.identified.attributes,
+  att.namespaceable.attributes,
+  
+  ## specifies a default prefix which will be prepended to all patterns relating to the element, unless otherwise stated.
+  attribute prefix { xsd:NCName }?,
+  empty
+\empty =
+  
+  ## indicates the presence of an empty node within a content model []
+  element empty { empty.content, empty.localattributes }
+empty.content = empty
+empty.localattributes = att.global.attributes, empty
+equiv =
+  
+  ## (equivalent) specifies a component which is considered equivalent to the parent element, either by co-reference, or by external link. [ ]
+  element equiv { equiv.content, equiv.localattributes }
+equiv.content = empty
+equiv.localattributes =
+  att.global.attributes,
+  att.internetMedia.attributes,
+  
+  ## a single word which follows the rules defining a legal XML name (see ), naming the underlying concept of which the parent is a representation.
+  attribute name { xsd:Name }?,
+  
+  ## (uniform resource identifier) references the underlying concept of which the parent is a representation by means of some external identifier
+  attribute uri { xsd:anyURI }?,
+  
+  ## references an external script which contains a method to transform instances of this element to canonical TEI
+  attribute filter { xsd:anyURI }?,
+  empty
+exemplum =
+  
+  ## groups an example demonstrating the use of an element along with optional paragraphs of commentary. []
+  element exemplum { exemplum.content, exemplum.localattributes }
+exemplum.content = model.pLike*, (egXML | eg), model.pLike*
+exemplum.localattributes =
+  att.global.attributes,
+  att.typed.attributes,
+  att.translatable.attributes,
+  empty
+gi =
+  
+  ## (element name) contains the name (generic identifier) of an element. [ ]
+  element gi { gi.content, gi.localattributes }
+gi.content = xsd:Name
+gi.localattributes =
+  att.global.attributes,
+  
+  ## supplies the name of the scheme in which this name is defined.
+  ## Sample values include: 1] TEI; 2] DBK (docbook) ; 3] XX (unknown) ; 4] Schematron; 5] HTML
+  [ a:defaultValue = "TEI" ]
+  attribute scheme {
+    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?,
+  empty
+ident =
+  
+  ## (identifier) contains an identifier or name for an object of some kind in a formal language. ident is used for tokens such as variable names, class names, type names, function names etc. in formal programming languages. []
+  element ident { ident.content, ident.localattributes }
+ident.content = text
+ident.localattributes =
+  att.global.attributes, att.typed.attributes, empty
+listRef =
+  
+  ## (list of references) supplies a list of significant references to places where this element is discussed, in the current document or elsewhere.
+  element listRef { listRef.content, listRef.localattributes }
+listRef.content = model.ptrLike+
+listRef.localattributes = att.global.attributes, empty
+macroRef =
+  
+  ## points to the specification for some pattern which is to be included in a schema []
+  element macroRef { macroRef.content, macroRef.localattributes }
+macroRef.content = empty
+macroRef.localattributes =
+  att.global.attributes,
+  
+  ## the identifier used for the required pattern within the source indicated.
+  attribute key { xsd:NCName },
+  empty
+macroSpec =
+  
+  ## (macro specification) documents the function and implementation of a pattern. [ ]
+  element macroSpec { macroSpec.content, macroSpec.localattributes }
+macroSpec.content =
+  (model.glossLike | model.descLike)*,
+  (content | valList)*,
+  constraintSpec*,
+  exemplum*,
+  remarks*,
+  listRef*
+macroSpec.localattributes =
+  att.global.attributes, att.identified.attributes, empty
+memberOf =
+  
+  ## specifies class membership of the documented element or class. []
+  element memberOf { memberOf.content, memberOf.localattributes }
+memberOf.content = macro.xtext
+memberOf.localattributes =
+  att.global.attributes,
+  
+  ## specifies the identifier for a class of which the documented element or class is a member or subclass
+  attribute key { xsd:Name }?,
+  
+  ## specifies the effect of this declaration on its parent module.
+  [ a:defaultValue = "add" ]
+  attribute mode {
+    
+    ## this declaration is added to the current definitions
+    "add"
+    | 
+      ## this declaration and all of its children are removed from the current setup
+      "delete"
+  }?,
+  
+  ## supplies the maximum number of times the element can occur in elements which use this model class in their content model
+  attribute max {
+    xsd:double
+    | xsd:token { pattern = "(\-?[\d]+/\-?[\d]+)" }
+    | xsd:decimal
+  }?,
+  
+  ## supplies the minumum number of times the element must occur in elements which use this model class in their content model
+  attribute min {
+    xsd:double
+    | xsd:token { pattern = "(\-?[\d]+/\-?[\d]+)" }
+    | xsd:decimal
+  }?,
+  empty
+model =
+  
+  ## describes the processing intended for a specified element. []
+  element model { model.content, model.localattributes }
+model.content =
+  ((model.glossLike | model.descLike)*, param*, outputRendition*)
+  >> sch:pattern [
+       id = "model-no_dup_default_models-constraint-rule-16"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context =
+           "tei:model[ not( parent::tei:modelSequence ) ][ not( @predicate ) ]"
+         "\x{a}" ~
+         "            "
+         sch:let [
+           name = "output"
+           value = "normalize-space( @output )"
+         ]
+         "\x{a}" ~
+         "            "
+         sch:report [
+           test =
+             "following-sibling::tei:model                             [ not( @predicate )]                             [ normalize-space( @output ) eq $output ]"
+           "\x{a}" ~
+           "          There are 2 (or more) 'model' elements in this '"
+           sch:value-of [ select = "local-name(..)" ]
+           "'\x{a}" ~
+           "          that have no predicate, but are targeted to the same output\x{a}" ~
+           '          ("'
+           sch:value-of [
+             select = "( $output, parent::modelGrp/@output, 'all')[1]"
+           ]
+           '")'
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+  >> sch:pattern [
+       id = "model-no_dup_models-constraint-rule-17"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context =
+           "tei:model[ not( parent::tei:modelSequence ) ][ @predicate ]"
+         "\x{a}" ~
+         "            "
+         sch:let [
+           name = "predicate"
+           value = "normalize-space( @predicate )"
+         ]
+         "\x{a}" ~
+         "            "
+         sch:let [
+           name = "output"
+           value = "normalize-space( @output )"
+         ]
+         "\x{a}" ~
+         "            "
+         sch:report [
+           test =
+             "following-sibling::tei:model                             [ normalize-space( @predicate ) eq $predicate ]                             [ normalize-space( @output ) eq $output ]"
+           "\x{a}" ~
+           "          There are 2 (or more) 'model' elements in this\x{a}" ~
+           "          '"
+           sch:value-of [ select = "local-name(..)" ]
+           "' that have\x{a}" ~
+           "          the same predicate, and are targeted to the same output\x{a}" ~
+           '          ("'
+           sch:value-of [
+             select = "( $output, parent::modelGrp/@output, 'all')[1]"
+           ]
+           '")'
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+model.localattributes =
+  att.global.attributes,
+  
+  ## names the process or function which this processing model uses in order to produce output.
+  ## Suggested values include: 1] alternate; 2] anchor; 3] block; 4] body; 5] break; 6] cell; 7] cit; 8] document; 9] figure; 10] glyph; 11] graphic; 12] heading; 13] index; 14] inline; 15] link; 16] list; 17] listItem; 18] metadata; 19] note; 20] omit; 21] paragraph; 22] row; 23] section; 24] table; 25] text; 26] title
+  attribute behaviour {
+    
+    ## support display of alternative visualisations, for example by displaying the preferred content, by displaying both in parallel, or by toggling between the two.
+    "alternate"
+    | 
+      ## create an identifiable anchor point in the output.
+      "anchor"
+    | 
+      ## create a block structure
+      "block"
+    | 
+      ## create the body of a document.
+      "body"
+    | 
+      ## create a line, column, or page break according to the value of type
+      "break"
+    | 
+      ## create a table cell
+      "cell"
+    | 
+      ## show the content, with an indication of the source
+      "cit"
+    | 
+      ## start a new output document
+      "document"
+    | 
+      ## make a figure with the title as caption
+      "figure"
+    | 
+      ## show a character by looking up reference to a chardesc at the given URI
+      "glyph"
+    | 
+      ## if url is present, uses it to display graphic, else display a placeholder image.
+      "graphic"
+    | 
+      ## creates a heading. 
+      "heading"
+    | 
+      ## generate list according to type.
+      "index"
+    | 
+      ## creates inline element out of content 
+      "inline"
+    | 
+      ## create hyperlink
+      "link"
+    | 
+      ## create a list. 
+      "list"
+    | 
+      ## create a list item.
+      "listItem"
+    | 
+      ## create metadata section
+      "metadata"
+    | 
+      ## create a note, often out of line, depending on the value of place; could be margin, footnote, endnote, inline
+      "note"
+    | 
+      ## do nothing, do not process children
+      "omit"
+    | 
+      ## create a paragraph out of content.
+      "paragraph"
+    | 
+      ## create a table row
+      "row"
+    | 
+      ## create a new section of the output document
+      "section"
+    | 
+      ## create a table
+      "table"
+    | 
+      ## create literal text
+      "text"
+    | 
+      ## create document title
+      "title"
+    | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  },
+  
+  ## the condition under which this model applies, given as an XPath predicate expression.
+  attribute predicate { text }?,
+  
+  ## whether to obey any rendition attribute which is present.
+  attribute useSourceRendition { xsd:boolean }?,
+  
+  ## the intended output.
+  ## Sample values include: 1] web; 2] print; 3] plain
+  attribute output {
+    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?,
+  
+  ## the name of a CSS class which should be associated with this element
+  attribute cssClass {
+    list { xsd:Name+ }
+  }?,
+  empty
+modelGrp =
+  
+  ## any grouping of model or modelSequence elements with a common output method []
+  element modelGrp { modelGrp.content, modelGrp.localattributes }
+modelGrp.content =
+  (model.glossLike | model.descLike)*,
+  outputRendition?,
+  (modelSequence | model)+
+modelGrp.localattributes =
+  att.global.attributes,
+  
+  ## whether to obey any rendition attribute which is present
+  attribute useSourceRendition { xsd:boolean }?,
+  
+  ## the intended output method
+  ## Suggested values include: 1] web; 2] print; 3] plaintext
+  attribute output {
+    
+    ## the output is intended for presentation in a web format
+    "web"
+    | 
+      ## the output is intended for presentation in a print format
+      "print"
+    | 
+      ## the output is intended for presentation in a plain text format
+      "plaintext"
+    | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?,
+  empty
+modelSequence =
+  
+  ## any sequence of model or modelSequence elements which is to be processed as a single set of actions []
+  element modelSequence {
+    modelSequence.content, modelSequence.localattributes
+  }
+modelSequence.content =
+  ((model.glossLike | model.descLike)*, (model, model, model*))
+  >> sch:pattern [
+       id =
+         "modelSequence-no_outputs_nor_predicates_4_my_kids-constraint-report-34"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context = "tei:modelSequence"
+         "\x{a}" ~
+         "            "
+         sch:report [
+           test = "tei:model[@output]"
+           role = "warning"
+           "The 'model' children\x{a}" ~
+           "      of a 'modelSequence' element inherit the @output attribute of the\x{a}" ~
+           "      parent 'modelSequence', and thus should not have their own"
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+modelSequence.localattributes =
+  att.global.attributes,
+  
+  ## the condition under which this model applies given as an XPath Predicate Expression
+  attribute predicate { text }?,
+  
+  ## whether to obey any rendition attribute which is present
+  attribute useSourceRendition { xsd:boolean }?,
+  
+  ## the intended output method
+  ## Suggested values include: 1] web; 2] print; 3] plaintext
+  attribute output {
+    
+    ## the output is intended for presentation in a web format
+    "web"
+    | 
+      ## the output is intended for presentation in a print format
+      "print"
+    | 
+      ## the output is intended for presentation in a plain text format
+      "plaintext"
+    | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?,
+  empty
+moduleRef =
+  
+  ## (module reference) references a module which is to be incorporated into a schema. []
+  element moduleRef { moduleRef.content, moduleRef.localattributes }
+moduleRef.content =
+  (content?)
+  >> sch:pattern [
+       id = "moduleRef-modref-constraint-rule-14"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context = "tei:moduleRef"
+         "\x{a}" ~
+         "            "
+         sch:report [
+           test = "* and @key"
+           "\x{a}" ~
+           "Child elements of "
+           sch:name [ ]
+           " are only allowed when an external module is being loaded\x{a}" ~
+           "        "
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+moduleRef.localattributes =
+  att.global.attributes,
+  (
+   ## specifies a default prefix which will be prepended to all patterns from the imported module
+   attribute prefix { xsd:NCName }?)
+  >> sch:pattern [
+       id = "moduleRef-prefix-not-same-prefix-constraint-rule-15"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context = "tei:moduleRef"
+         "\x{a}" ~
+         "            "
+         sch:report [
+           test =
+             "//*[ not( generate-id(.) eq generate-id(      current() ) ) ]/@prefix = @prefix"
+           "The prefix attribute\x{a}" ~
+           "	    of "
+           sch:name [ ]
+           " should not match that of any other\x{a}" ~
+           "	    element (it would defeat the purpose)"
+         ]
+         "\x{a}" ~
+         "          "
+       ]
+       "\x{a}" ~
+       "      "
+     ],
+  (
+   ## supplies a list of the elements which are to be copied from the specified module into the schema being defined.
+   attribute include {
+     list { xsd:NCName* }
+   }?
+   | 
+     ## supplies a list of the elements which are not to be copied from the specified module into the schema being defined.
+     attribute except {
+       list { xsd:NCName* }
+     }?),
+  (
+   ## the name of a TEI module
+   attribute key { xsd:NCName }?
+   | 
+     ## (uniform resource locator) refers to a non-TEI module of RELAX NG code by external location
+     attribute url { xsd:anyURI }?),
+  empty
+moduleSpec =
+  
+  ## (module specification) documents the structure, content, and purpose of a single module, i.e. a named and externally visible group of declarations. []
+  element moduleSpec { moduleSpec.content, moduleSpec.localattributes }
+moduleSpec.content =
+  (model.glossLike | model.descLike)*, exemplum*, remarks?, listRef*
+moduleSpec.localattributes =
+  att.global.attributes,
+  att.identified.attributes,
+  att.typed.attributes,
+  empty
+outputRendition =
+  
+  ## describes the rendering or appearance intended for all occurrences of an element in a specified context for a specified type of output.
+  element outputRendition {
+    outputRendition.content, outputRendition.localattributes
+  }
+outputRendition.content = text
+outputRendition.localattributes =
+  att.global.attributes,
+  
+  ## provides a way of defining pseudo-elements, that is, styling rules applicable to specific sub-portions of an element.
+  ## Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after
+  attribute scope {
+    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?,
+  empty
+param =
+  
+  ## provides a parameter for a model behaviour by supplying its name and an XPath expression identifying the location of its content. []
+  element param { param.content, param.localattributes }
+param.content = empty
+param.localattributes =
+  att.global.attributes,
+  
+  ## a name for the parameter being supplied
+  ## Suggested values include: 1] alternate; 2] default; 3] height; 4] id; 5] label; 6] level; 7] link; 8] place; 9] type; 10] url; 11] width
+  attribute name {
+    
+    ## when used with behaviour alternate, a parameter of this name supplies one of the pair of possible values; for example the regularized form rather than the original form within a choice element.
+    "alternate"
+    | 
+      ## when used with behaviour alternate, a parameter of this name supplies one of the pair of possible values; for example the original form rather than the regularized form within a choice element.
+      "default"
+    | 
+      ## when used with behaviour graphic, a parameter of this name supplies a value for the height of the graphic e.g. "300px", "50%".
+      "height"
+    | 
+      ## a parameter of this name should supply a unique identifier for the element being processed; as for example with the anchor behaviour
+      "id"
+    | 
+      ## a parameter of this name should supply an expression to be used to label something, for example  for a page break or  for a footnote reference; typically used with the note or break behaviours
+      "label"
+    | 
+      ## when used with the heading behaviour, a parameter of this name supplies a positive integer indicating the hierarchic level of a heading.
+      "level"
+    | 
+      ## when used with the link behaviour, a parameter of this name should supply a URL to be used as the target of a link. 
+      "link"
+    | 
+      ## when used with the note behaviour, a parameter of this name should provide a string which describes the intended placement of some text; typical values include "margin", "footnote", "endnote", "inline", "bottom"
+      "place"
+    | 
+      ## a parameter of this name can be used to categorize the specified behaviour in any way; for example the kind of break (when used with the break behaviour) or the kind of index to be generated (if used with the index behaviour) etc.
+      "type"
+    | 
+      ## when used with behaviour graphic, a parameter of this name supplies a a URL indicating the graphic intended.
+      "url"
+    | 
+      ## when used with behaviour graphic, a parameter of this name supplies a value for the width of the graphic e.g. "400px", "70%".
+      "width"
+    | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  },
+  
+  ## supplies an XPath expression which when evaluated provides the value for the parameter
+  attribute value { text },
+  empty
+paramList =
+  
+  ## list of parameter specifications
+  element paramList { paramList.content, paramList.localattributes }
+paramList.content = paramSpec*
+paramList.localattributes = att.global.attributes, empty
+paramSpec =
+  
+  ## supplies specification for one parameter of a model behaviour []
+  element paramSpec { paramSpec.content, paramSpec.localattributes }
+paramSpec.content = (model.glossLike | model.descLike)*
+paramSpec.localattributes =
+  att.global.attributes, att.identified.attributes, empty
+remarks =
+  
+  ## contains any commentary or discussion about the usage of an element, attribute, class, or entity not otherwise documented within the containing element. [   ]
+  element remarks { remarks.content, remarks.localattributes }
+remarks.content = model.pLike+
+remarks.localattributes =
+  att.global.attributes, att.translatable.attributes, empty
+schemaSpec =
+  
+  ## (schema specification) generates a TEI-conformant schema and documentation for it. [  ]
+  element schemaSpec { schemaSpec.content, schemaSpec.localattributes }
+schemaSpec.content =
+  (model.glossLike | model.descLike)*, (model.oddRef | model.oddDecl)*
+schemaSpec.localattributes =
+  att.global.attributes,
+  att.identified.attributes,
+  att.namespaceable.attributes,
+  att.docStatus.attributes,
+  
+  ## specifies entry points to the schema, i.e. which patterns may be used as the root of documents conforming to it.
+  [ a:defaultValue = "TEI" ]
+  attribute start {
+    list { xsd:Name+ }
+  }?,
+  
+  ## specifies a default prefix which will be prepended to all patterns relating to TEI elements, unless otherwise stated.
+  attribute prefix { xsd:NCName }?,
+  
+  ## (target language) specifies which language to use when creating the objects in a schema if names for elements or attributes are available in more than one language
+  attribute targetLang {
+    xsd:language
+    | (
+       ##
+       "")
+  }?,
+  
+  ## (documentation language) specifies which languages to use when creating documentation if the description for an element, attribute, class or macro is available in more than one language
+  attribute docLang {
+    list {
+      (xsd:language
+       | (
+          ##
+          ""))+
+    }
+  }?,
+  
+  ## (default namespace exclusions) provides a list of namespaces and/or prefixed element names to be excluded by default from anyName in RELAX NG schemas
+  [ a:defaultValue = "http://www.tei-c.org/ns/1.0 teix:egXML" ]
+  attribute defaultExceptions {
+    list {
+      (xsd:anyURI { pattern = "[^/]+:.*" }
+       | xsd:Name { pattern = ".+:.+" })+
+    }
+  }?,
+  empty
+sequence =
+  
+  ## indicates that the constructs referenced by its children form a sequence []
+  element sequence { sequence.content, sequence.localattributes }
+sequence.content =
+  (model.contentPart+)
+  >> sch:pattern [
+       id = "sequence-sequencechilden-constraint-assert-29"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context = "tei:sequence"
+         "\x{a}" ~
+         "            "
+         sch:assert [
+           test = "count(*)>1"
+           "The sequence element must have at least two child elements"
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+sequence.localattributes =
+  att.global.attributes,
+  att.repeatable.attributes,
+  
+  ## if true, indicates that the order in which component elements of a sequence appear in a document must correspond to the order in which they are given in the content model.
+  attribute preserveOrder { xsd:boolean }?,
+  empty
+specDesc =
+  
+  ## (specification description) indicates that a description of the specified element or class should be included at this point within a document. []
+  element specDesc { specDesc.content, specDesc.localattributes }
+specDesc.content = empty
+specDesc.localattributes =
+  att.global.attributes,
+  
+  ## (identifier) supplies the identifier of the documentary element or class for which a description is to be obtained.
+  attribute key { xsd:Name }?,
+  
+  ## (attributes) supplies attribute names for which descriptions should additionally be obtained.
+  attribute atts {
+    list { xsd:Name* }
+  }?,
+  empty
+specGrp =
+  
+  ## (specification group) contains any convenient grouping of specifications for use within the current module. []
+  element specGrp { specGrp.content, specGrp.localattributes }
+specGrp.content = (model.oddDecl | model.oddRef | model.divPart)*
+specGrp.localattributes = att.global.attributes, empty
+specGrpRef =
+  
+  ## (reference to a specification group) indicates that the declarations contained by the specGrp referenced should be inserted at this point. []
+  element specGrpRef { specGrpRef.content, specGrpRef.localattributes }
+specGrpRef.content = empty
+specGrpRef.localattributes =
+  att.global.attributes,
+  
+  ## points at the specification group which logically belongs here.
+  attribute target { xsd:anyURI },
+  empty
+specList =
+  
+  ## (specification list) marks where a list of descriptions is to be inserted into the prose documentation. []
+  element specList { specList.content, specList.localattributes }
+specList.content = specDesc+
+specList.localattributes = att.global.attributes, empty
+tag =
+  
+  ## contains text of a complete start- or end-tag, possibly including attribute specifications, but excluding the opening and closing markup delimiter characters. []
+  element tag { tag.content, tag.localattributes }
+tag.content = text
+tag.localattributes =
+  att.global.attributes,
+  
+  ## indicates the type of XML tag intended
+  attribute type {
+    
+    ## a start-tag, with delimiters < and > is intended
+    "start"
+    | 
+      ## an end-tag, with delimiters </ and > is intended
+      "end"
+    | 
+      ## a empty tag, with delimiters < and /> is intended
+      "empty"
+    | 
+      ## a pi (processing instruction), with delimiters <? and ?> is intended
+      "pi"
+    | 
+      ## a comment, with delimiters <!-- and --> is intended
+      "comment"
+    | 
+      ## a marked-section, with delimiters <[CDATA[ and ]]> is intended
+      "ms"
+  }?,
+  
+  ## supplies the name of the schema in which this tag is defined.
+  ## Sample values include: 1] TEI (text encoding initiative) ; 2] DBK (docbook) ; 3] XX (unknown) ; 4] Schematron; 5] HTML
+  [ a:defaultValue = "TEI" ]
+  attribute scheme {
+    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?,
+  empty
+textNode =
+  
+  ## indicates the presence of a text node in a content model []
+  element textNode { textNode.content, textNode.localattributes }
+textNode.content = empty
+textNode.localattributes = att.global.attributes, empty
+val =
+  
+  ## (value) contains a single attribute value. [ ]
+  element val { val.content, val.localattributes }
+val.content = text
+val.localattributes = att.global.attributes, empty
+valDesc =
+  
+  ## (value description) specifies any semantic or syntactic constraint on the value that an attribute may take, additional to the information carried by the datatype element. []
+  element valDesc { valDesc.content, valDesc.localattributes }
+valDesc.content = macro.phraseSeq.limited
+valDesc.localattributes =
+  att.global.attributes,
+  att.translatable.attributes,
+  att.combinable.attributes,
+  empty
+valItem =
+  
+  ## documents a single value in a predefined list of values. []
+  element valItem { valItem.content, valItem.localattributes }
+valItem.content =
+  model.glossLike*,
+  (model.descLike+, (model.glossLike, model.descLike*)*, remarks*)?,
+  paramList?
+valItem.localattributes =
+  att.global.attributes,
+  att.combinable.attributes,
+  
+  ## specifies the value concerned.
+  attribute ident { xsd:string },
+  empty
+valList =
+  
+  ## (value list) contains one or more valItem elements defining possible values. []
+  element valList { valList.content, valList.localattributes }
+valList.content = valItem*
+valList.localattributes =
+  att.global.attributes,
+  att.combinable.attributes,
+  
+  ## specifies the extensibility of the list of values specified.
+  [ a:defaultValue = "open" ]
+  attribute type {
+    
+    ## only the values specified are permitted.
+    "closed"
+    | 
+      ## (semi-open) all the values specified should be supported, but other values are legal and software should have appropriate fallback processing for them.
+      "semi"
+    | 
+      ## the values specified are sample values only.
+      "open"
+  }?,
+  empty
+# 3. macros

@@ -1,0 +1,123 @@
+
+<!--
+DTD module gaiji. generated from ODD source 2019-01-21T23:48:00Z. This material is dual-licensed.
+[http://creativecommons.org/licenses/by/3.0/] Distributed under a Creative Commons Attribution 3.0 Unported License.  [http://www.opensource.org/licenses/BSD-2-Clause] Copyright 2019 TEI Consortium. All rights reserved. Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. This software is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright holder or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage. TEI material can be licensed differently depending on the use you intend to make of it. Hence it is made available under both the CC+BY and BSD-2 licences. The CC+BY licence is generally appropriate for usages which treat TEI content as data or documentation. The BSD-2 licence is generally appropriate for usage of TEI content in a software environment. For further information or clarification, please contact the TEI Consortium.
+Edition: Version 3.5.0a. Last updated on
+	19th January 2019, revision e6ccc03
+Character and glyph documentation
+-->
+
+<!ENTITY % char 'INCLUDE' >
+<![ %char; [
+
+<!--doc:(character) provides descriptive information about a character. [] -->
+<!ELEMENT %n.char; %om.RR; (((%n.charName;)?,(%model.descLike;)*,(%n.charProp;)*,(%n.mapping;)*,(%n.figure;)*,(%model.graphicLike;)*,(%model.noteLike;)*))>
+<!ATTLIST %n.char; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.char;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % charDecl 'INCLUDE' >
+<![ %charDecl; [
+
+<!--doc:(character declarations) provides information about nonstandard characters and glyphs. [] -->
+<!ELEMENT %n.charDecl; %om.RR; (((%n.desc;)?,(%n.char;|%n.glyph;)+))>
+<!ATTLIST %n.charDecl; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.charDecl;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % charName 'INCLUDE' >
+<![ %charName; [
+
+<!--doc:(character name) contains the name of a character, expressed following Unicode conventions. [] -->
+<!ELEMENT %n.charName; %om.RR; (#PCDATA)>
+<!ATTLIST %n.charName; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.charName;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % charProp 'INCLUDE' >
+<![ %charProp; [
+
+<!--doc:(character property) provides a name and value for some property of the parent character or glyph. [] -->
+<!ELEMENT %n.charProp; %om.RR; (((%n.unicodeName;|%n.localName;),%n.value;))>
+<!ATTLIST %n.charProp; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.charProp;
+ %att.global.attributes;
+ %att.typed.attributes; >
+]]>
+
+<!ENTITY % g 'INCLUDE' >
+<![ %g; [
+
+<!--doc:(character or glyph) represents a glyph, or a non-standard character. [] -->
+<!ELEMENT %n.g; %om.RR; (#PCDATA)>
+<!ATTLIST %n.g; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.g;
+ %att.global.attributes;
+ %att.typed.attributes;
+ref %teidata.pointer;  #IMPLIED >
+]]>
+
+<!ENTITY % glyph 'INCLUDE' >
+<![ %glyph; [
+
+<!--doc:(character glyph) provides descriptive information about a character glyph. [] -->
+<!ELEMENT %n.glyph; %om.RR; (((%n.glyphName;)?,(%model.descLike;)*,(%n.charProp;)*,(%n.mapping;)*,(%n.figure;)*,(%model.graphicLike;)*,(%model.noteLike;)*))>
+<!ATTLIST %n.glyph; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.glyph;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % glyphName 'INCLUDE' >
+<![ %glyphName; [
+
+<!--doc:(character glyph name) contains the name of a glyph, expressed following Unicode conventions for character names. [] -->
+<!ELEMENT %n.glyphName; %om.RR; (#PCDATA)>
+<!ATTLIST %n.glyphName; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.glyphName;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % localName 'INCLUDE' >
+<![ %localName; [
+
+<!--doc:(locally-defined property name) contains a locally defined name for some property. [] -->
+<!ELEMENT %n.localName; %om.RR; (#PCDATA)>
+<!ATTLIST %n.localName; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.localName;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % mapping 'INCLUDE' >
+<![ %mapping; [
+
+<!--doc:(character mapping) contains one or more characters which are related to the parent character or glyph in some respect, as specified by the type attribute. [] -->
+<!ELEMENT %n.mapping; %om.RR; %macro.xtext;>
+<!ATTLIST %n.mapping; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.mapping;
+ %att.global.attributes;
+ %att.typed.attributes; >
+]]>
+
+<!ENTITY % unicodeName 'INCLUDE' >
+<![ %unicodeName; [
+
+<!--doc:(unicode property name) contains the name of a registered Unicode normative or informative property. [] -->
+<!ELEMENT %n.unicodeName; %om.RR; (#PCDATA)>
+<!ATTLIST %n.unicodeName; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.unicodeName;
+ %att.global.attributes;
+version %teidata.version;  #IMPLIED >
+]]>
+
+<!ENTITY % value 'INCLUDE' >
+<![ %value; [
+
+<!--doc:contains a single value for some property, attribute, or other analysis. [] -->
+<!ELEMENT %n.value; %om.RR; %macro.xtext;>
+<!ATTLIST %n.value; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.value;
+ %att.global.attributes; >
+]]>

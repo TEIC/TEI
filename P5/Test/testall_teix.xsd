@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.tei-c.org/ns/Examples" xmlns:dcr="http://www.isocat.org/ns/dcr" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples">
+  <xs:import namespace="http://www.isocat.org/ns/dcr" schemaLocation="dcr.xsd"/>
+  <xs:import namespace="http://www.tei-c.org/ns/1.0" schemaLocation="testall.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="testall_xml.xsd"/>
+  <xs:element name="egXML">
+    <xs:annotation>
+      <xs:documentation>(example of XML) a single XML fragment demonstrating the use of some XML, such as elements, attributes, or processing instructions, etc., in which the egXML element functions as the root element. [22.1.1. Phrase Level Terms]</xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="tei:anyElement-egXML"/>
+      <xs:attributeGroup ref="tei:att.global.attributes"/>
+      <xs:attribute name="valid" default="true">
+        <xs:annotation>
+          <xs:documentation>indicates the intended validity of the example with respect to a schema.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="true">
+              <xs:annotation>
+                <xs:documentation>the example is intended to be fully valid, assuming that its root element, or a provided root element, could have been used as a possible root element in the schema concerned.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="feasible">
+              <xs:annotation>
+                <xs:documentation>the example could be transformed into a valid document by inserting any number of valid attributes and child elements anywhere within it; or it is valid against a version of the schema concerned in which the provision of character data, list, element, or attribute values has been made optional.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="false">
+              <xs:annotation>
+                <xs:documentation>the example is not intended to be valid, and contains deliberate errors.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

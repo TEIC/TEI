@@ -1,0 +1,415 @@
+
+<!--
+DTD module transcr. generated from ODD source 2019-01-21T23:48:00Z. This material is dual-licensed.
+[http://creativecommons.org/licenses/by/3.0/] Distributed under a Creative Commons Attribution 3.0 Unported License.  [http://www.opensource.org/licenses/BSD-2-Clause] Copyright 2019 TEI Consortium. All rights reserved. Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. This software is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright holder or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage. TEI material can be licensed differently depending on the use you intend to make of it. Hence it is made available under both the CC+BY and BSD-2 licences. The CC+BY licence is generally appropriate for usages which treat TEI content as data or documentation. The BSD-2 licence is generally appropriate for usage of TEI content in a software environment. For further information or clarification, please contact the TEI Consortium.
+Edition: Version 3.5.0a. Last updated on
+	19th January 2019, revision e6ccc03
+Transcription of primary sources
+-->
+
+<!ENTITY % addSpan 'INCLUDE' >
+<![ %addSpan; [
+
+<!--doc:(added span of text) marks the beginning of a longer sequence of text added by an author, scribe, annotator or corrector (see also add). [] -->
+<!ELEMENT %n.addSpan; %om.RR;  EMPTY>
+<!ATTLIST %n.addSpan; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.addSpan;
+ %att.global.attributes;
+ %att.transcriptional.attributes;
+ %att.placement.attributes;
+ %att.typed.attributes;
+ %att.spanning.attributes;
+ %att.dimensions.attributes; >
+]]>
+
+<!ENTITY % am 'INCLUDE' >
+<![ %am; [
+
+<!--doc:(abbreviation marker) contains a sequence of letters or signs present in an abbreviation which are omitted or replaced in the expanded form of the abbreviation. [] -->
+<!ELEMENT %n.am; %om.RR; (#PCDATA|%model.gLike;|%model.pPart.transcriptional;)*>
+<!ATTLIST %n.am; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.am;
+ %att.global.attributes;
+ %att.typed.attributes;
+ %att.editLike.attributes; >
+]]>
+
+<!ENTITY % damage 'INCLUDE' >
+<![ %damage; [
+
+<!--doc:contains an area of damage to the text witness. [] -->
+<!ELEMENT %n.damage; %om.RR; %macro.paraContent;>
+<!ATTLIST %n.damage; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.damage;
+ %att.global.attributes;
+ %att.typed.attributes;
+ %att.damaged.attributes; >
+]]>
+
+<!ENTITY % damageSpan 'INCLUDE' >
+<![ %damageSpan; [
+
+<!--doc:(damaged span of text) marks the beginning of a longer sequence of text which is damaged in some way but still legible. [] -->
+<!ELEMENT %n.damageSpan; %om.RR;  EMPTY>
+<!ATTLIST %n.damageSpan; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.damageSpan;
+ %att.global.attributes;
+ %att.damaged.attributes;
+ %att.typed.attributes;
+ %att.spanning.attributes; >
+]]>
+
+<!ENTITY % delSpan 'INCLUDE' >
+<![ %delSpan; [
+
+<!--doc:(deleted span of text) marks the beginning of a longer sequence of text deleted, marked as deleted, or otherwise signaled as superfluous or spurious by an author, scribe, annotator, or corrector. [] -->
+<!ELEMENT %n.delSpan; %om.RR;  EMPTY>
+<!ATTLIST %n.delSpan; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.delSpan;
+ %att.global.attributes;
+ %att.transcriptional.attributes;
+ %att.typed.attributes;
+ %att.spanning.attributes;
+ %att.dimensions.attributes; >
+]]>
+
+<!ENTITY % ex 'INCLUDE' >
+<![ %ex; [
+
+<!--doc:(editorial expansion) contains a sequence of letters added by an editor or transcriber when expanding an abbreviation. [] -->
+<!ELEMENT %n.ex; %om.RR; %macro.xtext;>
+<!ATTLIST %n.ex; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.ex;
+ %att.global.attributes;
+ %att.editLike.attributes;
+ %att.dimensions.attributes; >
+]]>
+
+<!ENTITY % facsimile 'INCLUDE' >
+<![ %facsimile; [
+
+<!--doc:contains a representation of some written source in the form of a set of images rather than as transcribed or encoded text. [] -->
+<!ELEMENT %n.facsimile; %om.RR; (((%n.front;)?,(%model.graphicLike;|%n.surface;|%n.surfaceGrp;)+,(%n.back;)?))>
+<!ATTLIST %n.facsimile; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.facsimile;
+ %att.global.attributes;
+ %att.declaring.attributes; >
+]]>
+
+<!ENTITY % fw 'INCLUDE' >
+<![ %fw; [
+
+<!--doc:(forme work) contains a running head (e.g. a header, footer), catchword, or similar material appearing on the current page. [] -->
+<!ELEMENT %n.fw; %om.RR; %macro.phraseSeq;>
+<!ATTLIST %n.fw; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.fw;
+ %att.global.attributes;
+ %att.placement.attributes;
+ %att.written.attributes;
+type %teidata.enumerated;  #IMPLIED >
+]]>
+
+<!ENTITY % handNotes 'INCLUDE' >
+<![ %handNotes; [
+
+<!--doc:contains one or more handNote elements documenting the different hands identified within the source texts. [] -->
+<!ELEMENT %n.handNotes; %om.RR; (%n.handNote;)+>
+<!ATTLIST %n.handNotes; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.handNotes;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % handShift 'INCLUDE' >
+<![ %handShift; [
+
+<!--doc:marks the beginning of a sequence of text written in a new hand, or the beginning of a scribal stint. [] -->
+<!ELEMENT %n.handShift; %om.RR;  EMPTY>
+<!ATTLIST %n.handShift; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.handShift;
+ %att.global.attributes;
+ %att.handFeatures.attributes;
+new %teidata.pointer;  #IMPLIED >
+]]>
+
+<!ENTITY % line 'INCLUDE' >
+<![ %line; [
+
+<!--doc:contains the transcription of a topographic line in the source document [] -->
+<!ELEMENT %n.line; %om.RR; (#PCDATA|%model.global;|%model.gLike;|%model.linePart;)*>
+<!ATTLIST %n.line; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.line;
+ %att.typed.attributes;
+ %att.global.attributes;
+ %att.coordinated.attributes;
+ %att.written.attributes; >
+]]>
+
+<!ENTITY % listTranspose 'INCLUDE' >
+<![ %listTranspose; [
+
+<!--doc:supplies a list of transpositions, each of which is indicated at some point in a document typically by means of metamarks. [] -->
+<!ELEMENT %n.listTranspose; %om.RR; (%n.transpose;)+>
+<!ATTLIST %n.listTranspose; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.listTranspose;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % metamark 'INCLUDE' >
+<![ %metamark; [
+
+<!--doc:contains or describes any kind of graphic or written signal within a document the function of which is to determine how it should be read rather than forming part of the actual content of the document. [] -->
+<!ELEMENT %n.metamark; %om.RR; %macro.specialPara;>
+<!ATTLIST %n.metamark; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.metamark;
+ %att.spanning.attributes;
+ %att.placement.attributes;
+ %att.global.attributes;
+function %teidata.word;  #IMPLIED
+target CDATA  #IMPLIED >
+]]>
+
+<!ENTITY % mod 'INCLUDE' >
+<![ %mod; [
+
+<!--doc:represents any kind of modification identified within a single document. [] -->
+<!ELEMENT %n.mod; %om.RR; %macro.paraContent;>
+<!ATTLIST %n.mod; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.mod;
+ %att.global.attributes;
+ %att.transcriptional.attributes;
+ %att.typed.attributes;
+ %att.spanning.attributes;
+ %att.dimensions.attributes; >
+]]>
+
+<!ENTITY % path 'INCLUDE' >
+<![ %path; [
+
+<!--doc:defines any line passing through two or more points within a surface element. [ ] -->
+<!ELEMENT %n.path; %om.RR;  EMPTY>
+<!ATTLIST %n.path; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.path;
+ %att.global.attributes;
+ %att.typed.attributes;
+ %att.written.attributes;
+ %att.coordinated.attribute.start;
+ %att.coordinated.attribute.ulx;
+ %att.coordinated.attribute.uly;
+ %att.coordinated.attribute.lrx;
+ %att.coordinated.attribute.lry;
+points CDATA  #IMPLIED >
+]]>
+
+<!ENTITY % redo 'INCLUDE' >
+<![ %redo; [
+
+<!--doc:indicates one or more cancelled interventions in a document which have subsequently been marked as reaffirmed or repeated. [] -->
+<!ELEMENT %n.redo; %om.RR;  EMPTY>
+<!ATTLIST %n.redo; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.redo;
+ %att.global.attributes;
+ %att.spanning.attributes;
+ %att.transcriptional.attributes;
+ %att.dimensions.attributes;
+target CDATA  #IMPLIED >
+]]>
+
+<!ENTITY % restore 'INCLUDE' >
+<![ %restore; [
+
+<!--doc:indicates restoration of text to an earlier state by cancellation of an editorial or authorial marking or instruction. [] -->
+<!ELEMENT %n.restore; %om.RR; %macro.paraContent;>
+<!ATTLIST %n.restore; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.restore;
+ %att.global.attributes;
+ %att.transcriptional.attributes;
+ %att.typed.attributes;
+ %att.dimensions.attributes; >
+]]>
+
+<!ENTITY % retrace 'INCLUDE' >
+<![ %retrace; [
+
+<!--doc:contains a sequence of writing which has been retraced, for example by over-inking, to clarify or fix it. [] -->
+<!ELEMENT %n.retrace; %om.RR; %macro.paraContent;>
+<!ATTLIST %n.retrace; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.retrace;
+ %att.global.attributes;
+ %att.spanning.attributes;
+ %att.transcriptional.attributes;
+ %att.dimensions.attributes; >
+]]>
+
+<!ENTITY % secl 'INCLUDE' >
+<![ %secl; [
+
+<!--doc:(secluded text) Secluded. Marks text present in the source which the editor believes to be genuine but out of its original place (which is unknown). [] -->
+<!ELEMENT %n.secl; %om.RR; %macro.paraContent;>
+<!ATTLIST %n.secl; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.secl;
+ %att.global.attributes;
+ %att.editLike.attributes;
+ %att.dimensions.attributes;
+reason CDATA  #IMPLIED >
+]]>
+
+<!ENTITY % sourceDoc 'INCLUDE' >
+<![ %sourceDoc; [
+
+<!--doc:contains a transcription or other representation of a single source document potentially forming part of a dossier génétique or collection of sources. [ ] -->
+<!ELEMENT %n.sourceDoc; %om.RR; (%model.global;|%model.graphicLike;|%n.surface;|%n.surfaceGrp;)+>
+<!ATTLIST %n.sourceDoc; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.sourceDoc;
+ %att.global.attributes;
+ %att.declaring.attributes; >
+]]>
+
+<!ENTITY % space 'INCLUDE' >
+<![ %space; [
+
+<!--doc:indicates the location of a significant space in the text. [] -->
+<!ELEMENT %n.space; %om.RR; (%model.descLike;|%model.certLike;)*>
+<!ATTLIST %n.space; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.space;
+ %att.typed.attributes;
+ %att.dimensions.attributes;
+ %att.global.attribute.xmlid;
+ %att.global.attribute.n;
+ %att.global.attribute.xmllang;
+ %att.global.attribute.xmlbase;
+ %att.global.attribute.xmlspace;
+ %att.global.rendition.attribute.rend;
+ %att.global.rendition.attribute.style;
+ %att.global.rendition.attribute.rendition;
+ %att.global.linking.attribute.corresp;
+ %att.global.linking.attribute.synch;
+ %att.global.linking.attribute.sameAs;
+ %att.global.linking.attribute.copyOf;
+ %att.global.linking.attribute.next;
+ %att.global.linking.attribute.prev;
+ %att.global.linking.attribute.exclude;
+ %att.global.linking.attribute.select;
+ %att.global.analytic.attribute.ana;
+ %att.global.facs.attribute.facs;
+ %att.global.change.attribute.change;
+ %att.global.responsibility.attribute.cert;
+ %att.global.source.attribute.source;
+resp CDATA  #IMPLIED
+dim (horizontal|vertical) #IMPLIED >
+]]>
+
+<!ENTITY % subst 'INCLUDE' >
+<![ %subst; [
+
+<!--doc:(substitution) groups one or more deletions with one or more additions when the combination is to be regarded as a single intervention in the text. [] -->
+<!ELEMENT %n.subst; %om.RR; (%n.add;|%n.del;|%model.milestoneLike;)+>
+<!ATTLIST %n.subst; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.subst;
+ %att.global.attributes;
+ %att.transcriptional.attributes;
+ %att.dimensions.attributes; >
+]]>
+
+<!ENTITY % substJoin 'INCLUDE' >
+<![ %substJoin; [
+
+<!--doc:(substitution join) identifies a series of possibly fragmented additions, deletions or other revisions on a manuscript that combine to make up a single intervention in the text [] -->
+<!ELEMENT %n.substJoin; %om.RR; (%model.descLike;|%model.certLike;)*>
+<!ATTLIST %n.substJoin; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.substJoin;
+ %att.global.attributes;
+ %att.pointing.attributes;
+ %att.transcriptional.attributes;
+ %att.dimensions.attributes; >
+]]>
+
+<!ENTITY % supplied 'INCLUDE' >
+<![ %supplied; [
+
+<!--doc:signifies text supplied by the transcriber or editor for any reason; for example because the original cannot be read due to physical damage, or because of an obvious omission by the author or scribe. [] -->
+<!ELEMENT %n.supplied; %om.RR; %macro.paraContent;>
+<!ATTLIST %n.supplied; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.supplied;
+ %att.global.attributes;
+ %att.editLike.attributes;
+ %att.dimensions.attributes;
+reason CDATA  #IMPLIED >
+]]>
+
+<!ENTITY % surface 'INCLUDE' >
+<![ %surface; [
+
+<!--doc:defines a written surface as a two-dimensional coordinate space, optionally grouping one or more graphic representations of that space, zones of interest within that space, and transcriptions of the writing within them. [ ] -->
+<!ELEMENT %n.surface; %om.RR; (((%model.global;|%model.labelLike;|%model.graphicLike;)*,((%n.zone;|%n.line;|%n.path;|%n.surface;|%n.surfaceGrp;),(%model.global;)*)*))>
+<!ATTLIST %n.surface; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.surface;
+ %att.global.attributes;
+ %att.coordinated.attributes;
+ %att.declaring.attributes;
+ %att.typed.attributes;
+attachment %teidata.enumerated;  #IMPLIED
+flipping %teidata.truthValue;  #IMPLIED >
+]]>
+
+<!ENTITY % surfaceGrp 'INCLUDE' >
+<![ %surfaceGrp; [
+
+<!--doc:defines any kind of useful grouping of written surfaces, for example the recto and verso of a single leaf, which the encoder wishes to treat as a single unit. [] -->
+<!ELEMENT %n.surfaceGrp; %om.RR; (%model.global;|%n.surface;|%n.surfaceGrp;)+>
+<!ATTLIST %n.surfaceGrp; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.surfaceGrp;
+ %att.global.attributes;
+ %att.declaring.attributes;
+ %att.typed.attributes; >
+]]>
+
+<!ENTITY % surplus 'INCLUDE' >
+<![ %surplus; [
+
+<!--doc:marks text present in the source which the editor believes to be superfluous or redundant. [] -->
+<!ELEMENT %n.surplus; %om.RR; %macro.paraContent;>
+<!ATTLIST %n.surplus; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.surplus;
+ %att.global.attributes;
+ %att.editLike.attributes;
+ %att.dimensions.attributes;
+reason CDATA  #IMPLIED >
+]]>
+
+<!ENTITY % transpose 'INCLUDE' >
+<![ %transpose; [
+
+<!--doc:describes a single textual transposition as an ordered list of at least two pointers specifying the order in which the elements indicated should be re-combined. [] -->
+<!ELEMENT %n.transpose; %om.RR; ((%n.ptr;,(%n.ptr;)+))>
+<!ATTLIST %n.transpose; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.transpose;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % undo 'INCLUDE' >
+<![ %undo; [
+
+<!--doc:indicates one or more marked-up interventions in a document which have subsequently been marked for cancellation. [] -->
+<!ELEMENT %n.undo; %om.RR;  EMPTY>
+<!ATTLIST %n.undo; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.undo;
+ %att.global.attributes;
+ %att.spanning.attributes;
+ %att.transcriptional.attributes;
+ %att.dimensions.attributes;
+target CDATA  #IMPLIED >
+]]>
+
+<!ENTITY % zone 'INCLUDE' >
+<![ %zone; [
+
+<!--doc:defines any two-dimensional area within a surface element. [ ] -->
+<!ELEMENT %n.zone; %om.RR; (#PCDATA|%model.graphicLike;|%model.global;|%n.surface;|%model.linePart;)*>
+<!ATTLIST %n.zone; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.zone;
+ %att.global.attributes;
+ %att.coordinated.attributes;
+ %att.typed.attributes;
+ %att.written.attributes;
+rotate %teidata.count;  "0"  >
+]]>

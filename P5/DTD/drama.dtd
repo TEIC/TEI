@@ -1,0 +1,191 @@
+
+<!--
+DTD module drama. generated from ODD source 2019-01-21T23:48:00Z. This material is dual-licensed.
+[http://creativecommons.org/licenses/by/3.0/] Distributed under a Creative Commons Attribution 3.0 Unported License.  [http://www.opensource.org/licenses/BSD-2-Clause] Copyright 2019 TEI Consortium. All rights reserved. Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. This software is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright holder or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage. TEI material can be licensed differently depending on the use you intend to make of it. Hence it is made available under both the CC+BY and BSD-2 licences. The CC+BY licence is generally appropriate for usages which treat TEI content as data or documentation. The BSD-2 licence is generally appropriate for usage of TEI content in a software environment. For further information or clarification, please contact the TEI Consortium.
+Edition: Version 3.5.0a. Last updated on
+	19th January 2019, revision e6ccc03
+Performance texts
+-->
+
+<!ENTITY % actor 'INCLUDE' >
+<![ %actor; [
+
+<!--doc:contains the name of an actor appearing within a cast list. [] -->
+<!ELEMENT %n.actor; %om.RR; %macro.phraseSeq;>
+<!ATTLIST %n.actor; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.actor;
+ %att.global.attributes;
+ %att.canonical.attributes; >
+]]>
+
+<!ENTITY % camera 'INCLUDE' >
+<![ %camera; [
+
+<!--doc:describes a particular camera angle or viewpoint in a screen play. [ ] -->
+<!ELEMENT %n.camera; %om.RR; %macro.paraContent;>
+<!ATTLIST %n.camera; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.camera;
+ %att.global.attributes;
+ %att.typed.attributes; >
+]]>
+
+<!ENTITY % caption 'INCLUDE' >
+<![ %caption; [
+
+<!--doc:contains the text of a caption or other text displayed as part of a film script or screenplay. [ ] -->
+<!ELEMENT %n.caption; %om.RR; %macro.paraContent;>
+<!ATTLIST %n.caption; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.caption;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % castGroup 'INCLUDE' >
+<![ %castGroup; [
+
+<!--doc:(cast list grouping) groups one or more individual castItem elements within a cast list. [] -->
+<!ELEMENT %n.castGroup; %om.RR; (((%model.global;|%model.headLike;)*,((%n.castItem;|%n.castGroup;|%n.roleDesc;),(%model.global;)*)+,(%n.trailer;,(%model.global;)*)?))>
+<!ATTLIST %n.castGroup; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.castGroup;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % castItem 'INCLUDE' >
+<![ %castItem; [
+
+<!--doc:(cast list item) contains a single entry within a cast list, describing either a single role or a list of non-speaking roles. [] -->
+<!ELEMENT %n.castItem; %om.RR; (#PCDATA|%model.gLike;|%model.castItemPart;|%model.phrase;|%model.global;)*>
+<!ATTLIST %n.castItem; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.castItem;
+ %att.global.attributes;
+type (role|list) "role"  >
+]]>
+
+<!ENTITY % castList 'INCLUDE' >
+<![ %castList; [
+
+<!--doc:(cast list) contains a single cast list or dramatis personae. [ ] -->
+<!ELEMENT %n.castList; %om.RR; (((%model.divTop;|%model.global;)*,((%model.common;),(%model.global;)*)*,((%n.castItem;|%n.castGroup;),(%model.global;)*)+,((%model.common;),(%model.global;)*)*))>
+<!ATTLIST %n.castList; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.castList;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % epilogue 'INCLUDE' >
+<![ %epilogue; [
+
+<!--doc:contains the epilogue to a drama, typically spoken by an actor out of character, possibly in association with a particular performance or venue. [ ] -->
+<!ELEMENT %n.epilogue; %om.RR; (((%model.divTop;|%model.global;)*,((%model.common;),(%model.global;)*)+,((%model.divBottom;),(%model.global;)*)*))>
+<!ATTLIST %n.epilogue; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.epilogue;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % move 'INCLUDE' >
+<![ %move; [
+
+<!--doc:(movement) marks the actual movement of one or more characters. [] -->
+<!ELEMENT %n.move; %om.RR;  EMPTY>
+<!ATTLIST %n.move; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.move;
+ %att.global.attributes;
+ %att.ascribed.directed.attributes;
+type %teidata.enumerated;  #IMPLIED
+where NMTOKENS  #IMPLIED
+perf CDATA  #IMPLIED >
+]]>
+
+<!ENTITY % performance 'INCLUDE' >
+<![ %performance; [
+
+<!--doc:contains a section of front or back matter describing how a dramatic piece is to be performed in general or how it was performed on some specific occasion. [ ] -->
+<!ELEMENT %n.performance; %om.RR; (((%model.divTop;|%model.global;)*,((%model.common;),(%model.global;)*)+,((%model.divBottom;),(%model.global;)*)*))>
+<!ATTLIST %n.performance; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.performance;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % prologue 'INCLUDE' >
+<![ %prologue; [
+
+<!--doc:contains the prologue to a drama, typically spoken by an actor out of character, possibly in association with a particular performance or venue. [ ] -->
+<!ELEMENT %n.prologue; %om.RR; (((%model.divTop;|%model.global;)*,((%model.common;),(%model.global;)*)+,((%model.divBottom;),(%model.global;)*)*))>
+<!ATTLIST %n.prologue; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.prologue;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % role 'INCLUDE' >
+<![ %role; [
+
+<!--doc:contains the name of a dramatic role, as given in a cast list. [] -->
+<!ELEMENT %n.role; %om.RR; %macro.phraseSeq;>
+<!ATTLIST %n.role; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.role;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % roleDesc 'INCLUDE' >
+<![ %roleDesc; [
+
+<!--doc:(role description) describes a character's role in a drama. [] -->
+<!ELEMENT %n.roleDesc; %om.RR; %macro.phraseSeq;>
+<!ATTLIST %n.roleDesc; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.roleDesc;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % set 'INCLUDE' >
+<![ %set; [
+
+<!--doc:(setting) contains a description of the setting, time, locale, appearance, etc., of the action of a play, typically found in the front matter of a printed performance text (not a stage direction). [] -->
+<!ELEMENT %n.set; %om.RR; (((%model.headLike;|%model.global;)*,((%model.common;),(%model.global;)*)*))>
+<!ATTLIST %n.set; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.set;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % sound 'INCLUDE' >
+<![ %sound; [
+
+<!--doc:describes a sound effect or musical sequence specified within a screen play or radio script. [ ] -->
+<!ELEMENT %n.sound; %om.RR; %macro.paraContent;>
+<!ATTLIST %n.sound; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.sound;
+ %att.global.attributes;
+type %teidata.enumerated;  #IMPLIED
+discrete %teidata.xTruthValue;  #IMPLIED >
+]]>
+
+<!ENTITY % spGrp 'INCLUDE' >
+<![ %spGrp; [
+
+<!--doc:(speech group) contains a group of speeches or songs in a performance text presented in a source as constituting a single unit or number. [] -->
+<!ELEMENT %n.spGrp; %om.RR; (((%model.headLike;)*,(%model.global;|%n.sp;|%model.stageLike;)+))>
+<!ATTLIST %n.spGrp; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.spGrp;
+ %att.global.attributes;
+ %att.typed.attributes;
+ %att.ascribed.directed.attributes; >
+]]>
+
+<!ENTITY % tech 'INCLUDE' >
+<![ %tech; [
+
+<!--doc:(technical stage direction) describes a special-purpose stage direction that is not meant for the actors. [] -->
+<!ELEMENT %n.tech; %om.RR; %macro.paraContent;>
+<!ATTLIST %n.tech; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.tech;
+ %att.global.attributes;
+type %teidata.enumerated;  #IMPLIED
+perf CDATA  #IMPLIED >
+]]>
+
+<!ENTITY % view 'INCLUDE' >
+<![ %view; [
+
+<!--doc:describes the visual context of some part of a screen play in terms of what the spectator sees, generally independent of any dialogue. [ ] -->
+<!ELEMENT %n.view; %om.RR; %macro.specialPara;>
+<!ATTLIST %n.view; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.view;
+ %att.global.attributes; >
+]]>

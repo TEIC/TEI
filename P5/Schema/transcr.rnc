@@ -1,0 +1,695 @@
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+namespace sch = "http://purl.oclc.org/dsdl/schematron"
+namespace tei = "http://www.tei-c.org/ns/1.0"
+namespace teix = "http://www.tei-c.org/ns/Examples"
+
+# Schema generated 2019-01-21T23:48:03Z
+# Edition: Version 3.5.0a. Last updated on
+#	19th January 2019, revision e6ccc03
+# This material is dual-licensed.
+# [http://creativecommons.org/licenses/by/3.0/] Distributed under a Creative Commons Attribution 3.0 Unported License.  [http://www.opensource.org/licenses/BSD-2-Clause] Copyright 2019 TEI Consortium. All rights reserved. Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. This software is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright holder or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage. TEI material can be licensed differently depending on the use you intend to make of it. Hence it is made available under both the CC+BY and BSD-2 licences. The CC+BY licence is generally appropriate for usages which treat TEI content as data or documentation. The BSD-2 licence is generally appropriate for usage of TEI content in a software environment. For further information or clarification, please contact the TEI Consortium. Transcription of primary sources
+
+# Definitions from module transcr
+
+# Set global predeclared macros
+
+# Set predeclared macros
+
+# 0. predeclared macros
+
+# 1. classes
+att.global.facs.attributes = att.global.facs.attribute.facs
+att.global.facs.attribute.facs =
+  
+  ## (facsimile) points to all or part of an image which corresponds with the content of the element.
+  attribute facs {
+    list { xsd:anyURI+ }
+  }?
+att.global.change.attributes = att.global.change.attribute.change
+att.global.change.attribute.change =
+  
+  ## points to one or more change elements documenting a state or revision campaign to which the element bearing this attribute and its children have been assigned by the encoder.
+  attribute change {
+    list { xsd:anyURI+ }
+  }?
+att.coordinated.attributes =
+  att.coordinated.attribute.start,
+  att.coordinated.attribute.ulx,
+  att.coordinated.attribute.uly,
+  att.coordinated.attribute.lrx,
+  att.coordinated.attribute.lry,
+  att.coordinated.attribute.points
+att.coordinated.attribute.start =
+  
+  ## indicates the element within a transcription of the text containing at least the start of the writing represented by this zone or surface.
+  attribute start { xsd:anyURI }?
+att.coordinated.attribute.ulx =
+  
+  ## gives the x coordinate value for the upper left corner of a rectangular space.
+  attribute ulx {
+    xsd:double
+    | xsd:token { pattern = "(\-?[\d]+/\-?[\d]+)" }
+    | xsd:decimal
+  }?
+att.coordinated.attribute.uly =
+  
+  ## gives the y coordinate value for the upper left corner of a rectangular space.
+  attribute uly {
+    xsd:double
+    | xsd:token { pattern = "(\-?[\d]+/\-?[\d]+)" }
+    | xsd:decimal
+  }?
+att.coordinated.attribute.lrx =
+  
+  ## gives the x coordinate value for the lower right corner of a rectangular space.
+  attribute lrx {
+    xsd:double
+    | xsd:token { pattern = "(\-?[\d]+/\-?[\d]+)" }
+    | xsd:decimal
+  }?
+att.coordinated.attribute.lry =
+  
+  ## gives the y coordinate value for the lower right corner of a rectangular space.
+  attribute lry {
+    xsd:double
+    | xsd:token { pattern = "(\-?[\d]+/\-?[\d]+)" }
+    | xsd:decimal
+  }?
+att.coordinated.attribute.points =
+  
+  ## identifies a two dimensional area within the bounding box specified by the other attributes by means of a series of pairs of numbers, each of which gives the x,y coordinates of a point on a line enclosing the area.
+  attribute points {
+    list {
+      xsd:token { pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)" },
+      xsd:token { pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)" },
+      xsd:token { pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)" },
+      xsd:token { pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)" }*
+    }
+  }?
+# 2. elements
+addSpan =
+  
+  ## (added span of text) marks the beginning of a longer sequence of text added by an author, scribe, annotator or corrector (see also add). []
+  element addSpan { addSpan.content, addSpan.localattributes }
+addSpan.content =
+  empty
+  >> sch:pattern [
+       id = "addSpan-spanTo-constraint-assert-14"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context = "tei:addSpan"
+         "\x{a}" ~
+         "            "
+         sch:assert [
+           test = "@spanTo"
+           "The @spanTo attribute of "
+           sch:name [ ]
+           " is required."
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+  >> sch:pattern [
+       id = "addSpan-spanTo_fr-constraint-assert-15"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context = "tei:addSpan"
+         "\x{a}" ~
+         "            "
+         sch:assert [ test = "@spanTo" "L'attribut spanTo est requis." ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+addSpan.localattributes =
+  att.global.attributes,
+  att.transcriptional.attributes,
+  att.placement.attributes,
+  att.typed.attributes,
+  att.spanning.attributes,
+  att.dimensions.attributes,
+  empty
+am =
+  
+  ## (abbreviation marker) contains a sequence of letters or signs present in an abbreviation which are omitted or replaced in the expanded form of the abbreviation. []
+  element am { am.content, am.localattributes }
+am.content = (text | model.gLike | model.pPart.transcriptional)*
+am.localattributes =
+  att.global.attributes,
+  att.typed.attributes,
+  att.editLike.attributes,
+  empty
+damage =
+  
+  ## contains an area of damage to the text witness. []
+  element damage { damage.content, damage.localattributes }
+damage.content = macro.paraContent
+damage.localattributes =
+  att.global.attributes,
+  att.typed.attributes,
+  att.damaged.attributes,
+  empty
+damageSpan =
+  
+  ## (damaged span of text) marks the beginning of a longer sequence of text which is damaged in some way but still legible. []
+  element damageSpan { damageSpan.content, damageSpan.localattributes }
+damageSpan.content =
+  empty
+  >> sch:pattern [
+       id = "damageSpan-spanTo-constraint-assert-16"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context = "tei:damageSpan"
+         "\x{a}" ~
+         "            "
+         sch:assert [
+           test = "@spanTo"
+           "\x{a}" ~
+           "The @spanTo attribute of "
+           sch:name [ ]
+           " is required."
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+  >> sch:pattern [
+       id = "damageSpan-spanTo_fr-constraint-assert-17"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context = "tei:damageSpan"
+         "\x{a}" ~
+         "            "
+         sch:assert [ test = "@spanTo" "L'attribut spanTo est requis." ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+damageSpan.localattributes =
+  att.global.attributes,
+  att.damaged.attributes,
+  att.typed.attributes,
+  att.spanning.attributes,
+  empty
+delSpan =
+  
+  ## (deleted span of text) marks the beginning of a longer sequence of text deleted, marked as deleted, or otherwise signaled as superfluous or spurious by an author, scribe, annotator, or corrector. []
+  element delSpan { delSpan.content, delSpan.localattributes }
+delSpan.content =
+  empty
+  >> sch:pattern [
+       id = "delSpan-spanTo-constraint-assert-18"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context = "tei:delSpan"
+         "\x{a}" ~
+         "            "
+         sch:assert [
+           test = "@spanTo"
+           "The @spanTo attribute of "
+           sch:name [ ]
+           " is required."
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+  >> sch:pattern [
+       id = "delSpan-spanTo_fr-constraint-assert-19"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context = "tei:delSpan"
+         "\x{a}" ~
+         "            "
+         sch:assert [ test = "@spanTo" "L'attribut spanTo est requis." ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+delSpan.localattributes =
+  att.global.attributes,
+  att.transcriptional.attributes,
+  att.typed.attributes,
+  att.spanning.attributes,
+  att.dimensions.attributes,
+  empty
+ex =
+  
+  ## (editorial expansion) contains a sequence of letters added by an editor or transcriber when expanding an abbreviation. []
+  element ex { ex.content, ex.localattributes }
+ex.content = macro.xtext
+ex.localattributes =
+  att.global.attributes,
+  att.editLike.attributes,
+  att.dimensions.attributes,
+  empty
+facsimile =
+  
+  ## contains a representation of some written source in the form of a set of images rather than as transcribed or encoded text. []
+  element facsimile { facsimile.content, facsimile.localattributes }
+facsimile.content =
+  front?, (model.graphicLike | surface | surfaceGrp)+, back?
+facsimile.localattributes =
+  att.global.attributes, att.declaring.attributes, empty
+fw =
+  
+  ## (forme work) contains a running head (e.g. a header, footer), catchword, or similar material appearing on the current page. []
+  element fw { fw.content, fw.localattributes }
+fw.content = macro.phraseSeq
+fw.localattributes =
+  att.global.attributes,
+  att.placement.attributes,
+  att.written.attributes,
+  
+  ## classifies the material encoded according to some useful typology.
+  ## Sample values include: 1] header; 2] footer; 3] pageNum (page number) ; 4] lineNum (line number) ; 5] sig (signature) ; 6] catch (catchword) 
+  attribute type {
+    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?,
+  empty
+handNotes =
+  
+  ## contains one or more handNote elements documenting the different hands identified within the source texts. []
+  element handNotes { handNotes.content, handNotes.localattributes }
+handNotes.content = handNote+
+handNotes.localattributes = att.global.attributes, empty
+handShift =
+  
+  ## marks the beginning of a sequence of text written in a new hand, or the beginning of a scribal stint. []
+  element handShift { handShift.content, handShift.localattributes }
+handShift.content = empty
+handShift.localattributes =
+  att.global.attributes,
+  att.handFeatures.attributes,
+  
+  ## indicates a handNote element describing the hand concerned.
+  attribute new { xsd:anyURI }?,
+  empty
+line =
+  
+  ## contains the transcription of a topographic line in the source document []
+  element line { line.content, line.localattributes }
+line.content = (text | model.global | model.gLike | model.linePart)*
+line.localattributes =
+  att.typed.attributes,
+  att.global.attributes,
+  att.coordinated.attributes,
+  att.written.attributes,
+  empty
+listTranspose =
+  
+  ## supplies a list of transpositions, each of which is indicated at some point in a document typically by means of metamarks. []
+  element listTranspose {
+    listTranspose.content, listTranspose.localattributes
+  }
+listTranspose.content = transpose+
+listTranspose.localattributes = att.global.attributes, empty
+metamark =
+  
+  ## contains or describes any kind of graphic or written signal within a document the function of which is to determine how it should be read rather than forming part of the actual content of the document. []
+  element metamark { metamark.content, metamark.localattributes }
+metamark.content = macro.specialPara
+metamark.localattributes =
+  att.spanning.attributes,
+  att.placement.attributes,
+  att.global.attributes,
+  
+  ## describes the function (for example status, insertion, deletion, transposition) of the metamark.
+  attribute function {
+    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?,
+  
+  ## identifies one or more elements to which the metamark applies.
+  attribute target {
+    list { xsd:anyURI+ }
+  }?,
+  empty
+mod =
+  
+  ## represents any kind of modification identified within a single document. []
+  element mod { mod.content, mod.localattributes }
+mod.content = macro.paraContent
+mod.localattributes =
+  att.global.attributes,
+  att.transcriptional.attributes,
+  att.typed.attributes,
+  att.spanning.attributes,
+  att.dimensions.attributes,
+  empty
+path =
+  
+  ## defines any line passing through two or more points within a surface element. [ ]
+  element path { path.content, path.localattributes }
+path.content =
+  empty
+  >> sch:pattern [
+       id = "path-pathmustnotbeclosed-constraint-rule-12"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context = "tei:path[@points]"
+         "\x{a}" ~
+         "        \x{a}" ~
+         "            "
+         sch:let [
+           name = "firstPair"
+           value = "tokenize( normalize-space( @points ), ' ')[1]"
+         ]
+         "\x{a}" ~
+         "            "
+         sch:let [
+           name = "lastPair"
+           value = "tokenize( normalize-space( @points ), ' ')[last()]"
+         ]
+         "\x{a}" ~
+         "            "
+         sch:let [
+           name = "firstX"
+           value = "xs:float( substring-before( $firstPair, ',') )"
+         ]
+         "\x{a}" ~
+         "            "
+         sch:let [
+           name = "firstY"
+           value = "xs:float( substring-after( $firstPair, ',') )"
+         ]
+         "\x{a}" ~
+         "            "
+         sch:let [
+           name = "lastX"
+           value = "xs:float( substring-before( $lastPair, ',') )"
+         ]
+         "\x{a}" ~
+         "            "
+         sch:let [
+           name = "lastY"
+           value = "xs:float( substring-after( $lastPair, ',') )"
+         ]
+         "\x{a}" ~
+         "            "
+         sch:report [
+           test = "$firstX eq $lastX  and  $firstY eq $lastY"
+           "The first and\x{a}" ~
+           "          last elements of this path are the same. To specify a closed polygon, use\x{a}" ~
+           "          the zone element rather than the path element. "
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+path.localattributes =
+  att.global.attributes,
+  att.typed.attributes,
+  att.written.attributes,
+  att.coordinated.attribute.start,
+  att.coordinated.attribute.ulx,
+  att.coordinated.attribute.uly,
+  att.coordinated.attribute.lrx,
+  att.coordinated.attribute.lry,
+  
+  ## identifies a line within the container or bounding box specified by the parent element by means of a series of two or more pairs of numbers, each of which gives the x,y coordinates of a point on the line.
+  attribute points {
+    list {
+      xsd:token { pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)" },
+      xsd:token { pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)" },
+      xsd:token { pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)" }*
+    }
+  }?,
+  empty
+redo =
+  
+  ## indicates one or more cancelled interventions in a document which have subsequently been marked as reaffirmed or repeated. []
+  element redo { redo.content, redo.localattributes }
+redo.content = empty
+redo.localattributes =
+  att.global.attributes,
+  att.spanning.attributes,
+  att.transcriptional.attributes,
+  att.dimensions.attributes,
+  
+  ## points to one or more elements representing the interventions which are being reasserted.
+  attribute target {
+    list { xsd:anyURI+ }
+  }?,
+  empty
+restore =
+  
+  ## indicates restoration of text to an earlier state by cancellation of an editorial or authorial marking or instruction. []
+  element restore { restore.content, restore.localattributes }
+restore.content = macro.paraContent
+restore.localattributes =
+  att.global.attributes,
+  att.transcriptional.attributes,
+  att.typed.attributes,
+  att.dimensions.attributes,
+  empty
+retrace =
+  
+  ## contains a sequence of writing which has been retraced, for example by over-inking, to clarify or fix it. []
+  element retrace { retrace.content, retrace.localattributes }
+retrace.content = macro.paraContent
+retrace.localattributes =
+  att.global.attributes,
+  att.spanning.attributes,
+  att.transcriptional.attributes,
+  att.dimensions.attributes,
+  empty
+secl =
+  
+  ## (secluded text) Secluded. Marks text present in the source which the editor believes to be genuine but out of its original place (which is unknown). []
+  element secl { secl.content, secl.localattributes }
+secl.content = macro.paraContent
+secl.localattributes =
+  att.global.attributes,
+  att.editLike.attributes,
+  att.dimensions.attributes,
+  
+  ## one or more words indicating why this text has been secluded, e.g. interpolated etc.
+  attribute reason {
+    list {
+      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+    }
+  }?,
+  empty
+sourceDoc =
+  
+  ## contains a transcription or other representation of a single source document potentially forming part of a dossier génétique or collection of sources. [ ]
+  element sourceDoc { sourceDoc.content, sourceDoc.localattributes }
+sourceDoc.content =
+  (model.global | model.graphicLike | surface | surfaceGrp)+
+sourceDoc.localattributes =
+  att.global.attributes, att.declaring.attributes, empty
+space =
+  
+  ## indicates the location of a significant space in the text. []
+  element space { space.content, space.localattributes }
+space.content = (model.descLike | model.certLike)*
+space.localattributes =
+  att.typed.attributes,
+  att.dimensions.attributes,
+  att.global.attribute.xmlid,
+  att.global.attribute.n,
+  att.global.attribute.xmllang,
+  att.global.attribute.xmlbase,
+  att.global.attribute.xmlspace,
+  att.global.rendition.attribute.rend,
+  att.global.rendition.attribute.style,
+  att.global.rendition.attribute.rendition,
+  att.global.linking.attribute.corresp,
+  att.global.linking.attribute.synch,
+  att.global.linking.attribute.sameAs,
+  att.global.linking.attribute.copyOf,
+  att.global.linking.attribute.next,
+  att.global.linking.attribute.prev,
+  att.global.linking.attribute.exclude,
+  att.global.linking.attribute.select,
+  att.global.analytic.attribute.ana,
+  att.global.facs.attribute.facs,
+  att.global.change.attribute.change,
+  att.global.responsibility.attribute.cert,
+  att.global.source.attribute.source,
+  
+  ## (responsible party) (responsible party) indicates the individual responsible for identifying and measuring the space
+  attribute resp {
+    list { xsd:anyURI+ }
+  }?,
+  
+  ## (dimension) indicates whether the space is horizontal or vertical.
+  attribute dim {
+    
+    ## the space is horizontal.
+    "horizontal"
+    | 
+      ## the space is vertical.
+      "vertical"
+  }?,
+  empty
+subst =
+  
+  ## (substitution) groups one or more deletions with one or more additions when the combination is to be regarded as a single intervention in the text. []
+  element subst { subst.content, subst.localattributes }
+subst.content =
+  ((add | del | model.milestoneLike)+)
+  >> sch:pattern [
+       id = "subst-substContents1-constraint-assert-20"
+       "\x{a}" ~
+       "         "
+       sch:rule [
+         context = "tei:subst"
+         "\x{a}" ~
+         "            "
+         sch:assert [
+           test = "child::tei:add and child::tei:del"
+           "\x{a}" ~
+           "               "
+           sch:name [ ]
+           " must have at least one child add and at least one child del"
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+subst.localattributes =
+  att.global.attributes,
+  att.transcriptional.attributes,
+  att.dimensions.attributes,
+  empty
+substJoin =
+  
+  ## (substitution join) identifies a series of possibly fragmented additions, deletions or other revisions on a manuscript that combine to make up a single intervention in the text []
+  element substJoin { substJoin.content, substJoin.localattributes }
+substJoin.content = (model.descLike | model.certLike)*
+substJoin.localattributes =
+  att.global.attributes,
+  att.pointing.attributes,
+  att.transcriptional.attributes,
+  att.dimensions.attributes,
+  empty
+supplied =
+  
+  ## signifies text supplied by the transcriber or editor for any reason; for example because the original cannot be read due to physical damage, or because of an obvious omission by the author or scribe. []
+  element supplied { supplied.content, supplied.localattributes }
+supplied.content = macro.paraContent
+supplied.localattributes =
+  att.global.attributes,
+  att.editLike.attributes,
+  att.dimensions.attributes,
+  
+  ## one or more words indicating why the text has had to be supplied, e.g. overbinding, faded-ink, lost-folio, omitted-in-original.
+  attribute reason {
+    list {
+      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+    }
+  }?,
+  empty
+surface =
+  
+  ## defines a written surface as a two-dimensional coordinate space, optionally grouping one or more graphic representations of that space, zones of interest within that space, and transcriptions of the writing within them. [ ]
+  element surface { surface.content, surface.localattributes }
+surface.content =
+  (model.global | model.labelLike | model.graphicLike)*,
+  ((zone | line | path | surface | surfaceGrp), model.global*)*
+surface.localattributes =
+  att.global.attributes,
+  att.coordinated.attributes,
+  att.declaring.attributes,
+  att.typed.attributes,
+  
+  ## describes the method by which this surface is or was connected to the main surface
+  ## Sample values include: 1] glued; 2] pinned; 3] sewn
+  attribute attachment {
+    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?,
+  
+  ## indicates whether the surface is attached and folded in such a way as to provide two writing surfaces
+  attribute flipping { xsd:boolean }?,
+  empty
+surfaceGrp =
+  
+  ## defines any kind of useful grouping of written surfaces, for example the recto and verso of a single leaf, which the encoder wishes to treat as a single unit. []
+  element surfaceGrp { surfaceGrp.content, surfaceGrp.localattributes }
+surfaceGrp.content = (model.global | surface | surfaceGrp)+
+surfaceGrp.localattributes =
+  att.global.attributes,
+  att.declaring.attributes,
+  att.typed.attributes,
+  empty
+surplus =
+  
+  ## marks text present in the source which the editor believes to be superfluous or redundant. []
+  element surplus { surplus.content, surplus.localattributes }
+surplus.content = macro.paraContent
+surplus.localattributes =
+  att.global.attributes,
+  att.editLike.attributes,
+  att.dimensions.attributes,
+  
+  ## one or more words indicating why this text is believed to be superfluous, e.g. repeated, interpolated etc.
+  attribute reason {
+    list {
+      xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
+    }
+  }?,
+  empty
+transpose =
+  
+  ## describes a single textual transposition as an ordered list of at least two pointers specifying the order in which the elements indicated should be re-combined. []
+  element transpose { transpose.content, transpose.localattributes }
+transpose.content = ptr, ptr+
+transpose.localattributes = att.global.attributes, empty
+undo =
+  
+  ## indicates one or more marked-up interventions in a document which have subsequently been marked for cancellation. []
+  element undo { undo.content, undo.localattributes }
+undo.content = empty
+undo.localattributes =
+  att.global.attributes,
+  att.spanning.attributes,
+  att.transcriptional.attributes,
+  att.dimensions.attributes,
+  
+  ## points to one or more elements representing the interventions which are to be reverted or undone.
+  attribute target {
+    list { xsd:anyURI+ }
+  }?,
+  empty
+zone =
+  
+  ## defines any two-dimensional area within a surface element. [ ]
+  element zone { zone.content, zone.localattributes }
+zone.content =
+  (text | model.graphicLike | model.global | surface | model.linePart)*
+zone.localattributes =
+  att.global.attributes,
+  att.coordinated.attributes,
+  att.typed.attributes,
+  att.written.attributes,
+  
+  ## indicates the amount by which this zone has been rotated clockwise, with respect to the normal orientation of the parent surface element as implied by the dimensions given in the msDesc element or by the coordinates of the surface itself. The orientation is expressed in arc degrees.
+  [ a:defaultValue = "0" ] attribute rotate { xsd:nonNegativeInteger }?,
+  empty
+# 3. macros

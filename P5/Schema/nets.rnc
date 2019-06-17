@@ -1,0 +1,285 @@
+namespace tei = "http://www.tei-c.org/ns/1.0"
+namespace teix = "http://www.tei-c.org/ns/Examples"
+
+# Schema generated 2019-01-21T23:48:03Z
+# Edition: Version 3.5.0a. Last updated on
+#	19th January 2019, revision e6ccc03
+# This material is dual-licensed.
+# [http://creativecommons.org/licenses/by/3.0/] Distributed under a Creative Commons Attribution 3.0 Unported License.  [http://www.opensource.org/licenses/BSD-2-Clause] Copyright 2019 TEI Consortium. All rights reserved. Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. This software is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright holder or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage. TEI material can be licensed differently depending on the use you intend to make of it. Hence it is made available under both the CC+BY and BSD-2 licences. The CC+BY licence is generally appropriate for usages which treat TEI content as data or documentation. The BSD-2 licence is generally appropriate for usage of TEI content in a software environment. For further information or clarification, please contact the TEI Consortium. Graphs, networks, and trees
+
+# Definitions from module nets
+
+# Set global predeclared macros
+
+# Set predeclared macros
+
+# 0. predeclared macros
+
+# 1. classes
+
+# 2. elements
+arc =
+  
+  ## encodes an arc, the connection from one node to another in a graph. []
+  element arc { arc.content, arc.localattributes }
+arc.content = (label, label?)?
+arc.localattributes =
+  att.global.attributes,
+  
+  ## gives the identifier of the node which is adjacent from this arc.
+  attribute from { xsd:anyURI },
+  
+  ## gives the identifier of the node which is adjacent to this arc.
+  attribute to { xsd:anyURI },
+  empty
+eLeaf =
+  
+  ## (leaf or terminal node of an embedding tree) provides explicitly for a leaf of an embedding tree, which may also be encoded with the eTree element. []
+  element eLeaf { eLeaf.content, eLeaf.localattributes }
+eLeaf.content = label?, model.ptrLike?
+eLeaf.localattributes =
+  att.global.attributes,
+  att.typed.attributes,
+  
+  ## indicates the value of an embedding leaf, which is a feature structure or other analytic element.
+  attribute value { xsd:anyURI }?,
+  empty
+eTree =
+  
+  ## (embedding tree) provides an alternative to the tree element for representing ordered rooted tree structures. []
+  element eTree { eTree.content, eTree.localattributes }
+eTree.content = label?, (eTree | triangle | eLeaf | model.ptrLike)*
+eTree.localattributes =
+  att.global.attributes,
+  att.typed.attributes,
+  
+  ## provides the value of an embedding tree, which is a feature structure or other analytic element.
+  attribute value { xsd:anyURI }?,
+  empty
+forest =
+  
+  ## provides for groups of rooted trees. []
+  element forest { forest.content, forest.localattributes }
+forest.content = (tree | eTree | triangle)+
+forest.localattributes =
+  att.global.attributes, att.typed.attributes, empty
+graph =
+  
+  ## encodes a graph, which is a collection of nodes, and arcs which connect the nodes. []
+  element graph { graph.content, graph.localattributes }
+graph.content =
+  (label, model.global*)?,
+  (((node, model.global*)+, (arc, model.global*)*)
+   | ((arc, model.global*)+, (node, model.global*)+))
+graph.localattributes =
+  att.global.attributes,
+  
+  ## describes the type of graph.
+  ## Suggested values include: 1] undirected; 2] directed; 3] transitionNetwork; 4] transducer
+  attribute type {
+    
+    ## undirected graph
+    "undirected"
+    | 
+      ## directed graph
+      "directed"
+    | 
+      ## a directed graph with distinguished initial and final nodes
+      "transitionNetwork"
+    | 
+      ## a transition network with up to two labels on each arc
+      "transducer"
+    | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?,
+  
+  ## states the order of the graph, i.e., the number of its nodes.
+  attribute order { xsd:nonNegativeInteger }?,
+  
+  ## states the size of the graph, i.e., the number of its arcs.
+  attribute size { xsd:nonNegativeInteger }?,
+  empty
+iNode =
+  
+  ## (intermediate (or internal) node) represents an intermediate (or internal) node of a tree. []
+  element iNode { iNode.content, iNode.localattributes }
+iNode.content = label?
+iNode.localattributes =
+  att.global.attributes,
+  
+  ## indicates an intermediate node, which is a feature structure or other analytic element.
+  attribute value { xsd:anyURI }?,
+  
+  ## provides a list of identifiers of the elements which are the children of the intermediate node.
+  attribute children {
+    list { xsd:anyURI+ }
+  },
+  
+  ## provides the identifier of the element which is the parent of this node.
+  attribute parent { xsd:anyURI }?,
+  
+  ## (ordered) indicates whether or not the internal node is ordered.
+  attribute ord {
+    xsd:boolean
+    | (
+       ##
+       "unknown"
+       | 
+         ##
+         "inapplicable")
+  }?,
+  
+  ## provides the identifier of an element which this node follows.
+  attribute follow { xsd:anyURI }?,
+  
+  ## gives the out degree of an intermediate node, the number of its children.
+  attribute outDegree { xsd:nonNegativeInteger }?,
+  empty
+leaf =
+  
+  ## encodes the leaves (terminal nodes) of a tree. []
+  element leaf { leaf.content, leaf.localattributes }
+leaf.content = label?
+leaf.localattributes =
+  att.global.attributes,
+  
+  ## provides a pointer to a feature structure or other analytic element.
+  attribute value { xsd:anyURI }?,
+  
+  ## provides the identifier of parent of a leaf.
+  attribute parent { xsd:anyURI }?,
+  
+  ## provides an identifier of an element which this leaf follows.
+  attribute follow { xsd:anyURI }?,
+  empty
+listForest =
+  
+  ## provides for lists of forests. []
+  element listForest { listForest.content, listForest.localattributes }
+listForest.content = forest+
+listForest.localattributes =
+  att.global.attributes,
+  
+  ## identifies the type of the forest group.
+  attribute type {
+    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?,
+  empty
+node =
+  
+  ## encodes a node, a possibly labeled point in a graph. []
+  element node { node.content, node.localattributes }
+node.content = (label, label?)?
+node.localattributes =
+  att.global.attributes,
+  
+  ## provides the value of a node, which is a feature structure or other analytic element.
+  attribute value { xsd:anyURI }?,
+  
+  ## provides a type for a node.
+  ## Suggested values include: 1] initial; 2] final
+  attribute type {
+    
+    ## initial node in a transition network
+    "initial"
+    | 
+      ## final node in a transition network
+      "final"
+    | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?,
+  
+  ## (adjacent to) gives the identifiers of the nodes which are adjacent to the current node.
+  attribute adjTo {
+    list { xsd:anyURI+ }
+  }?,
+  
+  ## (adjacent from) gives the identifiers of the nodes which are adjacent from the current node.
+  attribute adjFrom {
+    list { xsd:anyURI+ }
+  }?,
+  
+  ## (adjacent) gives the identifiers of the nodes which are both adjacent to and adjacent from the current node.
+  attribute adj {
+    list { xsd:anyURI+ }
+  }?,
+  
+  ## gives the in degree of the node, the number of nodes which are adjacent from the given node.
+  attribute inDegree { xsd:nonNegativeInteger }?,
+  
+  ## gives the out degree of the node, the number of nodes which are adjacent to the given node.
+  attribute outDegree { xsd:nonNegativeInteger }?,
+  
+  ## gives the degree of the node, the number of arcs with which the node is incident.
+  attribute degree { xsd:nonNegativeInteger }?,
+  empty
+root =
+  
+  ## (root node) represents the root node of a tree. []
+  element root { root.content, root.localattributes }
+root.content = label?
+root.localattributes =
+  att.global.attributes,
+  
+  ## identifies the root node of the network by pointing to a feature structure or other analytic element.
+  attribute value { xsd:anyURI }?,
+  
+  ## identifies the elements which are the children of the root node.
+  attribute children {
+    list { xsd:anyURI+ }
+  },
+  
+  ## (ordered) indicates whether or not the root is ordered.
+  attribute ord {
+    xsd:boolean
+    | (
+       ##
+       "unknown"
+       | 
+         ##
+         "inapplicable")
+  }?,
+  
+  ## gives the out degree of the root, the number of its children.
+  attribute outDegree { xsd:nonNegativeInteger }?,
+  empty
+tree =
+  
+  ## encodes a tree, which is made up of a root, internal nodes, leaves, and arcs from root to leaves. []
+  element tree { tree.content, tree.localattributes }
+tree.content =
+  label?,
+  ((leaf | iNode)*, root, (leaf | iNode)*)
+tree.localattributes =
+  att.global.attributes,
+  
+  ## gives the maximum number of children of the root and internal nodes of the tree.
+  attribute arity { xsd:nonNegativeInteger }?,
+  
+  ## (ordered) indicates whether or not the tree is ordered, or if it is partially ordered.
+  attribute ord {
+    
+    ## indicates that all of the branching nodes of the tree are ordered.
+    "true"
+    | 
+      ## indicates that some of the branching nodes of the tree are ordered and some are unordered.
+      "partial"
+    | 
+      ## indicates that all of the branching nodes of the tree are unordered.
+      "false"
+  },
+  
+  ## gives the order of the tree, i.e., the number of its nodes.
+  attribute order { xsd:nonNegativeInteger }?,
+  empty
+triangle =
+  
+  ## (underspecified embedding tree, so called because of its
+  ##   characteristic shape when drawn) provides for an underspecified eTree, that is, an eTree with information left out. []
+  element triangle { triangle.content, triangle.localattributes }
+triangle.content = label?, (eTree | triangle | eLeaf)*
+triangle.localattributes =
+  att.global.attributes,
+  
+  ## supplies a value for the triangle, in the form of the identifier of a feature structure or other analytic element.
+  attribute value { xsd:anyURI }?,
+  empty
+# 3. macros

@@ -1,0 +1,185 @@
+
+<!--
+DTD module spoken. generated from ODD source 2019-01-21T23:48:00Z. This material is dual-licensed.
+[http://creativecommons.org/licenses/by/3.0/] Distributed under a Creative Commons Attribution 3.0 Unported License.  [http://www.opensource.org/licenses/BSD-2-Clause] Copyright 2019 TEI Consortium. All rights reserved. Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. This software is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright holder or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage. TEI material can be licensed differently depending on the use you intend to make of it. Hence it is made available under both the CC+BY and BSD-2 licences. The CC+BY licence is generally appropriate for usages which treat TEI content as data or documentation. The BSD-2 licence is generally appropriate for usage of TEI content in a software environment. For further information or clarification, please contact the TEI Consortium.
+Edition: Version 3.5.0a. Last updated on
+	19th January 2019, revision e6ccc03
+Transcribed Speech
+-->
+
+<!ENTITY % annotationBlock 'INCLUDE' >
+<![ %annotationBlock; [
+
+<!--doc:groups together various annotations, e.g. for parallel interpretations of a spoken segment. [] -->
+<!ELEMENT %n.annotationBlock; %om.RR; (%n.u;|%n.spanGrp;|%model.global.spoken;)*>
+<!ATTLIST %n.annotationBlock; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.annotationBlock;
+ %att.ascribed.attributes;
+ %att.timed.attributes;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % broadcast 'INCLUDE' >
+<![ %broadcast; [
+
+<!--doc:describes a broadcast used as the source of a spoken text. [ ] -->
+<!ELEMENT %n.broadcast; %om.RR; ((%model.pLike;)+|%model.biblLike;|%n.recording;)>
+<!ATTLIST %n.broadcast; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.broadcast;
+ %att.global.attributes;
+ %att.declarable.attributes; >
+]]>
+
+<!ENTITY % equipment 'INCLUDE' >
+<![ %equipment; [
+
+<!--doc:provides technical details of the equipment and media used for an audio or video recording used as the source for a spoken text. [ ] -->
+<!ELEMENT %n.equipment; %om.RR; (%model.pLike;)+>
+<!ATTLIST %n.equipment; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.equipment;
+ %att.global.attributes;
+ %att.declarable.attributes; >
+]]>
+
+<!ENTITY % incident 'INCLUDE' >
+<![ %incident; [
+
+<!--doc:marks any phenomenon or occurrence, not necessarily vocalized or communicative, for example incidental noises or other events affecting communication. [] -->
+<!ELEMENT %n.incident; %om.RR; (%model.descLike;)*>
+<!ATTLIST %n.incident; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.incident;
+ %att.global.attributes;
+ %att.timed.attributes;
+ %att.typed.attributes;
+ %att.ascribed.attributes; >
+]]>
+
+<!ENTITY % kinesic 'INCLUDE' >
+<![ %kinesic; [
+
+<!--doc:marks any communicative phenomenon, not necessarily vocalized, for example a gesture, frown, etc. [] -->
+<!ELEMENT %n.kinesic; %om.RR; (%model.descLike;)*>
+<!ATTLIST %n.kinesic; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.kinesic;
+ %att.global.attributes;
+ %att.timed.attributes;
+ %att.typed.attributes;
+ %att.ascribed.directed.attributes;
+iterated %teidata.xTruthValue;  "false"  >
+]]>
+
+<!ENTITY % pause 'INCLUDE' >
+<![ %pause; [
+
+<!--doc:marks a pause either between or within utterances. [] -->
+<!ELEMENT %n.pause; %om.RR;  EMPTY>
+<!ATTLIST %n.pause; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.pause;
+ %att.global.attributes;
+ %att.timed.attributes;
+ %att.typed.attributes;
+ %att.ascribed.directed.attributes; >
+]]>
+
+<!ENTITY % recording 'INCLUDE' >
+<![ %recording; [
+
+<!--doc:(recording event) provides details of an audio or video recording event used as the source of a spoken text, either directly or from a public broadcast. [ ] -->
+<!ELEMENT %n.recording; %om.RR; (%model.recordingPart;|%model.pLike;)*>
+<!ATTLIST %n.recording; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.recording;
+ %att.global.attributes;
+ %att.declarable.attributes;
+ %att.duration.attributes;
+ %att.typed.attribute.subtype;
+type (audio|video) "audio"  >
+]]>
+
+<!ENTITY % recordingStmt 'INCLUDE' >
+<![ %recordingStmt; [
+
+<!--doc:(recording statement) describes a set of recordings used as the basis for transcription of a spoken text. [ ] -->
+<!ELEMENT %n.recordingStmt; %om.RR; ((%model.pLike;)+|(%n.recording;)+)>
+<!ATTLIST %n.recordingStmt; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.recordingStmt;
+ %att.global.attributes; >
+]]>
+
+<!ENTITY % scriptStmt 'INCLUDE' >
+<![ %scriptStmt; [
+
+<!--doc:(script statement) contains a citation giving details of the script used for a spoken text. [  ] -->
+<!ELEMENT %n.scriptStmt; %om.RR; ((%model.pLike;)+|%model.biblLike;)>
+<!ATTLIST %n.scriptStmt; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.scriptStmt;
+ %att.global.attributes;
+ %att.declarable.attributes; >
+]]>
+
+<!ENTITY % shift 'INCLUDE' >
+<![ %shift; [
+
+<!--doc:marks the point at which some paralinguistic feature of a series of utterances by any one speaker changes. [] -->
+<!ELEMENT %n.shift; %om.RR;  EMPTY>
+<!ATTLIST %n.shift; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.shift;
+ %att.global.attributes;
+ %att.ascribed.attributes;
+feature %teidata.enumerated;  #IMPLIED
+new %teidata.enumerated;  "normal"  >
+]]>
+
+<!ENTITY % transcriptionDesc 'INCLUDE' >
+<![ %transcriptionDesc; [
+
+<!--doc:describes the set of transcription conventions used, particularly for spoken material. [] -->
+<!ELEMENT %n.transcriptionDesc; %om.RR; (%model.labelLike;|%model.ptrLike;|%model.pLike;)*>
+<!ATTLIST %n.transcriptionDesc; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.transcriptionDesc;
+ %att.global.attributes;
+ident %teidata.name;  #REQUIRED
+version %teidata.versionNumber;  #IMPLIED >
+]]>
+
+<!ENTITY % u 'INCLUDE' >
+<![ %u; [
+
+<!--doc:(utterance) contains a stretch of speech usually preceded and followed by silence or by a change of speaker. [] -->
+<!ELEMENT %n.u; %om.RR; %macro.paraContent;>
+<!ATTLIST %n.u; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.u;
+ %att.global.attributes;
+ %att.timed.attributes;
+ %att.declaring.attributes;
+ %att.ascribed.directed.attributes;
+ %att.notated.attributes;
+trans (smooth|latching|overlap|pause) "smooth"  >
+]]>
+
+<!ENTITY % vocal 'INCLUDE' >
+<![ %vocal; [
+
+<!--doc:marks any vocalized but not necessarily lexical phenomenon, for example voiced pauses, non-lexical backchannels, etc. [] -->
+<!ELEMENT %n.vocal; %om.RR; (%model.descLike;)*>
+<!ATTLIST %n.vocal; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.vocal;
+ %att.global.attributes;
+ %att.timed.attributes;
+ %att.ascribed.directed.attributes;
+ %att.typed.attributes;
+iterated %teidata.xTruthValue;  "false"  >
+]]>
+
+<!ENTITY % writing 'INCLUDE' >
+<![ %writing; [
+
+<!--doc:contains a passage of written text revealed to participants in the course of a spoken text. [] -->
+<!ELEMENT %n.writing; %om.RR; %macro.paraContent;>
+<!ATTLIST %n.writing; xmlns CDATA "http://www.tei-c.org/ns/1.0">
+<!ATTLIST %n.writing;
+ %att.global.attributes;
+ %att.ascribed.directed.attributes;
+ %att.typed.attributes;
+ %att.timed.attributes;
+gradual %teidata.xTruthValue;  #IMPLIED >
+]]>

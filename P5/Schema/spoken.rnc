@@ -1,0 +1,329 @@
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace ns1 = "http://purl.oclc.org/dsdl/schematron"
+namespace tei = "http://www.tei-c.org/ns/1.0"
+namespace teix = "http://www.tei-c.org/ns/Examples"
+
+# Schema generated 2019-01-21T23:48:03Z
+# Edition: Version 3.5.0a. Last updated on
+#	19th January 2019, revision e6ccc03
+# This material is dual-licensed.
+# [http://creativecommons.org/licenses/by/3.0/] Distributed under a Creative Commons Attribution 3.0 Unported License.  [http://www.opensource.org/licenses/BSD-2-Clause] Copyright 2019 TEI Consortium. All rights reserved. Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. This software is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright holder or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage. TEI material can be licensed differently depending on the use you intend to make of it. Hence it is made available under both the CC+BY and BSD-2 licences. The CC+BY licence is generally appropriate for usages which treat TEI content as data or documentation. The BSD-2 licence is generally appropriate for usage of TEI content in a software environment. For further information or clarification, please contact the TEI Consortium. Transcribed Speech
+
+# Definitions from module spoken
+
+# Set global predeclared macros
+
+# Set predeclared macros
+
+# 0. predeclared macros
+
+# 1. classes
+att.duration.attributes =
+  att.duration.w3c.attributes, att.duration.iso.attributes
+model.global.spoken =
+  pause | vocal | kinesic | incident | writing | shift
+model.global.spoken_alternation =
+  pause | vocal | kinesic | incident | writing | shift
+model.global.spoken_sequence =
+  pause, vocal, kinesic, incident, writing, shift
+model.global.spoken_sequenceOptional =
+  pause?, vocal?, kinesic?, incident?, writing?, shift?
+model.global.spoken_sequenceOptionalRepeatable =
+  pause*, vocal*, kinesic*, incident*, writing*, shift*
+model.global.spoken_sequenceRepeatable =
+  pause+, vocal+, kinesic+, incident+, writing+, shift+
+model.recordingPart =
+  model.dateLike | media | respStmt | equipment | broadcast
+model.recordingPart_alternation =
+  model.dateLike_alternation | media | respStmt | equipment | broadcast
+model.recordingPart_sequence =
+  model.dateLike_sequence, media, respStmt, equipment, broadcast
+model.recordingPart_sequenceOptional =
+  model.dateLike_sequenceOptional?,
+  media?,
+  respStmt?,
+  equipment?,
+  broadcast?
+model.recordingPart_sequenceOptionalRepeatable =
+  model.dateLike_sequenceOptionalRepeatable*,
+  media*,
+  respStmt*,
+  equipment*,
+  broadcast*
+model.recordingPart_sequenceRepeatable =
+  model.dateLike_sequenceRepeatable+,
+  media+,
+  respStmt+,
+  equipment+,
+  broadcast+
+model.divPart.spoken = u | annotationBlock
+model.divPart.spoken_alternation = u | annotationBlock
+model.divPart.spoken_sequence = u, annotationBlock
+model.divPart.spoken_sequenceOptional = u?, annotationBlock?
+model.divPart.spoken_sequenceOptionalRepeatable = u*, annotationBlock*
+model.divPart.spoken_sequenceRepeatable = u+, annotationBlock+
+# 2. elements
+annotationBlock =
+  
+  ## groups together various annotations, e.g. for parallel interpretations of a spoken segment. []
+  element annotationBlock {
+    annotationBlock.content, annotationBlock.localattributes
+  }
+annotationBlock.content = (u | spanGrp | model.global.spoken)*
+annotationBlock.localattributes =
+  att.ascribed.attributes,
+  att.timed.attributes,
+  att.global.attributes,
+  empty
+broadcast =
+  
+  ## describes a broadcast used as the source of a spoken text. [ ]
+  element broadcast { broadcast.content, broadcast.localattributes }
+broadcast.content = model.pLike+ | model.biblLike | recording
+broadcast.localattributes =
+  att.global.attributes, att.declarable.attributes, empty
+equipment =
+  
+  ## provides technical details of the equipment and media used for an audio or video recording used as the source for a spoken text. [ ]
+  element equipment { equipment.content, equipment.localattributes }
+equipment.content = model.pLike+
+equipment.localattributes =
+  att.global.attributes, att.declarable.attributes, empty
+incident =
+  
+  ## marks any phenomenon or occurrence, not necessarily vocalized or communicative, for example incidental noises or other events affecting communication. []
+  element incident { incident.content, incident.localattributes }
+incident.content = model.descLike*
+incident.localattributes =
+  att.global.attributes,
+  att.timed.attributes,
+  att.typed.attributes,
+  att.ascribed.attributes,
+  empty
+kinesic =
+  
+  ## marks any communicative phenomenon, not necessarily vocalized, for example a gesture, frown, etc. []
+  element kinesic { kinesic.content, kinesic.localattributes }
+kinesic.content = model.descLike*
+kinesic.localattributes =
+  att.global.attributes,
+  att.timed.attributes,
+  att.typed.attributes,
+  att.ascribed.directed.attributes,
+  
+  ## indicates whether or not the phenomenon is repeated.
+  [ a:defaultValue = "false" ]
+  attribute iterated {
+    xsd:boolean
+    | (
+       ##
+       "unknown"
+       | 
+         ##
+         "inapplicable")
+  }?,
+  empty
+pause =
+  
+  ## marks a pause either between or within utterances. []
+  element pause { pause.content, pause.localattributes }
+pause.content = empty
+pause.localattributes =
+  att.global.attributes,
+  att.timed.attributes,
+  att.typed.attributes,
+  att.ascribed.directed.attributes,
+  empty
+recording =
+  
+  ## (recording event) provides details of an audio or video recording event used as the source of a spoken text, either directly or from a public broadcast. [ ]
+  element recording { recording.content, recording.localattributes }
+recording.content = (model.recordingPart | model.pLike)*
+recording.localattributes =
+  att.global.attributes,
+  att.declarable.attributes,
+  att.duration.attributes,
+  att.typed.attribute.subtype,
+  
+  ## the kind of recording.
+  [ a:defaultValue = "audio" ]
+  attribute type {
+    
+    ## audio recording
+    "audio"
+    | 
+      ## audio and video recording
+      "video"
+  }?,
+  empty
+recordingStmt =
+  
+  ## (recording statement) describes a set of recordings used as the basis for transcription of a spoken text. [ ]
+  element recordingStmt {
+    recordingStmt.content, recordingStmt.localattributes
+  }
+recordingStmt.content = model.pLike+ | recording+
+recordingStmt.localattributes = att.global.attributes, empty
+scriptStmt =
+  
+  ## (script statement) contains a citation giving details of the script used for a spoken text. [  ]
+  element scriptStmt { scriptStmt.content, scriptStmt.localattributes }
+scriptStmt.content = model.pLike+ | model.biblLike
+scriptStmt.localattributes =
+  att.global.attributes, att.declarable.attributes, empty
+shift =
+  
+  ## marks the point at which some paralinguistic feature of a series of utterances by any one speaker changes. []
+  element shift { shift.content, shift.localattributes }
+shift.content =
+  empty
+  >> ns1:pattern [
+       id = "shift-shiftNew-constraint-assert-10"
+       "\x{a}" ~
+       "         "
+       ns1:rule [
+         context = "tei:shift"
+         "\x{a}" ~
+         "            "
+         ns1:assert [
+           test = "@new"
+           role = "warning"
+           "              \x{a}" ~
+           "The @new attribute should always be supplied; use the special value\x{a}" ~
+           '"normal" to indicate that the feature concerned ceases to be\x{a}' ~
+           "remarkable at this point."
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+       "\x{a}" ~
+       "      "
+     ]
+shift.localattributes =
+  att.global.attributes,
+  att.ascribed.attributes,
+  
+  ## a paralinguistic feature.
+  ## Suggested values include: 1] tempo; 2] loud; 3] pitch; 4] tension; 5] rhythm; 6] voice
+  attribute feature {
+    
+    ## speed of utterance.
+    "tempo"
+    | 
+      ## loudness.
+      "loud"
+    | 
+      ## pitch range.
+      "pitch"
+    | 
+      ## tension or stress pattern.
+      "tension"
+    | 
+      ## rhythmic qualities.
+      "rhythm"
+    | 
+      ## voice quality.
+      "voice"
+    | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?,
+  
+  ## specifies the new state of the paralinguistic feature specified.
+  [ a:defaultValue = "normal" ]
+  attribute new {
+    xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+  }?,
+  empty
+transcriptionDesc =
+  
+  ## describes the set of transcription conventions used, particularly for spoken material. []
+  element transcriptionDesc {
+    transcriptionDesc.content, transcriptionDesc.localattributes
+  }
+transcriptionDesc.content =
+  (model.labelLike | model.ptrLike | model.pLike)*
+transcriptionDesc.localattributes =
+  att.global.attributes,
+  
+  ## supplies an identifier for the encoding convention, independent of any version number.
+  attribute ident { xsd:Name },
+  
+  ## supplies a version number for the encoding conventions used, if any.
+  attribute version {
+    xsd:token { pattern = "[\d]+[a-z]*[\d]*(\.[\d]+[a-z]*[\d]*){0,3}" }
+  }?,
+  empty
+u =
+  
+  ## (utterance) contains a stretch of speech usually preceded and followed by silence or by a change of speaker. []
+  element u { u.content, u.localattributes }
+u.content = macro.paraContent
+u.localattributes =
+  att.global.attributes,
+  att.timed.attributes,
+  att.declaring.attributes,
+  att.ascribed.directed.attributes,
+  att.notated.attributes,
+  
+  ## (transition) indicates the nature of the transition between this utterance and the previous one.
+  [ a:defaultValue = "smooth" ]
+  attribute trans {
+    
+    ## this utterance begins without unusual pause or rapidity.
+    "smooth"
+    | 
+      ## this utterance begins with a markedly shorter pause than normal.
+      "latching"
+    | 
+      ## this utterance begins before the previous one has finished.
+      "overlap"
+    | 
+      ## this utterance begins after a noticeable pause.
+      "pause"
+  }?,
+  empty
+vocal =
+  
+  ## marks any vocalized but not necessarily lexical phenomenon, for example voiced pauses, non-lexical backchannels, etc. []
+  element vocal { vocal.content, vocal.localattributes }
+vocal.content = model.descLike*
+vocal.localattributes =
+  att.global.attributes,
+  att.timed.attributes,
+  att.ascribed.directed.attributes,
+  att.typed.attributes,
+  
+  ## indicates whether or not the phenomenon is repeated.
+  [ a:defaultValue = "false" ]
+  attribute iterated {
+    xsd:boolean
+    | (
+       ##
+       "unknown"
+       | 
+         ##
+         "inapplicable")
+  }?,
+  empty
+writing =
+  
+  ## contains a passage of written text revealed to participants in the course of a spoken text. []
+  element writing { writing.content, writing.localattributes }
+writing.content = macro.paraContent
+writing.localattributes =
+  att.global.attributes,
+  att.ascribed.directed.attributes,
+  att.typed.attributes,
+  att.timed.attributes,
+  
+  ## indicates whether the writing is revealed all at once or gradually.
+  attribute gradual {
+    xsd:boolean
+    | (
+       ##
+       "unknown"
+       | 
+         ##
+         "inapplicable")
+  }?,
+  empty
+# 3. macros
