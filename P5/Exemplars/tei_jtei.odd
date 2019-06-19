@@ -2163,6 +2163,15 @@
                 </sch:rule>
               </constraint>
             </constraintSpec>
+            <constraintSpec ident="jtei.sch-bibl-endpunctuation" scheme="schematron">
+              <constraint>
+                <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl">
+                  <sch:assert role="warning" test="(descendant::*|descendant::node()[normalize-space()])[last()][ends-with(normalize-space(), '.')]">
+                    A bibliographic entry should end with a period.
+                  </sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
             <attList>
               <attDef ident="type" mode="delete"/>
             </attList>
@@ -2525,19 +2534,17 @@
                   </sch:report>
                 </sch:rule>
                 <sch:rule context="tei:note" role="warning">
-                  <sch:report test="not(@rend='inside.parenthesis') and following::text()[not(ancestor::tei:note)][1][matches(., '^\)')]" sqf:fix="note.rend.add">
+                  <sch:report test="following::text()[not(ancestor::tei:note)][1][matches(., '^\)')]">
                     Footnotes may be placed before closing parentheses, though this is
-                    exceptionial. If this note's placement is intentional, please mark
-                    this with a @rend='inside.parenthesis' attribute. Otherwise, move
-                    it after the closing parenthesis.
+                    exceptionial. Please check if this note's placement is correct.
+                    Otherwise, move it after the closing parenthesis.
                   </sch:report>
-                  <sqf:fix id="note.rend.add">
-                    <sqf:description>
-                      <sqf:title>Add a @rend='inside.parentheses' attribute to the &lt;note&gt;.</sqf:title>
-                    </sqf:description>
-                    <sqf:add match="self::tei:note" node-type="attribute" target="rend">inside.parenthesis</sqf:add>
-                  </sqf:fix>                  
                 </sch:rule>                
+              <sch:rule context="tei:note">
+                  <sch:assert role="warning" test="(descendant::*|descendant::node()[normalize-space()])[last()][matches(normalize-space(), '[.?!]')]">
+                    A footnote should end with closing punctuation.
+                  </sch:assert>
+                </sch:rule>
               </constraint>
             </constraintSpec>
             <constraintSpec ident="jtei.sch-note-blocks" scheme="schematron">
@@ -2969,7 +2976,9 @@
                 <sch:let name="apos.straight" value="''''"/>
                 <sch:let name="quotes" value="concat('[', $apos.straight, '&quot;]')"/>
                 <sch:let name="div.types.front" value="('abstract', 'acknowledgements', 'authorNotes', 'editorNotes', 'corrections', 'dedication')"/>
-                <sch:let name="tei.version.url" value="'http://www.tei-c.org/release/doc/tei-p5-doc/VERSION'"/>
+                <!-- http://www.tei-c.org/release/doc/tei-p5-doc/VERSION produces 
+                     429 "Too Many Requests" errors -->
+                <sch:let name="tei.version.url" value="'https://jenkins.tei-c.org/view/TEI%20master/job/TEIP5/lastStableBuild/artifact/P5/release/doc/tei-p5-doc/VERSION/*view*/'"/>
                 <sch:let name="tei.version" value="if (unparsed-text-available($tei.version.url)) then normalize-space(unparsed-text($tei.version.url)) else ()"/>
               </sch:pattern>
             </constraint>
@@ -3262,11 +3271,11 @@
           </constraintSpec>
           <constraintSpec ident="jtei.sch-teiVersion" scheme="schematron">
             <constraint>
-              <sch:rule context="@target[matches(., '^https?://www\.tei-c\.org/release/doc/tei-p5-doc')]">
+              <sch:rule context="@target[matches(., '^https?://(www\.)?tei-c\.org/release/doc/tei-p5-doc')]">
                 <sch:assert test="false()" sqf:fix="teiURL.fix">
-                  Please refer to the exact version of the TEI Guidelines<sch:value-of select="if (normalize-space($tei.version)) then concat(' (currently at version ', $tei.version, ')') else ()"/>, and link to the version that can be found in the Vault section. For an overview of all archived versions, see http://www.tei-c.org/Vault/P5/.
+                  Please refer to the exact version of the TEI Guidelines<sch:value-of select="if (normalize-space($tei.version)) then concat(' (currently at version ', $tei.version, ')') else ()"/>, and link to the version that can be found in the Vault section. For an overview of all archived versions, see https://www.tei-c.org/Vault/P5/.
                   
-                  If you're referring to the English version, the correct URL will likely take the form of http://www.tei-c.org/Vault/P5/{$version-number}/doc/tei-p5-doc/en/html/.
+                  If you're referring to the English version, the correct URL will likely take the form of https://www.tei-c.org/Vault/P5/{$version-number}/doc/tei-p5-doc/en/html/.
                 </sch:assert>
                 <sqf:fix id="teiURL.fix" use-when="normalize-space($tei.version)">
                   <sqf:description>
@@ -3274,14 +3283,14 @@
                   </sqf:description>
                   <sqf:replace node-type="attribute"
                     target="target"
-                    select="replace(., '^https?://www\.tei-c\.org/release/', concat('https://www.tei-c.org/Vault/P5/', $tei.version, '/'))"/>
+                    select="replace(., '^https?://(www\.)?tei-c\.org/release/', concat('https://www.tei-c.org/Vault/P5/', $tei.version, '/'))"/>
                 </sqf:fix>
               </sch:rule>
             </constraint>
           </constraintSpec>
           <constraintSpec ident="jtei.jtei-url" scheme="schematron">
             <constraint>
-              <sch:rule context="@target[matches(., '^https?://(www\.)?jtei\.revues\.org/?')]">
+              <sch:rule context="@target[matches(., '^https?://(www\.)?jtei\.revues\.org/?')]" role="warning">
                 <sch:let name="URL.fixed" value="replace(., '^https?://(www\.)?jtei\.revues\.org/?', 'https://journals.openedition.org/jtei/')"/>
                 <sch:assert test="false()" sqf:fix="jteiURL.fix">
                   Please refer to the correct jTEI URL: <sch:value-of select="$URL.fixed"/>.
