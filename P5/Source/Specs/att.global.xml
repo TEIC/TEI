@@ -32,6 +32,7 @@ $Id$
       <gloss versionDate="2008-04-06" xml:lang="es">identificador</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">identifiant</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">identificatore</gloss>
+      <gloss xml:lang="ja" versionDate="2019-06-08">識別子</gloss>
       <desc versionDate="2005-10-10" xml:lang="en">provides a unique identifier for the element bearing the attribute.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">속성을 포함하는 요소에 대한 고유한 확인소를 제공한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">提供一個獨特識別符碼，識別帶有該屬性的元素。</desc>
@@ -65,6 +66,7 @@ $Id$
       <gloss versionDate="2008-04-06" xml:lang="es">número</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">nombre</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">numero</gloss>
+      <gloss xml:lang="ja" versionDate="2019-06-08">数値</gloss>
       <desc versionDate="2005-10-10" xml:lang="en">gives a number (or other label) for an element, which is not necessarily unique within
         the document.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">요소의 번호(또는 다른 표지)를 제시하며, 문서 내에서 반드시 고유값일 필요는 없다.</desc>
@@ -92,9 +94,7 @@ $Id$
           capítulos, de las secciones, de los items de una lista, etc.; puede también ser utilizado
           en la especificación de un sistema de referencia estándar para el texto.</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
-        <p> 当該属性<att>n</att>は，章・節・リスト項目などの番号を特定する ために使われる．これは，テキストを指示する標準参照システムにお いも採用されている． </p>
-      </remarks>
+      <remarks xml:lang="ja" versionDate="2019-06-08"><p>この属性の値は，もし空白やその他の区切り符号があったとしても、つねにひとまとまりのトークンとして解釈され、また数字のみで構成される必要はない。この属性は典型的には章や節，リスト等の構成要素の付番に用いられる。テキストの標準的な参照体系の仕様に含めることができる。</p></remarks>
     </attDef>
     <attDef ident="xml:lang" usage="opt">
       <gloss versionDate="2007-07-02" xml:lang="en">language</gloss>
@@ -102,13 +102,13 @@ $Id$
       <gloss versionDate="2008-04-06" xml:lang="es">lengua</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">langue</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">lingua</gloss>
+      <gloss xml:lang="ja" versionDate="2019-06-08">言語</gloss>
       <desc versionDate="2013-01-07" xml:lang="en">indicates the language of the element content using a <soCalled>tag</soCalled> generated
         according to <ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko"><ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>에 따라 생성된
         <soCalled>tag</soCalled>를 사용하는 요소 내용의 언어를 나타낸다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">使用<ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC3066</ref>的代碼，指出該元素內容的使用語言</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該要素の内容で使用されている言語を， <ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>
-        に準拠して作られた<soCalled>タグ</soCalled>で示す．</desc>
+      <desc xml:lang="ja" versionDate="2019-06-08"><ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>に従って生成された<soCalled>タグ</soCalled>を用いて要素の内容の言語を示す。</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">indique la langue du contenu de l'élément en
         utilisant les codes du <ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC 3066</ref>
          </desc>
@@ -166,10 +166,7 @@ and that a single TEI document may contain texts in many languages.</p>
         <p>Si no se especifica ningún valor para <att>xml:lang</att>, el valor de <att>xml:lang</att> para el elemento inmediatamente englobado, se hereda; por esta razón, un valor
           se debe especificar siempre en el elemento exterior (<gi>TEI</gi>).</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
-        <p> 当該属性<att>xml:lang</att>に値がない場合には，親要素にある属 性値を継承する．従って，一番外側の要素(すなわち<gi>TEI</gi>)の
-          属性値は常に継承されることになる． </p>
-      </remarks>
+      <remarks xml:lang="ja" versionDate="2019-06-16"><p>xml:lang の値は、直接の親要素、そのまた親要素からというように、文書の上位階層から継承されてくる。できるだけ高い適切な階層に xml:lang を指定するのが一般には望ましいが、teiHeader には関連するリソース要素と異なるデフォルト値が必要となったり、一つのTEI文書が多くの言語のテキストを含みうることには注意されたい。登録された言語タグの正式なリストはIANAが管理しており、<ptr target="http://www.iana.org/assignments/language-subtag-registry"></ptr> から確認できる。言語タグの構造についての良い概説は <ptr target="http://www.w3.org/International/articles/language-tags/"></ptr> を、手順を追った実用的なガイドは <ptr target="https://www.w3.org/International/questions/qa-choosing-language-tags.en.php"></ptr> を参照されたい。利用する値は、BCP 47 に準拠しなければならない。もし値が私用コード（<val>x-</val> から始まったり <val>-x-</val> を含む）ならば、その <att>ident</att> 属性と一致する値を持つ <gi>language</gi> 要素をTEIヘッダ内に追加して内容を説明すべきである。この説明は私用コード以外にも任意で追加できるが、<choice><abbr>IETF</abbr><expan>Internet Engineering Task Force</expan></choice> による定義と整合していなければならない。</p></remarks>
     </attDef>
     
     
@@ -272,14 +269,16 @@ and that a single TEI document may contain texts in many languages.</p>
           l'espace blanc</desc>
       <desc versionDate="2007-05-04" xml:lang="es">señala la voluntad de hacer que el espaciado sea preservado por cualquier aplicación.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">segnala la volontà di far sì che la spaziatura sia mantenuta da qualsivoglia applicazione.</desc>
-      <desc versionDate="2006-10-28" xml:lang="ja">空白文字類をアプリケーションがどう解釈するかを示す．</desc>
+      <desc xml:lang="ja" versionDate="2019-06-08">空白文字類をアプリケーションがどう解釈するかを示す。</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="closed">
         <valItem ident="default">
           <desc versionDate="2012-09-07" xml:lang="en">signals that the application's default white-space processing modes are acceptable</desc>
+          <desc xml:lang="ja" versionDate="2019-06-08">アプリケーションがデフォルトで持つ空白文字類処理モードが有効であることを知らせる。</desc>
         </valItem>
         <valItem ident="preserve">
           <desc versionDate="2012-09-07" xml:lang="en">indicates the intent that applications preserve all white space</desc>
+          <desc xml:lang="ja" versionDate="2019-06-08">アプリケーションがすべての空白文字類を保持するという意図を示す。</desc>
         </valItem>
       </valList>
       <remarks versionDate="2012-09-07" xml:lang="en">
@@ -287,6 +286,7 @@ and that a single TEI document may contain texts in many languages.</p>
       specification</ref> provides further guidance on the use of this
       attribute. Note that many parsers may not handle xml:space correctly.</p>
       </remarks>
+      <remarks xml:lang="ja" versionDate="2019-06-08"><p>この属性の利用に関する案内は<ref target="http://www.w3.org/TR/REC-xml/#sec-white-space">XML仕様</ref>を参照。xml:spaceを適切に扱うパーサーは多くない。</p></remarks>
     </attDef>
   </attList>
   <listRef>
