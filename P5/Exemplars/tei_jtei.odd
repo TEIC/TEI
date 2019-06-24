@@ -2534,9 +2534,9 @@
                   </sch:report>
                 </sch:rule>
                 <sch:rule context="tei:note" role="warning">
-                  <sch:report test="following::text()[not(ancestor::tei:note)][1][matches(., '^\)')]">
+                  <sch:report test="following::text()[not(ancestor::tei:note)][1][matches(normalize-space(), '^\)')]">
                     Footnotes may be placed before closing parentheses, though this is
-                    exceptionial. Please check if this note's placement is correct.
+                    exceptional. Please check if this note's placement is correct.
                     Otherwise, move it after the closing parenthesis.
                   </sch:report>
                 </sch:rule>                
@@ -2978,7 +2978,7 @@
                 <sch:let name="div.types.front" value="('abstract', 'acknowledgements', 'authorNotes', 'editorNotes', 'corrections', 'dedication')"/>
                 <!-- http://www.tei-c.org/release/doc/tei-p5-doc/VERSION produces 
                      429 "Too Many Requests" errors -->
-                <sch:let name="tei.version.url" value="'https://jenkins.tei-c.org/view/TEI%20master/job/TEIP5/lastStableBuild/artifact/P5/release/doc/tei-p5-doc/VERSION/*view*/'"/>
+                <sch:let name="tei.version.url" value="'https://jenkins.tei-c.org/job/TEIP5/lastStableBuild/artifact/P5/release/doc/tei-p5-doc/VERSION'"/>
                 <sch:let name="tei.version" value="if (unparsed-text-available($tei.version.url)) then normalize-space(unparsed-text($tei.version.url)) else ()"/>
               </sch:pattern>
             </constraint>
