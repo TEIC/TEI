@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" ident="att.formula">
+  <desc versionDate="2019-06-25" xml:lang="en">provides attributes for defining a mathematical formula.</desc>
+  <attList xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <attDef ident="formula" usage="opt">
+      <gloss versionDate="2019-06-25" xml:lang="en">holds a numeric value designated for use in a mathematical calculation.</gloss>
+      <desc versionDate="2019-06-25" xml:lang="en">An <att>formula</att> is provided for a numeric value necessary for a mathematical calculation such as a conversion between measurement systems.</desc>
+     
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.numeric"/></datatype>
+     
+    </attDef>
+  </attList>
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+          <encodingDesc>
+            <unitDecl>
+            <unitDef xml:id="keel" type="weight">
+              <label>keel</label>
+              <placeName ref="#england"/>
+              <conversion fromUnit="#chalder" toUnit="#keel" formula="20" from="1421" to="1676"/>
+              <conversion fromUnit="#chalder" toUnit="#keel" formula="16" from="1676" to="1824"/>
+              <desc>Keel was a unit measuring weight of coal. It had been equal to 20 chalders from 1421 to 1676, and it was made to be equivalent to 16 chalders from 1676 to 1824.</desc>
+            </unitDef>
+          </unitDecl>
+          </encodingDesc>
+        </egXML>
+      </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+      <conversion fromUnit="#teaspoon" toUnit="#tablespoon" formula="3"/>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+      <conversion fromUnit="#Celsius" toUnit="#Kelvin" formula="273.15"/>
+    </egXML>
+  </exemplum>
+  
+  <remarks versionDate="2019-06-25" xml:lang="en">
+    <p>This attribute class provides <att>formula</att> for use in defining a value used in mathematical calculation. It can be used, for example, to store a value needed to convert from from one system of measurement to another. In our simple examples, the values are additive: three teaspoons make a tablespoon. The formula attribute does not itself hold a formula, but rather a numerical value necessary for a conversion or other mathematical process documented elsewhere.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#HDUDECL" type="div3"/>
+  </listRef>
+</classSpec>

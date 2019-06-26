@@ -17,19 +17,33 @@
   </classes>
   <content>
      <alternate minOccurs="1" maxOccurs="unbounded">
-       <elementRef key="unit" minOccurs="1"/>
-       <classRef key="model.labelLike"/>
+       <classRef key="model.labelLike" minOccurs="1"/>
+       <classRef key="model.placeNamePart" minOccurs="0"/>
+       <elementRef key="conversion" minOccurs="0"/>
+       <elementRef key="unit" minOccurs="0"/><!-- 2019-06-25 ebb: QUESTION: Did we decide we don't want to permit <unit> inside <unitDef>? In this code I'm permitting it but not requiring it. -->
      </alternate>
   </content>
-  <!--ebb: This is a placeholder example from our ticket #1707 https://github.com/TEIC/TEI/issues/1707#issuecomment-345464670 -->
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <unitDef name="斤" xml:id="斤" type="weight">
-          <label xml:lang="ja">斤</label>
-          <label xml:lang="ja-Latn">kin</label>
-          <unit ref="#両" factor="16" />
-          <desc>A description here </desc>
-        </unitDef>
+      <unitDef xml:id="keel" type="weight">
+        <label>keel</label>
+        <placeName ref="#england"/>
+        <conversion fromUnit="#chalder" toUnit="#keel" formula="20" from="1421" to="1676"/>
+        <conversion fromUnit="#chalder" toUnit="#keel" formula="16" from="1676" to="1824"/>
+        <desc>Keel was a unit measuring weight of coal. It had been equal to 20 chalders from 1421 to 1676, and it was made to be equivalent to 16 chalders from 1676 to 1824.</desc>
+      </unitDef>
+      <unitDef xml:id="chalder" type="weight">
+        <label>chalder</label>
+        <placeName ref="#england"/>
+        <conversion fromUnit="#bushel" toUnit="#chalder" formula="32" from="1421" to="1676"/>
+        <conversion fromUnit="#bushel" toUnit="#chalder" formula="36" from="1676" to="1824"/>
+        <desc>Chalder was a unit measuring weight of coal. It had been equal to 32 bushels from 1421 to 1676, and it was made to be equivalent to 36 bushels from 1676 to 1824.</desc>
+      </unitDef>
+      <unitDef xml:id="bushel" type="weight">
+        <label>bushel</label>
+        <placeName ref="#england"/>
+        <desc>Bushel was a unit measuring weight of coal.</desc>
+      </unitDef>
     </egXML>
   </exemplum> 
   <listRef>

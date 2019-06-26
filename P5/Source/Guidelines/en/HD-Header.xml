@@ -1786,37 +1786,49 @@ more than one language, as in the following example:
   </div>
   <div type="div3" xml:id="HDUDECL"><head>The Unit Declaration</head>
     <p>When documents feature units of measurement that are not listed in the <ref target="https://www.bipm.org/en/publications/si-brochure/">International System of Units</ref>, the <gi>unitDecl</gi> element may be used in the encoding description to provide definitions and information about origins and equivalents.
+      <specList>
+        <specDesc key="unitDecl"/>
+      </specList>
     </p>
-    <specGrp xml:id="D2256" n="The unit declaration"><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unitDecl.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unitDef.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unit.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.labelLike.xml"/>
-    </specGrp>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NONE"><!--2018-07-18 ebb: The source was on our GitHub ticket #1707...Do we want to modify this or provide more/different examples? Can we explain/discuss the context for this example? -->
-      <unitDecl>
-        <unitDef name="斤" xml:id="斤" type="weight">
-          <label xml:lang="ja">斤</label>
-          <label xml:lang="ja-Ltn">kin</label>
-          <unit ref="#両" factor="16" />
-          <desc>A description here </desc>
+    <p>The <gi>unitDecl</gi> contains one or more <gi>unitDef</gi> child elements that serve to describe units of measure which may be marked in <gi>unit</gi> elements within the <gi>text</gi>.  
+      <specList>
+        <specDesc key="unitDef"/>
+        <specDesc key="unit"/>
+        <specDesc key="conversion"/> 
+      </specList>
+Within the <gi>unitDef</gi>, a <gi>conversion</gi> element may be used to store information relating to conversion between units. The <gi>conversion</gi> element holds a special pair of attributes, <att>fromUnit</att> and <att>toUnit</att>, which serve to indicate the direction of a calculation from one unit of measure (stored in <att>fromUnit</att>) to another (stored in <att>toUnit</att>). A numerical value needed to define the relation between these units may be stored in <att>formula</att> as shown in the example.
+    </p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NONE">
+      <encodingDesc>
+        <unitDecl>
+        <unitDef xml:id="keel" type="weight">
+          <label>keel</label>
+          <placeName ref="#england"/>
+          <conversion fromUnit="#chalder" toUnit="#keel" formula="20" from="1421" to="1676"/>
+          <conversion fromUnit="#chalder" toUnit="#keel" formula="16" from="1676" to="1824"/>
+          <desc>Keel was a unit measuring weight of coal. It had been equal to 20 chalders from 1421 to 1676, and it was made to be equivalent to 16 chalders from 1676 to 1824.</desc>
         </unitDef>
-        <unitDef name="両" xml:id="両" type="weight">
-          <label xml:lang="ja">両</label>
-          <label xml:lang="ja-Ltn">ryo</label>
-          <unit ref="#分" factor="4" />
-          <desc>A description here </desc>
+        <unitDef xml:id="chalder" type="weight">
+          <label>chalder</label>
+          <placeName ref="#england"/>
+          <conversion fromUnit="#bushel" toUnit="#chalder" formula="32" from="1421" to="1676"/>
+          <conversion fromUnit="#bushel" toUnit="#chalder" formula="36" from="1676" to="1824"/>
+          <desc>Chalder was a unit measuring weight of coal. It had been equal to 32 bushels from 1421 to 1676, and it was made to be equivalent to 36 bushels from 1676 to 1824.</desc>
         </unitDef>
-        <unitDef name="分" xml:id="分" type="weight">
-          <label xml:lang="ja">分</label>
-          <label xml:lang="ja-Ltn">Bu</label>
-          <unit ref="#銖" factor="6" />
-          <desc>A description here </desc>
-        </unitDef>
-        <unitDef name="銖" xml:id="銖" type="weight">
-          <label xml:lang="ja">銖</label>
-          <label xml:lang="ja-Ltn">Shu</label>
-          <unit factor="1" />
-          <desc>A description here </desc>
+        <unitDef xml:id="bushel" type="weight">
+          <label>bushel</label>
+          <placeName ref="#england"/>
+          <desc>Bushel was a unit measuring weight of coal.</desc>
         </unitDef>
       </unitDecl>
+      </encodingDesc>
     </egXML>
+    <specGrp xml:id="D2256" n="The unit declaration"><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unitDecl.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unitDef.xml"/>
+      <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.labelLike.xml"/> 
+      <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unit.xml"/>
+      <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/conversion.xml"/>
+      <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.placeNamePart.xml"/>  
+    </specGrp>
   </div>
   <div type="div3" xml:id="HDSCHSPEC"><head>The Schema Specification</head>
     <p>The <gi>schemaSpec</gi> element contains a schema specification. When this element appears inside <gi>encodingDesc</gi>, it allows embedding of a TEI ODD customization file inside a TEI header; alternatively, this element may be used in the <gi>body</gi> of an ODD document. The use of ODD files, and their relationship to schemas, is described in detail in <ptr target="#TD"/>.</p>

@@ -16,38 +16,32 @@
   <content>
     <elementRef key="unitDef" minOccurs="1" maxOccurs="unbounded"/>
   </content>
-  <!--ebb: This is a placeholder example from our ticket #1707 https://github.com/TEIC/TEI/issues/1707#issuecomment-345464670 -->
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <unitDecl>
-        <unitDef name="斤" xml:id="斤" type="weight">
-          <label xml:lang="ja">斤</label>
-          <label xml:lang="ja-Latn">kin</label>
-          <unit ref="#両" factor="16" />
-          <desc>A description here </desc>
+        <unitDef xml:id="keel" type="weight">
+          <label>keel</label>
+          <placeName ref="#england"/>
+          <conversion fromUnit="#chalder" toUnit="#keel" formula="20" from="1421" to="1676"/>
+          <conversion fromUnit="#chalder" toUnit="#keel" formula="16" from="1676" to="1824"/>
+          <desc>Keel was a unit measuring weight of coal. It had been equal to 20 chalders from 1421 to 1676, and it was made to be equivalent to 16 chalders from 1676 to 1824.</desc>
         </unitDef>
-        <unitDef name="両" xml:id="両" type="weight">
-          <label xml:lang="ja">両</label>
-          <label xml:lang="ja-Latn">ryo</label>
-          <unit ref="#分" factor="4" />
-          <desc>A description here </desc>
+        <unitDef xml:id="chalder" type="weight">
+          <label>chalder</label>
+          <placeName ref="#england"/>
+          <conversion fromUnit="#bushel" toUnit="#chalder" formula="32" from="1421" to="1676"/>
+          <conversion fromUnit="#bushel" toUnit="#chalder" formula="36" from="1676" to="1824"/>
+          <desc>Chalder was a unit measuring weight of coal. It had been equal to 32 bushels from 1421 to 1676, and it was made to be equivalent to 36 bushels from 1676 to 1824.</desc>
         </unitDef>
-        <unitDef name="分" xml:id="分" type="weight">
-          <label xml:lang="ja">分</label>
-          <label xml:lang="ja-Latn">Bu</label>
-          <unit ref="#銖" factor="6" />
-          <desc>A description here </desc>
-        </unitDef>
-        <unitDef name="銖" xml:id="銖" type="weight">
-          <label xml:lang="ja">銖</label>
-          <label xml:lang="ja-Latn">Shu</label>
-          <unit factor="1" />
-          <desc>A description here </desc>
+        <unitDef xml:id="bushel" type="weight">
+          <label>bushel</label>
+          <placeName ref="#england"/>
+          <desc>Bushel was a unit measuring weight of coal.</desc>
         </unitDef>
       </unitDecl>
     </egXML>
   </exemplum>
   <listRef>
-    <ptr target="#HDUDECL" type="div3"/><!--ebb: NOTE: I've prepared a place unitDecl (and unitDef) in section 2.3 (encodingDesc section) of the HD chapter, and I've tentatively placed it after geoDecl.-->
+    <ptr target="#HDUDECL" type="div3"/>
   </listRef>
 </elementSpec>
