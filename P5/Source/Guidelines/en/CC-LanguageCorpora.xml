@@ -97,7 +97,7 @@ large corpora.
 Guidelines; composite texts, including corpora, will typically make
 use of the following tags for their top-level organization.
 <specList><specDesc key="teiCorpus"/><specDesc key="TEI"/><specDesc key="teiHeader"/><specDesc key="text"/><specDesc key="group"/></specList> Full descriptions of these may be found in
-chapter <ptr target="#HD"/> (for <gi>teiHeader</gi>), and chapter <ptr target="#DS"/> (for <gi>teiCorpus</gi> <gi>TEI</gi>, <gi>text</gi> and
+chapter <ptr target="#HD"/> (for <gi>teiHeader</gi>), and chapter <ptr target="#DS"/> (for <gi>teiCorpus</gi>, <gi>TEI</gi>, <gi>text</gi>, and
 <gi>group</gi>); this section discusses their application to composite
 texts in particular.
  </p>
@@ -127,26 +127,43 @@ achieving this status.
 <p>The <gi>teiCorpus</gi> element is intended for the encoding of
 language corpora, though it may also be useful in encoding newspapers,
 electronic anthologies, and other disparate collections of material.
-The individual samples in the corpus are encoded as separate
-<gi>TEI</gi> elements, and the entire corpus is enclosed in a
-<gi>teiCorpus</gi> element.  Each sample has the usual structure for
-a <gi>TEI</gi> document, comprising a <gi>teiHeader</gi> followed by a
-<gi>text</gi> element. The corpus, too, has a corpus-level
-<gi>teiHeader</gi> element, in which the corpus as a whole, and encoding
-practices common to multiple samples may be described. The overall
-structure of a TEI-conformant corpus is thus:
+The <gi>TEI</gi> element may be used in the same manner itself; the
+<gi>teiCorpus</gi> element, however, makes explicit the multiplicity
+of the collection, whatever it may be. The individual samples in the
+corpus are encoded as separate <gi>TEI</gi> elements, and the entire
+corpus is enclosed in a <gi>TEI</gi> or <gi>teiCorpus</gi> element.
+Each sample has the usual structure for a <gi>TEI</gi> document,
+comprising a <gi>teiHeader</gi> followed by one or more members of the
+<ident type="class">model.resourceLike</ident> class. The corpus, too,
+has a corpus-level <gi>teiHeader</gi> element, in which the corpus as
+a whole, and encoding practices common to multiple samples may be
+described. The overall structure of a TEI-conformant corpus is thus:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND"><teiCorpus>
-    <teiHeader>
-    </teiHeader>
-    <TEI>
-         <teiHeader>  </teiHeader>
-         <text>  </text>
-    </TEI>
-    <TEI>
-         <teiHeader>  </teiHeader>
-         <text>  </text>
-    </TEI>
-</teiCorpus></egXML></p>
+  <teiHeader>
+  </teiHeader>
+  <TEI>
+    <teiHeader>  </teiHeader>
+    <text>  </text>
+  </TEI>
+  <TEI>
+    <teiHeader>  </teiHeader>
+    <text>  </text>
+  </TEI>
+</teiCorpus></egXML>
+Or, alternatively:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND"><TEI>
+  <teiHeader>
+  </teiHeader>
+  <TEI>
+    <teiHeader>  </teiHeader>
+    <text>  </text>
+  </TEI>
+  <TEI>
+    <teiHeader>  </teiHeader>
+    <text>  </text>
+  </TEI>
+</TEI></egXML></p>
 <p>Header information which relates to the whole corpus rather than to
 individual components of it should be factored out and included in the
 <gi>teiHeader</gi> element prefixed to the whole.  This two-level
@@ -165,8 +182,7 @@ reviews, etc.) into some higher-level grouping, possibly with sub-groups
 for date, region, etc.  The <gi>teiCorpus</gi> element provides no
 direct support for reflecting such internal corpus structure in the
 markup:  it treats the corpus as an undifferentiated series of
-components, each tagged <gi>TEI</gi>.
- </p>
+components, each tagged <gi>TEI</gi>.</p>
 <p>If it is essential to reflect a single permanent organization of a
 corpus into sub- and sub-sub-corpora, then the corpus or the high-level
 subcorpora may be encoded as composite texts, using the <gi>group</gi>
@@ -812,7 +828,7 @@ this common denominator.
 <p>For example, the following schematic shows the structure of a corpus
 comprising three texts, the first and last of which share the same
 encoding description. The second one has its own encoding description.
-<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND"><teiCorpus>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND"><TEI>
   <teiHeader>
     <fileDesc><!-- corpus file description--></fileDesc>
     <encodingDesc>
@@ -854,8 +870,7 @@ encoding description. The second one has its own encoding description.
       <!-- third corpus text -->
     </text>
   </TEI>
-</teiCorpus>
-</egXML>
+</TEI></egXML>
  </p></div>
 <div type="div3" xml:id="CCAS2"><head>Declarable Elements</head>
 
