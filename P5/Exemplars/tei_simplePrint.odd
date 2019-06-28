@@ -75,6 +75,8 @@
       </tagsDecl>
     </encodingDesc>
     <revisionDesc>
+      <change when="2019-06-28" who="mholmes sbauman">Eliminate cases of multiple *Spec
+      elements for the same <att>ident</att> by combining them manually</change>
       <change when="2016-11-17">Implement name change finally agreed by Council</change>
       <change when="2016-10-26">Remove authority,sponsor,funder,principal; unicodeName
         localName; add discussion of charDecl</change>
@@ -3355,7 +3357,6 @@ although <seg xml:id="network"
         <schemaSpec ident="tei_simplePrint" start="TEI teiCorpus">
           <specGrpRef target="#base"/>
           <specGrpRef target="#header"/>
-          <specGrpRef target="#header2"/>
           <specGrpRef target="#attclasses"/>
           <specGrpRef target="#modelclasses"/>
           <specGrpRef target="#simpleelements"/>
@@ -3420,33 +3421,7 @@ although <seg xml:id="network"
               textClass
               titleStmt
               xenoData"/>
-
             <moduleRef key="corpus" include="particDesc settingDesc"/>
-
-           
-          </specGrp>
-
-          <specGrp xml:id="header2">
-            <elementSpec ident="text" mode="change">
-              <constraintSpec xmlns="http://www.tei-c.org/ns/1.0"
-                xmlns:XSL="http://www.w3.org/1999/XSL/Transform" ident="headeronlyelement"
-                scheme="schematron">
-                <constraint>
-                  <!-- <rule xmlns="http://purl.oclc.org/dsdl/schematron"
-                    context="tei:att | tei:biblFull | tei:biblStruct | tei:change | tei:charDecl | tei:charProp | tei:editor
-                    | tei:editorialDecl | tei:email | tei:encodingDesc | tei:extent | tei:fileDesc | tei:gi | tei:glyph | tei:glyphName | 
-                    tei:idno | tei:imprint | tei:keywords | tei:licence | tei:listChange | tei:listPerson | tei:localName | tei:monogr | 
-                    tei:msDesc | tei:msIdentifier | tei:person | tei:physDesc | tei:profileDesc | tei:publicationStmt | tei:relatedItem | 
-                    tei:repository | tei:resp | tei:respStmt | tei:sourceDesc | tei:tag | tei:teiHeader | tei:term | tei:textClass | tei:textDesc 
-                    | tei:titleStmt | tei:typeDesc | tei:val | tei:value">-->
-                  <rule xmlns="http://purl.oclc.org/dsdl/schematron"
-                    context="tei:term | tei:biblFull ">
-                    <report test="ancestor::tei:text">Error: The element <name/> is not permitted
-                      outside the header</report>
-                  </rule>
-                </constraint>
-              </constraintSpec>
-            </elementSpec>
           </specGrp>
 
           <p>Some attributes and attribute classes are removed. The range of values available for
@@ -3534,9 +3509,6 @@ although <seg xml:id="network"
                   </rule>
                 </constraint>
               </constraintSpec>
-            </classSpec>
-
-            <classSpec type="atts" ident="att.global.rendition" mode="change">
               <!-- remove unused attributes @rend and @style; constrain values for @rendition -->
               <attList>
                 <attDef ident="rend" mode="delete"/>
@@ -3800,19 +3772,16 @@ although <seg xml:id="network"
           <p>The following unused model classes are removed.</p>
           <specGrp xml:id="modelclasses">
              <!-- why is this needed? the ODD processor should do it for you-->
-            <classSpec type="model" ident="model.entryPart" mode="delete"/>
-            <classSpec type="model" ident="model.placeNamePart" mode="delete"/>
-            <classSpec type="model" ident="model.placeStateLike" mode="delete"/>
+            <classSpec type="model" ident="model.certLike" mode="delete"/>
             <classSpec type="model" ident="model.egLike" mode="delete"/>
+            <classSpec type="model" ident="model.entryPart" mode="delete"/>
+            <classSpec type="model" ident="model.glossLike" mode="delete"/>
+            <classSpec type="model" ident="model.oddDecl" mode="delete"/>
             <classSpec type="model" ident="model.offsetLike" mode="delete"/>
             <classSpec type="model" ident="model.pPart.msdesc" mode="delete"/>
-            <classSpec type="model" ident="model.oddDecl" mode="delete"/>
-            <classSpec type="model" ident="model.specDescLike" mode="delete"/>
-            <classSpec type="model" ident="model.entryPart" mode="delete"/>
             <classSpec type="model" ident="model.placeNamePart" mode="delete"/>
             <classSpec type="model" ident="model.placeStateLike" mode="delete"/>
-            <classSpec type="model" ident="model.certLike" mode="delete"/>
-            <classSpec type="model" ident="model.glossLike" mode="delete"/>
+            <classSpec type="model" ident="model.specDescLike" mode="delete"/>
           </specGrp>
           <!-- 
             These are the 113 textual elements selected for use in TEI simplePrint texts-->
@@ -4644,7 +4613,8 @@ although <seg xml:id="network"
               <model behaviour="block"/>
             </elementSpec>
             <elementSpec ident="profileDesc" mode="change">
-                <exemplum xml:lang="en" versionDate="2016-11-14">
+              <model behaviour="omit"/>
+              <exemplum xml:lang="en" versionDate="2016-11-14">
                     <egXML xmlns="http://www.tei-c.org/ns/Examples">
                         <profileDesc>
                             <creation>
@@ -4979,9 +4949,6 @@ although <seg xml:id="network"
                 <param name="content" value="titleStmt"/>
               </model>
             </elementSpec>
-            <elementSpec ident="profileDesc" mode="change">
-              <model behaviour="omit"/>
-            </elementSpec>
             <elementSpec ident="revisionDesc" mode="change">
               <model behaviour="omit"/>
             </elementSpec>
@@ -5111,6 +5078,24 @@ although <seg xml:id="network"
 
             </elementSpec>
             <elementSpec ident="text" mode="change">
+              <constraintSpec xmlns="http://www.tei-c.org/ns/1.0"
+                xmlns:XSL="http://www.w3.org/1999/XSL/Transform" ident="headeronlyelement"
+                scheme="schematron">
+                <constraint>
+                  <!-- <rule xmlns="http://purl.oclc.org/dsdl/schematron"
+                    context="tei:att | tei:biblFull | tei:biblStruct | tei:change | tei:charDecl | tei:charProp | tei:editor
+                    | tei:editorialDecl | tei:email | tei:encodingDesc | tei:extent | tei:fileDesc | tei:gi | tei:glyph | tei:glyphName | 
+                    tei:idno | tei:imprint | tei:keywords | tei:licence | tei:listChange | tei:listPerson | tei:localName | tei:monogr | 
+                    tei:msDesc | tei:msIdentifier | tei:person | tei:physDesc | tei:profileDesc | tei:publicationStmt | tei:relatedItem | 
+                    tei:repository | tei:resp | tei:respStmt | tei:sourceDesc | tei:tag | tei:teiHeader | tei:term | tei:textClass | tei:textDesc 
+                    | tei:titleStmt | tei:typeDesc | tei:val | tei:value">-->
+                  <rule xmlns="http://purl.oclc.org/dsdl/schematron"
+                    context="tei:term | tei:biblFull ">
+                    <report test="ancestor::tei:text">Error: The element <name/> is not permitted
+                      outside the header</report>
+                  </rule>
+                </constraint>
+              </constraintSpec>
               <model behaviour="body">
                 <outputRendition> max-width: 80%; margin: auto; font-family: Verdana, Tahoma,
                   Geneva, Arial, Helvetica, sans-serif; </outputRendition>
