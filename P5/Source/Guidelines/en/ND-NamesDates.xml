@@ -1959,8 +1959,6 @@ occupation and residence.</p>
 
     <div xml:id="NDOBJ">
       <head>Objects</head>
-      <!-- JC: Expand prose here! -->
-
       <p>
         <specList>
           <specDesc key="object"/>
@@ -1972,42 +1970,57 @@ occupation and residence.</p>
         The <gi>object</gi> element is a more general descriptive form of the <gi>msDesc</gi> element. The latter should be used
         for describing manuscripts and similar text-bearing objects but can be viewed as a more specific form of the
           <gi>object</gi> element. </p>
-
+	<p>
+	<!-- JC: Update after a couple of releases -->
+        <emph>Please note:</emph> The <gi>object</gi> element is a recent addition to TEI P5 Guidelines as of version 3.5.0 and as such might 
+        be more prone to further revision in the next few releases as its use develops. This may be particularly evident where its 
+	contents have been borrowed from <gi>msDesc</gi> and have yet to be generalized from their use in the context of manuscript descriptions.  
+	</p>
 
 
       <p> The <gi>object</gi> element usually appears inside the <gi>listObject</gi> element which is used to group descriptions
         of identifiable objects. This is a member of <ident type="class">model.listLike</ident> and so <gi>listObject</gi> may
         appear anywhere that <gi>list</gi> is allowed. This enables the flexibility of using <gi>listObject</gi> to contain a set
-        of metadata descriptions stored in the header, or as a list of objects from a source document. </p>
+        of metadata descriptions stored in the header, or as a list of objects transcribed from a source document. The equivalent list 
+        for manuscript descriptions is <gi>listBibl</gi>. </p>
 
       <p>
         <specList>
-          <specDesc key="objIdentifier"/>
+          <specDesc key="objectIdentifier"/>
           <specDesc key="msContents"/>
           <specDesc key="physDesc"/>
           <specDesc key="history"/>
           <specDesc key="additional"/>
-        </specList> Overall, the basic structure of an object element is akin to that of <gi>msDesc</gi> in that after a group of
+        </specList> 
+        Overall, the basic structure of an <gi>object</gi> element is akin to that of <gi>msDesc</gi> in that it is providing a 
+        structured description of an object. After a group of
         identifying information, it has the option of paragraphs or, if the <ident type="module">msdescription</ident> module is
         loaded, <gi>msContents</gi>, <gi>physDesc</gi>, <gi>history</gi>, and <gi>additional</gi> elements for descriptive
         metadata about this object. Although these elements originate from manuscript description the <gi>object</gi> element may
-        be used for all forms of object (whether text-bearing or not). The <gi>objIdentifier</gi> element is a general-purpose
+        be used for all forms of object (whether text-bearing or not).  
+
+	<!-- JC: Update after a couple of releases -->
+        Where descendents of <gi>object</gi> still have the hallmarks 
+        of their use in manuscript description, the descriptions as relating to manuscripts should be interpreted as applying to all 
+        forms of object (text-bearing) or not. 
+	</p><p>
+       The <gi>objectIdentifier</gi> element is a general-purpose
         grouping element for location or identification information relating to a single object or resource. It is very similar to
-        an <gi>msIdentifier</gi> element with less contraints on the order of its contents. The <gi>objIdentifier</gi> may be more
+        an <gi>msIdentifier</gi> element with less contraints on the order of its contents. The <gi>objectIdentifier</gi> may be more
         or less detailed dependent on the needs of the encoder. In some cases an <gi>object</gi> may be used mostly as a common
         reference point for multiple <gi>objectName</gi> elements to refer back to. In situations, one might provide more detailed
-        information in the <gi>objIdentifier</gi> where it is available or desirable. Compare <egXML
+        information in the <gi>objectIdentifier</gi> where it is available or desirable. Compare <egXML
           xmlns="http://www.tei-c.org/ns/Examples">
-          <object xml:id="Excalibur-shortIdentifer">
-            <objIdentifier>
+          <object xml:id="Excalibur-shortIdentifier">
+            <objectIdentifier>
               <objectName>Excalibur</objectName>
-            </objIdentifier>
+            </objectIdentifier>
             <p>Excalibur is the name for the legendary sword of King Arthur.</p>
           </object>
         </egXML> where only a single <gi>objectName</gi> is provided and below where multiple versions are provided. <egXML
           xmlns="http://www.tei-c.org/ns/Examples">
-          <object xml:id="Excalibur-longerIdentifer">
-            <objIdentifier>
+          <object xml:id="Excalibur-longerIdentifier">
+            <objectIdentifier>
               <objectName type="main">Excalibur</objectName>
               <objectName type="alt">Caliburn</objectName>
               <objectName xml:lang="cy">Caledfwlch</objectName>
@@ -2015,19 +2028,19 @@ occupation and residence.</p>
               <objectName xml:lang="br">Kaledvoulc'h</objectName>
               <objectName xml:lang="la">Caliburnus</objectName>
               <country>Wales</country>
-            </objIdentifier>
+            </objectIdentifier>
             <p>Excalibur is the name for the legendary sword of King Arthur, in Welsh it is called Caledfwlch, in Cornish it is
               called Calesvol, in Breton it is called Kaledvoulc'h, and in Latin it is called Caliburnus. In some versions
               Excalibur's blade was engraved with phrases on opposite sides: "Take me up" and "Cast me away" (or similar).</p>
           </object>
         </egXML>
       </p>
-      <p> Moreover, the <gi>objIdentifier</gi> may include an <gi>address</gi> element to provide the address at which the object
-        currently resides. The use of <gi>location</gi> within this is enables the provision of geographical coordinates when
+      <p> Moreover, the <gi>objectIdentifier</gi> may include an <gi>address</gi> element to provide the address at which the object
+        currently resides. The use of <gi>location</gi> within this enables the provision of geographical coordinates when
         describing objects not housed in traditional repositories or institutions. This may also be used to supplement more
         traditional repository location information if available and, for example, to enable providing outputs such as maps
         showing the location of encoded objects. <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <objIdentifier>
+          <objectIdentifier>
             <objectName xml:lang="en">Mask of Tutankhamun</objectName>
             <idno type="carter">256a</idno>
             <idno type="JournalD'Entrée">60672</idno>
@@ -2042,10 +2055,10 @@ occupation and residence.</p>
                 <geo>30.047778, 31.233333</geo>
               </location>
             </address>
-          </objIdentifier>
+          </objectIdentifier>
         </egXML>
       </p>
-      <p> The <gi>msContents</gi> element is used to provide a description of the intellectual contents of any text on an object
+      <p> The <gi>msContents</gi> element is currently used to provide a description of the intellectual contents of any text on an object
         and, being optional, is not necessary if there are no intellectual contents to describe. (Such contents, especially in the
         case of artistic objects, may not always be textual.) The <gi>physDesc</gi> element may be used to give a physical
         description of the object either in prose or using more structured elements as and where they apply to that kind of
@@ -2058,7 +2071,7 @@ occupation and residence.</p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <listObject>
             <object xml:id="TutankhamunMask">
-              <objIdentifier>
+              <objectIdentifier>
                 <objectName xml:lang="en">Mask of Tutankhamun</objectName>
                 <idno type="carter">256a</idno>
                 <idno type="JournalD'Entrée">60672</idno>
@@ -2073,7 +2086,7 @@ occupation and residence.</p>
                     <geo>30.047778, 31.233333</geo>
                   </location>
                 </address>
-              </objIdentifier>
+              </objectIdentifier>
               <msContents>
                 <p>The back and shoulders of the mask is inscribed with a protective spell in Egyptian hieroglyphs formed of ten
                   vertical and horizontal lines. This spell first appeared on masks in the Middle Kingdom at least 500 years
@@ -2136,7 +2149,7 @@ occupation and residence.</p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <listObject>
             <object xml:id="Alfred-Jewel">
-              <objIdentifier>
+              <objectIdentifier>
                 <country>United Kingdom</country>
                 <region>Oxfordshire</region>
                 <settlement>Oxford</settlement>
@@ -2146,7 +2159,7 @@ occupation and residence.</p>
                 <idno type="ashmolean">AN1836p.135.371</idno>
                 <idno type="wikipedia">https://en.wikipedia.org/wiki/Alfred_Jewel</idno>
                 <objectName>Alfred Jewel</objectName>
-              </objIdentifier>
+              </objectIdentifier>
               <physDesc>
                 <p> The Alfred Jewel is about 6.4 cm in length and is made of combination of filigreed <material>gold</material>
                   surrounding a polished teardrop shaped piece of transparent <material>quartz</material>. Underneath the rock
@@ -2179,13 +2192,97 @@ occupation and residence.</p>
         </egXML>
       </p>
 
+
+<p>
+There is no restriction on the form, size, or type of object that may be described by an <gi>object</gi> element, however, some objects may be more adequately described by a <gi>place</gi> element depending on context. Where a description of an object is being provided in terms of identification, physical characteristics, or history, then an <gi>object</gi> element may be preferred. Where metadata is being recorded about the geo-political location, population, or similar traits, then the <gi>place</gi> element may be better suited. A corresponding relation between an object description and place may be recorded through the use of the <att>corresp</att> attribute. An example of a large object that might be described with the <gi>object</gi> element could be a building such as the Central Library of the National Autonomous University of Mexico.
+</p>
+
+
+<p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <object type="building" xml:lang="en" xml:id="UNAM-CL">
+               <objectIdentifier>
+                  <objectName type="abbr">The Central Library of UNAM</objectName>
+                  <objectName type="full">The Central Library of the National Autonomous University of Mexico</objectName>
+                  <objectName xml:lang="es">La Biblioteca Central de la Universidad Nacional Autónoma de México</objectName>
+                  <settlement>Mexico City</settlement>
+                  <region>Coyoacán</region>
+                  <country>Mexico</country>
+               </objectIdentifier>
+               <physDesc>
+                  <objectDesc>
+                     <p> The Central Library encompasses an area of <dim unit="m" quantity="16000" type="area">16 thousand square
+                           meters</dim> and is built on a three meter platform. The base contains two <material>basalt</material>
+                        <objectType>fountains</objectType> and <objectType>decorative reliefs</objectType> inspired by
+                        pre-Hispanic art.</p>
+                     <p>The library has ten windowless floors for book storage, each having enough space for 120 thousand volumes.
+                        These storage areas have the necessary lighting, temperature and humidty conditions for book conservation.
+                        In the reading room, flanked by a garden on each side, the diffuse and matte light is filtered through
+                           <material>thin tecali stone slabs</material>. The semi-basement of the building contains the service
+                        and administrative offices of the library.</p>
+                     <p>The building facades are covered with one of the largest murals in the world and is made from naturally
+                        colored stone tiles. It is entitled <title>Historical Representation of Culture</title> and is by
+                           <persName role="artist">Juan O'Gorman</persName>.</p>
+                  </objectDesc>
+                  <decoDesc>
+                     <decoNote>
+                        <label>Base</label> At the base of the building there are two basalt fountains and decorative reliefs
+                        around the outside that are inspired by pre-Hispanic art. The color of the stone in these elements is left
+                        exposed to take advantage of the stone's texture as an aesthetic and expressive element, and to give a
+                        sense of continuity to the external pavement.</decoNote>
+                     <decoNote>
+                        <label>Murals</label>
+                        <p>The outside windowless portion of the building contains one of the largest murals in the world. This is
+                           called <title>Historical Representation of the Culture</title> and is a <material>stone polychromatic
+                              mosaic</material> based on the combination of 12 basic colors. The mural is created in an
+                           impressionist style where the coloured tiles when seen from a distance form specific figures. The 12
+                           colors where chosen from 150 samples of original stones with the criteria including the stone's
+                           resistance to degredation by weather. According to the artist, <persName role="artist">Juan
+                              O'Gorman</persName>, in the mosaic he represented three fundamental historical facets of the Mexican
+                           culture: the pre-Hispanic era, the Spanish colonial era, and the modern age. For example with the North
+                           Wall, this represents the pre-Hispanic era and is dominated by mythical elements relating to the
+                           life-death duality. The left side of the main axis there are
+                           deities and scenes pertaining to the creation of life. The right hand side of the mural contains figures 
+                           relating to death. For a more detailed description see <ref
+                              target="https://en.wikipedia.org/wiki/Central_Library_(UNAM)#Murals"
+                              >https://en.wikipedia.org/wiki/Central_Library_(UNAM)#Murals</ref>. </p>
+                     </decoNote>
+                  </decoDesc>
+               </physDesc>
+               <history>
+                  <origin> In <origDate when="1948" type="conceptual">1948</origDate> the architect and artist Juan O'Gorman, in
+                     collaboration with architects Gustavo Saavedra and Juan Martinez de Velasco designed the building with a
+                     functionalist approach, as part of the greater project of the construction of the University City on the
+                     grounds of the Pedregal de San Angel in Mexico City. Originally the building was planned to host the National
+                     Library and National Newspaper Library of Mexico. The library finally opened its doors for the first time on
+                        <origDate when="1956-04-05" type="opening">5 April 1956</origDate>. In July 2007 it was declared a UNESCO
+                     world heritage site. </origin>
+
+               </history>
+               <additional>
+                  <adminInfo>
+                     <custodialHist>
+                        <custEvent from="1981" to="1983"> The library was significantly remodelled from 1981 - 1983 with the
+                           purpose of changing from closed shelving to open stacks, providing users more direct access to the
+                           collections. </custEvent>
+                     </custodialHist>
+                  </adminInfo>
+               </additional>
+            </object>
+
+
+</egXML>
+</p>
+
+
+
       <!-- Include all the necessary object-related elements  -->
       <specGrp xml:id="DNDOBJ" n="Names for objects">
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/objectName.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/object.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/listObject.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.objectLike.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/objIdentifier.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/objectIdentifier.xml"/>
       </specGrp>
 
     </div>

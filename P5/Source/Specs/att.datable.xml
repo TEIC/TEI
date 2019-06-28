@@ -4,19 +4,20 @@ Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" type="atts" xml:id="DATABLE" ident="att.datable">
-  <desc versionDate="2007-06-12" xml:lang="en">provides attributes for normalization of elements that contain
-  dates, times, or datable events.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">날짜, 시간 또는 날짜 명기
-  사건을 포함하는 요소의 규격화에 대한 속성을 제공한다.</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">提供用於元素規格化的屬性，
-  這些元素包含日期明確的事件。</desc>
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+  module="tei" type="atts" xml:id="DATABLE" ident="att.datable">
+  <desc versionDate="2007-06-12" xml:lang="en">provides attributes for normalization of elements
+    that contain dates, times, or datable events.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">날짜, 시간 또는 날짜 명기 사건을 포함하는 요소의 규격화에 대한 속성을 제공한다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">提供用於元素規格化的屬性， 這些元素包含日期明確的事件。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">日付や時間または時間事象を含む要素の正規化手法を示す属性を示す．</desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">fournit des attributs
-  pour la normalisation d'éléments qui contiennent des mentions
-  d'événements datés ou susceptibles de l'être</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">atributos para registrar expresiones temporales normalizadas.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">assegna attributi per la normalizzazione di elementi che contengono eventi databili</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">fournit des attributs pour la normalisation
+    d'éléments qui contiennent des mentions d'événements datés ou susceptibles de l'être</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">atributos para registrar expresiones temporales
+    normalizadas.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">assegna attributi per la normalizzazione di elementi
+    che contengono eventi databili</desc>
   <classes>
     <memberOf key="att.datable.w3c"/>
     <memberOf key="att.datable.iso"/>
@@ -24,95 +25,112 @@ $Id$
   </classes>
   <attList>
     <attDef ident="calendar" usage="opt">
-      <desc versionDate="2011-11-25" xml:lang="en">indicates the system or calendar to which the date represented by the content of this
-        element belongs.</desc>
+      <desc versionDate="2011-11-25" xml:lang="en">indicates the system or calendar to which the
+        date represented by the content of this element belongs.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">날짜 표현 시스템 또는 달력 표시 형식을 표시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該日期表示所使用的曆法計算系統。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該日付の歴システムを示す．</desc>
-      <desc versionDate="2009-01-06" xml:lang="fr">indique le système ou le calendrier auquel appartient
-        la date exprimée dans le contenu de l'élément.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">indica el sistema o calendario en que se muestra una
-        fecha.</desc>
+      <desc xml:lang="ja" versionDate="2019-02-03">この要素を含むコンテントにおける日付の暦やシステムを示す．</desc>
+      <desc versionDate="2009-01-06" xml:lang="fr">indique le système ou le calendrier auquel
+        appartient la date exprimée dans le contenu de l'élément.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">indica el sistema o calendario en que se muestra
+        una fecha.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data
         appartiene.</desc>
-      <datatype><dataRef key="teidata.pointer"/></datatype>
+      <datatype>
+        <dataRef key="teidata.pointer"/>
+      </datatype>
       <constraintSpec ident="calendar" scheme="schematron">
         <constraint>
           <sch:rule context="tei:*[@calendar]">
-            <sch:assert test="string-length(.) gt 0">
-@calendar indicates the system or calendar to which the date represented by the content of this element
-belongs, but this <sch:name/> element has no textual content.</sch:assert>
+            <sch:assert test="string-length(.) gt 0"> @calendar indicates the system or calendar to
+              which the date represented by the content of this element belongs, but this
+              <sch:name/> element has no textual content.</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
       <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">He was born on <date calendar="#gregorian">Feb. 22, 1732</date> 
-          (<date calendar="#julian" when="1732-02-22"> Feb. 11, 1731/32, O.S.</date>).</egXML>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">He was born on <date calendar="#gregorian"
+            >Feb. 22, 1732</date> (<date calendar="#julian" when="1732-02-22"> Feb. 11, 1731/32,
+            O.S.</date>).</egXML>
       </exemplum>
       <exemplum versionDate="2008-04-06" xml:lang="fr">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Bouiller_Rapport"> L'année
-          1960 fut, en vertu du calendrier grégorien, bissextile ; le 22 juin tomba ainsi le jour
-          de l'été, le <date calendar="#gregorian">22 juin</date>.
-        </egXML>
+          1960 fut, en vertu du calendrier grégorien, bissextile ; le 22 juin tomba ainsi le jour de
+          l'été, le <date calendar="#gregorian">22 juin</date>. </egXML>
       </exemplum>
-      <remarks xml:lang="en" versionDate="2015-05-29"><p>Note that the <att>calendar</att> attribute (unlike
-        <att>datingMethod</att> defined in <ident type="class">att.datable.custom</ident>) defines
-      the calendar system of the date in the original material defined by the parent element, <emph>not</emph>
-      the calendar to which the date is normalized.</p></remarks>
+      <remarks xml:lang="en" versionDate="2015-05-29">
+        <p>Note that the <att>calendar</att> attribute (unlike <att>datingMethod</att> defined in
+            <ident type="class">att.datable.custom</ident>) defines the calendar system of the date
+          in the original material defined by the parent element, <emph>not</emph> the calendar to
+          which the date is normalized.</p>
+      </remarks>
+      <remarks xml:lang="ja" versionDate="2019-02-03"><p>
+        <att>calendar</att>属性は(<ident type="class">att.datable.custom</ident>クラスで定義される<att>datingMethod</att>属性と異なり、
+        親要素によって定義される原資料の日付の暦日システムを定義するものであり、
+        どの暦日に日付を正規化するかではない。</p></remarks>
     </attDef>
     <attDef ident="period" usage="opt">
-      <desc versionDate="2011-11-25" xml:lang="en">supplies a pointer to some location defining a named
-        period of time within which the datable item is understood to
-        have occurred.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">시간을 명시할 수 있는 항목이 일어난 시간의 기간명을 정의하는 특정 위치로의 포인터를 제공한다.</desc>
-      <desc versionDate="2008-04-06" xml:lang="es">suministra un indicador a una localización concreta que define un periodo de tiempo conocido dentro del cual el item datable se ha producido.</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">時間事象の名前付き時間幅を定義する時点を示す．</desc>
+      <desc versionDate="2011-11-25" xml:lang="en">supplies a pointer to some location defining a
+        named period of time within which the datable item is understood to have occurred.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">시간을 명시할 수 있는 항목이 일어난 시간의 기간명을 정의하는 특정 위치로의 포인터를
+        제공한다.</desc>
+      <desc versionDate="2008-04-06" xml:lang="es">suministra un indicador a una localización
+        concreta que define un periodo de tiempo conocido dentro del cual el item datable se ha
+        producido.</desc>
+      <desc xml:lang="ja" versionDate="2019-02-03">年代測定可能な事柄が起きたとされる名前付の時間幅を定義する，
+        何らかの場所へのポインタを提供する．</desc>
       <desc versionDate="2008-03-30" xml:lang="fr">fournit un pointeur vers un emplacement donné
-        définissant une période de temps nommée durant laquelle l'item
-      concerné s'inscrit.</desc>
-      <desc versionDate="2007-11-06" xml:lang="it">fornisce un puntatore a una data posizione definendo un determinato periodo di tempo entro il quale l'oggetto da datare è collocabile</desc>
-      <datatype><dataRef key="teidata.pointer"/></datatype>
+        définissant une période de temps nommée durant laquelle l'item concerné s'inscrit.</desc>
+      <desc versionDate="2007-11-06" xml:lang="it">fornisce un puntatore a una data posizione
+        definendo un determinato periodo di tempo entro il quale l'oggetto da datare è
+        collocabile</desc>
+      <datatype>
+        <dataRef key="teidata.pointer"/>
+      </datatype>
     </attDef>
   </attList>
   <remarks versionDate="2011-11-25" xml:lang="en">
-    <p>This <soCalled>superclass</soCalled> provides attributes that
-    can be used to provide normalized values of temporal information.
-    By default, the attributes from the <ident type="class">att.datable.w3c</ident> class are provided. If the
-    module for names &amp; dates is loaded, this class also provides
-    attributes from the <ident type="class">att.datable.iso</ident> and
-    <ident type="class">att.datable.custom</ident> classes. In general, the possible values of attributes restricted to
-    the W3C datatypes form a subset of those values available via the
-    ISO 8601 standard. However, the greater expressiveness of the ISO
-    datatypes may not be needed, and there exists much greater
-    software support for the W3C datatypes.</p>
+    <p>This <soCalled>superclass</soCalled> provides attributes that can be used to provide
+      normalized values of temporal information. By default, the attributes from the <ident
+        type="class">att.datable.w3c</ident> class are provided. If the module for names &amp; dates
+      is loaded, this class also provides attributes from the <ident type="class"
+        >att.datable.iso</ident> and <ident type="class">att.datable.custom</ident> classes. In
+      general, the possible values of attributes restricted to the W3C datatypes form a subset of
+      those values available via the ISO 8601 standard. However, the greater expressiveness of the
+      ISO datatypes may not be needed, and there exists much greater software support for the W3C
+      datatypes.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
-    <p>Cette<soCalled>superclasse</soCalled> fournit des attributs qui peuvent être employés
-                pour donner des valeurs normalisées à des informations relatives au temps. Par
-                défaut, les attributs de la classe <ident type="class">att.datable.w3c</ident> sont
-                fournis. Si le module pour les noms et les dates est chargé, cette classe fournit
-                également des attributs de la classe <ident type="class">att.datable.iso</ident>. En
-                général, les valeurs possibles des attributs, limitées aux types de données W3C,
-                forment un sous-ensemble des valeurs que l'on trouve dans la norme ISO 8601.
-                Cependant, il n'est peut-être pas nécessaire de recourir aux possibilités très
-                étendues des types de données de l'ISO. Il existe en effet une bien plus grande
-                offre logicielle pour le traitement des types de données W3C.</p>
+    <p>Cette<soCalled>superclasse</soCalled> fournit des attributs qui peuvent être employés pour
+      donner des valeurs normalisées à des informations relatives au temps. Par défaut, les
+      attributs de la classe <ident type="class">att.datable.w3c</ident> sont fournis. Si le module
+      pour les noms et les dates est chargé, cette classe fournit également des attributs de la
+      classe <ident type="class">att.datable.iso</ident>. En général, les valeurs possibles des
+      attributs, limitées aux types de données W3C, forment un sous-ensemble des valeurs que l'on
+      trouve dans la norme ISO 8601. Cependant, il n'est peut-être pas nécessaire de recourir aux
+      possibilités très étendues des types de données de l'ISO. Il existe en effet une bien plus
+      grande offre logicielle pour le traitement des types de données W3C.</p>
   </remarks>
   <remarks xml:lang="es" versionDate="2008-04-06">
-    <p>Esta <soCalled>superclase</soCalled> proporciona atributos que pueden ser utilizados para proporcionar valores normalizados de información temporal.
-    Por defecto, los atributos de la clase <ident type="class">att.datable.w3c</ident> son proporcionados. Si el módulo para los nombres y las fechas se acciona, esta clase también proporciona atributos de <ident type="class">att.datable.iso</ident>. En general, los valores posibles de los atributos son los restringidos por la forma de los datatypes de W3C, un subconjunto de esos valores disponibles vía el estándar de ISO 8601. Sin embargo, la mayoría de expresiones de los datatypes de ISO pueden no ser necesarios, y existe software de soporte para los datatypes de W3C.</p>
+    <p>Esta <soCalled>superclase</soCalled> proporciona atributos que pueden ser utilizados para
+      proporcionar valores normalizados de información temporal. Por defecto, los atributos de la
+      clase <ident type="class">att.datable.w3c</ident> son proporcionados. Si el módulo para los
+      nombres y las fechas se acciona, esta clase también proporciona atributos de <ident
+        type="class">att.datable.iso</ident>. En general, los valores posibles de los atributos son
+      los restringidos por la forma de los datatypes de W3C, un subconjunto de esos valores
+      disponibles vía el estándar de ISO 8601. Sin embargo, la mayoría de expresiones de los
+      datatypes de ISO pueden no ser necesarios, y existe software de soporte para los datatypes de
+      W3C.</p>
   </remarks>
-  <remarks xml:lang="ja" versionDate="2008-04-05">
-    <p>
-    このいわゆる<soCalled>親クラス(スーパークラス)</soCalled>は，
-    正規化された値を属性値として持つ，時間情報を示す属性になる．
-    デフォルト値として，当該属性は，クラス<ident type="class">att.datable.w3c</ident>が付与されている．
-    名前と日付に関するモジュールが使用される場合，当該クラスは，クラス
-    <ident type="class">att.datable.iso</ident>から属性が与えられる．
-    一般には，W3Cのデータ形式に従った属性値は，ITO8601に従った属性値の
-    下位要素になっている．しかし，より強力な表現力を持つISOのデータ形
-    式が必要になることはない．さらに強力な表現力をサポートするソフトウェ
-    アも存在する．
+  <remarks xml:lang="ja" versionDate="2019-02-03">
+    <p>この<soCalled>親クラス(スーパークラス)</soCalled>は， 
+      正規化された時間情報を示すために用いる属性を提供する．デフォルト値として，当該属性は，
+      クラス<ident type="class">att.datable.w3c</ident>が付与されている．
+      名前と日付に関するモジュールが使用される場合，当該クラスは，クラス <ident
+        type="class">att.datable.iso</ident>から属性が与えられる．一般には，
+      W3Cのデータ形式に従った属性値は，ISO8601に従った属性値の下位集合をなす．
+      しかし，より強力な表現力を持つISOのデータ形式が必要にはならないかもしれない．
+      W3Cのデータ形式に対するさらに強力な表現力をサポートするソフトウェアも存在する．
     </p>
   </remarks>
   <listRef>

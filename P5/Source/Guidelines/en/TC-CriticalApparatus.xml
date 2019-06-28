@@ -132,9 +132,7 @@ proposition; a helping theorem.</q>--></p>
       <p>Readings may be encoded individually, or grouped for perspicuity using the <gi>rdgGrp</gi>
         element described in section <ptr target="#TCAPSU"/>.</p>
       <p>As members of the attribute classes <ident type="class">att.witnessed</ident> and <ident type="class">att.textCritical</ident>, both of these elements inherit the following
-        attributes. <!--Some of
-these attributes are intelligible only if the reading is ascribed to a
-single witness; others have no such restriction.-->
+        attributes. 
         <specList>
           <specDesc key="att.witnessed" atts="wit"/>
           <specDesc key="att.textCritical" atts="type cause varSeq hand"/>
@@ -198,55 +196,43 @@ disen sumer gân.</l>
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="ang" source="#TCAPLR-eg-11"><l>se ðe on
   <app>
      <rdg wit="#Kl">hea(um) h(æþ)e</rdg>
-     <rdg wit="#ms" resp="#Z">heaðo hlæwe</rdg>
-     <rdg wit="#ms" resp="#Cha">heaum hope</rdg>
+     <rdg wit="#ms" source="#Z">heaðo hlæwe</rdg>
+     <rdg wit="#ms" source="#Cha">heaum hope</rdg>
   </app></l>
 <l>hord beweotode,</l></egXML>
-        <!-- He also records the fact that Holthausen, editions 1-5,  -->
-        <!-- and Sch&uuml;cking follow Zupitza's reading of the ms.   -->
-        <!-- So in 'real life' this will require a witDetail          -->
-        <!-- element, I think.                                        --></p>
-      <p>The <att>hand</att> and <att>resp</att> attributes are intelligible only on an element
-        recording a reading from a single witness, and should not be used if more than one witness
-        is given on the same <gi>rdg</gi> or <gi>lem</gi> element. If more than one witness is given
-        for the reading, they are undefined. To convey this information when the witness is one
-        among several, the <gi>witDetail</gi> element should be used; see section <ptr target="#TCAPLW"/>.</p>
+      </p>
+      <p>Because the <att>hand</att> attribute indicates a particular manuscript hand, it is intelligible 
+        only on a reading from a single witness. If an encoder wishes to indicate that a particular 
+        reading from a list in <att>wit</att> is in a particular hand, the <gi>witDetail</gi> element 
+        should be used; see section <ptr target="#TCAPLW"/>.</p>
       <p>Where there is a greater weight of editorial discussion and interpretation than can
         conveniently be expressed through the attributes provided on these elements (for example
-        where there are multiple witnesses for a single reading or multiple editorial responsibility
-        for an emendation) this information can be attached to the apparatus in a note, or recorded
-        in the feature structure notation defined in chapter <ptr target="#FS"/>. In particular,
-        such recurring text-critical situations as palaeographic confusion of particular letters, or
-        homœoarchy or homœoteleuton involving specific character groups, may lend themselves to
-        feature structure treatment. Information concerning these recurrent situations may be
-        encoded into database-like fragments within the text which would then be available to
-        sophisticated computer-assisted analysis. Further work remains to be done on such
-        mechanisms, however, and so no examples are given here of the use of feature structures in
-        text-critical apparatus.</p>
+        where the editor wishes to discuss how a section of text might be punctuated) this information 
+        can be attached to the apparatus in a note.</p>
       <p>The <gi>note</gi> element may also be used to record the specific wording of notes in the
         apparatus of the source edition, as here in a transcription of Friedrich Klaeber's note on
-          <title>Beowulf</title> 2207a: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#TCAPLR-eg-11"><l n="2207a">syððan Beowulfe
-<note resp="#Kl" place="app">Fol. 179a <mentioned>beowulfe</mentioned>.
+          <title>Beowulf</title> 2207a: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#TCAPLR-eg-11"><l n="2207a">syððan <app><lem>Beowulfe</lem>
+<note source="#Kl">Fol. 179a <mentioned>beowulfe</mentioned>.
   Folio 179, with the last page (Fol. 198b), is the worst part of the
   entire MS. It has been freshened up by a later hand, but not always
   correctly. Information on doubtful readings is in the notes of
-  Zupitza and Chambers.</note></l>
+  Zupitza and Chambers.</note></app></l>
 <l n="2207b">brade rice</l>
 </egXML>
         <!-- Klaeber, app. to 2207.                                   --> Notes providing details of
         the reading of one particular witness should be encoded using the specialized
           <gi>witDetail</gi> element described in section <ptr target="#TCAPLW"/>.</p>
       <p>Encoders should be aware of the distinct fields of use of the attribute values
-          <att>wit</att>, <att>hand</att>, and <att>resp</att>. Broadly, <att>wit</att> identifies
+          <att>wit</att>, <att>hand</att>, and <att>source</att>. Broadly, <att>wit</att> identifies
         the physical entity in which the reading is found (manuscript, clay tablet, papyrus, printed
         edition); <att>hand</att> refers to the agent responsible for inscribing that reading in
-        that physical entity (scribe, author, inscriber, hand 1, hand 2); <att>resp</att> indicates
+        that physical entity (scribe, author, inscriber, hand 1, hand 2); <att>source</att> indicates
         the scholar responsible for asserting the existence of that reading in that physical entity.
         In some cases, the categories may blur: a scholar may produce an edition introducing
         readings for which he or she is responsible; that edition may itself become a witness in a
         later critical apparatus. Thus, readings introduced as corrections in the earlier edition
         will be seen in the later apparatus as witnessed by the earlier edition. As observed in the
-        discussion concerning the discrimination of <att>hand</att> and <att>resp</att> in
+        discussion concerning the discrimination of <att>hand</att> and <att>resp</att> in 
         transcription of primary sources in section <ptr target="#PHHR"/>, the division of layers of
         responsibility through various scholars for particular aspects of a particular reading may
         require the more complex mechanisms for assigning responsibility described in chapter <ptr target="#CE"/>.</p>
@@ -376,12 +362,12 @@ disen sumer gân.</l>
     <div type="div3" xml:id="TCAPLW">
       <head>Witness Information</head>
       <p>A given reading is associated with the set of witnesses attesting it by listing the
-        witnesses in the <att>wit</att> attribute on the <gi>rdg</gi>, <gi>lem</gi>, or
-          <gi>rdgGrp</gi> element. Special mechanisms, described in the following sections, are
-        needed to associate annotation on a reading with one specific witness among several (section
-          <ptr target="#TCAPWD"/>), to transcribe witness information verbatim from a source edition
-        (section <ptr target="#TCSCWL"/>), and to identify the formal lists of witnesses typically
-        provided in the front matter of critical editions (section <ptr target="#TCAPWL"/>).</p>
+        witnesses in the <att>wit</att> attribute on the <gi>rdg</gi> or <gi>lem</gi> element. Special 
+        mechanisms, described in the following sections, are needed to associate annotation on a reading 
+        with one specific witness among several (section <ptr target="#TCAPWD"/>), to transcribe 
+        witness information verbatim from a source edition (section <ptr target="#TCSCWL"/>), and to 
+        identify the formal lists of witnesses typically provided in the front matter of critical 
+        editions (section <ptr target="#TCAPWL"/>).</p>
       <div type="div4" xml:id="TCAPWD">
         <head>Witness Detail Information</head>
         <p>When it is desired to give additional information about a particular witness or witnesses
@@ -392,21 +378,19 @@ disen sumer gân.</l>
             <specDesc key="att.pointing" atts="target"/>
             <specDesc key="witDetail" atts="wit"/>
           </specList></p>
-        <p>Unlike <gi>note</gi>, <gi>witDetail</gi> cannot be included in the text at the point of
+        <p>Because it annotates an attribute value, <gi>witDetail</gi> cannot be included in the text at the point of
           attachment; it must point to the reading(s) being annotated by means of its
             <att>target</att> attribute. To indicate, on the authority of editor PR, that the
           Ellesmere manuscript has an ornamental capital in the word
             <mentioned>Experience</mentioned>, for example, one might write:
           <egXML xmlns="http://www.tei-c.org/ns/Examples"><app type="substantive">
-    <rdgGrp type="subvariants">
-        <lem xml:id="W026" wit="#El #Hg">Experience</lem>
-        <rdg wit="#Ha4">Experiens</rdg>
-    </rdgGrp>
+  <lem xml:id="W026" wit="#El #Hg">Experience</lem>
+  <witDetail target="#W026" wit="#El">Ornamental capital.</witDetail>
+  <rdg wit="#Ha4">Experiens</rdg>
 </app>
-<witDetail target="#W026" wit="#El" resp="#PR">Ornamental capital.</witDetail></egXML>
+</egXML>
           This encoding makes clear that the ornamental capital mentioned is in the Ellesmere
-          manuscript, and not in Hengwrt or Ha4. The <att>resp</att> attribute assigns
-          responsibility to PR.</p>
+          manuscript, and not in Hengwrt or Ha4. </p>
         <p>Like <gi>note</gi>, <gi>witDetail</gi> may be used to record the specific wording of
           information in the source text, even when the information itself is captured in some more
           formal way elsewhere. The example from the <title>Carmina Burana</title> above (section
@@ -418,94 +402,75 @@ disen sumer gân.</l>
    <app>
       <rdg wit="#Mu" hand="#m1">alle</rdg>
       <rdg xml:id="anon.6.4" wit="#Mu" hand="#m2">allen</rdg>
+      <witDetail target="#anon.6.4" wit="#Mu">
+        <mentioned>n</mentioned> nachgetragen.
+      </witDetail>
    </app>
 disen sumer gân.</l>
-<witDetail target="#anon.6.4" wit="#Mu">
-   <ref>allen</ref>
-   <mentioned>n</mentioned> nachgetragen.
-</witDetail></egXML>
+</egXML>
           <!-- Des Minnesangs Fr&uuml;hling, ed.  Hugo Moser and        -->
           <!-- Helmut Tervooren (Stuttgart:  Hirzel, 1977), I, 20.      -->
           <!-- (Anonymous VI).                                          --></p>
-        <p>Observe that a single witness detail element may be linked to several different readings
-          (noting, for example, a recurrent phenomenon in a particular manuscript) by having the
-            <att>target</att> attribute point at all the readings in question. Similarly, feature
-          structures containing information about the text in a witness (whether retroversion,
+        <p>Observe that a single witness detail element may be linked to different readings, by having the
+          <att>target</att> attribute point at all the readings in question. It is, however, best practice 
+          from the encoder's perspective to keep <gi>witDetail</gi>s close to the readings they annotate, therefore
+          it is not recommended that a single <gi>witDetail</gi> be used to annotate many readings.
+          Similarly, feature structures containing information about the text in a witness (whether retroversion,
           regularization, or other) can also be linked to specific <gi>lem</gi> and <gi>rdg</gi>
           instances. See chapter <ptr target="#FS"/>.</p>
         <specGrp xml:id="DTCAPWD" n="Witness Details"> <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/witDetail.xml"/> </specGrp>
       </div>
       <div type="div4" xml:id="TCSCWL">
         <head>Witness Information in the Source</head>
-        <p>In the transcription of printed critical editions, it may be desirable to retain for
+        <p>Although <gi>witDetail</gi> provides a good way to annotate witness references in <att>wit</att>, lists
+          of sigla <note place="bottom">The Latin word <foreign>siglum</foreign> (<gloss>sign</gloss>), pl. 
+          <foreign>sigla</foreign> denotes the abbreviation used in a critical apparatus to indicate a 
+          particular witness.</note> may be complex enough that it is impractical to use the combination of 
+          <att>wit</att> and <gi>witDetail</gi>.
+          Moreover, in the transcription of printed critical editions, it may be desirable to retain for
           future reference the exact form in which the source edition records the witnesses to a
           particular reading; this is particularly important in cases of ambiguity in the
           information, or uncertainty as to the correct interpretation. The <gi>wit</gi> element may
           be used to transcribe such lists of witnesses to a particular reading. <specList>
             <specDesc key="wit"/>
           </specList> The <gi>wit</gi> list may appear following a <gi>rdg</gi>, <gi>rdgGrp</gi>, or
-            <gi>lem</gi> element in any apparatus entry, and should be used only to transcribe the
-          witness information in the form found in the source.<!-- In particular, it should not be used as a substitute     -->
-          <!-- for the <att>wit</att> attribute:  where present, the    -->
-          <!-- information in the <gi>wit</gi> element and the          -->
-          <!-- <att>wit</att> attribute should agree, unless the        -->
-          <!-- encoder is uncertain about the interpretation of the     -->
-          <!-- witness information in the source, or the encoder has    -->
-          <!-- corrected an error in the source.                        --> The advantage of holding
-          witness information in the <att>wit</att> attribute of <gi>lem</gi> or <gi>rdg</gi> is
-          that <!-- this may make
-it more convenient for -->an application can check that every
-            sigil<note place="foot">We use the term sigil as the English equivalent of the Latin
-            term <foreign>siglum</foreign> (sign) traditionally used for the brief identifier
-            associated with a particular document.</note> for the identifier has been declared
-          elsewhere in the document. Because the <att>wit</att> attribute has declared datatype of
-          one or more <ident type="datatype">data.pointer</ident> values, a check can be made that
-          readings are assigned only to witness sigla which have been identified (using the
-            <att>xml:id</att> attribute) within a <gi>listWit</gi> element (see section <ptr target="#TCAPWL"/>). Such checking is more difficult for witness sigla held as the
-          content of a <gi>wit</gi> element.
-          <!--: an application program can check them, but parsers will
-not.--> For this reason, it
-          is recommended that encoders always hold witness information in the <att>wit</att>
-          attribute of <gi>lem</gi> and <gi>rdg</gi>, where possible. Thus, as in the examples
-          below, even when a reference to a witness is exactly reproduced in the <gi>wit</gi>
-          element, the corresponding sigil for that witness can be written into the <att>wit</att>
-          attribute of the matching <gi>rdg</gi> or <gi>lem</gi>. However, in cases where it is
-          uncertain how the witness reference contained in the <gi>wit</gi> element should be
-          interpreted, or where no witness exists, the <att>wit</att> attribute on the matching
-            <gi>rdg</gi> or <gi>lem</gi> may be left empty. <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COBICOR-eg-251" xml:lang="gmh"><lg type="stanza"> <l xml:id="Diet1.1">Slăfest du, vriedel ziere?</l>
-    <l xml:id="Diet1.2">wan wecket uns leider schiere;</l>
-    <l xml:id="Diet1.3">ein vogellīn sŏ wol getăn</l>
-    <l xml:id="Diet1.4">daz ist der linden an daz zwī gegăn.</l>
-    </lg>
-<app type="secondary" loc="Diet.1.1">
-    <rdg wit="#Kb">slăfst</rdg> <wit>K(Ba)</wit>
-    </app>
-<app type="secondary" loc="Diet.1.2">
-    <rdg wit="#Kv">Man</rdg> <wit>K(V)</wit>
-    <rdg wit="#K">weckt</rdg> <wit>K (Wackernagel 401)</wit>
-    <rdg wit="#Ju">Ich waen ez taget uns schiere</rdg>
-    <wit>Jungbluth, Festschr. Pretzel 1963, 122.</wit>
-    </app>
-</egXML>
-          <!-- MF 39,18, ed. Moser/Tervooren, p. 66.                    --> Of course, the sigil
-          used for a particular witness in the source, as recorded in the <gi>wit</gi> element, may
-          well differ from that used to indicated the same witness in the <att>wit</att> attribute,
-          as shown particularly in the apparatus for the second line of the poem (Diet.1.2).</p>
-
+            <gi>lem</gi> element in any apparatus entry. <gi>wit</gi> may be used in a way functionally equivalent
+          to <att>wit</att> if the sigla therein are wrapped in <gi>ref</gi>s with <att>target</att> attributes
+          pointing to a predefined witness. For example 
+          <egXML xmlns="http://www.tei-c.org/ns/Examples"><app>
+            <lem>Nondum</lem>
+            <rdg wit="#G #P" xml:id="rdg1.1nundum" ana="#orthographical">nundum</rdg>
+            <witDetail wit="#G" target="#rdg1.1nundum">corr. <ref
+                target="#G1">G<hi rend="super">1</hi></ref></witDetail>
+            </app>
+          </egXML>
+          which indicates that the reading <q>nundum</q> for <q>nondum</q> is to be found in MSS G (although it is 
+          corrected to <foreign>nondum</foreign> in the primary hand) and P, might be written:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples"><app>
+            <lem>Nondum</lem>
+            <rdg wit="#G #P" ana="#orthographical">nundum</rdg>
+            <wit><ref target="#G">G</ref>(corr. <ref target="#G1">G<hi rend="super">1</hi></ref>)<ref target="#P">P</ref></wit>
+          </app>
+          </egXML>
+          This is somewhat more verbose, but accomplishes the same goal. Because <att>wit</att> is more succinct, and because it makes
+          the automated verification of correct witness references easier, using <att>wit</att> (with <gi>witDetail</gi> when
+          needed) is almost always to be preferred.
+        </p>
         <specGrp xml:id="DTCSCWL" n="Sourcetext Witness Lists in Apparatus"> <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/wit.xml"/> </specGrp>
       </div>
       <div type="div4" xml:id="TCAPWL">
         <head>The Witness List</head>
         <p>A list of all identified witnesses should normally be supplied in the front matter of the
           edition, or in the <gi>sourceDesc</gi> element of its header. This may be given either as
-          a simple bibliographic list, using the <gi>listBibl</gi> element described in <ptr target="#COBI"/>, or as a <gi>listWit</gi> element, which contains a series of
+          a simple bibliographic list, using the <gi>listBibl</gi> element described in 
+          <ptr target="#COBI"/>, or as a <gi>listWit</gi> element, which contains a series of
             <gi>witness</gi> elements. Each <gi>witness</gi> element may contain a brief
           characterization of the witness, given as one or more prose paragraphs. If more detailed
           information about a manuscript witness is available, it should be represented using the
             <gi>msDesc</gi> element provided by the <ident type="module">msdescription</ident>
           module; a <gi>msDesc</gi> may appear within a <gi>listBibl</gi>. </p>
         <p>Whether information about a particular witness is supplied by means of a <gi>bibl</gi>,
-            <gi>msDesc</gi>, or <gi>witness</gi> element, a unique sigil for this source should
+            <gi>msDesc</gi>, or <gi>witness</gi> element, a unique siglum for this source should
           always be supplied, using the global <att>xml:id</att> attribute. This identifier can then
           be used elsewhere to refer to this particular witness. <specList>
             <specDesc key="listWit"/>
@@ -594,16 +559,11 @@ Barcelona, 1518, Carles Amorós. </bibl>
 </egXML>
         </p>
         <p>In text-critical work it is customary to refer to frequently occurring groups of
-          witnesses by means of a single common sigil. Such sigla may be documented as
+          witnesses by means of a single common siglum. Such sigla may be documented as
           pseudo-witnesses in their own right by including a nested witness list within the witness
-          list, which uses the sigil for the group as its identifier, and supplies a fuller name for
+          list, which uses the siglum for the group as its identifier, and supplies a fuller name for
           the group in its optional child <gi>head</gi> element, before listing the other witnesses
           contained by the group.
-          <!-- In this example, the group of
-manuscripts of the <title>Canterbury Tales</title> which make up <soCalled>Constant
-Group C</soCalled> are themselves first allocated sigla in individual
-<gi>witness</gi> elements, and then those sigla are given as the
-<att>included</att> value of a further <gi>witness</gi> element. -->
           For example, the Constant Group C of manuscripts comprising witnesses Cp, La, and S12,
           might be represented as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <listWit>
@@ -616,18 +576,58 @@ Group C</soCalled> are themselves first allocated sigla in individual
    <witness xml:id="Sl2">British Library Sloane MS 1686</witness>
 </listWit>
 </listWit></egXML>
-          <!--   <witness xml:id="c" included="#Cp #La #Sl2">Constant Group c</witness>--> That the
-          reading <mentioned>Experiment</mentioned> occurs in all three manuscripts can now be
-          indicated simply as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><rdg wit="#Con">Experiment</rdg></egXML>
-          <!-- What happens if both 'c' and 'La' are given, on two      -->
-          <!-- different readings?  Needs clarification for next        -->
-          <!-- revision.  Allow single-ms readings to override a        -->
-          <!-- group?  What, then, about groups of groups, or about     -->
-          <!-- overlapping groups?  Perhaps better to say that 'c'      -->
-          <!-- *always* is the same as 'Cp La Sl2', with no             -->
-          <!-- exceptions.  (msm)
-	--> Note that a single witness cannot appear more than once in a
-          witness list, and therefore cannot be assigned to more than one group of witnesses. </p>
+          That the reading <mentioned>Experiment</mentioned> occurs in all three manuscripts can now be
+          indicated simply as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><rdg wit="#Con">Experiment</rdg></egXML></p>
+        <p>The more elaborate example below shows both multiple levels of nesting and a strategy for mapping
+          the the <att>xml:id</att> of the witness to the siglum which will be displayed to the reader of a derived visualisation:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples"><witness xml:id="Σ">Servius (<abbr type="siglum">Σ</abbr>) = ΔΓ 
+  <listWit>
+    <witness xml:id="Δ"><abbr type="siglum">Δ</abbr><listWit>
+      <witness xml:id="J"><abbr type="siglum">J</abbr> = Metens. Bibl. mun. 292, s. IX </witness>
+      <witness xml:id="L"><abbr type="siglum">L</abbr> = Leid. Bibl. der Rijksuniv. B.P.L. 52, s. VIII / IX</witness>
+    </listWit></witness>
+    <witness xml:id="Γ"><abbr type="siglum">Γ</abbr><listWit>
+      <witness xml:id="θ"><abbr type="siglum">θ</abbr><listWit>
+        <witness xml:id="Α"><abbr type="siglum">A</abbr> = Caroliruh. Bad. Landesbibl. Aug. CXVI, s. IX2 (Reichenau); de codice A derivati:
+          <listWit>
+            <witness xml:id="S"><abbr type="siglum">S</abbr> = Sangall. Stiftsbibl. 861 + 862, s. IX / X</witness>
+            <witness xml:id="Guelf"><abbr type="siglum">Guelf.</abbr> = Guelf. HAB 2546 (44.23 Aug. fol.), s. XV</witness>
+          </listWit>
+        </witness>
+        <witness xml:id="O"><abbr type="siglum">O</abbr> = Oxon. Bodl. Laud lat. 117, s. XI<hi rend="superscript">2</hi></witness>
+      </listWit></witness>
+      <witness xml:id="τ"><abbr type="siglum">τ</abbr>
+        <listWit>
+          <witness xml:id="Pa"><abbr type="siglum">Pa</abbr> = Paris. BnF lat. 7959, s. IX (Tours)</witness>
+          <witness xml:id="Pc"><abbr type="siglum">Pc</abbr> = Paris. BnF lat. 7961, s. X / XI</witness>
+          <witness xml:id="Q"><abbr type="siglum">Q</abbr>	Flor. BML Plut. 45.14, s. IX</witness>
+          <witness xml:id="Lb"><abbr type="siglum">Lb</abbr> = corrector cod. <ref target="#L">L</ref> (sup.)</witness>
+        </listWit>
+      </witness>
+      <witness xml:id="γ"><abbr type="siglum">γ</abbr> <listWit>
+        <witness xml:id="E"><abbr type="siglum">E</abbr> = Escorial. Bibl. S. Lorenzo T.II.17, s. IX<hi rend="superscript">2</hi> (Ital. septentrion.) </witness>
+        <witness xml:id="Pb"><abbr type="siglum">Pb</abbr>	Paris. BnF lat. 16236, s. X / XI</witness>
+        <witness xml:id="Y"><abbr type="siglum">Y</abbr> = Trident. Bib. com. 3388 (olim Vind. 72), s.
+          IX<hi rend="superscript">2</hi></witness>
+        <witness xml:id="M"><abbr type="siglum">M</abbr> = Monac. Bay. Staatsbibl. Clm 6394, s. XI
+        </witness>
+      </listWit></witness>
+      <witness xml:id="σ"><abbr type="siglum">σ</abbr> <listWit>
+        <witness xml:id="W"><abbr type="siglum">W</abbr> = Guelf. HAB 2091, s. XIII<hi rend="superscript">ex.</hi></witness>
+        <witness xml:id="Ν"><abbr type="siglum">N</abbr> = Neap. Bibl. naz. lat. 5 (olim Vind. 27), s.
+          X<hi rend="superscript">1</hi></witness>
+        <witness xml:id="U"><abbr type="siglum">U</abbr> = Berolin. Staatsbibl. lat. quart. 219, s. XII</witness>
+      </listWit></witness>
+      <witness xml:id="ο"><abbr type="siglum">º</abbr> classis codicum de Γ defluentium quibus lectiones faciliores in contextum contaminatione inferre valde placuit (= PaPcγσ in A. 9.1-10.190, 10.397-12.162; PaPcγU in A. 12.162-320; PaPcγ in A. 12.320-522); cf. praef. n. 30.</witness>
+    </listWit></witness>
+  </listWit></witness>
+          </egXML>
+          Here we have a summary of the witnesses, with their sigla, used in an edition, as is generally
+          found in the <foreign>conspectus siglorum</foreign> in the front matter of a critical edition.
+          Families are indicated with Greek letters and manuscript witnesses with Latin letters. The siglum for
+          display is always contained in the <gi>abbr</gi> with <att>type</att> <q>siglum</q> child of each
+          witness, so it is always easy to retrieve the display siglum for a given identifier reference. 
+        </p>
 
 
         <p>Situations commonly arise where there are many more or less fragmentary witnesses, such
@@ -1137,14 +1137,16 @@ not for those for elements nested within.--></p>
       structures cannot occur at the same level. Similarly, it is an error if the contents of an 
       apparatus entry place a <gi>p</gi> inside another <gi>p</gi> or an <gi>l</gi> inside an <gi>l</gi>.</p>
     <p>Phenomena such as omissions and transpositions in witnesses will require some encoding strategies
-      that differ from those in the examples above. An omission in one witness may be encoded using an
-      empty <gi>rdg</gi>, thus:
+      that differ from those in the examples above. An editor wishing to signal an omission in one witness 
+      should encode the omission using an empty <gi>rdg</gi>, thus:
       <egXML xmlns="http://www.tei-c.org/ns/Examples"><app xml:id="d1e372">
   <lem xml:id="d1e373" source="#Heyworth"><l n="18">Hypsipyle uacuo constitit in thalamo:</l></lem>
   <rdg xml:id="d1e376" wit="#J" cause="homeoarchon"/>
 </app></egXML>
       Notice that in this example, the variation occurs at the unit of the verse line. The scribe of MS J has 
-      skipped line 18 (probably by mistake) because, like line 19, it begins with the name "Hypsipyle."
+      skipped line 18 (probably by mistake) because, like line 19, it begins with the name "Hypsipyle." If a witness 
+      contains an interpolation that the editor does not wish to show in the base text, an empty
+      <gi>lem</gi> should be used, in the same fashion.
     </p>
     <p>Transpositions are harder to encode, because they involve variation that occurs in different 
       locations. A single <gi>app</gi> will therefore not be sufficient, and the variants must be linked. 
@@ -1167,7 +1169,7 @@ not for those for elements nested within.--></p>
       Note that both <gi>app</gi>s are linked via the <att>exclude</att> attribute, because they are mutually
       exclusive: if one reading is chosen for display in a reading interface, for example, the other must 
       disappear and vice versa. To avoid repetition, the second pair of lines can make use of the <att>copyOf</att> 
-      attribute. If they were both transposed and somewhat different, then both sets would be written in full.
+      attribute. If they were both transposed and somewhat different, then both sets should be written in full.
     </p>
     <p>Apparatus entries may nest when there is variation at both higher and lower structural levels, e.g.:
       <egXML xmlns="http://www.tei-c.org/ns/Examples"><app xml:id="d1e275">

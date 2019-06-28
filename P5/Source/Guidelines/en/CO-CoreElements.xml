@@ -872,20 +872,20 @@ which case the same section might simply be tagged:
 <specList><specDesc key="att.ascribed" atts="who"/><specDesc key="att.ascribed.directed" atts="toWhom"/></specList>
 These may be used to make explicit who is speaking and who is being spoken to:
  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COHQQ-eg-23" xml:lang="fr">Adolphe se tourna vers lui :
- <said who="#Adolphe">— Alors, Albert, quoi de neuf?</said>
- <said who="#Albert">— Pas grand-chose.</said>
- <said who="#Robert">— Il fait beau,</said> dit Robert.
+ <said who="#Ado" toWhom="#Alb">— Alors, Albert, quoi de neuf?</said>
+ <said who="#Alb" toWhom="#Ado">— Pas grand-chose.</said>
+ <said who="#Rob">— Il fait beau,</said> dit Robert.
 <!-- ... elsewhere in the document -->
- <list type="speakers">
-   <item xml:id="Adolphe"/>
-   <item xml:id="Albert"/>
-   <item xml:id="Robert"/>
- </list></egXML>
+ <listPerson type="speakers">
+   <person xml:id="Ado"><persName>Adolphe</persName></person>
+   <person xml:id="Alb"><persName>Albert</persName></person>
+   <person xml:id="Rob"><persName>Robert</persName></person>
+ </listPerson></egXML>
 
  The <att>who</att> attribute may be supplied whether
  or not an indication of the speaker is given explicitly in the
  text. Likewise, the <att>toWhom</att> attribute may be supplied to indicate the encoder's interpretation
- of the intended recipient of the speech. They may take the form (as above) of  a
+ of the intended recipient of the speech. They may take the form (as above) of  an abbreviated or
  normalized form of the speaker's name, but the role of these attributes is to act as a
  pointer to a location elsewhere in the text, or another document, where data about each
  party may be supplied. While these attributes could point to any source of information about the parties involved, the most appropriate place for such
@@ -4747,7 +4747,7 @@ reference would be encoded using <gi>biblStruct</gi> as follows:
 <gi>biblStruct</gi> elements) be enclosed in a <gi>series</gi> element
 or (in a <gi>biblFull</gi> element) a <gi>seriesStmt</gi> element.  The
 title of the series may be tagged <tag>title level="s"</tag>, the
-volume number <tag>biblScope unit="vol"</tag>, and responsibility
+volume number <tag>biblScope unit="volume"</tag>, and responsibility
 statements for the series (e.g. the name and affiliation of the editor,
 as in the example in section <ptr target="#COBICOL"/>) may be tagged
 <gi>editor</gi> or <gi>respStmt</gi>. Any identifier associated with
@@ -5103,7 +5103,7 @@ have no analogues in Scribe and BibTeX are not noted.
   <item>tag as <gi>title</gi> in appropriate context or with appropriate
       <att>level</att> value</item>
   <label>volume</label>
-  <item>tag as <tag>biblScope unit="vol"</tag></item>
+  <item>tag as <tag>biblScope unit="volume"</tag></item>
   <label>year</label>
   <item>tag as <gi>date</gi>; if the date is not in a trivially parseable form,
     use the <att>when</att> attribute to provide an ISO-format

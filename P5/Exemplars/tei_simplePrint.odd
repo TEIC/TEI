@@ -3352,7 +3352,7 @@ although <seg xml:id="network"
           processing model component. Note that the cross references included in these
           specifications are to the section of the full TEI Guidelines where the subject is treated,
           and not to sections of the present document.</p>
-        <schemaSpec ident="teisimpleprint" start="TEI teiCorpus">
+        <schemaSpec ident="tei_simplePrint" start="TEI teiCorpus">
           <specGrpRef target="#base"/>
           <specGrpRef target="#header"/>
           <specGrpRef target="#header2"/>
@@ -3460,6 +3460,7 @@ although <seg xml:id="network"
             <classRef key="att.milestoneUnit"/>
             <classRef key="att.global.linking"/>
             <classRef key="att.coordinated"/>
+            <classRef key="att.tableDecoration"/>
 
             <!-- delete unused attribute classes -->
             <classSpec type="atts" ident="att.datcat" mode="delete"/>
@@ -3796,9 +3797,9 @@ although <seg xml:id="network"
             </classSpec>
           </specGrp>
 
+          <p>The following unused model classes are removed.</p>
           <specGrp xml:id="modelclasses">
-            <p>The following unused model classes are removed.</p>
-            <!-- why is this needed? the ODD processor should do it for you-->
+             <!-- why is this needed? the ODD processor should do it for you-->
             <classSpec type="model" ident="model.entryPart" mode="delete"/>
             <classSpec type="model" ident="model.placeNamePart" mode="delete"/>
             <classSpec type="model" ident="model.placeStateLike" mode="delete"/>
@@ -4086,7 +4087,6 @@ although <seg xml:id="network"
             <elementSpec ident="castGroup" mode="change">
               <model predicate="child::*" behaviour="list">
                 <desc>Insert list. </desc>
-                <param name="content" value="castItem|castGroup"/>
               </model>
             </elementSpec>
             <elementSpec ident="castItem" mode="change">
@@ -4096,7 +4096,6 @@ although <seg xml:id="network"
             </elementSpec>
             <elementSpec ident="castList" mode="change">
               <model predicate="child::*" behaviour="list" useSourceRendition="true">
-                <param name="content" value="castItem"/>
                 <outputRendition>list-style: ordered;</outputRendition>
               </model>
             </elementSpec>
@@ -4476,17 +4475,11 @@ although <seg xml:id="network"
               <model behaviour="block"/>
             </elementSpec>
             <elementSpec ident="list" mode="change">
-              <model predicate="@rendition" behaviour="list" useSourceRendition="true">
-                <param name="content" value="item"/>
-              </model>
-              <model predicate="not(@rendition)" behaviour="list">
-                <param name="content" value="item"/>
-              </model>
+              <model predicate="@rendition" behaviour="list" useSourceRendition="true"/>
+              <model predicate="not(@rendition)" behaviour="list"/>
             </elementSpec>
             <elementSpec ident="listBibl" mode="change">
-              <model predicate="bibl" behaviour="list">
-                <param name="content" value="bibl"/>
-              </model>
+              <model predicate="bibl" behaviour="list"/>
               <model behaviour="block"/>
             </elementSpec>
             <elementSpec ident="measure" mode="change">
