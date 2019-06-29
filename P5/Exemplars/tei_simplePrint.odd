@@ -1489,7 +1489,7 @@ although <seg xml:id="network"
                   Bennet</name>, </q>said his lady to him one day, <q>have you heard that <name
                   type="place">Netherfield Park</name> is let at last?</q></egXML>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">It being one of the principles of the
-                <name type="organization">Circumlocution Office</name> never, on any account
+                <name type="org">Circumlocution Office</name> never, on any account
               whatsoever, to give a straightforward answer, <name type="person">Mr Barnacle</name>
               said, <q>Possibly.</q></egXML>
           </p>
@@ -1526,8 +1526,8 @@ although <seg xml:id="network"
                 ref="#WADLM1"><choice>
                   <orig>Walter de la Mare</orig>
                   <reg>de la Mare, Walter</reg>
-                </choice></name> was born at <name key="Ch1" type="place">Charlton</name>, in <name
-                key="KT1" type="county">Kent</name>, in 1873.</egXML>
+                </choice></name> was born at <name ref="https://en.wikipedia.org/wiki/Charlton,_London" type="place">Charlton</name>, in <name
+                type="place">Kent</name>, in 1873.</egXML>
           </p>
         </div>
         <div xml:id="code">
@@ -1999,13 +1999,13 @@ although <seg xml:id="network"
             single letter or character: the <gi>c</gi> element is provided for this purpose.
             <!-- some crazy people mark up interword space with a c: shd that be mentioned? -->
           </p>
-          <p>The <gi>w</gi> also provides for each word to be associated with a root form or lemma,
+        <p>The <gi>w</gi> also provides for each word to be associated with a root form or lemma,
             either explicitly using the <att>lemma</att> attribute, or by reference, using the
               <att>lemmaRef</att> attribute, as in this example: <egXML
               xmlns="http://www.tei-c.org/ns/Examples">...<w ana="#VBD" lemma="be"
                 lemmaRef="http://www.myLexicon.com/be">was</w> ... </egXML>
           </p>
-        </div>
+       </div>
         <div>
           <head>General-Purpose Interpretation Elements</head>
           <p>The <gi>w</gi> element is a specialisation of the <gi>seg</gi> element which has
@@ -2901,7 +2901,7 @@ although <seg xml:id="network"
               referencing scheme built into the encoding works. In its simplest form, it consists of
               prose description.</p>
             <p>Example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl>
-                  <p>The <att>n</att> attribute on each <gi>div</gi> contains the canonical
+                  <p>The @n attribute on each &lt;div> element contains the canonical
                     reference for each division in the form XX.yyy where XX is the book number in
                     roman numeral and yyy is the section number in arabic.</p>
                   <p>Milestone tags refer to the edition of 1830 as E30 and that of 1850 as E50.</p>
@@ -3436,14 +3436,18 @@ although <seg xml:id="network"
             <classRef key="att.global.linking"/>
             <classRef key="att.coordinated"/>
             <classRef key="att.tableDecoration"/>
-
+            
+<classRef key="att.metrical"  include="rhyme"/>
+<classRef key="att.divLike" exclude="org sample"/>            
+            
+<classRef key="att.linguistic" include="lemma lemmaRef"/>
+            
             <!-- delete unused attribute classes -->
             <classSpec type="atts" ident="att.datcat" mode="delete"/>
             <classSpec type="atts" ident="att.declarable" mode="delete"/>
             <classSpec type="atts" ident="att.declaring" mode="delete"/>
             <classSpec type="atts" ident="att.ranging" mode="delete"/>
-            <classSpec type="atts" ident="att.divLike" mode="delete"/>
-
+    
             <!-- delete some attributes from global linking. -->
             <classSpec type="atts" ident="att.global.linking" mode="change">
               <attList>
@@ -5176,6 +5180,8 @@ although <seg xml:id="network"
                   </s>
                 </egXML>
               </exemplum>
+<!--   though probably we'd rather do this with @pos rather than @ana -->
+             
             </elementSpec>
           </specGrp>
         </div>
