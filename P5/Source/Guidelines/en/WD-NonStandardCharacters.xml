@@ -73,11 +73,12 @@ character is considered eligible for addition
 to the Unicode Standard.  </item>
 
 </list> </p>
-    <p>Since there are now close to 100,000 characters in Unicode,
+    <p>Since there are now close to 130,000 characters in Unicode,
     chances are good that what you need is already there, but it might
     not be easy to find, since it might have a different name in
-    Unicode.  Look again, this time at other sites, for example <ptr target="http://www.eki.ee/letter/"/>, which also provide searches
-    based on scripts and languages. Take care, however, that all the
+    Unicode. Editors working with East Asian writing systems, should consult
+    the <ref target="https://unicode.org/charts/unihan.html">Unihan Database </ref>.
+    Look again, this time at other sites, for example <ptr target="http://www.eki.ee/letter/"/> (no CJK) or <ptr target="https://www.chise.org"/> (CJK only), which also provide searches based on scripts and languages. Take care, however, that all the
     properties of what seems to be a relevant character are consistent
     with those of the character you are looking for. For example, if
     your character is definitely a digit, but the properties of the
@@ -149,6 +150,7 @@ part of it) by adding a suitable encoding declaration. For example, if
 a document begins with the declaration <code>&lt;?xml
 encoding="iso-8859-1"?&gt;</code> any Unicode characters which are not
 in the ISO-8859-1 character set must be represented by NCRs. </p>
+<!-- Phase 1 needs rewrite with att.gaijiProperties #1805 -->
      <p>The <mentioned>gaiji</mentioned> module defined by this
      chapter adds a further way of representing specific characters
      and glyphs in a document. (Gaiji is from Japanese <seg xml:lang="ja">外字</seg>, meaning <gloss>external
@@ -171,9 +173,8 @@ class, and the <gi>g</gi> element is added to the phrase class. These
 elements and their components are documented in the rest of this
 section. </p>
 <p>The Unicode standard defines properties for all the characters it
-defines in the Unicode Character Database, knowledge of which is
-usually built into text processing systems.  If the character
-represented by the <gi>g</gi> element does not exist in Unicode at
+defines in the <ref target="https://unicode.org/ucd/">Unicode Character Database </ref>, knowledge of which is usually built into text processing systems. If the
+character represented by the <gi>g</gi> element does not exist in Unicode at
 all, its properties are not available. If the character represented is
 an existing Unicode character, but is not available in the document
 character set recognized by a given text processing system, it may
@@ -191,6 +192,7 @@ them and the list of properties defined in these Guidelines.</p>
 <p>Usage examples for these elements are given below at <ptr target="#D25-30"/> and <ptr target="#D25-40"/>.  The gaiji module
 itself is formally defined in section <ptr target="#WSD-DEF"/>
 below. It declares the following additional elements:
+<!-- Phase 5 deprecation candidate #1805 -->
 <specList>
 <specDesc key="charDecl"/>
 <specDesc key="g" atts="ref"/>
@@ -248,6 +250,7 @@ using a reference number from a well-known character dictionary or a
 project-specific serial number.</note>. For convenience of processing,
 the following distinct elements are proposed for naming characters and
 glyphs:
+<!-- Phase 3 deprecation candidate #1805 -->
 <specList>
 <specDesc key="charName"/>
 <specDesc key="glyphName"/>
@@ -276,7 +279,7 @@ resolution, or in different formats, or may itself be repeated. As
 elsewhere, the <att>mimeType</att> attribute
 of <gi>graphic</gi> should be used to specify
 the format of the image.</p>
-
+<!-- Phase 3 rewrite example #1805 -->
 <p>The <gi>mapping</gi> element is similar to the standard TEI
 <gi>equiv</gi> element. While the latter is used to express
 correspondence relationships between TEI concepts or elements and
@@ -489,14 +492,15 @@ Character Database: Canonical Combining Class Values</ref>); these were taken fr
 	 the text direction: it has the value <code>Y</code>
 (character is mirrored) or <code>N</code> (code is not mirrored).</item>
 	</list></p>
+  <!-- Phase 5 deprecation see #1805 -->
 <p>The Unicode Standard also defines a set of informative (but non-normative)
-properties for Unicode characters.  If encoders want to provide such
+properties for Unicode characters. If encoders want to provide such
 properties, they may be included using the suggested Unicode name,
 tagged using the <gi>unicodeName</gi> element. However, encoders may
 also supply other locally-defined properties, which must be named using
 the <gi>localName</gi> element to distinguish them. If a Unicode name
 exists for a given property, it should however always be preferred to
-a locally defined name. Locally defined names should be used only for   properties
+a locally defined name. Locally defined names should be used only for properties
 which are not specified by the Unicode Standard.</p>
 </div>
    </div>
@@ -702,6 +706,7 @@ provide useful documentation for the particular character or glyph so referenced
      purpose of which is to supply a recommended character entity name
      for the character.
 </p>
+<!-- Phase 1 add unihanProp prose rewrite section see #1805 mention IDS -->
 <p>Under certain circumstances, Chinese Han characters can be written
     within a circle.  Rather than considering this as simply an aspect of the
     rendering, an encoder may wish to treat such circled characters as
