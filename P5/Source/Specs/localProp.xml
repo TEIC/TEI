@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Copyright TEI Consortium. Dual-licensed under CC-by and BSD2 licences See the file COPYING.txt for details $Date$ $Id$ -->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec ident="localProp" module="gaiji" xml:id="LOCALPROP" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0"
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <gloss versionDate="2018-08-22" xml:lang="en">locally defined property</gloss>
+    <desc versionDate="2018-08-22" xml:lang="en">holds the name and value of a locally defined character (or glyph) property as part of its attributes.</desc>
+    <classes>
+        <!-- This seems odd but matches to be deprecated unicodeName -->
+        <memberOf key="att.global"/>
+        <memberOf key="att.gaijiProp"/>
+    </classes>
+    <content>
+        <empty/>
+    </content>
+    <attList>
+        <attDef ident="name" usage="req">
+            <desc>specifies the  name of a locally defined character (or glyph) property</desc>
+            <datatype>
+                <dataRef key="teidata.xmlName"/>
+            </datatype>
+        </attDef>
+        <attDef ident="value" usage="req">
+            <desc>specifies the  value of a locally defined character (or glyph) property</desc>
+            <datatype>
+                <dataRef key="teidata.word"/>
+            </datatype>
+            <valList type="open">
+                <valItem ident="entity"/>
+            </valList>
+        </attDef>
+    </attList>
+    <exemplum xml:lang="und">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <char xml:id="circledU4EBA">
+                <charName>CIRCLED IDEOGRAPH 4EBA</charName>
+                <unicodeProp name="Decomposition_Mapping" value="circle"/>
+                <localProp name="daikanwa" value="entity"/>
+                <mapping type="standard">人</mapping>
+            </char>
+        </egXML>
+    </exemplum>
+    <remarks versionDate="2005-01-14" xml:lang="en">
+        <p>No definitive list of local names is proposed. However, the name <ident>entity</ident> is recommended as a means of naming the property identifying the recommended
+            character entity name for this character or glyph.</p>
+    </remarks>
+    <remarks versionDate="2007-06-12" xml:lang="fr">
+        <p>Il n'est pas proposé de liste fermée de noms locaux de propriétés. Cependant, la dénomination <ident>entity</ident> (entité) est recommandée pour la propriété donnant le
+            nom de l'entité caractère conseillée pour le caractère ou le glyphe en cours de description.</p>
+    </remarks>
+    <remarks versionDate="2008-04-05" xml:lang="ja">
+        <p> ローカル名のリストで勧告されているものはない．但し，文字やグリフを 表す文字エンティティを特定する際には，名前<ident>エンティティ </ident>を使い素性に名付けることは推奨されている． </p>
+    </remarks>
+    <listRef>
+        <ptr target="#ucsprops"/>
+    </listRef>
+</elementSpec>

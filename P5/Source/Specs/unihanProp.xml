@@ -1,0 +1,1045 @@
+<!-- Copyright TEI Consortium. Dual-licensed under CC-by and BSD2 licences See the file COPYING.txt for details $Date$ $Id$ -->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec ident="unihanProp" module="gaiji" xml:id="UNIHANPROP" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0"
+   xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+   <gloss versionDate="2018-08-22" xml:lang="en">uniHan property</gloss>
+   <desc versionDate="2018-08-22" xml:lang="en">holds the name and value of a normative or informative uniHan character (or glyph) property as part of its attributes.</desc>
+   <classes>
+      <!-- This seems odd but matches to be deprecated unicodeName -->
+      <memberOf key="att.global"/>
+      <memberOf key="att.gaijiProp"/>
+   </classes>
+   <content>
+      <empty/>
+   </content>
+<!-- TODO duncrum Phase 4 #1805 activate and test value constraint checks  -->
+   <!--<constraintSpec ident="kAccountingNumeric" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kAccountingNumeric' or matches($prop-value, '[0-9]+')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kBigFive" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kBigFive' or matches($prop-value, '[0-9A-F]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kCCCII" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kCCCII' or matches($prop-value, '[0-9A-F]{6}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kCNS1986" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kCNS1986' or matches($prop-value, '[12E]-[0-9A-F]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kCNS1992" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kCNS1992' or matches($prop-value, '[1-9]-[0-9A-F]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kCangjie" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kCangjie' or matches($prop-value, '[A-Z]+')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kCantonese" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kCantonese' or matches($prop-value, '[a-z]{1,6}[1-6]')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kCheungBauer" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kCheungBauer' or matches($prop-value, '[0-9]{3}/[0-9]{2};[A-Z]*;[a-z1-6\[\]/,]+')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kCheungBauerIndex" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kCheungBauerIndex' or matches($prop-value, '[0-9]{3}\.[01][0-9]')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kCihaiT" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kCihaiT' or matches($prop-value, '[1-9][0-9]{0,3}\.[0-9]{3}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kCompatibilityVariant" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kCompatibilityVariant' or matches($prop-value, 'U\+2?[0-9A-F]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kCowles" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kCowles' or matches($prop-value, '[0-9]{1,4}(\.[0-9]{1,2})?')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kDaeJaweon" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kDaeJaweon' or matches($prop-value, '[0-9]{4}\.[0-9]{2}[01]')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kDefinition" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kDefinition' or matches($prop-value, '[^\t&#34;]+')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kEACC" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kEACC' or matches($prop-value, '[0-9A-F]{6}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kFenn" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kFenn' or matches($prop-value, '[0-9]+a?[A-KP*]')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kFennIndex" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kFennIndex' or matches($prop-value, '[0-9][0-9]{0,2}\.[01][0-9]')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kFourCornerCode" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kFourCornerCode' or matches($prop-value, '[0-9]{4}(\.[0-9])?')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kFrequency" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kFrequency' or matches($prop-value, '[1-5]')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kGB0" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kGB0' or matches($prop-value, '[0-9]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kGB1" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kGB1' or matches($prop-value, '[0-9]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kGB3" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kGB3' or matches($prop-value, '[0-9]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kGB5" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kGB5' or matches($prop-value, '[0-9]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kGB7" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kGB7' or matches($prop-value, '[0-9]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kGB8" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kGB8' or matches($prop-value, '[0-9]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kGSR" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kGSR' or matches($prop-value, '[0-9]{4}[a-vx-z]\W?')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kGradeLevel" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kGradeLevel' or matches($prop-value, '[1-6]')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kHDZRadBreak" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kHDZRadBreak' or matches($prop-value, '[⼀-⿕]\[U\+2F[0-9A-D][0-9A-F]\]:[1-8][0-9]{4}\.[0-3][0-9]0')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kHKGlyph" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kHKGlyph' or matches($prop-value, '[0-9]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kHKSCS" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kHKSCS' or matches($prop-value, '[0-9A-F]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kHanYu" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kHanYu' or matches($prop-value, '[1-8][0-9]{4}\.[0-3][0-9][0-3]')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kHangul" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kHangul' or matches($prop-value, '[ᄀ-ᄒ][ᅡ-ᅵ][ᆨ-ᇂ]?:[01EN]{1,3}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kHanyuPinlu" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kHanyuPinlu' or matches($prop-value, '[\p{L}\p{M}*+]\([0-9]+\)')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kHanyuPinyin" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kHanyuPinyin' or matches($prop-value, '(\d{5}\.\d{2}0,)*\d{5}\.\d{2}0:([\p{L}\p{M}*+]+,)*[\p{L}\p{M}*+]+')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kIBMJapan" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kIBMJapan' or matches($prop-value, 'F[ABC][0-9A-F]{2}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kIICore" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kIICore' or matches($prop-value, '[ABC][GHJKMPT]{1,7}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kIRGDaeJaweon" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kIRGDaeJaweon' or matches($prop-value, '[0-9]{4}\.[0-9]{2}[01]')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kIRGDaiKanwaZiten" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kIRGDaiKanwaZiten' or matches($prop-value, '[0-9]{5}\W?')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kIRGHanyuDaZidian" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kIRGHanyuDaZidian' or matches($prop-value, '[1-8][0-9]{4}\.[0-3][0-9][01]')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kIRGKangXi" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kIRGKangXi' or matches($prop-value, '[01][0-9]{3}\.[0-7][0-9][01]')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kIRG_GSource" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kIRG_GSource' or matches($prop-value,
+               'G(4K|BK|CH|CY|FZ|HC|HZ|((BK|CH|CY|DZ|GH|HC|RM|WZ|XC|XH|ZH)-[0-9]{4}\.[0-9]{2})|HZ-[0-9]{5}\.[0-9]{2}|(KX-[01][0-9]{3}\.1?[0-9]{2})|((CYY|FZ|JZ|ZFY|ZJW)-[0-9]{5})|([0135789ES]-[0-9A-F]{4})|(XHZ-[0-9]{3})|(PGLG-[0-9]{4})|(IDC-[0-9]{3})|(K-[0-9A-F]{4})|((OCD|CE)-\d{3})|(H-\d{4})|(H-\d{7})|(LGYJ-\d{4})|(ZYS-\d{5})|(Z-\d{4})|(Z-\d{7})|(G?F[CZ]-\d{3,6}))')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kIRG_HSource" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kIRG_HSource' or matches($prop-value, 'H(-[0-9A-F]{4,5}|(B[012]|D)-[0-9A-F]{4})')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kIRG_JSource" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kIRG_JSource' or matches($prop-value, 'J1?((([0134AK]|A[34]|3A|ARIB|MJ)-[0-9A-F]{4,6})|(H-(((IB|JT|[0-9]{2})[0-9A-F]{4}S?))))')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kIRG_KPSource" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kIRG_KPSource' or matches($prop-value, 'KP[01]-[0-9A-F]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kIRG_KSource" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kIRG_KSource' or matches($prop-value, 'K([0-5]-[0-9A-F]{4}|C-[0-9]{5})')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kIRG_MSource" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kIRG_MSource' or matches($prop-value, 'MAC-[0-9]{5}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kIRG_TSource" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kIRG_TSource' or matches($prop-value, 'T[1-7B-F]-[0-9A-F]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kIRG_USource" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kIRG_USource' or matches($prop-value, 'U(TC|CI|K|SAT)-[0-9]{5}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kIRG_VSource" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kIRG_VSource' or matches($prop-value, 'V[0-4U]-[02]?[0-9A-F]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kJIS0213" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kJIS0213' or matches($prop-value, '[12],[0-9]{2},[0-9]{1,2}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kJa" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kJa' or matches($prop-value, '[0-9A-F]{4}S?')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kJapaneseKun" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kJapaneseKun' or matches($prop-value, '[A-Z]+')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kJapaneseOn" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kJapaneseOn' or matches($prop-value, '[A-Z]+')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kJinmeiyoKanji" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kJinmeiyoKanji' or matches($prop-value, '(20[0-9]{2})(:U\+2?[0-9A-F]{4})?')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kJis0" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kJis0' or matches($prop-value, '[0-9]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kJis1" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kJis1' or matches($prop-value, '[0-9]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kJoyoKanji" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kJoyoKanji' or matches($prop-value, '(20[0-9]{2})|(U\+2?[0-9A-F]{4})')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kKPS0" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kKPS0' or matches($prop-value, '[0-9A-F]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kKPS1" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kKPS1' or matches($prop-value, '[0-9A-F]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kKSC0" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kKSC0' or matches($prop-value, '[0-9]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kKSC1" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kKSC1' or matches($prop-value, '[0-9]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kKangXi" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kKangXi' or matches($prop-value, '[0-9]{4}\.[0-9]{2}[01]')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kKarlgren" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kKarlgren' or matches($prop-value, '[1-9][0-9]{0,3}[A*]?')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kKorean" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kKorean' or matches($prop-value, '[A-Z]+')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kKoreanEducationHanja" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kKoreanEducationHanja' or matches($prop-value, '20[0-9]{2}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kKoreanName" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kKoreanName' or matches($prop-value, '(20[0-9]{2})(:U\+2?[0-9A-F]{4})*')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kLau" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kLau' or matches($prop-value, '[1-9][0-9]{0,3}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kMainlandTelegraph" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kMainlandTelegraph' or matches($prop-value, '[0-9]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kMandarin" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kMandarin' or matches($prop-value, '[\p{L}\p{M}*+]')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kMatthews" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kMatthews' or matches($prop-value, '[1-9][0-9]{0,3}(a|\.5)?')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kMeyerWempe" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kMeyerWempe' or matches($prop-value, '[1-9][0-9]{0,3}[a-t*]?')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kMorohashi" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kMorohashi' or matches($prop-value, '[0-9]{5}\W?')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kNelson" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kNelson' or matches($prop-value, '[0-9]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kOtherNumeric" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kOtherNumeric' or matches($prop-value, '[0-9]+')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kPhonetic" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kPhonetic' or matches($prop-value, '[1-9][0-9]{0,3}[A-D]?\*?')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kPrimaryNumeric" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kPrimaryNumeric' or matches($prop-value, '[0-9]+')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kPseudoGB1" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kPseudoGB1' or matches($prop-value, '[0-9]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kRSAdobe_Japan1_6" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kRSAdobe_Japan1_6' or matches($prop-value, '[CV]\+[0-9]{1,5}\+[1-9][0-9]{0,2}\.[1-9][0-9]?\.[0-9]{1,2}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kRSJapanese" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kRSJapanese' or matches($prop-value, '[1-9][0-9]{0,2}\.[0-9]{1,2}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kRSKanWa" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kRSKanWa' or matches($prop-value, '[1-9][0-9]{0,2}\.[0-9]{1,2}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kRSKangXi" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kRSKangXi' or matches($prop-value, '[1-9][0-9]{0,2}\.-?[0-9]{1,2}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kRSKorean" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kRSKorean' or matches($prop-value, '[1-9][0-9]{0,2}\.[0-9]{1,2}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kRSUnicode" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kRSUnicode' or matches($prop-value, '[1-9][0-9]{0,2}\W?\.-?[0-9]{1,2}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kSBGY" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kSBGY' or matches($prop-value, '[0-9]{3}\.[0-7][0-9]')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kSemanticVariant" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kSemanticVariant' or matches($prop-value, 'U\+2?[0-9A-F]{4}(&lt;k[A-Za-z0-9]+(:[TBZFJ]+)?(,k[A-Za-z0-9]+(:[TBZFJ]+)?)*)?')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kSimplifiedVariant" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kSimplifiedVariant' or matches($prop-value, 'U\+2?[0-9A-F]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kSpecializedSemanticVariant" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kSpecializedSemanticVariant' or matches($prop-value, 'U\+2?[0-9A-F]{4}(&lt;k[A-Za-z0-9]+(:[TBZFJ]+)?(,k[A-Za-z0-9]+(:[TBZFJ]+)?)*)?')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kTGH" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kTGH' or matches($prop-value, '20[0-9]{2}:[1-9][0-9]{0,3}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kTaiwanTelegraph" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kTaiwanTelegraph' or matches($prop-value, '[0-9]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kTang" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kTang' or matches($prop-value, '\*?[A-Za-z()æɑəɛ̀̌]+')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kTotalStrokes" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kTotalStrokes' or matches($prop-value, '[1-9][0-9]{0,2}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kTraditionalVariant" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kTraditionalVariant' or matches($prop-value, 'U\+2?[0-9A-F]{4}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kVietnamese" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kVietnamese' or matches($prop-value, '[A-Za-zĐđ\p{M}*+]+')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kXHC1983" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kXHC1983' or matches($prop-value, '[0-9]{4}\.[0-9]{3}\*?(,[0-9]{4}\.[0-9]{3}\*?)*:[\p{L}\p{M}*+]+')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kXerox" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kXerox' or matches($prop-value, '[0-9]{3}:[0-9]{3}')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>
+   <constraintSpec ident="kZVariant" scheme="schematron">
+      <constraint>
+         <sch:rule context="tei:unihanProp/@name">
+            <sch:let name="prop-value" value="./@value"/>
+            <sch:assert test=". != 'kZVariant' or matches($prop-value, 'U\+2?[0-9A-F]{4}(&lt;k[A-Za-z0-9]+(:[TBZ]+)?(,k[A-Za-z0-9]+(:[TBZ]+)?)*)?')">
+               <sch:value-of select="$prop-value"/> does not match the expected value of the unihan property.</sch:assert>
+         </sch:rule>
+      </constraint>
+   </constraintSpec>-->
+   <attList>
+      <attDef ident="version" usage="opt">
+         <desc versionDate="2005-01-14" xml:lang="en">specifies the version number of the Unicode Standard in which this property name is defined.</desc>
+         <desc versionDate="2018-08-23" xml:lang="de">gibt die Versionsnummer des Unicode Standards an, in dem dieser Eigenschaftsname definiert ist.</desc>
+         <desc versionDate="2007-12-20" xml:lang="ko">특성명이 정의된 표준 유니코드의 버전 숫자를 명시한다.</desc>
+         <desc versionDate="2007-05-02" xml:lang="zh-TW">說明該性質名稱是定義在哪一版本的統一碼標準 (Unicode Standard) 中。</desc>
+         <desc versionDate="2008-04-05" xml:lang="ja">当該素性名が定義されているユニコードの版番号を示す．</desc>
+         <desc versionDate="2007-06-12" xml:lang="fr">spécifie le numéro de version de la norme Unicode où se trouve défini ce nom de propriété</desc>
+         <desc versionDate="2007-05-04" xml:lang="es">especifica el número de versión del Estándar de Unicode en que este nombre de propiedad se ha definido.</desc>
+         <desc versionDate="2007-01-21" xml:lang="it">specifica il numero della versione dello standard Unicode nel quale è definito il nome della proprietà.</desc>
+         <datatype>
+            <dataRef key="teidata.enumerated"/>
+         </datatype>
+         <!-- TODO Phase 6: close list #1805 -->
+         <valList type="semi">
+            <valItem ident="1.1"/>
+            <valItem ident="2.0"/>
+            <valItem ident="2.1"/>
+            <valItem ident="3.0"/>
+            <valItem ident="3.1"/>
+            <valItem ident="3.2"/>
+            <valItem ident="4.0"/>
+            <valItem ident="4.1"/>
+            <valItem ident="5.0"/>
+            <valItem ident="5.1"/>
+            <valItem ident="5.2"/>
+            <valItem ident="6.0"/>
+            <valItem ident="6.1"/>
+            <valItem ident="6.2"/>
+            <valItem ident="6.3"/>
+            <valItem ident="7.0"/>
+            <valItem ident="8.0"/>
+            <valItem ident="9.0"/>
+            <valItem ident="10.0"/>
+            <valItem ident="11.0"/>
+            <valItem ident="12.0"/>
+            <valItem ident="12.1"/>
+            <valItem ident="unassigned"/>
+         </valList>
+      </attDef>
+      <attDef ident="name" usage="req">
+         <desc>specifies the normalized name of a unicode han database (unihan) property</desc>
+         <datatype>
+            <dataRef key="teidata.xmlName"></dataRef>
+         </datatype>
+         <valList type="closed">
+            <valItem ident="kZVariant"/>
+            <valItem ident="kAccountingNumeric"/>
+            <valItem ident="kBigFive"/>
+            <valItem ident="kCCCII"/>
+            <valItem ident="kCNS1986"/>
+            <valItem ident="kCNS1992"/>
+            <valItem ident="kCangjie"/>
+            <valItem ident="kCantonese"/>
+            <valItem ident="kCheungBauer"/>
+            <valItem ident="kCheungBauerIndex"/>
+            <valItem ident="kCihaiT"/>
+            <valItem ident="kCompatibilityVariant"/>
+            <valItem ident="kCowles"/>
+            <valItem ident="kDaeJaweon"/>
+            <valItem ident="kDefinition"/>
+            <valItem ident="kEACC"/>
+            <valItem ident="kFenn"/>
+            <valItem ident="kFennIndex"/>
+            <valItem ident="kFourCornerCode"/>
+            <valItem ident="kFrequency"/>
+            <valItem ident="kGB0"/>
+            <valItem ident="kGB1"/>
+            <valItem ident="kGB3"/>
+            <valItem ident="kGB5"/>
+            <valItem ident="kGB7"/>
+            <valItem ident="kGB8"/>
+            <valItem ident="kGSR"/>
+            <valItem ident="kGradeLevel"/>
+            <valItem ident="kHDZRadBreak"/>
+            <valItem ident="kHKGlyph"/>
+            <valItem ident="kHKSCS"/>
+            <valItem ident="kHanYu"/>
+            <valItem ident="kHangul"/>
+            <valItem ident="kHanyuPinlu"/>
+            <valItem ident="kHanyuPinyin"/>
+            <valItem ident="kIBMJapan"/>
+            <valItem ident="kIICore"/>
+            <valItem ident="kIRGDaeJaweon"/>
+            <valItem ident="kIRGDaiKanwaZiten"/>
+            <valItem ident="kIRGHanyuDaZidian"/>
+            <valItem ident="kIRGKangXi"/>
+            <valItem ident="kIRG_GSource"/>
+            <valItem ident="kIRG_HSource"/>
+            <valItem ident="kIRG_JSource"/>
+            <valItem ident="kIRG_KPSource"/>
+            <valItem ident="kIRG_KSource"/>
+            <valItem ident="kIRG_MSource"/>
+            <valItem ident="kIRG_TSource"/>
+            <valItem ident="kIRG_USource"/>
+            <valItem ident="kIRG_VSource"/>
+            <valItem ident="kJIS0213"/>
+            <valItem ident="kJa"/>
+            <valItem ident="kJapaneseKun"/>
+            <valItem ident="kJapaneseOn"/>
+            <valItem ident="kJinmeiyoKanji"/>
+            <valItem ident="kJis0"/>
+            <valItem ident="kJis1"/>
+            <valItem ident="kJoyoKanji"/>
+            <valItem ident="kKPS0"/>
+            <valItem ident="kKPS1"/>
+            <valItem ident="kKSC0"/>
+            <valItem ident="kKSC1"/>
+            <valItem ident="kKangXi"/>
+            <valItem ident="kKarlgren"/>
+            <valItem ident="kKorean"/>
+            <valItem ident="kKoreanEducationHanja"/>
+            <valItem ident="kKoreanName"/>
+            <valItem ident="kLau"/>
+            <valItem ident="kMainlandTelegraph"/>
+            <valItem ident="kMandarin"/>
+            <valItem ident="kMatthews"/>
+            <valItem ident="kMeyerWempe"/>
+            <valItem ident="kMorohashi"/>
+            <valItem ident="kNelson"/>
+            <valItem ident="kOtherNumeric"/>
+            <valItem ident="kPhonetic"/>
+            <valItem ident="kPrimaryNumeric"/>
+            <valItem ident="kPseudoGB1"/>
+            <valItem ident="kRSAdobe_Japan1_6"/>
+            <valItem ident="kRSJapanese"/>
+            <valItem ident="kRSKanWa"/>
+            <valItem ident="kRSKangXi"/>
+            <valItem ident="kRSKorean"/>
+            <valItem ident="kRSUnicode"/>
+            <valItem ident="kSBGY"/>
+            <valItem ident="kSemanticVariant"/>
+            <valItem ident="kSimplifiedVariant"/>
+            <valItem ident="kSpecializedSemanticVariant"/>
+            <valItem ident="kTGH"/>
+            <valItem ident="kTaiwanTelegraph"/>
+            <valItem ident="kTang"/>
+            <valItem ident="kTotalStrokes"/>
+            <valItem ident="kTraditionalVariant"/>
+            <valItem ident="kVietnamese"/>
+            <valItem ident="kXHC1983"/>
+            <valItem ident="kXerox"/>
+         </valList>
+      </attDef>
+      <attDef ident="value" usage="req">
+          <desc>specifies the value of a named unihan property</desc>
+          <datatype>
+              <dataRef key="teidata.word"/>
+          </datatype>
+      </attDef>
+   </attList>
+   <exemplum xml:lang="und">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <char>
+            <unihanProp name="kRSKangXi" value="120.5"/>
+         </char>
+      </egXML>
+   </exemplum>
+   <remarks versionDate="2018-08-22" xml:lang="en">
+      <p>A definitive list of current Unihan property names is provided in the <ref target="https://www.unicode.org/reports/tr38/">Unicode Han Database</ref>.</p>
+   </remarks>
+   <listRef>
+      <ptr target="#ucsprops"/>
+   </listRef>
+</elementSpec>
