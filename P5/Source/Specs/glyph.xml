@@ -4,20 +4,21 @@ Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="gaiji" xml:id="GLYPH" ident="glyph">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec ident="glyph" module="gaiji" xml:id="GLYPH" xmlns="http://www.tei-c.org/ns/1.0">
   <gloss versionDate="2005-01-14" xml:lang="en">character glyph</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">그림 문자</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">文字的形體</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">glyphe d'un caractère</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">pictograma</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">glifo</gloss>
-  <desc versionDate="2005-01-14" xml:lang="en">provides descriptive information about a character glyph<!-- which is not
+  <desc versionDate="2005-01-14" xml:lang="en">provides descriptive information about a character
+    glyph<!-- which is not
 otherwise available in the document character set-->.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">그림 문자에 관한 기술적 정보를 제공한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供一種字體的描述性資訊。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">グリフの解説を示す．</desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">fournit des informations descriptives sur un
-			glyphe</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">fournit des informations descriptives sur un glyphe</desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona información descriptiva sobre un pictograma.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">fornisce informazioni descrittive su di un glifo.</desc>
   <classes>
@@ -25,27 +26,20 @@ otherwise available in the document character set-->.</desc>
   </classes>
   <content>
     <sequence>
-      
-        <elementRef key="glyphName" minOccurs="0"/>
-      
-      
-        <classRef key="model.descLike" minOccurs="0" maxOccurs="unbounded"/>
-      
-      
-        <elementRef key="charProp" minOccurs="0" maxOccurs="unbounded"/>
-      
-      
-        <elementRef key="mapping" minOccurs="0" maxOccurs="unbounded"/>
-      
-      
-        <elementRef key="figure" minOccurs="0" maxOccurs="unbounded"/>
-      
-      
-        <classRef key="model.graphicLike" minOccurs="0" maxOccurs="unbounded"/>
-      
-      
-        <classRef key="model.noteLike" minOccurs="0" maxOccurs="unbounded"/>
-      
+      <elementRef key="glyphName" minOccurs="0"/>
+      <classRef key="model.descLike" maxOccurs="unbounded" minOccurs="0"/>
+      <alternate>
+        <elementRef key="charProp" maxOccurs="unbounded" minOccurs="0"/>
+        <sequence>
+          <elementRef key="unicodeProp" maxOccurs="unbounded" minOccurs="0"/>
+          <elementRef key="unihanProp" maxOccurs="unbounded" minOccurs="0"/>
+          <elementRef key="localProp" maxOccurs="unbounded" minOccurs="0"/>
+        </sequence>
+      </alternate>
+      <elementRef key="mapping" maxOccurs="unbounded" minOccurs="0"/>
+      <elementRef key="figure" maxOccurs="unbounded" minOccurs="0"/>
+      <classRef key="model.graphicLike" maxOccurs="unbounded" minOccurs="0"/>
+      <classRef key="model.noteLike" maxOccurs="unbounded" minOccurs="0"/>
     </sequence>
   </content>
   <exemplum xml:lang="en">
