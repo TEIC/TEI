@@ -103,7 +103,7 @@ detest: checkrnv
 	sed 's/.*detest.xml:/detest.xml:/' detest2.log >> detest.log
 	sed 's/.*detest.xml:/detest.xml:/' detest3.log >> detest.log
 	diff detest.log expected-results/detest.log
-	rm -f detest*log
+	rm -f detest1.log detest2.log detest3.log
 
 clean:
 	rm -f test*.doc.xml test*.rnc test*.dtd test*.compiled.* test*.xsd test*.rnc test*.rng test*.xsl test*.isosch
