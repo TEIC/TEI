@@ -150,7 +150,6 @@ part of it) by adding a suitable encoding declaration. For example, if
 a document begins with the declaration <code>&lt;?xml
 encoding="iso-8859-1"?&gt;</code> any Unicode characters which are not
 in the ISO-8859-1 character set must be represented by NCRs. </p>
-<!-- Phase 1 needs rewrite with att.gaijiProperties #1805 -->
      <p>The <mentioned>gaiji</mentioned> module defined by this
      chapter adds a further way of representing specific characters
      and glyphs in a document. (Gaiji is from Japanese <seg xml:lang="ja">外字</seg>, meaning <gloss>external
@@ -184,15 +183,14 @@ for use by such applications in a standard way.</p>
 <p> The list of attributes (properties) for characters is modelled on
 those in the Unicode Character Database, which distinguishes
 <term>normative</term> and <term>informative</term> character
-properties. Additional, non-Unicode, properties may also be supplied.
+properties. The Unicode Consortium also maintains a separate set of character properties specific to East Asian characters in the <ref target="http://www.unicode.org/charts/unihan.html">Unihan database</ref> which TEI fully supports. Lastly, non-Unicode, properties may also be supplied.
 Since the list of properties will vary with different versions of the
 Unicode Standard, there may not be an exact correspondence between
 them and the list of properties defined in these Guidelines.</p>
-
+<!-- TODO Phase 5 Preceding sentence needs to mention update mechanisn #1805 -->
 <p>Usage examples for these elements are given below at <ptr target="#D25-30"/> and <ptr target="#D25-40"/>.  The gaiji module
 itself is formally defined in section <ptr target="#WSD-DEF"/>
 below. It declares the following additional elements:
-<!-- Phase 5 deprecation candidate #1805 -->
 <specList>
 <specDesc key="charDecl"/>
 <specDesc key="g" atts="ref"/>
@@ -250,7 +248,6 @@ using a reference number from a well-known character dictionary or a
 project-specific serial number.</note>. For convenience of processing,
 the following distinct elements are proposed for naming characters and
 glyphs:
-<!-- Phase 3 deprecation candidate #1805 -->
 <specList>
 <specDesc key="charName"/>
 <specDesc key="glyphName"/>
@@ -258,7 +255,9 @@ glyphs:
 <p>Within both <gi>char</gi> and <gi>glyph</gi>, the following elements are available:
 <specList>
 <specDesc key="gloss"/>
-<specDesc key="charProp"/>
+<specDesc key="unicodeProp"/>
+<specDesc key="unihanProp"/>
+<specDesc key="localProp"/>
 <specDesc key="desc"/>
 <specDesc key="mapping"/>
 <specDesc key="figure"/>
@@ -279,7 +278,6 @@ resolution, or in different formats, or may itself be repeated. As
 elsewhere, the <att>mimeType</att> attribute
 of <gi>graphic</gi> should be used to specify
 the format of the image.</p>
-<!-- Phase 3 rewrite example #1805 -->
 <p>The <gi>mapping</gi> element is similar to the standard TEI
 <gi>equiv</gi> element. While the latter is used to express
 correspondence relationships between TEI concepts or elements and
@@ -298,10 +296,7 @@ equivalences, <code>standard</code> for standardized forms, and
 following example: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><charDecl>
 <char xml:id="aenl">
 <charName>LATIN LETTER ENLARGED SMALL A</charName>
-<charProp>
-<localName>entity</localName>
-<value>aenl</value>
-</charProp>
+<localProp name="entity" value="aenl"/>
 <mapping type="standard">a</mapping>
 </char>
 </charDecl>
@@ -320,9 +315,7 @@ from the private use area as in this example:
 </egXML>
 </p>
 <p>A more precise documentation of the properties of any character or
-glyph may be supplied using the generic <gi>charProp</gi> element
-described in the next section. Despite its name, this element may be
-used for either characters or glyphs.
+glyph may be supplied using on of the three<gi>localProp</gi>, <gi>unicodeProp</gi>, or <gi>unihanProp</gi> elements described in the next section. These elements may be used for either characters or glyphs.
 </p>
 <div type="div3" xml:id="ucsprops"><head>Character Properties</head>
 <p>The Unicode Standard documents <soCalled>ideal</soCalled>
@@ -339,19 +332,21 @@ currently assigned to certain properties. When making such
 modifications, great care should be taken not to override standard
 informative properties for characters which already exist in the Unicode
 Standard, as documented in <ref target="#CH-eg-02">Freytag (2006)</ref>.</p>
-<p>The <gi>charProp</gi> element allows an encoder to supply information
+<p>The three <gi>xxxProp</gi> elements allows an encoder to supply information
 about a character or glyph. Where the information concerned relates to
-a property which has already been identified in the Unicode Standard, encoders are
-urged to use the appropriate Unicode property name. </p>
-<p>The following elements are used to record character properties:
+a property which has already been identified in the Unicode Standard, use of the appropriate Unicode property name is mandatory with <gi>unicodeProp</gi>. Unihan properties are similarly validated with <gi>unihanProp</gi>. Where neither of these standards suffices, use <gi>localProp</gi>. </p>
+<p>The following attributes are used to record key-value pairs for character properties:
+<!-- TODO phase 2: is this the correct way of doing this? -->
 <specList>
-<specDesc key="unicodeName"/>
-<specDesc key="localName"/>
+<specDesc key="name"/>
 <specDesc key="value"/>
 </specList>
-For each property, the encoder must supply either a
-<gi>unicodeName</gi> or a <gi>localName</gi>, followed by a
-<gi>value</gi>. </p>
+For each property, the encoder must supply both a
+<gi>name</gi> and a <gi>value</gi>. In cases of boolean properties TEI requires an explict true or false <gi>value</gi> attribute:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+  <unicodeProp name="Ideographic" value="False"/>
+</egXML>
+</p>
 <p>For convenience, we list here some of the normative character
 properties and their values. For full information, refer to chapter 4 of
 <title>The Unicode Standard</title>, or the online documentation of the Unicode Character Database.
@@ -465,22 +460,22 @@ Character Database: Canonical Combining Class Values</ref>); these were taken fr
 	  mapped in the way specified by the decomposition type). The
 	  following types of mapping are defined in the Unicode Standard:
 <table>
-<row><cell><code>font</code></cell><cell>   A font variant (e.g. a blackletter form)</cell></row>
-<row><cell><code>noBreak</code></cell><cell>   A no-break version of a space or hyphen</cell></row>
-<row><cell><code>initial</code></cell><cell>   An initial presentation form (Arabic)</cell></row>
-<row><cell><code>medial</code></cell><cell>   A medial presentation form (Arabic)</cell></row>
-<row><cell><code>final</code></cell><cell>   A final presentation form (Arabic)</cell></row>
-<row><cell><code>isolated</code></cell><cell>   An isolated presentation form (Arabic)</cell></row>
-<row><cell><code>circle</code></cell><cell>   An encircled form</cell></row>
-<row><cell><code>super</code></cell><cell>   A superscript form</cell></row>
-<row><cell><code>sub</code></cell><cell>   A subscript form</cell></row>
-<row><cell><code>vertical</code></cell><cell>   A vertical layout presentation form</cell></row>
-<row><cell><code>wide</code></cell><cell>   A wide (or zenkaku) compatibility character</cell></row>
-<row><cell><code>narrow</code></cell><cell>   A narrow (or hankaku) compatibility character</cell></row>
-<row><cell><code>small</code></cell><cell>   A small variant form (CNS compatibility)</cell></row>
-<row><cell><code>square</code></cell><cell>   A CJK squared font variant</cell></row>
-<row><cell><code>fraction</code></cell><cell>   A vulgar fraction form</cell></row>
-<row><cell><code>compat</code></cell><cell>   Otherwise-unspecified compatibility character</cell></row>
+<row><cell><code>font</code></cell><cell>A font variant (e.g. a blackletter form)</cell></row>
+<row><cell><code>noBreak</code></cell><cell>A no-break version of a space or hyphen</cell></row>
+<row><cell><code>initial</code></cell><cell>An initial presentation form (Arabic)</cell></row>
+<row><cell><code>medial</code></cell><cell>A medial presentation form (Arabic)</cell></row>
+<row><cell><code>final</code></cell><cell>A final presentation form (Arabic)</cell></row>
+<row><cell><code>isolated</code></cell><cell>An isolated presentation form (Arabic)</cell></row>
+<row><cell><code>circle</code></cell><cell>An encircled form</cell></row>
+<row><cell><code>super</code></cell><cell>A superscript form</cell></row>
+<row><cell><code>sub</code></cell><cell>A subscript form</cell></row>
+<row><cell><code>vertical</code></cell><cell>A vertical layout presentation form</cell></row>
+<row><cell><code>wide</code></cell><cell>A wide (or zenkaku) compatibility character</cell></row>
+<row><cell><code>narrow</code></cell><cell>A narrow (or hankaku) compatibility character</cell></row>
+<row><cell><code>small</code></cell><cell>A small variant form (CNS compatibility)</cell></row>
+<row><cell><code>square</code></cell><cell>A CJK squared font variant</cell></row>
+<row><cell><code>fraction</code></cell><cell>A vulgar fraction form</cell></row>
+<row><cell><code>compat</code></cell><cell>Otherwise-unspecified compatibility character</cell></row>
 </table>
 </item>
 	 <label>Numeric_Value</label> <item>This property applies for
@@ -528,19 +523,13 @@ define distinct <gi>glyph</gi> elements, one for each of the forms of
 the letter we wish to distinguish: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><charDecl>
   <glyph xml:id="r1">
   <glyphName>LATIN SMALL LETTER R WITH ONE FUNNY STROKE</glyphName>
-   <charProp>
-      <localName>entity</localName>
-       <value>r1</value>
-   </charProp>
-   <figure><graphic url="r1img.png"/></figure>
+  <localProp name="entitiy" value="r1"/>
+ <figure><graphic url="r1img.png"/></figure>
  </glyph>
   <glyph xml:id="r2">
   <glyphName>LATIN SMALL LETTER R WITH TWO FUNNY STROKES</glyphName>
-   <charProp>
-      <localName>entity</localName>
-       <value>r2</value>
-   </charProp>
-   <figure><graphic url="r2img.png"/></figure>
+  <localProp name="entitiy" value="r2"/>
+  <figure><graphic url="r2img.png"/></figure>
  </glyph>
 </charDecl> </egXML>
      With these definitions in place, occurrences of these two special
@@ -573,7 +562,7 @@ the letter we wish to distinguish: <egXML xmlns="http://www.tei-c.org/ns/Example
 (In fact the Unicode Standard does provide a character to represent the
       <code>Fi</code> ligature; the encoder may however prefer not to
       use it in order to simplify other text processing  operations,
-      such as indexing).    </p>
+      such as indexing).</p>
 <p>With this
      markup in place, it will be possible to write programs to analyze
      the distribution of the different letters "r" as well as produce
@@ -603,7 +592,7 @@ represented as follows:<eg><![CDATA[<abbr>&r1;</abbr>]]></eg></p>
     places where such markup constructs are not allowed, notably in
     attribute values.
     </p>
-
+<!-- TODO Phase 5 add alternative unihanProp mechanism to define the relationship #1805 -->
     <p>Since the need to use these constructs to annotate or define
     characters occurs frequently in Chinese, Korean, and Japanese
     documents, here are some issues that are specific to these
@@ -659,7 +648,7 @@ represented as follows:<eg><![CDATA[<abbr>&r1;</abbr>]]></eg></p>
    <div type="div2" xml:id="D25-40">
     <head>Adding New Characters</head>
     <p>The creation of additional characters for use in text encoding
-    is quite similar to the annotation of existing characters.  The
+    is quite similar to the annotation of existing characters. The
     same element <gi>g</gi> is used to provide a link from the
     character instance in the text to a character definition provided
     within the <gi>charDecl</gi> element. This character definition
@@ -668,7 +657,7 @@ represented as follows:<eg><![CDATA[<abbr>&r1;</abbr>]]></eg></p>
     the Private Use Area (PUA) of the Unicode Standard, which is an
     area set aside for the very purpose of privately adding new
     characters to a document.  Recommendations on how to use such PUA
-    characters are given in the following section.  </p>
+    characters are given in the following section.</p>
 <p>In some circumstances, it may be desirable to provide a single
 precomposed form of a character that is encoded in Unicode only as a
 sequence of code points. For example, in Medieval
@@ -693,10 +682,7 @@ provide useful documentation for the particular character or glyph so referenced
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><char xml:id="ydotacute">
        <charName>LATIN SMALL LETTER Y WITH DOT ABOVE AND
        ACUTE</charName>
-     <charProp>
-       <localName>entity</localName>
-       <value>ydotacute</value>
-     </charProp>
+       <localProp name="entitiy" value="ydotacute"/>
      <mapping type="composed">&amp;#x0079;&amp;#x0307;&amp;#x0301;</mapping>
      <mapping type="PUA">U+E0A4</mapping> </char></egXML> This
      definition specifies the mapping between this composed character
@@ -706,25 +692,27 @@ provide useful documentation for the particular character or glyph so referenced
      purpose of which is to supply a recommended character entity name
      for the character.
 </p>
+<p>For Han characters, Unicode provides dedicated symbols to capture the composition in Ideographic Description Sequences (IDS). Encoders are strongly encouraged to provide IDS for each variant ideograph in the header component of the gaiji module to faciliated greater human and machine readability of rare or unencoded characters, as in the following example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+  <!-- more properties here -->
+  <mapping type="IDS">⿻人為</mapping>
+  <mapping type="standard">偽</mapping>
+  <!-- more properties here -->
+</egXML>
+The composition rules and further examples appear in <ref target="https://www.unicode.org/versions/Unicode11.0.0/ch18.pdf#G28626">Chapter 18.2: Ideographic Description Characters</ref> of the Unicode Standard. Editors should be aware that different sequences can accurately describe the same character. In the example the character "人" (U+4EBA) could have been substituted with "亻" (U+4EBB). Local preferences about how sequences are constructed should be documented in the <ptr target="#HD5"/>. Additionally, a number of online services, such as <ref target="https://chise.org"/>, offer quering and retrieving IDS, which facilitate a greater degree of stablilty across different applications.</p>
 <!-- Phase 1 add unihanProp prose rewrite section see #1805 mention IDS -->
 <p>Under certain circumstances, Chinese Han characters can be written
-    within a circle.  Rather than considering this as simply an aspect of the
+    within a circle. Rather than considering this as simply an aspect of the
     rendering, an encoder may wish to treat such circled characters as
-    entirely distinct  derived characters. For a given character
+    entirely distinct derived characters. For a given character
     (say that represented by the numeric-character reference <code>&amp;#x4EBA;</code>)
     the circled variant might conveniently be represented as
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#NONE"> <g ref="#U4EBA-circled"/></egXML>, which references a
     definition such as the following:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><char xml:id="U4EBA-circled">
   <charName>CIRCLED IDEOGRAPH</charName>
-  <charProp>
-    <unicodeName>Decomposition_Mapping</unicodeName>
-    <value>circle</value>
-  </charProp>
-  <charProp>
-   <localName>daikanwa</localName>
-   <value>36</value>
-  </charProp>
+  <unicodeProp name="Decomposition_Mapping" value="cicle"/>
+  <localProp name="daikanwa" value="36"/>
   <mapping type="standard">
    &amp;#x4EBA;
   </mapping>
@@ -742,7 +730,7 @@ mappings indicate firstly that the standard form of this character is
 the character <code>&amp;#x4EBA;</code>, and secondly that the
 character used to represent this character locally is the PUA
 character  <code>&amp;#xE000;</code>. For convenience of local
-processing this PUA character may in fact appear  as content of
+processing this PUA character may in fact appear as content of
 the <gi>g</gi> element. In general, however, the <gi>g</gi> element
 will be empty.</p>
    </div>
@@ -750,7 +738,7 @@ will be empty.</p>
     <head>How to Use Code Points from the Private Use Area</head>
     <p>The developers of the Unicode Standard have set aside an
     area of the codespace for the private use of software vendors,
-    user groups, or individuals.  As of this writing (Unicode 5.0),
+    user groups, or individuals.  As of this writing (Unicode 12.1),
     there are around 137,000 code points available in this area, which
     should be enough for most needs. No code point assignments will be made
     to this area by standard bodies and only some very basic default
@@ -1365,6 +1353,7 @@ The selection and combination of modules to form a TEI schema is described in
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unicodeName.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unihanProp.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unicodeProp.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/value.xml"/></specGrp>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/value.xml"/>
+</specGrp>
 </div>
 </div>
