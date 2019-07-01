@@ -146,3 +146,4 @@ clean:
 	rm -f enrich.rng isofs.rng
 	rm -f names.xml *properties
 	rm -f [A-Z]*xml
+	rm -f tei_customization.odd
