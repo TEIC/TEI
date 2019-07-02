@@ -295,7 +295,7 @@ equivalences, <code>standard</code> for standardized forms, and
 <code>simplified</code> for simplified characters, etc., as in the
 following example: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><charDecl>
 <char xml:id="aenl">
-<charName>LATIN LETTER ENLARGED SMALL A</charName>
+<localProp name="name" value="LATIN LETTER ENLARGED SMALL A"/>
 <localProp name="entity" value="aenl"/>
 <mapping type="standard">a</mapping>
 </char>
@@ -307,7 +307,7 @@ character or (more likely) glyph under discussion onto a character
 from the private use area as in this example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><charDecl>
 <glyph xml:id="z103">
-<glyphName>LATIN LETTER Z WITH TWO STROKES</glyphName>
+<localProp name="name" value="LATIN LETTER Z WITH TWO STROKES"/>
 <mapping type="standard">Z</mapping>
 <mapping type="PUA">U+E304</mapping>
 </glyph>
@@ -521,12 +521,12 @@ standard representation for the character concerned, we will need to
 define distinct <gi>glyph</gi> elements, one for each of the forms of
 the letter we wish to distinguish: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><charDecl>
   <glyph xml:id="r1">
-  <glyphName>LATIN SMALL LETTER R WITH ONE FUNNY STROKE</glyphName>
+  <localProp name="name" value="LATIN SMALL LETTER R WITH ONE FUNNY STROKE"/>
   <localProp name="entitiy" value="r1"/>
  <figure><graphic url="r1img.png"/></figure>
  </glyph>
   <glyph xml:id="r2">
-  <glyphName>LATIN SMALL LETTER R WITH TWO FUNNY STROKES</glyphName>
+  <localProp name="name" value="LATIN SMALL LETTER R WITH TWO FUNNY STROKES"/>
   <localProp name="entitiy" value="r2"/>
   <figure><graphic url="r2img.png"/></figure>
  </glyph>
@@ -546,14 +546,14 @@ the letter we wish to distinguish: <egXML xmlns="http://www.tei-c.org/ns/Example
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p> ... <g ref="#Filig">Fi</g>lthy riches...</p>
 <!-- in the charDecl -->
   <glyph xml:id="Filig">
-   <glyphName>LATIN UPPER F AND LATIN LOWER I LIGATURE</glyphName>
+   <localProp name="name" value="LATIN UPPER F AND LATIN LOWER I LIGATURE"/>
    <figure><graphic url="Filig.png"/></figure>
  </glyph>
 </egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p> ... <abbr><g ref="#per">per</g></abbr> ardua</p>
 <!-- in the charDecl -->
   <glyph xml:id="per">
-   <glyphName>LATIN ABBREVIATION PER</glyphName>
+   <localProp name="name" value="LATIN ABBREVIATION PER"/>
    <figure><graphic url="per.png"/></figure>
  </glyph>
 
@@ -679,8 +679,8 @@ representation is to use the <gi>g</gi> element defined by
 the module defined in this chapter: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#NONE"><g ref="#ydotacute"/></egXML>. This makes it possible for the encoder to
 provide useful documentation for the particular character or glyph so referenced:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><char xml:id="ydotacute">
-   <charName>LATIN SMALL LETTER Y WITH DOT ABOVE AND
-   ACUTE</charName>
+   <localProp name="name" value="LATIN SMALL LETTER Y WITH DOT ABOVE AND
+   ACUTE"/>
    <localProp name="entitiy" value="ydotacute"/>
  <mapping type="composed">&amp;#x0079;&amp;#x0307;&amp;#x0301;</mapping>
  <mapping type="PUA">U+E0A4</mapping> </char></egXML> This
@@ -709,8 +709,8 @@ the circled variant might conveniently be represented as
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#NONE"> <g ref="#U4EBA-circled"/></egXML>, which references a
 definition such as the following:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><char xml:id="U4EBA-circled">
-  <charName>CIRCLED IDEOGRAPH</charName>
   <unicodeProp name="Decomposition_Mapping" value="cicle"/>
+  <localProp name="name" value="CIRCLED IDEOGRAPH 36"/>
   <localProp name="daikanwa" value="36"/>
   <mapping type="standard">
    &amp;#x4EBA;
@@ -1337,22 +1337,24 @@ The selection and combination of modules to form a TEI schema is described in
 <ptr target="#STIN"/>.
 </p>
 <specGrp>
-
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/g.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/char.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/charName.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/charProp.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/charDecl.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.gaijiProp.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/char.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/glyph.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/glyphName.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/localName.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/localProp.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/mapping.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unicodeName.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unihanProp.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unicodeProp.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.gaijiProp.xml"/>
+
+<!-- duncdrum to be deprecated -->
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/value.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unicodeName.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/localName.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/glyphName.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/charProp.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/charName.xml"/>
+
 </specGrp>
 </div>
 </div>
