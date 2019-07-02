@@ -30,6 +30,15 @@ $Id$
     <textNode/>
     <!--s:assert> some schematron rules here</s:assert-->
   </content>
+  <constraintSpec scheme="schematron" validUntil="2021-07-09"
+		  ident="unihan-phase5-uniname" type="deprecationWarning">
+    <desc type="deprecationInfo" xml:lang="en"
+    versionDate="2019-07-01">Use either `unicodeProp`, `localProp`, or `unihanProp` to specify character or glyph properties.</desc>
+    <constraint>
+      <sch:assert test="*" role="nonfatal">The use of the `unicodeName` element
+      is deprecated, and will be considered invalid after 2021-07-09. Use either `unicodeProp`, `localProp`, or `unihanProp` to specify character or glyph properties.</sch:assert>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="version" usage="opt">
       <desc versionDate="2005-01-14" xml:lang="en">specifies the version number of the Unicode Standard in which this property name is
