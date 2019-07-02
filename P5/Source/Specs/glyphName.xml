@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
+Copyright TEI Consortium.
+Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="gaiji" xml:id="GLYPHNAME" ident="glyphName">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="gaiji" xml:id="GLYPHNAME" ident="glyphName">
   <gloss versionDate="2005-01-14" xml:lang="en">character glyph name</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">그림문자명</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">字體名稱</gloss>
@@ -27,6 +27,15 @@ $Id$
   <content>
     <textNode/>
   </content>
+  <constraintSpec scheme="schematron" validUntil="2021-07-09"
+		  ident="unihan-phase5-glyphName" type="deprecationWarning">
+    <desc type="deprecationInfo" xml:lang="en"
+    versionDate="2019-07-01">Use either `unicodeProp`, or `localProp`, to specify character or glyph names.</desc>
+    <constraint>
+      <sch:assert test="*" role="nonfatal">The use of the `glyphName` element
+      is deprecated, and will be considered invalid after 2021-07-09. Use either `unicodeProp`, or `localProp` to specify character or glyph names.</sch:assert>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <glyphName>CIRCLED IDEOGRAPH 4EBA</glyphName>
