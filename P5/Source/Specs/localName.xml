@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
+Copyright TEI Consortium.
+Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="gaiji" xml:id="LOCALNAME" ident="localName">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="gaiji" xml:id="LOCALNAME" ident="localName">
   <gloss versionDate="2007-07-04" xml:lang="en">locally-defined property name</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">국부적으로 정의된 특성명</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">當地定義的性質名稱</gloss>
@@ -27,13 +27,22 @@ $Id$
     <textNode/>
     <!--s:assert> some schematron rules here</s:assert-->
   </content>
-  <exemplum xml:lang="mul">
+  <constraintSpec scheme="schematron" validUntil="2021-07-09"
+		  ident="unihan-phase5-localName" type="deprecationWarning">
+    <desc type="deprecationInfo" xml:lang="en"
+    versionDate="2019-07-01">Use either `unicodeProp`, `localProp`, or `unihanProp` to specify character or glyph properties.</desc>
+    <constraint>
+      <sch:assert test="*" role="nonfatal">The use of the `localName` element
+      is deprecated, and will be considered invalid after 2021-07-09. Use either `unicodeProp`, `localProp`, or `unihanProp` to specify character or glyph properties.</sch:assert>
+    </constraint>
+  </constraintSpec>
+  <exemplum versionDate="2019-07-01" xml:lang="mul">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <localName>daikanwa</localName>
       <localName>entity</localName>
     </egXML>
   </exemplum>
-  <exemplum versionDate="2008-04-06" xml:lang="fr">
+  <exemplum versionDate="2019-07-01" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <localName>daikanwa</localName>
       <localName>entité</localName>
