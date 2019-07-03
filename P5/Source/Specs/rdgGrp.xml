@@ -27,61 +27,16 @@ relationship or other affinity.</desc>
     <memberOf key="att.textCritical"/>
   </classes>
   <content>
-    <!--    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:zeroOrMore>
-        <rng:ref name="model.global"/>
-      </rng:zeroOrMore>
-      <rng:oneOrMore>
-        <rng:choice>
-          <rng:group>
-            <rng:ref name="rdgGrp"/>
-            <rng:zeroOrMore>
-              <rng:ref name="model.global"/>
-            </rng:zeroOrMore>
-          </rng:group>
-          <rng:group>
-            <rng:ref name="rdg"/>
-            <rng:zeroOrMore>
-              <rng:ref name="model.global"/>
-            </rng:zeroOrMore>
-            <rng:optional>
-              <rng:ref name="wit"/>
-              <rng:zeroOrMore>
-                <rng:ref name="model.global"/>
-              </rng:zeroOrMore>
-            </rng:optional>
-          </rng:group>
-        </rng:choice>
-      </rng:oneOrMore>
-    </rng:group>-->
-    <!-- restored original(post P3, pre P4) corrected form of content
-     model  LB Dec 04 -->
-    
-      
-    <alternate minOccurs="1" maxOccurs="unbounded">
-      <sequence>
-        <elementRef key="rdgGrp"/>
-        <elementRef key="wit" minOccurs="0"/>
-      </sequence>
-      
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <sequence minOccurs="0">
-          <elementRef key="lem"/>
-          <elementRef key="wit" minOccurs="0"/>
-        </sequence>
-        
-        <sequence>
-          <classRef key="model.rdgLike"/>
-          <elementRef key="wit" minOccurs="0"/>
-        </sequence>
-      </sequence>
-      
-      <classRef key="model.noteLike" minOccurs="0" maxOccurs="unbounded"/>
-      <elementRef key="witDetail" minOccurs="0" maxOccurs="unbounded"/>
-      
+    <sequence>
+      <elementRef key="lem" minOccurs="0"/>
+    <alternate maxOccurs="unbounded" minOccurs="0">
+      <classRef key="model.rdgLike"/>
+      <classRef key="model.noteLike"/>
+      <elementRef key="witDetail"/>
+      <elementRef key="wit"/>      
+      <elementRef key="rdgGrp"/>      
     </alternate>
-      
-    
+    </sequence>
   </content>
   <constraintSpec scheme="schematron" ident="only1lem">
     <constraint xmlns:sch="http://purl.oclc.org/dsdl/schematron">
