@@ -73,34 +73,27 @@ character is considered eligible for addition
 to the Unicode Standard.  </item>
 
 </list> </p>
-<p>Since there are now close to 130,000 characters in Unicode,
+<p>Since there are now over 130,000 characters in Unicode,
 chances are good that what you need is already there, but it might
 not be easy to find, since it might have a different name in
 Unicode. Editors working with East Asian writing systems, should consult
-the <ref target="https://unicode.org/charts/unihan.html">Unihan Database </ref>.
+the <ref target="https://unicode.org/charts/unihan.html">Unihan Database</ref>.
 Look again, this time at other sites, for example <ptr target="http://www.eki.ee/letter/"/> (no CJK) or <ptr target="https://www.chise.org"/> (CJK only), which also provide searches based on scripts and languages. Take care, however, that all the
 properties of what seems to be a relevant character are consistent
 with those of the character you are looking for. For example, if
 your character is definitely a digit, but the properties of the
 best match you can find for it say that it is a letter, you may
-have a character not yet defined in Unicode.  </p>
+have a character not yet defined in Unicode.</p>
 <p>In general, it is advisable to avoid Unicode characters generally
 described as presentation forms.<note place="bottom">Specifically,
-characters in the Unicode blocks Alphabetic Presentation Forms, Arabic
-Presentation Forms-A, Arabic Presentation Forms-B, Letterlike Symbols,
-and Number Forms.</note> However, if the character you are looking for
-is being used in a notation (rather than as part of the orthography of
-a language) then it is quite acceptable to select characters from the
-Mathematical Operators block, provided that they have the appropriate
-properties (i.e. <code>So</code>: Symbol, Other; or <code>Sm</code>:
+characters in the Unicode blocks Alphabetic Presentation Forms, Arabic Presentation Forms-A, Arabic Presentation Forms-B, Letterlike Symbols,and Number Forms.</note> However, if the character you are looking for is being used in a notation (rather than as part of the orthography of a language) then it is quite acceptable to select characters from the Mathematical Operators block, provided that they have the appropriate properties (i.e. <code>So</code>: Symbol, Other; or <code>Sm</code>:
 Symbol, Math).</p>
 <p>An encoded character may be precomposed or it may be formed
 from base characters and combining diacritical marks. Either will
-suffice for a character to be "found" as an encoded character. </p>
-<p>If there are several possible Unicode characters to choose amongst,
+suffice for a character to be "found" as an encoded character. If there are several possible Unicode characters to choose amongst,
 it is good practice to consult other colleagues and practitioners to
 see whether a consensus has emerged in favour of one or other of
-them. </p>
+them.</p>
 <p>If, however, no suitable form of your character seems to exist,
 the next question will be: <q>Does the graphical unit in question
 represent a variant form of a known character, or does it
@@ -235,23 +228,7 @@ further <ptr target="#D25-30"/>).</p>
 <p>The Unicode Standard recommends naming conventions which should be
 followed strictly where the intention is to annotate an existing
 Unicode character, and which may also be used as a model when
-creating new names for characters or glyphs<note place="bottom">It should be noted,
-however, that this naming convention cannot meaningfully be applied to
-East Asian characters; the typical Unicode descriptions for these
-characters take the form <q>CJK Unified Ideograph
-<code>U+4E00</code></q>, where <code>U+4E00</code> is simply the
-Unicode code point value of the character in question.  In cases where
-no Unicode code point exists, there is little hope of finding a name
-that helps to identify the character. Names should therefore be
-constructed in a way meaningful to local practice, for example by
-using a reference number from a well-known character dictionary or a
-project-specific serial number.</note>. For convenience of processing,
-the following distinct elements are proposed for naming characters and
-glyphs:
-<specList>
-<specDesc key="charName"/>
-<specDesc key="glyphName"/>
-</specList></p>
+creating new names for characters or glyphs<note place="bottom">It should be noted, however, that this naming convention cannot meaningfully be applied to East Asian characters; the typical Unicode descriptions for these characters take the form <q>CJK Unified Ideograph <code>U+4E00</code></q>, where <code>U+4E00</code> is simply the Unicode code point value of the character in question.  In cases where no Unicode code point exists, there is little hope of finding a name that helps to identify the character. Names should therefore be constructed in a way meaningful to local practice, for example by using a reference number from a well-known character dictionary or a project-specific serial number.</note>:</p>
 <p>Within both <gi>char</gi> and <gi>glyph</gi>, the following elements are available:
 <specList>
 <specDesc key="gloss"/>
@@ -262,7 +239,6 @@ glyphs:
 <specDesc key="mapping"/>
 <specDesc key="figure"/>
 <specDesc key="note"/>
-
 </specList>
 </p>
 
@@ -315,8 +291,7 @@ from the private use area as in this example:
 </egXML>
 </p>
 <p>A more precise documentation of the properties of any character or
-glyph may be supplied using on of the three<gi>localProp</gi>, <gi>unicodeProp</gi>, or <gi>unihanProp</gi> elements described in the next section. These elements may be used for either characters or glyphs.
-</p>
+glyph may be supplied using one of the three: <gi>localProp</gi>, <gi>unicodeProp</gi>, or <gi>unihanProp</gi> elements described in the next section.</p>
 <div type="div3" xml:id="ucsprops"><head>Character Properties</head>
 <p>The Unicode Standard documents <soCalled>ideal</soCalled>
 characters, defined by reference to a number of
@@ -332,24 +307,23 @@ currently assigned to certain properties. When making such
 modifications, great care should be taken not to override standard
 informative properties for characters which already exist in the Unicode
 Standard, as documented in <ref target="#CH-eg-02">Freytag (2006)</ref>.</p>
-<p>The three <gi>xxxProp</gi> elements allows an encoder to supply information
-about a character or glyph. Where the information concerned relates to
-a property which has already been identified in the Unicode Standard, use of the appropriate Unicode property name is mandatory with <gi>unicodeProp</gi>. Unihan properties are similarly validated with <gi>unihanProp</gi>. Where neither of these standards suffices, use <gi>localProp</gi>. </p>
-<p>The following attributes are used to record key-value pairs for character properties:
-<!-- TODO phase 2: is this the correct way of doing this? -->
+<!-- TODO phase 6 insert comment about validation of values -->
+<p>The <gi>unicodeProp</gi>, <gi>unihanProp</gi>, and <gi>localProp</gi> elements allow TEI encoders to record information about a character or glyph. Where the information concerned relates to
+a property which has already been identified in the Unicode Standard, use of the appropriate Unicode property name with <gi>unicodeProp</gi> is strongly encouraged. The use of available Unihan property names with <gi>unihanProp</gi>, is similarly encouraged. With these elements, validation rules for property names <!-- and values --> according to Unicode conventions are incorporated into TEI validation rules. Where neither of these standards suffices use <gi>localProp</gi>.</p>
+<!-- Phse 3-5 TODO add @version in here and override possible values for localProp -->
+<p>The three elements for recording Unicode or locally defined properties belong to the <gi>att.gaijiProp</gi> class. This class defines two required attributes for record key-value pairs for character properties:
+<!-- TODO phase 3: add version -->
 <specList>
-<specDesc key="name"/>
-<specDesc key="value"/>
+<specDesc key="att.gaijiProp" atts="name value"/>
 </specList>
 For each property, the encoder must supply both a
-<gi>name</gi> and a <gi>value</gi>. In cases of boolean properties TEI requires an explict true or false <gi>value</gi> attribute:
+<att>name</att> and a <att>value</att>. In cases of boolean properties TEI requires an explict true or false <gi>value</gi> attribute:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
   <unicodeProp name="Ideographic" value="False"/>
 </egXML>
 </p>
 <p>For convenience, we list here some of the normative character
-properties and their values. For full information, refer to chapter 4 of
-<title>The Unicode Standard</title>, or the online documentation of the Unicode Character Database.
+properties and their values. For full information, refer to chapter 4 of <title>The Unicode Standard</title>, or the online documentation of the Unicode Character Database.
 <list type="gloss">
 	 <label>General_Category</label> <item>The general
 	  category (described in the Unicode Standard chapter 4 section 5) is an assignment to some
@@ -491,11 +465,7 @@ Character Database: Canonical Combining Class Values</ref>); these were taken fr
 	 the text direction: it has the value <code>Y</code>
 (character is mirrored) or <code>N</code> (code is not mirrored).</item>
 	</list></p>
-<p>The Unicode Standard also defines a set of informative (but non-normative)
-properties for Unicode characters. If encoders want to provide such
-properties, they may be included using the suggested Unicode name. If a Unicode
-name exists for a given character this should always be used, encoders may
-also supply locally defined names. To tag a unicode name, use <gi>unicodeProp</gi>, or <gi>localProp</gi> where names not specified by the Unicode Standard.</p>
+<p>The Unicode Standard also defines a set of informative (but non-normative) properties for Unicode characters. If encoders want to provide such properties, they may be included using the suggested Unicode name. If a Unicode name exists for a given character this should always be used, encoders may also supply locally defined names. To tag a unicode name, use <gi>unicodeProp</gi>, or <gi>unihanProp</gi> for Unihan properties. For names specified elsewhere or specified locally use <gi>localProp</gi>.</p>
 </div>
    </div>
    <div type="div2" xml:id="D25-30">
@@ -691,19 +661,17 @@ provide useful documentation for the particular character or glyph so referenced
  purpose of which is to supply a recommended character entity name
  for the character.
 </p>
-<p>For Han characters, Unicode provides dedicated symbols to capture the composition in Ideographic Description Sequences (IDS). Encoders are strongly encouraged to provide IDS for each variant ideograph in the header component of the gaiji module to faciliated greater human and machine readability of rare or unencoded characters, as in the following example:
+<p>The composition rules for ideographic characters typically require more complex rules than the <code>&amp;ydotacute;</code> above. For these cases Unicode provides dedicated symbols to capture the composition in Ideographic Description Sequences (IDS). Encoders are strongly encouraged to provide IDS for each variant ideograph in the header component of the gaiji module to faciliated greater human and machine readability of rare or unencoded characters, as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+<glyph xml:id="U507D-var">
   <!-- more properties here -->
   <mapping type="IDS">⿻人為</mapping>
   <mapping type="standard">偽</mapping>
-  <!-- more properties here -->
+</glyph>
 </egXML>
-The composition rules and further examples appear in <ref target="https://www.unicode.org/versions/Unicode11.0.0/ch18.pdf#G28626">Chapter 18.2: Ideographic Description Characters</ref> of the Unicode Standard. Editors should be aware that different sequences can accurately describe the same character. In the example the character "人" (U+4EBA) could have been substituted with "亻" (U+4EBB). Local preferences about how sequences are constructed should be documented in the <ptr target="#HD5"/>. Additionally, a number of online services, such as <ref target="https://chise.org"/>, offer quering and retrieving IDS, which facilitate a greater degree of stablilty across different applications.</p>
-<!-- Phase 1 add unihanProp prose rewrite section see #1805 mention IDS -->
+The composition rules and further examples appear in <ref target="https://www.unicode.org/versions/Unicode11.0.0/ch18.pdf#G28626">Chapter 18.2: Ideographic Description Characters</ref> of the Unicode Standard. Editors should be aware that different sequences can accurately describe the same character. In the example the character "人" (U+4EBA) could have been substituted with "亻" (U+4EBB). Local preferences about how sequences are constructed should be documented in the <ptr target="#HD5"/>. Additionally, a number of online services, such as <ref target="https://chise.org"> CHISE</ref>, offer quering and retrieving characters via IDS, which facilitates a greater degree of stablilty across different applications.</p>
 <p>Under certain circumstances, Chinese Han characters can be written
-within a circle. Rather than considering this as simply an aspect of the
-rendering, an encoder may wish to treat such circled characters as
-entirely distinct derived characters. For a given character
+within a circle. Rather than considering this as simply an aspect of the rendering, an encoder may wish to treat such circled characters as entirely distinct derived characters. For a given character
 (say that represented by the numeric-character reference <code>&amp;#x4EBA;</code>)
 the circled variant might conveniently be represented as
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#NONE"> <g ref="#U4EBA-circled"/></egXML>, which references a
@@ -724,13 +692,7 @@ character has been defined with two mappings, and with two
 properties. The two properties are the Unicode-defined
 character-decomposition which specifies that this is a circled
 character, using the appropriate terminology (see <ptr target="#ucsprops"/> above) and a locally defined property known as
-<soCalled>daikanwa</soCalled> <!-- whatever that means -->. The two
-mappings indicate firstly that the standard form of this character is
-the character <code>&amp;#x4EBA;</code>, and secondly that the
-character used to represent this character locally is the PUA
-character  <code>&amp;#xE000;</code>. For convenience of local
-processing this PUA character may in fact appear as content of
-the <gi>g</gi> element. In general, however, the <gi>g</gi> element
+<soCalled>daikanwa</soCalled>. The two mappings indicate firstly that the standard form of this character is the character <code>&amp;#x4EBA;</code>, and secondly that the character used to represent this character locally is the PUA character  <code>&amp;#xE000;</code>. For convenience of local processing this PUA character may in fact appear as content of the <gi>g</gi> element. In general, however, the <gi>g</gi> element
 will be empty.</p>
    </div>
    <div type="div2" xml:id="D25-50">
