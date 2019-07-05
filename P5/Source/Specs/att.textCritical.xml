@@ -16,8 +16,17 @@ $Id$
   <classes>
     <memberOf key="att.written"/>
   </classes>
+  <!-- Seems we can't just use:
+  <classes>
+    <memberOf key="att.typed"/>
+  </classes>
+  and then modify @type with <attDef>, below, as the Stylesheets
+  generate RELAX NG with 2 @types defined. See Stylesheets ticket
+  #370. Note that same problems is present in att.entryLike.
+  Also see TEI ticket #1867. -->
   <attList>
-    <attDef ident="type" usage="opt">
+    <attRef class="att.typed" name="subtype"/>
+    <attDef ident="type" usage="opt" mode="add">
       <desc versionDate="2005-10-10" xml:lang="en">classifies the reading according to some useful typology.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">유용한 유형에 따라 독법을 분류한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">用合宜的分類法將對應本分類。</desc>
