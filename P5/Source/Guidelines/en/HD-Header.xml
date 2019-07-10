@@ -1797,7 +1797,7 @@ more than one language, as in the following example:
         <specDesc key="conversion" atts="formula fromUnit toUnit from to notBefore notAfter when"/> 
         <specDesc key="att.formula" atts="formula"/>
       </specList>
-Within the <gi>unitDef</gi>, a <gi>conversion</gi> element may be used to store information relating to conversion between units. The <gi>conversion</gi> element holds a special pair of attributes, <att>fromUnit</att> and <att>toUnit</att>, which serve to indicate the direction of a calculation from one unit of measure (stored in <att>fromUnit</att>) to another (stored in <att>toUnit</att>). A numerical value needed to define the relation between these units may be stored in <att>formula</att> as shown in the example. 
+Within the <gi>unitDef</gi>, a <gi>conversion</gi> element may be used to store information relating to conversion between units. The <gi>conversion</gi> element holds a special pair of attributes, <att>fromUnit</att> and <att>toUnit</att>, which serve to indicate the direction of a calculation from one unit of measure (stored in <att>fromUnit</att>) to another (stored in <att>toUnit</att>). A mathematical calculation to define the relation between these units may be stored in <att>formula</att>, as shown in the following examples. The <att>formula</att> attribute takes a value expressed as an XPath expression, which means that division must be expressed with <q>div</q> so as not to be confused with the forward slash used in path navigation. 
     </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NONE">
       <encodingDesc>
@@ -1805,15 +1805,15 @@ Within the <gi>unitDef</gi>, a <gi>conversion</gi> element may be used to store 
         <unitDef xml:id="keel" type="weight">
           <label>keel</label>
           <placeName ref="#england"/>
-          <conversion fromUnit="#chalder" toUnit="#keel" formula="20" from="1421" to="1676"/>
-          <conversion fromUnit="#chalder" toUnit="#keel" formula="16" from="1676" to="1824"/>
+          <conversion fromUnit="#chalder" toUnit="#keel" formula="$fromUnit * 20" from="1421" to="1676"/>
+          <conversion fromUnit="#chalder" toUnit="#keel" formula="$fromUnit * 16" from="1676" to="1824"/>
           <desc>Keel was a unit measuring weight of coal. It had been equal to 20 chalders from 1421 to 1676, and it was made to be equivalent to 16 chalders from 1676 to 1824.</desc>
         </unitDef>
         <unitDef xml:id="chalder" type="weight">
           <label>chalder</label>
           <placeName ref="#england"/>
-          <conversion fromUnit="#bushel" toUnit="#chalder" formula="32" from="1421" to="1676"/>
-          <conversion fromUnit="#bushel" toUnit="#chalder" formula="36" from="1676" to="1824"/>
+          <conversion fromUnit="#bushel" toUnit="#chalder" formula="$fromUnit * 32" from="1421" to="1676"/>
+          <conversion fromUnit="#bushel" toUnit="#chalder" formula="$fromUnit * 36" from="1676" to="1824"/>
           <desc>Chalder was a unit measuring weight of coal. It had been equal to 32 bushels from 1421 to 1676, and it was made to be equivalent to 36 bushels from 1676 to 1824.</desc>
         </unitDef>
         <unitDef xml:id="bushel" type="weight">
@@ -1823,6 +1823,17 @@ Within the <gi>unitDef</gi>, a <gi>conversion</gi> element may be used to store 
         </unitDef>
       </unitDecl>
       </encodingDesc>
+    </egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+     <encodingDesc>
+       <unitDecl>
+         <unitDef xml:id="Celsius" type="temperature">
+           <label>Celsius or Centrigrade scale</label>
+           <conversion fromUnit="#Fahrenheit" toUnit="#Celsius" formula="($fromUnit - 32) * (5 div 9)"/>
+           <desc>To convert from the Fahrenheit to the Celsius scale, subtract 32 from the Celsius temperature and multiply by 5/9.</desc>
+         </unitDef>
+       </unitDecl>
+     </encodingDesc>
     </egXML>
     <specGrp xml:id="D2256" n="The unit declaration">
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unitDecl.xml"/>
