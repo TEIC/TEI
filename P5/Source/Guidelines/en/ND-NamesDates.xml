@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
+Copyright TEI Consortium.
+Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details.
 $Date$
 $Id$
@@ -788,7 +788,8 @@ target="#CONA"/>).  The tag -->The
         assertions relating to: <list rend="bulleted">
           <item>characteristics or <term>traits</term> which do not, by and large, change over time</item>
           <item>characteristics or <term>states</term> which hold true only at a specific time</item>
-          <item><term>events</term> or incidents which may lead to a change of state or, less frequently, trait.</item>
+          <item><term>events</term> or incidents which may lead to a change of state or, less frequently, trait,</item>
+          <item>external resources where other information on the subject can be found.</item>
         </list>
       </p>
 
@@ -823,6 +824,21 @@ target="#CONA"/>).  The tag -->The
         </specList>
       </p>
 
+      <p>When developing a prosopography record of a named entity it is often helpful to refer explicitly to other resources, for example the Library of Congress Name Authority File, Virtual Internationl Authority File (VIAF), a gazetteer of places like Pleiades, or a printed book.
+        <specList>
+          <specDesc key="idno" atts="type"/>
+        </specList>
+      </p>
+      <p>Here is a simple example:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="Rome">
+               <placeName>Rome</placeName>
+               <location>
+                  <geo>41.891775, 12.486137</geo>
+               </location>
+               <idno type="Pleiades">423025</idno>
+               <note>capital of the Roman Empire</note>
+            </place></egXML>
+      </p>
     </div>
     <div type="div3" xml:id="NDPERSE">
       <head>The Person Element</head>
@@ -923,7 +939,7 @@ target="#CONA"/>).  The tag -->The
       <div type="div4" xml:id="NDPERSEpc">
         <head>Personal Characteristics</head>
         <p>The <ident type="class">model.persStateLike</ident> class contains elements describing physical or socially-constructed
-          characteristics, traits, or states of a person. Members of the class comprise the following specific elements: <!-- MDH: commented out langKnown, as it's not actually in the class, and 
+          characteristics, traits, or states of a person. Members of the class comprise the following specific elements: <!-- MDH: commented out langKnown, as it's not actually in the class, and
       added state and trait. See http://purl.org/TEI/BUGS/3492947
       and discussion on Council list 2012-02-24. -->
           <specList>
@@ -1825,7 +1841,7 @@ properly elaborated or tested LB 2012-06-15 -->
 <p>In order to allow even greater flexibility we intend to propose a new element, tentatively called <gi>assert</gi>,
 which may be used for making assertions about characteristics, states
 and changes in states and associating these assertions with
-bibliographical records, notes and so on. 
+bibliographical records, notes and so on.
 <specList>
 <specDesc key="assert"/>
 </specList>
@@ -1972,16 +1988,16 @@ occupation and residence.</p>
           <gi>object</gi> element. </p>
 	<p>
 	<!-- JC: Update after a couple of releases -->
-        <emph>Please note:</emph> The <gi>object</gi> element is a recent addition to TEI P5 Guidelines as of version 3.5.0 and as such might 
-        be more prone to further revision in the next few releases as its use develops. This may be particularly evident where its 
-	contents have been borrowed from <gi>msDesc</gi> and have yet to be generalized from their use in the context of manuscript descriptions.  
+        <emph>Please note:</emph> The <gi>object</gi> element is a recent addition to TEI P5 Guidelines as of version 3.5.0 and as such might
+        be more prone to further revision in the next few releases as its use develops. This may be particularly evident where its
+	contents have been borrowed from <gi>msDesc</gi> and have yet to be generalized from their use in the context of manuscript descriptions.
 	</p>
 
 
       <p> The <gi>object</gi> element usually appears inside the <gi>listObject</gi> element which is used to group descriptions
         of identifiable objects. This is a member of <ident type="class">model.listLike</ident> and so <gi>listObject</gi> may
         appear anywhere that <gi>list</gi> is allowed. This enables the flexibility of using <gi>listObject</gi> to contain a set
-        of metadata descriptions stored in the header, or as a list of objects transcribed from a source document. The equivalent list 
+        of metadata descriptions stored in the header, or as a list of objects transcribed from a source document. The equivalent list
         for manuscript descriptions is <gi>listBibl</gi>. </p>
 
       <p>
@@ -1991,18 +2007,18 @@ occupation and residence.</p>
           <specDesc key="physDesc"/>
           <specDesc key="history"/>
           <specDesc key="additional"/>
-        </specList> 
-        Overall, the basic structure of an <gi>object</gi> element is akin to that of <gi>msDesc</gi> in that it is providing a 
+        </specList>
+        Overall, the basic structure of an <gi>object</gi> element is akin to that of <gi>msDesc</gi> in that it is providing a
         structured description of an object. After a group of
         identifying information, it has the option of paragraphs or, if the <ident type="module">msdescription</ident> module is
         loaded, <gi>msContents</gi>, <gi>physDesc</gi>, <gi>history</gi>, and <gi>additional</gi> elements for descriptive
         metadata about this object. Although these elements originate from manuscript description the <gi>object</gi> element may
-        be used for all forms of object (whether text-bearing or not).  
+        be used for all forms of object (whether text-bearing or not).
 
 	<!-- JC: Update after a couple of releases -->
-        Where descendents of <gi>object</gi> still have the hallmarks 
-        of their use in manuscript description, the descriptions as relating to manuscripts should be interpreted as applying to all 
-        forms of object (text-bearing) or not. 
+        Where descendents of <gi>object</gi> still have the hallmarks
+        of their use in manuscript description, the descriptions as relating to manuscripts should be interpreted as applying to all
+        forms of object (text-bearing) or not.
 	</p><p>
        The <gi>objectIdentifier</gi> element is a general-purpose
         grouping element for location or identification information relating to a single object or resource. It is very similar to
@@ -2067,7 +2083,7 @@ occupation and residence.</p>
           <gi>acquisition</gi> to describe its current ownership. The <gi>additional</gi> element may be used to provide
         information about surrogates for the object (such as digital facsimiles) as well as administrative and curatorial
         information. A full description of an object can provide more or less detail at any level to represent the state of
-        knowledge about the object. 
+        knowledge about the object.
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <listObject>
             <object xml:id="TutankhamunMask">
@@ -2144,8 +2160,8 @@ occupation and residence.</p>
 
       <p>If the object is being referenced from elsewhere in the document, this is usually done with an <gi>objectName</gi>. For
         example here the <val>Alfred-Jewel</val> <att>xml:id</att> is referenced from a paragraph elsewhere in the document using the <att>ref</att>
-         attribute on the <gi>objectName</gi> element. 
-        
+         attribute on the <gi>objectName</gi> element.
+
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <listObject>
             <object xml:id="Alfred-Jewel">
@@ -2178,16 +2194,16 @@ occupation and residence.</p>
                 <acquisition> It was bequeathed to Oxford University by Colonel Nathaniel Palmer (c. 1661-1718) and today is in
                   the Ashmolean Museum in Oxford. </acquisition>
               </history>
-            </object> 
+            </object>
           </listObject>
-          
-          
+
+
           <!-- Elsewhere in document -->
-          <p> 
+          <p>
             The <objectName ref="#MinsterLovellJewel">Minster Lovell Jewel</objectName> is probably the most similar to the
               <objectName ref="#Alfred-Jewel">Alfred Jewel</objectName> and was found in <placeName ref="#MinsterLovell">Minster
               Lovell</placeName> in <placeName ref="#Oxfordshire">Oxfordshire</placeName> and is kept at the <orgName
-              ref="#AshmoleanMuseum">Ashmolean Museum</orgName>. 
+              ref="#AshmoleanMuseum">Ashmolean Museum</orgName>.
           </p>
         </egXML>
       </p>
@@ -2242,7 +2258,7 @@ There is no restriction on the form, size, or type of object that may be describ
                            culture: the pre-Hispanic era, the Spanish colonial era, and the modern age. For example with the North
                            Wall, this represents the pre-Hispanic era and is dominated by mythical elements relating to the
                            life-death duality. The left side of the main axis there are
-                           deities and scenes pertaining to the creation of life. The right hand side of the mural contains figures 
+                           deities and scenes pertaining to the creation of life. The right hand side of the mural contains figures
                            relating to death. For a more detailed description see <ref
                               target="https://en.wikipedia.org/wiki/Central_Library_(UNAM)#Murals"
                               >https://en.wikipedia.org/wiki/Central_Library_(UNAM)#Murals</ref>. </p>
@@ -2531,12 +2547,12 @@ There is no restriction on the form, size, or type of object that may be describ
             New York, <date type="occasion" when="--01-01">New Year's Day</date> is the quietest of holidays, <date when="--07-04"
               type="occasion">Independence Day</date> the most turbulent.</egXML>
         </p>
-        <!-- Example needs to be re-worked 
+        <!-- Example needs to be re-worked
 <p>These components may be applied to dates using any calendar system
 using  subcomponents equivalent to those listed above:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><title>Le Vieux Cordelier:
 Journal r&#xE9;dig&#xE9; par Camille Desmoulins</title>,
-<date calendar="Revolutionary" value="1794-02-03">   
+<date calendar="Revolutionary" value="1794-02-03">
    Quintidi
    Pluviose
    2e d&#xE9;cade,
