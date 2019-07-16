@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>TEI Minimal</title>
+            <author>James Cummings</author>
+         </titleStmt>
+         <publicationStmt>
+            <publisher>TEI Consortium</publisher>
+            <availability status="free">
+               <licence target="http://creativecommons.org/licenses/by-sa/3.0/"> Distributed under a Creative Commons
+                  Attribution-ShareAlike 3.0 Unported License </licence>
+               <licence target="http://www.opensource.org/licenses/BSD-2-Clause">
+                  <p>Copyright 2013 TEI Consortium.</p>
+                  <p>All rights reserved.</p>
+                  <p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that
+                     the following conditions are met:</p>
+                  <list>
+                     <item>Redistributions of source code must retain the above copyright notice, this list of conditions and the
+                        following disclaimer.</item>
+                     <item>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and
+                        the following disclaimer in the documentation and/or other materials provided with the
+                        distribution.</item>
+                  </list>
+                  <p>This software is provided by the copyright holders and contributors "as is" and any express or implied
+                     warranties, including, but not limited to, the implied warranties of merchantability and fitness for a
+                     particular purpose are disclaimed. In no event shall the copyright holder or contributors be liable for any
+                     direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to,
+                     procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however
+                     caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence
+                     or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such
+                     damage.</p>
+               </licence>
+               <p>TEI material can be licensed differently depending on the use you intend to make of it. Hence it is made
+                  available under both the CC+BY and BSD-2 licences. The CC+BY licence is generally appropriate for usages which
+                  treat TEI content as data or documentation. The BSD-2 licence is generally appropriate for usage of TEI content
+                  in a software environment. For further information or clarification, please contact the <ref
+                     target="mailto:info@tei-c.org">TEI Consortium</ref>. </p>
+            </availability>
+         </publicationStmt>
+         <sourceDesc>
+            <p>Created from scratch by James Cummings, but looking at previous tei_minimal and tei_bare exemplars by SPQR and
+               LR.</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <head>A Minimal TEI Customization</head>
+
+         <p>This TEI ODD defines a TEI customization that is as minimal as possible and the schema generated from it will validate
+            a document that is minimally valid against the TEI scheme. It includes only the ten required elements:
+            <list rend="numbered">
+               <item><gi>teiHeader</gi> from the header module to store required metadata</item>
+               <item><gi>fileDesc</gi> from the header module to record information about this file</item>
+               <item><gi>titleStmt</gi> from the header module to record information about the title</item>
+               <item><gi>publicationStmt</gi> from the header module to detail how it is published</item>
+               <item><gi>sourceDesc</gi> from the header module to record where it is from</item>
+               <item><gi>p</gi> from the core module for use in the header and the body</item>
+               <item><gi>title</gi> from the core module for use in the titleStmt</item>
+               <item><gi>TEI</gi> from the textstructure module because what is a TEI file without that?</item>
+               <item><gi>text</gi> from the textstructure module to hold some text</item>
+               <item><gi>body</gi> from the textstructure module as a place to put that text</item>
+            </list>
+         </p>
+         <schemaSpec ident="tei_minimal-new" start="TEI">
+
+            <!-- required minimal header elements -->
+            <moduleRef key="header" include="teiHeader fileDesc titleStmt publicationStmt sourceDesc"/>
+
+            <!-- required core elements (p and title for use in titleStmt) -->
+            <moduleRef key="core" include="p title"/>
+
+            <!-- required textstructure elements (TEI, text, and body) -->
+            <moduleRef key="textstructure" include="TEI text body"/>
+
+            <!-- required module tei instantiates lots of classes used for further expansion of this odd -->
+            <moduleRef key="tei"/>
+
+
+         </schemaSpec>
+      </body>
+   </text>
+</TEI>

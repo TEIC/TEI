@@ -80,6 +80,7 @@ while test $# -gt 0; do
       --dummy)      ECHO=echo;;
       --package=*)  package=`echo $1 | sed 's/.*=//'`;;
       --version=*)  version=`echo $1 | sed 's/.*=//'`;;
+      --vault=*)    Vault=`echo $1 | sed 's/.*=//'`;;
       --upload)  JOB=upload;;
       --makecurrent)  JOB=makecurrent;;
       --install)  JOB=install;;

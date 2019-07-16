@@ -4,7 +4,7 @@ Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" xml:id="MEASUREMENT" ident="att.measurement">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" type="atts" xml:id="MEASUREMENT" ident="att.measurement">
   <desc versionDate="2006-01-05" xml:lang="en">provides attributes to represent a regularized or normalized measurement.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">정상화 또는 규격화된 측정 방식을 표상하는 속성을 제시한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供屬性，代表一般化或規格化的度量。</desc>
@@ -14,6 +14,13 @@ $Id$
       régularisée ou normalisée.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos que representen una medición regularizada o normalizada.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">assegna degli attributi che rappresentano una misurazione regolarizzata o normalizzata</desc>
+  <constraintSpec ident="att-measurement-unitRef" scheme="schematron">
+    <constraint>
+      <sch:rule context="tei:*[@unitRef]">
+        <sch:report test="@unit" role="info">The @unit attribute may be unnecessary when @unitRef is present.</sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList xmlns:rng="http://relaxng.org/ns/structure/1.0">
     <attDef ident="unit" usage="opt">
       <gloss versionDate="2009-05-28" xml:lang="fr">unité</gloss>
@@ -361,6 +368,10 @@ $Id$
 	<val>Mbel</val> (10&#x2077; decibels).</p> 
 -->
       </remarks>
+    </attDef>
+    <attDef ident="unitRef" usage="opt">
+      <desc versionDate="2019-07-09" xml:lang="en">points to a unique identifier stored in the <att>xml:id</att> of a <gi>unitDef</gi> element that defines a unit of measure.</desc>
+     <datatype maxOccurs="1"><dataRef key="teidata.pointer"/></datatype>
     </attDef>
     <attDef ident="quantity" usage="opt">
       <gloss versionDate="2009-05-28" xml:lang="fr">quantité</gloss>

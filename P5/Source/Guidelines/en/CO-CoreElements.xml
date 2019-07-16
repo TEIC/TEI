@@ -4073,6 +4073,7 @@ represented by means of an <gi>idno</gi> element placed within the
 <title level="a">Markup Systems and The Future of Scholarly Text
 Processing</title>
 <idno type="DOI">10.1145/32206.32209</idno>
+<ref type="url">http://xml.coverpages.org/coombs.html</ref>
 </analytic>
 <monogr>
 <title level="j">Communications of the ACM</title>
@@ -4081,7 +4082,6 @@ Processing</title>
 <biblScope unit="issue">11</biblScope>
 <biblScope unit="page">933–947</biblScope>
 </monogr>
-<ref type="url">http://xml.coverpages.org/coombs.html</ref>
 </biblStruct>
 </egXML>
 <p>Punctuation must not appear between the elements within a
@@ -4747,7 +4747,7 @@ reference would be encoded using <gi>biblStruct</gi> as follows:
 <gi>biblStruct</gi> elements) be enclosed in a <gi>series</gi> element
 or (in a <gi>biblFull</gi> element) a <gi>seriesStmt</gi> element.  The
 title of the series may be tagged <tag>title level="s"</tag>, the
-volume number <tag>biblScope unit="vol"</tag>, and responsibility
+volume number <tag>biblScope unit="volume"</tag>, and responsibility
 statements for the series (e.g. the name and affiliation of the editor,
 as in the example in section <ptr target="#COBICOL"/>) may be tagged
 <gi>editor</gi> or <gi>respStmt</gi>. Any identifier associated with
@@ -5006,19 +5006,41 @@ concerned to normalize bibliographic references:
 </author>
 <title level="a">Beyond the Scriptorium: The Role of the Library in Text
 Encoding</title>
+<ref type="url">http://www.dlib.org/dlib/january02/sukovic/01sukovic.html</ref>  
 </analytic>
 <monogr>
 <title level="j">D-Lib</title>
-<ref type="url">http://www.dlib.org/dlib/january02/sukovic/01sukovic.html</ref>
 <imprint>
 <biblScope unit="volume">8</biblScope>
 <biblScope unit="issue">1</biblScope>
 <date>2002</date>
 </imprint>
-
 </monogr>
 </biblStruct>
 </egXML>
+  </p>
+  <p>The <gi>ptr</gi> element may be used as a child element of <gi>biblStruct</gi> to refer to the online catalog record of this bibliographic item:
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+    <biblStruct type="manifestation">
+      <monogr>
+        <author> 
+          <persName> 
+            <forename>Germain</forename>
+            <surname>Brice</surname> 
+          </persName> 
+        </author>
+        <title level="m"
+          >Description de la ville de Paris et de tout ce qu’elle contient de plus remarquable, par Germain Brice ; enrichie d’un nouveau plan et de figures dessinées et gravées correctement. 7e édition, revue et augmentée par l’auteur</title>
+        <imprint>
+          <date when="1717">1717</date>
+          <pubPlace>Paris</pubPlace>
+          <publisher>F. Fournier</publisher>
+        </imprint>
+        <extent>In-12</extent>
+      </monogr>
+      <ptr type="catBnf" target="http://catalogue.bnf.fr/ark:/12148/cb30160624f/" />
+    </biblStruct>
+    </egXML>
   </p>
 </div>
 
@@ -5103,7 +5125,7 @@ have no analogues in Scribe and BibTeX are not noted.
   <item>tag as <gi>title</gi> in appropriate context or with appropriate
       <att>level</att> value</item>
   <label>volume</label>
-  <item>tag as <tag>biblScope unit="vol"</tag></item>
+  <item>tag as <tag>biblScope unit="volume"</tag></item>
   <label>year</label>
   <item>tag as <gi>date</gi>; if the date is not in a trivially parseable form,
     use the <att>when</att> attribute to provide an ISO-format
