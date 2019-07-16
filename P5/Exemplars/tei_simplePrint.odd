@@ -75,6 +75,8 @@
       </tagsDecl>
     </encodingDesc>
     <revisionDesc>
+      <change when="2019-06-28" who="mholmes sbauman">Eliminate cases of multiple *Spec
+      elements for the same <att>ident</att> by combining them manually</change>
       <change when="2016-11-17">Implement name change finally agreed by Council</change>
       <change when="2016-10-26">Remove authority,sponsor,funder,principal; unicodeName
         localName; add discussion of charDecl</change>
@@ -1487,7 +1489,7 @@ although <seg xml:id="network"
                   Bennet</name>, </q>said his lady to him one day, <q>have you heard that <name
                   type="place">Netherfield Park</name> is let at last?</q></egXML>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">It being one of the principles of the
-                <name type="organization">Circumlocution Office</name> never, on any account
+                <name type="org">Circumlocution Office</name> never, on any account
               whatsoever, to give a straightforward answer, <name type="person">Mr Barnacle</name>
               said, <q>Possibly.</q></egXML>
           </p>
@@ -1524,8 +1526,8 @@ although <seg xml:id="network"
                 ref="#WADLM1"><choice>
                   <orig>Walter de la Mare</orig>
                   <reg>de la Mare, Walter</reg>
-                </choice></name> was born at <name key="Ch1" type="place">Charlton</name>, in <name
-                key="KT1" type="county">Kent</name>, in 1873.</egXML>
+                </choice></name> was born at <name ref="https://en.wikipedia.org/wiki/Charlton,_London" type="place">Charlton</name>, in <name
+                type="place">Kent</name>, in 1873.</egXML>
           </p>
         </div>
         <div xml:id="code">
@@ -1997,13 +1999,13 @@ although <seg xml:id="network"
             single letter or character: the <gi>c</gi> element is provided for this purpose.
             <!-- some crazy people mark up interword space with a c: shd that be mentioned? -->
           </p>
-          <p>The <gi>w</gi> also provides for each word to be associated with a root form or lemma,
+        <p>The <gi>w</gi> also provides for each word to be associated with a root form or lemma,
             either explicitly using the <att>lemma</att> attribute, or by reference, using the
               <att>lemmaRef</att> attribute, as in this example: <egXML
               xmlns="http://www.tei-c.org/ns/Examples">...<w ana="#VBD" lemma="be"
                 lemmaRef="http://www.myLexicon.com/be">was</w> ... </egXML>
           </p>
-        </div>
+       </div>
         <div>
           <head>General-Purpose Interpretation Elements</head>
           <p>The <gi>w</gi> element is a specialisation of the <gi>seg</gi> element which has
@@ -2899,7 +2901,7 @@ although <seg xml:id="network"
               referencing scheme built into the encoding works. In its simplest form, it consists of
               prose description.</p>
             <p>Example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl>
-                  <p>The <att>n</att> attribute on each <gi>div</gi> contains the canonical
+                  <p>The @n attribute on each &lt;div> element contains the canonical
                     reference for each division in the form XX.yyy where XX is the book number in
                     roman numeral and yyy is the section number in arabic.</p>
                   <p>Milestone tags refer to the edition of 1830 as E30 and that of 1850 as E50.</p>
@@ -3352,10 +3354,9 @@ although <seg xml:id="network"
           processing model component. Note that the cross references included in these
           specifications are to the section of the full TEI Guidelines where the subject is treated,
           and not to sections of the present document.</p>
-        <schemaSpec ident="teisimpleprint" start="TEI teiCorpus">
+        <schemaSpec ident="tei_simplePrint" start="TEI teiCorpus">
           <specGrpRef target="#base"/>
           <specGrpRef target="#header"/>
-          <specGrpRef target="#header2"/>
           <specGrpRef target="#attclasses"/>
           <specGrpRef target="#modelclasses"/>
           <specGrpRef target="#simpleelements"/>
@@ -3420,33 +3421,7 @@ although <seg xml:id="network"
               textClass
               titleStmt
               xenoData"/>
-
             <moduleRef key="corpus" include="particDesc settingDesc"/>
-
-           
-          </specGrp>
-
-          <specGrp xml:id="header2">
-            <elementSpec ident="text" mode="change">
-              <constraintSpec xmlns="http://www.tei-c.org/ns/1.0"
-                xmlns:XSL="http://www.w3.org/1999/XSL/Transform" ident="headeronlyelement"
-                scheme="schematron">
-                <constraint>
-                  <!-- <rule xmlns="http://purl.oclc.org/dsdl/schematron"
-                    context="tei:att | tei:biblFull | tei:biblStruct | tei:change | tei:charDecl | tei:charProp | tei:editor
-                    | tei:editorialDecl | tei:email | tei:encodingDesc | tei:extent | tei:fileDesc | tei:gi | tei:glyph | tei:glyphName | 
-                    tei:idno | tei:imprint | tei:keywords | tei:licence | tei:listChange | tei:listPerson | tei:localName | tei:monogr | 
-                    tei:msDesc | tei:msIdentifier | tei:person | tei:physDesc | tei:profileDesc | tei:publicationStmt | tei:relatedItem | 
-                    tei:repository | tei:resp | tei:respStmt | tei:sourceDesc | tei:tag | tei:teiHeader | tei:term | tei:textClass | tei:textDesc 
-                    | tei:titleStmt | tei:typeDesc | tei:val | tei:value">-->
-                  <rule xmlns="http://purl.oclc.org/dsdl/schematron"
-                    context="tei:term | tei:biblFull ">
-                    <report test="ancestor::tei:text">Error: The element <name/> is not permitted
-                      outside the header</report>
-                  </rule>
-                </constraint>
-              </constraintSpec>
-            </elementSpec>
           </specGrp>
 
           <p>Some attributes and attribute classes are removed. The range of values available for
@@ -3461,14 +3436,18 @@ although <seg xml:id="network"
             <classRef key="att.global.linking"/>
             <classRef key="att.coordinated"/>
             <classRef key="att.tableDecoration"/>
-
+            
+<classRef key="att.metrical"  include="rhyme"/>
+<classRef key="att.divLike" exclude="org sample"/>            
+            
+<classRef key="att.linguistic" include="lemma lemmaRef"/>
+            
             <!-- delete unused attribute classes -->
             <classSpec type="atts" ident="att.datcat" mode="delete"/>
             <classSpec type="atts" ident="att.declarable" mode="delete"/>
             <classSpec type="atts" ident="att.declaring" mode="delete"/>
             <classSpec type="atts" ident="att.ranging" mode="delete"/>
-            <classSpec type="atts" ident="att.divLike" mode="delete"/>
-
+    
             <!-- delete some attributes from global linking. -->
             <classSpec type="atts" ident="att.global.linking" mode="change">
               <attList>
@@ -3534,9 +3513,6 @@ although <seg xml:id="network"
                   </rule>
                 </constraint>
               </constraintSpec>
-            </classSpec>
-
-            <classSpec type="atts" ident="att.global.rendition" mode="change">
               <!-- remove unused attributes @rend and @style; constrain values for @rendition -->
               <attList>
                 <attDef ident="rend" mode="delete"/>
@@ -3797,22 +3773,19 @@ although <seg xml:id="network"
             </classSpec>
           </specGrp>
 
+          <p>The following unused model classes are removed.</p>
           <specGrp xml:id="modelclasses">
-            <p>The following unused model classes are removed.</p>
-            <!-- why is this needed? the ODD processor should do it for you-->
-            <classSpec type="model" ident="model.entryPart" mode="delete"/>
-            <classSpec type="model" ident="model.placeNamePart" mode="delete"/>
-            <classSpec type="model" ident="model.placeStateLike" mode="delete"/>
+             <!-- why is this needed? the ODD processor should do it for you-->
+            <classSpec type="model" ident="model.certLike" mode="delete"/>
             <classSpec type="model" ident="model.egLike" mode="delete"/>
+            <classSpec type="model" ident="model.entryPart" mode="delete"/>
+            <classSpec type="model" ident="model.glossLike" mode="delete"/>
+            <classSpec type="model" ident="model.oddDecl" mode="delete"/>
             <classSpec type="model" ident="model.offsetLike" mode="delete"/>
             <classSpec type="model" ident="model.pPart.msdesc" mode="delete"/>
-            <classSpec type="model" ident="model.oddDecl" mode="delete"/>
-            <classSpec type="model" ident="model.specDescLike" mode="delete"/>
-            <classSpec type="model" ident="model.entryPart" mode="delete"/>
             <classSpec type="model" ident="model.placeNamePart" mode="delete"/>
             <classSpec type="model" ident="model.placeStateLike" mode="delete"/>
-            <classSpec type="model" ident="model.certLike" mode="delete"/>
-            <classSpec type="model" ident="model.glossLike" mode="delete"/>
+            <classSpec type="model" ident="model.specDescLike" mode="delete"/>
           </specGrp>
           <!-- 
             These are the 113 textual elements selected for use in TEI simplePrint texts-->
@@ -4087,7 +4060,6 @@ although <seg xml:id="network"
             <elementSpec ident="castGroup" mode="change">
               <model predicate="child::*" behaviour="list">
                 <desc>Insert list. </desc>
-                <param name="content" value="castItem|castGroup"/>
               </model>
             </elementSpec>
             <elementSpec ident="castItem" mode="change">
@@ -4097,7 +4069,6 @@ although <seg xml:id="network"
             </elementSpec>
             <elementSpec ident="castList" mode="change">
               <model predicate="child::*" behaviour="list" useSourceRendition="true">
-                <param name="content" value="castItem"/>
                 <outputRendition>list-style: ordered;</outputRendition>
               </model>
             </elementSpec>
@@ -4477,17 +4448,11 @@ although <seg xml:id="network"
               <model behaviour="block"/>
             </elementSpec>
             <elementSpec ident="list" mode="change">
-              <model predicate="@rendition" behaviour="list" useSourceRendition="true">
-                <param name="content" value="item"/>
-              </model>
-              <model predicate="not(@rendition)" behaviour="list">
-                <param name="content" value="item"/>
-              </model>
+              <model predicate="@rendition" behaviour="list" useSourceRendition="true"/>
+              <model predicate="not(@rendition)" behaviour="list"/>
             </elementSpec>
             <elementSpec ident="listBibl" mode="change">
-              <model predicate="bibl" behaviour="list">
-                <param name="content" value="bibl"/>
-              </model>
+              <model predicate="bibl" behaviour="list"/>
               <model behaviour="block"/>
             </elementSpec>
             <elementSpec ident="measure" mode="change">
@@ -4652,7 +4617,8 @@ although <seg xml:id="network"
               <model behaviour="block"/>
             </elementSpec>
             <elementSpec ident="profileDesc" mode="change">
-                <exemplum xml:lang="en" versionDate="2016-11-14">
+              <model behaviour="omit"/>
+              <exemplum xml:lang="en" versionDate="2016-11-14">
                     <egXML xmlns="http://www.tei-c.org/ns/Examples">
                         <profileDesc>
                             <creation>
@@ -4987,9 +4953,6 @@ although <seg xml:id="network"
                 <param name="content" value="titleStmt"/>
               </model>
             </elementSpec>
-            <elementSpec ident="profileDesc" mode="change">
-              <model behaviour="omit"/>
-            </elementSpec>
             <elementSpec ident="revisionDesc" mode="change">
               <model behaviour="omit"/>
             </elementSpec>
@@ -5119,6 +5082,24 @@ although <seg xml:id="network"
 
             </elementSpec>
             <elementSpec ident="text" mode="change">
+              <constraintSpec xmlns="http://www.tei-c.org/ns/1.0"
+                xmlns:XSL="http://www.w3.org/1999/XSL/Transform" ident="headeronlyelement"
+                scheme="schematron">
+                <constraint>
+                  <!-- <rule xmlns="http://purl.oclc.org/dsdl/schematron"
+                    context="tei:att | tei:biblFull | tei:biblStruct | tei:change | tei:charDecl | tei:charProp | tei:editor
+                    | tei:editorialDecl | tei:email | tei:encodingDesc | tei:extent | tei:fileDesc | tei:gi | tei:glyph | tei:glyphName | 
+                    tei:idno | tei:imprint | tei:keywords | tei:licence | tei:listChange | tei:listPerson | tei:localName | tei:monogr | 
+                    tei:msDesc | tei:msIdentifier | tei:person | tei:physDesc | tei:profileDesc | tei:publicationStmt | tei:relatedItem | 
+                    tei:repository | tei:resp | tei:respStmt | tei:sourceDesc | tei:tag | tei:teiHeader | tei:term | tei:textClass | tei:textDesc 
+                    | tei:titleStmt | tei:typeDesc | tei:val | tei:value">-->
+                  <rule xmlns="http://purl.oclc.org/dsdl/schematron"
+                    context="tei:term | tei:biblFull ">
+                    <report test="ancestor::tei:text">Error: The element <name/> is not permitted
+                      outside the header</report>
+                  </rule>
+                </constraint>
+              </constraintSpec>
               <model behaviour="body">
                 <outputRendition> max-width: 80%; margin: auto; font-family: Verdana, Tahoma,
                   Geneva, Arial, Helvetica, sans-serif; </outputRendition>
@@ -5199,6 +5180,8 @@ although <seg xml:id="network"
                   </s>
                 </egXML>
               </exemplum>
+<!--   though probably we'd rather do this with @pos rather than @ana -->
+             
             </elementSpec>
           </specGrp>
         </div>

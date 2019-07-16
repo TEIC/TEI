@@ -26,7 +26,7 @@
       <desc versionDate="2013-11-21" xml:lang="en">indicates how references
       to this class within a content model should be interpreted.</desc>
       <valList type="closed">
-        <valItem ident="alternate">
+        <valItem ident="alternation">
           <desc versionDate="2013-11-21" xml:lang="en">any one member of the class may appear</desc>
         </valItem>
         <valItem ident="sequence">
@@ -49,15 +49,19 @@
           occurrences of all members of the class may appear in sequence</desc>
         </valItem>
       </valList>
-      <remarks xml:lang="en" versionDate="2013-11-20"><p>If the members of the class are <val>a</val>, <val>b</val>
-      and  <val>c</val>, then a reference to the class within a content
-      model is understood as being a reference to <val>a|b|c</val> when
-      <att>expand</att> has the value <val>alternation</val>; to
-      <val>a,b,c</val> when it has the value <val>sequence</val>; to
-      <val>(a?,b?,c?)</val> when it has the value
-      <val>sequenceOptional</val>; to (a*,b*, c*) when it has the value
-      <val>sequenceOptionalRepeatable</val>; or to (a+,b+,c+) when it has
-      the value <val>sequenceRepeatable</val>.</p>
+      <remarks xml:lang="en" versionDate="2013-11-20">
+	<!-- Encoding (and whitespace) updated 2019-07-07 w/ no change to text -->
+	<p>If the members of the class are <ident>a</ident>,
+	<ident>b</ident> and <ident>c</ident>, then a reference to the
+	class within a content model is understood as being a
+	reference to <code>a|b|c</code> when <att>expand</att> is
+	omitted or has the value <val>alternation</val>; to
+	<code>a,b,c</code> when it has the value <val>sequence</val>;
+	to <code>(a?,b?,c?)</code> when it has the value
+	<val>sequenceOptional</val>; to <code>(a*,b*,c*)</code> when
+	it has the value <val>sequenceOptionalRepeatable</val>; or to
+	<code>(a+,b+,c+)</code> when it has the value
+	<val>sequenceRepeatable</val>.</p>
       </remarks>
     </attDef>
     <attList org="choice">
@@ -82,11 +86,11 @@
       </schemaSpec>
     </egXML>
   </exemplum>
-  <remarks versionDate="2010-07-06" xml:lang="en">
+  <remarks versionDate="2019-07-07" xml:lang="en">
  <!-- p>If neither <att>include</att> nor <att>except</att> is specified, all class members are included in the schema being defined.</p -->
     <p>Attribute and model classes are identified by the name supplied as value for the
     <att>ident</att> attribute on the <gi>classSpec</gi> element in
-    which they are declared. All TEI  names are unique; attribute
+    which they are declared. All TEI class names are unique; attribute
     class names conventionally begin with the letters <code>att.</code>.
     </p>
   </remarks>
