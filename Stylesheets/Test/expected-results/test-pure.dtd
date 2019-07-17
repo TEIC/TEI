@@ -1,0 +1,45 @@
+
+
+<!-- start classes -->
+
+<!-- stop classes -->
+
+<!-- start elements -->
+
+<!--doc:mixed content, text or one element -->
+<!ELEMENT bit (#PCDATA|bob)*>
+<!--doc:empty element with attribute -->
+<!ELEMENT bob  EMPTY>
+<!ATTLIST bob
+href CDATA #IMPLIED >
+<!--doc:dummy -->
+<!ELEMENT choice  EMPTY>
+<!--doc:dummy -->
+<!ELEMENT orgName  EMPTY>
+<!--doc:dummy -->
+<!ELEMENT persName  EMPTY>
+<!--doc:dummy -->
+<!ELEMENT seg  EMPTY>
+<!--doc:simple elements -->
+<!ELEMENT stuff (bit|bob|thingummy)+>
+<!--doc:mixed content with multiple elements -->
+<!ELEMENT t1 (#PCDATA|bit|bob|t1)*>
+<!--doc:mixed content with *Occurs -->
+<!ELEMENT t2 (#PCDATA|bit|bob)*>
+<!--doc:mixed content with only minOccurs -->
+<!ELEMENT t3 (#PCDATA|bit|bob)*>
+<!--doc:mixed content with only maxOccurs -->
+<!ELEMENT t4 (#PCDATA|bit|bob|t1)*>
+<!--doc:sequence within alternation  -->
+<!ELEMENT t5 (#PCDATA|bit|bob)*>
+<!--doc:sequence with textNode -->
+<!ELEMENT t6 (#PCDATA|bit|bob)*>
+<!--doc:sequence of elements -->
+<!ELEMENT t7 (((orgName)?,(persName)?,(choice)?,(seg)?,(trait)?))>
+<!--doc:sequence with textnode, and minOccurs on elements -->
+<!ELEMENT t8 (#PCDATA|orgName|persName|choice|seg|trait)*>
+<!--doc:element with just text  -->
+<!ELEMENT thingummy (#PCDATA)>
+<!--doc:dummy -->
+<!ELEMENT trait  EMPTY>
+<!-- end elements -->

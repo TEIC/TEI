@@ -1,0 +1,42 @@
+default namespace = ""
+namespace sch = "http://purl.oclc.org/dsdl/schematron"
+namespace tei = "http://www.tei-c.org/ns/1.0"
+namespace teix = "http://www.tei-c.org/ns/Examples"
+namespace xlink = "http://www.w3.org/1999/xlink"
+
+
+#
+
+sch:ns [ prefix = "tei" uri = "http://www.tei-c.org/ns/1.0" ]
+stuffPart = bob | bit
+stuff =
+  
+  ## élément racine d'un schéma simplissime
+  element stuff { stuffPart+ }
+stuffSeq =
+  
+  ## élément racine d'un schéma simplissime
+  element stuffSeq { bob, bit }
+stuffSeqOpt =
+  
+  ## élément racine d'un schéma simplissime
+  element stuffSeqOpt { bob?, bit? }
+stuffSeqRep =
+  
+  ## élément racine d'un schéma simplissime
+  element stuffSeqRep { bob+, bit+ }
+bob =
+  
+  ## élément pointeur du schéma simplissime
+  element bob {
+    empty,
+    
+    ## fournit l' URI de l'objet cible
+    attribute uri { xsd:anyURI }?,
+    empty
+  }
+bit =
+  
+  ## élément textuel du schéma simplissime (peut contenir des bobs) 
+  element bit { (text | bob)* }
+start = stuff | stuffSeq | stuffSeqOpt | stuffSeqRep

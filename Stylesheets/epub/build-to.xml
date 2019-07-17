@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project basedir="." default="dist" name="teitoepub">
+  <!--
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public
+	License as published by the Free Software Foundation; either
+	version 2.1 of the License, or (at your option) any later version.
+	
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Lesser General Public License for more details.
+	
+	You should have received a copy of the GNU Lesser General Public
+	License along with this library; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+	
+        Id: $Id$
+        Copyright: 2011, TEI Consortium<
+-->
+  <!--
+ Convert TEI documents into ePUB files.
+ -->
+  <import file="../common/teianttasks.xml"/>
+
+  <property name="teitoepub"
+	    value="${profiledir}/${profile}/epub/to.xsl"/>
+
+  <target name="dist" depends="odd,notodd,cleanup"/>
+
+  <target name="odd" if="processODD">
+    <odd2lite in="${inputFile}" out="${inputFile}.processedodd"/>
+    <buildepub in="${inputFile}.processedodd" out="${outputFile}" inDir="${inputDir}"/>
+    <delete file="${inputFile}.processedodd"/>
+  </target>
+
+  <target name="notodd" unless="processODD">
+    <buildepub in="${inputFile}" out="${outputFile}" inDir="${inputDir}"/>
+  </target>
+
+</project>

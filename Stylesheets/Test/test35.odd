@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+     xml:lang="en">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Bug</title>
+        <author>Louis-Dominique Dubeau</author>
+      </titleStmt>
+      <publicationStmt>
+        <availability status="free">
+          <p>This template file is freely available and you are
+hereby authorised to copy, modify, and redistribute it in
+any way without further reference or permissions.</p>
+          <p>When making such modifications, you are strongly
+recommended to change the present text to include an
+accurate statement of the licencing conditions applicable
+to your modified text.</p>
+        </availability>
+      </publicationStmt>
+      <notesStmt>
+        <note type="ns">http://foo.foo/foo</note>
+      </notesStmt>
+      <sourceDesc>
+        <p>No source; originally written in digital form.</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>Foo.</p>
+      <schemaSpec ident="foo" prefix="tei_" start="TEI">
+        <moduleRef xmlns="http://www.tei-c.org/ns/1.0" key="header"/>
+        <moduleRef xmlns="http://www.tei-c.org/ns/1.0" key="core"/>
+        <moduleRef xmlns="http://www.tei-c.org/ns/1.0" key="tei"/>
+        <moduleRef xmlns="http://www.tei-c.org/ns/1.0" key="textstructure"/>
+        <moduleRef xmlns="http://www.tei-c.org/ns/1.0" key="linking"/>
+        <elementSpec ident="teiCorpus" mode="delete" module="core"/>
+        <!-- required to avoid Sanity Checker complaint -->
+        <elementSpec ident="handNote" mode="delete" module="header"/>
+
+        <elementSpec ident="cit"
+                     ns="http://foo.foo/foo"
+                     prefix="foo_">
+          <desc>
+            This element encodes a citation according to the foo standard.
+          </desc>
+          <classes>
+            <memberOf key="model.quoteLike"/>
+          </classes>
+          <content>
+            <rng:ref name="foo_flerbl"/>
+          </content>
+        </elementSpec>
+
+        <elementSpec ident="flerbl"
+                     ns="http://foo.foo/foo"
+                     prefix="foo_">
+          <desc>
+            This element encodes a flerbl according to the foo standard.
+          </desc>
+          <content>
+            <rng:ref name="ref"/>
+            <rng:oneOrMore>
+              <rng:ref name="macro.specialPara"/>
+            </rng:oneOrMore>
+            <rng:text/>
+          </content>
+        </elementSpec>
+
+      </schemaSpec>
+    </body>
+
+  </text>
+</TEI>

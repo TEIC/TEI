@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+     xml:lang="en">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Namespace Test</title>
+        <author>Louis-Dominique Dubeau</author>
+      </titleStmt>
+      <publicationStmt>
+        <p></p>
+      </publicationStmt>
+      <sourceDesc>
+        <p></p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>Foo.</p>
+      <schemaSpec ident="foo" prefix="tei_" start="TEI">
+        <moduleRef key="header"/>
+        <moduleRef key="core"/>
+        <moduleRef key="tei"/>
+        <moduleRef key="textstructure"/>
+        <moduleRef key="linking"/>
+
+        <elementSpec ident="cit"
+                     ns="http://foo.foo/foo"
+                     prefix="foo_">
+          <desc>
+            This element encodes a citation according to the foo standard.
+          </desc>
+          <classes>
+            <memberOf key="model.quoteLike"/>
+          </classes>
+          <content>
+            <rng:ref name="ref"/>
+            <rng:oneOrMore>
+              <rng:ref name="macro.specialPara"/>
+            </rng:oneOrMore>
+            <rng:text/>
+          </content>
+          <attList>
+            <attDef ident="q">
+              <datatype>
+                <rng:text/>
+              </datatype>
+            </attDef>
+            <attDef ns="http://blah.blah/blah" xml:lang="fr" ident="r">
+              <datatype>
+                <rng:text/>
+              </datatype>
+            </attDef>
+          </attList>
+        </elementSpec>
+      </schemaSpec>
+    </body>
+  </text>
+</TEI>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:svg="http://www.w3.org/2000/svg"
+  xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Title</title>
+      </titleStmt>
+      <publicationStmt>
+        <p>Publication Information</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Information about the source</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+    
+      <schemaSpec ns="" start="stuff stuffSeq stuffSeqOpt stuffSeqRep" ident="oddex-1" xmlns:rng="http://relaxng.org/ns/structure/1.0"
+        xmlns="http://www.tei-c.org/ns/1.0">
+        
+        <classSpec ident="stuffPart" type="model">
+          <desc>elements qui ont la possibilite de figurer dans un stuff</desc>
+        </classSpec>
+        
+        <elementSpec ident="stuff">
+          <desc>élément racine d'un schéma simplissime</desc>
+          <content>
+            <classRef key="stuffPart" maxOccurs="unbounded" >
+            </classRef>
+          </content>
+        </elementSpec>
+        
+        <elementSpec ident="stuffSeq">
+          <desc>élément racine d'un schéma simplissime</desc>
+          <content>
+            <classRef key="stuffPart" maxOccurs="1" expand="sequence">
+            </classRef>
+          </content>
+        </elementSpec>
+        
+        <elementSpec ident="stuffSeqOpt">
+          <desc>élément racine d'un schéma simplissime</desc>
+          <content>
+            <classRef key="stuffPart" maxOccurs="1" expand="sequenceOptional">
+            </classRef>
+          </content>
+        </elementSpec>
+        
+        <elementSpec ident="stuffSeqRep">
+          <desc>élément racine d'un schéma simplissime</desc>
+          <content>
+            <classRef key="stuffPart" maxOccurs="1" expand="sequenceRepeatable">
+            </classRef>
+          </content>
+        </elementSpec>
+        
+        <elementSpec ident="bob">
+          <desc>élément pointeur du schéma simplissime</desc>
+          <classes><memberOf key="stuffPart"/></classes>
+          <content/>
+          <attList>
+            <attDef ident="uri">
+              <desc>fournit l' URI de l'objet cible</desc>
+              <datatype>
+                <rng:data type="anyURI"/>
+                <!-- should be <macroRef key="data.pointer"/>-->
+              </datatype>
+            </attDef>
+          </attList>
+        </elementSpec>
+        
+        <elementSpec ident="bit">
+          <desc>élément textuel du schéma simplissime (peut contenir des bobs) </desc>
+          <classes><memberOf key="stuffPart"/></classes>
+          <content>
+	    <alternate  minOccurs="0" maxOccurs="unbounded">
+	      <textNode/>
+              <elementRef key="bob"/>
+	    </alternate>
+          </content>
+        </elementSpec>
+      </schemaSpec>
+    </body>
+  </text>
+</TEI>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>testPure1InvalidInstance: File designed to fail validation against a schema
+        created from testPure1.odd in predicted ways.</title>
+      </titleStmt>
+      <publicationStmt>
+        <p>Free for all for anything for ever.</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Born-digital</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <div>
+        <head>Test file for validation</head>
+
+        <p>This file is designed to fail validation in specific predicted ways.</p>
+
+        <!--
+            Test something from tagdocs that should *not* be valid, along
+            with something that should.
+        -->
+        <p>Turns out, because of the use of
+        <gi>elementRef</gi>s instead of just <tag>moduleRef
+        key="tagdocs"</tag>, the <gi>gi</gi> elements in this
+        paragraph should be valid, but the <gi>tag</gi>
+        element should not.</p>
+
+        <!-- 
+             The testPure1 schema removed <join> and <joinGrp>, so the
+             following should generate an error.
+        -->
+        <joinGrp type="invalid">
+          <join result="p" scope="branches" target="#para1 #para2"/>
+          <join result="p" scope="branches" target="#para3 #para4"/>
+        </joinGrp>
+
+        <!-- Test the deletion of @synch -->
+        <p synch="#para1 #para2">The testPure1 schema has
+        removed <att>synch</att> from att.global.linking, so
+        its presence on this <gi>p</gi> should cause an
+        error.</p>
+        
+        <!-- Test the removal of att.typed from <list>. -->
+        <list type="notAllowed">
+          <head>List with <att>type</att>, which is not allowed. </head>
+          <item>one</item>
+          <item>two</item>
+        </list>
+
+        <!-- 
+             Test constraints on the attrs of <measureGrp>, as they were
+             used to test <dataRef> in the ODD.
+        -->
+        <list>
+          <label><att>corresp</att>: <gi>dataRef</gi> w/ <att>key</att></label>
+          <item><measureGrp corresp="#para1"/> Should be
+          invalid, as <val>#para1</val> is not a teidata.count
+          (i.e., a non-negative integer).</item>
+
+          <label><att>select</att>: <gi>dataRef</gi> w/ <att>name</att></label>
+          <item><measureGrp select="#para1"/> Should be
+          invalid, as <val>#para1</val> is not a non-negative
+          integer.</item>
+
+          <label><att>sameAs</att>: <gi>dataRef</gi> w/ <att>key</att> &amp; <att>restriction</att></label>
+          <item><measureGrp sameAs="1234"/> Should be invalid,
+          as <val>1234</val> is a 4-digit teidata.count, not a
+          1- or 2-digit teidata.count (i.e., non-negative
+          integer). <note><emph>THIS TEST FAILS</emph> — it
+          should be invalid, but is not flagged as such. Thus
+          this test has correctly helped us find an error (or
+          at least, a missing feature) in the Stylesheets. See
+          <ref
+              target="https://github.com/TEIC/Stylesheets/issues/349">#349</ref>;
+          when it is fixed the expected-results of this file
+          will need to be updated, and this entire
+          <gi>note</gi> should be deleted.</note></item>
+
+          <label><att>copyOf</att>: <gi>dataRef</gi> w/ <att>name</att> &amp; <att>restriction</att></label>
+          <item><measureGrp copyOf="567.890"/> Should be
+          invalid, as <val>567.890</val> is not an integer,
+          let alone a 1- or 2-digit non-negative
+          integer.</item>
+        </list>
+
+        <!-- Test the deletion of biblStruct from the core module, 
+             and simultaneously the content model of <bibl>, which
+             tests @minOccurs and @maxOccurs. -->
+        <listBibl>
+          <head>This should not allow biblStruct</head>
+          <bibl>
+            <title>This one should fail because it has no
+            author; 2+ are required.</title>
+            <date>2018</date>
+          </bibl>
+          <bibl>
+            <author>This one should fail because it</author>
+            <author>has no title; 1-8 are required.</author>
+            <publisher>me</publisher>
+            <date when="2019-01-06"/>
+          </bibl>
+          <bibl>
+            <author>me</author>
+            <author>you</author>
+            <title>This one should fail for too many publishers</title>
+            <publisher n="1"/>
+            <publisher n="2"/>
+            <publisher n="3"/>
+            <publisher n="4"/>
+            <!-- That should be enough to make it fail, as 3 is the max -->
+            <!-- But it doesn't work right. See #354. -->
+            <publisher n="5"/>
+            <date when="2019-01-06"/>
+          </bibl>
+          <biblStruct>
+            <monogr>
+              <title>This one should not be allowed</title>
+              <imprint>
+                <date>2018</date>
+              </imprint>
+            </monogr>
+          </biblStruct>
+        </listBibl>
+      </div>
+      
+      <div>
+        <head>Some linguistic stuff</head>
+        <p><s>This is a sentence with a <phr>short phrase</phr> and a single 
+        <w>word</w>.</s> 
+        <s>The word should require the ana attribute, and therefore 
+        fail validation, but the phrase not.</s></p>
+      </div>
+      
+      <!--        <persName> should be allowed but <addName> not, because @include
+           was used and <addName> was not included in it. -->
+      <div>
+        <head>No addNames</head>
+        <p>Have you hears of 
+        <persName>Frederick <addName type="epithet">the Great</addName></persName>?</p>
+      </div>
+      
+      <!--        <div1> should be disallowed through @except.    -->
+      <div1>
+        <head>This should not be valid</head>
+        <p>div1 and friends is excluded.</p>
+      </div1>
+      
+      <div>
+        <head>Testing some content model changes</head>
+        <p>The email address for <email>henrytheeighth.gmail.com</email>
+        should be invalid.</p>
+      </div>
+      
+    </body>
+  </text>
+</TEI>

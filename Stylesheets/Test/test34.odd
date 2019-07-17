@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:bar="http://blah.blah/bar"
+     xmlns:blah="http://blah.blah/blah"
+     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+     xml:lang="en">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Namespace Test</title>
+        <author>Louis-Dominique Dubeau</author>
+      </titleStmt>
+      <publicationStmt>
+        <p></p>
+      </publicationStmt>
+      <sourceDesc>
+        <p></p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>Foo.</p>
+      <schemaSpec ns="http://foo.foo/foo" ident="foo" prefix="tei_" start="TEI">
+        <moduleRef key="header"/>
+        <moduleRef key="core"/>
+        <moduleRef key="tei"/>
+        <moduleRef key="textstructure"/>
+        <moduleRef key="linking"/>
+
+        <elementSpec ident="cit"
+                     prefix="foo_">
+          <desc>
+            This element encodes a new citation (CASE 1)
+          </desc>
+          <classes>
+            <memberOf key="model.quoteLike"/>
+          </classes>
+          <content>
+            <rng:ref name="ref"/>
+            <rng:oneOrMore>
+              <rng:ref name="macro.specialPara"/>
+            </rng:oneOrMore>
+            <rng:text/>
+          </content>
+        </elementSpec>
+
+        <elementSpec ident="cit" prefix="bar_" ns="http://blah.blah/bar">
+          <desc>
+            This element encodes a new citation (CASE 2)
+          </desc>
+          <classes>
+            <memberOf key="model.quoteLike"/>
+          </classes>
+          <content>
+            <rng:ref name="ref"/>
+            <rng:oneOrMore>
+              <rng:ref name="macro.specialPara"/>
+            </rng:oneOrMore>
+            <rng:text/>
+          </content>
+        </elementSpec>
+
+        <elementSpec ident="q" prefix="blah_"
+                     ns="http://blah.blah/blah">
+          <desc>
+            This element encodes a new quote (CASE 4)
+          </desc>
+          <classes>
+            <memberOf key="model.quoteLike"/>
+          </classes>
+          <content>
+            <rng:ref name="ref"/>
+            <rng:oneOrMore>
+              <rng:ref name="macro.specialPara"/>
+            </rng:oneOrMore>
+            <rng:text/>
+          </content>
+        </elementSpec>
+      </schemaSpec>
+    </body>
+  </text>
+</TEI>

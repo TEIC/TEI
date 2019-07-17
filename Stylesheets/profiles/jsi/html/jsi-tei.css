@@ -1,0 +1,285 @@
+/* 
+** Stylesheet for the JSI TEI Stylesheet profile 
+** This stylesheet tries to mimic the rendering of the Word styles in
+** http://nl.ijs.si/tei/convert/profiles/jsi/docx/template.docx
+** The idea is that by comparing the Word and HTML it is possible to 
+** identify errors in Word that need to be fixed to get a good TEI.
+*/
+@import "http://www.tei-c.org/release/xml/tei/stylesheet/tei.css";
+
+body{
+   color: #000000;
+   background-color: #FFFFFF;
+   margin: 10pt;
+   padding:0;
+}
+
+.tei_lg { 
+    display: block;
+    text-indent: 0.5cm;
+    font-style: italic;
+    color: Brown;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+.tei_sp { 
+    display: block;
+    text-indent: 0.5cm;
+    font-style: italic;
+    margin-top: 1em;
+    color: Plum;
+}
+.tei_speaker { 
+    display: block;
+    font-weight: bold;
+    margin-bottom: 1pt;
+}
+
+div.tei_sp p.tei_l { 
+    display: block;
+    text-indent: 0.75cm;
+    color: Plum;
+}
+div.tei_lg p.tei_l { 
+    display: block;
+    color: Brown;
+    margin-top: 1pt;
+    margin-bottom: 1pt;
+}
+.tei_l { 
+    display: block;
+    text-indent: 0.5cm;
+    font-style: italic;
+    color: Orange;
+    margin-top: 1pt;
+    margin-bottom: 1pt;
+}
+
+ol.tei_listBibl {
+    counter-reset: bibl_counter 0;
+    list-style-type: none;
+}
+li.tei_bibl:before {
+    font-style: normal;
+    color: black;
+    content: "[" counter(bibl_counter) "] ";
+    counter-increment: bibl_counter;
+}
+ol.tei_listBibl li.tei_bibl {
+    display: block;
+}
+
+.tei_cit { 
+    display: block;
+    margin-left: 2em;
+    margin-right: 2em;
+    margin-bottom: 1em;
+}
+.quote { 
+    display: inline;
+    font-style: italic;
+    text-shadow:1px 1px DarkCyan;
+    color: DarkCyan;
+}
+
+.tei_fwCatch { 
+    display: block;
+    color: blue;
+    text-align: right;
+}
+
+.tei_bibl { 
+    margin: 0pt;
+    display: inline;
+    font-style: italic;
+    color: DarkGoldenRod;
+}
+.tei_foreign { 
+    display: inline;
+    font-style: italic;
+    text-shadow: 1px 1px rgb(187,5,5);
+    color: rgb(187,5,5);
+}
+.tei_q { 
+    display: inline;
+    font-style: italic;
+    text-shadow: 1px 1px DarkBlue;
+    color: DarkBlue;
+}
+.tei_damage { 
+    display: inline;
+    font-weight: bold;
+    color: Orange;
+}
+.tei_gap { 
+    display: inline;
+    font-weight: bold;
+    color: Red;
+}
+.tei_supplied { 
+    display: inline;
+    font-weight: bold;
+    color: Brown;
+}
+.tei_surplus { 
+    display: inline;
+    font-weight: bold;
+    color: Green;
+}
+.tei_unclear { 
+    display: inline;
+    font-weight: bold;
+    color: Purple;
+}
+
+.tei_subst:before {
+    content: "[";
+    color: LightBlue;
+}
+.tei_subst:after {
+    content: "]";
+    color: LightBlue;
+}
+.tei_del { 
+    display: inline;
+    text-decoration: line-through;
+    color: Red;
+}
+.tei_add { 
+    display: inline;
+    text-decoration: underline;
+    color: SeaGreen;
+}
+
+.tei_choice:before {
+    content: "{";
+    color: LightBlue;
+}
+.tei_choice:after {
+    content: "}";
+    color: LightBlue;
+}
+.tei_abbr { 
+    display: inline;
+    font-weight: bold;
+    color: Blue;
+    text-decoration: none;
+    border-bottom: 2px dotted Blue;
+}
+.tei_choice .tei_abbr:after {
+    font-weight: normal;
+    color: LightGrey;
+    text-decoration: none;
+    border: none;
+    content: "|";
+}
+.tei_expan { 
+    display: inline;
+    color: Blue;
+    text-decoration: none;
+    border-bottom: 4px double Blue;
+}
+
+.tei_orig { 
+    display: inline;
+    color: Pink;
+    text-decoration: none;
+    border-bottom: 2px dotted Pink;
+}
+.tei_choice .tei_orig:after {
+    font-weight: normal;
+    color: LightGrey;
+    text-decoration: none;
+    border: none;
+    content: "|";
+}
+.tei_reg { 
+    display: inline;
+    color: Pink;
+    text-decoration: none;
+    border-bottom: 4px double Pink;
+}
+
+.tei_sic { 
+    display: inline;
+    color: Red;
+    text-decoration: none;
+    border-bottom: 2px dotted Red;
+}
+.tei_choice .tei_sic:after {
+    font-weight: normal;
+    color: LightGrey;
+    text-decoration: none;
+    border: none;
+    content: "|";
+}
+.tei_corr { 
+    display: inline;
+    color: Green;
+    text-decoration: none;
+    border-bottom: 4px double Green;
+}
+
+.tei_name { 
+    display: inline;
+    border-style: solid;
+    border-width: 2px;
+    border-color: darkred;
+}
+.tei_orgName { 
+    display: inline;
+    border-style: solid;
+    border-width: 2px;
+    border-color: LightBlue;
+}
+.tei_placeName { 
+    display: inline;
+    border-style: solid;
+    border-width: 2px;
+    border-color: green;
+}
+.tei_persName { 
+    display: inline;
+    border-style: solid;
+    border-width: 2px;
+    border-color: red;
+}
+
+div.margin_left {
+    display: block;
+    clear: left;
+    padding: 4pt;
+    width: 10%;
+    float: left; 
+    border: solid green 1pt; 
+    margin: 6pt;
+}
+div.margin_right {
+    display: block;
+    clear: right;
+    padding: 4pt;
+    width: 10%;
+    float:right; 
+    border: solid green 1pt; 
+    margin: 6pt;
+}
+
+div.margin_inner {
+    display: block;
+    clear: left;
+    padding: 4pt;
+    width: 10%;
+    float: left; 
+    border: solid green 1pt; 
+    margin: 6pt;
+}
+div.margin_outer {
+    display: block;
+    clear: right;
+    padding: 4pt;
+    width: 10%;
+    float:right; 
+    border: solid green 1pt; 
+    margin: 6pt;
+}

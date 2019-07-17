@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI  xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Pure ODD test</title>
+      </titleStmt>
+      <publicationStmt>
+        <p>Publication Information</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Information about the source</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <schemaSpec ns="" start="t1 t2 t3 t4 t5 t6 t7 t8 stuff" ident="odd-1" xmlns:rng="http://relaxng.org/ns/structure/1.0"
+        xmlns="http://www.tei-c.org/ns/1.0">
+        <elementSpec ident="stuff">
+          <desc>simple elements</desc>
+          <content>
+            <alternate maxOccurs="unbounded">
+              <elementRef key="bit"/>
+              <elementRef key="bob"/>
+              <elementRef key="thingummy"/>
+            </alternate>
+          </content>
+        </elementSpec>
+        <elementSpec ident="bob">
+          <desc>empty element with attribute</desc>
+          <content/>
+          <attList>
+            <attDef ident="href">
+              <desc>fournit l' URI de l'objet cible</desc>
+              <datatype>
+                <rng:data type="anyURI"/>
+                <!-- should be <macroRef key="data.pointer"/>-->
+              </datatype>
+            </attDef>
+          </attList>
+        </elementSpec>
+        <elementSpec ident="thingummy">
+          <desc>element with just text </desc> 
+          <content>
+	    <textNode/>
+	  </content>
+        </elementSpec>
+        <elementSpec ident="bit">
+          <desc>mixed content, text or one element</desc>
+          <content>
+	    <alternate>
+	      <textNode/>
+	      <elementRef key="bob" maxOccurs="1"/>
+	    </alternate>
+          </content>
+	  <constraintSpec ident="test" scheme="schematron">
+	    <constraint>
+	      <report test="count(bob) !=1" xmlns="http://purl.oclc.org/dsdl/schematron">Only one bob allowed</report>
+	    </constraint>
+	  </constraintSpec>
+        </elementSpec>
+
+        <elementSpec ident="t1">
+          <desc>mixed content with multiple elements</desc>
+          <content>
+	    <alternate>
+	      <textNode/>
+	      <elementRef key="bit"/>
+	      <elementRef key="bob"/>
+	      <elementRef key="t1"/>
+	    </alternate>
+          </content>
+        </elementSpec>
+        
+	<elementSpec ident="t2">
+	  <desc>mixed content with *Occurs</desc>
+	  <content>
+            <alternate  minOccurs="0" maxOccurs="unbounded" >
+	      <textNode/>
+              <elementRef key="bit"/>
+              <elementRef key="bob"/>
+            </alternate>
+          </content>
+	</elementSpec>
+
+	<elementSpec ident="t3">
+	  <desc>mixed content with only minOccurs</desc>
+	  <content >
+              <alternate  minOccurs="0" >
+		<textNode/>
+                <elementRef key="bit"/>
+		<elementRef key="bob"/>
+              </alternate>
+          </content>
+	</elementSpec>
+        
+        <elementSpec ident="t4">
+	  <desc>mixed content with only maxOccurs</desc>      
+          <content>
+            <alternate maxOccurs="unbounded">
+	      <textNode/>
+              <elementRef key="bit"/>
+              <elementRef key="bob"/>
+              <elementRef key="t1"/>
+            </alternate>
+          </content>
+        </elementSpec>
+        
+        <elementSpec ident="t5">
+          
+          <desc>sequence within alternation </desc>
+          <content>	  
+	      <alternate>
+	      	<textNode/>
+		<sequence  maxOccurs="unbounded">
+		  <elementRef key="bit"/>
+		  <elementRef key="bob"/>         
+		</sequence>
+	      </alternate>
+          </content>
+        </elementSpec>
+
+
+        <elementSpec ident="t6">
+          <!-- -->
+          <desc>sequence with textNode</desc>
+          <content >
+            <sequence minOccurs="0">
+	      <textNode/>
+              <elementRef key="bit"/>
+              <elementRef key="bob"/>              
+            </sequence>
+          </content>
+        </elementSpec>
+        
+       
+	
+	<elementSpec ident="t7">
+	    <desc>sequence of elements</desc>
+	    <content>
+	      <sequence>
+		<elementRef key="orgName"  minOccurs="0"/>
+		<elementRef key="persName"  minOccurs="0"/>
+		<elementRef key="choice"  minOccurs="0"/>
+		<elementRef key="seg"  minOccurs="0"/>
+		<elementRef key="trait"  minOccurs="0"/>
+	      </sequence>
+	    </content>
+	  </elementSpec>
+
+	  <elementSpec ident="t8">
+	    <desc>sequence with textnode, and minOccurs on elements</desc>
+	    <content>
+	      <sequence>
+		<textNode/>
+		<elementRef key="orgName"  minOccurs="0"/>
+		<elementRef key="persName"  minOccurs="0"/>
+		<elementRef key="choice"  minOccurs="0"/>
+		<elementRef key="seg"  minOccurs="0"/>
+		<elementRef key="trait"  minOccurs="0"/>
+	      </sequence>
+	    </content>
+	  </elementSpec>
+
+	  <elementSpec ident="choice">
+	    <desc>dummy</desc>
+	    <content/>
+	  </elementSpec>
+	  <elementSpec ident="orgName">
+	    <desc>dummy</desc>
+	    <content/>
+	  </elementSpec>
+	  <elementSpec ident="persName">
+	    <desc>dummy</desc>
+	    <content/>
+	  </elementSpec>
+	  <elementSpec ident="trait">
+	    <desc>dummy</desc>
+	    <content/>
+	  </elementSpec>
+	  <elementSpec ident="seg">
+	    <desc>dummy</desc>
+	    <content/>
+	  </elementSpec>
+
+<!-- now some datatype tests -->
+
+<!-- commented out pending merge of pure odd
+
+        <elementSpec ident="one">
+          <desc>an empty element with purified attributes</desc>
+          <content/>
+          <attList>
+            <attDef ident="count">
+              <desc>how often the one element is used</desc>
+<datatype>              <dataRef name="nonNegativeInteger"/></datatype>
+            </attDef>
+            <attDef ident="teicount">
+              <desc>another way of saying same thing</desc>
+<datatype>              <dataRef key="teidata.count"/></datatype>
+            </attDef>
+            <attDef ident="trixie">
+              <desc>an integral percentage</desc>
+          <datatype>    <dataRef name="nonNegativeInteger" restriction="[0-9][0-9]?"/>             </datatype>
+            </attDef>
+          </attList>
+        </elementSpec>
+-->
+      </schemaSpec>
+      
+
+    </body>
+  </text>
+</TEI>

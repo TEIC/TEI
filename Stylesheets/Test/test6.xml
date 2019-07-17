@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+>
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Test 6</title>
+      </titleStmt>
+      <publicationStmt>
+        <p></p>
+      </publicationStmt>
+      <sourceDesc>
+        <p></p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+	<divGen type="toc"/>
+      <div>
+	<head>Part 1</head>
+	<p><hi>Cats</hi><note place="foot">A Cat (<ptr target="http://en.wikipedia.org/wiki/Cat"/>) is a fine beast, as in this picture: <graphic url="cat.jpg"/></note></p>
+      </div>
+      <div>
+	<head>Part 2</head>
+	<p>Dogs<note place="end">A Dog (<ptr target="http://en.wikipedia.org/wiki/Dog"/>) is a dreary beast, unlike the cat in this picture: <graphic url="cat.jpg"/></note></p>
+      </div>
+      <div>
+	<head>cit and quote</head>
+	<p><cit><quote><p>Ils ne produisent qu’en collaborant d’une manière déterminée et en échangeant entre eux leurs activités.
+	    Pour produire, ils entrent en relations et en rapports déterminés les uns avec les autres,
+	    et ce n’est que dans les limites de ces relations et de ces rapports sociaux
+	    que s’établit leur action sur la nature, la production.</p></quote><bibl><author>Karl Marx</author>,
+	    <title>Travail salarié et capital, suivi de Salaire, prix et profit</title>,
+	    p. 31,
+	    <publisher>Éditions sociales</publisher>,
+	    <pubPlace>Paris</pubPlace>,
+	    <date>1952</date>.
+	  </bibl></cit></p>
+    		<p>Some text introducing <bibl>all things bibliographic</bibl>, followed by some more text.</p>
+      </div>
+      <div>
+	<head>Verbatim</head>
+	<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <xsl:template name="makeExternalLink">
+      <xsl:param name="ptr" as="xs:boolean"  select="false()"/>
+      <xsl:param name="dest"/>
+      <xsl:choose>
+         <xsl:when test="$ptr">
+            <xsl:text>{\small\ttfamily </xsl:text>
+	    <xsl:sequence select="$dest"/>
+            <xsl:text>}</xsl:text>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:apply-templates/>
+         </xsl:otherwise>
+      </xsl:choose>
+  </xsl:template>
+   <xsl:template name="tableHline">
+   <xsl:text>\hline </xsl:text>
+   </xsl:template>
+</egXML>
+      </div>
+      <div>
+	<head>Lists</head>
+	<list type="gloss">
+	  <label>[label here]</label>
+	  <item>item here</item>
+	</list>
+      </div>
+    </body>
+	</text>
+</TEI>

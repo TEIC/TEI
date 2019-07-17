@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Pure ODD test</title>
+        <author>Lou Burnard</author>
+      </titleStmt>
+      <publicationStmt>
+        <p>Publication Information</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Information about the source</p>
+      </sourceDesc>
+    </fileDesc>
+    <revisionDesc><change when="2017-01-07">LB completed first draft by merging several other test files</change></revisionDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>This ODD exercises the elements used to define content models in post P5 3.0 TEI systems.
+        It does not use or assume the existence of any other TEI elements. </p>
+      <schemaSpec start="stuff" ident="testODD" ns="">
+       
+        <elementSpec ident="stuff">
+          <desc>A test element containing bits and bobs and texty stuff</desc>
+          <content>
+            <alternate maxOccurs="unbounded">
+              <elementRef key="title"/>
+              <elementRef key="bit"/>
+              <elementRef key="bob"/>
+              <elementRef key="bob1"/>
+              <elementRef key="bitOrbob"/>
+              <elementRef key="bitOrbobs"/>
+              <elementRef key="bitAndbob"/>
+              <elementRef key="bitAndbobs"/>
+              <elementRef key="bobs"/>
+              <elementRef key="abob"/>
+              <elementRef key="xyz"/>
+              <elementRef key="test"/>
+            </alternate>
+          </content>
+        </elementSpec>
+        
+        <elementSpec ident="bit">
+          <desc>an empty element with a mandatory attribute</desc>
+          <content/>
+          <attList>
+            <attDef ident="href" usage="req">
+              <desc>provides a pointer</desc>
+              <datatype>
+                <dataRef name="anyURI"/>
+              </datatype>
+            </attDef>
+          </attList>
+        </elementSpec>
+        
+        <elementSpec ident="title">
+          <desc>an element containing just text </desc>
+          <content>
+            <textNode/>
+          </content>
+        </elementSpec>
+        
+        <elementSpec ident="bob">
+          <desc>traditional mixed content</desc>
+          <content>
+            <alternate minOccurs="0" maxOccurs="unbounded">
+              <textNode/>
+              <elementRef key="bit"/>
+            </alternate>
+          </content>
+        </elementSpec>
+        
+        <!-- does schematron work? -->
+        <elementSpec ident="bob1">
+          <desc>same again but only permitting one bit</desc>
+          <content>
+            <alternate minOccurs="0" maxOccurs="unbounded">
+              <textNode/>
+              <elementRef key="bit"/>
+            </alternate>
+          </content>
+          <constraintSpec ident="test" scheme="schematron">
+            <constraint>
+              <report test="count(bit) !=1" xmlns="http://purl.oclc.org/dsdl/schematron">Only one
+                bob allowed</report>
+            </constraint>
+          </constraintSpec>
+        </elementSpec>
+        
+        <elementSpec ident="bitOrbob">
+          <desc>alternation with only minOccurs</desc>
+          <content>
+            <alternate minOccurs="0">
+              <elementRef key="bit"/>
+              <elementRef key="bob"/>
+            </alternate>
+          </content>
+        </elementSpec>
+        
+        <elementSpec ident="bitOrbobs">
+          <desc>alternation with only maxOccurs</desc>
+          <content>
+            <alternate maxOccurs="unbounded">
+              <elementRef key="bit"/>
+              <elementRef key="bob"/>
+            </alternate>
+          </content>
+        </elementSpec>
+        
+        <elementSpec ident="bitAndbob">
+          <desc>sequence within alternation </desc>
+          <content>
+            <alternate>
+              <textNode/>
+              <sequence maxOccurs="unbounded">
+                <elementRef key="bit"/>
+                <elementRef key="bob"/>
+              </sequence>
+            </alternate>
+          </content>
+        </elementSpec>
+        
+        <elementSpec ident="bitAndbobs">
+          <desc>An optional bit and 2 to 4 bobs</desc>
+          <content>
+            <sequence>
+              <elementRef key="bit" minOccurs="0"/>
+              <elementRef key="bob" minOccurs="2" maxOccurs="4"/>
+            </sequence>
+          </content>
+        </elementSpec>
+        
+        <elementSpec ident="bobs">
+          <desc>as many bobs as you like, but at least two</desc>
+          <content>
+            <elementRef key="bob" minOccurs="2" maxOccurs="unbounded"/>
+          </content>
+        </elementSpec>
+        
+        <elementSpec ident="abob">
+          <desc>Just one bob since max is not specified</desc>
+          <content>
+            <elementRef key="bob" minOccurs="1"/>
+          </content>
+        </elementSpec>
+        
+        <elementSpec ident="xyz">
+          <desc>textnode plus sequence of elements</desc>
+          <content>
+            <sequence>
+              <textNode/>
+              <elementRef key="x" minOccurs="0"/>
+              <elementRef key="y" minOccurs="0"/>
+              <elementRef key="z" minOccurs="0"/>
+            </sequence>
+          </content>
+        </elementSpec>
+        
+        <!-- now some datatype tests -->
+        <elementSpec ident="x">
+          <desc>an empty element with purified attributes</desc>
+          <content/>
+          <attList>
+            <attDef ident="count">
+              <desc>how often this element is used</desc>
+              <datatype>
+                <dataRef name="nonNegativeInteger"/>
+              </datatype>
+            </attDef>
+           <!-- <attDef ident="teicount">
+              <desc>another way of saying same thing</desc>
+              <datatype>
+                <dataRef key="teidata.count"/>
+              </datatype>
+            </attDef>-->
+            <!-- commented out since we dont have TEI -->
+            <attDef ident="trixie">
+              <desc>an integral percentage</desc>
+              <datatype>
+                <dataRef name="nonNegativeInteger" restriction="[0-9][0-9]?"/>
+              </datatype>
+            </attDef>
+            <attDef ident="granfalloon">
+              <desc>Any real number between -360 and 360</desc>
+              <datatype>
+                <dataRef name="decimal">
+                  <dataFacet name="maxInclusive" value="360.0"/>
+                  <dataFacet name="minInclusive" value="-360.0"/>
+                </dataRef>
+              </datatype>
+            </attDef>
+          </attList>
+        </elementSpec>
+        
+        <!-- Now the classRef tests  -->
+        <classSpec ident="testClass" type="model">
+          <desc>A suitable class for testing</desc>
+        </classSpec>
+        <elementSpec ident="x" mode="change">
+          <desc>a test element</desc>
+          <classes>
+            <memberOf key="testClass"/>
+          </classes>
+        </elementSpec>
+        <elementSpec ident="y">
+          <desc>a test element</desc>
+          <classes>
+            <memberOf key="testClass"/>
+          </classes>
+        </elementSpec>
+        <elementSpec ident="z">
+          <desc>a test element</desc>
+          <classes>
+            <memberOf key="testClass"/>
+          </classes>
+        </elementSpec>
+        <elementSpec ident="test">
+          <content>
+            <alternate>
+              <elementRef key="testP1"/>
+              <elementRef key="testP2"/>
+              <elementRef key="testP3"/>
+              <elementRef key="testP4a"/>
+              <elementRef key="testP4b"/>
+              <elementRef key="testP5"/>
+              <elementRef key="testP6"/>
+              <elementRef key="testP7"/>
+              <elementRef key="testP8"/>
+              <elementRef key="testP9"/>
+              <elementRef key="testPA"/>
+              <elementRef key="testPB"/>
+            </alternate>
+          </content>
+        </elementSpec>
+        <elementSpec ident="testP1">
+          <desc>Default: should generate x | y | z</desc>
+          <content>
+            <classRef key="testClass"/>
+          </content>
+        </elementSpec>
+        <elementSpec ident="testP2">
+          <desc>Sequence: should generate x,y,z</desc>
+          <content>
+            <classRef key="testClass" expand="sequence"/>
+          </content>
+        </elementSpec>
+        <elementSpec ident="testP3">
+          <desc>Should generate x|y but no z</desc>
+          <content>
+            <classRef key="testClass" expand="alternate" except="z"/>
+          </content>
+        </elementSpec>
+        <elementSpec ident="testP4a">
+          <desc>Should also generate x|y but no z; doesnt work because wrong default value for
+            @expand is used</desc>
+          <content>
+            <classRef key="testClass" include="x y"/>
+          </content>
+        </elementSpec>
+        <elementSpec ident="testP4b">
+          <desc>Should generate x|y but no z; works because right value for @expand is
+            supplied</desc>
+          <content>
+            <classRef key="testClass" expand="alternate" include="x y"/>
+          </content>
+        </elementSpec>
+        <elementSpec ident="testP5">
+          <desc>Should generate (y|z)* </desc>
+          <content>
+            <classRef key="testClass" expand="alternate" except="x" minOccurs="0"
+              maxOccurs="unbounded"/>
+          </content>
+        </elementSpec>
+        <elementSpec ident="testP6">
+          <desc>Should generate (y|z)+ </desc>
+          <content>
+            <classRef key="testClass" expand="alternate" except="x" maxOccurs="unbounded"/>
+          </content>
+        </elementSpec>
+        <elementSpec ident="testP7">
+          <desc>Should generate ((y|z),(y|z)?, (y|z)?) or maybe (y|z)+ and a schematron rule, but
+            doesn't </desc>
+          <content>
+            <classRef key="testClass" expand="alternate" except="x" maxOccurs="3"/>
+          </content>
+        </elementSpec>
+        <elementSpec ident="testP8">
+          <desc>Should generate (x+,y+) </desc>
+          <content>
+            <classRef key="testClass" expand="sequenceRepeatable" include="x y"/>
+          </content>
+        </elementSpec>
+        <elementSpec ident="testP9">
+          <desc>Generates (y?, z?) and not (z?,y?) because order is always order of
+            declaration</desc>
+          <content>
+            <classRef key="testClass" expand="sequenceOptional" include="z y"/>
+          </content>
+        </elementSpec>
+        <elementSpec ident="testPA">
+          <desc>Should generate (x*,y*) </desc>
+          <content>
+            <classRef key="testClass" expand="sequenceOptionalRepeatable" include="x y"/>
+          </content>
+        </elementSpec>
+        <elementSpec ident="testPB">
+          <desc>Should generate ((x*,y*)+) whatever that means </desc>
+          <content>
+            <classRef key="testClass" expand="sequenceOptionalRepeatable" maxOccurs="unbounded"
+              include="x y"/>
+          </content>
+        </elementSpec>
+      </schemaSpec>
+    </body>
+  </text>
+</TEI>

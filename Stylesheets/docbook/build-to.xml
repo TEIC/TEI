@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project basedir="." default="dist" name="teitodocbook">
+  <!--
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public
+	License as published by the Free Software Foundation; either
+	version 2.1 of the License, or (at your option) any later version.
+	
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Lesser General Public License for more details.
+	
+	You should have received a copy of the GNU Lesser General Public
+	License along with this library; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+	
+        Id: $Id: build-to.xml 11933 2013-04-14 14:45:01Z rahtz $
+        Copyright: 2011, TEI Consortium<
+-->
+  <!--
+ Convert TEI documents into DOCBOOK files.
+ -->
+  <import file="../common/teianttasks.xml"/>
+
+  <target name="odd" if="processODD">
+    <odd2lite in="${inputFile}" out="${inputFile}.processedodd"/>
+    <buildgeneric type="docbook" xsl="${profiledir}/${profile}/docbook/to.xsl" in="${inputFile}.processedodd" out="${outputFile}"/>
+    <delete file="${inputFile}.processedodd"/>
+  </target>
+
+  <target name="dist" unless="processODD">
+    <buildgeneric type="docbook" xsl="${profiledir}/${profile}/docbook/to.xsl" in="${inputFile}" out="${outputFile}"/>
+  </target>
+
+</project>

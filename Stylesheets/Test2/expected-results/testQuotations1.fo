@@ -1,0 +1,270 @@
+<root xmlns="http://www.w3.org/1999/XSL/Format">
+   <layout-master-set>
+      <simple-page-master master-name="simple1"
+                          page-width="211mm"
+                          page-height="297mm"
+                          margin-top="72pt"
+                          margin-bottom="72pt"
+                          margin-left="72pt"
+                          margin-right="72pt">
+         <region-body margin-bottom="24pt" margin-top="24pt"/>
+         <region-before extent="14pt"/>
+         <region-after extent="14pt"/>
+      </simple-page-master>
+      <simple-page-master master-name="left1"
+                          page-width="211mm"
+                          page-height="297mm"
+                          margin-top="72pt"
+                          margin-bottom="72pt"
+                          margin-left="72pt"
+                          margin-right="72pt">
+         <region-body margin-bottom="24pt" margin-top="24pt"/>
+         <region-before region-name="xsl-region-before-left" extent="14pt"/>
+         <region-after region-name="xsl-region-after-left" extent="14pt"/>
+      </simple-page-master>
+      <simple-page-master master-name="right1"
+                          page-width="211mm"
+                          page-height="297mm"
+                          margin-top="72pt"
+                          margin-bottom="72pt"
+                          margin-left="72pt"
+                          margin-right="72pt">
+         <region-body margin-bottom="24pt" margin-top="24pt"/>
+         <region-before region-name="xsl-region-before-right" extent="14pt"/>
+         <region-after region-name="xsl-region-after-right" extent="14pt"/>
+      </simple-page-master>
+      <simple-page-master master-name="first1"
+                          page-width="211mm"
+                          page-height="297mm"
+                          margin-top="72pt"
+                          margin-bottom="72pt"
+                          margin-left="72pt"
+                          margin-right="72pt">
+         <region-body margin-bottom="24pt" margin-top="24pt"/>
+         <region-before region-name="xsl-region-before-first" extent="14pt"/>
+         <region-after region-name="xsl-region-after-first" extent="14pt"/>
+      </simple-page-master>
+      <simple-page-master master-name="simple2"
+                          page-width="211mm"
+                          page-height="297mm"
+                          margin-top="72pt"
+                          margin-bottom="72pt"
+                          margin-left="72pt"
+                          margin-right="72pt">
+         <region-body column-count="1" margin-bottom="24pt" margin-top="24pt"/>
+         <region-before extent="14pt"/>
+         <region-after extent="14pt"/>
+      </simple-page-master>
+      <simple-page-master master-name="left2"
+                          page-width="211mm"
+                          page-height="297mm"
+                          margin-top="72pt"
+                          margin-bottom="72pt"
+                          margin-left="72pt"
+                          margin-right="72pt">
+         <region-body column-count="1" margin-bottom="24pt" margin-top="24pt"/>
+         <region-before region-name="xsl-region-before-left" extent="14pt"/>
+         <region-after region-name="xsl-region-after-left" extent="14pt"/>
+      </simple-page-master>
+      <simple-page-master master-name="right2"
+                          page-width="211mm"
+                          page-height="297mm"
+                          margin-top="72pt"
+                          margin-bottom="72pt"
+                          margin-left="72pt"
+                          margin-right="72pt">
+         <region-body column-count="1" margin-bottom="24pt" margin-top="24pt"/>
+         <region-before region-name="xsl-region-before-right" extent="14pt"/>
+         <region-after region-name="xsl-region-after-right" extent="14pt"/>
+      </simple-page-master>
+      <simple-page-master master-name="first2"
+                          page-width="211mm"
+                          page-height="297mm"
+                          margin-top="72pt"
+                          margin-bottom="72pt"
+                          margin-left="72pt"
+                          margin-right="72pt">
+         <region-body column-count="1" margin-bottom="24pt" margin-top="24pt"/>
+         <region-before region-name="xsl-region-before-first" extent="14pt"/>
+         <region-after region-name="xsl-region-after-first" extent="14pt"/>
+      </simple-page-master>
+      <page-sequence-master master-name="twoside1nofirst">
+         <repeatable-page-master-alternatives>
+            <conditional-page-master-reference master-reference="right1" odd-or-even="odd"/>
+            <conditional-page-master-reference master-reference="left1" odd-or-even="even"/>
+         </repeatable-page-master-alternatives>
+      </page-sequence-master>
+      <page-sequence-master master-name="twoside1">
+         <repeatable-page-master-alternatives>
+            <conditional-page-master-reference master-reference="first1" page-position="first"/>
+            <conditional-page-master-reference master-reference="right1" odd-or-even="odd"/>
+            <conditional-page-master-reference master-reference="left1" odd-or-even="even"/>
+         </repeatable-page-master-alternatives>
+      </page-sequence-master>
+      <page-sequence-master master-name="oneside1">
+         <repeatable-page-master-alternatives>
+            <conditional-page-master-reference master-reference="first1" page-position="first"/>
+            <conditional-page-master-reference master-reference="simple1"/>
+         </repeatable-page-master-alternatives>
+      </page-sequence-master>
+      <page-sequence-master master-name="twoside2">
+         <repeatable-page-master-alternatives>
+            <conditional-page-master-reference master-reference="first2" page-position="first"/>
+            <conditional-page-master-reference master-reference="right2" odd-or-even="odd"/>
+            <conditional-page-master-reference master-reference="left2" odd-or-even="even"/>
+         </repeatable-page-master-alternatives>
+      </page-sequence-master>
+      <page-sequence-master master-name="oneside2">
+         <repeatable-page-master-alternatives>
+            <conditional-page-master-reference master-reference="first2" page-position="first"/>
+            <conditional-page-master-reference master-reference="simple2"/>
+         </repeatable-page-master-alternatives>
+      </page-sequence-master>
+   </layout-master-set>
+   <page-sequence format="1"
+                  text-align="justify"
+                  hyphenate="true"
+                  language="en"
+                  initial-page-number="1"
+                  master-reference="twoside2">
+      <static-content flow-name="xsl-region-before-right">
+         <block text-align="justify" text-align-last="justify" font-size="10pt">
+            <block>
+               <leader rule-thickness="0pt"/>
+               <inline>
+                  <page-number/>
+               </inline>
+            </block>
+         </block>
+      </static-content>
+      <static-content flow-name="xsl-region-before-left">
+         <block text-align="justify" font-size="10pt">
+            <block>
+               <inline>
+                  <page-number/>
+               </inline>
+               <leader rule-thickness="0pt"/>
+            </block>
+         </block>
+      </static-content>
+      <static-content flow-name="xsl-region-before-first">
+         <block/>
+      </static-content>
+      <static-content flow-name="xsl-region-after-right">
+         <block text-align="end" font-size="10pt">
+            <page-number/>
+         </block>
+      </static-content>
+      <static-content flow-name="xsl-region-after-left">
+         <block text-align="start" font-size="10pt">
+            <page-number/>
+         </block>
+      </static-content>
+      <static-content flow-name="xsl-region-after-first">
+         <block font-size="10pt" text-align="end">
+            <page-number/>
+         </block>
+      </static-content>
+      <static-content flow-name="xsl-footnote-separator">
+         <block>
+            <leader leader-pattern="rule"
+                    leader-length="100%"
+                    rule-style="solid"
+                    rule-thickness="0.5pt"/>
+         </block>
+      </static-content>
+      <flow flow-name="xsl-region-body" font-family="Times" font-size="10pt">
+         <block keep-with-next.within-page="always"
+                id="d27e23"
+                text-align="left"
+                font-family="Times"
+                font-size="18pt"
+                font-weight="bold"
+                space-after="6pt"
+                space-before.optimum="12pt"
+                text-indent="0em">1. Quotations Part 1</block>
+         <block line-height="1">Quote 1, with <inline hyphenate="false" color="black" font-family="Courier">&lt;p&gt;</inline>: <block text-align="start"
+                   text-indent="0pt"
+                   end-indent="12pt"
+                   start-indent="12pt"
+                   font-size="9pt"
+                   space-before.optimum="4pt"
+                   space-after.optimum="4pt"
+                   line-height="normal">
+               <block line-height="1">Ils ne produisent qu’en collaborant d’une manière déterminée et en échangeant entre eux leurs activités. Pour produire, ils entrent en relations et en rapports déterminés les uns avec les autres, et ce n’est que dans les limites de ces relations et de ces rapports sociaux que s’établit leur action sur la nature, la production.</block>
+            </block>
+         </block>
+         <block line-height="1"
+                text-indent="1em"
+                space-before.optimum="0pt"
+                space-before.maximum="12pt">Quote 2, with @rend=display <block text-align="start"
+                   text-indent="0pt"
+                   end-indent="12pt"
+                   start-indent="12pt"
+                   font-size="9pt"
+                   space-before.optimum="4pt"
+                   space-after.optimum="4pt"
+                   line-height="normal">Ils ne produisent qu’en collaborant d’une manière déterminée et en échangeant entre eux leurs activités. Pour produire, ils entrent en relations et en rapports déterminés les uns avec les autres, et ce n’est que dans les limites de ces relations et de ces rapports sociaux que s’établit leur action sur la nature, la production. </block>
+         </block>
+         <block line-height="1"
+                text-indent="1em"
+                space-before.optimum="0pt"
+                space-before.maximum="12pt">Quote 3, testing length Ils ne produisent qu’en collaborant d’une manière déterminée et en échangeant entre eux leurs activités. Pour produire, ils entrent en relations et en rapports déterminés les uns avec les autres, et ce n’est que dans les limites de ces relations et de ces rapports sociaux que s’établit leur action sur la nature, la production. </block>
+         <block line-height="1"
+                text-indent="1em"
+                space-before.optimum="0pt"
+                space-before.maximum="12pt">Quote 4, short length Ils ne produisent qu’en collaborant d’une manière déterminée et en échangeant entre eux leurs activités. </block>
+         <block line-height="1"
+                text-indent="1em"
+                space-before.optimum="0pt"
+                space-before.maximum="12pt">Quote 5, with rend="inline" Ils ne produisent qu’en collaborant d’une manière déterminée et en échangeant entre eux leurs activités. Pour produire, ils entrent en relations et en rapports déterminés les uns avec les autres, et ce n’est que dans les limites de ces relations et de ces rapports sociaux que s’établit leur action sur la nature, la production. </block>
+         <block font-size="8pt">
+            <block text-align="start"
+                   text-indent="0pt"
+                   end-indent="12pt"
+                   start-indent="12pt"
+                   font-size="9pt"
+                   space-before.optimum="4pt"
+                   space-after.optimum="4pt"
+                   line-height="normal">
+               <block line-height="1">Ils ne produisent qu’en collaborant d’une manière déterminée et en échangeant entre eux leurs activités. Pour produire, ils entrent en relations et en rapports déterminés les uns avec les autres, et ce n’est que dans les limites de ces relations et de ces rapports sociaux que s’établit leur action sur la nature, la production.</block>
+            </block>
+            <inline font-style="normal" font-weight="normal">Karl Marx, <inline font-style="italic" font-weight="normal">Travail salarié et capital, suivi de Salaire, prix et profit</inline>, p. 31, Éditions sociales, Paris, 1952.</inline>
+         </block>
+         <block keep-with-next.within-page="always"
+                id="d27e80"
+                text-align="left"
+                font-family="Times"
+                font-size="18pt"
+                font-weight="bold"
+                space-after="6pt"
+                space-before.optimum="12pt"
+                text-indent="0em">2. Quotations Part 2</block>
+         <block line-height="1">Consider quotations: "This is a quote which is run on within the text and will have quote marks of some kind around it."</block>
+         <block line-height="1"
+                text-indent="1em"
+                space-before.optimum="0pt"
+                space-before.maximum="12pt">Another quotation: <block text-align="start"
+                   text-indent="0pt"
+                   end-indent="12pt"
+                   start-indent="12pt"
+                   font-size="9pt"
+                   space-before.optimum="4pt"
+                   space-after.optimum="4pt"
+                   line-height="normal">This is a block quote set off as such from the rest of the text</block>
+         </block>
+         <block line-height="1"
+                text-indent="1em"
+                space-before.optimum="0pt"
+                space-before.maximum="12pt">Here, by contrast is an "inline quotation". Another strange thing about quotes is this: <block text-align="start"
+                   text-indent="0pt"
+                   end-indent="12pt"
+                   start-indent="12pt"
+                   font-size="9pt"
+                   space-before.optimum="4pt"
+                   space-after.optimum="4pt"
+                   line-height="normal">You can put line breaks <block/>to determine where the line breaks <block/>Inside a block!</block>
+         </block>
+      </flow>
+   </page-sequence>
+</root>

@@ -1,0 +1,669 @@
+/* original from Matthew Driscoll for editing
+   
+   edited by Sebastian Rahtz March 2009
+   for general HTML display
+This software is dual-licensed:
+
+1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
+Unported License http://creativecommons.org/licenses/by-sa/3.0/ 
+
+2. http://www.opensource.org/licenses/BSD-2-Clause
+		
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+* Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+
+This software is provided by the copyright holders and contributors
+"as is" and any express or implied warranties, including, but not
+limited to, the implied warranties of merchantability and fitness for
+a particular purpose are disclaimed. In no event shall the copyright
+holder or contributors be liable for any direct, indirect, incidental,
+special, exemplary, or consequential damages (including, but not
+limited to, procurement of substitute goods or services; loss of use,
+data, or profits; or business interruption) however caused and on any
+theory of liability, whether in contract, strict liability, or tort
+(including negligence or otherwise) arising in any way out of the use
+of this software, even if advised of the possibility of such damage.
+*/
+msDesc {
+    display: block;
+    font-family: "Junicode";
+    margin-left: 25pt;
+    margin-right: 15pt;
+    margin-top: 15pt;
+    margin-bottom: 15pt;
+    font-size: 12pt;
+    line-height: 14pt;
+    text-align: left
+}
+msDesc>msIdentifier {
+    display: block;
+    font-size: 26pt;
+    line-height: 28pt;
+    color: #ad1010
+}
+msIdentifier country {
+    display: none
+}
+msIdentifier settlement {
+    display: none
+}
+msIdentifier repository {
+    display: none
+}
+msIdentifier altIdentifier {
+    display: none
+}
+msName[type="nickname"]:before {
+    content: "(\201C"
+}
+msName[type="nickname"]:after {
+    content: "\201D)"
+}
+head, msContents, history, additional, seal {
+    padding-top: 3pt;
+    padding-bottom: 2pt;
+    display: block
+}
+physDesc, supportDesc, objectDesc, layoutDesc, decoDesc, sealDesc {
+    display: block;
+    margin-bottom: 4pt;
+}
+physDesc:before {
+    content: "Physical description:";
+    font-weight: 600;
+    font-variant: small-caps;
+    font-size: 120%;
+}
+history:before {
+    content: "History:";
+    display: block;
+    font-weight: 600;
+    font-variant: small-caps;
+    font-size: 120%
+}
+
+head {
+    font-size: 16pt;
+    line-height: 19pt
+}
+title {
+    display: inline;
+}
+head title {
+    font-style: italic
+}
+head>title:after {
+    content: ". "
+}
+head>origPlace:after {
+    content: ", "
+}
+head>origDate:after {
+    content: "."
+}
+head>textLang:after {
+    content: "."
+}
+head note {
+    display: block;
+    padding-top: 10pt;
+    font-size: 13pt
+}
+msItem[n]:before {
+    font-weight: 600;
+    content: attr(n) ". "
+}
+msContents:before {
+    content: "Contents:";
+    font-weight: 600;
+    font-variant: small-caps;
+    font-size: 120%
+}
+msItem {
+    display: block;
+    margin-left: 10pt
+}
+msItem>msItem {
+    display: block;
+    margin-left: 15pt
+}
+msItem[n]>locus:before {
+    content: "("
+}
+msItem[n]>locus:after {
+    content: ")"
+}
+msItem>title {
+    font-weight: 600;
+    font-size: 100%;
+    letter-spacing: 1px
+}
+msItem>title:after {
+    content: ". "
+}
+rubric {
+    display: block
+}
+rubric:before {
+    content: "Rubric: \201C"
+}
+rubric:after {
+    content: "\201D "
+}
+incipit {
+    display: block
+}
+incipit:before {
+    content: "Incipit: \201C"
+}
+incipit:after {
+    content: "\201D "
+}
+explicit {
+    display: block
+}
+explicit:before {
+    content: "Explicit: \201C"
+}
+explicit:after {
+    content: "\201D "
+}
+incipit[defective="yes"]:before {
+    content: "Begins: \201C"
+}
+explicit[defective="yes"]:before {
+    content: "Ends: \201C"
+}
+rubric[type="final"]:before {
+    content: "Final rubric: \201C"
+}
+rubric[type="final"]:after {
+    content: "\201D "
+}
+colophon {
+    display: block
+}
+colophon:before {
+    content: "Colophon: \201C"
+}
+colophon:after {
+    content: "\201D "
+}
+msItem>textLang {
+    display: block
+}
+msItem>textLang:before {
+    content: "Language of text: "
+}
+msItem>textLang:after {
+    content: "."
+}
+history origin {
+    display: block
+}
+history origin:before {
+    content: "Origin:";
+    font-weight: bold
+}
+history provenance:before {
+    content: "Provenance: ";
+    font-weight: bold
+}
+history provenance {
+    display: block
+}
+history acquisition:before {
+    content: "Acquisition: ";
+    font-weight: bold
+}
+history acquisition {
+    display: block
+}
+msItem>listBibl {
+    display: block;
+    list-style-type: none;
+    margin-left: 20pt
+}
+msItem>listBibl>bibl {
+    display: list-item;
+    margin-left: 30pt
+}
+msItem>listBibl:before {
+    content: "Text editions:";
+    display: block;
+    font-weight: 600
+}
+msItem>bibl {
+    display: block;
+    margin-left: 20pt
+}
+msItem>bibl:before {
+    content: "Text edition: ";
+    font-weight: 600
+}
+msItem>listBibl>bibl:after {
+    content: "."
+}
+author:after {
+    content: ", "
+}
+bibl>editor:after {
+    content: ", ";
+    text-align: left
+}
+bibl title[level="m"] {
+    font-style: italic;
+    font-weight: normal;
+    font-size: 100%
+}
+bibl title[level="j"] {
+    font-style: italic;
+    font-weight: normal;
+    font-size: 100%
+}
+bibl title[level="s"] {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 100%
+}
+bibl title[level="a"] {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 100%
+}
+bibl title[level="a"]:before {
+    content: " \201C"
+}
+bibl title[level="a"]:after {
+    content: "\201D, "
+}
+bibl title[level="s"]:before {
+    content: ", "
+}
+msItem bibl title {
+    font-style: italic
+}
+biblScope[type="pages"]:before {
+    content: ", pp. "
+}
+imprint:before {
+    content: "("
+}
+imprint:after {
+    content: ")"
+}
+pubPlace:after {
+    content: ","
+}
+bibl>note:before {
+    content: " ("
+}
+bibl>note:after {
+    content: ")"
+}
+additional>listBibl>bibl:after {
+    content: "."
+}
+q:before {
+    content: "\201C"
+}
+q:after {
+    content: "\201D"
+}
+q q:before {
+    content: "�"
+}
+q q:after {
+    content: "�"
+}
+q[type="block"] {
+    display: block;
+    margin-left: 15pt;
+    font-size: 12pt;
+    line-height: 14pt
+}
+q[type="block"]:before {
+    content: ""
+}
+q[type="block"]:after {
+    content: ""
+}
+msItem note:before {
+    content: " ("
+}
+msItem note:after {
+    content: ")"
+}
+form {
+    display: block
+}
+form:before {
+    content: "Form: ";
+    font-weight: bold
+}
+support {
+    display: block
+}
+support:before {
+    content: "Support: ";
+    font-weight: bold
+}
+extent {
+    display: block
+}
+extent:before {
+    content: "No. of leaves: ";
+    font-weight: bold;
+    display: block
+}
+collation {
+    display: block
+}
+collation:before {
+    content: "Collation: ";
+    font-weight: bold
+}
+layout {
+    display: block
+}
+layout:before {
+    content: "Layout: ";
+    font-weight: bold
+}
+msWriting {
+    display: block
+}
+msWriting:before {
+    content: "Script: ";
+    font-weight: bold
+}
+musicNotation {
+    display: block
+}
+musicNotation:before {
+    content: "Musical notation: ";
+    font-weight: bold
+}
+decoDesc:before {
+    content: "Decoration: ";
+    font-weight: bold
+}
+decoNote {
+    display: list-item;
+    margin-left: 16pt;
+}
+bindingDesc {
+    display: block
+}
+bindingDesc:before {
+    content: "Binding: ";
+    font-weight: bold
+}
+foliation {
+    display: block
+}
+foliation:before {
+    content: "Foliation: ";
+    font-weight: bold
+}
+additions {
+    display: block
+}
+additions:before {
+    content: "Additions: ";
+    font-weight: bold
+}
+condition {
+    display: block
+}
+condition:before {
+    content: "Condition: ";
+    font-weight: bold
+}
+dimensions[type="leaf"] {
+    display: block
+}
+dimensions[type="leaf"]:before {
+    content: "Size of leaves: ";
+    font-weight: bold;
+    display: block
+}
+dimensions height:after {
+    content: " x "
+}
+dimensions:after {
+    content: " mm."
+}
+dimensions depth:before {
+    content: " x "
+}
+recordHist {
+    display: block
+}
+recordHist:before {
+    content: "Record history: ";
+    font-weight: bold
+}
+availability {
+    display: block
+}
+availability:before {
+    content: "Availability: ";
+    font-weight: bold
+}
+custodialHist {
+    display: block
+}
+custodialHist:before {
+    content: "Custodial history: ";
+    font-weight: bold
+}
+custEvent {
+    display: list-item;
+    list-style-type: none;
+    margin-left: 30pt
+}
+surrogates {
+    display: block
+}
+surrogates:before {
+    content: "Surrogates: ";
+    font-weight: bold
+}
+surrogates>p>listBibl {
+    display: block;
+}
+surrogates>p>listBibl>bibl {
+    display: list-item;
+    margin-left: 30pt
+}
+title[type="gmd"]:before {
+    content: "Format: "
+}
+title[type="gmd"]:after {
+    content: ". "
+}
+surrogates idno:before {
+    content: "ID no.: "
+}
+surrogates idno:after {
+    content: ". "
+}
+surrogates bibl date:before {
+    content: "Date created: "
+}
+accMat {
+    display: block
+}
+accMat:before {
+    content: "Accompanying material: ";
+    font-weight: bold
+}
+additional:before {
+    content: "Additional:";
+    display: block;
+    font-weight: 600;
+    font-variant: small-caps;
+    font-size: 120%
+}
+additional>listBibl {
+    display: block;
+    list-style-type: none;
+    margin-top: 10pt
+}
+additional>listBibl:before {
+    content: "Bibliography:";
+    display: block;
+    font-weight: 600;
+    font-variant: small-caps;
+    font-size: 120%
+}
+additional>listBibl>bibl {
+    text-align: left;
+    display: list-item;
+    margin-left: 30pt
+}
+list {
+    display: block;
+}
+list item {
+    display: list-item;
+    margin-left: 30pt
+}
+q item {
+    list-style-type: none
+}
+item locus:after {
+    content: ": "
+}
+pb:before {
+    font-weight: 600;
+    content: "|" attr(n) "|"
+}
+lb[n] {
+    display: list-item;
+    list-style-type: none;
+    margin-left: 30pt;
+}
+lb[type="hyphenated"]:before {
+    content: "-|"
+}
+lb[n]:after {
+    content: attr(n);
+}
+supplied[reason="damage"]:before {
+    content: "<"
+}
+supplied[reason="damage"]:after {
+    content: ">"
+}
+supplied[reason="illegible"]:before {
+    content: "["
+}
+supplied[reason="illegible"]:after {
+    content: "]"
+}
+supplied[reason="omitted"]:before {
+    content: "\27E8"
+}
+supplied[reason="omitted"]:after {
+    content: "\27E9"
+}
+gap:before {
+    content: " [...]"
+}
+expan {
+    font-style: italic
+}
+foreign {
+    font-style: italic
+}
+ref {
+    font-style: italic
+}
+hi[rend="sup"] {
+    font-size: .83em;
+    vertical-align: super
+}
+hi[rend="underline"] {
+    text-decoration: underline
+}
+hi[rend="bold"] {
+    font-weight: bold
+}
+hi[rend="italic"] {
+    font-style: italic
+}
+del[rend="overstrike"] {
+    text-decoration: line-through
+}
+note>title {
+    font-style: italic
+}
+p {
+    display: block
+}
+p>p {
+    display: block;
+    margin-left: 15pt;
+    margin-right: 15pt;
+    margin-top: 2pt;
+    margin-bottom: 2pt;
+    font-style: normal;
+    font-size: 12pt;
+    line-height: 13pt
+}
+lg {
+    display: block;
+    margin-bottom: 10pt
+}
+l {
+    display: block
+}
+msPart {
+    display: block;
+    margin-top: 15pt;
+    margin-bottom: 15pt
+}
+msPart idno {
+    display: block;
+    font-size: 16pt
+}
+hi[rend="scap"] {
+    font-size: 65%
+}
+hi[rend="lig"] {
+    letter-spacing: -4px
+}
+publisher {
+    display: inline;
+}
+choice > abbr {
+    display: none;
+}
+choice > orig {
+    display: none;
+}
+choice > expan {
+    font-style: normal
+}
+expan > ex:before {
+    content: "(";
+}
+expan > ex:after {
+    content: ")";
+}
+
+placeName, persName, name, genName, geogName, roleName {
+        display: inline;
+}

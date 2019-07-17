@@ -1,0 +1,3036 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- *************************************************************** -->
+<!-- Entity definitions for groups of formatting objects -->
+<!-- *************************************************************** -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.w3.org/1999/XSL/Format" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:rx="http://www.renderx.com/XSL/Extensions">
+    <xs:import namespace="http://www.renderx.com/XSL/Extensions" schemaLocation="rxxsd.xsd"/>
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+    <xs:element name="basic-inlines" abstract="true"/>
+    <xs:element name="basic-blocks" abstract="true" substitutionGroup="fo:blocks"/>
+    <xs:element name="out-of-lines" abstract="true" substitutionGroup="fo:blocks"/>
+    <xs:element name="wrappers" abstract="true" substitutionGroup="fo:blocks"/>
+    <xs:group name="inlines">
+        <xs:sequence>
+            <xs:choice minOccurs="0">
+                <xs:element ref="fo:basic-inlines"/>
+                <xs:element ref="fo:out-of-lines"/>
+                <xs:element ref="fo:wrappers"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:group>
+    <xs:element name="blocks" abstract="true"/>
+    <xs:group name="mixed-level">
+        <xs:sequence>
+            <xs:choice minOccurs="0">
+                <xs:element ref="fo:basic-inlines"/>
+                <xs:element ref="fo:basic-blocks"/>
+                <xs:element ref="fo:out-of-lines"/>
+                <xs:element ref="fo:wrappers"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:group>
+    <!-- *************************************************************** -->
+    <!-- Entity definitions for common groups of properties -->
+    <!-- This grouping reflects properties cooccurrence, rather than -->
+    <!-- property semantics. It does not correspond to grouping in the -->
+    <!-- draft. -->
+    <!-- *************************************************************** -->
+    <!-- Accessibility Properties -->
+    <xs:attributeGroup name="accessibility-properties">
+        <xs:attribute name="source-document"/>
+        <xs:attribute name="role"/>
+    </xs:attributeGroup>
+    <!-- Relative Position Properties -->
+    <!-- 'position' shorthand property also makes part of this group -->
+    <xs:attributeGroup name="relative-position-properties">
+        <xs:attribute name="relative-position">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="static"/>
+                    <xs:enumeration value="relative"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="position">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="static"/>
+                    <xs:enumeration value="relative"/>
+                    <xs:enumeration value="absolute"/>
+                    <xs:enumeration value="fixed"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="top"/>
+        <xs:attribute name="right"/>
+        <xs:attribute name="bottom"/>
+        <xs:attribute name="left"/>
+    </xs:attributeGroup>
+    <!-- Absolute or Relative Position Properties -->
+    <!-- There is no object that can be positioned only absolutely. -->
+    <!-- Therefore, absolute and relative positioning properties are -->
+    <!-- grouped together -->
+    <xs:attributeGroup name="absolute-or-relative-position-properties">
+        <xs:attribute name="absolute-position">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="absolute"/>
+                    <xs:enumeration value="fixed"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attributeGroup ref="fo:relative-position-properties"/>
+    </xs:attributeGroup>
+    <!-- Aural Properties -->
+    <!-- 'cue' and 'pause' shorthand properties are also included -->
+    <xs:attributeGroup name="aural-properties">
+        <xs:attribute name="azimuth"/>
+        <xs:attribute name="cue"/>
+        <xs:attribute name="cue-after"/>
+        <xs:attribute name="cue-before"/>
+        <xs:attribute name="elevation"/>
+        <xs:attribute name="pause"/>
+        <xs:attribute name="pause-after"/>
+        <xs:attribute name="pause-before"/>
+        <xs:attribute name="pitch"/>
+        <xs:attribute name="pitch-range"/>
+        <xs:attribute name="play-during"/>
+        <xs:attribute name="richness"/>
+        <xs:attribute name="speak">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="normal"/>
+                    <xs:enumeration value="none"/>
+                    <xs:enumeration value="spell-out"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="speak-header">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="once"/>
+                    <xs:enumeration value="always"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="speak-numeral">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="digits"/>
+                    <xs:enumeration value="continuous"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="speak-punctuation">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="code"/>
+                    <xs:enumeration value="none"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="speech-rate"/>
+        <xs:attribute name="stress"/>
+        <xs:attribute name="voice-family"/>
+        <xs:attribute name="volume"/>
+    </xs:attributeGroup>
+    <!-- Common Border, Padding, and Background Properties -->
+    <!-- Relative shorthand properties are also included -->
+    <xs:attributeGroup name="border-padding-background-properties">
+        <xs:attribute name="background"/>
+        <xs:attribute name="background-attachment">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="scroll"/>
+                    <xs:enumeration value="fixed"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="background-color">
+            <xs:annotation>
+                <xs:documentation> Specifies the color for the background. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="background-image">
+            <xs:annotation>
+                <xs:documentation>The background-image attribute specifies an URI of the bitmap
+                    image file. An unqualified URI is treated as a path to a file in the local file
+                    system; if the path is relative, it is calculated from the location of the
+                    source XSL FO document (rather than from the current directory where XEP is run).</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="background-position">
+            <xs:annotation>
+                <xs:documentation>Used to specify image position.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="background-position-vertical"/>
+        <xs:attribute name="background-position-horizontal"/>
+        <xs:attribute name="background-repeat">
+            <xs:annotation>
+                <xs:documentation>Specify whether the image should be repeated along any of the axes.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="repeat"/>
+                    <xs:enumeration value="repeat-x"/>
+                    <xs:enumeration value="repeat-y"/>
+                    <xs:enumeration value="no-repeat"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute ref="rx:background-content-type"/>
+        <xs:attribute ref="rx:background-content-height"/>
+        <xs:attribute ref="rx:background-content-width"/>
+        <xs:attribute ref="rx:background-scaling"/>
+        <xs:attribute name="border"/>
+        <xs:attribute name="border-after-color"/>
+        <xs:attribute name="border-after-style">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="none"/>
+                    <xs:enumeration value="hidden"/>
+                    <xs:enumeration value="dotted"/>
+                    <xs:enumeration value="dashed"/>
+                    <xs:enumeration value="solid"/>
+                    <xs:enumeration value="double"/>
+                    <xs:enumeration value="groove"/>
+                    <xs:enumeration value="ridge"/>
+                    <xs:enumeration value="inset"/>
+                    <xs:enumeration value="outset"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-after-width"/>
+        <xs:attribute name="border-after-width.length"/>
+        <xs:attribute name="border-after-width.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="discard"/>
+                    <xs:enumeration value="retain"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-before-color"/>
+        <xs:attribute name="border-before-style">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="none"/>
+                    <xs:enumeration value="hidden"/>
+                    <xs:enumeration value="dotted"/>
+                    <xs:enumeration value="dashed"/>
+                    <xs:enumeration value="solid"/>
+                    <xs:enumeration value="double"/>
+                    <xs:enumeration value="groove"/>
+                    <xs:enumeration value="ridge"/>
+                    <xs:enumeration value="inset"/>
+                    <xs:enumeration value="outset"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-before-width"/>
+        <xs:attribute name="border-before-width.length"/>
+        <xs:attribute name="border-before-width.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="discard"/>
+                    <xs:enumeration value="retain"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-bottom"/>
+        <xs:attribute name="border-bottom-color"/>
+        <xs:attribute name="border-bottom-style">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="none"/>
+                    <xs:enumeration value="hidden"/>
+                    <xs:enumeration value="dotted"/>
+                    <xs:enumeration value="dashed"/>
+                    <xs:enumeration value="solid"/>
+                    <xs:enumeration value="double"/>
+                    <xs:enumeration value="groove"/>
+                    <xs:enumeration value="ridge"/>
+                    <xs:enumeration value="inset"/>
+                    <xs:enumeration value="outset"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-bottom-width"/>
+        <xs:attribute name="border-bottom-width.length"/>
+        <xs:attribute name="border-bottom-width.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="discard"/>
+                    <xs:enumeration value="retain"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-color"/>
+        <xs:attribute name="border-end-color"/>
+        <xs:attribute name="border-end-style">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="none"/>
+                    <xs:enumeration value="hidden"/>
+                    <xs:enumeration value="dotted"/>
+                    <xs:enumeration value="dashed"/>
+                    <xs:enumeration value="solid"/>
+                    <xs:enumeration value="double"/>
+                    <xs:enumeration value="groove"/>
+                    <xs:enumeration value="ridge"/>
+                    <xs:enumeration value="inset"/>
+                    <xs:enumeration value="outset"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-end-width"/>
+        <xs:attribute name="border-end-width.length"/>
+        <xs:attribute name="border-end-width.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="discard"/>
+                    <xs:enumeration value="retain"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-left"/>
+        <xs:attribute name="border-left-color"/>
+        <xs:attribute name="border-left-style">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="none"/>
+                    <xs:enumeration value="hidden"/>
+                    <xs:enumeration value="dotted"/>
+                    <xs:enumeration value="dashed"/>
+                    <xs:enumeration value="solid"/>
+                    <xs:enumeration value="double"/>
+                    <xs:enumeration value="groove"/>
+                    <xs:enumeration value="ridge"/>
+                    <xs:enumeration value="inset"/>
+                    <xs:enumeration value="outset"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-left-width"/>
+        <xs:attribute name="border-left-width.length"/>
+        <xs:attribute name="border-left-width.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="discard"/>
+                    <xs:enumeration value="retain"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-right"/>
+        <xs:attribute name="border-right-color"/>
+        <xs:attribute name="border-right-style">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="none"/>
+                    <xs:enumeration value="hidden"/>
+                    <xs:enumeration value="dotted"/>
+                    <xs:enumeration value="dashed"/>
+                    <xs:enumeration value="solid"/>
+                    <xs:enumeration value="double"/>
+                    <xs:enumeration value="groove"/>
+                    <xs:enumeration value="ridge"/>
+                    <xs:enumeration value="inset"/>
+                    <xs:enumeration value="outset"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-right-width"/>
+        <xs:attribute name="border-right-width.length"/>
+        <xs:attribute name="border-right-width.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="discard"/>
+                    <xs:enumeration value="retain"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-start-color"/>
+        <xs:attribute name="border-start-style">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="none"/>
+                    <xs:enumeration value="hidden"/>
+                    <xs:enumeration value="dotted"/>
+                    <xs:enumeration value="dashed"/>
+                    <xs:enumeration value="solid"/>
+                    <xs:enumeration value="double"/>
+                    <xs:enumeration value="groove"/>
+                    <xs:enumeration value="ridge"/>
+                    <xs:enumeration value="inset"/>
+                    <xs:enumeration value="outset"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-start-width"/>
+        <xs:attribute name="border-start-width.length"/>
+        <xs:attribute name="border-start-width.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="discard"/>
+                    <xs:enumeration value="retain"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-style"/>
+        <xs:attribute name="border-top"/>
+        <xs:attribute name="border-top-color">
+            <xs:annotation>
+                <xs:documentation> One of 16 predefined HTML system colors, or an RGB value. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="border-top-style">
+            <xs:annotation>
+                <xs:documentation>One of solid, dashed, dotted, double, inset, outset, groove,
+                    ridge, or none.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="none"/>
+                    <xs:enumeration value="hidden"/>
+                    <xs:enumeration value="dotted"/>
+                    <xs:enumeration value="dashed"/>
+                    <xs:enumeration value="solid"/>
+                    <xs:enumeration value="double"/>
+                    <xs:enumeration value="groove"/>
+                    <xs:enumeration value="ridge"/>
+                    <xs:enumeration value="inset"/>
+                    <xs:enumeration value="outset"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-top-width">
+            <xs:annotation>
+                <xs:documentation>One of thin, medium, thick, or an explicit width specification.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="border-top-width.length"/>
+        <xs:attribute name="border-top-width.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="discard"/>
+                    <xs:enumeration value="retain"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-width"/>
+        <xs:attribute name="padding">
+            <xs:annotation>
+                <xs:documentation>The padding between the text and the border. <ul> You can also
+                        specify several numbers as a value for padding attributes: <li> if there are
+                            two values, the top and bottom paddings are set to the first value and
+                            the right and left paddings are set to the second;</li>
+                        <li> if there are three values, the top is set to the first value, the left
+                            and right are set to the second, and the bottom one is set to the third;</li>
+                        <li> if there are four values, they apply to the top, right, bottom, and
+                            left, respectively.</li>
+                    </ul>
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="padding-after"/>
+        <xs:attribute name="padding-after.length"/>
+        <xs:attribute name="padding-after.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="discard"/>
+                    <xs:enumeration value="retain"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="padding-before"/>
+        <xs:attribute name="padding-before.length"/>
+        <xs:attribute name="padding-before.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="discard"/>
+                    <xs:enumeration value="retain"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="padding-bottom"/>
+        <xs:attribute name="padding-bottom.length"/>
+        <xs:attribute name="padding-bottom.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="discard"/>
+                    <xs:enumeration value="retain"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="padding-end"/>
+        <xs:attribute name="padding-end.length"/>
+        <xs:attribute name="padding-end.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="discard"/>
+                    <xs:enumeration value="retain"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="padding-left"/>
+        <xs:attribute name="padding-left.length"/>
+        <xs:attribute name="padding-left.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="discard"/>
+                    <xs:enumeration value="retain"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="padding-right"/>
+        <xs:attribute name="padding-right.length"/>
+        <xs:attribute name="padding-right.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="discard"/>
+                    <xs:enumeration value="retain"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="padding-start"/>
+        <xs:attribute name="padding-start.length"/>
+        <xs:attribute name="padding-start.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="discard"/>
+                    <xs:enumeration value="retain"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="padding-top"/>
+        <xs:attribute name="padding-top.length"/>
+        <xs:attribute name="padding-top.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="discard"/>
+                    <xs:enumeration value="retain"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!-- Border Precedence Properties for tables -->
+    <xs:attributeGroup name="border-precedence-properties">
+        <xs:attribute name="border-after-precedence"/>
+        <xs:attribute name="border-before-precedence"/>
+        <xs:attribute name="border-end-precedence"/>
+        <xs:attribute name="border-start-precedence"/>
+    </xs:attributeGroup>
+    <!-- Box Size Properties -->
+    <xs:attributeGroup name="box-size-properties">
+        <xs:attribute name="height"/>
+        <xs:attribute name="min-height"/>
+        <xs:attribute name="max-height"/>
+        <xs:attribute name="width"/>
+        <xs:attribute name="min-width"/>
+        <xs:attribute name="max-width"/>
+        <xs:attribute name="inline-progression-dimension"/>
+        <xs:attribute name="inline-progression-dimension.minimum"/>
+        <xs:attribute name="inline-progression-dimension.optimum"/>
+        <xs:attribute name="inline-progression-dimension.maximum"/>
+        <xs:attribute name="block-progression-dimension"/>
+        <xs:attribute name="block-progression-dimension.minimum"/>
+        <xs:attribute name="block-progression-dimension.optimum"/>
+        <xs:attribute name="block-progression-dimension.maximum"/>
+    </xs:attributeGroup>
+    <!-- Common Area Properties -->
+    <xs:attributeGroup name="area-properties">
+        <xs:attribute name="clip"/>
+        <xs:attribute name="overflow">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="visible"/>
+                    <xs:enumeration value="hidden"/>
+                    <xs:enumeration value="scroll"/>
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="error-if-overflow"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="display-align">
+            <xs:annotation>
+                <xs:documentation>Specifies the alignment of the contents inside the area.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="before"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="after"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="reference-orientation">
+            <xs:annotation>
+                <xs:documentation>Specifies rotation of coordinate axes for the region; its value is
+                    an angle of rotation counterclockwise (in degrees; must be multiple of 90;
+                    negative values rotate clockwise).</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="90"/>
+                    <xs:enumeration value="180"/>
+                    <xs:enumeration value="270"/>
+                    <xs:enumeration value="-90"/>
+                    <xs:enumeration value="-180"/>
+                    <xs:enumeration value="-270"/>
+                    <xs:enumeration value="0deg"/>
+                    <xs:enumeration value="90deg"/>
+                    <xs:enumeration value="180deg"/>
+                    <xs:enumeration value="270deg"/>
+                    <xs:enumeration value="-90deg"/>
+                    <xs:enumeration value="-180deg"/>
+                    <xs:enumeration value="-270deg"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="writing-mode">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="lr-tb"/>
+                    <xs:enumeration value="rl-tb"/>
+                    <xs:enumeration value="tb-rl"/>
+                    <xs:enumeration value="lr"/>
+                    <xs:enumeration value="rl"/>
+                    <xs:enumeration value="tb"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!-- Common Font Properties -->
+    <!-- 'font' shorthand property is also included -->
+    <xs:attributeGroup name="font-properties">
+        <xs:attribute name="font"/>
+        <xs:attribute name="font-selection-strategy">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="character-by-character"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="font-family"/>
+        <xs:attribute name="font-size"/>
+        <xs:attribute name="font-size-adjust"/>
+        <xs:attribute name="font-stretch">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="normal"/>
+                    <xs:enumeration value="wider"/>
+                    <xs:enumeration value="narrower"/>
+                    <xs:enumeration value="ultra-condensed"/>
+                    <xs:enumeration value="extra-condensed"/>
+                    <xs:enumeration value="condensed"/>
+                    <xs:enumeration value="semi-condensed"/>
+                    <xs:enumeration value="semi-expanded"/>
+                    <xs:enumeration value="expanded"/>
+                    <xs:enumeration value="extra-expanded"/>
+                    <xs:enumeration value="ultra-expanded"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="font-style">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="normal"/>
+                    <xs:enumeration value="italic"/>
+                    <xs:enumeration value="oblique"/>
+                    <xs:enumeration value="backslant"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="font-variant">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="normal"/>
+                    <xs:enumeration value="small-caps"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="font-weight">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="normal"/>
+                    <xs:enumeration value="bold"/>
+                    <xs:enumeration value="bolder"/>
+                    <xs:enumeration value="lighter"/>
+                    <xs:enumeration value="inherit"/>
+                    <xs:enumeration value="100"/>
+                    <xs:enumeration value="200"/>
+                    <xs:enumeration value="300"/>
+                    <xs:enumeration value="400"/>
+                    <xs:enumeration value="500"/>
+                    <xs:enumeration value="600"/>
+                    <xs:enumeration value="700"/>
+                    <xs:enumeration value="800"/>
+                    <xs:enumeration value="900"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!-- Common Hyphenation Properties - Inline -->
+    <!-- 'xml:lang' shorthand property is also included -->
+    <xs:attributeGroup name="hyphenation-properties-inline">
+        <xs:attribute name="country"/>
+        <xs:attribute name="language"/>
+        <xs:attribute name="script"/>
+        <xs:attribute ref="xml:lang"/>
+        <xs:attribute name="hyphenate">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="false"/>
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="hyphenation-character"/>
+        <xs:attribute name="hyphenation-push-character-count"/>
+        <xs:attribute name="hyphenation-remain-character-count"/>
+    </xs:attributeGroup>
+    <!-- Common Hyphenation Properties - Block -->
+    <xs:attributeGroup name="hyphenation-properties-block">
+        <xs:attribute name="hyphenation-keep">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="column"/>
+                    <xs:enumeration value="page"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="hyphenation-ladder-count"/>
+        <xs:attributeGroup ref="fo:hyphenation-properties-inline"/>
+    </xs:attributeGroup>
+    <!-- Common CSS Margin Properties -->
+    <!-- 'margin' shorthand property is also included -->
+    <xs:attributeGroup name="margin-properties-CSS">
+        <xs:attribute name="margin"/>
+        <xs:attribute name="margin-bottom"/>
+        <xs:attribute name="margin-left"/>
+        <xs:attribute name="margin-right"/>
+        <xs:attribute name="margin-top"/>
+    </xs:attributeGroup>
+    <!-- Common Margin Properties - Block -->
+    <xs:attributeGroup name="margin-properties-block">
+        <xs:attributeGroup ref="fo:margin-properties-CSS"/>
+        <xs:attribute name="space-after"/>
+        <xs:attribute name="space-after.minimum"/>
+        <xs:attribute name="space-after.optimum">
+            <xs:annotation>
+                <xs:documentation> This serves to separate adjacent footnote bodies. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="space-after.maximum"/>
+        <xs:attribute name="space-after.precedence"/>
+        <xs:attribute name="space-after.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="retain"/>
+                    <xs:enumeration value="discard"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="space-before"/>
+        <xs:attribute name="space-before.minimum"/>
+        <xs:attribute name="space-before.optimum"/>
+        <xs:attribute name="space-before.maximum"/>
+        <xs:attribute name="space-before.precedence"/>
+        <xs:attribute name="space-before.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="retain"/>
+                    <xs:enumeration value="discard"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="start-indent"/>
+        <xs:attribute name="end-indent"/>
+    </xs:attributeGroup>
+    <!-- Common Margin Properties - Inline -->
+    <xs:attributeGroup name="margin-properties-inline">
+        <xs:attributeGroup ref="fo:margin-properties-block"/>
+        <xs:attribute name="space-start"/>
+        <xs:attribute name="space-start.minimum"/>
+        <xs:attribute name="space-start.optimum"/>
+        <xs:attribute name="space-start.maximum"/>
+        <xs:attribute name="space-start.precedence"/>
+        <xs:attribute name="space-start.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="retain"/>
+                    <xs:enumeration value="discard"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="space-end"/>
+        <xs:attribute name="space-end.minimum"/>
+        <xs:attribute name="space-end.optimum"/>
+        <xs:attribute name="space-end.maximum"/>
+        <xs:attribute name="space-end.precedence"/>
+        <xs:attribute name="space-end.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="retain"/>
+                    <xs:enumeration value="discard"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!-- Area Alignment Properties - inline -->
+    <!-- 'vertical-align' shorthand is added -->
+    <xs:attributeGroup name="area-alignment-properties-inline">
+        <xs:attribute name="alignment-adjust"/>
+        <xs:attribute name="alignment-baseline">
+            <xs:annotation>
+                <xs:documentation> This aligns the leader vertically to the baseline. </xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="baseline"/>
+                    <xs:enumeration value="before-edge"/>
+                    <xs:enumeration value="text-before-edge"/>
+                    <xs:enumeration value="middle"/>
+                    <xs:enumeration value="central"/>
+                    <xs:enumeration value="after-edge"/>
+                    <xs:enumeration value="text-after-edge"/>
+                    <xs:enumeration value="top"/>
+                    <xs:enumeration value="text-top"/>
+                    <xs:enumeration value="bottom"/>
+                    <xs:enumeration value="text-bottom"/>
+                    <xs:enumeration value="ideographic"/>
+                    <xs:enumeration value="alphabetic"/>
+                    <xs:enumeration value="hanging"/>
+                    <xs:enumeration value="mathematical"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="baseline-shift"/>
+        <xs:attribute name="dominant-baseline">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="use-script"/>
+                    <xs:enumeration value="no-change"/>
+                    <xs:enumeration value="reset-size"/>
+                    <xs:enumeration value="ideographic"/>
+                    <xs:enumeration value="alphabetic"/>
+                    <xs:enumeration value="hanging"/>
+                    <xs:enumeration value="mathematical"/>
+                    <xs:enumeration value="central"/>
+                    <xs:enumeration value="middle"/>
+                    <xs:enumeration value="text-after-edge"/>
+                    <xs:enumeration value="text-before-edge"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="vertical-align"/>
+    </xs:attributeGroup>
+    <!-- Line Height Properties -->
+    <xs:attributeGroup name="line-height-properties">
+        <xs:attribute name="line-height">
+            <xs:annotation>
+                <xs:documentation> This property specifies the line height: it can be expressed as a
+                    length, as a numeric value, or as a percent. Numbers and percents are
+                    interpreted as multiples to the nominal font height. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="line-height.minimum"/>
+        <xs:attribute name="line-height.optimum"/>
+        <xs:attribute name="line-height.maximum"/>
+        <xs:attribute name="line-height.precedence"/>
+        <xs:attribute name="line-height.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="retain"/>
+                    <xs:enumeration value="discard"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="line-height-shift-adjustment"/>
+    </xs:attributeGroup>
+    <!-- Line Related Properties -->
+    <!-- [!] <string> values are temporarily excluded from text-align -->
+    <xs:attributeGroup name="line-related-properties">
+        <xs:attribute name="text-align">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="start"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="end"/>
+                    <xs:enumeration value="justify"/>
+                    <xs:enumeration value="inside"/>
+                    <xs:enumeration value="outside"/>
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="text-align-last">
+            <xs:annotation>
+                <xs:documentation> This attribute alligns the last line. </xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="relative"/>
+                    <xs:enumeration value="start"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="end"/>
+                    <xs:enumeration value="justify"/>
+                    <xs:enumeration value="inside"/>
+                    <xs:enumeration value="outside"/>
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="text-indent"/>
+        <xs:attribute name="last-line-end-indent"/>
+        <xs:attribute name="line-stacking-strategy">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="line-height"/>
+                    <xs:enumeration value="font-height"/>
+                    <xs:enumeration value="max-height"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="linefeed-treatment">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="ignore"/>
+                    <xs:enumeration value="preserve"/>
+                    <xs:enumeration value="treat-as-space"/>
+                    <xs:enumeration value="treat-as-zero-width-space"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="white-space">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="normal"/>
+                    <xs:enumeration value="pre"/>
+                    <xs:enumeration value="nowrap"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="white-space-treatment">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="ignore"/>
+                    <xs:enumeration value="preserve"/>
+                    <xs:enumeration value="ignore-if-before-linefeed"/>
+                    <xs:enumeration value="ignore-if-after-linefeed"/>
+                    <xs:enumeration value="ignore-if-surrounding-linefeed"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="white-space-collapse">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="false"/>
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="wrap-option">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="no-wrap"/>
+                    <xs:enumeration value="wrap"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="unicode-bidi">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="normal"/>
+                    <xs:enumeration value="embed"/>
+                    <xs:enumeration value="bidi-override"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="direction">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="ltr"/>
+                    <xs:enumeration value="rtl"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!-- Character Properties -->
+    <xs:attributeGroup name="character-properties">
+        <xs:attribute name="letter-spacing"/>
+        <xs:attribute name="letter-spacing.minimum"/>
+        <xs:attribute name="letter-spacing.optimum"/>
+        <xs:attribute name="letter-spacing.maximum"/>
+        <xs:attribute name="letter-spacing.precedence"/>
+        <xs:attribute name="letter-spacing.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="retain"/>
+                    <xs:enumeration value="discard"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="word-spacing"/>
+        <xs:attribute name="word-spacing.minimum"/>
+        <xs:attribute name="word-spacing.optimum"/>
+        <xs:attribute name="word-spacing.maximum"/>
+        <xs:attribute name="word-spacing.precedence"/>
+        <xs:attribute name="word-spacing.conditionality">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="retain"/>
+                    <xs:enumeration value="discard"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="treat-as-word-space">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="text-decoration" type="xs:NMTOKENS"/>
+        <xs:attribute name="score-spaces">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="text-shadow"/>
+        <xs:attribute name="text-transform">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="capitalize"/>
+                    <xs:enumeration value="uppercase"/>
+                    <xs:enumeration value="lowercase"/>
+                    <xs:enumeration value="none"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="suppress-at-line-break">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="suppress"/>
+                    <xs:enumeration value="retain"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="text-altitude"/>
+        <xs:attribute name="text-depth"/>
+        <xs:attribute name="glyph-orientation-horizontal">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="90"/>
+                    <xs:enumeration value="180"/>
+                    <xs:enumeration value="270"/>
+                    <xs:enumeration value="-90"/>
+                    <xs:enumeration value="-180"/>
+                    <xs:enumeration value="-270"/>
+                    <xs:enumeration value="0deg"/>
+                    <xs:enumeration value="90deg"/>
+                    <xs:enumeration value="180deg"/>
+                    <xs:enumeration value="270deg"/>
+                    <xs:enumeration value="-90deg"/>
+                    <xs:enumeration value="-180deg"/>
+                    <xs:enumeration value="-270deg"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="glyph-orientation-vertical">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="90"/>
+                    <xs:enumeration value="180"/>
+                    <xs:enumeration value="270"/>
+                    <xs:enumeration value="-90"/>
+                    <xs:enumeration value="-180"/>
+                    <xs:enumeration value="-270"/>
+                    <xs:enumeration value="0deg"/>
+                    <xs:enumeration value="90deg"/>
+                    <xs:enumeration value="180deg"/>
+                    <xs:enumeration value="270deg"/>
+                    <xs:enumeration value="-90deg"/>
+                    <xs:enumeration value="-180deg"/>
+                    <xs:enumeration value="-270deg"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attributeGroup ref="fo:font-properties"/>
+        <xs:attributeGroup ref="fo:line-height-properties"/>
+    </xs:attributeGroup>
+    <!-- Common Keeps and Breaks Properties - Atomic objects -->
+    <!-- 'page-break-*' shorthand properties are also included -->
+    <xs:attributeGroup name="keeps-and-breaks-properties-atomic">
+        <xs:attribute name="break-after">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="column"/>
+                    <xs:enumeration value="page"/>
+                    <xs:enumeration value="even-page"/>
+                    <xs:enumeration value="odd-page"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="break-before">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="column"/>
+                    <xs:enumeration value="page"/>
+                    <xs:enumeration value="even-page"/>
+                    <xs:enumeration value="odd-page"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="keep-with-next"/>
+        <xs:attribute name="keep-with-next.within-line"/>
+        <xs:attribute name="keep-with-next.within-column">
+            <xs:annotation>
+                <xs:documentation> This property connects the figure caption to the figure itself.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="keep-with-next.within-page"/>
+        <xs:attribute name="keep-with-previous"/>
+        <xs:attribute name="keep-with-previous.within-line"/>
+        <xs:attribute name="keep-with-previous.within-column"/>
+        <xs:attribute name="keep-with-previous.within-page"/>
+        <xs:attribute name="page-break-after">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="always"/>
+                    <xs:enumeration value="avoid"/>
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="page-break-before">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="always"/>
+                    <xs:enumeration value="avoid"/>
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!-- Common Keeps and Breaks Properties - Inline -->
+    <!-- 'page-break-inside' shorthand property is also included -->
+    <xs:attributeGroup name="keeps-and-breaks-properties-inline">
+        <xs:attributeGroup ref="fo:keeps-and-breaks-properties-atomic"/>
+        <xs:attribute name="keep-together"/>
+        <xs:attribute name="keep-together.within-line"/>
+        <xs:attribute name="keep-together.within-column"/>
+        <xs:attribute name="keep-together.within-page"/>
+        <xs:attribute name="page-break-inside">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="avoid"/>
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!-- Common Keeps and Breaks Properties - Block -->
+    <xs:attributeGroup name="keeps-and-breaks-properties-block">
+        <xs:attributeGroup ref="fo:keeps-and-breaks-properties-inline"/>
+        <xs:attribute name="orphans"/>
+        <xs:attribute name="widows"/>
+    </xs:attributeGroup>
+    <!-- Leader and Rule Properties -->
+    <xs:attributeGroup name="leader-properties">
+        <xs:attribute name="leader-alignment">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="none"/>
+                    <xs:enumeration value="reference-area"/>
+                    <xs:enumeration value="page"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="leader-pattern">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="space"/>
+                    <xs:enumeration value="rule"/>
+                    <xs:enumeration value="dots"/>
+                    <xs:enumeration value="use-content"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="leader-pattern-width"/>
+        <xs:attribute name="leader-length"/>
+        <xs:attribute name="leader-length.minimum"/>
+        <xs:attribute name="leader-length.optimum"/>
+        <xs:attribute name="leader-length.maximum"/>
+        <xs:attribute name="rule-style">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="none"/>
+                    <xs:enumeration value="dotted"/>
+                    <xs:enumeration value="dashed"/>
+                    <xs:enumeration value="solid"/>
+                    <xs:enumeration value="double"/>
+                    <xs:enumeration value="groove"/>
+                    <xs:enumeration value="ridge"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="rule-thickness"/>
+    </xs:attributeGroup>
+    <!-- Table Properties -->
+    <!-- 'border-spacing' shorthand property is also included -->
+    <!-- 'inherit' property added to table-omit-...er-at-break -->
+    <xs:attributeGroup name="table-properties">
+        <xs:attribute name="border-collapse">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="collapse"/>
+                    <xs:enumeration value="collapse-with-precedence"/>
+                    <xs:enumeration value="separate"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-spacing">
+            <xs:annotation>
+                <xs:documentation> Corresponds to CELLSPACING attribute of the HTML table model. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="border-separation"/>
+        <xs:attribute name="border-separation.inline-progression-direction"/>
+        <xs:attribute name="border-separation.block-progression-direction"/>
+        <xs:attribute name="caption-side">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="before"/>
+                    <xs:enumeration value="after"/>
+                    <xs:enumeration value="start"/>
+                    <xs:enumeration value="end"/>
+                    <xs:enumeration value="top"/>
+                    <xs:enumeration value="bottom"/>
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="empty-cells">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="show"/>
+                    <xs:enumeration value="hide"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="table-layout">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="fixed"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="table-omit-header-at-break">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="table-omit-footer-at-break">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!-- List Properties -->
+    <xs:attributeGroup name="list-properties">
+        <xs:attribute name="provisional-distance-between-starts">
+            <xs:annotation>
+                <xs:documentation> This property specifies how far the left side of the label is
+                    distant from the left side of the body.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="provisional-label-separation">
+            <xs:annotation>
+                <xs:documentation> This property specifies the separation between the right side of
+                    the label and the left edge of the body.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!-- Float Properties -->
+    <xs:attributeGroup name="float-properties">
+        <xs:attribute name="float">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="before"/>
+                    <xs:enumeration value="start"/>
+                    <xs:enumeration value="end"/>
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="none"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="clear">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="start"/>
+                    <xs:enumeration value="end"/>
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="both"/>
+                    <xs:enumeration value="none"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="intrusion-displace">
+            <xs:annotation>
+                <xs:documentation> This controls interaction of formatting objects with side floats. </xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="none"/>
+                    <xs:enumeration value="line"/>
+                    <xs:enumeration value="indent"/>
+                    <xs:enumeration value="block"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!-- Visibility Properties -->
+    <xs:attributeGroup name="visibility-properties">
+        <xs:attribute name="visibility">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="visible"/>
+                    <xs:enumeration value="hidden"/>
+                    <xs:enumeration value="collapse"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="z-index"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Set of all inheritable properties. This includes attributes -->
+    <!-- marked as inheritable in the spec, as well as all features that -->
+    <!-- may assume a value of "inherit" (because all such features are -->
+    <!-- also permitted at parent elements). By XSL design, this set -->
+    <!-- comprises nearly all attributes. -->
+    <!-- =============================================================== -->
+    <xs:attributeGroup name="inheritable-properties">
+        <xs:attribute name="color"/>
+        <xs:attribute name="relative-align">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="before"/>
+                    <xs:enumeration value="baseline"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="span">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="none"/>
+                    <xs:enumeration value="all"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attributeGroup ref="fo:accessibility-properties"/>
+        <xs:attributeGroup ref="fo:absolute-or-relative-position-properties"/>
+        <xs:attributeGroup ref="fo:border-padding-background-properties"/>
+        <xs:attributeGroup ref="fo:border-precedence-properties"/>
+        <xs:attributeGroup ref="fo:aural-properties"/>
+        <xs:attributeGroup ref="fo:box-size-properties"/>
+        <xs:attributeGroup ref="fo:margin-properties-inline"/>
+        <xs:attributeGroup ref="fo:area-properties"/>
+        <xs:attributeGroup ref="fo:area-alignment-properties-inline"/>
+        <xs:attributeGroup ref="fo:character-properties"/>
+        <xs:attributeGroup ref="fo:table-properties"/>
+        <xs:attributeGroup ref="fo:list-properties"/>
+        <xs:attributeGroup ref="fo:float-properties"/>
+        <xs:attributeGroup ref="fo:line-related-properties"/>
+        <xs:attributeGroup ref="fo:leader-properties"/>
+        <xs:attributeGroup ref="fo:keeps-and-breaks-properties-block"/>
+        <xs:attributeGroup ref="fo:hyphenation-properties-block"/>
+        <xs:attributeGroup ref="fo:visibility-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Common property subsets. -->
+    <!-- =============================================================== -->
+    <!-- Properties for every block that may contain text children -->
+    <xs:attributeGroup name="block-properties">
+        <xs:attribute name="id" type="xs:ID"/>
+        <xs:attribute ref="rx:key"/>
+        <xs:attributeGroup ref="fo:inheritable-properties"/>
+    </xs:attributeGroup>
+    <!-- Properties for nonempty inline elements -->
+    <xs:attributeGroup name="inline-properties">
+        <xs:attribute name="id" type="xs:ID"/>
+        <xs:attribute ref="rx:key"/>
+        <xs:attributeGroup ref="fo:inheritable-properties"/>
+    </xs:attributeGroup>
+    <!-- Properties for empty inline elements that contain characters -->
+    <xs:attributeGroup name="empty-inline-properties">
+        <xs:attribute name="id" type="xs:ID"/>
+        <xs:attribute ref="rx:key"/>
+        <xs:attribute name="color"/>
+        <xs:attributeGroup ref="fo:accessibility-properties"/>
+        <xs:attributeGroup ref="fo:aural-properties"/>
+        <xs:attributeGroup ref="fo:relative-position-properties"/>
+        <xs:attributeGroup ref="fo:area-alignment-properties-inline"/>
+        <xs:attributeGroup ref="fo:character-properties"/>
+        <xs:attributeGroup ref="fo:border-padding-background-properties"/>
+        <xs:attributeGroup ref="fo:hyphenation-properties-inline"/>
+        <xs:attributeGroup ref="fo:visibility-properties"/>
+    </xs:attributeGroup>
+    <!-- Properties for graphical inline elements -->
+    <xs:attributeGroup name="graphic-properties">
+        <xs:attribute name="id" type="xs:ID"/>
+        <xs:attribute ref="rx:key"/>
+        <xs:attribute name="content-type"/>
+        <xs:attributeGroup ref="fo:accessibility-properties"/>
+        <xs:attributeGroup ref="fo:relative-position-properties"/>
+        <xs:attributeGroup ref="fo:aural-properties"/>
+        <xs:attributeGroup ref="fo:border-padding-background-properties"/>
+        <xs:attributeGroup ref="fo:margin-properties-inline"/>
+        <xs:attributeGroup ref="fo:area-alignment-properties-inline"/>
+        <xs:attributeGroup ref="fo:box-size-properties"/>
+        <xs:attributeGroup ref="fo:font-properties"/>
+        <xs:attributeGroup ref="fo:line-height-properties"/>
+        <xs:attributeGroup ref="fo:keeps-and-breaks-properties-atomic"/>
+        <xs:attribute name="content-height"/>
+        <xs:attribute name="content-width"/>
+        <xs:attribute name="display-align">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="before"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="after"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="overflow">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="visible"/>
+                    <xs:enumeration value="hidden"/>
+                    <xs:enumeration value="scroll"/>
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="error-if-overflow"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="scaling">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="uniform"/>
+                    <xs:enumeration value="non-uniform"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="scaling-method">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="integer-pixels"/>
+                    <xs:enumeration value="resample-any-method"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="text-align">
+            <xs:annotation>
+                <xs:documentation> This property defines the alignment of the text within the block.
+                    XSL FO uses a specific coordinate system for referring to block edges: instead
+                    of &#x2018;left&#x2019; and &#x2018;right&#x2019;, side
+                    alignment is expressed in terms of inline progression direction. For Western
+                    scripts, glyphs on the line are placed from left to right; therefore,
+                    left-aligned text will have text-align="start", and right-aligned text will have
+                    text-align="end". Two other values are "center" and "justify" (same as in CSS).
+                    You can also use other CSS values for this property &#x2014; "left" is a
+                    synonym for start, and "right" is a synonym for end. </xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="start"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="end"/>
+                    <xs:enumeration value="justify"/>
+                    <xs:enumeration value="inside"/>
+                    <xs:enumeration value="outside"/>
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!-- *************************************************************** -->
+    <!-- Content models and attributes -->
+    <!---->
+    <!-- A. Element structure for top-level elements -->
+    <!-- *************************************************************** -->
+    <!-- =============================================================== -->
+    <!-- Root element. Contains everything, generates nothing. It has an -->
+    <!-- id, a FO namespace prefix declaration, and other namespace -->
+    <!-- declarations if used. It can also bear inheritable properties, -->
+    <!-- passed further to fo:flows/fo:static-contents. Inheritable -->
+    <!-- properties from fo:layout-master-set are banned in this version -->
+    <!-- of the DTD. -->
+    <!-- =============================================================== -->
+    <xs:element name="root">
+        <xs:annotation>
+            <xs:documentation> This is the top node of the formatting object tree. It holds an
+                fo:layout-master-set formatting object (which holds all masters used in the
+                document), an optional fo:declarations, and one or more fo:page-sequence objects. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" ref="rx:meta-info"/>
+                <xs:element minOccurs="0" ref="rx:page-device"/>
+                <xs:element ref="fo:layout-master-set"/>
+                <xs:element minOccurs="0" ref="fo:declarations"/>
+                <xs:element minOccurs="0" ref="rx:outline"/>
+                <xs:element maxOccurs="unbounded" ref="fo:page-sequence"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.root-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.root-attlist">
+        <xs:attribute name="media-usage">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="paginate"/>
+                    <xs:enumeration value="bounded-in-one-dimension"/>
+                    <xs:enumeration value="unbounded"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attributeGroup ref="fo:inheritable-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Document meta information - RenderX extension -->
+    <!-- =============================================================== -->
+    <xs:attributeGroup name="rx.meta-field-attlist">
+        <xs:attribute name="name" use="required"/>
+        <xs:attribute name="value" use="required"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="rx.page-device-attlist">
+        <xs:attribute name="input-tray"/>
+        <xs:attribute name="output-tray"/>
+        <xs:attribute name="manual-feed">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="duplex">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="mirror-print">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="negative-print">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="collate">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="number-copies"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Color profile declarations -->
+    <!-- =============================================================== -->
+    <xs:element name="declarations">
+        <xs:annotation>
+            <xs:documentation>The fo:declarations formatting object is used to group global
+                declarations for a stylesheet.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="fo:color-profile"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="color-profile">
+        <xs:annotation>
+            <xs:documentation>The fo:color-profile formatting object is used to declare an ICC Color
+                Profile for a stylesheet. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attributeGroup ref="fo:fo.color-profile-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.color-profile-attlist">
+        <xs:attribute name="src" use="required"/>
+        <xs:attribute name="color-profile-name" use="required"/>
+        <xs:attribute name="rendering-intent"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Bookmarks - RenderX extension -->
+    <!-- =============================================================== -->
+    <xs:attributeGroup name="rx.bookmark-attlist">
+        <xs:attribute name="internal-destination"/>
+        <xs:attribute name="external-destination"/>
+        <xs:attribute name="collapse-subtree">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Layout-master-set. Contains a set of page-masters. Neither of -->
+    <!-- its descendants generates any area, so no inherited elements -->
+    <!-- can be specified on it or on its children. -->
+    <!-- Content model made more strict than in the draft, to enforce -->
+    <!-- that a page-sequence-master be always accompanied by at least -->
+    <!-- one simple-page-master. -->
+    <!-- =============================================================== -->
+    <xs:element name="layout-master-set">
+        <xs:annotation>
+            <xs:documentation>The fo:layout-master-set is a wrapper around all masters used in the
+                document. This includes page-sequence-masters, page-masters, and region-masters. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="fo:page-sequence-master"/>
+                <xs:element ref="fo:simple-page-master"/>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="fo:simple-page-master"/>
+                    <xs:element ref="fo:page-sequence-master"/>
+                </xs:choice>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <!-- =============================================================== -->
+    <!-- Page sequence master -->
+    <!-- =============================================================== -->
+    <xs:element name="page-sequence-master">
+        <xs:annotation>
+            <xs:documentation>This is used to specify the constraints on and the order in which a
+                given set of page-masters will be used in generating a sequence of pages. Pages are
+                automatically generated when the fo:page-sequence-master is used in formatting an
+                fo:page-sequence. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element ref="fo:single-page-master-reference"/>
+                <xs:element ref="fo:repeatable-page-master-reference"/>
+                <xs:element ref="fo:repeatable-page-master-alternatives"/>
+            </xs:choice>
+            <xs:attributeGroup ref="fo:fo.page-sequence-master-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.page-sequence-master-attlist">
+        <xs:attribute name="master-name" use="required"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Sequence specifiers are predefined sequences of page masters -->
+    <!-- that are used by page sequence master to construct a desired -->
+    <!-- page collection. -->
+    <!-- =============================================================== -->
+    <xs:element name="single-page-master-reference">
+        <xs:annotation>
+            <xs:documentation>This specifies a sub-sequence consisting of a single instance of a
+                single page-master. It is used to specify the use of a particular page-master at a
+                given point in the sequence of pages that would be generated using the
+                fo:page-sequence-master that is the parent of the fo:single-page-master-reference. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attributeGroup ref="fo:fo.single-page-master-reference-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.single-page-master-reference-attlist">
+        <xs:attribute name="master-reference" use="required"/>
+    </xs:attributeGroup>
+    <xs:element name="repeatable-page-master-reference">
+        <xs:annotation>
+            <xs:documentation>This specifies a sub-sequence consisting of repeated instances of a
+                single page-master. The number of repetitions may be bounded or potentially unbounded.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attributeGroup ref="fo:fo.repeatable-page-master-reference-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.repeatable-page-master-reference-attlist">
+        <xs:attribute name="master-reference" use="required"/>
+        <xs:attribute name="maximum-repeats"/>
+    </xs:attributeGroup>
+    <xs:element name="repeatable-page-master-alternatives">
+        <xs:annotation>
+            <xs:documentation> This specifies a sub-sequence consisting of repeated instances of a
+                set of alternative page-masters. The number of repetitions may be bounded or
+                potentially unbounded. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="fo:conditional-page-master-reference"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.repeatable-page-master-alternatives-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.repeatable-page-master-alternatives-attlist">
+        <xs:attribute name="maximum-repeats"/>
+    </xs:attributeGroup>
+    <xs:element name="conditional-page-master-reference">
+        <xs:annotation>
+            <xs:documentation> This used to identify a page-master that is to be used when the
+                conditions on its use are satisfied. This allows different page-masters to be used,
+                for example, for even and odd pages, for the first page in a page-sequence, or for
+                blank pages. This usage is typical in chapters of a book or report where the first
+                page has a different layout than the rest of the chapter and the headings and
+                footings on even and odd pages may be different as well. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attributeGroup ref="fo:fo.conditional-page-master-reference-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.conditional-page-master-reference-attlist">
+        <xs:attribute name="master-reference" use="required"/>
+        <xs:attribute name="page-position">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="first"/>
+                    <xs:enumeration value="last"/>
+                    <xs:enumeration value="rest"/>
+                    <xs:enumeration value="any"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="odd-or-even">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="odd"/>
+                    <xs:enumeration value="even"/>
+                    <xs:enumeration value="any"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="blank-or-not-blank">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="blank"/>
+                    <xs:enumeration value="not-blank"/>
+                    <xs:enumeration value="any"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Simple page master defines a page layout. It does not -->
+    <!-- explicitly generate any content. Most of its properties are -->
+    <!-- local except for writing-mode and reference-orientation that -->
+    <!-- are inherited by the underlying region-* objects. -->
+    <!-- =============================================================== -->
+    <!-- NOTE. We could think about a common background/padding/border -->
+    <!-- for every page instance generated by the page master. For such -->
+    <!-- a scope, we may add borders/padding/background to its features. -->
+    <!-- However, in the current version this is ruled out explicitly by -->
+    <!-- the XSL specs. -->
+    <xs:element name="simple-page-master">
+        <xs:annotation>
+            <xs:documentation> This is used in the generation of pages and specifies the geometry of
+                the page. The page may be subdivided into up to five regions: region-body,
+                region-before, region-after, region-start, and region-end. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="fo:region-body"/>
+                <xs:element minOccurs="0" ref="fo:region-before"/>
+                <xs:element minOccurs="0" ref="fo:region-after"/>
+                <xs:element minOccurs="0" ref="fo:region-start"/>
+                <xs:element minOccurs="0" ref="fo:region-end"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.simple-page-master-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.simple-page-master-attlist">
+        <xs:attributeGroup ref="fo:margin-properties-CSS"/>
+        <xs:attribute name="master-name" use="required"/>
+        <xs:attribute name="page-height">
+            <xs:annotation>
+                <xs:documentation>The height of the page.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="page-width">
+            <xs:annotation>
+                <xs:documentation>The width of the page.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="size">
+            <xs:annotation>
+                <xs:documentation>A shorthand property to set the page size. Worth noting are
+                    "portrait" and "landscape" values to set the default page size with different orientation.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="reference-orientation">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="90"/>
+                    <xs:enumeration value="180"/>
+                    <xs:enumeration value="270"/>
+                    <xs:enumeration value="-90"/>
+                    <xs:enumeration value="-180"/>
+                    <xs:enumeration value="-270"/>
+                    <xs:enumeration value="0deg"/>
+                    <xs:enumeration value="90deg"/>
+                    <xs:enumeration value="180deg"/>
+                    <xs:enumeration value="270deg"/>
+                    <xs:enumeration value="-90deg"/>
+                    <xs:enumeration value="-180deg"/>
+                    <xs:enumeration value="-270deg"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="writing-mode">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="lr-tb"/>
+                    <xs:enumeration value="rl-tb"/>
+                    <xs:enumeration value="tb-rl"/>
+                    <xs:enumeration value="lr"/>
+                    <xs:enumeration value="rl"/>
+                    <xs:enumeration value="tb"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+    <!-- Regions. The page instance is divided into subareas, whose -->
+    <!-- properties are described by the five region-* elements. These -->
+    <!-- elements by themselves do not generate any content. -->
+    <!-- Reference-orientation and writing-mode may be inherited from -->
+    <!-- the page master; all other features are local. -->
+    <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+    <xs:attributeGroup name="region-properties">
+        <xs:attributeGroup ref="fo:border-padding-background-properties"/>
+        <xs:attributeGroup ref="fo:area-properties"/>
+        <xs:attribute name="region-name"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Body region: middle of the page. Unlike side regions, this one -->
+    <!-- may have multiple columns. -->
+    <!-- [!] We have restricted margin properties to be margin-only, -->
+    <!-- allowing no spaces. This is done because no clear semantics -->
+    <!-- can be ascribed to single components of a space vector. -->
+    <!-- =============================================================== -->
+    <xs:element name="region-body">
+        <xs:annotation>
+            <xs:documentation> Used in constructing a simple-page-master. This region specifies a
+                viewport/reference pair that is located in the "center" of the
+                fo:simple-page-master. The overflow trait controls how much of the underlying
+                region-reference-area is visible; that is, whether the region-reference-area is
+                clipped by its parent region-viewport-area. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attributeGroup ref="fo:fo.region-body-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.region-body-attlist">
+        <xs:attributeGroup ref="fo:region-properties"/>
+        <xs:attributeGroup ref="fo:margin-properties-CSS"/>
+        <xs:attribute name="column-count"/>
+        <xs:attribute name="column-gap"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Side regions: page edges. These regions have extent and -->
+    <!-- precedence that is used to arbitrate corner conflicts. Side -->
+    <!-- regions are viewed as frames, and may not have margins. -->
+    <!-- Extent made obligatory: its default value of 0.0pt does not -->
+    <!-- make much sense. -->
+    <!-- =============================================================== -->
+    <xs:attributeGroup name="side-region-properties">
+        <xs:attributeGroup ref="fo:region-properties"/>
+        <xs:attribute name="extent" use="required"/>
+        <xs:attribute name="precedence">
+            <xs:annotation>
+                <xs:documentation> To control the allocation of page corners to either sidebars or
+                    headers/footers, this special precedence attribute is used on side regions: if
+                    set to "true", its bearer captures the corner. In case of equal precedences,
+                    headers/footers win.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="region-before">
+        <xs:annotation>
+            <xs:documentation> Used in constructing a simple-page-master. This region specifies a
+                viewport/reference pair that is located on the "before" side of the
+                page-reference-area. In lr-tb writing-mode, this region corresponds to the header
+                region. The overflow trait controls how much of the underlying region-reference-area
+                is visible; that is, whether the region-reference-area is clipped by its parent
+                region-viewport-area. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attributeGroup ref="fo:fo.region-before-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.region-before-attlist">
+        <xs:attributeGroup ref="fo:side-region-properties"/>
+    </xs:attributeGroup>
+    <xs:element name="region-after">
+        <xs:annotation>
+            <xs:documentation> Used in constructing a simple-page-master. This region specifies a
+                viewport/reference pair that is located on the "after" side of the
+                page-reference-area. In lr-tb writing-mode, this region corresponds to the footer
+                region. The overflow trait controls how much of the underlying region-reference-area
+                is visible; that is, whether the region-reference-area is clipped by its parent
+                region-viewport-area. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attributeGroup ref="fo:fo.region-after-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.region-after-attlist">
+        <xs:attributeGroup ref="fo:side-region-properties"/>
+    </xs:attributeGroup>
+    <xs:element name="region-start">
+        <xs:annotation>
+            <xs:documentation> Used in constructing a simple-page-master. This region specifies a
+                viewport/reference pair that is located on the "start" side of the
+                page-reference-area. In lr-tb writing-mode, this region corresponds to a left
+                sidebar. The overflow trait controls how much of the underlying
+                region-reference-area is visible; that is, whether the region-reference-area is
+                clipped by its parent region-viewport-area. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attributeGroup ref="fo:fo.region-start-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.region-start-attlist">
+        <xs:attributeGroup ref="fo:side-region-properties"/>
+    </xs:attributeGroup>
+    <xs:element name="region-end">
+        <xs:annotation>
+            <xs:documentation> Used in constructing a simple-page-master. This region specifies a
+                viewport/reference pair that is located on the "end" side of the
+                page-reference-area. In lr-tb writing-mode, this region corresponds to a right
+                sidebar. The overflow trait controls how much of the underlying
+                region-reference-area is visible; that is, whether the region-reference-area is
+                clipped by its parent region-viewport-area. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attributeGroup ref="fo:fo.region-end-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.region-end-attlist">
+        <xs:attributeGroup ref="fo:side-region-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Page sequence defines the order of choosing page masters to -->
+    <!-- accomodate all the contents generated by its fo:flow and -->
+    <!-- fo:static-content children, and the way of numbering them. -->
+    <!-- =============================================================== -->
+    <xs:element name="page-sequence">
+        <xs:annotation>
+            <xs:documentation>This object is used to specify how to create a (sub-)sequence of pages
+                within a document; for example, a chapter of a report. The content of these pages
+                comes from flow children (consisting of the single fo:flow and any fo:static-content
+                flow objects) of the fo:page-sequence.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" ref="fo:title"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="fo:static-content"/>
+                <xs:element ref="fo:flow"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.page-sequence-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.page-sequence-attlist">
+        <xs:attribute name="id" type="xs:ID"/>
+        <xs:attribute ref="rx:key"/>
+        <xs:attribute name="master-reference" use="required">
+            <xs:annotation>
+                <xs:documentation>This attribute selects an appropriate layout scheme. Setting
+                    master-reference to a page master name means that all pages in this sequence
+                    will be formatted using this page master.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="initial-page-number"/>
+        <xs:attribute name="force-page-count">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="even"/>
+                    <xs:enumeration value="odd"/>
+                    <xs:enumeration value="end-on-even"/>
+                    <xs:enumeration value="end-on-odd"/>
+                    <xs:enumeration value="no-force"/>
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="format"/>
+        <xs:attribute name="letter-value">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="auto"/>
+                    <xs:enumeration value="alphabetic"/>
+                    <xs:enumeration value="traditional"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="grouping-separator"/>
+        <xs:attribute name="grouping-size"/>
+        <xs:attributeGroup ref="fo:inheritable-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Title may not contain out-of-lines. -->
+    <!-- =============================================================== -->
+    <xs:element name="title">
+        <xs:annotation>
+            <xs:documentation> This formatting object is used to associate a title with a given
+                page-sequence. This title may be used by an interactive User Agent to identify the
+                pages. For example, the content of the fo:title can be formatted and displayed in a
+                "title" window or in a "tool tip". </xs:documentation>
+        </xs:annotation>
+        <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="fo:basic-inlines"/>
+                <xs:element ref="fo:wrappers"/>
+            </xs:choice>
+            <xs:attributeGroup ref="fo:fo.title-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.title-attlist">
+        <xs:attributeGroup ref="fo:inheritable-properties"/>
+    </xs:attributeGroup>
+    <!-- *************************************************************** -->
+    <!-- B. Element structure for content-bearing elements -->
+    <!-- *************************************************************** -->
+    <!-- =============================================================== -->
+    <!-- Flows. They are just sequences of blocks. 'flow-name' feature -->
+    <!-- defines linkage of the flow to a region in the page master. -->
+    <!-- =============================================================== -->
+    <!-- =============================================================== -->
+    <!-- An extension element, fo:flow-section, has been added in order -->
+    <!-- to overcome limitations on multicolumn layout imposed by XSL FO -->
+    <!-- =============================================================== -->
+    <xs:attributeGroup name="flow-properties">
+        <xs:attribute name="id" type="xs:ID"/>
+        <xs:attribute ref="rx:key"/>
+        <xs:attribute name="flow-name" use="required"/>
+        <xs:attributeGroup ref="fo:inheritable-properties"/>
+    </xs:attributeGroup>
+    <xs:element name="static-content">
+        <xs:annotation>
+            <xs:documentation> This formatting object holds a sequence or a tree of formatting
+                objects that is to be presented in a single region or repeated in like-named regions
+                on one or more pages in the page-sequence. Its common use is for repeating or
+                running headers and footers. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="fo:blocks"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.static-content-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.static-content-attlist">
+        <xs:attributeGroup ref="fo:flow-properties"/>
+    </xs:attributeGroup>
+    <xs:element name="flow">
+        <xs:annotation>
+            <xs:documentation> The content of the fo:flow formatting object is a sequence of flow
+                objects that provides the flowing text content that is distributed into pages. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element ref="fo:blocks"/>
+                <xs:element ref="rx:flow-section"/>
+            </xs:choice>
+            <xs:attributeGroup ref="fo:fo.flow-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.flow-attlist">
+        <xs:attributeGroup ref="fo:flow-properties"/>
+    </xs:attributeGroup>
+    <!-- Extension element. Acts like a top-level block -->
+    <!-- with multiple columns. -->
+    <xs:attributeGroup name="rx.flow-section-attlist">
+        <xs:attribute name="column-count"/>
+        <xs:attribute name="column-gap"/>
+        <xs:attributeGroup ref="fo:block-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Block is the base element for all content areas. Besides -->
+    <!-- properties used to format the block itself, it also conveys -->
+    <!-- formatting information to its inline-level children. -->
+    <!-- =============================================================== -->
+    <xs:element name="block" substitutionGroup="fo:basic-blocks">
+        <xs:annotation>
+            <xs:documentation> This formatting object is commonly used for formatting paragraphs,
+                titles, headlines, figure and table captions, etc. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="fo:initial-property-set"/>
+                <xs:element ref="fo:basic-inlines"/>
+                <xs:element ref="fo:basic-blocks"/>
+                <xs:element ref="fo:out-of-lines"/>
+                <xs:element ref="fo:wrappers"/>
+            </xs:choice>
+            <xs:attributeGroup ref="fo:fo.block-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.block-attlist">
+        <xs:attributeGroup ref="fo:block-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Block container -->
+    <!-- =============================================================== -->
+    <xs:element name="block-container" substitutionGroup="fo:basic-blocks">
+        <xs:annotation>
+            <xs:documentation> This flow object is used to generate a block-level reference-area,
+                typically containing text blocks with a different writing-mode. In addition, it can
+                also be used with a different reference-orientation to rotate its content. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="fo:blocks"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.block-container-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.block-container-attlist">
+        <xs:attributeGroup ref="fo:block-properties"/>
+    </xs:attributeGroup>
+    <!-- *************************************************************** -->
+    <!-- Inline elements -->
+    <!-- *************************************************************** -->
+    <!-- =============================================================== -->
+    <!-- Unicode bidi-override -->
+    <!-- =============================================================== -->
+    <xs:element name="bidi-override" substitutionGroup="fo:basic-inlines">
+        <xs:annotation>
+            <xs:documentation> This formatting object is used when the Unicode BIDI algorithm fails.
+                It forces a string of text to be written in a specific direction. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType mixed="true">
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="fo:inlines"/>
+            <xs:attributeGroup ref="fo:fo.bidi-override-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.bidi-override-attlist">
+        <xs:attributeGroup ref="fo:inline-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Single character -->
+    <!-- =============================================================== -->
+    <xs:element name="character" substitutionGroup="fo:basic-inlines">
+        <xs:annotation>
+            <xs:documentation> This flow object represents a character that is mapped to a glyph for
+                presentation. It is an atomic unit to the formatter. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attributeGroup ref="fo:fo.character-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.character-attlist">
+        <xs:attribute name="character" use="required"/>
+        <xs:attributeGroup ref="fo:empty-inline-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Initial property set specifies properties for one or more lines -->
+    <!-- =============================================================== -->
+    <xs:element name="initial-property-set">
+        <xs:annotation>
+            <xs:documentation> This auxiliary formatting object specifies formatting properties for
+                the first line of an fo:block. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attributeGroup ref="fo:fo.initial-property-set-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.initial-property-set-attlist">
+        <xs:attributeGroup ref="fo:empty-inline-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- External graphic -->
+    <!-- =============================================================== -->
+    <xs:element name="external-graphic" substitutionGroup="fo:basic-inlines">
+        <xs:annotation>
+            <xs:documentation> This formatting object generates and returns one inline-level
+                viewport-area and one reference-area containing the external graphic. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attributeGroup ref="fo:fo.external-graphic-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.external-graphic-attlist">
+        <xs:attributeGroup ref="fo:graphic-properties"/>
+        <xs:attribute name="src"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- In-stream graphic -->
+    <!-- =============================================================== -->
+    <xs:element name="instream-foreign-object" substitutionGroup="fo:basic-inlines">
+        <xs:annotation>
+            <xs:documentation> This flow object is used for an inline graphic or other "generic"
+                object where the object data resides as descendants of the
+                fo:instream-foreign-object, typically as an XML element subtree in a non-XSL
+                namespace. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="fo:any">
+                    <xs:attributeGroup ref="fo:fo.instream-foreign-object-attlist"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.instream-foreign-object-attlist">
+        <xs:attributeGroup ref="fo:graphic-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!--  An element to mark a point in the XML output (RenderX extension) -->
+    <!-- =============================================================== -->
+    <xs:attributeGroup name="rx.pinpoint-attlist">
+        <xs:attribute name="value" use="required"/>
+        <xs:attributeGroup ref="fo:accessibility-properties"/>
+        <xs:attributeGroup ref="fo:relative-position-properties"/>
+        <xs:attributeGroup ref="fo:area-alignment-properties-inline"/>
+        <xs:attributeGroup ref="fo:keeps-and-breaks-properties-atomic"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Inline -->
+    <!-- =============================================================== -->
+    <xs:element name="inline" substitutionGroup="fo:basic-inlines">
+        <xs:annotation>
+            <xs:documentation> This formatting object is commonly used for formatting a portion of
+                text with a background or enclosing it in a border. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType mixed="true">
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="fo:mixed-level"/>
+            <xs:attributeGroup ref="fo:fo.inline-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.inline-attlist">
+        <xs:attributeGroup ref="fo:inline-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Inline container -->
+    <!-- =============================================================== -->
+    <xs:element name="inline-container" substitutionGroup="fo:basic-inlines">
+        <xs:annotation>
+            <xs:documentation> This flow object is used to generate an inline reference-area,
+                typically containing text blocks with a different writing-mode. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="fo:blocks"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.inline-container-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.inline-container-attlist">
+        <xs:attributeGroup ref="fo:inline-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Leader -->
+    <!-- =============================================================== -->
+    <xs:element name="leader" substitutionGroup="fo:basic-inlines">
+        <xs:annotation>
+            <xs:documentation> This formatting object generates and returns a single normal
+                inline-area. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType mixed="true">
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="fo:inlines"/>
+            <xs:attributeGroup ref="fo:fo.leader-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.leader-attlist">
+        <xs:attributeGroup ref="fo:inline-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Page Number -->
+    <!-- =============================================================== -->
+    <xs:element name="page-number" substitutionGroup="fo:basic-inlines">
+        <xs:annotation>
+            <xs:documentation> This formatting object is used to obtain an inline-area whose content
+                is the page-number for the page on which the inline-area is placed. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attributeGroup ref="fo:fo.page-number-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.page-number-attlist">
+        <xs:attributeGroup ref="fo:empty-inline-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Page number citation -->
+    <!-- =============================================================== -->
+    <xs:element name="page-number-citation" substitutionGroup="fo:basic-inlines">
+        <xs:annotation>
+            <xs:documentation> This is used to reference the page-number for the page containing the
+                first normal area returned by the cited formatting object. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attributeGroup ref="fo:fo.page-number-citation-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.page-number-citation-attlist">
+        <xs:attributeGroup ref="fo:empty-inline-properties"/>
+        <xs:attribute name="ref-id" use="required"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Page number list - index entry -->
+    <!-- =============================================================== -->
+    <xs:attributeGroup name="rx.page-index-attlist">
+        <xs:attributeGroup ref="fo:empty-inline-properties"/>
+        <xs:attribute name="ref-key" use="required"/>
+        <xs:attribute name="list-separator"/>
+        <xs:attribute name="range-separator"/>
+        <xs:attribute name="merge-subsequent-page-numbers"/>
+    </xs:attributeGroup>
+    <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+    <!-- Formatting objects for tables. -->
+    <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+    <!-- =============================================================== -->
+    <!-- Table & Caption is a wrapper to all the stuff pertinent to a -->
+    <!-- given table. It generates a block consisting of two subblocks: -->
+    <!-- one for the caption, another one for the table itself. The -->
+    <!-- placement of these two blocks is controlled by the -->
+    <!-- 'caption-side' property: if  caption-side="before"|"after" (or -->
+    <!-- their absolute orientation equivalents), the two blocks are -->
+    <!-- drawn one after another; if it is "start"|"end", then the -->
+    <!-- caption is displayed on the correspondent side of the table. -->
+    <!-- In this case, the relative alignment of the two blocks is given -->
+    <!-- by the 'relative-align'/'display-align' property. -->
+    <!---->
+    <!-- =============================================================== -->
+    <xs:element name="table-and-caption" substitutionGroup="fo:basic-blocks">
+        <xs:annotation>
+            <xs:documentation> This flow object is used for formatting a table together with its
+                caption. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" ref="fo:table-caption"/>
+                <xs:element ref="fo:table"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.table-and-caption-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.table-and-caption-attlist">
+        <xs:attributeGroup ref="fo:block-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Table caption is an area container. -->
+    <!-- =============================================================== -->
+    <xs:element name="table-caption">
+        <xs:annotation>
+            <xs:documentation>This formatting object is used to contain block-level formatting
+                objects containing the caption for the table only when using the fo:table-and-caption.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="fo:blocks"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.table-caption-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.table-caption-attlist">
+        <xs:attributeGroup ref="fo:block-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- fo:table is the basic element for all tables. All the contents -->
+    <!-- placed inside it is distributed over a single rectangular grid -->
+    <!-- of rows and columns. -->
+    <!-- =============================================================== -->
+    <xs:element name="table" substitutionGroup="fo:basic-blocks">
+        <xs:annotation>
+            <xs:documentation> This flow object is used for formatting the tabular material of a
+                table. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="fo:table-column"/>
+                <xs:element minOccurs="0" ref="fo:table-header"/>
+                <xs:element minOccurs="0" ref="fo:table-footer"/>
+                <xs:element maxOccurs="unbounded" ref="fo:table-body"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.table-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.table-attlist">
+        <xs:attributeGroup ref="fo:block-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Table column specifies common properties to ascribe to all -->
+    <!-- cells in a column *or a group of columns*. Note that, if both -->
+    <!-- 'number-columns-repeated' and 'number-columns-spanned' exceed -->
+    <!-- 1, the column counter is increased by 'number-columns-spanned'. -->
+    <!-- it means that you only set properties for columns: -->
+    <!-- 'column-number' -->
+    <!-- 'column-number' + 'number-columns-spanned' -->
+    <!-- 'column-number' + 2 * 'number-columns-spanned' -->
+    <!-- and so on, leaving default properties for intermediate columns. -->
+    <!-- =============================================================== -->
+    <xs:element name="table-column">
+        <xs:annotation>
+            <xs:documentation> This auxiliary formatting object specifies characteristics applicable
+                to table cells that have the same column and span. The most important property is
+                the "column-width" property. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attributeGroup ref="fo:fo.table-column-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.table-column-attlist">
+        <xs:attribute name="column-number"/>
+        <xs:attribute name="column-width"/>
+        <xs:attribute name="number-columns-repeated">
+            <xs:annotation>
+                <xs:documentation> Sets the same size characteristic for a given number of columns. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="number-columns-spanned">
+            <xs:annotation>
+                <xs:documentation>Specifies the number of columns a cell spans.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attributeGroup ref="fo:inheritable-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Table header, table footer, and table body are wrappers for -->
+    <!-- groups of rows. They contain either one or more fo:table-rows, -->
+    <!-- or one or more fo:table-cells; in the latter case, row breaks -->
+    <!-- are specified in the cells by 'starts-row'/'ends-row'. -->
+    <!-- All these elements are identical both in the content structure -->
+    <!-- and in the attributes. -->
+    <!-- =============================================================== -->
+    <xs:complexType name="row-group">
+        <xs:choice>
+            <xs:element maxOccurs="unbounded" ref="fo:table-row"/>
+            <xs:element maxOccurs="unbounded" ref="fo:table-cell"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:element name="table-header">
+        <xs:annotation>
+            <xs:documentation> This formatting object is used to contain the content of the table
+                header. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="fo:row-group">
+                    <xs:attributeGroup ref="fo:fo.table-header-attlist"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.table-header-attlist">
+        <xs:attribute name="id" type="xs:ID"/>
+        <xs:attribute ref="rx:key"/>
+        <xs:attributeGroup ref="fo:inheritable-properties"/>
+    </xs:attributeGroup>
+    <xs:element name="table-footer">
+        <xs:annotation>
+            <xs:documentation> This formatting object is used to contain the content of the table
+                footer. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="fo:row-group">
+                    <xs:attributeGroup ref="fo:fo.table-footer-attlist"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.table-footer-attlist">
+        <xs:attribute name="id" type="xs:ID"/>
+        <xs:attribute ref="rx:key"/>
+        <xs:attributeGroup ref="fo:inheritable-properties"/>
+    </xs:attributeGroup>
+    <xs:element name="table-body">
+        <xs:annotation>
+            <xs:documentation> This formatting object is used to contain the content of the table
+                body. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="fo:row-group">
+                    <xs:attributeGroup ref="fo:fo.table-body-attlist"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.table-body-attlist">
+        <xs:attribute name="id" type="xs:ID"/>
+        <xs:attribute ref="rx:key"/>
+        <xs:attributeGroup ref="fo:inheritable-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Table row. -->
+    <!-- =============================================================== -->
+    <xs:element name="table-row">
+        <xs:annotation>
+            <xs:documentation> This formatting object is used to group table-cells into rows; all
+                table-cells in a table-row start in the same geometric row on the table grid. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="fo:table-cell"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.table-row-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.table-row-attlist">
+        <xs:attribute name="id" type="xs:ID"/>
+        <xs:attribute ref="rx:key"/>
+        <xs:attributeGroup ref="fo:inheritable-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Table cell. -->
+    <!-- =============================================================== -->
+    <xs:element name="table-cell">
+        <xs:annotation>
+            <xs:documentation> This formatting object is used to group content to be placed in a
+                table cell. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="fo:blocks"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.table-cell-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.table-cell-attlist">
+        <xs:attributeGroup ref="fo:block-properties"/>
+        <xs:attribute name="column-number"/>
+        <xs:attribute name="ends-row">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="number-columns-spanned"/>
+        <xs:attribute name="number-rows-spanned">
+            <xs:annotation>
+                <xs:documentation> Sets the number of rows the cell spans. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="starts-row">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+    <!-- Formatting objects for lists. -->
+    <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+    <!-- =============================================================== -->
+    <!-- List block is a block, with some extra features to control the -->
+    <!-- disposition of list items. -->
+    <!-- =============================================================== -->
+    <xs:element name="list-block" substitutionGroup="fo:basic-blocks">
+        <xs:annotation>
+            <xs:documentation> This flow object is used to format a list. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="fo:list-item"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.list-block-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.list-block-attlist">
+        <xs:attributeGroup ref="fo:block-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- List item is a coupling of item label and item body. -->
+    <!-- =============================================================== -->
+    <xs:element name="list-item">
+        <xs:annotation>
+            <xs:documentation> This formatting object contains the label and the body of an item in
+                a list. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="fo:list-item-label"/>
+                <xs:element ref="fo:list-item-body"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.list-item-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.list-item-attlist">
+        <xs:attributeGroup ref="fo:block-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- List item label and list item body -->
+    <!-- =============================================================== -->
+    <xs:element name="list-item-label">
+        <xs:annotation>
+            <xs:documentation>This formatting object contains the content of the label of a
+                list-item, typically used to either enumerate, identify, or adorn the list-item's body.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="fo:blocks"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.list-item-label-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.list-item-label-attlist">
+        <xs:attributeGroup ref="fo:block-properties"/>
+    </xs:attributeGroup>
+    <xs:element name="list-item-body">
+        <xs:annotation>
+            <xs:documentation> This formatting object contains the content of the body of a
+                list-item. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="fo:blocks"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.list-item-body-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.list-item-body-attlist">
+        <xs:attributeGroup ref="fo:block-properties"/>
+    </xs:attributeGroup>
+    <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+    <!-- Out-of-lines. -->
+    <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+    <!-- =============================================================== -->
+    <!-- Floats and footnotes resemble containers. Accordingly, we treat -->
+    <!-- them as block sequences. -->
+    <!-- =============================================================== -->
+    <xs:element name="float" substitutionGroup="fo:out-of-lines">
+        <xs:annotation>
+            <xs:documentation> This formatting object is typically used either to cause an image to
+                be positioned in a separate area at the beginning of a page, or to cause an image to
+                be positioned to one side, with normal content flowing around and along-side the
+                image. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="fo:blocks"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.float-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.float-attlist">
+        <xs:attributeGroup ref="fo:block-properties"/>
+    </xs:attributeGroup>
+    <xs:element name="footnote" substitutionGroup="fo:out-of-lines">
+        <xs:annotation>
+            <xs:documentation>This is typically used to produce footnote-citations within the
+                region-body of a page and the corresponding footnote in a separate area nearer the
+                after-edge of the page.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="fo:inline"/>
+                <xs:element ref="fo:footnote-body"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.footnote-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.footnote-attlist">
+        <xs:attributeGroup ref="fo:block-properties"/>
+    </xs:attributeGroup>
+    <xs:element name="footnote-body">
+        <xs:annotation>
+            <xs:documentation>This is used to generate the footnote content.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="fo:blocks"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.footnote-body-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.footnote-body-attlist">
+        <xs:attributeGroup ref="fo:block-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Simple link. From the formatting point of view, it's nothing -->
+    <!-- but a regular inline sequence. -->
+    <!-- =============================================================== -->
+    <xs:element name="basic-link" substitutionGroup="fo:basic-inlines">
+        <xs:annotation>
+            <xs:documentation>This is used for representing the start resource of a simple
+                one-directional single-target link. The object allows for traversal to the
+                destination resource, typically by clicking on any of the containing areas.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType mixed="true">
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="fo:mixed-level"/>
+            <xs:attributeGroup ref="fo:fo.basic-link-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.basic-link-attlist">
+        <xs:attributeGroup ref="fo:inline-properties"/>
+        <xs:attribute name="external-destination"/>
+        <xs:attribute name="internal-destination"/>
+        <xs:attribute name="indicate-destination">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="show-destination">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="replace"/>
+                    <xs:enumeration value="new"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="destination-placement-offset"/>
+        <xs:attribute name="target-processing-context"/>
+        <xs:attribute name="target-presentation-context"/>
+        <xs:attribute name="target-stylesheet"/>
+    </xs:attributeGroup>
+    <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+    <!-- Wrappers and Markers. -->
+    <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+    <!-- =============================================================== -->
+    <!-- Wrapper. This may be useful but breaks every effort to validate -->
+    <!-- content models for blocks and inlines. -->
+    <!-- =============================================================== -->
+    <xs:element name="wrapper" substitutionGroup="fo:wrappers">
+        <xs:annotation>
+            <xs:documentation>This formatting object is used to specify inherited properties for a
+                group of formatting objects.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType mixed="true">
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="fo:mixed-level"/>
+            <xs:attributeGroup ref="fo:fo.wrapper-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.wrapper-attlist">
+        <xs:attribute name="id" type="xs:ID"/>
+        <xs:attribute ref="rx:key"/>
+        <xs:attributeGroup ref="fo:inheritable-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Marker. This element may embrace any content but cannot pass -->
+    <!-- properties to its children; so, it may not have features other -->
+    <!-- than marker-class-name. -->
+    <!-- =============================================================== -->
+    <xs:element name="marker" substitutionGroup="fo:wrappers">
+        <xs:annotation>
+            <xs:documentation>This is used in conjunction with fo:retrieve-marker to produce running
+                headers or footers.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType mixed="true">
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="fo:mixed-level"/>
+            <xs:attributeGroup ref="fo:fo.marker-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.marker-attlist">
+        <xs:attribute name="marker-class-name"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Marker retrieval. -->
+    <!-- =============================================================== -->
+    <xs:element name="retrieve-marker" substitutionGroup="fo:wrappers">
+        <xs:annotation>
+            <xs:documentation>This is used in conjunction with fo:marker to produce running headers
+                or footers. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attributeGroup ref="fo:fo.retrieve-marker-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.retrieve-marker-attlist">
+        <xs:attribute name="retrieve-class-name"/>
+        <xs:attribute name="retrieve-position">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="first-starting-within-page"/>
+                    <xs:enumeration value="first-including-carryover"/>
+                    <xs:enumeration value="last-starting-within-page"/>
+                    <xs:enumeration value="last-ending-within-page"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="retrieve-boundary">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="page"/>
+                    <xs:enumeration value="page-sequence"/>
+                    <xs:enumeration value="document"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+    <!-- Multistate stuff. This section is the least developed in the -->
+    <!-- whole DTD, and most solutions are arbitrary. We beg thy pardon. -->
+    <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+    <!-- =============================================================== -->
+    <!-- Switch. This is a pure logical operator; no formatting may be -->
+    <!-- conveyed through it. -->
+    <!-- =============================================================== -->
+    <xs:element name="multi-switch" substitutionGroup="fo:wrappers">
+        <xs:annotation>
+            <xs:documentation>This wraps the specification of alternative sub-trees of formatting
+                objects (each sub-tree being within an fo:multi-case), and controls the switching
+                (activated via fo:multi-toggle) from one alternative to another.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="fo:multi-case"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.multi-switch-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.multi-switch-attlist">
+        <xs:attributeGroup ref="fo:inheritable-properties"/>
+        <xs:attribute name="id" type="xs:ID"/>
+        <xs:attribute ref="rx:key"/>
+        <xs:attribute name="auto-restore">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Single case. Block-level formatting may be conveyed. -->
+    <!-- =============================================================== -->
+    <xs:element name="multi-case">
+        <xs:annotation>
+            <xs:documentation>This is used to contain (within an fo:multi-switch) each alternative
+                sub-tree of formatting objects among which the parent fo:multi-switch will choose
+                one to show and will hide the rest.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType mixed="true">
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="fo:mixed-level"/>
+            <xs:attributeGroup ref="fo:fo.multi-case-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.multi-case-attlist">
+        <xs:attributeGroup ref="fo:inheritable-properties"/>
+        <xs:attribute name="id" type="xs:ID"/>
+        <xs:attribute ref="rx:key"/>
+        <xs:attribute name="starting-state"/>
+        <xs:attribute name="case-name"/>
+        <xs:attribute name="case-title"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Toggle. This is a typical inline. -->
+    <!-- =============================================================== -->
+    <xs:element name="multi-toggle" substitutionGroup="fo:basic-inlines">
+        <xs:annotation>
+            <xs:documentation>This is typically used to establish an area that when actuated (for
+                example implemented as "clicked"), has the effect of switching from one
+                fo:multi-case to another. The "switch-to" property value of the fo:multi-toggle
+                typically matches the "case-name" property value of the fo:multi-case to switch to.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType mixed="true">
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="fo:inlines"/>
+            <xs:attributeGroup ref="fo:fo.multi-toggle-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.multi-toggle-attlist">
+        <xs:attributeGroup ref="fo:inheritable-properties"/>
+        <xs:attribute name="id" type="xs:ID"/>
+        <xs:attribute ref="rx:key"/>
+        <xs:attribute name="switch-to"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Multi-properties is listed among block-level elements. -->
+    <!-- Formatting common to all property sets can be specified here; -->
+    <!-- we expect it to be block-level only. -->
+    <!-- =============================================================== -->
+    <xs:element name="multi-properties" substitutionGroup="fo:wrappers">
+        <xs:annotation>
+            <xs:documentation>This is used to switch between two or more property sets that are
+                associated with a given portion of content.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="fo:multi-property-set"/>
+                <xs:element ref="fo:wrapper"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="fo:fo.multi-properties-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.multi-properties-attlist">
+        <xs:attributeGroup ref="fo:block-properties"/>
+    </xs:attributeGroup>
+    <!-- =============================================================== -->
+    <!-- Multi property set. Since these are properties of a -->
+    <!-- fo:multi-properties that is considered a block, we accept only -->
+    <!-- block properties here. -->
+    <!-- =============================================================== -->
+    <xs:element name="multi-property-set">
+        <xs:annotation>
+            <xs:documentation>This auxiliary formatting object is used to specify an alternative set
+                of formatting properties that can be used to provide an alternate presentation of
+                the children flow objects of the fo:wrapper child of the parent of this fo:multi-property-set.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attributeGroup ref="fo:fo.multi-property-set-attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="fo.multi-property-set-attlist">
+        <xs:attributeGroup ref="fo:block-properties"/>
+        <xs:attribute name="active-state" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="link"/>
+                    <xs:enumeration value="visited"/>
+                    <xs:enumeration value="active"/>
+                    <xs:enumeration value="hover"/>
+                    <xs:enumeration value="focus"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:complexType name="any" mixed="true">
+        <xs:sequence>
+            <xs:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

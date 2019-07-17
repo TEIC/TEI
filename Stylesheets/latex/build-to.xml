@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project basedir="." default="dist" name="teitolatex">
+  <!--
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public
+	License as published by the Free Software Foundation; either
+	version 2.1 of the License, or (at your option) any later version.
+	
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS latexR A PARTICULAR PURPOSE.  See the GNU
+	Lesser General Public License for more details.
+	
+	You should have received a copy of the GNU Lesser General Public
+	License along with this library; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+	
+        Id: $Id: build-to.xml 12074 2013-05-03 18:30:52Z rahtz $
+        Copyright: 2011, TEI Consortium<
+-->
+  <!--
+ Convert TEI documents into latex files.
+ -->
+  <import file="../common/teianttasks.xml"/>
+
+  <target name="dist" depends="odd,notodd,go"/>
+
+  <target name="odd" if="processODD">
+    <odd2lite in="${inputFile}" out="${inputFile}.processedodd"/>
+    <buildgeneric type="latex" xsl="${profiledir}/${profile}/latex/to.xsl" in="${inputFile}.processedodd" out="${outputFile}"/>
+    <delete file="${inputFile}.processedodd"/>
+  </target>
+
+  <target name="notodd" unless="processODD">
+    <buildgeneric type="latex"
+		  xsl="${profiledir}/${profile}/latex/to.xsl"
+		  in="${inputFile}" out="${outputFile}"/>
+  </target>
+
+  <target name="go">
+    <echo level="info">Get names of graphics files and write an ant task</echo>
+    <xslt force="yes" style="${listgraphics}" in="${inputFile}" out="${outputDir}/copy.xml">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="$catalogfile"/>
+        </catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="inputDir" expression="${inputDir}"/>
+      <param name="outputDir" expression="${outputDir}"/>
+      <param name="mediaDir" expression="Pictures"/>
+    </xslt>
+    <echo level="info">Copy image files by running ant task</echo>
+    <ant antfile="${outputDir}/copy.xml"/>
+    <delete file="${outputDir}/copy.xml"/>
+  </target>
+
+</project>

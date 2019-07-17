@@ -1,0 +1,1090 @@
+/* 
+** Copyright 2015 TEI Consortium
+
+This software is dual-licensed:
+
+1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
+Unported License http://creativecommons.org/licenses/by-sa/3.0/ 
+
+2. http://www.opensource.org/licenses/BSD-2-Clause
+		
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+* Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+
+This software is provided by the copyright holders and contributors
+"as is" and any express or implied warranties, including, but not
+limited to, the implied warranties of merchantability and fitness for
+a particular purpose are disclaimed. In no event shall the copyright
+holder or contributors be liable for any direct, indirect, incidental,
+special, exemplary, or consequential damages (including, but not
+limited to, procurement of substitute goods or services; loss of use,
+data, or profits; or business interruption) however caused and on any
+theory of liability, whether in contract, strict liability, or tort
+(including negligence or otherwise) arising in any way out of the use
+of this software, even if advised of the possibility of such damage.
+
+*/
+
+/* main layout */
+@import url(odd.css);
+body.simple{
+    color:#000000;
+    background-color:#FFFFFF;
+    margin:10pt;
+}
+
+body{
+    color:#000000;
+    background-color:#FFFFFF;
+    margin:10pt;
+    padding:0;
+    font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+}
+
+body.pagetable{
+    color:#000000;
+    background-color:#FFFFFF;
+}
+
+/* 3 columns allowed for, or just a right and left */
+#col1{
+    width:20%;
+    background:#FFFFFF;
+    margin:0;
+    margin-top:10px;
+    color:#000066;
+    padding:5px;
+    position:absolute;
+    float:left;
+    border-style:solid;
+    border-width:1px;
+    border-color:red;
+}
+
+#col2{
+    background:#FFFFFF;
+    color:#333333;
+    border-style:solid;
+    border-width:1px;
+    border-color:#000000;
+    margin:0;
+    margin-top:10px;
+    padding:5px;
+    left:22%;
+    width:51%;
+    position:absolute;
+}
+
+#col3{
+    width:24%;
+    left:75%;
+    color:#000066;
+    background:#FFFFFF;
+    border-style:solid;
+    border-width:1px;
+    border-color:red;
+    margin:0;
+    margin-top:10px;
+    padding:5px;
+    position:absolute;
+    float:right;
+}
+
+#lh-col{
+    width:16%;
+    color:#000000;
+    margin-top:2pt;
+    margin-right:10pt;
+    padding:5px;
+    background-color:#FFFFFF;
+    float:left;
+    font-weight:normal;
+}
+
+#rh-col{
+    background-color:#FFFFFF;
+    color:#333333;
+    margin:2pt;
+    padding:5px;
+    float:right;
+    width:75%;
+    font-weight:normal;
+}
+
+/* now the layers of the header */
+
+/* the main title */
+div.stdheader{
+    border-bottom:1pt solid black;
+}
+
+#hdr{
+    width:auto;
+    margin:0;
+    background-repeat:no-repeat;
+    overflow:inherit;
+}
+
+/* a navigation bar */
+#hdr2{
+    width:auto;
+    color:#000000;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:bold;
+    background-color:#99CCFF;
+    padding-left:5px;
+    padding-bottom:2px;
+    padding-top:2px;
+    padding-right:5px;
+}
+
+/* a breadcrumb trail */
+#hdr3{
+    width:auto;
+    color:#000000;
+    background-color:#AD06BC;
+    padding-left:5px;
+    padding-bottom:2px;
+    padding-top:2px;
+    padding-right:5px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:bold;
+    font-size:smaller;
+}
+
+.bannerright{
+    float:right;
+    color:#FFFFFF;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:0.8em;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+/* section headings */
+#hdr h1{
+    color:red;
+}
+h1{
+    font-weight:bold;
+    font-size:1.8em;
+    margin-bottom:0.8em;
+}
+
+h2{
+    font-size:1.3em;
+    margin-bottom:0.7em;
+    font-weight:bold;
+}
+
+h3{
+    font-size:1.2em;
+    font-weight:bold;
+    margin-bottom:0.5em;
+    font-style:italic;
+}
+
+h1.maintitle{
+    margin-left:100px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:bold;
+    bottom:5px;
+}
+
+h1.title{
+    margin-left:100px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:bold;
+    bottom:5px;
+}
+
+h2.institution{
+    margin-left:100px;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+h2.department{
+    margin-left:100px;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+h2.subtitle{
+    margin-left:100px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:bold;
+}
+
+.footer{
+    text-align:center;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:0.8em;
+}
+
+
+/* components of the breadcrumb trail */
+a.breadcrumb{
+    color:#FFFFFF;
+    text-decoration:none;
+    padding-right:5px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:bold;
+    font-size:0.8em;
+}
+
+ul.breadcrumb
+{
+    display:inline;
+    font-size:1.1em;
+}
+
+li.breadcrumb:before{
+    content:"▶";
+}
+li.breadcrumb-first:before{
+    content:"▶";
+}
+li.breadcrumb
+{
+    padding-left:12px;
+    padding-right:5px;
+    display:inline;
+    color:#000000;
+}
+li.breadcrumb-first
+{
+    padding-left:12px;
+    padding-right:5px;
+    display:inline;
+    color:#000000;
+}
+
+div.breadcrumb{
+    display:inline;
+}
+
+.skiplinks{
+    font-family:arial, sans-serif;
+    color:#FFFFFF;
+    font-weight:bold;
+    font-size:0.8em;
+    text-decoration:none;
+    padding-right:15px;
+}
+
+.tocontent{
+    color:#000066;
+    display:none;
+}
+
+.hide{
+    display:none;
+}
+
+a:hover
+{
+    text-decoration:underline;
+}
+
+a.navbar:link
+{
+    color:#FFFFFF;
+    text-decoration:none;
+}
+
+a.navbar:visited
+{
+    color:#FFFFFF;
+    text-decoration:none;
+}
+
+a.navbar:hover{
+    color:#FFFFFF;
+    text-decoration:underline;
+}
+
+
+/* an inner <text>, eg inside a <q> */
+div.innertext{
+    margin:6pt;
+    border:1pt solid red;
+}
+/* literal code */
+
+div.cdata{
+    white-space:pre;
+    clear:both;
+}
+
+pre,
+div.pre,
+div.pre_eg,
+pre.eg,
+div.eg{
+    clear:both;
+    margin-top:1em;
+    margin-bottom:1em;
+    border-top-width:4px;
+    border-bottom-width:4px;
+    border-left-width:2px;
+    border-right-width:2px;
+    border-style:solid;
+    padding-top:10px;
+    padding-right:10px;
+    padding-bottom:10px;
+    padding-left:10px;
+    color:#000000;
+    line-height:1.1em;
+    font-family:monospace;
+    font-size:10pt;
+    white-space:pre;
+}
+
+div.egXML_valid{
+    background-color:#f7f9f6;
+    border-color:#c5d8bb;
+}
+div.egXML_feasible{
+    background-color:#fff9f3;
+    border-color:#ffe1ad;
+}
+div.egXML_invalid{
+    border-color:#ffe7e8;
+    background-color:#fdbbac;
+}
+
+/* table of contents */
+ul.toc{
+    list-style:none;
+}
+li.toc{
+    list-style:none;
+}
+
+/* table of contents links */
+
+a.inlinetoc:link,
+a.inlinetoc:visited
+{
+    color:#7A7A7A;
+    font-size:smaller;
+    text-decoration:none;
+}
+
+a.inlinetoc-this:visited,
+a.inlinetoc-this:link
+{
+    font-size:smaller;
+    color:#000000;
+    font-weight:bold;
+    text-decoration:underline;
+}
+
+a.inlinetoc-sub:visited,
+a.inlinetoc-sub:link
+{
+    text-decoration:none;
+    color:#000000;
+    font-weight:normal;
+    font-size:smaller;
+}
+
+span.toclist{
+    font-size:smaller;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:bold;
+}
+
+p.toclist0{
+    margin-left:0.5em;
+    margin-top:1pt;
+    margin-bottom:3pt;
+    text-indent:-0.5em;
+    font-size:small;
+}
+
+p.toclist1{
+    margin-left:1em;
+    margin-top:1pt;
+    margin-bottom:2pt;
+    text-indent:-0.7em;
+    font-size:small;
+}
+
+p.toclist2{
+    margin-left:1.5em;
+    text-indent:-1em;
+    font-size:small;
+}
+
+p.toclist3{
+    margin-left:2em;
+    text-indent:-1.5em;
+    font-size:small;
+}
+
+span.toclist-this{
+    color:red;
+}
+
+a.toclist:visited,
+a.toclist:link
+{
+    font-weight:bold;
+    color:#000000;
+    text-decoration:none;
+}
+
+/* notes */
+div.noteHeading{
+    margin-top:9pt;
+    border:0;
+    border-top:1pt;
+    border-style:solid;
+    padding-top:6pt;
+    font-size:larger;
+    font-weight:bold;
+}
+div.noteBody{
+    display:inline;
+}
+
+div.note{
+    margin-left:2em;
+    margin-right:2em;
+    margin-bottom:3pt;
+    margin-top:3pt;
+    text-indent:-1em;
+}
+
+span.noteLabel{
+    vertical-align:super;
+    font-size:smaller;
+    font-style:italic;
+}
+span.note:before{
+    content:" [";
+}
+span.note:after{
+    content:"] ";
+}
+
+span.note{
+    font-size:smaller;
+}
+/* address */
+span.address {
+    display: block;
+    font-style: italic;
+}
+/* images */
+img.display{
+    margin-top:10pt;
+    margin-bottom:10pt;
+    display:block;
+}
+
+.floatimage{
+    float:left;
+    margin-right:6px;
+    vertical-align:top;
+}
+/* specialized divs */
+div.letter{
+    margin-left:2em;
+    margin-right:2em;
+    margin-top:6pt;
+    margin-bottom:6pt;
+    border-top:1pt solid green;
+    border-bottom:1pt solid green;
+}
+/* title page */
+div.titlePage,
+div.titlepage{
+    border-top:2pt solid #000000;
+    border-bottom:2pt solid #000000;
+    padding-top:6pt;
+    padding-bottom:6pt;
+    font-size:larger;
+    text-align:center;
+}
+div.docImprint{
+    margin-top:6pt;
+    display:block;
+    font-style:italic;
+}
+div.docDate{
+    font-style:italic;
+}
+div.docTitle{
+    display:block;
+    margin-top:6pt;
+    font-weight:bold;
+    margin-bottom:18pt;
+}
+div.docAuthor{
+    font-style:italic;
+}
+
+div.byline{
+    display:block;
+}
+
+div.dateline{
+    text-align:right;
+}
+
+/* paragraphs */
+p,
+span.p,
+div.p{
+    margin-top:0.3em;
+}
+span.p{
+    display:block;
+}
+div.p blockquote p{
+    margin-top:0.0em;
+    -webkit-margin-before:0em;
+    -webkit-margin-after:0em;
+    -webkit-margin-start:0px;
+    -webkit-margin-end:p0px;
+}
+p.box{
+    border:1pt solid #000000;
+}
+
+/* verse */
+div.lg{
+    margin-left:10px;
+    margin-bottom:10px;
+}
+div.l{
+    text-align:left;
+    margin-left:1em;
+}
+/* misc */
+div.epigraph{
+    margin:20pt;
+}
+div.numbering{
+    float:left;
+    font-size:smaller;
+    width:2em;
+}
+
+div.linenumber{
+}
+
+div.signed{
+    text-align:left;
+}
+div.salute{
+    text-align:left;
+}
+div.indent1{
+    margin-left:1em;
+}
+div.indent2{
+    margin-left:2em;
+}
+div.indent3{
+    margin-left:3em;
+}
+div.indent4{
+    margin-left:4em;
+}
+div.indent5{
+    margin-left:5em;
+}
+div.indent6{
+    margin-left:6em;
+}
+
+td.label{
+    font-weight:bold;
+    background-color:#AAAAAA;
+}
+tr.label td{
+    font-weight:bold;
+    background-color:#AAAAAA;
+}
+
+span.label{
+    font-weight:bold;
+}
+
+h5{
+    font-size:100%;
+}
+h6{
+    font-size:100%;
+}
+
+div.tocFront{
+    border-bottom:1pt solid #000000;
+}
+div.tocBack{
+    border-bottom:1pt solid #000000;
+}
+div.tocBody{
+    border-bottom:1pt solid #000000;
+}
+/* a listBibl rend='labels' */
+div.listBibl{
+    margin-top:6pt;
+    margin-bottom:6pt;
+}
+span.bibl{
+    font-style:italic;
+}
+div.bibl{
+    margin-left:0.5em;
+    text-indent:-0.5em;
+}
+div.biblfree{
+    font-size:smaller;
+    margin-left:0.5em;
+    text-indent:-0.5em;
+    margin-bottom:6pt;
+}
+
+span.biblLabel{
+    font-weight:bold;
+    margin-right:1em;
+}
+
+/* a <bibl> inside a <cit> */
+div.citbibl:before{
+    content:"(";
+}
+div.citbibl:after{
+    content:")";
+}
+div.citbibl{
+    font-style:italic;
+    font-size:smaller;
+}
+/* a <quote> inside a <cit> */
+div.citquote{
+    margin-left:10pt;
+    margin-right:10pt;
+}
+
+/* gloss lists with bold labels */
+dt{
+    font-weight:bold;
+}
+/* quotation */
+div.blockquote
+{
+    margin-top:10pt;
+    margin-bottom:10pt;
+    margin-left:40px;
+    margin-right:40px;
+}
+/* opener */
+div.opener
+{
+    margin:10pt;
+}
+div.q{
+    margin:10pt;
+}
+/* figures */
+.figure{
+    display:block;
+    border-top:solid 1pt blue;
+    border-bottom:solid 1pt blue;
+}
+.caption{
+    margin-top:6pt;
+    margin-bottom:12pt;
+    display:block;
+    font-style:italic;
+}
+/* inline quote */
+span.q{
+}
+
+/* from drama */
+/* speeches in drama */
+.p-in-sp{
+    margin-left:1em;
+}
+div.sp{
+    margin-top:4pt;
+}
+div.spProse{
+    text-indent:-1em;
+    margin-left:1em;
+}
+div.speaker{
+    font-style:italic;
+}
+span.speaker{
+    font-style:italic;
+}
+
+span.actor{
+    font-style:italic;
+}
+span.camera{
+    font-style:italic;
+}
+span.role{
+    font-style:italic;
+}
+span.set{
+    font-style:italic;
+}
+span.sound{
+    font-style:italic;
+}
+span.stage{
+    font-style:italic;
+}
+span.tech{
+    font-style:italic;
+}
+span.view{
+    font-style:italic;
+}
+span.nextLink{
+    font-style:italic;
+}
+span.previousLink{
+    font-style:italic;
+}
+span.upLink{
+    font-style:italic;
+}
+/* bibl */
+span.titlem{
+    font-style:italic;
+}
+span.titlej{
+    font-style:italic;
+}
+span.titleu{
+}
+span.titles{
+}
+
+aside,
+span.notemargin,
+span.notemarginOuter,
+span.notemarginLeft,
+span.notemarginRight,
+span.notemargin,
+div.notemargin{
+    display:block;
+    font-size:smaller;
+    clear:right;
+    padding:4pt;
+    font-style:italic;
+    width:10%;
+    border:solid green 1pt;
+    margin:6pt;
+}
+span.notemargin,
+span.notemarginOuter,
+span.notemarginRight,
+span.notemargin,
+div.notemargin{
+    float:right;
+}
+span.notemarginLeft{
+    float:left;
+}
+
+div.floatingText_back{
+    border-top:solid black 1pt;
+}
+div.floatingText_front{
+    border-top:solid black 1pt;
+}
+div.floatingText{
+    margin:6pt;
+    border:solid black 1pt;
+}
+div.pagebreak,
+span.pagebreak{
+    display:block;
+    color:grey;
+    float:right;
+}
+span.element{
+    font-weight:bold;
+    color:black;
+}
+span.unclear{
+    font-style:italic;
+}
+span.wordtypeNN,
+span.wordtypeNNS{
+    color:green;
+}
+span.wordtypeVVD,
+span.wordtypeVVN,
+span.wordtypeVVN,
+span.wordtypeVVZ,
+span.wordtypeVVG,
+span.wordtypeVV{
+    color:red;
+}
+
+li.headless{
+    display:none;
+}
+
+div.footer{
+    border-top:solid black 1pt;
+}
+
+div.stdfooter{
+    clear:both;
+    border-top:solid black 1pt;
+    border-bottom:solid black 1pt;
+}
+
+div.altfigure{
+    border-top:solid black 1pt;
+    border-bottom:solid black 1pt;
+}
+
+table.table,
+table.table tr,
+table.table td{
+    border:solid black 1pt;
+}
+table.table td{
+    padding:1ex 1ex 1ex 1ex;
+}
+p.mainAuthor{
+    display:block;
+    margin:1ex 0ex 1ex 0ex;
+}
+p.mainEditor{
+    display:block;
+    margin:1ex 0ex 1ex 0ex;
+}
+
+/* for ePub */
+div.EpubCoverPage{
+    -webkit-hyphens:none;
+    font-family:serif;
+    height:860pt;
+    font-size:30pt;
+    font-weight:bold;
+    padding-top:15pt;
+    margin:12pt;
+    border:solid red 1pt;
+    text-align:center;
+}
+/* general purpose block aligns */
+.centerbold{
+    text-align:center;
+    font-weight:bold;
+}
+.center{
+    text-align:center;
+}
+.right{
+    text-align:right;
+}
+.left{
+    text-align:left;
+}
+
+/* <hi> rend values */
+span.typewriter{
+    font-family:monospace;
+}
+span.normalweight{
+    font-weight:normal;
+}
+span.smallcaps{
+    font-variant:small-caps;
+}
+span.bold{
+    font-weight:bold;
+}
+span.italic{
+    font-style:italic;
+}
+span.allcaps{
+    text-transform:uppercase;
+}
+span.strikethrough{
+    text-decoration:line-through;
+}
+span.doublestrikethrough{
+    text-decoration:line-through;
+}
+span.underline{
+    text-decoration:underline;
+}
+span.wavyunderline{
+    text-decoration-line:underline;
+    text-decoration-style:wavy;
+}
+span.doubleunderline{
+    text-decoration:underline;
+}
+span.superscript{
+    vertical-align:super;
+    font-size:smaller;
+}
+span.subscript{
+    vertical-align:bottom;
+    font-size:smaller;
+}
+span.numberParagraph:before{
+    content:"[";
+}
+span.numberParagraph:after{
+    content:"] ";
+}
+span.numberParagraph{
+    font-size:smaller;
+    color:grey;
+}
+
+/* misc inline*/
+
+span.foreign{
+    font-style:italic;
+}
+
+span.distinct{
+  font-style: italic;
+}
+
+/* generic rendition */
+.plain{
+    text-decoration:none;
+}
+
+.small{
+    font-size:small;
+}
+.term{
+    font-style:italic;
+}
+.hi{
+    font-style:italic;
+}
+.emph{
+    font-weight:bold;
+}
+.label{
+    font-weight:bold;
+}
+.mentioned{
+    font-style:italic;
+}
+
+/* transcription */
+
+div.sourceDoc{
+}
+
+div.surfaceGrp{
+    border-bottom-width:1pt;
+    border-bottom-color:green;
+    border-bottom-style:solid;
+    clear:both;
+}
+
+div.surface{
+    clear:both;
+    border-width:1pt;
+    border-style:solid;
+    border-color:grey;
+    margin-bottom:1ex;
+}
+
+div.zone{
+    border-width:1pt;
+    border-style:solid;
+    border-color:lightgrey;
+    margin-bottom:0.5ex;
+}
+
+div.line{
+}
+
+div.facsimage{
+    float:right;
+}
+div.facsimage img{
+    max-height:100%;
+    width:auto
+}
+
+span.damage{
+    border-bottom:1px dashed red;
+}
+span.ex {
+    font-style: italic;
+}
+/* app crit */
+div.appcrit{
+    border-top:solid black 1pt;
+    margin-top:2pt;
+    padding-top:2pt;
+    margin-bottom:2pt;
+    margin-left:1em;
+}
+div.app{
+    margin-top:1pt;
+    font-size:smaller;
+}
+span.lemma{
+}
+span.lemmawitness{
+    font-weight:bold;
+}
+span.listhead{
+    display:block;
+    margin-top:0em;
+    margin-right:1em;
+    padding-left:3px;
+    padding-right:3px;
+    font-weight:bold;
+}
+table.border td{
+    vertical-align:top;
+    border:1px solid black;
+    padding:2px;
+}
+table.border td.norules{
+    border-width:0px;
+    padding-top:6px;
+}
+table.border{
+    border-collapse:collapse;
+    border-spacing:0;
+}
+.del{
+    text-decoration:line-through;
+}
+.red{
+    color:red;
+}
+.green{
+    color:green;
+}
+.orange{
+    color:orange;
+}

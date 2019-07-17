@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>testPure1ValidInstance: File designed to pass validation 
+        against a schema created from testPure1.odd.</title>
+      </titleStmt>
+      <publicationStmt>
+        <p>Free for all for anything for ever.</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Born-digital</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <div>
+        <head>Test file for validation</head>
+        
+        <p>This file is designed to pass validation.</p>
+        
+        <p>We changed the <gi>title</gi> element's <att>type</att> attribute
+        to permit some of these values:</p>
+        
+        <list>
+          <head>Some objects related to media</head>
+          <item><title type="single">Jeepster</title></item>
+          <item><title type="LP">Electric Warrior</title></item>
+          <item><title type="CD">A Beard of Stars</title></item>
+        </list>
+        
+        <p>Test inclusion: <persName>Syd Bauman</persName> and
+        <persName>Martin Holmes</persName> are working on these tests
+        in <placeName>Providence</placeName> and
+        <placeName>Victoria</placeName> for the
+        <orgName>TEI</orgName>.</p>
+      </div>
+
+      <div>
+	<head>Test of <gi>dataRef</gi></head>
+	<p>I'm not about to try to work <gi>measureGrp</gi> into four
+	clever sentences, so:
+	<list>
+	  <label><att>corresp</att>: <gi>dataRef</gi> w/ <att>key</att></label>
+	  <item><measureGrp corresp="0"/> Should be
+	  valid, as <val>0</val> is a teidata.count
+	  (i.e., non-negative integer.)</item>
+
+	  <label><att>select</att>: <gi>dataRef</gi> w/ <att>name</att></label>
+	  <item><measureGrp select="1"/> Should be valid, as
+	  <val>1</val> is a non-negative integer.</item>
+
+	  <label><att>sameAs</att>: <gi>dataRef</gi> w/ <att>key</att> &amp; <att>restriction</att></label>
+	  <item><measureGrp sameAs="2"/> Should be
+	  valid, as <val>2</val> is a 1- or
+	  2-digit teidata.count (i.e., non-negative
+	  integer).</item>
+
+	  <label><att>copyOf</att>: <gi>dataRef</gi> w/ <att>name</att> &amp; <att>restriction</att></label>
+	  <item><measureGrp copyOf="34"/> Should be valid, as
+	  <val>34</val> is a 1- or 2-digit non-negative
+	  integer.</item>
+	</list>
+	</p>
+      </div>
+
+      <div>
+	<head>Testing content model and occurences of element refs</head>
+	<p>The following <gi>bibl</gi> should be valid. It
+	<emph>should</emph> be invalid if you add 2 more
+	<gi>publisher</gi> elements (for a total of 4), but is not.
+	See <ref
+	target="https://github.com/TEIC/Stylesheets/issues/354">354</ref>.
+	<bibl>
+	  <author>one</author>
+	  <author>two</author>
+	  <title xml:lang="es">uno</title>
+	  <title xml:lang="es">dos</title>
+	  <title xml:lang="es">tres</title>
+	  <title xml:lang="es">quatro</title>
+	  <title xml:lang="es">cinco</title>
+	  <publisher xml:lang="ja">ich</publisher>
+	  <publisher xml:lang="ja">ni</publisher>
+	  <date when="2019-01-05"/>
+	</bibl>
+	</p>
+      </div>
+      
+      <div>
+        <head>Some linguistic stuff</head>
+        <p><s>This is a sentence with a <phr>short phrase</phr> and a single 
+        <w ana="https://en.oxforddictionaries.com/definition/word">word</w>.</s> 
+        <s>The word should require the ana attribute, but the phrase not.</s></p>
+      </div>
+      
+      <div>
+        <head>Testing some content model changes</head>
+        <p>The email address for <email>thevenerablebede@gmail.com</email>
+        should be valid.</p>
+      </div>
+    </body>
+  </text>
+</TEI>
