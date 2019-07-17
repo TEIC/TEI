@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project basedir="." default="dist" name="teitohtml">
+  <!--
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public
+	License as published by the Free Software Foundation; either
+	version 2.1 of the License, or (at your option) any later version.
+	
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Lesser General Public License for more details.
+	
+	You should have received a copy of the GNU Lesser General Public
+	License along with this library; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+	
+        Id: $Id: build-to.xml 9886 2011-12-04 22:50:41Z rahtz $
+        Copyright: 2011, TEI Consortium<
+-->
+  <!--
+ Convert Docbook documents into TEI files.
+ -->
+  <!-- Path to Docbook XML file. -->
+  <property name="inputFile" value=""/>
+  <!-- Path where the output TEI file will be saved. -->
+  <property name="outputFile" value=""/>
+  <!-- which profile -->
+  <property name="profile" value="default"/>
+  <property name="catalogfile" value="../catalog.xml"/>
+  <!-- where does oxygen keep stuff -->
+  <property name="oxygenlib" value=""/>
+  <!-- Stylesheet for transformation -->
+  <property name="docbook2tei" value="${profiledir}/${profile}/docbook/from.xsl"/>
+  <dirname property="inputFileDir" file="${inputFile}"/>
+  <dirname property="outputDir" file="${outputFile}"/>
+  <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
+  <path id="classpath">
+    <pathelement path="${java.class.path}"/>
+  </path>
+  <target name="dist" depends="convert"/>
+  <target name="convert">
+    <echo level="info">XSLT generate TEI files</echo>
+    <xslt force="yes" style="${docbook2tei}" in="${inputFile}" out="${outputFile}">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="$catalogfile"/>
+        </catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="directory" expression="file:///${outputTempDir}"/>
+      <!-- emit some diagnostics"-->
+      <param name="debug" expression="${debug}" if="debug"/>
+      <!-- be verbose-->
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+  </target>
+</project>

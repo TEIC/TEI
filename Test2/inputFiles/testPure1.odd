@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_customization.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/Exemplars/tei_customization.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xml:lang="en"     n="testPure1"
+     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+     xmlns="http://www.tei-c.org/ns/1.0" >
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Test TEI Customization using Pure ODD</title>
+        <author>Martin Holmes</author>
+        <author>Syd Bauman</author>
+      </titleStmt>
+      <publicationStmt>
+        <p>Free for anyone for anything</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Authored from scratch</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <schemaSpec start="TEI div" ident="testPure1" prefix="t_">
+        <desc>This file is intended as input for a conversion to
+        RNG and Schematron (and possibly other outputs) as part 
+        of the modular Stylesheets test process. No source is 
+        specified here, because the source p5subset.xml is controlled
+        by command-line input. The purpose of this file is to test 
+        Pure ODD customizations of TEI whose valid instance files will 
+        always validate against tei_all. In other words, it is not 
+        a place to test creating new elements in new namespaces, or
+        changing content models in such a way as to create non-TEI-
+        compliant schemas (for the most severe definition of 
+        <soCalled>TEI-compliant</soCalled>).</desc>
+        
+        <moduleRef key="tei"/>        
+        <moduleRef key="header"/>
+        <moduleRef key="core"/>
+        <moduleRef key="analysis"/>
+        <moduleRef key="linking"/>
+        
+        <!-- test @except -->
+        <moduleRef key="textstructure" except="div1 div2 div3 div4 div5 div6 div7"/>
+        
+        <!-- test @include -->
+        <moduleRef key="namesdates" include="persName placeName orgName"/>
+        
+        <!-- Allow our instance files to use <gi> et al descriptively,
+             thus testing direct use of <elementRef>: -->
+	<elementRef key="gi"/>
+	<elementRef key="att"/>
+	<elementRef key="val"/>
+
+	<!-- Test deletion of an element directly: -->
+	<elementSpec module="linking" ident="join" mode="delete"/>
+	<elementSpec module="linking" ident="joinGrp" mode="delete"/>
+
+        <!-- try deleting a class that is not included anyway as
+             dictionary module is not included -->
+        <classSpec ident="att.lexicographic" mode="delete" type="atts"/>
+
+        <!-- test deletion of attr class (which is a subclass); scorched earth approach: -->
+        <classSpec ident="att.datable.custom" mode="delete" type="atts"/>
+        <classSpec ident="att.datable.iso" mode="delete" type="atts"/>
+
+        <!-- test deletion of an attr from a class; selective thinning approach: -->
+        <classSpec ident="att.typed" type="atts" mode="change">
+          <attList>
+            <attDef ident="subtype" mode="delete"/>
+          </attList>
+        </classSpec>
+
+        <!-- test deletion of an attr from a subclass; selective thinning approach: -->
+        <classSpec ident="att.global.linking" type="atts" mode="change">
+          <attList>
+	    <attDef ident="synch" mode="delete"/>
+          </attList>
+        </classSpec>
+
+        <!-- test unsubscribing an element from a class, here removing
+             <list> from att.typed, removing @type and @subtype;
+             genteel bureaucratic approach: -->
+        <elementSpec module="core" ident="list" mode="change">
+          <classes mode="change">
+            <memberOf key="att.typed" mode="delete"/>
+          </classes>
+        </elementSpec>
+ 
+        <!-- test removal of a specific attribute from an element that
+             holds it privately; repossession: -->
+        <elementSpec module="core" ident="note" mode="change">
+          <attList>
+            <attDef ident="anchored" mode="delete"/>
+          </attList>
+        </elementSpec>
+
+        <!-- test providing a closed value list for an attr provided by a class: -->
+        <elementSpec ident="title" mode="change" module="core">
+          <attList>
+            <attDef ident="type" mode="replace">
+              <datatype>
+                <dataRef key="teidata.enumerated"/>
+              </datatype>
+              <valList type="closed">
+                <valItem ident="LP">
+                  <gloss>long playing</gloss>
+                  <desc>12-inch vinyl</desc>
+                </valItem>
+                <valItem ident="single"/>
+                <valItem ident="eightTrack"/>
+                <valItem ident="cassette"/>
+                <valItem ident="CD">
+                  <gloss>compact disc</gloss>
+                </valItem>
+                <valItem ident="VCRtape"/>
+                <valItem ident="DVD"/>
+                <valItem ident="blueRay"/>
+              </valList>
+            </attDef>
+          </attList>
+        </elementSpec>
+
+	<!-- Test providing a closed value list for a privately held attr: -->
+	<?TEI winita?>
+
+	<!-- Test use of <dataRef> (by changing attrs): -->
+	<elementSpec ident="measureGrp" mode="change" module="core">
+	  <attList>
+	    <attDef mode="change" ident="corresp">
+	      <datatype minOccurs="1" maxOccurs="1">
+		<dataRef key="teidata.count"/>
+	      </datatype>
+	    </attDef>
+	    <attDef mode="change" ident="select">
+	      <datatype minOccurs="1" maxOccurs="1">
+		<dataRef name="nonNegativeInteger"/>
+	      </datatype>
+	    </attDef>
+	    <attDef mode="change" ident="sameAs">
+	      <datatype minOccurs="1" maxOccurs="1">
+		<dataRef key="teidata.count" restriction="[0-9][0-9]?"/>
+	      </datatype>
+	    </attDef>
+	    <attDef mode="change" ident="copyOf">
+	      <datatype minOccurs="1" maxOccurs="1">
+		<dataRef name="nonNegativeInteger" restriction="[0-9][0-9]?"/>
+	      </datatype>
+	    </attDef>
+	  </attList>
+	</elementSpec>		
+
+	<!-- Test changing a content model, and simultaneously test
+	     @minOccurs and @maxOccurs on <elementRef>: -->
+	<elementSpec ident="bibl" mode="change" module="core">
+          <desc>A short bibliographic citation with nothing but author, title, and optional date</desc>
+          <content>
+            <sequence>
+              <elementRef key="author" minOccurs="2" maxOccurs="unbounded"/>
+              <elementRef key="title" minOccurs="1" maxOccurs="8"/>
+	      <elementRef key="publisher" minOccurs="0" maxOccurs="3"/>
+              <elementRef key="date" minOccurs="0" maxOccurs="1"/>
+            </sequence>
+          </content>
+        </elementSpec>
+        
+	<!-- Test deletion of an element from its module: -->
+        <elementSpec ident="biblStruct" module="core" mode="delete"/>
+        
+	<!-- Test changing an attribute on an individual alement from
+	     optional to required, when the attribute comes from a
+	     class:. -->
+        <elementSpec ident="w" module="linking" mode="change">
+          <attList>
+            <attDef ident="ana" mode="change" usage="req"/>
+          </attList>
+        </elementSpec>
+
+	<!-- Test constraint of content to specific value list, and
+	     addition of remarks: -->
+        <elementSpec ident="email" module="core" mode="change">
+          <content>
+            <valList type="closed">
+              <valItem ident="amourdecosmos@gmail.com">
+                <gloss>The email address of Amour de Cosmos.</gloss>
+              </valItem>
+              <valItem ident="thevenerablebede@gmail.com">
+                <gloss>The email address of The Venerable Bede.</gloss>
+              </valItem>
+            </valList>
+          </content>
+	  <remarks>
+	    <p>Our <gi>email</gi> element is only allowed to contain
+	    one of two email addresses, so we try to constrain its
+	    content model using a valList.</p>
+	  </remarks>
+        </elementSpec>
+
+	<!-- Test adding a Schematron constraint: -->
+	<elementSpec ident="linkGrp" module="linking" mode="change">
+	  <constraintSpec scheme="schematron" ident="eight_is_enough">
+	    <constraint>
+	      <sch:report test="count(*)>8">Too many links!</sch:report>
+	    </constraint>
+	  </constraintSpec>
+	</elementSpec>
+
+      </schemaSpec>
+    </body>
+    <back>
+    </back>
+  </text>
+</TEI>

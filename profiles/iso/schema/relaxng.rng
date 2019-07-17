@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: relaxng.rng 2971 2007-08-27 11:02:26Z rahtz $ -->
+<grammar 
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    ns="http://relaxng.org/ns/structure/1.0" 
+    xmlns="http://relaxng.org/ns/structure/1.0" 
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="extrapattern">
+    <optional>
+      <ref name="anyDoc"/>
+    </optional>
+    <ref name="pattern"/>
+    <optional>
+      <ref name="anyDoc"/>
+    </optional>
+  </define>
+
+  <define name="pattern">
+    <choice>
+      <element name="element">
+        <attribute name="name">
+          <data type="QName"/>
+        </attribute>
+        <oneOrMore>
+          <ref name="extrapattern"/>
+        </oneOrMore>
+	<optional>
+	  <attribute name="ns">
+	    <data type="anyURI"/>	  
+	  </attribute>
+	</optional>
+      </element>
+      <element name="element">
+        <ref name="nameClass"/>
+        <oneOrMore>
+          <ref name="extrapattern"/>
+        </oneOrMore>
+      </element>
+      <element name="attribute">
+        <attribute name="name">
+          <data type="QName"/>
+        </attribute>
+        <optional>
+	  <attribute name="ns">
+	    <data type="anyURI"/>	  
+	  </attribute>
+	</optional>
+        <optional>
+          <ref name="anyAttDoc"/>
+        </optional>
+        <optional>
+          <ref name="extrapattern"/>
+        </optional>
+      </element>
+      <element name="attribute">
+        <ref name="nameClass"/>
+        <optional>
+          <ref name="extrapattern"/>
+        </optional>
+      </element>
+      <element name="group">
+        <oneOrMore>
+          <ref name="extrapattern"/>
+        </oneOrMore>
+      </element>
+      <element name="interleave">
+        <oneOrMore>
+          <ref name="extrapattern"/>
+        </oneOrMore>
+      </element>
+      <element name="choice">
+        <oneOrMore>
+          <ref name="extrapattern"/>
+        </oneOrMore>
+      </element>
+      <element name="optional">
+        <oneOrMore>
+          <ref name="extrapattern"/>
+        </oneOrMore>
+      </element>
+      <element name="zeroOrMore">
+        <oneOrMore>
+          <ref name="extrapattern"/>
+        </oneOrMore>
+      </element>
+      <element name="oneOrMore">
+        <oneOrMore>
+          <ref name="extrapattern"/>
+        </oneOrMore>
+      </element>
+      <element name="list">
+        <oneOrMore>
+          <ref name="extrapattern"/>
+        </oneOrMore>
+      </element>
+      <element name="mixed">
+        <oneOrMore>
+          <ref name="extrapattern"/>
+        </oneOrMore>
+      </element>
+      <element name="ref">
+        <attribute name="name">
+          <data type="NCName"/>
+        </attribute>
+      </element>
+      <element name="parentRef">
+        <attribute name="name">
+          <data type="NCName"/>
+        </attribute>
+      </element>
+      <element name="empty">
+        <empty/>
+      </element>
+      <element name="text">
+        <empty/>
+      </element>
+      <element name="value">
+        <optional>
+          <attribute name="type">
+            <data type="NCName"/>
+          </attribute>
+        </optional>
+        <data type="string"/>
+      </element>
+      <element name="data">
+        <attribute name="type">
+          <data type="NCName"/>
+        </attribute>
+        <zeroOrMore>
+          <ref name="param"/>
+        </zeroOrMore>
+        <optional>
+          <ref name="exceptExtrapattern"/>
+        </optional>
+      </element>
+      <element name="notAllowed">
+        <empty/>
+      </element>
+      <element name="externalRef">
+        <attribute name="href">
+          <data type="anyURI"/>
+        </attribute>
+        <empty/>
+      </element>
+      <element name="grammar">
+	<optional>
+	  <attribute name="datatypeLibrary">
+	    <data type="anyURI"/>	  
+	  </attribute>
+	</optional>
+	<attribute name="ns">
+          <data type="anyURI"/>	  
+	</attribute>
+        <zeroOrMore>
+          <ref name="grammarContent"/>
+        </zeroOrMore>
+      </element>
+    </choice>
+  </define>
+
+<define name="anyDoc">
+  <element>
+    <nsName ns="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+    <optional>
+      <attribute name="ns">
+	<data type="anyURI"/>	  
+      </attribute>
+    </optional>
+    <zeroOrMore>
+      <choice>
+	<ref name="anyDoc"/>
+	<text/>
+      </choice>
+    </zeroOrMore>
+  </element>
+</define>
+
+<define name="anyAttDoc">
+  <attribute name="defaultValue"
+	     ns="http://relaxng.org/ns/compatibility/annotations/1.0">
+    <text/>
+  </attribute>
+</define>
+
+  <define name="param">
+    <element name="param">
+      <attribute name="name">
+        <data type="NCName"/>
+      </attribute>
+      <data type="string"/>
+    </element>
+  </define>
+  <define name="exceptExtrapattern">
+    <element name="except">
+      <oneOrMore>
+        <ref name="extrapattern"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="grammarContent">
+    <choice>
+      <ref name="start"/>
+      <ref name="define"/>
+      <element name="div">
+        <zeroOrMore>
+          <ref name="grammarContent"/>
+        </zeroOrMore>
+      </element>
+      <element name="include">
+        <attribute name="href">
+          <data type="anyURI"/>
+        </attribute>
+        <zeroOrMore>
+          <ref name="includeContent"/>
+        </zeroOrMore>
+      </element>
+    </choice>
+  </define>
+  <define name="includeContent">
+    <choice>
+      <ref name="start"/>
+      <ref name="define"/>
+      <element name="div">
+        <zeroOrMore>
+          <ref name="includeContent"/>
+        </zeroOrMore>
+      </element>
+    </choice>
+  </define>
+  <define name="start">
+    <element name="start">
+      <optional>
+        <attribute name="combine">
+          <ref name="method"/>
+        </attribute>
+      </optional>
+      <ref name="extrapattern"/>
+    </element>
+  </define>
+  <define name="define">
+    <element name="define">
+      <attribute name="name">
+        <data type="NCName"/>
+      </attribute>
+      <optional>
+        <attribute name="combine">
+          <ref name="method"/>
+        </attribute>
+      </optional>
+      <oneOrMore>
+        <ref name="extrapattern"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="method">
+    <choice>
+      <value>choice</value>
+      <value>interleave</value>
+    </choice>
+  </define>
+  <define name="nameClass">
+    <choice>
+      <element name="name">
+        <data type="QName"/>
+      </element>
+      <element name="anyName">
+        <optional>
+          <ref name="exceptNameClass"/>
+        </optional>
+      </element>
+      <element name="nsName">
+        <optional>
+	  <attribute name="ns">
+	    <data type="anyURI"/>	  
+	  </attribute>
+	</optional>
+        <optional>
+          <ref name="exceptNameClass"/>
+        </optional>
+      </element>
+      <element name="choice">
+        <oneOrMore>
+          <ref name="nameClass"/>
+        </oneOrMore>
+      </element>
+    </choice>
+  </define>
+  <define name="exceptNameClass">
+    <element name="except">
+      <oneOrMore>
+        <ref name="nameClass"/>
+      </oneOrMore>
+    </element>
+  </define>
+</grammar>

@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="documentation" name="StylesheetsTest"
+    xmlns:if="ant:if"
+    xmlns:unless="ant:unless">
+
+    <description> 
+     Stylesheets/Test2/build.xml
+     
+     ANT TEST FILE FOR THE TEI STYLESHEETS.
+        
+     MDH 2017: This is an EXPERIMENTAL build file which is 
+     attempting to wholly replace the Makefile in the Stylesheets/Test
+     directory. I want to discover:
+    
+     a) How easy it is to replicate all the functions of the Makefile in ant.
+     
+     b) Whether this is faster or slower than running the Makefile. I hope to
+        discover that it's faster, because we only instantiate one VM to run 
+        ant, rather than running Saxon multiple times. Doing all the file diffs
+        takes, for instance, only 1 second for me. Also, ant allows us to run
+        tests in parallel, which should yield advantages.
+        
+     c) How practical it will be to make this cross-platform (i.e. to support 
+        Windows).
+        
+     Work on this file is proceeding in small steps...
+     
+     Issues with the Makefile process:
+     
+      - It's difficult to understand.
+      
+      - It's multilayered: for instance, a call to:
+            test.rng
+        calls the symlink teitorelaxng, which calls the script transformtei, 
+        which calls ant passing a build-to or build-from file, which calls 
+        Saxon....
+        
+     You can call this file with many targets, but this:
+     
+        ant test
+        
+     will run the set of tests which have been set up so far.
+     
+     Files used as input to conversions are found in the inputFiles folder;
+     results are stored in the outputFiles folder. Running
+     
+        ant clean
+        
+     will empty the outputFiles folder. It is not cleaned up by default because
+     we usually want to examine the results of conversions.
+    </description>
+    
+<!-- First we include the generic utilities module.   -->
+    <import file="build_utilities.xml" as="utils"/>
+    
+<!-- Import the modular test files.   -->
+    
+    <import file="build_odd.xml"/>
+    <import file="build_odt.xml"/>
+    <import file="build_docx.xml"/>
+    
+<!-- BEGIN PARAMETERS. -->
+    
+<!-- Whether we're running tests against expected results or regenerating
+     expected results en masse. MOVED TO build_utilities.xml. -->
+    <!--<property name="regenerate" value=""/>-->
+    
+<!-- Whether or not to build all FO files generated into PDFs with FOP.   -->
+    <property name="buildFoToPdf" value="true"/>
+    
+<!-- We can control where the source of the TEI Guidelines is. This is the 
+     path to [a directory containing] p5subset.xml. If not supplied, most 
+     scripts default to using the current version from the tei-c.org Vault. 
+     Only a local path (fully expanded) can be supplied, so we can't point
+     to the Jenkins server (for instance), although we might choose to download
+     the latest dev Jenkins build of p5subset.xml to a local folder.
+     Passing -Dlocalsource=DIR fails, but -Dlocalsource=DIR/p5subset.xml works 
+     for some reason.
+    -->
+    <property name="localsource" value=""/>
+    
+<!-- Properties for downloading, unzipping and using FOP 2.2 dist, used in creating PDFs from XSL:FO.
+     We're stuck at 2.2 because no hyphenation lib is available for 2.3 yet. -->
+    <property name="fopDist" value="http://apache.mirror.iweb.ca/xmlgraphics/fop/binaries/fop-2.2-bin.zip"/>
+    <property name="fopDest" value="${basedir}/../lib"/>
+    <property name="fopHome" value="${basedir}/../lib/fop-2.2"/>
+    <property name="fopHyphDist" value="https://downloads.sourceforge.net/project/offo/offo-hyphenation/2.2/offo-hyphenation-compiled.zip"/>
+    <property name="jeuclidDist" value="https://downloads.sourceforge.net/project/jeuclid/3.1.x/3.1.9/jeuclid-3.1.9-distribution.zip"/>
+    
+<!-- Filesets for each set of tests should be declared here. -->
+
+<!--  TEI file that can be converted in a straightforward manner into HTML
+      without special parameters. -->
+    <fileset id="simpleTeiForHtmlFiles" dir="${inputDir}" includes="testP5ExTcp1.xml, 
+        testRendition1.xml, testQuotations1.xml, testWhitespace1.xml, testBinaryObjects1.xml,
+        testCorpus1.xml, testMathML.xml, testStructure1.xml"/>
+    
+<!--  HTML input files for conversion into TEI.  -->
+    <fileset id="htmlInputFiles" dir="${inputDir}" includes="testHtmlInput1.html"/>
+    
+ <!-- TEI P4 input files for conversion to P5.  -->
+    <fileset id="p4InputFiles" dir="${inputDir}" includes="testP4Input1.xml"/>
+    
+<!--  Two cocoa test files which are converted to TEI.  -->
+    <fileset id="cocoaFiles" dir="${inputDir}" includes="testCocoa*.txt"/>
+    
+<!--  TEI files which are converted to XSL:FO.  -->
+    <fileset id="foFiles" dir="${inputDir}" includes="generalP5.xml, testStructure1.xml, testCorpus1.xml, testMathML.xml, 
+        testBibliography1.xml, testNotes1.xml, tei_simplePrint.doc.xml, testQuotations1.xml, testBinaryObjects1.xml"/>
+    
+<!--  Files for conversion to RDF.  -->
+    <fileset id="rdfFiles" dir="${inputDir}" includes="testToRdf1.xml"/>
+
+
+    
+<!--  These targets are core transformation and validation processes which are 
+      widely used. -->
+    <target name="RngToRnc">
+        <description>
+            TARGET RngToRnc
+            This target is passed two parameters, rngIn and rncOut, and then 
+            uses Trang to convert the first to the second.
+        </description>
+        <echo level="info" message="Convert ${rngIn} to ${rncOut} using Trang."/>
+        <java classname="com.thaiopensource.relaxng.translate.Driver" fork="no">
+            <classpath location="${trang}"/>
+            <arg value="-O"/>
+            <arg value="rnc"/>
+            <arg value="${rngIn}.rng"/>
+            <arg value="${rncOut}.rnc"/>
+        </java>
+    </target>
+    
+    
+    <!-- NOTE: used to have depends="symlinkCssFiles", but I don't see the point in 
+         that; HTML outputse seem to be linked to CSS files on the tei website.    -->
+    <target name="simpleTeiToHtml">
+        <description>
+            TARGET simpleTeiToHtml
+            This passes a set of files (simpleTeiForHtmlFiles) to the teiFileToHtml
+            target, which then builds them to HTML and diffs them against 
+            expected results.
+        </description>
+        <foreach target="teiFileToHtml" param="inFile">
+            <path>
+                <fileset refid="simpleTeiForHtmlFiles"/>
+            </path>
+        </foreach>
+    </target>
+    
+    <target name="teiFileToHtml">
+        <description>
+            TARGET teiFileToHtml
+            This builds a TEI file into HTML output using standard simple parameters.
+            The results are linted, diffed, and have their internal links checked.
+            It takes a single parameter, inFile.
+        </description>
+        <echo message="Building test file ${inFile} into HTML."/>
+        <basename file="${inFile}" property="plainFileName" suffix=".xml"/>
+        <property name="outFile" value="${outputDir}/${plainFileName}.html"/>
+        <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
+            <arg value="-s:${inFile}"/>
+            <arg value="-xsl:${basedir}/../html/html.xsl"/>
+            <arg value="-o:${outFile}"/>
+            <!--<arg value="cssFile=../tei.css"/>-->
+            <arg value="useFixedDate=true"/>
+            <arg value="graphicsPrefix=../"></arg>
+            <arg value="--suppressXsltNamespaceCheck:on"/>
+            <arg value="-versionmsg:off"/>
+        </java>
+        
+        <!--  Now check/format/indent the result with and diff it.      -->
+        <antcall target="prepAndDiffFile">
+            <param name="inFile" value="${outFile}"/>
+        </antcall>
+        
+    </target>
+    
+    <target name="teiFilesFromHtml">
+        <description>
+            TARGET teiFilesFromHtml
+            This passes a set of files (htmlInputFiles) to the teiFileFromHtml
+            target, which then builds them to TEI and diffs them against 
+            expected results.
+        </description>
+        <echo message="${toString:htmlInputFiles}"/>
+        <foreach target="teiFileFromHtml" param="inFile">
+            <path>
+                <fileset refid="htmlInputFiles"/>
+            </path>
+        </foreach>
+    </target>
+    
+    <target name="teiFileFromHtml">
+        <description>
+            TARGET teiFileFromHtml
+            This test takes a single input file in HTML and converts it to TEI.
+            The results are linted and diffed. It takes a single parameter, inFile.
+        </description>
+        <echo message="Converting test input file ${inFile} from HTML to TEI."/>
+        <basename file="${inFile}" property="plainFileName" suffix=".html"/>
+        <property name="outFile" value="${outputDir}/${plainFileName}.xml"/>
+        <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
+            <arg value="-s:${inFile}"/>
+            <arg value="-xsl:${basedir}/../html/html2tei.xsl"/>
+            <arg value="-o:${outFile}"/>
+            <arg value="useFixedDate=true"/>
+            <arg value="--suppressXsltNamespaceCheck:on"/>
+            <arg value="-versionmsg:off"/>
+        </java>
+        
+        <!--  Now check/format/indent the result with and diff it.      -->
+        <antcall target="prepAndDiffFile">
+            <param name="inFile" value="${outFile}"/>
+        </antcall>
+        
+    </target>
+    
+    <target name="teiFilesFromP4">
+        <description>
+            TARGET teiFilesFromP4
+            This passes a set of files (p4InputFiles) to the teiFileFromP4
+            target, which then builds them to TEI and diffs them against 
+            expected results.
+        </description>
+        <foreach target="teiFileFromP4" param="inFile">
+            <path>
+                <fileset refid="p4InputFiles"/>
+            </path>
+        </foreach>
+    </target>
+    
+    <target name="teiFileFromP4">
+        <description>
+            TARGET teiFileFromP4
+            This test takes a single input file in P4 and converts it to TEI P5.
+            The results are linted and diffed. It takes a single parameter, inFile.
+        </description>
+        <echo message="Converting test input file ${inFile} from P4 to TEI P5."/>
+        <basename file="${inFile}" property="plainFileName"/>
+        <property name="outFile" value="${outputDir}/${plainFileName}"/>
+        <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
+            <arg value="-s:${inFile}"/>
+            <arg value="-xsl:${basedir}/../profiles/default/p4/from.xsl"/>
+            <arg value="-o:${outFile}"/>
+            <arg value="useFixedDate=true"/>
+            <arg value="--suppressXsltNamespaceCheck:on"/>
+            <arg value="-versionmsg:off"/>
+        </java>
+        
+        <!--  Now check/format/indent the result with and diff it.      -->
+        <antcall target="prepAndDiffFile">
+            <param name="inFile" value="${outFile}"/>
+        </antcall>
+        
+    </target>
+    
+<!--
+    
+    <target name="oddToRng">
+        <description>
+            TARGET oddToRng
+            This target converts the single file test.odd to test.rng 
+            and then diffs it against the expected results. It involves
+            a straight conversion, but then some tweaking to remove 
+        </description>
+<!-\-  First convert odd to relaxng.      -\->
+        <exec executable="${bin}/teitorelaxng" failonerror="true">
+            <arg line="-\-localsource=${localsource}"/>
+            <arg file="${inputDir}/test.odd"/>
+            <arg file="${outputDir}/test.rng"/>
+        </exec>
+        
+<!-\-  Now clean and diff.      -\->
+        <antcall target="prepAndDiffFile">
+            <param name="inFile" value="${outputDir}/test.rng"/>
+        </antcall>
+    </target>-->
+    
+<!-- Markdown tests just run one file in each direction, so 
+     didn't use filesets. BUT THIS SHOULD BE REMEDIED. -->
+    <target name="markdown">
+        <description>
+            TARGET markdown
+            Converts one file from Markdown to TEI, and one file
+            from TEI to Markdown, then diffs the results against
+            expected results.
+        </description>
+        <echo message="Testing conversion of Markdown to TEI."/>
+        <exec executable="${bin}/markdowntotei" failonerror="true">
+            <arg line="--localsource=${localsource}"/>
+            <arg file="${inputDir}/testMarkdown1.md"/>
+            <arg file="${outputDir}/testMarkdown1.xml"/>
+        </exec>
+        
+        <!--  Now diff.      -->
+        <antcall target="diffFile">
+            <param name="inFile" value="${outputDir}/testMarkdown1.xml"/>
+        </antcall>
+        
+        <echo message="Testing conversion of TEI to Markdown."/>
+        <exec executable="${bin}/teitomarkdown" failonerror="true">
+            <arg line="--localsource=${localsource}"/>
+            <arg file="${inputDir}/generalP5.xml"/>
+            <arg file="${outputDir}/generalP5.md"/>
+        </exec>
+        
+        <!--  Now diff.      -->
+        <antcall target="diffFile">
+            <param name="inFile" value="${outputDir}/generalP5.md"/>
+        </antcall>
+    </target>
+    
+<!-- Cocoa tests go in only one direction, cocoa to TEI, and there
+     are only two test files. . -->
+    <target name="cocoaFileToTei">
+        <description>
+            TARGET cocoaFileToTei
+            Converts a single cocoa file to TEI and then diffs 
+            the result against expected results. Takes one param,
+            inFile.
+        </description>
+        <echo message="Converting ${inFile} from cocoa to TEI."/>
+        <basename file="${inFile}" property="plainFileName" suffix=".txt"/>
+        <property name="outFile" value="${outputDir}/${plainFileName}.xml"/>
+        <exec executable="${bin}/cocoatotei" failonerror="true">
+            <arg line="--localsource=${localsource}"/>
+            <arg file="${inFile}"/>
+            <arg file="${outFile}"/>
+        </exec>
+        
+        <!--  Now diff.      -->
+        <antcall target="diffFile">
+            <param name="inFile" value="${outFile}"/>
+        </antcall>
+    </target>
+    
+    <target name="cocoaFilesToTei">
+        <description>
+            TARGET cocoaFilesToTei
+            Converts a set of files from cocoa to TEI, then diffs the 
+            results against expected results.
+        </description>
+        <foreach target="cocoaFileToTei" param="inFile">
+            <path>
+                <fileset refid="cocoaFiles"/>
+            </path>
+        </foreach>
+    </target>
+    
+<!-- XSL:FO tests go in only one direction, TEI to FO, and the
+        results are not only diffed but validated against fo.xsd.
+        By default, we assume that the transformer target is 
+        FOP. -->
+    <target name="teiFileToFo">
+        <description>
+            TARGET teiFileToFo
+            Converts a single TEI file to fo, validates the result
+            against the fo.xsd with Jing, and then diffs it against 
+            expected results. By default, we assume FOP is the 
+            target transformer for the FO. Takes one param, inFile.
+        </description>
+        <echo message="Converting ${inFile} from TEI to XSL:FO."/>
+        <basename file="${inFile}" property="plainFileName" suffix=".xml"/>
+        <property name="outFile" value="${outputDir}/${plainFileName}.fo"/>
+        <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
+            <arg value="-s:${inFile}"/>
+            <arg value="-xsl:${basedir}/../fo/fo.xsl"/>
+            <arg value="-o:${outFile}"/>
+            <arg value="--suppressXsltNamespaceCheck:on"/>
+            <arg value="-versionmsg:off"/>
+            <arg value="foEngine=fop"/>
+        </java>
+        
+        <!--  Validate with Jing.      -->
+        <jing rngfile="${schemaDir}/fo.xsd" file="${outFile}"/>
+        
+        <!--  Now format and diff. Note that in the original Makefile, only some
+        files are linted before diffing; no apparent reason why some are and some
+        aren't. We choose to do all of them because it makes interpreting diff 
+        errors much simpler. -->
+        <antcall target="prepAndDiffFile">
+            <param name="inFile" value="${outFile}"/>
+        </antcall>
+        
+        <!-- Now build the actual PDF, if set in the root properties. -->
+        <antcall target="foFileToPdf" if:true="${buildFoToPdf}">
+            <param name="inFile" value="${outFile}"/>
+        </antcall>
+    </target>
+    
+    <target name="foFileToPdf" depends="getFop">
+        <description>
+            TARGET foFileToPDF
+            This target depends on getFop, which downloads a copy of FOP
+            if it's not yet there. Then it compiles an FO file to PDF
+            using FOP. Takes one param, inFile.
+        </description>
+        
+        <propertyregex property="pdfFile" input="${inFile}" regexp="\.fo" replace=".pdf" global="true"/>
+        <echo message="Converting ${inFile} from XSL:FO to ${pdfFile}."/>
+        
+        <!-- This taskdef configured per instructions at 
+            https://xmlgraphics.apache.org/fop/2.2/anttask.html. -->
+        <taskdef name="fop"
+            classname="org.apache.fop.tools.anttasks.Fop"
+            onerror="fail">
+            <classpath>
+                <fileset dir="${fopHome}/fop/lib">
+                    <include name="*.jar"/>
+                </fileset>
+                <fileset dir="${fopHome}/fop/build">
+                    <include name="fop.jar"/>
+                    <include name="fop-hyph.jar" />
+                </fileset>
+            </classpath>
+        </taskdef>
+        
+        <fop format="application/pdf"
+            fofile="${inFile}"
+            outfile="${pdfFile}"
+            basedir="${outputDir}"
+            force="true"/>
+        
+    </target>
+    
+    <target name="teiFilesToFo">
+        <description>
+            TARGET teiFilesToFo
+            Converts several TEI files to XSL:FO, validates the results
+            against fo.xsd with Jing, and diffs them against expected 
+            results.
+        </description>
+        <foreach target="teiFileToFo" param="inFile">
+            <path>
+                <fileset refid="foFiles"/>
+            </path>
+        </foreach>
+    </target>
+    
+    <target name="teiFileToRdf">
+        <description>
+            TARGET teiFileToRdf
+            Converts a single TEI file to rdf then diffs it against 
+            expected results. Takes one param, inFile.
+        </description>
+        <echo message="Converting ${inFile} from TEI to RDF."/>
+        <basename file="${inFile}" property="plainFileName" suffix=".xml"/>
+        <property name="outFile" value="${outputDir}/${plainFileName}.rdf"/>
+        <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
+            <arg value="-s:${inFile}"/>
+            <arg value="-xsl:${basedir}/../profiles/default/rdf/to.xsl"/>
+            <arg value="-o:${outFile}"/>
+            <arg value="--suppressXsltNamespaceCheck:on"/>
+            <arg value="-versionmsg:off"/>
+        </java>
+        
+        
+        <antcall target="prepAndDiffFile">
+            <param name="inFile" value="${outFile}"/>
+        </antcall>
+    </target>
+    
+    <target name="teiFilesToRdf">
+        <description>
+            TARGET teiFilesToRdf
+            Converts TEI files to rdf, and diffs them against expected 
+            results.
+        </description>
+        <foreach target="teiFileToRdf" param="inFile">
+            <path>
+                <fileset refid="rdfFiles"/>
+            </path>
+        </foreach>
+    </target>
+    
+<!--  We want to test FOP, but probably avoid exploding our repo,
+      so we download it. This is hard-coded FOP 2.2. -->
+    <target name="getFop" unless:blank="getFopAlreadyExecuted">
+        <description>
+            TARGET getFop
+            Checks whether the FOP jars are available, and if not, 
+            downloads a binary distribution and unzips it into the 
+            ../lib folder. Then it gets a hyphenation file from a
+            separate open-source project if that jar is not yet
+            available. Finally, it retrieves the JEuclid jars 
+            needed to process MathML into PDF with FOP.
+        </description>
+        <property name="getFopAlreadyExecuted" value="true" />
+        <available property="fopAvailable" file="${fopHome}/fop/build/fop.jar"/>
+        <echo unless:true="${fopAvailable}" message="Downloading FOP 2.2 to test creation of PDFs."/>
+        <get unless:true="${fopAvailable}" src="${fopDist}" 
+             dest="${fopDest}" verbose="on" retries="3" usetimestamp="true"/>
+        <unzip unless:true="${fopAvailable}" src="${fopDest}/fop-2.2-bin.zip" dest="${fopDest}" failonemptyarchive="true"/>
+        <delete file="${fopDest}/fop-2.2-bin.zip"/>
+        
+        <available property="fopHyphAvailable" file="${fopHome}/fop/build/fop-hyph.jar"/>
+        <echo unless:true="${fopHyphAvailable}" message="Downloading FOP hyphenation jar."/>
+        <get unless:true="${fopHyphAvailable}" src="${fopHyphDist}" 
+            dest="${fopDest}" verbose="on" retries="3" usetimestamp="true"/>
+        <unzip unless:true="${fopHyphAvailable}" src="${fopDest}/offo-hyphenation-compiled.zip" dest="${fopDest}" failonemptyarchive="true"/>
+        <copy unless:true="${fopHyphAvailable}" file="${fopDest}/offo-hyphenation-compiled/fop-hyph.jar" todir="${fopHome}/fop/build"/>
+        <delete file="${fopDest}/offo-hyphenation-compiled.zip"/>
+        <delete dir="${fopDest}/offo-hyphenation-compiled"/>
+        
+        <available property="jeuclidJarsAvailable" file="${fopHome}/fop/lib/jeuclid-core-3.1.9.jar"/>
+        <echo unless:true="${jeuclidJarsAvailable}" message="Downloading JEuclid jars for processing MathML into PDF."/>
+        <get unless:true="${jeuclidJarsAvailable}" src="${jeuclidDist}" 
+            dest="${fopDest}" verbose="on" retries="3" usetimestamp="true"/>
+        <unzip unless:true="${jeuclidJarsAvailable}" src="${fopDest}/jeuclid-3.1.9-distribution.zip" dest="${fopDest}" failonemptyarchive="true"/>
+        <copy unless:true="${jeuclidJarsAvailable}" file="${fopDest}/jeuclid-3.1.9/repo/jeuclid-core-3.1.9.jar" todir="${fopHome}/fop/lib"/>
+        <copy unless:true="${jeuclidJarsAvailable}" file="${fopDest}/jeuclid-3.1.9/repo/jeuclid-fop-3.1.9.jar" todir="${fopHome}/fop/lib"/>
+        <delete file="${fopDest}/jeuclid-3.1.9-distribution.zip"/>
+        <delete dir="${fopDest}/jeuclid-3.1.9"/>
+    </target>
+    
+    <target name="test">
+        <description>
+            TARGET: test
+            This target runs all build and check processes. Use this target
+            for a full run of tests. IT'S NOT COMPLETE BY A LONG WAY. This
+            runs all tests in parallel for better performance. We run the 
+            clean target before everything else, assuming that if you're 
+            running all the tests you'll want cruft cleared away first.
+        </description>
+        <parallel failonany="true">
+            <antcall target="clean"/>
+            <antcall target="oddFilesToRng"/>
+            <antcall target="simpleTeiToHtml"/>
+            <antcall target="markdown"/>
+            <antcall target="cocoaFilesToTei"/>
+            <antcall target="teiFilesToFo"/>
+            <antcall target="teiFilesToRdf"/>
+            <antcall target="teiFilesFromHtml"/>
+            <antcall target="teiFilesFromP4"/>
+            <antcall target="odt"/>
+            <antcall target="docx"/>
+        </parallel>
+    </target>
+    
+    <target name="documentation">
+        <echo>
+            To see detailed documentation for this buildfile, run 
+                ant -projecthelp
+            To run the full set of tests that have been scripted 
+            so far, run
+                ant test
+        </echo>
+    </target>
+    
+</project>

@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="utilsDocumentation" name="utils"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless">
+  
+  <description> 
+    Stylesheets/Test2/build_utilities.xml
+    
+    ANT UTILITIES MODULE TO SUPPORT ANT TEST FILE FOR THE TEI STYLESHEETS.
+    
+    MDH 2017: This file contains general utility properties and targets 
+    which are used by the main build.xml file, and by individual
+    conversion target files.
+    
+  </description>
+  
+  
+  <target name="utilsDocumentation">
+    <echo>
+      This is a support module for the build.xml file in the 
+      same folder. Run:
+      
+        ant -projecthelp
+        
+      to see full details of the build process.
+    </echo>
+  </target>
+  
+  <!-- We need ant-contrib to do foreach.   -->
+  <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+
+  <!-- Whether we're running tests against expected results or regenerating
+     expected results en masse. -->
+  <property name="regenerate" value=""/>
+  
+  <!-- AN ASSORTMENT OF FILE PATHS. -->
+  <!-- Location of transformtei script and its symlinked callers.   -->
+  <property name="bin" value="../bin"/>
+  
+  <!-- Location of input files for test conversions.   -->
+  <property name="inputDir" value="${basedir}/inputFiles"/>
+  
+  <!-- Location of output files resulting from test conversions.   -->
+  <property name="outputDir" value="${basedir}/outputFiles"/>
+  
+  <!-- Location of existing expected results for comparison of new output.   -->
+  <property name="expectedResultsDir" value="${basedir}/expected-results"/>
+  
+  <!-- Location of schemas used to validate results.   -->
+  <property name="schemaDir" value="${basedir}/schemas"/>
+  
+  <!-- tei_all schema is not stored, it's retrieved if not there. -->
+  <property name="teiAllSchema" value="${schemaDir}/tei_all.rng"/>
+  
+  <!-- Source to retrieve teiAllSchema from. -->
+  <property name="teiAllSource" value="https://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng"/>
+  
+  <!-- Java tools we need.    -->
+  <property name="saxonJar" value="../lib/saxon9he.jar"/>
+  <property name="trangJar" value="../lib/trang.jar"/>
+  <!-- Not sure why we need a special version of Jing, but that's what the Makefile uses. 
+     This should be checked into. -->
+  <property name="jingJar" value="../lib/lib/jing-20120724.0.0.jar"/>
+  
+  <!-- The jing task requires attributes @rngfile and @file.    -->
+  <taskdef name="jing" classpath="${jingJar}" classname="com.thaiopensource.relaxng.util.JingTask"/>
+  
+  <path id="externalCalls">
+    <fileset dir="../lib">
+      <include name="*.jar"/>
+    </fileset>
+    <fileset dir="../tools/ImageInfo" includes="**.jar"/>
+    <path refid="library.dir"/>
+  </path>
+  
+  <fileset id="generatedFiles" dir="${outputDir}" excludes="readme.txt">
+    <!--<include name="**.*"/>-->
+    <include name="**/**"/>
+  </fileset>  
+  <!--  CSS files that are used in HTML builds. These are symlinked from
+      the Stylesheets/ root folder. Not quite sure why yet. -->
+  <fileset id="cssFiles" dir="${basedir}/../css" includes="*.css"/>
+  
+  <!--  Symlinks to the CSS files created during the build.  -->
+  <fileset id="symlinksToCssFiles" dir="${basedir}/.." includes="*.css"/>
+  
+  <!--  Cleanup target, removing all files created.  -->
+  <target name="clean">
+    <description>
+      TARGET clean
+      This target removes all generated files.
+    </description>
+    <delete  includeemptydirs="true">
+      <fileset refid="symlinksToCssFiles"/>
+      <fileset refid="generatedFiles"/>
+    </delete>
+  </target>
+  
+  <!--  These targets deal with diffing the results of transformations against
+      expected results. The transformation result files are typically in the root 
+      Test folder; the files to diff them against are in the Test2/expected-results
+      folder. -->
+  
+  <target name="prepAndDiffFile">
+    <description>
+      TARGET prepAndDiffFile
+      This target calls the cleanForDiff target followed by the diffFile target
+      to normalize a file then compare it with its expected-results counterpart.
+      it takes a single parameter, inFile.
+    </description>
+    <!--  Format/indent the result with xmllint.      -->
+    <antcall target="cleanForDiff">
+      <param name="inFile" value="${inFile}"/>
+    </antcall>
+    
+    <!-- Diff the files, or regenerate.       -->
+    <antcall target="diffFile">
+      <param name="inFile" value="${inFile}"/>
+    </antcall>
+  </target>
+  
+  <target name="diffFile">
+    <description>
+      TARGET diffFile
+      The diffFile target is passed the name of a transformation result.
+      It infers the location of the expected results against which
+      to diff this file, and then does a comparison between the two,
+      using the ant filesmatch condition. If that fails, it then 
+      triggers a true diff using the diff executable, outputs the 
+      results, and fails the build.
+    </description>
+    <basename property="inFileName" file="${inFile}"/>
+    <property name="otherFile" value="${expectedResultsDir}/${inFileName}"/>
+    <!-- NOTE: We use ${file.separator} for portability. -->
+    <!--<propertyregex property="otherFile" input="${inFile}" regexp="(${file.separator})(${inFileName})" replace="\1expected-results\1\2" global="true"/>-->
+    <!--  If regenerating, just copy the file.      -->
+    <!--<echo unless:blank="${regenerate}" message="Copying generated ${inFile} to expected-results folder."/>
+    <copy unless:blank="${regenerate}" file="${inFile}" tofile="${otherFile}"/>-->
+    
+    <echo unless:blank="${regenerate}" message="The regenerate functionality has been removed from this test suite."/>
+    <echo unless:blank="${regenerate}" message="Instead, please diff your output file against the expected-results file manually and copy changes over if correct."/>
+    
+    
+    <!--  If not regenerating, then diff the file.      -->
+    <trycatch if:blank="${regenerate}">
+      <try>
+        <echo message="diff A: ${inFile}"/>
+        <echo message="diff B: ${otherFile}"/>
+        <fail message="${inFile} is different from ${otherFile}.">    
+          <condition>
+            <not>
+              <filesmatch file1="${inFile}" file2="${otherFile}"/>
+            </not>
+          </condition>
+        </fail>
+      </try>
+      <catch>
+        <echo message="ERROR: DIFF FAILURE..."/>
+        <!--  Note: this currently depends on the command-line diff app
+      available on *NIX platforms, but we could fork here and 
+      call diff.exe on Windows. Even if we don't, the build 
+      should only fail here on Windows if the files are different;
+      there would simply be less in the way of useful output. -->
+        <exec dir="." executable="diff">
+          <arg line="-u"/>
+          <arg line="-b"/>
+          <arg file="${inFile}"/>
+          <arg file="${otherFile}"/>
+        </exec>
+        <fail message="Build failed because of differences between  ${inFile} and ${otherFile}. See diff output above."/>
+      </catch>
+    </trycatch>
+  </target>
+  
+  
+  <target name="cleanForDiff">
+    <description>
+      TARGET cleanForDiff
+      This target is run on any XML or XHTML(5) output which is going to
+      be compared with an expected result file. It uses cleanForDiff.xsl
+      to:
+      1. Remove all comments (since these often contain dates, versions
+      etc.)
+      2. Normalize Unicode to UTF-8 NFC.
+      3. Check all internal links in HTML files.
+      4. Format and indent.
+      This should cover all the functions of checklinks.xsl, xmllint.
+      and various PERL bits and pieces in the original Test/Makefile.
+      It takes a single input file, inFile.
+      
+      Unfortunately, HTML5 documents created with the Stylesheets currently
+      use !DOCTYPE html  SYSTEM "about:legacy-compat", which will cause 
+      Saxon to die with an "unknown protocol: about" error, so we strip 
+      that off first with a regex transform.
+      
+      Note that if this strip process is applied to a file with a doctype which
+      contains entities (i.e. has closing angle brackets inside it), it will fail.
+      Current test processes don't process any such files.
+    </description>
+    <echo level="info" message="Clean ${inFile} ready for diffing with expected results."/>
+    <replaceregexp file="${inFile}" match="^\s*&lt;!DOCTYPE[^>]+>" replace=""/>
+    <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
+      <arg value="-s:${inFile}"/>
+      <arg value="-xsl:${basedir}/cleanForDiff.xsl"/>
+      <arg value="-o:${inFile}"/>
+      <arg value="--suppressXsltNamespaceCheck:on"/>
+      <arg value="-versionmsg:off"/>
+      <arg value="-dtd:off"/>
+    </java>
+  </target>
+  
+  <target name="lintFormat">
+    <description>
+      TARGET lintFormat
+      This target calls xmllint to format and indent an XML file that has 
+      been created for more reliable diff results, avoiding whitespace 
+      differences. It expects a single parameter, inFile. It lints the 
+      file to a temp file, tmpLint, then moves that back over the original
+      file.
+      
+      It may be difficult to find a good equivalent of this on Windows.
+    </description>
+    <exec executable="xmllint" failonerror="true" output="tmpLint">
+      <arg line="--format"/>
+      <arg file="${inFile}"/>
+    </exec>
+    <move file="tmpLint" tofile="${inFile}"/>
+  </target>
+  
+  <target name="diffFileSets">
+    <description>
+      TARGET: diffFileSets
+      The diffFileSets target diffs all of the files in a number 
+      of nested filesets against their expected results, by passing
+      each to the diffFile target.
+    </description>
+    <foreach target="diffFile" param="inFile">
+      <path>
+        <fileset refid="generatedFiles"/>                
+      </path>
+    </foreach>
+  </target>
+  
+  <target name="diffAllFiles">
+    <description>
+      TARGET: diffAllFiles
+      This target diffs all the files produced by the build process 
+      against their expected results.
+    </description>
+    <antcall target="diffFileSets"/>
+  </target>
+  
+  <target name="getLatestTeiAll" unless:true="haveTeiAll">
+    <description>
+      TARGET getLatestTeiAll
+      This target checks to see whether tei_all.rng is available in the schemas
+      folder. If not, it retrieves it for use in validation of results with Jing.
+    </description>
+    <if>
+      <available file="${teiAllSchema}"/>
+      <then>
+        <property name="haveTeiAll" value="true"/>
+      </then>
+      <else>
+        <echo message="Retrieving a copy of the tei_all schema."/>
+        <get src="${teiAllSource}" dest="${teiAllSchema}" verbose="on" retries="3" usetimestamp="true"/>
+        <property name="haveTeiAll" value="true"/>
+      </else>
+    </if>
+  </target>
+  
+  <target name="validateInvalidInstanceRng">
+    <description>
+      TARGET validateInvalidInstance
+      This target uses Jing to validate an XML instance file that is
+      purposely invalid, in order to check that the expected error
+      messages are generated. It diffs the actual output against
+      expected results, and fails if the results do not match.
+      Filenames are all generated from a single input pattern
+      (plainFileName).
+    </description>
+    <property name="rngFile" value="${outputDir}/${plainFileName}.rng"/>
+    <property name="invalidInstance" value="${inputDir}/invalidInstances/${plainFileName}InvalidInstance.xml"/>
+    <property name="outputMessageFile" value="${outputDir}/${plainFileName}InvalidInstanceRngMessages.txt"/>
+    
+<!--   Run jing to create the error output file. -->
+    <property name="expectedMessageFile" value="${expectedResultsDir}/${plainFileName}InvalidInstanceRngMessages.txt"/>
+    <java fork="true" failonerror="false" jar="${jingJar}" output="${outputMessageFile}">
+      <arg value="${rngFile}"/>
+      <arg value="${invalidInstance}"/>
+    </java>
+    
+<!--   Now we sed the file to get rid of host-specific paths. -->
+    <replaceregexp file="${outputMessageFile}" match="^.+inputFiles" replace="" flags="" byline="true"/>
+    
+<!--   Now diff against expected-results. -->
+    <antcall target="diffFile">
+      <param name="inFile" value="${outputMessageFile}"/>
+    </antcall>
+    
+  </target>
+  
+  <!--   NOTE: I DO NOT SEE THE POINT IN THESE CSS FILE SYMLINKS, AND UNLESS I 
+       CAN FIGURE OUT A GOOD REASON FOR THEM, I'LL REMOVE THE FOLLOWING TWO 
+       TARGETS. -->
+  <target name="symlinkCssFile">
+    <description>
+      TARGET symlinkCssFile (PROBABLY OBSOLETE)
+      This target creates a symlink from the ${basedir}/../ directory
+      to a file in its child css directory. NOTE: need to figure
+      out how best to accomplish this on Windows. ${to} is passed
+      as a param; ${from} is generated from it.
+    </description>
+    <propertyregex property="from" input="${to}" regexp="${file.separator}css${file.separator}" replace="${file.separator}Test2{$file.separator}outputFiles{$file.separator}" global="true"/>
+    <exec executable="ln">
+      <arg value="-s"/>
+      <arg value="-f"/>
+      <arg file="${to}"/>
+      <arg file="${from}"/>
+    </exec>
+  </target>
+  
+  <target name="symlinkCssFiles">
+    <description>
+      TARGET symlinkCssFiles (PROBABLY OBSOLETE)
+      This target creates symlinks from the parent directory of ${basedir}
+      to each of the CSS files in the ../css directory. These are used in 
+      the HTML build processes, then removed on cleanup.
+    </description>
+    <foreach target="symlinkCssFile" param="to">
+      <path>
+        <fileset refid="cssFiles"/>
+      </path>
+    </foreach>
+  </target>
+  
+</project>

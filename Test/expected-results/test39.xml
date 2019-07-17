@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title/>
+        <author>Tomaz Erjavec</author>
+      </titleStmt>
+      <editionStmt>
+        <edition>
+          <date>2014-01-20</date>
+        </edition>
+      </editionStmt>
+      <publicationStmt>
+        <p>unknown</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Converted from a Word document</p>
+      </sourceDesc>
+    </fileDesc>
+    <encodingDesc>
+      <appInfo>
+        <application xml:id="docxtotei" ident="TEI_fromDOCX" version="2.15.0">
+          <label>DOCX to TEI</label>
+        </application>
+      </appInfo>
+    </encodingDesc>
+    <revisionDesc>
+      <listChange>
+        <change>
+          <date/>
+          <name>Tomaz Erjavec</name>
+        </change>
+      </listChange>
+    </revisionDesc>
+  </teiHeader>
+  <text>
+    <front>
+      <titlePage>
+        <docTitle>
+          <titlePart type="Title">DOCX 2 TEI</titlePart>
+          <titlePart type="Subtitle">Instructions and Example Document</titlePart>
+        </docTitle>
+        <docAuthor>
+          <hi rend="bold smallcaps">Tomaž Erjavec, Andrej Pančur</hi>
+        </docAuthor>
+        <docDate>2014-08-12</docDate>
+      </titlePage>
+      <p rend="TOC Heading">
+        <hi rend="Heading_2_Char">
+          <seg rend="bold">Ta</seg>
+          <seg rend="bold">b</seg>
+          <seg rend="bold">le of Contents</seg>
+        </hi>
+      </p>
+      <p rend="toc 1">
+        <ref target="#Toc382049195">Introduction	2</ref>
+      </p>
+      <p rend="toc 1">
+        <ref target="#Toc382049196">Using standard Word formatting	2</ref>
+      </p>
+      <p rend="toc 2">
+        <ref target="#Toc382049197">Basic formatting	3</ref>
+      </p>
+      <p rend="toc 2">
+        <ref target="#Toc382049198">Character level styles	3</ref>
+      </p>
+      <p rend="toc 2">
+        <ref target="#Toc382049199">Paragraph level styles	3</ref>
+      </p>
+      <p rend="toc 2">
+        <ref target="#Toc382049200">Notes	3</ref>
+      </p>
+      <p rend="toc 2">
+        <ref target="#Toc382049201">Figures	4</ref>
+      </p>
+      <p rend="toc 2">
+        <ref target="#Toc382049202">Tables	5</ref>
+      </p>
+      <p rend="toc 2">
+        <ref target="#Toc382049203">Indexes	6</ref>
+      </p>
+      <p rend="toc 2">
+        <ref target="#Toc382049204">Bibliography	6</ref>
+      </p>
+      <p rend="toc 2">
+        <ref target="#Toc382049205">Page and line breaks	6</ref>
+      </p>
+      <p rend="toc 1">
+        <ref target="#Toc382049206">TEI element styles	7</ref>
+      </p>
+      <p rend="toc 2">
+        <ref target="#Toc382049207">Paragraph level styles	7</ref>
+      </p>
+      <p rend="toc 2">
+        <ref target="#Toc382049208">Character level styles	8</ref>
+      </p>
+      <p rend="toc 3">
+        <ref target="#Toc382049209">Janus elements	8</ref>
+      </p>
+      <p rend="toc 2">
+        <ref target="#Toc382049210">Defining your own	9</ref>
+      </p>
+      <p rend="toc 1">
+        <ref target="#Toc382049211">Conversion to HTML	9</ref>
+      </p>
+      <p rend="toc 1">
+        <ref target="#Toc382049212">Conclusions and further work	9</ref>
+      </p>
+      <p rend="toc 2">
+        <ref target="#Toc382049213">TEI Stylesheet bugs	10</ref>
+      </p>
+      <p rend="toc 1">
+        <ref target="#Toc382049214">Appendix 1. Auto-generated sections	11</ref>
+      </p>
+      <p rend="toc 2">
+        <ref target="#Toc382049215">Index	11</ref>
+      </p>
+      <p rend="toc 2">
+        <ref target="#Toc382049216">Table of Figures	11</ref>
+      </p>
+      <p rend="toc 2">
+        <ref target="#Toc382049217">Table of Tables	11</ref>
+      </p>
+    </front>
+    <body>
+      <div>
+        <head><anchor xml:id="Toc382049195"/>Introduction</head>
+        <p>This document is meant as an exemplar and test Word file for a docx2tei profile of the <ref target="http://www.tei-c.org/Tools/Stylesheets/">TEI Stylesheets</ref>. It also functions as the source for a Word template (.dotx) that can serve for authoring new or editing existing Word documents (primarily books) with the intention of converting them to TEI.  How Word structures are converted to TEI is here explained only briefly; to see the details it is best to compare the Word document with the generated TEI one. </p>
+        <p>This file and the associated profile, as well as a mini Web converter are available at <ref target="http://nl.ijs.si/tei/convert/">http://nl.ijs.si/tei/convert/</ref></p>
+        <p>In this document we give as examples the actual Word styles used, and when we refer to them, they are set in <hi rend="italic">italic</hi>, e.g. the style <hi rend="italic">Quote</hi>. To give TEI structures that these styles are converted to we use XPath and underline them, for &lt;note place="left"&gt; we write <hi rend="underline">note[@place = "left"]</hi>.</p>
+        <p>Here are some general hints about the conversion of the Word document to TEI using this profile:</p>
+        <list type="unordered">
+          <item>Very fancy formatting and esp. layout are not preserved in the TEI.</item>
+          <item>The conversion heavily depends on using Word styles, so using “raw” formatting will not work well.  The styles are here visually distinguished in a certain way, but changing their appearance to better suit individual use does not affect the conversion. Styles that are not used can be also deleted, to have less clutter in the Style gallery. Please note that English style names should be used; the conversion does currently not support styles names in other languages.</item>
+          <item>For repetitive tasks (e.g. marking various types of names) it is convenient to define keyboard shortcuts; if only one style (e.g. <hi rend="italic">tei:name</hi>) is being repeatedly applied, then CTRL-Y works as well.</item>
+          <item>The text before the first heading goes to the element &lt;front&gt;, with styles Title, Subtitle, Author and Date being mapped to appropriate TEI elements. The rest of the text in this division ignored; the first heading and the rest becomes &lt;body&gt;.</item>
+          <item>Some styles get extra processing, e.g. a series of paragraphs of style <hi rend="italic">Bibliography</hi> are converted into a <hi rend="underline">listBibl</hi> element containing a series of <hi rend="underline">bibl</hi> elements.</item>
+          <item>Styles starting with <hi rend="italic">tei:</hi> are substituted by their TEI element, as explained in the Section on TEI elements.</item>
+          <item>Some <hi rend="italic">tei:</hi> styles have shorthand notation, e.g<hi rend="italic">. tei:orgName</hi> goes to <hi rend="underline">name[@type=’org’]</hi>. </item>
+        </list>
+      </div>
+      <div>
+        <head><anchor xml:id="Toc382049196"/>Using standard Word formatting</head>
+        <p>This section reviews what kind of formatting we can do in standard Word to get appropriate TEI elements. The following section explains basic Word formatting (paragraphs, links, text effects) while the next two deal with character level and paragraph level styles. It is important to understand the distinction between the two, because the conversion to TEI is defined in terms of these two levels of styles. At the same time, Word does magic and can change one type of style to the other, which can lead to bad conversion results. When the TEI elements are not as expected it often helps to show Word formatting, i.e. pressing the “Show/Hide ¶” button and the Style gallery.</p>
+        <div>
+          <head><anchor xml:id="Toc382049197"/>Basic formatting</head>
+          <p>Plain paragraphs are converted to <hi rend="underline">p</hi>. Empty paragraphs are removed even if they contain white-space, e.g:</p>
+          <p>All types of links (to <ref target="http://nl.ijs.si/tei/convert/">web pages</ref>, <ref target="mailto:tomaz.erjavec@ijs.si">mail addresses</ref>, and document-internal cross-references, e.g. to the section on TEI element styles) should be converted correctly. References to documents on disk will of course not work.</p>
+          <p>Formatting is converted to the value of <hi rend="underline">hi/@rend</hi>: <hi rend="bold">bold</hi>, <hi rend="italic">italic</hi>, <hi rend="underline">underline</hi>, and <hi rend="strikethrough">strikethrough</hi> are preserved, also if more than one style is used, e.g. <hi rend="italic bold underline">italic bold underline</hi>. Colours are also converted: <hi rend="background(yellow)">rumeno ozadje</hi>, <hi rend="color(FF0000)">rdeča</hi>, <hi rend="color(92D050)">svetlozelena</hi>, <hi rend="color(C00000)">temno rdeča</hi>, <hi rend="color(FFC000)">oranžna</hi>, <hi rend="color(FFFF00)">rumena</hi>, <hi rend="color(00B0F0)">svetlomodra</hi>, <hi rend="color(0070C0)">modra</hi>, <hi rend="color(7030A0)" xml:space="preserve">vijolična, </hi><hi rend="italic bold underline color(76923C)">podčrtana, krepka in nenavadna</hi>. The exact details, such as the colour of <hi rend="wavyunderline">underline</hi> and more <hi rend="bold">fancy text effects</hi> are not preserved. </p>
+        </div>
+        <div>
+          <head><anchor xml:id="Toc382049198"/>Character level styles</head>
+          <p>Inside paragraphs we can have dates (with the <hi rend="italic">Date</hi> style), which are converted to <hi rend="underline">date</hi>, e.g. “It was a bright cold day in <hi rend="Date_Char">April</hi>, and the clocks were striking thirteen.”</p>
+        </div>
+        <div>
+          <head><anchor xml:id="Toc382049199"/><anchor xml:id="Ref395615364"/>Paragraph level styles</head>
+          <p>Bulleted and numbered lists are supported, although the numbering style will not survive the conversion, e.g.:</p>
+          <list type="ordered">
+            <item>First item<list type="ordered"><item>Subitem<list type="ordered"><item>Subsubitem</item></list></item></list></item>
+          </list>
+          <p>By using the paragraph level <hi rend="italic">Quote</hi> style a <hi rend="underline">quote</hi> can be produced:</p>
+          <p rend="Quote" style="font-style: italic; ">My fake plants died because I did not pretend to water them.</p>
+        </div>
+        <div>
+          <head><anchor xml:id="Toc382049200"/>Notes</head>
+          <p rend="MarginNoteLeft">Margin Note Left</p>
+          <p rend="MarginNoteRight">Margin Note Right</p>
+          <p>Here is a standard footnote<anchor xml:id="Ref378325988"/><note place="foot" xml:id="ftn1" n="1"><p rend="footnote text"> Small footnote (we don’t want a paragraph inside it).</p></note> and another,<note place="foot" xml:id="ftn2" n="2"><p rend="footnote text"> A footnote with two paragraphs. This is the first.</p><p rend="footnote text">And this is the second.</p></note> which should be converted without problems. We can also use endnotes<hi rend="endnote_reference"><note place="end"><p rend="endnote text"> This is an example of an endnote.</p></note></hi> although the difference between the two is moot in on-line editions. </p>
+          <p rend="MarginNoteInner">Margin Note Inner</p>
+          <p rend="MarginNoteOuter">Margin Note Outer</p>
+          <p>Critical editions can also use marginal notes. Following one of the existing TEI profiles we define 4 <hi rend="italic">MarginNote</hi> styles (<hi rend="italic">MarginNoteLeft, MarginNoteRight, MarginNoteInner, MarginNoteOuter</hi>), which are used to the left and right of this text. They are converted to <hi rend="underline">note[@place = "margin_xx"]</hi> where xx <hi style="font-family:Cambria Math" xml:space="preserve">∈ </hi>{left, right, inner, outer}. Note that the exact positioning of these notes is rather tricky.</p>
+        </div>
+        <div>
+          <head><anchor xml:id="Toc382049201"/>Figures</head>
+          <p>Figures and esp. tables are the more problematic aspects of conversion, as there are many ways to include them into a Word document. The pictures have to be embedded in the Word document. Because the conversion takes as input a Word document, references to external images are not supported. </p>
+          <p>The included pictures should be in as high resolution as possible – it is not a good idea to copy &amp; paste them into Word, as this often loses resolution. Also, avoid embedding TIFF images if the TEI is to be afterwards converted to HTML as most Web browsers do not display TIFF. </p>
+          <p>If the figure has a caption, it should be made with “Insert Caption” so that it is in the correct style (<hi rend="italic">Caption</hi>) and has automatic figure numbering. Note that the captions has to be <hi rend="italic">below</hi> the image in order to get converted.</p>
+          <p>So, in short, the conversion supports embedded images with captions and references to them, c.f. Figure 1, which can be also referred to as the Figure below.</p>
+          <figure>
+            <graphic n="1001" width="8.951125cm" height="5.315627777777777cm" url="media/image1.png" rend="inline"/>
+            <head><anchor xml:id="Ref378267425"/><anchor xml:id="Ref378324575"/><anchor xml:id="Toc381285977"/>Figure 1 Some Statistics, as a picture</head>
+          </figure>
+          <p>It is possible to have two images in one figure (i.e. with one <hi rend="italic">Caption</hi>). As shown in Figure 2 they can be side by side or they can be side by side i.e. separated by a paragraph mark , c.f. Figure 3.</p>
+          <figure>
+            <head><anchor xml:id="Ref378324989"/><anchor xml:id="Toc381285978"/>Figure 2 Two images, side by side</head>
+          </figure>
+          <figure>
+            <graphic n="1005" width="5.368919444444445cm" height="3.5090194444444442cm" url="media/image3.jpeg" rend="inline"/>
+            <head>Figure 3 Two images one above the other</head>
+          </figure>
+          <p>Figures in Word can also be embedded Excel graphs, as is the case with Figure 4. However, this conversion currently does <hi rend="italic">not</hi> work.</p>
+          <figure>
+            <p>
+              <hi style="color:red; font-size: 14pt; font-weight:bold;" rend="ERROR">�</hi>
+              <note place="margin" type="conversion" resp="#teitodocx">
+                <hi rend="docxError">unable to handle picture here, no embed or link</hi>
+              </note>
+            </p>
+            <head><anchor xml:id="Ref378264708"/><anchor xml:id="Ref378264701"/><anchor xml:id="Toc381285980"/>Figure 4 Embedded Excel example</head>
+          </figure>
+          <p>We can also have pictures without captions. These are with this profile wrapped in <hi rend="underline">figure</hi>, c.f. below:</p>
+          <figure>
+            <graphic n="1007" width="1.71555cm" height="1.7031194444444444cm" url="media/image4.jpeg" rend="inline"/>
+          </figure>
+        </div>
+        <div>
+          <head><anchor xml:id="Toc382049202"/>Tables</head>
+          <p>Tables, even somewhat more complicated ones (e.g. Table 2) can also be converted to TEI. However, the details of their layout and formatting will not be preserved. As with Figures, it is currently not possible to convert embedded Excel spreadsheets.</p>
+          <table rend="rules">
+            <row>
+              <cell rend="left"/>
+              <cell rend="left">
+                <hi rend="bold" style="font-size:9pt">Lendava</hi>
+              </cell>
+              <cell rend="left">
+                <hi rend="bold" style="font-size:9pt">Murska Sobota</hi>
+              </cell>
+              <cell rend="left">
+                <hi rend="bold" style="font-size:9pt">Beltinci</hi>
+              </cell>
+              <cell rend="left">
+                <hi rend="bold" style="font-size:9pt">okoliške vasi</hi>
+              </cell>
+              <cell rend="left">
+                <hi rend="bold" style="font-size:9pt">skupaj</hi>
+              </cell>
+            </row>
+            <row>
+              <cell rend="right">
+                <hi style="font-size:9pt">1778</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">14</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">0</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">0</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">0</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">14</hi>
+              </cell>
+            </row>
+            <row>
+              <cell rend="right">
+                <hi style="font-size:9pt">1793</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">19</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">14</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">21</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">6</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">60</hi>
+              </cell>
+            </row>
+            <row>
+              <cell rend="right">
+                <hi style="font-size:9pt">1812</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">23</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">13</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">40</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">0</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:9pt">76</hi>
+              </cell>
+            </row>
+            <head><anchor xml:id="Ref378063790"/><lb/><anchor xml:id="Toc381285985"/>Table 1 A Simple table</head>
+          </table>
+          <table rend="rules">
+            <row>
+              <cell rend="center" cols="5">
+                <hi rend="bold" style="font-size:10pt">SLOVENSKE DEŽELE</hi>
+              </cell>
+            </row>
+            <row>
+              <cell rend="left"/>
+              <cell rend="right">
+                <hi style="font-size:10pt">144</hi>
+              </cell>
+              <cell rend="right">
+                <hi style="font-size:10pt">192</hi>
+              </cell>
+              <cell rend="right">
+                <hi style="font-size:10pt">182</hi>
+              </cell>
+            </row>
+            <row>
+              <cell rend="left"/>
+              <cell rend="right">
+                <hi style="font-size:10pt">96</hi>
+              </cell>
+              <cell rend="right">
+                <hi style="font-size:10pt">89</hi>
+              </cell>
+              <cell rend="right">
+                <hi style="font-size:10pt">145</hi>
+              </cell>
+            </row>
+            <row>
+              <cell rend="left">
+                <hi rend="italic" style="font-size:10pt">Ljubljana</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:10pt">(74)</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:10pt">(76)</hi>
+              </cell>
+              <cell rend="right">
+                <hi rend="italic" style="font-size:10pt">(95)</hi>
+              </cell>
+            </row>
+            <row>
+              <cell rend="center" cols="5">
+                <hi rend="bold" style="font-size:10pt">Sodni okraji z ozemlja današnje slovenske Primorske</hi>
+              </cell>
+            </row>
+            <head><anchor xml:id="Ref378079178"/><anchor xml:id="Toc381285986"/>Table 2 A more complex table with multi columns</head>
+          </table>
+        </div>
+        <div>
+          <head><anchor xml:id="Toc382049203"/>Indexes</head>
+          <p>Word also supports the making of indexes and they are preserved in the conversion, as the example below shows (click on “Reveal formatting”, i.e. “Show ¶” to see the index marks):</p>
+          <p>“Here we are indexing the Web<index indexName="XE"><term>Web</term></index>, Web services<index indexName="XE"><term>Web</term><index><term>Web service</term></index></index>, and Web apps<index indexName="XE"><term>Web</term><index><term>Web app</term></index></index>, but also bugs<index indexName="XE"><term>bugs</term><index><term>horrible bugs<ref type="xr">See bugs</ref></term></index></index> and errors<index indexName="XE"><term>error</term></index>. Note that the index terms can be in Word also formatted<index indexName="XE"><term>formatting</term></index>, which is lost in the TEI. We can have ranges though, like this<index indexName="XE" spanTo="#foo"><term>Range</term><index><term>Subrange</term></index></index>.”</p>
+        </div>
+        <div>
+          <head><anchor xml:id="Toc382049204"/>Bibliography</head>
+          <p>Support for bibliography is quite basic – use the <hi rend="italic">Bibliography</hi> style, as below, to get a <hi rend="underline">listBibl</hi> element with nested <hi rend="underline">bibl</hi> elements, i.e. <hi rend="underline">listBibl/bibl+</hi>.</p>
+          <p rend="Bibliography">AUMÜLLER, Jutta: Assimilation: Kontroversen um ein migrationspolitisches Konzept. Bielefeld: Transcript Verlag, 2009.</p>
+          <p rend="Bibliography">BAGARIĆ, Marija: Obitelj Kapetanović. V: Pravednici među narodima [online], <ref target="http://www.geoskola.hr/hr/projekti/pravednici/kapetanovici.htm">http://www.geoskola.hr/hr/projekti/pravednici/kapetanovici.htm</ref> (Accessed 27. 9. 2007).</p>
+          <p rend="Bibliography">BELLER, Steven: Wien und die Juden 1867-1938. Wien, Köln in Weimar: Böhlau, 1993.</p>
+        </div>
+        <div>
+          <head><anchor xml:id="Toc382049205"/>Page and line breaks</head>
+          <p>Page breaks are preserved in TEI, even soft ones. However, page breaks can be problematic, as they can appear inside any (even otherwise empty) element, like <hi rend="underline">p</hi>, <hi rend="underline">head</hi>, <hi rend="underline">div</hi>. Hard line breaks also work, and are converted to <hi rend="underline">lb</hi>.<lb/>There was a hard line break just before this sentence, and a hard page break follows it.<pb/></p>
+        </div>
+      </div>
+      <div>
+        <head><anchor xml:id="Ref357527304"/><anchor xml:id="Ref381286210"/><anchor xml:id="Toc382049206"/>TEI element styles</head>
+        <p>In addition to standard Word styles, there is a special group of styles that start with “tei:” followed by (typically) the name of a TEI element. These styles are in the Word document given lots of eye watering effects to distinguish them from other text. </p>
+        <p>In some cases the styles are mapped to more complicated structures. An example is the <hi rend="italic">tei:lg</hi> style: if a series of paragraphs uses this style then each series ending with an empty paragraph is converted to <hi rend="underline">lg</hi>, with <hi rend="underline">l</hi> for the individual paragraph. To see the details for each style it is easiest to compare this file with the derived TEI. </p>
+        <div>
+          <head><anchor xml:id="Toc382049207"/>Paragraph level styles</head>
+          <p>These styles are paragraph level, i.e. they should mark complete paragraphs.</p>
+          <p>A citation is styled with <hi rend="italic">tei:cit</hi> and can (as all other paragraph level styles) have included character level styles, in this case <hi rend="italic">tei:bibl</hi> to mark a bibliographic item (note that citations should have a bibliographic item, whereas quotations, i.e. <hi rend="underline">quote</hi>, do not need to):</p>
+          <cit>A spectre is haunting Europe; the spectre of Communism. <bibl>The Communist Manifesto (1848), by Karl Marx and Friedrich Engels</bibl></cit>
+          <p>For poetry the <hi rend="italic">tei:lg</hi> style should be used. This is converted to <hi rend="underline">lg</hi> for each stanza, and <hi rend="underline">l</hi> for a line in a stanza. Note that a series of stanzas can be styled with <hi rend="italic">tei:lg</hi>, and an empty paragraph will separate the stanzas, as in the example below:</p>
+          <lg>There once was a man from Nantucket</lg>
+          <lg>Who kept all his cash in a bucket.</lg>
+          <lg>But his daughter, named Nan,</lg>
+          <lg>Ran away with a man</lg>
+          <lg>And as for the bucket, Nantucket.</lg>
+          <p>We can also have individual lines of poetry, without line group; for these the <hi rend="italic">tei:l</hi> style should be used, e.g.:</p>
+          <l>There once was a man from Nantucket</l>
+          <l>Who kept all his cash in a bucket.</l>
+          <p>The <hi rend="italic">tei:sp</hi> style should be used to mark a drama speech (<hi rend="underline">sp</hi>). We implement the convention that the first paragraph goes to <hi rend="underline">speaker</hi> and the rest are <hi rend="underline">l</hi>ines. As with a bibliography list, an empty paragraph will separate two speeches. For example:</p>
+          <sp>Polonius</sp>
+          <sp>Though this be madness, yet there is method in’t.</sp>
+          <sp>Will you walk out of the air, my lord?</sp>
+          <sp>Hamlet</sp>
+          <sp>Into my grave.</sp>
+          <fwCatch>Catch-word</fwCatch>
+          <fwSig>Signature<pb/></fwSig>
+          <fwPageNum>Page number</fwPageNum>
+          <fwHeader>Running Head</fwHeader>
+          <p>When transcribing primary sources, the <hi rend="underline">fw</hi> element is used to mark text in the headers and footers of the pages, where the <hi rend="underline">fw/@type</hi> is used to distinguish different types of these “forme works«. To make this annotation easier, several styles are defined which already set the value of <hi rend="underline">@type</hi>:</p>
+          <list type="unordered">
+            <item>catch-words: <hi rend="italic">tei:fwCatch</hi> (<hi rend="underline">fw[@type="catch"]</hi>), example at bottom of previous page;</item>
+            <item>running heads: <hi rend="italic">tei:fwHeader</hi> (<hi rend="underline">fw[@type="header"]</hi>), example at top of this page;</item>
+            <item>page numbers: <hi rend="italic">tei:fwPageNum</hi> (<hi rend="underline">fw[@type="pageNum"]</hi>), example at top of this page;</item>
+            <item>signatures or gathering symbols: <hi rend="italic">tei:fwSig</hi> (<hi rend="underline">fw[@type="sig"]</hi>), example at bottom of previous page.</item>
+          </list>
+        </div>
+        <div>
+          <head><anchor xml:id="Toc382049208"/>Character level styles</head>
+          <p>Character level Word styles map to various TEI phrase level elements:</p>
+          <list type="unordered">
+            <item>Basic style (elements) supported are <hi rend="italic">tei:bibl</hi> (<hi rend="underline">bibl</hi>), <hi rend="italic">tei:foreign</hi> (<hi rend="underline">foreign</hi>), <hi rend="italic">tei:q</hi> (<hi rend="underline">q</hi>), e.g.:<lb/>“text <bibl>Bibl</bibl> text <foreign>Foreign</foreign> text <q>Quoted</q> text”.</item>
+            <item>There is also <hi rend="italic">tei:quote</hi>, which is used when a <hi rend="underline">quote</hi> is to be used on the character level (note that for paragraph level <hi rend="underline">quote</hi> one must use the default Word <hi rend="italic">Quote</hi> style, as explained in the Section on Paragraph level styles),  e.g.:<lb/>“text <quote>Longer quoted text</quote> and some text”.</item>
+            <item>Named entities are marked with <hi rend="italic">tei:name</hi> (<hi rend="underline">name</hi>), <hi rend="italic">tei:persName</hi> (<hi rend="underline">name[@type="person"]</hi>), <hi rend="italic">tei:placeName</hi> (<hi rend="underline">name[@type="place"]</hi>), <hi rend="italic">tei:orgName</hi> (<hi rend="underline">name[@type="org"]</hi>), e.g.:<lb/>“text <name>Name</name> text <persName>Person</persName> text <placeName>Place</placeName> text <orgName>Organisation</orgName> text”.</item>
+            <item>Text-critical elements with eponymous names (note that the text marked with <hi rend="italic">tei:gap</hi> goes to <hi rend="underline">gap/desc</hi>, i.e. a description of the gapped text<hi rend="underline">)</hi>, e.g.:<lb/>“text <damage>Damage</damage> text <gap><desc xml:space="preserve">Gap (description of) </desc></gap> text <supplied>Supplied</supplied> text <surplus>Surplus</surplus> text <unclear>Unclear</unclear> text”.</item>
+          </list>
+          <p>Note that if we have several such elements in a row there should be at least one character in between marked with <hi rend="italic">Normal</hi> style in order to separate them. For example, (<bibl>Pančur, 2011, 45-47; Erjavec, 2012, 30</bibl>) will produce one <hi rend="underline">bibl</hi>, whereas (<bibl>Pančur, 2011, 45-47</bibl>; <bibl>Erjavec, 2012, 30</bibl>) will produce two; the difference is in the semicolon, it is marked with the <hi rend="italic">tei:bibl</hi> style in the former and <hi rend="italic">Normal</hi> in the latter.<note place="foot" xml:id="ftn3" n="3"><p rend="footnote text"> It is also possible to have character-level styles in notes, e.g., <bibl>AUMÜLLER, Jutta: Assimilation: Kontroversen um ein migrationspolitisches Konzept. Bielefeld: Transcript Verlag, 2009</bibl>.</p></note></p>
+          <div>
+            <head><anchor xml:id="Toc382049209"/>Janus elements</head>
+            <p>So called Janus (two-faced) elements are used mostly in text-critical editions and are special in that they can represent two alternative paths through the text of the document. When taken as alternative encodings they are wrapped in a <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-subst.html">subst</ref> or <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-choice.html">choice</ref> element. In particular, a contiguous series of <hi rend="underline">del</hi> and <hi rend="underline">add</hi> elements gets in the TEI the parent element <hi rend="underline">subst</hi> , while ordered pairs of <hi rend="underline">abbr</hi> followed by <hi rend="underline">expan</hi>, <hi rend="underline">orig</hi> followed by <hi rend="underline">reg</hi> and <hi rend="underline">sic</hi> followed by <hi rend="underline">corr</hi> get a parent <hi rend="underline">choice</hi> element. </p>
+            <p>Examples of use:</p>
+            <list type="unordered">
+              <item><anchor xml:id="foo"/><anchor xml:id="adddel"/>For deletions and additions in the source text use <hi rend="italic">tei:del</hi> (<hi rend="underline">del</hi>) and <hi rend="italic">tei:add</hi> (<hi rend="underline">add</hi>):<lb/>“<del>Delete</del> text <del>Delete</del> <add>Add</add>, text <add>Add</add> <del>Delete</del>, text <del>Delete</del> <add>Add</add> <del>Delete</del> <add>Add</add>, text <add>Add</add>”.</item>
+              <item>For abbreviations and their expansions use <hi rend="italic">tei:abbr</hi> (<hi rend="underline">abbr</hi>) and <hi rend="italic">tei:expan</hi> (<hi rend="underline">expan</hi>):<lb/>“<abbr>Abbreviation</abbr> text <abbr>Abbreviation</abbr> <expan>Expansion</expan>, text <expan>Expansion</expan>”.</item>
+              <item>For original and regularised text use <hi rend="italic">tei:orig</hi> (orig) and <hi rend="italic">tei:reg</hi> (<hi rend="underline">reg</hi>):<lb/>“<orig>Orig</orig> text <orig>Orig</orig> <reg>Regularised</reg>, text <reg>Regularised</reg>”.</item>
+              <item>For abbreviations and their expansions use <hi rend="italic">tei:abbr</hi> (<hi rend="underline">abbr</hi>) and <hi rend="italic">tei:expan</hi> (<hi rend="underline">expan</hi>):<lb/>“<sic xml:space="preserve">Sic </sic>text <sic>Sic</sic> <corr>Corr </corr><sic>Sic</sic> <corr>Corr </corr><sic>Sic</sic> <corr>Corr</corr>, text <corr>Corr</corr>”.</item>
+            </list>
+          </div>
+        </div>
+        <div>
+          <head><anchor xml:id="Toc382049210"/>Defining your own</head>
+          <p>It is possible to define new <hi rend="italic">tei:</hi> styles, which will also get converted to the TEI element that follows the <hi rend="italic">tei:</hi> prefix. It is useful to give them visual features to distinguish them from the surrounding text and other styles, and, as with the other style, to use them only in contexts where the TEI element is allowed.</p>
+        </div>
+      </div>
+      <div>
+        <head><anchor xml:id="Toc382049211"/>Conversion to HTML</head>
+        <p>A down-converter to HTML (together with CSS) is also available in the JSI profile. The HTML simulates the look of the JSI template.docx, in particular the supported elements should look the same as the <hi rend="italic">tei:*</hi> styles in Word. The intention is to offer a “round trip” for the author / editor of the Word file, so that errors can be seen by visually comparing the DOCX with the HTML.</p>
+      </div>
+      <div>
+        <head><anchor xml:id="Toc382049212"/>Conclusions and further work</head>
+        <p>We’ve used approach to authoring TEI documents via Word for many years now, but so far the workflow was from RTF to TEI with home grown XSLT, c.f. <ref target="http://nl.ijs.si/e-zrc/rtf2tei/">http://nl.ijs.si/e-zrc/rtf2tei/</ref>. Now we’ve switched to standard Stylesheets, and this document and the associated profile are our attempt in this direction.</p>
+        <p>The plan is to:</p>
+        <list type="ordered">
+          <item>Fix bugs &amp; add features, c.f. below</item>
+          <item>Make a better converter than the current one? Maybe install OxGarage?</item>
+          <item>Split current profile into two: <list type="ordered"><item>for social studies (focus on tables, figures, indexes, names, potentially soft pbs) </item><item>for humanities (facsimile, text-critical and other <hi rend="italic">tei:</hi> styles).</item></list></item>
+        </list>
+        <p>  Including facsimiles:</p>
+        <list type="unordered">
+          <item>extend the idea of tei: styles to section headings (pass 4?): <lb/>if it is “tei:facsimile” this is the facsimile.</item>
+          <item>it can be empty (or maybe just a p) – then a facsimile with hard pb number of surfaces is created </item>
+          <item>can have figures directly (with captions or not) </item>
+          <item>or has a <hi rend="italic">tei:surface</hi> which is a numbered list of surfaces</item>
+          <item>each surface has a description and / or URI of image (can be local if plugged into downloaded conversion); how are they marked? (if it looks like an uri it is an uri?)</item>
+        </list>
+        <div>
+          <head><anchor xml:id="Toc382049213"/>TEI Stylesheet bugs</head>
+          <list type="unordered">
+            <item><hi rend="underline">pb</hi>’s at start / end of elements should be promoted upwards as far as they go (and containing elements zapped if then empty) //fixed locally in pass4//</item>
+            <item>footnotes are numbered wrongly, as the take note/@n = w:footnoteReference/@w:id but w:id is not necessarily the correct number of the footnote //fixed locally in pass2//</item>
+            <item>Embedded Excel spreadsheets are not converted.</item>
+            <item>Problems with (phrase level) elements containing initial or final space, which should go outside the element, e.g. “foo&lt;term&gt; bar &lt;/term&gt;baz” → “foo &lt;term&gt;bar&lt;/term&gt; baz”, otherwise some injudicious use of normalize-space quickly produces run-together text, e.g. “foo&lt;term&gt;bar&lt;/term&gt;baz”. Example: “text<sic xml:space="preserve"> Sic </sic>text” </item>
+            <item>
+              <pb/>
+            </item>
+          </list>
+        </div>
+      </div>
+      <div>
+        <head><anchor xml:id="Toc382049214"/>Appendix 1. Auto-generated sections</head>
+        <p>Word can auto-generate various tables of contents. Not clear if this is worth including in the TEI document (except if pageification is kept), as they would probably be better automatically generated from a tei:divGen. </p>
+        <div>
+          <head><anchor xml:id="Toc382049215"/>Index</head>
+          <p rend="index 1">bugs</p>
+          <p rend="index 2">horrible bugs. <hi rend="italic">See</hi> bugs</p>
+          <p rend="index 1">error, 6</p>
+          <p rend="index 1"><hi rend="bold">formatting</hi>, 6</p>
+          <p rend="index 1">Range</p>
+          <p rend="index 2">Subrange, 9</p>
+          <p rend="index 1">Web, 6</p>
+          <p rend="index 2">Web app, 6</p>
+          <p rend="index 2">Web service, 6</p>
+        </div>
+        <div>
+          <head><anchor xml:id="Toc382049216"/>Table of Figures</head>
+          <figure>
+            <p rend="table of figures">
+              <ref target="#Toc381285977">Figure 1 Some Statistics, as a picture	4</ref>
+            </p>
+            <p rend="table of figures">
+              <ref target="#Toc381285978">Figure 2 Two images, one above the other	4</ref>
+            </p>
+            <p rend="table of figures">
+              <ref target="#Toc381285979">Figure 3 Two images side by side	5</ref>
+            </p>
+            <p rend="table of figures">
+              <ref target="#Toc381285980">Figure 4 Embedded Excel example	5</ref>
+            </p>
+          </figure>
+        </div>
+        <div>
+          <head><anchor xml:id="Toc382049217"/>Table of Tables</head>
+          <figure>
+            <p rend="table of figures">
+              <ref target="#Toc381285985">Table 1 A Simple table	5</ref>
+            </p>
+            <p rend="table of figures">
+              <ref target="#Toc381285986">Table 2 A more complex table with multi columns	6</ref>
+            </p>
+          </figure>
+        </div>
+      </div>
+    </body>
+  </text>
+</TEI>

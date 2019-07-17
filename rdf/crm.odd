@@ -1,0 +1,110 @@
+<?oxygen RNGSchema="tei_odds.rnc" type="compact"?>
+<TEI xml:lang="en" xmlns="http://www.tei-c.org/ns/1.0" >
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Mapping TEI to CIDOC CRM and FRBRoo</title>
+	    <author>Sebastian Rahtz</author>
+         </titleStmt>
+         <publicationStmt>
+	   <p> </p>
+	 </publicationStmt>
+         <sourceDesc>
+            <p>authored from scratch</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>
+     <body>
+       <specGrp xml:id="crm">
+	 <elementSpec ident="TEI" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="TEI"/>
+	 </elementSpec>
+	 <elementSpec ident="teiCorpus" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="TEI"/>
+	 </elementSpec>
+
+	 <elementSpec ident="title" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E35"
+		  uri="http://erlangen-crm.org/current/E35_Title"/>
+	 </elementSpec>
+
+	 <elementSpec ident="author" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E65"
+		  uri="http://erlangen-crm.org/current/E65_creation"/>
+	 </elementSpec>
+
+	 <elementSpec ident="text" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E31" uri="http://erlangen-crm.org/current/E31_Document"/>
+	 </elementSpec>
+
+	 <elementSpec ident="person" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E21" uri="http://erlangen-crm.org/current/E21_Person"/>
+	 </elementSpec>
+	 <elementSpec ident="place" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E53" uri="http://erlangen-crm.org/current/E53_Place"/>
+	 </elementSpec>
+	 <elementSpec ident="persName" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E82" uri="http://erlangen-crm.org/current/E82_Actor_Appellation"/>
+	 </elementSpec>
+
+	 <elementSpec ident="placeName" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E48"
+		 uri="http://erlangen-crm.org/current/E48_Place_Name"/>
+	 </elementSpec>
+
+	 <elementSpec ident="ab" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="anonblock"/>
+	 </elementSpec>
+
+	 <elementSpec ident="publicationStmt" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="F30"
+		  uri="http://erlangen-crm.org/efrbroo/F30_Publication_Event"/>
+	 </elementSpec>
+
+	 <elementSpec ident="fileDesc" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="F24"
+		  uri="http://erlangen-crm.org/efrbroo/F24_Publication_Expression"/>
+	 </elementSpec>
+       </specGrp>
+
+       <specGrp xml:id="properties">
+	 <elementSpec ident="date" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E52" uri="http://erlangen-crm.org/current/E52_Time-Span"/>
+	 </elementSpec>
+	 <elementSpec ident="event" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E5" uri="http://erlangen-crm.org/current/E5_Event"/>
+	 </elementSpec>
+	 <elementSpec ident="org" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E74" uri="http://erlangen-crm.org/current/E74_Group"/>
+	 </elementSpec>
+	 <elementSpec ident="residence" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="P74" uri="http://erlangen-crm.org/current/P74_has_current_or_former_residence"/>
+	 </elementSpec>
+	 <elementSpec ident="birth" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E67" uri="http://erlangen-crm.org/current/E67_Birth"/>
+	 </elementSpec>
+	 <elementSpec ident="death" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E69" uri="http://erlangen-crm.org/current/E69_Death"/>
+	 </elementSpec>
+	 <elementSpec ident="geo" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E47"
+		  uri="http://erlangen-crm.org/current/E47_Place_Spatial_Coordinates"/>
+	 </elementSpec>
+	 <elementSpec ident="name" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl"
+		  name="teiname"/>
+	   <attList>
+	     <attDef ident="ref" mode="change" usage="req"/>
+	   </attList>
+	 </elementSpec>
+	 <classSpec ident="att.global" mode="change">
+	   <attList>
+	     <attDef ident="xml:id" mode="change" usage="req"/>
+	   </attList>
+	 </classSpec>
+       </specGrp>
+
+     </body>
+   </text>
+</TEI>

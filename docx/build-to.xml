@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project basedir="." default="dist" name="teidocx">
+  <!--
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public
+	License as published by the Free Software Foundation; either
+	version 2.1 of the License, or (at your option) any later version.
+	
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Lesser General Public License for more details.
+	
+	You should have received a copy of the GNU Lesser General Public
+	License along with this library; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+	
+        Id: $Id$
+        Copyright: 2011, TEI Consortium<
+-->
+  <!--
+ Convert TEI documents into docx files.
+ -->
+  <import file="../common/teianttasks.xml"/>
+
+  <target name="dist" depends="setup,odd,notodd,coverpages,nocoverpages,zip,cleanup"/>
+
+  <target name="odd" if="processODD">
+   <odd2lite in="${inputFile}" out="${inputFile}.processedodd"/>
+   <builddocx in="${inputFile}.processedodd" out="${outputFile}" xsl="${profiledir}/${profile}/docx/to.xsl"/>
+   <delete file="${inputFile}.processedodd"/>
+  </target>
+
+  <target name="notodd" unless="processODD">
+    <builddocx in="${inputFile}" out="${outputFile}" xsl="${profiledir}/${profile}/docx/to.xsl"/>
+  </target>
+
+  <target name="nocoverpages" unless="makecoverpages">
+    <move file="${outputTempDir}/newdocument.xml" tofile="${outputTempDir}/word/document.xml" overwrite="true"/>
+  </target>
+
+  <target name="coverpages" if="makecoverpages">
+    <echo>Make cover pages</echo>
+    <xslt style="${profiledir}/${profile}/docx/makecoverpages.xsl" in="${outputTempDir}/word/document.xml" out="${outputTempDir}/tmp3.xml">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <classpath location="${oxygenlib}/saxon9he.jar"/>
+      <param name="headerFile" expression="file:///${outputTempDir}/tmp2.xml"/>
+      <param name="documentFile" expression="file:///${outputTempDir}/newdocument.xml"/>
+    </xslt>
+    <move file="${outputTempDir}/tmp3.xml" tofile="${outputTempDir}/word/document.xml" overwrite="true"/>
+    <delete file="${outputTempDir}/newdocument.xml"/>
+  </target>
+
+</project>

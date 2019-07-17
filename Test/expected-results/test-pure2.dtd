@@ -1,0 +1,33 @@
+
+
+<!-- predeclared classes -->
+
+<!ENTITY % stuffPart "bob |bit"> 
+<!ENTITY % stuffPart_sequence "bob, bit"> 
+<!ENTITY % stuffPart_sequenceOptional "bob?, bit?"> 
+<!ENTITY % stuffPart_sequenceOptionalRepeatable "bob*, bit*"> 
+<!ENTITY % stuffPart_sequenceRepeatable "bob+, bit+"> 
+<!-- end of predeclared classes -->
+
+<!ENTITY % stuffPart "bob |bit"> 
+<!ENTITY % stuffPart_sequence "bob, bit"> 
+<!ENTITY % stuffPart_sequenceOptional "bob?, bit?"> 
+<!ENTITY % stuffPart_sequenceOptionalRepeatable "bob*, bit*"> 
+<!ENTITY % stuffPart_sequenceRepeatable "bob+, bit+"> 
+<!-- start elements -->
+
+<!--doc:élément textuel du schéma simplissime (peut contenir des bobs)  -->
+<!ELEMENT bit (#PCDATA|bob)*>
+<!--doc:élément pointeur du schéma simplissime -->
+<!ELEMENT bob  EMPTY>
+<!ATTLIST bob
+uri CDATA #IMPLIED >
+<!--doc:élément racine d'un schéma simplissime -->
+<!ELEMENT stuff (%stuffPart;)+>
+<!--doc:élément racine d'un schéma simplissime -->
+<!ELEMENT stuffSeq (%stuffPart_sequence;)>
+<!--doc:élément racine d'un schéma simplissime -->
+<!ELEMENT stuffSeqOpt (%stuffPart_sequenceOptional;)>
+<!--doc:élément racine d'un schéma simplissime -->
+<!ELEMENT stuffSeqRep (%stuffPart_sequenceRepeatable;)>
+<!-- end elements -->

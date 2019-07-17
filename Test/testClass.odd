@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Some simple classRef exercises</title>
+         </titleStmt>
+         <publicationStmt>
+            <p>Unpublished TEI test file</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>All my own work</p>
+         </sourceDesc>
+         
+      </fileDesc>
+      <revisionDesc><change when="2016-02-14">LB drafted</change></revisionDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <p>This ODD exercises the various attributes associated with <gi>classRef</gi> to see
+            which, if any, of them work. Scroll down to the bottom of the generated RNC to check
+         if the declarations match what's expected. </p>
+         <schemaSpec start="div" ident="testClassRef">
+            <elementRef key="div"/>
+            <elementRef key="p"/>
+            <classSpec ident="testClass" type="model">
+               <desc>A suitable class for testing</desc>
+            </classSpec>
+            <elementSpec ident="x">
+               <desc>a test element</desc>
+               <classes>
+                  <memberOf key="testClass"/>
+               </classes>
+            </elementSpec>
+            <elementSpec ident="y">
+               <desc>a test element</desc>
+               <classes>
+                  <memberOf key="testClass"/>
+               </classes>
+            </elementSpec>
+            <elementSpec ident="z">
+               <desc>a test element</desc>
+               <classes>
+                  <memberOf key="testClass"/>
+               </classes>
+            </elementSpec>
+            <moduleRef key="tei"/>
+            <elementSpec ident="testP1">
+               <desc>Default: should generate x | y | z</desc>
+               <classes>
+                  <memberOf key="model.divPart"/>
+               </classes>
+               <content>
+                  <classRef key="testClass"/>
+               </content>
+            </elementSpec>
+
+            <elementSpec ident="testP2">
+               <desc>Sequence: should generate x,y,z</desc>
+               <classes>
+                  <memberOf key="model.divPart"/>
+               </classes>
+               <content>
+                  <classRef key="testClass" expand="sequence"/>
+               </content>
+            </elementSpec>
+
+            <elementSpec ident="testP3">
+               <desc>Should generate x|y but no z</desc>
+               <classes>
+                  <memberOf key="model.divPart"/>
+               </classes>
+               <content>
+                  <classRef key="testClass" expand="alternate" except="z"/>
+               </content>
+            </elementSpec>
+
+            <elementSpec ident="testP4a">
+               <desc>Should also generate x|y but no z; doesnt work because wrong default value for
+                  @expand is used</desc>
+               <classes>
+                  <memberOf key="model.divPart"/>
+               </classes>
+               <content>
+                  <classRef key="testClass" include="x y"/>
+               </content>
+            </elementSpec>
+
+            <elementSpec ident="testP4b">
+               <desc>Should generate x|y but no z; works because right value for @expand is
+                  supplied</desc>
+               <classes>
+                  <memberOf key="model.divPart"/>
+               </classes>
+               <content>
+                  <classRef key="testClass" expand="alternate" include="x y"/>
+               </content>
+            </elementSpec>
+
+            <elementSpec ident="testP5">
+               <desc>Should generate (y|z)* </desc>
+               <classes>
+                  <memberOf key="model.divPart"/>
+               </classes>
+               <content>
+                  <classRef key="testClass" expand="alternate" except="x" minOccurs="0"
+                     maxOccurs="unbounded"/>
+               </content>
+            </elementSpec>
+
+            <elementSpec ident="testP6">
+               <desc>Should generate (y|z)+ </desc>
+               <classes>
+                  <memberOf key="model.divPart"/>
+               </classes>
+               <content>
+                  <classRef key="testClass" expand="alternate" except="x" maxOccurs="unbounded"/>
+               </content>
+            </elementSpec>
+
+            <elementSpec ident="testP7">
+               <desc>Should generate ((y|z),(y|z)?, (y|z)?) or maybe (y|z)+ and a schematron rule,
+                  but doesn't </desc>
+               <classes>
+                  <memberOf key="model.divPart"/>
+               </classes>
+               <content>
+                  <classRef key="testClass" expand="alternate" except="x" maxOccurs="3"/>
+               </content>
+            </elementSpec>
+
+            <elementSpec ident="testP8">
+               <desc>Should generate (x+,y+) </desc>
+               <classes>
+                  <memberOf key="model.divPart"/>
+               </classes>
+               <content>
+                  <classRef key="testClass" expand="sequenceRepeatable" include="x y"/>
+               </content>
+            </elementSpec>
+
+            <elementSpec ident="testP9">
+               <desc>Generates  (y?, z?) and not (z?,y?) because order is always order of declaration</desc>
+               <classes>
+                  <memberOf key="model.divPart"/>
+               </classes>
+               <content>
+                  <classRef key="testClass" expand="sequenceOptional" include="z y"/>
+               </content>
+            </elementSpec>
+          
+            
+            <elementSpec ident="testPA">
+               <desc>Should generate (x*,y*) </desc>
+               <classes>
+                  <memberOf key="model.divPart"/>
+               </classes>
+               <content>
+                  <classRef key="testClass" expand="sequenceOptionalRepeatable" include="x y"/>
+               </content>
+            </elementSpec>
+            
+            <elementSpec ident="testPB">
+               <desc>Should generate ((x*,y*)+) whatever that means </desc>
+               <classes>
+                  <memberOf key="model.divPart"/>
+               </classes>
+               <content>
+                  <classRef key="testClass" expand="sequenceOptionalRepeatable" maxOccurs="unbounded" include="x y"/>
+               </content>
+            </elementSpec>
+         </schemaSpec>
+      </body>
+   </text>
+</TEI>

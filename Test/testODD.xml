@@ -1,0 +1,89 @@
+<!-- This is a test file for schemas generated from testODD.odd 
+     NB it contains some deliberate errors which the validator should detect: they
+      are indicated in the file and also by a ! comment  LB 7 i 17 --> 
+
+ <stuff>
+  <bit href="ptr:overThere"/>
+  <title>Some text here</title>
+  <bob>
+    <bit href="#ID1"/>
+    some more text here
+    <bit href="http://www.tei-c.org"/>
+    and here but the next bit should be flagged as invalid
+    <bit/> <!-- ! -->
+  </bob>
+  <bob/>
+  <bob1>
+    can have just text in here
+  </bob1>
+  <bob1>
+    or some text and a bit
+    <bit href="#ID1"/>
+    and some more text
+    <bit href="ptr:roundTheCorner"/>  <!-- ! -->
+    but schematron should complain about preceding bit
+  </bob1>
+  <bitOrbob/>
+  <bitOrbob>
+    <bob/>
+  </bitOrbob>
+  <bitOrbob>
+    <bit href="http://www.tei-c.org"/>
+  </bitOrbob>
+  <bitOrbob>
+    <bob>This bob is OK but you can't have another one</bob>
+    <bob/>  <!-- ! -->
+  </bitOrbob>
+  <bitOrbobs>
+    <bob>This bob is OK and you can have another one</bob>
+    <bob>Or even more</bob>
+    <bob/>
+  </bitOrbobs>
+  <bitOrbobs>
+    <bob>This bob is OK : it can  have a bit in it
+    <bit href="http://www.tei-c.org"/>
+    or next to it</bob>
+    <bit href="http://www.tei-c.org"/>
+    <bit href="http://www.tei-c.org"/>
+    <bob>but you can't have an empty container</bob>
+  </bitOrbobs>
+   <bitOrbobs/>  <!-- ! -->
+  <bitAndbob>
+    <bit href="#ID1"/>
+    <bob/>
+  </bitAndbob>
+  <bitAndbob>
+    Next one is invalid
+  </bitAndbob>
+  <bitAndbobs>
+    <bit href="#ID1"/>
+<bob/>
+<bob/>
+<bob/>
+  </bitAndbobs>  <!-- ! -->
+  <bitAndbobs>
+<bob/>
+<bob/>
+<bob/>
+<bob/>
+  </bitAndbobs>
+  <bitAndbobs>
+<bob/>
+<bob/>
+<bob/>
+<bob/>
+    <bob>One too many!</bob>  <!-- ! -->
+  </bitAndbobs>
+  <bobs><bob/><bob/><bob/><bob/><bob/><bob>Next bobs is inadequate</bob></bobs>
+   <bobs><bob/></bobs> <!-- ! -->
+  <abob><bob>Just one bob</bob></abob>
+   <abob><bob>Just one bob</bob><bob>Not two or none!</bob></abob> <!-- ! -->
+   <abob/> <!-- ! -->
+  <xyz><x/><y/><z/></xyz>
+  <xyz><x count="42"  trixie="00" granfalloon="0.636519"/></xyz>
+   <!-- and now with dud values for each attribute... -->
+   <xyz><x count="xlii" trixie="101" granfalloon="-365"/></xyz><!-- ! -->
+ 
+ <!-- check rng output for classRef tests -->
+   
+  </stuff>

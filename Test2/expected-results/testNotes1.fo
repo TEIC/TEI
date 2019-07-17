@@ -1,0 +1,469 @@
+<root xmlns="http://www.w3.org/1999/XSL/Format">
+   <layout-master-set>
+      <simple-page-master master-name="simple1"
+                          page-width="211mm"
+                          page-height="297mm"
+                          margin-top="72pt"
+                          margin-bottom="72pt"
+                          margin-left="72pt"
+                          margin-right="72pt">
+         <region-body margin-bottom="24pt" margin-top="24pt"/>
+         <region-before extent="14pt"/>
+         <region-after extent="14pt"/>
+      </simple-page-master>
+      <simple-page-master master-name="left1"
+                          page-width="211mm"
+                          page-height="297mm"
+                          margin-top="72pt"
+                          margin-bottom="72pt"
+                          margin-left="72pt"
+                          margin-right="72pt">
+         <region-body margin-bottom="24pt" margin-top="24pt"/>
+         <region-before region-name="xsl-region-before-left" extent="14pt"/>
+         <region-after region-name="xsl-region-after-left" extent="14pt"/>
+      </simple-page-master>
+      <simple-page-master master-name="right1"
+                          page-width="211mm"
+                          page-height="297mm"
+                          margin-top="72pt"
+                          margin-bottom="72pt"
+                          margin-left="72pt"
+                          margin-right="72pt">
+         <region-body margin-bottom="24pt" margin-top="24pt"/>
+         <region-before region-name="xsl-region-before-right" extent="14pt"/>
+         <region-after region-name="xsl-region-after-right" extent="14pt"/>
+      </simple-page-master>
+      <simple-page-master master-name="first1"
+                          page-width="211mm"
+                          page-height="297mm"
+                          margin-top="72pt"
+                          margin-bottom="72pt"
+                          margin-left="72pt"
+                          margin-right="72pt">
+         <region-body margin-bottom="24pt" margin-top="24pt"/>
+         <region-before region-name="xsl-region-before-first" extent="14pt"/>
+         <region-after region-name="xsl-region-after-first" extent="14pt"/>
+      </simple-page-master>
+      <simple-page-master master-name="simple2"
+                          page-width="211mm"
+                          page-height="297mm"
+                          margin-top="72pt"
+                          margin-bottom="72pt"
+                          margin-left="72pt"
+                          margin-right="72pt">
+         <region-body column-count="1" margin-bottom="24pt" margin-top="24pt"/>
+         <region-before extent="14pt"/>
+         <region-after extent="14pt"/>
+      </simple-page-master>
+      <simple-page-master master-name="left2"
+                          page-width="211mm"
+                          page-height="297mm"
+                          margin-top="72pt"
+                          margin-bottom="72pt"
+                          margin-left="72pt"
+                          margin-right="72pt">
+         <region-body column-count="1" margin-bottom="24pt" margin-top="24pt"/>
+         <region-before region-name="xsl-region-before-left" extent="14pt"/>
+         <region-after region-name="xsl-region-after-left" extent="14pt"/>
+      </simple-page-master>
+      <simple-page-master master-name="right2"
+                          page-width="211mm"
+                          page-height="297mm"
+                          margin-top="72pt"
+                          margin-bottom="72pt"
+                          margin-left="72pt"
+                          margin-right="72pt">
+         <region-body column-count="1" margin-bottom="24pt" margin-top="24pt"/>
+         <region-before region-name="xsl-region-before-right" extent="14pt"/>
+         <region-after region-name="xsl-region-after-right" extent="14pt"/>
+      </simple-page-master>
+      <simple-page-master master-name="first2"
+                          page-width="211mm"
+                          page-height="297mm"
+                          margin-top="72pt"
+                          margin-bottom="72pt"
+                          margin-left="72pt"
+                          margin-right="72pt">
+         <region-body column-count="1" margin-bottom="24pt" margin-top="24pt"/>
+         <region-before region-name="xsl-region-before-first" extent="14pt"/>
+         <region-after region-name="xsl-region-after-first" extent="14pt"/>
+      </simple-page-master>
+      <page-sequence-master master-name="twoside1nofirst">
+         <repeatable-page-master-alternatives>
+            <conditional-page-master-reference master-reference="right1" odd-or-even="odd"/>
+            <conditional-page-master-reference master-reference="left1" odd-or-even="even"/>
+         </repeatable-page-master-alternatives>
+      </page-sequence-master>
+      <page-sequence-master master-name="twoside1">
+         <repeatable-page-master-alternatives>
+            <conditional-page-master-reference master-reference="first1" page-position="first"/>
+            <conditional-page-master-reference master-reference="right1" odd-or-even="odd"/>
+            <conditional-page-master-reference master-reference="left1" odd-or-even="even"/>
+         </repeatable-page-master-alternatives>
+      </page-sequence-master>
+      <page-sequence-master master-name="oneside1">
+         <repeatable-page-master-alternatives>
+            <conditional-page-master-reference master-reference="first1" page-position="first"/>
+            <conditional-page-master-reference master-reference="simple1"/>
+         </repeatable-page-master-alternatives>
+      </page-sequence-master>
+      <page-sequence-master master-name="twoside2">
+         <repeatable-page-master-alternatives>
+            <conditional-page-master-reference master-reference="first2" page-position="first"/>
+            <conditional-page-master-reference master-reference="right2" odd-or-even="odd"/>
+            <conditional-page-master-reference master-reference="left2" odd-or-even="even"/>
+         </repeatable-page-master-alternatives>
+      </page-sequence-master>
+      <page-sequence-master master-name="oneside2">
+         <repeatable-page-master-alternatives>
+            <conditional-page-master-reference master-reference="first2" page-position="first"/>
+            <conditional-page-master-reference master-reference="simple2"/>
+         </repeatable-page-master-alternatives>
+      </page-sequence-master>
+   </layout-master-set>
+   <page-sequence format="1"
+                  text-align="justify"
+                  hyphenate="true"
+                  language="en"
+                  initial-page-number="1"
+                  master-reference="twoside2">
+      <static-content flow-name="xsl-region-before-right">
+         <block text-align="justify" text-align-last="justify" font-size="10pt">
+            <block>
+               <leader rule-thickness="0pt"/>
+               <inline>
+                  <page-number/>
+               </inline>
+            </block>
+         </block>
+      </static-content>
+      <static-content flow-name="xsl-region-before-left">
+         <block text-align="justify" font-size="10pt">
+            <block>
+               <inline>
+                  <page-number/>
+               </inline>
+               <leader rule-thickness="0pt"/>
+            </block>
+         </block>
+      </static-content>
+      <static-content flow-name="xsl-region-before-first">
+         <block/>
+      </static-content>
+      <static-content flow-name="xsl-region-after-right">
+         <block text-align="end" font-size="10pt">
+            <page-number/>
+         </block>
+      </static-content>
+      <static-content flow-name="xsl-region-after-left">
+         <block text-align="start" font-size="10pt">
+            <page-number/>
+         </block>
+      </static-content>
+      <static-content flow-name="xsl-region-after-first">
+         <block font-size="10pt" text-align="end">
+            <page-number/>
+         </block>
+      </static-content>
+      <static-content flow-name="xsl-footnote-separator">
+         <block>
+            <leader leader-pattern="rule"
+                    leader-length="100%"
+                    rule-style="solid"
+                    rule-thickness="0.5pt"/>
+         </block>
+      </static-content>
+      <flow flow-name="xsl-region-body" font-family="Times" font-size="10pt">
+         <block text-indent="0pt"
+                end-indent="12pt"
+                start-indent="12pt"
+                font-size="6pt"
+                space-before.optimum="4pt"
+                space-after.optimum="4pt">A free-standing note </block>
+         <block line-height="1">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet<inline font-size="9pt" font-style="italic"> [Note: plain note in first paragraph] </inline> Lorem ipsum dolor sit amet</block>
+         <block line-height="1"
+                text-indent="1em"
+                space-before.optimum="0pt"
+                space-before.maximum="12pt">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet<footnote>
+               <inline font-size="7pt" vertical-align="super">1</inline>
+               <footnote-body>
+                  <block end-indent="0pt"
+                         start-indent="0pt"
+                         text-align="start"
+                         font-style="normal"
+                         text-indent="1em"
+                         font-size="9pt"
+                         line-height="normal">
+                     <inline font-size="7pt" vertical-align="super">1</inline> Foot note in second paragraph</block>
+               </footnote-body>
+            </footnote>
+         </block>
+         <block line-height="1"
+                text-indent="1em"
+                space-before.optimum="0pt"
+                space-before.maximum="12pt">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet<block font-size="9pt" font-style="italic"> [Note: Marginal note in third paragraph with an embedded list <list-block provisional-distance-between-starts="18pt"
+                           provisional-label-separation="6pt"
+                           text-indent="0em"
+                           margin-right="10pt"
+                           space-before="6pt"
+                           space-after="6pt">
+                  <list-item space-before.optimum="4pt">
+                     <list-item-label end-indent="label-end()">
+                        <block text-align="end">•</block>
+                     </list-item-label>
+                     <list-item-body start-indent="body-start()">
+                        <block font-weight="normal">cats</block>
+                     </list-item-body>
+                  </list-item>
+                  <list-item space-before.optimum="4pt">
+                     <list-item-label end-indent="label-end()">
+                        <block text-align="end">•</block>
+                     </list-item-label>
+                     <list-item-body start-indent="body-start()">
+                        <block font-weight="normal">dogs</block>
+                     </list-item-body>
+                  </list-item>
+               </list-block> innit] </block> ipsum dolor sit amet Lorem ipsum dolor sit amet ipsum dolor sit amet Lorem ipsum dolor sit amet BEFORE <block font-size="9pt" font-style="italic"> [Note: <block>Marginal note with para in third paragraph with an embedded list <list-block provisional-distance-between-starts="18pt"
+                              provisional-label-separation="6pt"
+                              text-indent="0em"
+                              margin-right="10pt"
+                              space-before="6pt"
+                              space-after="6pt">
+                     <list-item space-before.optimum="4pt">
+                        <list-item-label end-indent="label-end()">
+                           <block text-align="end">•</block>
+                        </list-item-label>
+                        <list-item-body start-indent="body-start()">
+                           <block font-weight="normal">cats</block>
+                        </list-item-body>
+                     </list-item>
+                     <list-item space-before.optimum="4pt">
+                        <list-item-label end-indent="label-end()">
+                           <block text-align="end">•</block>
+                        </list-item-label>
+                        <list-item-body start-indent="body-start()">
+                           <block font-weight="normal">dogs</block>
+                        </list-item-body>
+                     </list-item>
+                  </list-block> innit</block>] </block> AFTER ipsum dolor sit amet Lorem ipsum dolor sit amet</block>
+         <block line-height="1"
+                text-indent="1em"
+                space-before.optimum="0pt"
+                space-before.maximum="12pt">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet<block text-indent="0pt"
+                   end-indent="12pt"
+                   start-indent="12pt"
+                   font-size="6pt"
+                   space-before.optimum="4pt"
+                   space-after.optimum="4pt">Display note in fourth paragraph dolor sit amet Lorem ipsum dolor sit amet dolor sit amet Lorem ipsum dolor sit amet dolor sit amet Lorem ipsum dolor sit amet dolor sit amet Lorem ipsum dolor sit amet dolor sit amet Lorem ipsum dolor sit amet</block> ipsum dolor sit amet Lorem ipsum dolor sit amet</block>
+         <block line-height="1"
+                text-indent="1em"
+                space-before.optimum="0pt"
+                space-before.maximum="12pt">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet<inline font-size="9pt" font-style="italic"> [Note: Inline note in fifth paragraph] </inline> ipsum dolor sit amet Lorem ipsum dolor sit amet</block>
+         <block line-height="1"
+                text-indent="1em"
+                space-before.optimum="0pt"
+                space-before.maximum="12pt">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet<basic-link internal-destination="d27e61">
+               <inline font-size="7pt" vertical-align="super">i</inline>
+            </basic-link> ipsum dolor sit amet Lorem ipsum dolor sit amet</block>
+         <block line-height="1"
+                text-indent="1em"
+                space-before.optimum="0pt"
+                space-before.maximum="12pt">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet<inline font-size="9pt" font-style="italic"> [Note: Left margin note in seventh paragraph] </inline> ipsum dolor sit amet Lorem ipsum dolor sit amet</block>
+         <block line-height="1"
+                text-indent="1em"
+                space-before.optimum="0pt"
+                space-before.maximum="12pt">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit Lorem amet ipsum dolor sit amet<inline font-size="9pt" font-style="italic"> [Note: Outer margin note in eighth paragraph] </inline> ipsum dolor sit amet Lorem ipsum dolor sit amet</block>
+         <block line-height="1"
+                text-indent="1em"
+                space-before.optimum="0pt"
+                space-before.maximum="12pt">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet<inline font-size="9pt" font-style="italic"> [Note: Right margin note in nineth paragraph] </inline> ipsum dolor sit amet Lorem ipsum dolor sit amet</block>
+         <block line-height="1"
+                text-indent="1em"
+                space-before.optimum="0pt"
+                space-before.maximum="12pt">And ‘<block font-size="9pt" font-style="italic"> [Note: <block>
+                  <inline font-style="italic">Besides,</inline> tuus Apollo <inline font-style="italic">is spoke in relation to</inline> Latona, <inline font-style="italic">Sister to</inline> Apollo.</block> 
+               <block text-indent="1em"
+                      space-before.optimum="0pt"
+                      space-before.maximum="12pt">V. Epit. ad Livium c. 134. V. Petav.</block>] </block>Pacatum{que} reget patriis virtutibus Orbem,’ could not be meant of <inline font-style="italic">Augustus,</inline> who assumed not that name till the Battel of <inline font-style="italic">Actium</inline> was over, which was about the Year of <inline font-style="italic">Rome</inline> 718, five Years after <inline font-style="italic">Pollio</inline>'s Consulship, when this Poem was wrote.</block>
+         <block text-align="center"
+                font-style="italic"
+                end-indent="12pt"
+                start-indent="12pt"
+                space-before="8pt"
+                space-after="4pt"
+                keep-with-next="always">Table 1. </block>
+         <table text-align="left"
+                font-size="9pt"
+                table-layout="fixed"
+                width="100%"
+                id="d27e124">
+            <table-body text-indent="0pt">
+               <table-row>
+                  <table-cell padding="2pt" text-align="left">
+                     <block>1</block>
+                  </table-cell>
+                  <table-cell padding="2pt" text-align="left">
+                     <block>text<footnote>
+                           <inline font-size="7pt" vertical-align="super">2</inline>
+                           <footnote-body>
+                              <block end-indent="0pt"
+                                     start-indent="0pt"
+                                     text-align="start"
+                                     font-style="normal"
+                                     text-indent="1em"
+                                     font-size="9pt"
+                                     line-height="normal">
+                                 <inline font-size="7pt" vertical-align="super">2</inline> with footnote</block>
+                           </footnote-body>
+                        </footnote>
+                     </block>
+                  </table-cell>
+               </table-row>
+               <table-row>
+                  <table-cell padding="2pt" text-align="left">
+                     <block>2</block>
+                  </table-cell>
+                  <table-cell padding="2pt" text-align="left">
+                     <block>text<inline font-size="9pt" font-style="italic"> [Note: with ordinary note] </inline>
+                     </block>
+                  </table-cell>
+               </table-row>
+               <table-row>
+                  <table-cell padding="2pt" text-align="left">
+                     <block>3</block>
+                  </table-cell>
+                  <table-cell padding="2pt" text-align="left">
+                     <block>
+                        <footnote>
+                           <inline font-size="7pt" vertical-align="super">3</inline>
+                           <footnote-body>
+                              <block end-indent="0pt"
+                                     start-indent="0pt"
+                                     text-align="start"
+                                     font-style="normal"
+                                     text-indent="1em"
+                                     font-size="9pt"
+                                     line-height="normal">
+                                 <inline font-size="7pt" vertical-align="super">3</inline> no text, with footnote</block>
+                           </footnote-body>
+                        </footnote>
+                     </block>
+                  </table-cell>
+               </table-row>
+               <table-row>
+                  <table-cell padding="2pt" text-align="left">
+                     <block>4</block>
+                  </table-cell>
+                  <table-cell padding="2pt" text-align="left">
+                     <block>
+                        <inline font-size="9pt" font-style="italic"> [Note: no text, with note] </inline>
+                     </block>
+                  </table-cell>
+               </table-row>
+               <table-row>
+                  <table-cell padding="2pt" text-align="left">
+                     <block>5</block>
+                  </table-cell>
+                  <table-cell padding="2pt" text-align="left">
+                     <block>
+                        <block text-indent="0pt"
+                               end-indent="12pt"
+                               start-indent="12pt"
+                               font-size="6pt"
+                               space-before.optimum="4pt"
+                               space-after.optimum="4pt">Display note (no other content in cell)</block>
+                     </block>
+                  </table-cell>
+               </table-row>
+               <table-row>
+                  <table-cell padding="2pt" text-align="left">
+                     <block>6</block>
+                  </table-cell>
+                  <table-cell padding="2pt" text-align="left">
+                     <block>Some ordinary context and <block text-indent="0pt"
+                               end-indent="12pt"
+                               start-indent="12pt"
+                               font-size="6pt"
+                               space-before.optimum="4pt"
+                               space-after.optimum="4pt">Display note</block>
+                     </block>
+                  </table-cell>
+               </table-row>
+            </table-body>
+         </table>
+         <block keep-with-next.within-page="always"
+                id="one"
+                text-align="left"
+                font-family="Times"
+                font-size="14pt"
+                font-weight="bold"
+                space-after="3pt"
+                space-before.optimum="9pt"
+                text-indent="0em">1. Section one</block>
+         <block line-height="1">the words</block>
+         <block keep-with-next.within-page="always"
+                id="two"
+                text-align="left"
+                font-family="Times"
+                font-size="12pt"
+                font-weight="bold"
+                font-style="italic"
+                space-after="2pt"
+                space-before.optimum="4pt"
+                text-indent="0em">1.1. subsection heading</block>
+         <block line-height="1">hello</block>
+         <block line-height="1"
+                text-indent="1em"
+                space-before.optimum="0pt"
+                space-before.maximum="12pt">A note here <footnote>
+               <inline font-size="7pt" vertical-align="super">4</inline>
+               <footnote-body>
+                  <block end-indent="0pt"
+                         start-indent="0pt"
+                         text-align="start"
+                         font-style="normal"
+                         text-indent="1em"
+                         font-size="9pt"
+                         line-height="normal">
+                     <inline font-size="7pt" vertical-align="super">4</inline> A footnote in section 1</block>
+               </footnote-body>
+            </footnote>
+         </block>
+         <block line-height="1"
+                text-indent="1em"
+                space-before.optimum="0pt"
+                space-before.maximum="12pt"/>
+         <block keep-with-next.within-page="always"
+                id="three"
+                text-align="left"
+                font-family="Times"
+                font-size="14pt"
+                font-weight="bold"
+                space-after="3pt"
+                space-before.optimum="9pt"
+                text-indent="0em">2. Section two</block>
+         <block line-height="1">A note <footnote>
+               <inline font-size="7pt" vertical-align="super">5</inline>
+               <footnote-body>
+                  <block end-indent="0pt"
+                         start-indent="0pt"
+                         text-align="start"
+                         font-style="normal"
+                         text-indent="1em"
+                         font-size="9pt"
+                         line-height="normal">
+                     <inline font-size="7pt" vertical-align="super">5</inline> A footnote in section 2</block>
+               </footnote-body>
+            </footnote>
+         </block>
+         <block font-size="12pt"
+                text-align="left"
+                font-weight="bold"
+                font-style="italic"
+                space-after="2pt"
+                space-before.optimum="4pt"
+                text-indent="0em">Notes</block>
+         <block id="d27e61">i. End note in sixth paragraph</block>
+      </flow>
+   </page-sequence>
+</root>

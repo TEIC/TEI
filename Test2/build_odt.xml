@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="odt" name="StylesheetsTestOdt"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless">
+  
+  <description> 
+    Stylesheets/Test2/build_odt.xml
+    
+    ANT TEST FILE FOR CONVERSIONS BETWEEN TEI AND ODT.
+    
+    
+    
+  </description>
+
+
+  <!-- First we include the generic utilities module.   -->
+  <import file="build_utilities.xml" as="utils"/>
+  
+  <!-- The odt file we need to call. CAN'T GET THIS TO WORK YET. -->
+  <!--<import file="../odt/build-to.xml"/>-->
+  
+  <!--  Files for conversion to ODT.  -->
+  <fileset id="teiToOdtFiles" dir="${inputDir}" includes="generalP5.xml"/>
+  
+  <!--  Files for conversion from ODT.  -->
+  <fileset id="teiFromOdtFiles" dir="${inputDir}" includes="testFromOdt1.odt"/>
+  
+  
+<!-- Default target that does everything. -->
+  <target name="odt">
+    <antcall target="teiFilesToOdt"/>
+    <antcall target="teiFilesFromOdt"/>
+  </target>
+  
+  <target name="teiFilesToOdt">
+    <description>
+      TARGET teiFilesToOdt
+      Converts TEI files to odt, extracts their contents.xml, 
+      and diffs them against expected results.
+    </description>
+   
+    <foreach target="teiFileToOdt" param="inFile">
+      <path>
+        <fileset refid="teiToOdtFiles"/>
+      </path>
+    </foreach>
+    
+<!-- Why not use a macrodef rather than a target, as below?
+     Because we often want to call a single target with a single
+     file while we're working on tests; there's no easy way to 
+     do this if the process is defined as a macrodef rather than
+     as a distinct target.
+    -->
+<!--    <for param="inFile">
+      <fileset refid="teiToOdtFiles"/>
+      <sequential>
+        <teitoodt inFile="@{inFile}"/>
+      </sequential>
+    </for>-->
+    
+  </target>
+  
+<!--  <macrodef name="teitoodt">
+    <attribute name="inFile"/>
+    <sequential>
+      <basename file="@{inFile}" property="plainFileName" suffix=".xml"/>
+      <property name="outFile" value="${outputDir}/${plainFileName}.odt"/>
+      
+      <exec executable="${bin}/teitoodt" failonerror="true">
+        <arg line="-\-localsource=${localsource}"/>
+        <arg file="@{inFile}"/>
+        <arg file="${outFile}"/>
+      </exec>
+      
+      <!-\- Make a temp dir and unzip the ODT file.        -\->
+      <mkdir dir="${outputDir}/temp"/>
+      <unzip src="${outFile}" dest="${outputDir}/temp"/>
+      <copy file="${outputDir}/temp/content.xml" tofile="${outputDir}/temp/${plainFileName}OdtContent.xml"/>
+      
+      
+      <antcall target="prepAndDiffFile">
+        <param name="inFile" value="${outputDir}/temp/${plainFileName}OdtContent.xml"/>
+      </antcall>
+    </sequential>
+  </macrodef>-->
+  
+  <target name="teiFileToOdt">
+    <description>
+      TARGET teiFileToOdt
+      Converts a single TEI file to odt, then extracts the content.xml from
+      the result and diffs it against expected results. It takes a single
+      parameter, inFile.
+    </description>
+    <basename file="${inFile}" property="plainFileName" suffix=".xml"/>
+    <property name="outFile" value="${outputDir}/${plainFileName}.odt"/>
+    
+<!-- NOTE: ultimately we want to do this conversion by calling ant directly on the 
+    ../odt/build-to.xml file, but it seems impossible to make this work; ant cannot
+    find the main Saxon class. -->
+    <exec executable="${bin}/teitoodt" failonerror="true">
+      <arg line="--localsource=${localsource}"/>
+      <arg file="${inFile}"/>
+      <arg file="${outFile}"/>
+    </exec>
+    
+<!-- Make a temp dir and unzip the ODT file.        -->
+    <mkdir dir="${outputDir}/temp/${plainFileName}"/>
+    <unzip src="${outFile}" dest="${outputDir}/temp/${plainFileName}.odt"/>
+    <copy file="${outputDir}/temp/${plainFileName}.odt/content.xml" tofile="${outputDir}/temp/${plainFileName}.odt/${plainFileName}OdtContent.xml"/> 
+    
+    <antcall target="prepAndDiffFile">
+      <param name="inFile" value="${outputDir}/temp/${plainFileName}.odt/${plainFileName}OdtContent.xml"/>
+    </antcall>
+  </target>
+  
+  <target name="teiFilesFromOdt">
+    <description>
+      TARGET teiFilesFromOdt
+      Converts ODT files to TEI, validates them, 
+      and diffs them against expected results.
+    </description>
+    
+    <foreach target="teiFileFromOdt" param="inFile">
+      <path>
+        <fileset refid="teiFromOdtFiles"/>
+      </path>
+    </foreach>
+   
+  </target>
+  
+  <target name="teiFileFromOdt" depends="getLatestTeiAll">
+    <description>
+      TARGET teiFileFromOdt
+      Converts a single ODT file to TEI, validates the result with Jing,
+      then diffs it against expected results. It takes a single
+      parameter, inFile.
+    </description>
+    <basename file="${inFile}" property="plainFileName" suffix=".odt"/>
+    <property name="outFile" value="${outputDir}/${plainFileName}.xml"/>
+    
+    <!-- NOTE: ultimately we want to do this conversion by calling ant directly on the 
+    ../odt/build-from.xml file, but it seems impossible to make this work; ant cannot
+    find the main Saxon class. -->
+    <exec executable="${bin}/odttotei" failonerror="true">
+      <arg line="--localsource=${localsource}"/>
+      <arg file="${inFile}"/>
+      <arg file="${outFile}"/>
+    </exec>
+    
+<!-- Validate the results.   -->
+    <jing rngfile="${teiAllSchema}" file="${outFile}"/>
+    
+    <antcall target="prepAndDiffFile">
+      <param name="inFile" value="${outFile}"/>
+    </antcall>
+  </target>
+  
+  
+</project>

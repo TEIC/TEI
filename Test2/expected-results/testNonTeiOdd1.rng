@@ -1,0 +1,491 @@
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:tei="http://www.tei-c.org/ns/1.0"
+         xmlns:teix="http://www.tei-c.org/ns/Examples"
+         datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
+         ns="http://www.w3.org/1999/xhtml">
+   <sch:ns xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+           prefix="tei"
+           uri="http://www.tei-c.org/ns/1.0"/>
+   <define name="macro.paraContent">
+      <zeroOrMore>
+         <choice>
+            <text/>
+            <ref name="model.phrase"/>
+         </choice>
+      </zeroOrMore>
+   </define>
+   <define name="macro.divContent">
+      <group>
+         <optional>
+            <ref name="model.divHeading"/>
+         </optional>
+         <oneOrMore>
+            <ref name="model.divBody"/>
+         </oneOrMore>
+      </group>
+   </define>
+   <define name="div">
+      <element name="div" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Division of a document; used as the root for content blocks.) The core container element for a content block. This may also nest, to provide subsections.</a:documentation>
+         <ref name="macro.divContent"/>
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+                  id="nonTeiOdd-div-headingLevelMustMatchNesting-constraint-assert-1">
+            <rule context="xh:div">
+               <sch:assert xmlns="http://www.tei-c.org/ns/1.0"
+                           xmlns:xh="http://www.w3.org/1999/xhtml"
+                           xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                           xmlns:gcse="http://www.google.com/cse"
+                           test="if (child::xh:h3) then count(ancestor::xh:div) = 0                             else if (child::xh:h4) then count(ancestor::xh:div) = 1                             else if (child::xh:h5) then count(ancestor::xh:div) = 2                             else not(child::xh:h3 or child::xh:h4 or child::xh:h5)"> The level of your heading (h3, h4 or h5) must fit with the depth of
+                           your division nesting; so the top-level div would have h3, a div inside
+                           it would have h4, and a div inside that would have h5. </sch:assert>
+            </rule>
+         </pattern>
+         <ref name="att.classable.attributes"/>
+         <ref name="att.identifiable.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="h3">
+      <element name="h3" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Level 3 heading) The h3 (level 3 heading) element provides the heading for root-level div elements.</a:documentation>
+         <ref name="macro.paraContent"/>
+         <ref name="att.classable.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="h4">
+      <element name="h4" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Level 4 heading) </a:documentation>
+         <ref name="macro.paraContent"/>
+         <ref name="att.classable.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="h5">
+      <element name="h5" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Level 5 heading) </a:documentation>
+         <ref name="macro.paraContent"/>
+         <ref name="att.classable.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="p">
+      <element name="p" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Prose paragraph.</a:documentation>
+         <ref name="macro.paraContent"/>
+         <ref name="att.classable.attributes"/>
+         <ref name="att.identifiable.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="blockquote">
+      <element name="blockquote" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Block quotation.</a:documentation>
+         <oneOrMore>
+            <choice>
+               <ref name="p"/>
+               <ref name="ul"/>
+               <ref name="macro.paraContent"/>
+            </choice>
+         </oneOrMore>
+         <ref name="att.classable.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="q">
+      <element name="q" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Inline quotation. In rendering, quotation marks will be supplied, so do not include them.</a:documentation>
+         <ref name="macro.paraContent"/>
+         <ref name="att.classable.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="ul">
+      <element name="ul" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Unordered list, usually bulleted.</a:documentation>
+         <oneOrMore>
+            <ref name="li"/>
+         </oneOrMore>
+         <ref name="att.classable.attribute.style"/>
+         <optional>
+            <attribute name="class">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <choice>
+                  <value>disc</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(List items are preceded by a disc.) </a:documentation>
+                  <value>square</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(List items are preceded by a square.) </a:documentation>
+                  <value>none</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(List items have no preceding symbol.) </a:documentation>
+               </choice>
+            </attribute>
+         </optional>
+         <empty/>
+      </element>
+   </define>
+   <define name="ol">
+      <element name="ol" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Ordered list, usually numbered.</a:documentation>
+         <oneOrMore>
+            <ref name="li"/>
+         </oneOrMore>
+         <ref name="att.classable.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="li">
+      <element name="li" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Item in a list.</a:documentation>
+         <zeroOrMore>
+            <choice>
+               <ref name="ul"/>
+               <ref name="ol"/>
+               <ref name="p"/>
+               <ref name="macro.paraContent"/>
+            </choice>
+         </zeroOrMore>
+         <ref name="att.classable.attributes"/>
+         <ref name="att.identifiable.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="strong">
+      <element name="strong" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Text that needs to be highlighted because it is important; will be rendered by default in bold.</a:documentation>
+         <ref name="macro.paraContent"/>
+         <ref name="att.classable.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="img">
+      <element name="img" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Image element. May be rendered inline or as a block, depending on where it appears in the document structure.</a:documentation>
+         <empty/>
+         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+                  id="nonTeiOdd-img-imgWithoutCaptionNeedsAltAndTitle-constraint-assert-2">
+            <rule context="xh:img">
+               <sch:assert xmlns="http://www.tei-c.org/ns/1.0"
+                           xmlns:xh="http://www.w3.org/1999/xhtml"
+                           xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                           xmlns:gcse="http://www.google.com/cse"
+                           test="(@alt and @title) or following-sibling::xh:figcaption or ancestor::xh:ul[@class='gallery']"> If your img element is not inside a figure element with a figcaption,
+                           then it requires @alt and @title attributes to provide help for
+                           visually-impaired users. </sch:assert>
+            </rule>
+         </pattern>
+         <ref name="att.classable.attribute.style"/>
+         <ref name="att.identifiable.attributes"/>
+         <optional>
+            <attribute name="class">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(The class attribute provides styles through rules in the CSS
+                           stylesheet. ) </a:documentation>
+               <list>
+                  <oneOrMore>
+                     <choice>
+                        <value>normal</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Present the image in normal rectangular format.) </a:documentation>
+                        <value>oval</value>
+                        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Present the image in oval portrait-style format.) </a:documentation>
+                     </choice>
+                  </oneOrMore>
+               </list>
+            </attribute>
+         </optional>
+         <optional>
+            <attribute name="width">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Width in pixels of the image.</a:documentation>
+            </attribute>
+         </optional>
+         <optional>
+            <attribute name="height">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Height in pixels of the image</a:documentation>
+            </attribute>
+         </optional>
+         <attribute name="src">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(path to the image (usually a relative path)) </a:documentation>
+         </attribute>
+         <optional>
+            <attribute name="data-lg-version">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(path to a larger version of the image to show as a popup (usually a
+                           relative path)) </a:documentation>
+            </attribute>
+         </optional>
+         <optional>
+            <attribute name="alt">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(description of the image for visually-impaired users. If not
+                           supplied, then figcaption will be used instead.) </a:documentation>
+            </attribute>
+         </optional>
+         <optional>
+            <attribute name="title">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(description of the image which will pop up on mouseover. If not
+                           supplied, then figcaption will be used instead.) </a:documentation>
+            </attribute>
+         </optional>
+         <empty/>
+      </element>
+   </define>
+   <define name="em">
+      <element name="em" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Emphasized text; will be rendered by default in italics.</a:documentation>
+         <zeroOrMore>
+            <choice>
+               <ref name="macro.paraContent"/>
+            </choice>
+         </zeroOrMore>
+         <ref name="att.classable.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="a">
+      <element name="a" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+         <ref name="macro.paraContent"/>
+         <ref name="att.classable.attributes"/>
+         <attribute name="href">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+         </attribute>
+         <optional>
+            <attribute name="title">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(explanation of what is being linked to. Will pop up when mousing over
+                           the link.) </a:documentation>
+            </attribute>
+         </optional>
+         <empty/>
+      </element>
+   </define>
+   <define name="figure">
+      <element name="figure" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">A figure consists of an image and a caption.</a:documentation>
+         <group>
+            <ref name="img"/>
+            <optional>
+               <ref name="figcaption"/>
+            </optional>
+         </group>
+         <ref name="att.classable.attribute.style"/>
+         <ref name="att.identifiable.attributes"/>
+         <attribute name="class">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(The class attribute provides styles through rules in the CSS
+                           stylesheet. ) </a:documentation>
+            <list>
+               <oneOrMore>
+                  <choice>
+                     <value>leftFloat</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Float this figure to the left and flow the text around
+                                 it.) </a:documentation>
+                     <value>center</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Centre this figure and do not float text around it.) </a:documentation>
+                     <value>rightFloat</value>
+                     <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Float this figure to the right and flow the text around
+                                 it.) </a:documentation>
+                  </choice>
+               </oneOrMore>
+            </list>
+         </attribute>
+         <empty/>
+      </element>
+   </define>
+   <define name="figcaption">
+      <element name="figcaption" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Caption for an image in a figure element.</a:documentation>
+         <ref name="macro.paraContent"/>
+         <ref name="att.classable.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="td">
+      <element name="td" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">A table data cell.</a:documentation>
+         <ref name="macro.paraContent"/>
+      </element>
+   </define>
+   <define name="th">
+      <element name="th" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">A table label or heading cell.</a:documentation>
+         <ref name="macro.paraContent"/>
+         <optional>
+            <attribute name="scope">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <choice>
+                  <value>col</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Scope of this heading is the column below it.) </a:documentation>
+                  <value>row</value>
+                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(Scope of this heading is the row to the right of it.) </a:documentation>
+               </choice>
+            </attribute>
+         </optional>
+         <empty/>
+      </element>
+   </define>
+   <define name="tr">
+      <element name="tr" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">A table row.</a:documentation>
+         <oneOrMore>
+            <group>
+               <zeroOrMore>
+                  <ref name="th"/>
+               </zeroOrMore>
+               <zeroOrMore>
+                  <ref name="td"/>
+               </zeroOrMore>
+            </group>
+         </oneOrMore>
+      </element>
+   </define>
+   <define name="caption">
+      <element name="caption" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">A table caption.</a:documentation>
+         <ref name="macro.paraContent"/>
+      </element>
+   </define>
+   <define name="table">
+      <element name="table" ns="http://www.w3.org/1999/xhtml">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">A table.</a:documentation>
+         <optional>
+            <ref name="caption"/>
+         </optional>
+         <oneOrMore>
+            <ref name="tr"/>
+         </oneOrMore>
+         <ref name="att.classable.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="model.phrase">
+      <choice>
+         <ref name="q"/>
+         <ref name="strong"/>
+         <ref name="img"/>
+         <ref name="em"/>
+         <ref name="a"/>
+         <ref name="figcaption"/>
+      </choice>
+   </define>
+   <define name="model.divHeading">
+      <choice>
+         <ref name="h3"/>
+         <ref name="h4"/>
+         <ref name="h5"/>
+      </choice>
+   </define>
+   <define name="model.divBody">
+      <choice>
+         <ref name="div"/>
+         <ref name="p"/>
+         <ref name="blockquote"/>
+         <ref name="ul"/>
+         <ref name="ol"/>
+         <ref name="img"/>
+         <ref name="figure"/>
+         <ref name="table"/>
+      </choice>
+   </define>
+   <define name="att.classable.attributes">
+      <ref name="att.classable.attribute.class"/>
+      <ref name="att.classable.attribute.style"/>
+   </define>
+   <define name="att.classable.attribute.class">
+      <optional>
+         <attribute name="class">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(The class attribute provides styles through rules in the CSS
+                           stylesheet. ) </a:documentation>
+            <list>
+               <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+            </list>
+         </attribute>
+      </optional>
+   </define>
+   <define name="att.classable.attribute.style">
+      <optional>
+         <attribute name="style">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(The style attribute provides one-off style options for specific and
+                           unusual cases. Do not use this unless you know that the element you're
+                           styling is unlike any other element on the site.) </a:documentation>
+         </attribute>
+      </optional>
+   </define>
+   <define name="att.identifiable.attributes">
+      <ref name="att.identifiable.attribute.id"/>
+   </define>
+   <define name="att.identifiable.attribute.id">
+      <optional>
+         <attribute name="id">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+            <data type="ID"/>
+         </attribute>
+      </optional>
+   </define>
+   <start>
+      <choice>
+         <ref name="div"/>
+      </choice>
+   </start>
+   <ns xmlns="http://purl.oclc.org/dsdl/schematron"
+       prefix="xh"
+       uri="http://www.w3.org/1999/xhtml"/> 
+   <sch:pattern xmlns="http://www.tei-c.org/ns/1.0"
+                xmlns:xh="http://www.w3.org/1999/xhtml"
+                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                xmlns:gcse="http://www.google.com/cse">
+                        <sch:let name="smartDouble" value="'[“”]'"/>
+                        <sch:let name="smartSingle" value="'[‘’]'"/>
+                        <sch:let name="straightDouble" value="'&#34;'"/>
+                        <sch:let name="straightApos" value="''''"/>
+                        <sch:let name="straightQuotes"
+               value="concat('[', $straightDouble, $straightApos, ']')"/>
+                     </sch:pattern>
+   <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+            id="nonTeiOdd-noQuotesInText-constraint-rule-1">
+      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                context="text()[not(ancestor::xh:script)]">
+                        <sch:assert test="not(matches(., $straightQuotes))"> Do not use straight
+                           quotes in text. Use the q element wherever possible; for
+                           apostrophes, use the smart version (’). </sch:assert>
+                     </sch:rule>
+   </pattern>
+   <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+            id="nonTeiOdd-noDivJustForFigure-constraint-rule-2">
+      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="xh:div">
+                        <sch:assert test="not(count(*) = 1 and child::xh:figure)"> There's no need
+                           to wrap a figure element in a div. </sch:assert>
+                     </sch:rule>
+   </pattern>
+   <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+            id="nonTeiOdd-onlyPermittedImgAttributes-constraint-rule-3">
+      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="xh:img">
+                        <sch:assert test="every $att in @* satisfies local-name($att) = ('src', 'alt', 'title', 'width', 'height', 'id', 'style', 'class')"> Only the following attributes are allowed on img: 'src',
+                           'alt', 'title', 'id', 'style', 'class', 'width' and
+                           'height'. </sch:assert>
+                     </sch:rule>
+   </pattern>
+   <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+            id="nonTeiOdd-spacesAfterPeriods-constraint-rule-4">
+      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="xh:*/text()">
+                        <sch:assert test="not(matches(., '[^\.]\.[A-Z]'))"> Don't forget to put a
+                           space after every period. </sch:assert>
+                     </sch:rule>
+   </pattern>
+   <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+            id="nonTeiOdd-noSpacesInHrefs-constraint-rule-5">
+      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="xh:a">
+                        <sch:assert test="not(matches(@href, '\s+'))"> There should be no spaces in
+                           href attributes (links). </sch:assert>
+                     </sch:rule>
+   </pattern>
+   <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+            id="nonTeiOdd-noLinksInLinks-constraint-rule-6">
+      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="xh:a">
+                        <sch:assert test="not(descendant::xh:a[@href])"> Don't place links inside
+                           other links. </sch:assert>
+                     </sch:rule>
+   </pattern>
+   <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+            id="nonTeiOdd-periodsAndCommasOutsideLinks-constraint-rule-7">
+      <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" context="xh:a[@href]">
+                        <sch:assert test="not(matches(., '[\.,:;]\s*$')) or matches(., '((Esq\.)|(A\.\s*W\.)|(\.\s*\.\s*\.))$')"> Don't include trailing periods and commas inside link text.
+                        </sch:assert>
+                     </sch:rule>
+   </pattern>
+</grammar>

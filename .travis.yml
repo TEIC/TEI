@@ -1,0 +1,12 @@
+sudo: required
+
+language: java
+
+services:
+  - docker
+
+before_install:
+  - docker pull teic/jenkins:dev
+
+script:
+  - docker run --rm --name jenkins -w /var/odd -it -v `pwd`:/var/odd -u $UID --entrypoint "make" teic/jenkins:dev clean test deb dist

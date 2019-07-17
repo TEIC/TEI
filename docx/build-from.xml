@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project basedir="." default="dist" name="docxtei">
+  <!--
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public
+	License as published by the Free Software Foundation; either
+	version 2.1 of the License, or (at your option) any later version.
+	
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Lesser General Public License for more details.
+	
+	You should have received a copy of the GNU Lesser General Public
+	License along with this library; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+	
+        Id: $Id$
+        Copyright: 2011, TEI Consortium<
+-->
+  <!--
+ Convert docx files to TEI documents.
+ -->
+  <import file="../common/teianttasks.xml"/>
+
+  <target name="dist" depends="convert,mediadir.check,embeddingdir.check,chartdir.check,picturecopy,embeddingcopy,chartcopy,cleanup"/>
+
+  <property name="docxtoTEI" value="${profiledir}/${profile}/docx/from.xsl"/>
+
+  <target name="convert">
+    <echo>	 using ${docxtoTEI}</echo>
+    <unzip src="${inputFile}" dest="${outputTempDir}"/>
+    <xslt force="yes" style="${docxtoTEI}" in="${outputTempDir}/word/document.xml" out="${outputFile}">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="$catalogfile"/>
+        </catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="word-directory" expression="file:///${outputTempDir}"/>
+      <param name="inputDir" expression="${inputDir}"/>
+      <param name="mediaDir" expression="word/media"/>
+    </xslt>
+  </target>
+  <target name="mediadir.check">
+    <condition property="mediadir.exists">
+      <available file="${outputTempDir}/word/media" type="dir"/>
+    </condition>
+  </target>
+  <target name="picturecopy" if="${mediadir.exists}">
+    <mkdir dir="${outputDir}/media"/>
+    <move todir="${outputDir}/media" overwrite="true">
+      <fileset dir="${outputTempDir}/word/media"/>
+    </move>
+  </target>
+  <target name="embeddingdir.check">
+    <condition property="embeddingdir.exists">
+      <available file="${outputTempDir}/word/embeddings" type="dir"/>
+    </condition>
+  </target>
+  <target name="embeddingcopy" if="${embeddingdir.exists}">
+    <mkdir dir="${outputDir}/embeddings"/>
+    <move todir="${outputDir}/embeddings" overwrite="true">
+      <fileset dir="${outputTempDir}/word/embeddings"/>
+    </move>
+  </target>
+  <target name="chartdir.check">
+    <condition property="chartdir.exists">
+      <available file="${outputTempDir}/word/charts" type="dir"/>
+    </condition>
+  </target>
+  <target name="chartcopy" if="${chartdir.exists}">
+    <mkdir dir="${outputDir}/charts"/>
+    <move todir="${outputDir}/charts" overwrite="true">
+      <fileset dir="${outputTempDir}/word/charts"/>
+    </move>
+  </target>
+</project>

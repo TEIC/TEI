@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="."
+    xmlns:if="ant:if"
+    xmlns:unless="ant:unless">
+
+    <description> 
+     Stylesheets/Test2/convert.xml
+     
+     SUPPLEMENTARY ANT TEST FILE FOR THE TEI STYLESHEETS.
+        
+     MDH 2017-01-05: This is part of my experimental build system 
+     of which the root build file is build.xml. See that file for 
+     detailed documentation. This file is designed to handle running
+     conversions in a platform-independent manner. Its modus operandi 
+     is:
+     
+      - A call is made to a task which is named for the matching 
+        symlinked script file in the Stylesheets bin directory (for 
+        instance, teitofo).
+        
+      - If the platform is *NIX, then the matching symlink is called,
+        running the transformtei script, and thus testing the symlink
+        and script.
+        
+      - If the platform is not *NIX (i.e. it's Windows), then the appropriate
+        ant build script or Saxon transformation that WOULD be called by
+        transformtei is run instead; this tests the actual transformation, 
+        which is better than nothing.
+        
+     Properties such as jar locations and Java classes are inherited from 
+     the root build.xml file and thus not defined here.
+    </description>
+    
+    
+    <!-- We need ant-contrib to do foreach.   -->
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+    
+    <!-- Define Saxon to allow local testing.   -->
+    <property name="saxonJar" value="../lib/saxon9he.jar"/>
+    
+    <!-- Define bin to allow local testing.   -->
+    <property name="bin" value="../bin"/>
+    
+    <!-- What OS family are we running on?   -->
+    <condition property="isWindows" value="true">
+        <os family="windows" />
+    </condition>
+    <condition property="isNix" value="true">
+        <os family="unix" />
+    </condition>
+
+    <echo if:true="${isWindows}" message="Running on Windows."/>
+    <echo if:true="${isNix}" message="Running on *NIX."/>
+    
+    <target name="teitofo">
+        <description>
+            TARGET teitofo
+            Converts a single TEI file to fo. Takes one param, inFile.
+        </description>
+        
+        <echo message="Converting ${inFile} from TEI to XSL:FO."/>
+        <property name="absInFile" location="${inFile}"/>
+        <propertyregex property="outFile" input="${absInFile}" regexp="\.xml$" replace=".fo" global="true"/>
+        <echo message="Output file: ${outFile}"/>
+        
+<!-- If *NIX, then run the actual script symlink to transformtei.       -->
+        <exec if:true="${isNix}" executable="${bin}/teitofo" failonerror="true">
+            <arg line="--localsource=${localsource}"/>
+            <arg file="${absInFile}"/>
+            <arg file="${outFile}"/>
+        </exec>
+        
+<!-- If Windows, then run ant again with the fo buildfile. -->
+        <java if:true="${isWindows}" 
+            classname="org.apache.tools.ant.launch.Launcher"
+            fork="true" 
+            failonerror="true" >
+            <classpath>
+                <pathelement location="${ant.home}/lib/ant-launcher.jar"/>
+            </classpath>
+            <arg line="-lib ../lib"/>
+            <arg line="-buildfile ../fo/build-to.xml"/>
+            <arg line="-DinputFile=${absInFile}"/>
+            <arg line="-DoutputFile=${outFile}"/>
+        </java>
+    </target>
+    
+</project>

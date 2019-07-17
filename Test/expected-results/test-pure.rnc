@@ -1,0 +1,103 @@
+default namespace = ""
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+namespace sch = "http://purl.oclc.org/dsdl/schematron"
+namespace tei = "http://www.tei-c.org/ns/1.0"
+namespace teix = "http://www.tei-c.org/ns/Examples"
+namespace xlink = "http://www.w3.org/1999/xlink"
+
+
+#
+
+sch:ns [ prefix = "tei" uri = "http://www.tei-c.org/ns/1.0" ]
+stuff =
+  
+  ## simple elements
+  element stuff { (bit | bob | thingummy)+ }
+bob =
+  
+  ## empty element with attribute
+  element bob {
+    empty,
+    
+    ## fournit l' URI de l'objet cible
+    attribute href { xsd:anyURI }?,
+    empty
+  }
+thingummy =
+  
+  ## element with just text 
+  element thingummy { text }
+bit =
+  
+  ## mixed content, text or one element
+  element bit {
+    (text | bob)
+    >> sch:pattern [
+         id = "odd-1-bit-test-constraint-report-1"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:bit"
+           "\x{a}" ~
+           "               "
+           sch:report [ test = "count(bob) !=1" "Only one bob allowed" ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+  }
+t1 =
+  
+  ## mixed content with multiple elements
+  element t1 { text | bit | bob | t1 }
+t2 =
+  
+  ## mixed content with *Occurs
+  element t2 { (text | bit | bob)* }
+t3 =
+  
+  ## mixed content with only minOccurs
+  element t3 { (text | bit | bob)? }
+t4 =
+  
+  ## mixed content with only maxOccurs
+  element t4 { (text | bit | bob | t1)+ }
+t5 =
+  
+  ## sequence within alternation 
+  element t5 { text | (bit, bob)+ }
+t6 =
+  
+  ## sequence with textNode
+  element t6 { (text, bit, bob)? }
+t7 =
+  
+  ## sequence of elements
+  element t7 { orgName?, persName?, choice?, seg?, trait? }
+t8 =
+  
+  ## sequence with textnode, and minOccurs on elements
+  element t8 { text, orgName?, persName?, choice?, seg?, trait? }
+choice =
+  
+  ## dummy
+  element choice { empty }
+orgName =
+  
+  ## dummy
+  element orgName { empty }
+persName =
+  
+  ## dummy
+  element persName { empty }
+trait =
+  
+  ## dummy
+  element trait { empty }
+seg =
+  
+  ## dummy
+  element seg { empty }
+start = t1 | t2 | t3 | t4 | t5 | t6 | t7 | t8 | stuff

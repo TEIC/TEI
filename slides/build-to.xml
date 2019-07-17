@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project basedir="." default="dist" name="teitoslides">
+  <!--
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public
+	License as published by the Free Software Foundation; either
+	version 2.1 of the License, or (at your option) any later version.
+	
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Lesser General Public License for more details.
+	
+	You should have received a copy of the GNU Lesser General Public
+	License along with this library; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+	
+        Id: $Id: build-to.xml 12074 2013-05-03 18:30:52Z rahtz $
+        Copyright: 2011, TEI Consortium<
+-->
+  <!--
+ Convert TEI documents into HTML files.
+ -->
+  <import file="../common/teianttasks.xml"/>
+
+  <basename property="basefile" file="${outputFile}" suffix=".slides"/>
+  <property name="texfile" value="${basefile}"/>
+
+  <target name="dist" depends="odd,notodd,go,teicleanup"/>
+
+  <target name="odd" if="processODD">
+    <odd2lite in="${inputFile}" out="${inputFile}.processedodd"/>
+    <buildgeneric type="slides" xsl="${profiledir}/${profile}/slides/to.xsl"  in="${inputFile}.processedodd" out="${inputDir}/${texfile}.tex"/>
+    <delete file="${inputFile}.processedodd"/>
+  </target>
+
+  <target name="notodd" unless="processODD">
+    <buildgeneric type="slides" xsl="${profiledir}/${profile}/slides/to.xsl"  in="${inputFile}" out="${inputDir}/${texfile}.tex"/>
+  </target>
+
+  <target name="go">
+    <copy file="${profiledir}/${profile}/slides/logo.png"
+	  tofile="${outputDir}/_slidelogo.png"/>
+    <runtex out="${outputFile}" in="${inputDir}/${texfile}"
+	    indir="${inputDir}" outdir="${outputDir}"/>
+    <delete file="${outputDir}/_slidelogo.png"/>
+  </target>
+
+
+  <target name="handout">
+    <!-- The transformation for SLIDES handout output. -->
+    <echo level="info">XSLT generate slides handout file</echo>
+    <xslt force="yes" style="${odd2slides}" in="${inputFile}" out="${texfile}-handout.tex">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="directory" expression="file:///${outputTempDir}"/>
+      <!-- supply name of language-->
+      <param name="lang" expression="${lang}" if="lang"/>
+      <!-- emit some diagnostics"-->
+      <param name="debug" expression="${debug}" if="debug"/>
+      <param name="logoFile" expression="_slidelogo.png"/>
+      <param name="startAttribute" expression="{"/>
+      <param name="startAttributeValue" expression="{"/>
+      <param name="startElement" expression="{"/>
+      <param name="startElementName" expression="{"/>
+      <param name="attsOnSameLine" expression="6"/>
+      <param name="beamerClass" expression="boxes"/>
+      <param name="reencode" expression="false"/>
+      <param name="pause" expression="false"/>
+      <!-- be verbose-->
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+    <exec executable="xelatex" dir="${outputDir}" failonerror="true">
+      <arg value="-interaction=nonstopmode"/>
+      <arg value="${texfile}-handout.tex"/>
+    </exec>
+    <exec executable="xelatex" dir="${outputDir}" failonerror="true">
+      <arg value="-interaction=batchmode"/>
+      <arg value="${texfile}-handout.tex"/>
+    </exec>
+    <echo>wrote ${texfile}-handout.tex</echo>
+  </target>
+</project>

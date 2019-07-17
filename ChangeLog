@@ -1,0 +1,849 @@
+2019-07-16  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	update expected results
+	built against current Guidelines release branch
+
+2019-07-11  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #385 from TEIC/peterstadler-issue360
+	fixes internal PDF links #360
+
+2019-07-11  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	update expected results
+
+2019-07-10  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	remove surrounding square brackets from bibliographic references
+
+2019-07-10  Stuart Yeates  <syeates@gmail.com>
+
+	Add some text to make this findable using google (#374)
+
+2019-07-05  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	Merge branch 'dev' into peterstadler-issue360
+
+2019-07-02  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	fix creation of Debian packages
+	Debian uses fakeroot to build packages which resets all environment variables. In the Docker image the `jar` executable is outside of the default paths "/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11" so we need this extra treatment.
+
+2019-06-24  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	Defaulting descs to en instead of all languages
+
+2019-06-20  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #381 from rvdb/jTEI-improve-punctuation-handling
+	fixed the obligatory typo :-/
+
+2019-06-20  rvdb  <ron.vandenbranden@kantl.be>
+
+	fixed the obligatory typo :-/
+
+2019-06-19  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #380 from rvdb/jTEI-improve-punctuation-handling
+	improved processing of "quotation elements" and footnotes w.r.t. subs…
+
+2019-06-19  rvdb  <ron.vandenbranden@kantl.be>
+
+	improved processing of "quotation elements" and footnotes w.r.t. subsequent punctuation, which should now be fully compliant with CMOS:
+	  -only commas and periods should appear before closing quotation mark
+	  -(only the) innermost "quotation element" should "pull in" subsequent comma or period
+	   -all punctuation marks except dash should precede footnote markers
+
+2019-05-20  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	move relaxng related templates to their proper location #375
+	Those templates were introduced by PR #366 but led to some unintended side effects in the epub build. Stylesheets group decided to move them out of teiodds.xsl, thus tacitly accepting to revert the changes to the DTD output as a consequence.
+
+	Co-Authored-By: Martina Scholger <martina.scholger@uni-graz.at>
+	Co-Authored-By: Martin Holmes <mholmes@uvic.ca>
+	Co-Authored-By: Syd Bauman <sydb@users.noreply.github.com>
+
+2019-05-20  martindholmes  <mholmes@uvic.ca>
+
+	Adding comment to new templates.
+
+2019-05-17  Piotr Banski  <bansp@users.noreply.github.com>
+
+	added checks for trang, ant and xetex to `make check` (#239)
+	* added checks for trang, ant and xetex to `make check`
+	
+	* remove checks for jing and trang, and add warning for xetex
+	
+	jing and trang do not need to be installed locally but are provided within the Stylesheets repo
+
+2019-05-10  martindholmes  <mholmes@uvic.ca>
+
+	Fix for expected-results in Test2 following revisions to specs.
+
+2019-05-10  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	update expected results for #360
+
+	set default citebordercolor #360
+	for new `\cite` command (was `\hyperref`)
+
+	fix citation references
+	by using `\cite` rather than `\hyperref`
+
+	some refactoring
+	in particular the `tei:makeHyperTarget` is unecessary because the `\bibitem` adds a label automatically
+
+2019-05-08  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	Merge branch 'dev' into peterstadler-issue360
+
+2019-05-08  Syd Bauman  <s.bauman@neu.edu>
+
+	Change expected results to match #336.
+
+2019-05-08  Raffaele Viglianti  <raffaeleviglianti@gmail.com>
+
+	Merge pull request #343 from TEIC/peterstadler-fix-multiple-schemaSpecs
+	fix processing of multiple schema specs (in one TEI document)
+
+2019-05-08  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Merge pull request #336 from PietroLiuzzo/patch-1
+	adding rendering of ref, gi and att inside desc; still need to updated expected results (and then will close ticket)
+
+2019-05-08  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	Improved handling of multiple schemaSpecs when merging multiple *Spec declarations. Refs #249
+
+2019-05-08  Syd Bauman  <s.bauman@neu.edu>
+
+	Per #240, drop the "four", as there are now six. :-)
+
+2019-05-08  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Merge pull request #240 from bansp/patch-2
+	Only problem w/ this PR is that we left it for so long the number of uses of `@zip64Mode` has changed. Also, the link to get.xml is currently dead due to ADHO server crash problem, but that doesn't change this PR.
+	So Council accepts this PR, and I'm supposed to go fix the reference to `@zip64Mode` attrs now.
+
+2019-04-29  Syd Bauman  <s.bauman@neu.edu>
+
+	complete merge
+
+	Add comments to solve #355
+
+2019-04-29  martindholmes  <mholmes@uvic.ca>
+
+	@martindholmes and @sydb working on issue #355, adding comments to clarify the creation and use of a PI.
+
+2019-03-30  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Merge pull request #367 from TEIC/issue366
+	make sure to only pass one prefix to `concat()`, fixes 366
+
+2019-03-28  Syd Bauman  <s.bauman@neu.edu>
+
+	Minor change: The ever vigilant @cmsmcq [noticed](https://github.com/TEIC/Stylesheets/pull/367#issuecomment-476296447) I missed changing a '=' to 'eq' on previous commit. As he points out, should make no difference whatsoever to actual processing (of valid documents).
+
+2019-03-26  martindholmes  <mholmes@uvic.ca>
+
+	Fix for expected results change arising from https://github.com/TEIC/Stylesheets/commit/c2d23d7125998bae7b8edc5a783789fcba02a608.
+
+2019-03-25  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	updated tests
+
+	Merge branch 'dev' of github.com:TEIC/Stylesheets into dev
+
+	fixed wrong variable name
+
+2019-03-25  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	partially revert JSON tests
+	This undoes ff9837e7d4e22a3606f6db3a3ff14f12cf8609d4 to fix the current build problems. NB:  Test/expected-results/test34.combined.json was only partially reverted, the "desc" arrays remain empty here.
+
+2019-03-25  Syd Bauman  <s.bauman@neu.edu>
+
+	Incorporate @cmsmcq's suggestions into another attempt at fixing this; only partially tested
+
+2019-03-22  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	make sure to only pass one prefix to `concat()`, fixes 366
+
+2019-03-21  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	updated tests
+
+	set "en" as default value for doclang
+
+	switched to using default doclang parameter
+
+2019-03-18  martindholmes  <mholmes@uvic.ca>
+
+	Fix for expected-results.
+
+2019-03-18  Syd Bauman  <s.bauman@neu.edu>
+
+	Fix #361: Add namespace to <egXML> in <egXML> output. (we hope this works; let's see what Mr. Jenkins says)
+
+2019-03-16  James Cummings  <296651+jamescummings@users.noreply.github.com>
+
+	Merge pull request #359 from TEIC/peterstadler-issue-358
+	add support for hard page breaks in odttotei
+
+2019-03-15  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	Merge branch 'dev' into peterstadler-fix-multiple-schemaSpecs
+
+2019-03-11  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Merge pull request #364 from TEIC/peterstadler-dev
+	set localsource parameter once for build process 
+
+2019-03-07  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	add TEISOURCE_DEFAULT
+	which will be used when no --localsource is provided; as requested in https://github.com/TEIC/Stylesheets/pull/364#issuecomment-470603525
+
+	improve code for setting localsource
+	and add comments
+
+	replace hard coded source in testfile
+	with variable DEFAULTSOURCE. This will prevent builds from failing when DEFAULTSOURCE is set to something different than the default.
+
+2019-03-06  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	point at the vault, not the release
+
+	support localsource pointing at some web resource
+	this is a temporary hack and needs to be fleshed out.
+
+	add proper support for setting localsource
+	this will allow you to invoke `make` with a local copy of the TEI sources, circumventing the current hickup with the servers …
+	 e.g. `make test DEFAULTSOURCE=file:///my/local/path/to/p5subset.xml`
+
+2019-03-05  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	update scheme for source
+	NB: we need to modify the tests to capture this. Because whenever a different source is set this test will fail
+
+	update expected json results
+
+	update expected results #357
+
+	update expected results
+
+	remove trailing whitespace #357
+
+	update default p5subset scheme
+
+2019-03-04  Joey Takeda  <joey.takeda@gmail.com>
+
+	#328: Suppress copying unprocessed attRefs in common_tagdocs.
+
+2019-02-20  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	fix for valDesc when no lang is specified
+
+	fixed missing axis to get valList `@type`
+
+2019-02-17  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	add phantomsection to spec labels, fixes 360
+
+2019-02-15  Syd Bauman  <s.bauman@neu.edu>
+
+	Merge in the latest changes from dev
+
+	Fix #357.
+
+2019-02-15  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	Adjusted odd2json tests
+
+	Changes for datatype processing
+
+2019-01-31  martindholmes  <mholmes@uvic.ca>
+
+	Merge branch 'dev' of github.com:TEIC/Stylesheets into dev
+
+	Updates to Test2 due to changes in ODD processing and schema.
+
+2019-01-30  Hugh Cayless  <philomousos@gmail.com>
+
+	Merge branch 'master' into dev post 7.47.0 release.
+
+2019-01-29  Hugh Cayless  <philomousos@gmail.com>
+
+	Merge branch 'release-7.47.0'
+	Fixing issues with the tests, which surfaced with TEI 3.5.0.
+
+	Fixing expected results.
+
+	Merging release branch.
+
+	Updated changelog.
+
+	Set VERSION 7.47.0
+2019-01-29  Hugh Cayless  <philomousos@gmail.com>
+
+	Set VERSION 7.47.0
+
+2019-01-28  Syd Bauman  <s.bauman@neu.edu>
+
+	Release note processing: Process <gi> and <ident type="class"> in readme-X.Y.Z.xml files such that they point to the X.Y.Z version of the Guidelines
+
+2019-01-24  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Merge pull request #356 from TEIC/peterstadler-issue351
+	pull request to address #351
+
+2019-01-24  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	Merge branch 'dev' into peterstadler-issue351
+
+2019-01-20  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	Adjusted odd2json to look for class types from a source file when not found in the local ODD. This will help supporting non-compiled ODDs. Updated tests.
+
+2019-01-12  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	create output directories if needed #351
+	this should be safe since `-p` does not throw an error for existing directories and creates parent directories if needed
+
+	set `-e` option #351
+	… to exit immediately if some command returns a non-zero status.
+
+2019-01-06  Syd Bauman  <s.bauman@neu.edu>
+
+	add test: Added better testing of minOccurs= and maxOccurs= (in part to set up testing for when we try to fix #354).
+
+2019-01-04  Syd Bauman  <s.bauman@neu.edu>
+
+	Fix #352: Changed “odd2odd.xsl” to “teiodds.xsl” in unused error message.
+
+2019-01-04  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	only class name for memberOf
+
+	back to simple classes
+
+	returned to non-agnostic model with apologies for the revert attempts nonsense
+
+	Revert "Added more detail for memberOf"
+	This reverts commit 64dbff8bae86e3e65bbb838345e3342505986b6e.
+
+	Revert "fix expected results"
+	This reverts commit e422d4bfff5ccb372acf49efbf299eecf8b7c5dc.
+
+	New tests for odd2json
+
+	Merge branch 'dev' of github.com:TEIC/Stylesheets into dev
+
+	Made representation of memberOf more agnostic. The XSLT does not attempt to sort class references by class type as that information may not always be available in customization ODDs.
+
+2019-01-04  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	fix expected results
+	aftermath of 64dbff8bae86e3e65bbb838345e3342505986b6e
+
+2019-01-03  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	Added more detail for memberOf
+
+2018-12-30  Syd Bauman  <s.bauman@neu.edu>
+
+	Update testPure1, step 8: Add a Schematron constraint. (Also some tweaks to comments and added a <remarks>.)
+
+2018-12-21  Syd Bauman  <sydb@users.noreply.github.com>
+
+	Update README_build_odd.md
+	Typo fix.
+
+2018-12-21  martindholmes  <mholmes@uvic.ca>
+
+	Tweaks to test ODD readme.
+
+	Tweaks to test ODD readme.
+
+	More added to the ODD test readme file.
+
+2018-12-14  martindholmes  <mholmes@uvic.ca>
+
+	Markdown fix in readme.
+
+	Markdown fix in readme.
+
+	Adding a readme to document the ODD file processing.
+
+2018-12-08  Syd Bauman  <s.bauman@neu.edu>
+
+	Update testPure1, step 7: Add tests for <dataRef> with key= or name=, and restriction=. Note that one of these tests worked, in that it found a Stylesheets problem. See #349.
+
+	Update testPure1, step 6: 1) Delete att.lexicographic instead of att.deprecated, just to be clear that we are testing the deletion of something that is not included. (Since previous versions of this schema have included 'tagdocs', and even this version sucks in some elements therefrom.) 2) Change the alteration of synch= to be a deletion thereof to match the comment. I.e., synch= should not be included in output schemas, and thus invalid.
+
+2018-12-07  Syd Bauman  <s.bauman@neu.edu>
+
+	Update testPure1, step 5: Delete the <join> and <joinGrp> elements from testPure1 schema using <elementSpec>.
+
+	Update testPure1, step 4: Replace reference to module 'tagdocs' and replace with references to elements <gi>, <att>, and <val>. Add a test to ensure that <tag> is invalid.
+
+	Update testPure1, step 3: Move reference to module 'linking' from middle-of-pack to up where all the other simple <moduleRef>s are. This has profound effects on what the output RNG looks like, but should have no effect on what it validates. I have checked against all the XML files in the inputFiles/ directory, and the same number of error messages are issued for each.
+
+	Update testPure1, step 2: Change order of <moduleRef> declarations so that those that are simple (i.e., have no attrs) come first. This has profound effects on what the output RNG looks like, but should have no effect on what it validates. I have checked against all the XML files in the imnputFiles/ directory, and the same number of error messages are issued for each. Also use phrase-level encoding in the <desc>.
+
+	Update testPure1, step 1: Just a change to the order of and whitespace between the attributes and namespace declarations on the outermost <TEI> element. Nothing else. Should cause no appreciable change at all. But requires different expected results, as the order is propegated through to the output.
+
+	Revert testPure1: Revert the testPure1.odd file in preparation for re-introducing each change I made one at a time.
+
+2018-11-23  martindholmes  <mholmes@uvic.ca>
+
+	Removing -Dregenerate support, since it's risky and not the ideal approach.
+
+2018-11-23  Syd Bauman  <s.bauman@neu.edu>
+
+	Add more tests of ODD constructs
+
+2018-11-20  Syd Bauman  <s.bauman@neu.edu>
+
+	Updated AUTHORS: Added those who are listed in ChangeLog or have > 25 commits to the AUTHORS list.
+
+2018-11-19  Syd Bauman  <s.bauman@neu.edu>
+
+	Fix #334: During today's Stylesheets group conference call we fixed ticket #334 by adding a template that simply ingores <cb>, <gb>, and <milestone> elements. It is possible, if not outright likely, that in the future we will have to do better than just ignoring them, but at least now FO can be produced w/o this error forcing the build to fail.
+
+2018-11-19  James Cummings  <296651+jamescummings@users.noreply.github.com>
+
+	Merge pull request #339 from cyocum/html-tei-ex
+	Make editorial expansions appear as italic in HTML
+
+2018-11-17  martindholmes  <mholmes@uvic.ca>
+
+	Adding test for valList in content models.
+
+2018-11-12  martindholmes  <mholmes@uvic.ca>
+
+	A bit more progress with Pure ODD testing.
+
+2018-11-11  martindholmes  <mholmes@uvic.ca>
+
+	Tweak to wording.
+
+	More work on Pure ODD test.
+
+	A bit more work on Pure ODD test.
+
+2018-11-02  martindholmes  <mholmes@uvic.ca>
+
+	Adding valid instance file for testPure1.
+
+	Adding beginnings of an invalid instance file for testPure1.
+
+2018-10-29  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	update expected results
+
+2018-10-27  Chris Yocum  <cyocum@gmail.com>
+
+	Fixed expected html in test
+
+	Upated html expected results to match html ex output
+
+	Changed to use CSS rather than HTML element
+
+2018-10-26  Syd Bauman  <s.bauman@neu.edu>
+
+	Merge in @martindholmes changes, I think
+
+	With @martindholmes change name of validation output file so that Jenkins console doesn't parse it as an error
+
+2018-10-26  martindholmes  <mholmes@uvic.ca>
+
+	Changing nomenclature to avoid using the word 'error', which may trigger Jenkins log parser build failures.
+
+	@sydb and @martindholmes working on setting up for more ODD processing.
+
+2018-10-26  Syd Bauman  <s.bauman@neu.edu>
+
+	Merge branch 'dev' of https://github.com/TEIC/Stylesheets into dev
+
+	Change informational message for readability.
+
+2018-10-26  martindholmes  <mholmes@uvic.ca>
+
+	Fixes to expected results due to nomenclature and naming convention changes.
+
+2018-10-26  Syd Bauman  <s.bauman@neu.edu>
+
+	Merge branch 'dev' of https://github.com/TEIC/Stylesheets into dev
+
+2018-10-26  martindholmes  <mholmes@uvic.ca>
+
+	@sydb and @martindholmes changing nomenclature for clarity.
+
+2018-10-26  Syd Bauman  <s.bauman@neu.edu>
+
+	@martindholmes and I changing nomenclature for clarity
+
+2018-10-26  martindholmes  <mholmes@uvic.ca>
+
+	Tweak to readme.
+
+2018-10-23  Chris Yocum  <cyocum@gmail.com>
+
+	Fixed last missing i tag
+
+2018-10-22  Chris Yocum  <cyocum@gmail.com>
+
+	Updated html tests to use the new italics for editorial expansions
+
+2018-10-21  Chris Yocum  <cyocum@gmail.com>
+
+	Make editorial expansions appear as italic in HTML
+	Make editorial expansions appear as italic in HTML. This allows
+	editorial interventions to be visible when a transcription is
+	translated into HTML.  This is common formating for printed critical
+	editions.
+
+2018-09-28  Syd Bauman  <s.bauman@neu.edu>
+
+	Update version to 7.47.0 as we just released 7.46.0
+
+	auto-updated changelog
+
+	Prepare for release
+
+2018-09-26  Syd Bauman  <s.bauman@neu.edu>
+
+	More work on #250
+2018-09-26  Syd Bauman  <s.bauman@neu.edu>
+
+	More work on #250
+
+	Work on #250
+
+2018-09-25  Syd Bauman  <s.bauman@neu.edu>
+
+	Address #330: Ensure that no colons are in the generated ID used for <sch:pattern>s.
+
+2018-09-21  martindholmes  <mholmes@uvic.ca>
+
+	Fix to prevent deprecations in egXML from being harvested for the appendix.
+
+2018-09-13  martindholmes  <mholmes@uvic.ca>
+
+	Don't nest tds in tds.
+
+	Work on TEI ticket #1657: translatable headings for deprecation appendix table.
+
+2018-09-12  martindholmes  <mholmes@uvic.ca>
+
+	Merge branch 'dev' of github.com:TEIC/Stylesheets into dev
+
+	Stylesheet support for another column in the deprecation table with descriptive information.
+
+2018-09-11  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	add Travis build icon to Readme
+	and added more targets to the `make` command (to align it with the current Jenkins job)
+
+2018-09-11  martindholmes  <mholmes@uvic.ca>
+
+	Sort deprecations by expiry date.
+
+	Add namespace prefix, doh.
+
+	Attempting to make constraintSpec deprecations link to their ancestor spec file in the Deprecations appendix.
+
+2018-09-11  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	this should work now …
+	proper docker command for running the Stylesheets tests on Travis
+
+	add travis integration
+
+2018-09-11  martindholmes  <mholmes@uvic.ca>
+
+	Fix for ill-formed file committed in haste. Sorry folks.
+
+	Attempt to make deprecation idents into links.
+
+	Tweaks to prepare for easier linking.
+
+2018-09-10  martindholmes  <mholmes@uvic.ca>
+
+	Table structure should be fixed now (TEI ticket 1657 work).
+
+	Still hacking on TEI ticket #1657.
+
+	More work on TEI ticket #1657.
+
+	Fix for expected results.
+
+	Work on TEIC/TEI ticket #1657: need to add processing for deprecationcat value of divGen/@type.
+
+2018-09-08  martindholmes  <mholmes@uvic.ca>
+
+	Work on ticket #216: removing apparently orphaned file.
+
+	Try actually saving the file before committing.
+
+	Adding a README as requested by Council in Tokyo.
+
+	Two files removed per issue #216. If nothing breaks, I'll continue.
+
+	Commenting out bad CSS in epub output for issue #115, this time in epub rather than epub3.
+
+	Commenting out bad CSS in epub output for issue #115.
+
+	Space missing in listed authors.
+
+2018-09-07  Raffaele Viglianti  <raffaeleviglianti@gmail.com>
+
+	Merge pull request #292 from ebeshero/dev
+	possible solution for processing listRef/ref in odd2odd.xsl
+
+2018-09-07  ebeshero  <ebbondar@gmail.com>
+
+	merging with dev instead of master Merge remote-tracking branch 'upstream/dev' into dev
+
+	updating from main Stylesheets Merge remote-tracking branch 'upstream/master' into dev
+
+2018-09-07  Magdalena Turska  <tuurma@gmail.com>
+
+	Merge branch 'dev' of https://github.com/TEIC/Stylesheets into dev
+
+	fix #308 cleaning up remaining hardcoded and superfluous references to Saxon EE
+
+2018-09-07  martindholmes  <mholmes@uvic.ca>
+
+	For issue #316, added tite to the list. If nothing breaks, ticket can be closed.
+
+2018-08-31  martindholmes  <mholmes@uvic.ca>
+
+	Fix for local paths in outputs and expected-results.
+
+2018-08-31  Hugh A. Cayless  <philomousos@gmail.com>
+
+	Merge pull request #332 from TEIC/sortedDiffTests
+	Implementation of sorted diffing to make Test more robust against software version changes.
+
+2018-08-31  martindholmes  <mholmes@uvic.ca>
+
+	Updating FOP to 2.2, which involves changing filepaths.
+
+	Use https for all downloads from now on.
+
+2018-08-31  Hugh Cayless  <philomousos@gmail.com>
+
+	Sorting archive manifest before diff.
+
+2018-08-29  martindholmes  <mholmes@uvic.ca>
+
+	Test of sorted diffing to make Test more robust against software version changes.
+
+2018-08-28  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	attempting to fix more test errors
+
+	Fixing tests for new odd2json
+
+2018-08-27  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	Merge branch 'dev' into raffazizzi-json
+
+2018-08-22  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	A few adjustments and representing datatypes for attributes
+
+2018-08-11  martindholmes  <mholmes@uvic.ca>
+
+	Slight file re-organization per suggestion from SB; parameterizing file list so a single file can be tested more easily.
+
+2018-08-08  martindholmes  <mholmes@uvic.ca>
+
+	Schematron now being extracted from ODDs.
+
+2018-08-07  martindholmes  <mholmes@uvic.ca>
+
+	Added one more test to the invalid file.
+
+	Invalid file testing: first example working.
+
+2018-08-06  martindholmes  <mholmes@uvic.ca>
+
+	Comments in ODD build file as to how to proceed with testing validation using generated schemas.
+
+	Build of ODD for non-TEI schema working.
+
+	RelaxNG being created; adding valid exemplar for testing.
+
+	Adding a simple test file for building an ODD for a non-TEI schema.
+
+2018-07-27  martindholmes  <mholmes@uvic.ca>
+
+	Merge branch 'dev' of https://github.com/TEIC/Stylesheets into dev
+
+	Update build file to match new file name for old test.odd.
+
+2018-07-27  Syd Bauman  <s.bauman@neu.edu>
+
+	Rename output file accordingly
+
+	Tweak and rename specDesc test file
+
+2018-07-25  martindholmes  <mholmes@uvic.ca>
+
+	Updated pureOdd  expected-results.
+
+	Whitespace in expected-results.
+
+	Updates for changes to expected-results.
+
+	Fixing duplicated project name.
+
+2018-07-25  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	changes related to attributes processing
+
+	Merge branch 'dev' into raffazizzi-json
+
+2018-07-23  Syd Bauman  <s.bauman@neu.edu>
+
+	Update for 3.4.0: Re-create a bunch of the expected results based on what is generated from test files using the soon-to-be-published 3.4.0.
+
+2018-07-23  raffazizzi  <raffaeleviglianti@gmail.com>
+
+	Updated version after release
+2018-07-23  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	trimming whitespace from VERSION file
+	… to fix current issue with extra new line
+
+	bump version number to 7.45.0 (sine alpha)
+
+2018-05-11  Syd Bauman  <s.bauman@neu.edu>
+
+	First crack at new test of Pure ODD in Test2, brought to you by Martin & Syd
+
+2018-05-06  Syd Bauman  <s.bauman@neu.edu>
+
+	Bug fix: Generated pattern ID should not contain colons.
+
+2018-05-04  martindholmes  <mholmes@uvic.ca>
+
+	Tweaks to new Pure ODD test file.
+
+	Adding new Pure ODD test file.
+
+	Fix for typo.
+
+2018-04-30  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	argh, never merge without testing
+	follow-up commit to PR #320 with fixed expected results
+
+2018-04-30  Duncan Paterson  <duncdrum@users.noreply.github.com>
+
+	Minor changes for easier use with tei-publisher (#320)
+	* add short title for better display in odd editor
+	
+	* fix readme header style
+	lint md
+	
+	* add link to defaultSource into sourceDesc of output
+
+2018-04-30  martindholmes  <mholmes@uvic.ca>
+
+	Fix expected results from test 15 changed through issue #138.
+
+	Initial work on issue #138: adding an attribute to the TEI Lite generated from glosses and descs to signify when they're out of date.
+
+2018-04-24  martindholmes  <mholmes@uvic.ca>
+
+	Refactoring to make ODD to RNG processing modular. Anyone can now add an ODD and a target RNG file to the set to include it in the test.
+
+2018-04-22  Syd Bauman  <s.bauman@neu.edu>
+
+	More on TEI ticket 1737: Remove straggling references to the type= attribute of <macroSpec>, except for those that should remain and those in odd2dtd that refer to the values 'epe' and 'defaultpe', as I do not know what those are.
+
+2018-04-21  Syd Bauman  <s.bauman@neu.edu>
+
+	Start addressing TEI issue 1737: Start to address https://github.com/TEIC/TEI/issues/1737 by removing code that refers to <macroSpec type=dt>. There is a corresponding commit in the TEI repo, but I don't know its number yet.
+
+2018-04-20  Syd Bauman  <s.bauman@neu.edu>
+
+	isoschematron->schematron
+
+	Only another whitespace change
+
+	Only a whitespace change
+
+2018-04-20  martindholmes  <mholmes@uvic.ca>
+
+	Another expected-results whitespace fix.
+
+2018-04-20  Syd Bauman  <s.bauman@neu.edu>
+
+	Only whitespace changes
+
+	Only whitespace differences
+
+2018-04-20  martindholmes  <mholmes@uvic.ca>
+
+	Previous version was polluted with unmerged pull request data.
+
+	Another update for expected-results.
+
+	Didn't quite get the expected-results right.
+
+	Update to expected results.
+
+2018-04-05  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	fixed typos
+
+	added test file for docx hyperlinks #299
+	thanks to @rvdb for the discovery and the test
+
+2018-04-05  rvdb  <ron.vandenbranden@kantl.be>
+
+	docx2tei hyperlink fix (#300)
+	* copy <w:endnote> for further processing (analogous to how footnotes are processed)
+	
+	* simplified and corrected <w:hyperlink> processing, so that URL and fragment identifier are preserved
+	
+	* adapted instruction that removes initial underscore from fragment identifiers to the improved format for ref/@target
+
+2018-04-04  Peter Stadler  <stadlerpeter@yahoo.fr>
+
+	added test11a.xml to the clean target
+
+2018-02-26  Hugh Cayless  <philomousos@gmail.com>
+
+	Handling constraintSpec on dataSpec properly.
+
+2018-02-12  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #311 from rvdb/jTEI
+	-display abstract at the beginning of an article in PDF
+
+2018-02-12  rvdb  <ron.vandenbranden@kantl.be>
+
+	-display abstract at the beginning of an article in PDF -display appendixes before bibliography and notes in PDF
+
+2018-02-11  Martin Holmes  <mholmes@uvic.ca>
+
+	Merge pull request #310 from rvdb/jTEI
+	-made note numbering style configurable: This is way more elaborate and cool than I'd imagined. Nice work.
+
+2018-02-10  rvdb  <ron.vandenbranden@kantl.be>
+
+	-made note numbering style configurable:   -continuous numbering or restart numbering for front / body / back   -single number format or different formats for front / body / back -fixed note numbering for ODT
+
+2018-02-06  martindholmes  <mholmes@uvic.ca>
+
+	Fixing Test2 expected results for changes re (unknown project).
+
+2018-02-01  martindholmes  <mholmes@uvic.ca>
+
+	Removing call to Saxon 9 EE from docx ant process; causes process to fail if Oxygen not installed. Issue #308.

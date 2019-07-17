@@ -1,0 +1,85 @@
+#!/bin/sh
+X=`dirname $0`
+APP=`(cd $X; pwd)`
+cp template_orig.docx template.docx
+
+mkdir temp$$
+cd temp$$
+unzip -q ../template.docx
+
+# remove custom xml file
+if test -e docProps/custom.xml
+then
+  echo "removed custom.xml"
+  rm docProps/custom.xml
+fi
+
+# remove custom xml folder
+if test -e customXml
+then
+  echo "remove customXml folder"
+  rm -r customXml
+fi
+
+# remove webSettings
+if test -e word/webSettings.xml
+then
+	echo "remove webSettings.xml"
+	rm word/webSettings.xml
+fi
+
+# remove word/_rels/settings.xml.rels
+if test -e word/_rels/settings.xml.rels
+then
+	echo "remove settings.xml.rels"
+	rm word/_rels/settings.xml.rels	
+fi
+
+# remove headers and footers
+echo "remove all header and footer files"
+rm word/footer*
+rm word/header*
+
+# remove theme directory
+if test -e word/theme
+then
+	echo "remove document themes"
+	rm -r word/theme
+fi
+	
+
+# remove endnotes and footnotes
+if test -e word/endnotes.xml
+then
+	echo "remove endotes.xml"
+	rm word/endnotes.xml
+fi
+if test -e word/footnotes.xml
+then
+	echo "remove foototes.xml"
+	rm word/footnotes.xml
+fi
+
+
+# remove glossary dir
+if test -e word/glossary
+then
+	echo "remove glossary directory"
+	rm -r word/glossary
+fi
+
+# fix .rels
+saxon _rels/.rels $APP/fixdotrels.xsl > x
+mv x _rels/.rels
+
+#fix styles
+saxon word/styles.xml $APP/fixstyle.xsl > x
+mv x word/styles.xml
+
+# zip back together
+rm ../template.docx
+zip -r -q ../template.docx  .
+cd ..
+rm -rf temp$$
+
+echo "stored template in template.docx"

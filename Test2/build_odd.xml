@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="odd" name="StylesheetsTestOdd"
+  xmlns:if="ant:if"
+  xmlns:unless="ant:unless">
+  
+  <description> 
+    Stylesheets/Test2/build_odd.xml
+    
+    ANT TEST FILE FOR CONVERSIONS BETWEEN ODD AND OTHER FORMATS.
+    
+    
+    
+  </description>
+
+
+  <!-- First we include the generic utilities module.   -->
+  <import file="build_utilities.xml" as="utils"/>
+  
+  <!-- This is the list of files we're going to process, expressed
+       as a parameter, so that it can be overridden to process 
+       a subset of files. -->
+  <property name="oddFileList" value="testSpecificationDescription.odd testPure1.odd testNonTeiOdd1.odd"/>
+  
+  <!--  Files for conversion from ODD to RNG.  -->
+  <fileset id="oddToRngFiles" dir="${inputDir}" includes="${oddFileList}"/>
+  
+  
+<!-- Default target that does everything. -->
+  <target name="odd">
+    <antcall target="oddFilesToRng"/>
+  </target>
+  
+  <target name="oddFilesToRng">
+    <description>
+      TARGET oddFilesToRng
+      Converts ODD files to RNG and diffs them against expected results.
+      Then if correctly-named instance files exist, these are validated
+      against the RNG file and results checked.
+      Then Schematron is extracted from both the ODD file and the RNG 
+      file, and instance files are validated against both Schematron files
+      with results checked.
+    </description>
+   
+    <foreach target="oddFileToRng" param="inFile">
+      <path>
+        <fileset refid="oddToRngFiles"/>
+      </path>
+    </foreach>
+    
+<!-- Why not use a macrodef rather than a target, as below?
+     Because we often want to call a single target with a single
+     file while we're working on tests; there's no easy way to 
+     do this if the process is defined as a macrodef rather than
+     as a distinct target.
+    -->
+<!--    <for param="inFile">
+      <fileset refid="oddToRngFiles"/>
+      <sequential>
+        <oddToRng inFile="@{inFile}"/>
+      </sequential>
+    </for>-->
+    
+  </target>
+  
+<!--  <macrodef name="oddToRng">
+    <attribute name="inFile"/>
+    <sequential>
+      <basename file="@{inFile}" property="plainFileName" suffix=".odd"/>
+      <property name="outFile" value="${outputDir}/${plainFileName}.rng"/>
+      
+      <exec executable="${bin}/teitorelaxng" failonerror="true">
+        <arg line="-\-localsource=${localsource}"/>
+        <arg file="@{inFile}"/>
+        <arg file="${outFile}"/>
+      </exec>
+      
+      <antcall target="prepAndDiffFile">
+        <param name="inFile" value="${outputDir}/${plainFileName}.odd"/>
+      </antcall>
+    </sequential>
+  </macrodef>-->
+  
+  <target name="oddFileToRng">
+    <description>
+      TARGET oddFileToRng
+      Converts a sinigle ODD file to RNG and diffs it against expected results.
+      Then if correctly-named instance files exist, these are validated
+      against the RNG file and results checked.
+      Then Schematron is extracted from both the ODD file and the RNG 
+      file, and instance files are validated against both Schematron files
+      with results checked. 
+      It takes a single parameter, inFile.
+    </description>
+    <basename file="${inFile}" property="plainFileName" suffix=".odd"/>
+    <property name="outFile" value="${outputDir}/${plainFileName}.rng"/>
+    
+    <exec executable="${bin}/teitorelaxng" failonerror="true">
+      <arg line="--localsource=${localsource}"/>
+      <arg file="${inFile}"/>
+      <arg file="${outFile}"/>
+    </exec>
+    
+    <antcall target="prepAndDiffFile">
+      <param name="inFile" value="${outputDir}/${plainFileName}.rng"/>
+    </antcall>
+    
+    <!-- Next we extract Schematron from the ODD file. Rather than
+         checking first whether there is any Schematron to be extracted,
+         it's simpler to assume there is (and good practice to include
+         some anyway). -->
+    <antcall target="extractSchematronFromOdd">
+      <param name="inFile" value="${inFile}"/>
+    </antcall>
+      <!-- 
+      Next:
+         If there is a file named ${inputDir}/${plainFileName}ValidInstance.xml, then:
+      
+         1. Validate it with Jing against ${outputDir}/${plainFileName}.rng and fail on invalid.
+         
+         2. Validate it (how???) against ${outputDir}/${plainFileName}.sch and fail on invalid.
+      
+      And then:
+         If there is a file named ${inputDir}/${plainFileName}InvalidInstance.xml, then:
+      
+         1. Validate it with Jing against ${outputDir}/${plainFileName}.rng > 
+            ${outputDir}/${plainFileName}InvalidExemplarRngMessages.txt, and diff that
+            against ${expectedResultsDir}/${plainFileName}InvalidExemplarRngMessages.txt
+            
+         2. Validate it (how???) against ${outputDir}/${plainFileName}.sch > 
+            ${outputDir}/${plainFileName}InvalidExemplarSchMessages.txt, and diff that
+            against ${expectedResultsDir}/${plainFileName}InvalidExemplarSchMessages.txt
+       -->
+<!--   Look for a valid instance, and if it's there, validate it with
+       the schema that's been created. -->
+    
+    <property name="validInstance" value="${inputDir}/validInstances/${plainFileName}ValidInstance.xml"/>
+    
+    <if>
+      <available file="${validInstance}"/>
+      <then>
+        <echo message=""/>
+        <echo message="Validating valid instance file ${validInstance} against ${outputDir}/${plainFileName}.rng."/>
+        <jing rngfile="${outputDir}/${plainFileName}.rng" file="${validInstance}"/>
+      </then>
+    </if>
+    
+<!--   Look for an invalid instance, and if it's there, validate it and diff
+       errors against expected-results. -->
+    
+    <property name="invalidInstance" value="${inputDir}/invalidInstances/${plainFileName}InvalidInstance.xml"/>
+    
+    <if>
+      <available file="${invalidInstance}"/>
+      <then>
+        <antcall target="validateInvalidInstanceRng">
+          <param name="plainFileName" value="${plainFileName}"/>
+        </antcall>
+      </then>
+    </if>
+    
+  </target>
+  
+  <target name="extractSchematronFromOdd">
+    <description>
+      TARGET extractSchematronFromOdd
+      This target uses Stylesheets/odds/extract-isosch.xsl to
+      extract the Schematron embedded in an ODD file. It takes
+      a single parameter inFile, the name of the ODD file, and creates
+      a single Schematron file, outputFiles/[oddFileNameWithoutExtension]FromOdd.sch.
+    </description>
+    <basename file="${inFile}" property="plainFileName" suffix=".odd"/>
+    <property name="schFromOddFile" value="${outputDir}/${plainFileName}FromOdd.sch"/>
+    <echo message="Extracting Schematron from ${inFile} into ${schFromOddFile}"/>
+    <java fork="true" classname="net.sf.saxon.Transform" classpath="${saxonJar}" failonerror="true">
+      <arg value="-s:${inFile}"/>
+      <arg value="-xsl:${basedir}/../odds/extract-isosch.xsl"/>
+      <arg value="-o:${schFromOddFile}"/>
+      <arg value="--suppressXsltNamespaceCheck:on"/>
+      <arg value="-versionmsg:off"/>
+    </java>
+    
+  </target>
+  
+</project>

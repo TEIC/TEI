@@ -1,0 +1,97 @@
+#!/bin/sh
+HERE=`pwd`
+IN=`basename $1`
+OUT=`basename $2`
+INd=`dirname $1`
+OUTd=`dirname $2`
+INDIR=`(cd $INd; pwd)`
+OUTDIR=`(cd $OUTd; pwd)`
+AD=`dirname $0`
+APPDIR=`(cd $AD; pwd)`
+mkdir temp$$
+cd temp$$
+unzip -q $INDIR/$IN
+# remove old template
+if test -e $OUTDIR/$OUT
+then
+  echo "remove old template"
+  rm $OUTDIR/$OUT
+fi
+
+# remove custom document properties
+if test -e docProps/custom.xml
+then
+  echo "removed custom.xml"
+  rm docProps/custom.xml
+  #saxon docProps/custom.xml $APPDIR/fixdocprop.xsl  template="$3" > x.xml
+  #mv x.xml docProps/custom.xml
+fi
+
+# remove custom xml folder
+if test -e customXml
+then
+  echo "remove customXml folder"
+  rm -r customXml
+fi
+
+# remove webSettings
+if test -e word/webSettings.xml
+then
+	echo "remove webSettings.xml"
+	rm word/webSettings.xml
+fi
+
+# remove word/_rels/settings.xml.rels
+if test -e word/_rels/settings.xml.rels
+then
+	echo "remove settings.xml.rels"
+	rm word/_rels/settings.xml.rels	
+fi
+
+# remove headers and footers
+echo "remove all header and footer files"
+rm word/footer*
+rm word/header*
+
+# remove theme directory
+if test -e word/theme
+then
+	echo "remove document themes"
+	rm -r word/theme
+fi
+	
+
+# remove endnotes and footnotes
+if test -e word/endnotes.xml
+then
+	echo "remove endotes.xml"
+	rm word/endnotes.xml
+fi
+if test -e word/footnotes.xml
+then
+	echo "remove footnotes.xml"
+	rm word/footnotes.xml
+fi
+
+
+# remove glossary dir
+if test -e word/glossary
+then
+	echo "remove glossary directory"
+	rm -r word/glossary
+fi
+
+# fix .rels
+saxon _rels/.rels $APPDIR/fixdotrels.xsl > x
+mv x _rels/.rels
+
+#fix styles
+saxon word/styles.xml $APPDIR/fixstyle.xsl > x
+mv x word/styles.xml
+
+# zip back together
+zip -r -q $OUTDIR/$OUT .
+cd ..
+rm -rf temp$$
+
+echo "stored template in $OUTDIR/$OUT"

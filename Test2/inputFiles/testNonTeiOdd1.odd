@@ -1,0 +1,556 @@
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?><?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?><TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:xh="http://www.w3.org/1999/xhtml"
+     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+     xmlns:gcse="http://www.google.com/cse"
+     n="testNonTeiOdd1">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Test for using ODD to define non-TEI schemas</title>
+            <author>Martin Holmes</author>
+         </titleStmt>
+         <publicationStmt>
+            <p>Free for any purpose</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>This is a very simplified version of an ODD file originally created for the
+               johnkeats.uvic.ca website.</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <p>No documentary content yet. The <gi>schemaSpec</gi> is in the <gi>back</gi>. This ODD
+            defines a schema to validate very simple XHTML5 fragments rooted on the <gi>xh:div</gi>
+            element.</p>
+      </body>
+      <back>
+         <div>
+            <schemaSpec ident="nonTeiOdd" start="div" ns="http://www.w3.org/1999/xhtml">
+
+               <elementSpec ident="div" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+                  <gloss>Division of a document; used as the root for content blocks.</gloss>
+                  <desc>The core container element for a content block. This may also nest, to
+                     provide subsections.</desc>
+                  <classes>
+                     <memberOf key="model.divBody"/>
+                     <memberOf key="att.classable"/>
+                     <memberOf key="att.identifiable"/>
+                  </classes>
+                  <content>
+                     <macroRef key="macro.divContent"/>
+                  </content>
+                  <constraintSpec ident="headingLevelMustMatchNesting" scheme="schematron">
+                     <constraint>
+                        <sch:assert test="if (child::xh:h3) then count(ancestor::xh:div) = 0                             else if (child::xh:h4) then count(ancestor::xh:div) = 1                             else if (child::xh:h5) then count(ancestor::xh:div) = 2                             else not(child::xh:h3 or child::xh:h4 or child::xh:h5)"> The level of your heading (h3, h4 or h5) must fit with the depth of
+                           your division nesting; so the top-level div would have h3, a div inside
+                           it would have h4, and a div inside that would have h5. </sch:assert>
+                     </constraint>
+                  </constraintSpec>
+
+               </elementSpec>
+
+               <elementSpec ident="h3" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+                  <gloss>Level 3 heading</gloss>
+                  <desc>The h3 (level 3 heading) element provides the heading for root-level div
+                     elements.</desc>
+                  <classes>
+                     <memberOf key="model.divHeading"/>
+                     <memberOf key="att.classable"/>
+                  </classes>
+                  <content>
+                     <macroRef key="macro.paraContent"/>
+                  </content>
+               </elementSpec>
+
+               <elementSpec ident="h4" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+                  <gloss>Level 4 heading</gloss>
+                  <classes>
+                     <memberOf key="model.divHeading"/>
+                     <memberOf key="att.classable"/>
+                  </classes>
+                  <content>
+                     <macroRef key="macro.paraContent"/>
+                  </content>
+               </elementSpec>
+
+               <elementSpec ident="h5" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+                  <gloss>Level 5 heading</gloss>
+                  <classes>
+                     <memberOf key="model.divHeading"/>
+                     <memberOf key="att.classable"/>
+                  </classes>
+                  <content>
+                     <macroRef key="macro.paraContent"/>
+                  </content>
+               </elementSpec>
+
+               <elementSpec ident="p" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+                  <desc>Prose paragraph.</desc>
+                  <classes>
+                     <memberOf key="model.divBody"/>
+                     <memberOf key="att.classable"/>
+                     <memberOf key="att.identifiable"/>
+                  </classes>
+                  <content>
+                     <macroRef key="macro.paraContent"/>
+                  </content>
+               </elementSpec>
+
+               <elementSpec ident="blockquote"
+                            ns="http://www.w3.org/1999/xhtml"
+                            module="xhtml5">
+                  <desc>Block quotation.</desc>
+                  <classes>
+                     <memberOf key="model.divBody"/>
+                     <memberOf key="att.classable"/>
+                  </classes>
+                  <content>
+                     <alternate minOccurs="1" maxOccurs="unbounded">
+                        <elementRef key="p"/>
+                        <elementRef key="ul"/>
+                        <macroRef key="macro.paraContent"/>
+                     </alternate>
+                  </content>
+               </elementSpec>
+
+               <elementSpec ident="q" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+                  <desc>Inline quotation. In rendering, quotation marks will be supplied, so do not
+                     include them.</desc>
+                  <classes>
+                     <memberOf key="model.phrase"/>
+                     <memberOf key="att.classable"/>
+                  </classes>
+                  <content>
+                     <macroRef key="macro.paraContent"/>
+                  </content>
+               </elementSpec>
+
+               <elementSpec ident="ul" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+                  <desc>Unordered list, usually bulleted.</desc>
+                  <classes>
+                     <memberOf key="model.divBody"/>
+                     <memberOf key="att.classable"/>
+                  </classes>
+                  <content>
+                     <elementRef key="li" minOccurs="1" maxOccurs="unbounded"/>
+                  </content>
+                  <attList>
+                     <attDef ident="class" mode="replace" usage="opt">
+                        <valList type="closed">
+                           <valItem ident="disc" mode="add">
+                              <gloss>List items are preceded by a disc.</gloss>
+                           </valItem>
+                           <valItem ident="square" mode="add">
+                              <gloss>List items are preceded by a square.</gloss>
+                           </valItem>
+                           <valItem ident="none" mode="add">
+                              <gloss>List items have no preceding symbol.</gloss>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+
+               <elementSpec ident="ol" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+                  <desc>Ordered list, usually numbered.</desc>
+                  <classes>
+                     <memberOf key="model.divBody"/>
+                     <memberOf key="att.classable"/>
+                  </classes>
+                  <content>
+                     <elementRef key="li" minOccurs="1" maxOccurs="unbounded"/>
+                  </content>
+               </elementSpec>
+
+               <elementSpec ident="li" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+                  <desc>Item in a list.</desc>
+                  <classes>
+                     <memberOf key="att.classable"/>
+                     <memberOf key="att.identifiable"/>
+                  </classes>
+                  <content>
+                     <alternate minOccurs="0" maxOccurs="unbounded">
+                        <elementRef key="ul"/>
+                        <elementRef key="ol"/>
+                        <elementRef key="p"/>
+                        <macroRef key="macro.paraContent"/>
+                     </alternate>
+                  </content>
+               </elementSpec>
+
+               
+
+               <elementSpec ident="strong" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+                  <desc>Text that needs to be highlighted because it is important; will be rendered
+                     by default in bold.</desc>
+                  <classes>
+                     <memberOf key="model.phrase"/>
+                     <memberOf key="att.classable"/>
+                  </classes>
+                  <content>
+                     <macroRef key="macro.paraContent"/>
+                  </content>
+               </elementSpec>
+
+               
+
+               
+
+               <elementSpec ident="img" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+                  <desc>Image element. May be rendered inline or as a block, depending on where it
+                     appears in the document structure.</desc>
+                  <classes>
+                     <memberOf key="model.phrase"/>
+                     <memberOf key="model.divBody"/>
+                     <memberOf key="att.classable"/>
+                     <memberOf key="att.identifiable"/>
+                  </classes>
+                  <constraintSpec ident="imgWithoutCaptionNeedsAltAndTitle" scheme="schematron">
+                     <constraint>
+                        
+                        <sch:assert test="(@alt and @title) or following-sibling::xh:figcaption or ancestor::xh:ul[@class='gallery']"> If your img element is not inside a figure element with a figcaption,
+                           then it requires @alt and @title attributes to provide help for
+                           visually-impaired users. </sch:assert>
+                     </constraint>
+                  </constraintSpec>
+                  <attList>
+                     <attDef ident="width" usage="opt">
+                        <desc>Width in pixels of the image.</desc>
+                        <datatype>
+                           <dataRef key="teidata.outputMeasurement"/>
+                        </datatype>
+                     </attDef>
+                     <attDef ident="height" usage="opt">
+                        <desc>Height in pixels of the image</desc>
+                        <datatype>
+                           <dataRef key="teidata.outputMeasurement"/>
+                        </datatype>
+                     </attDef>
+                     <attDef ident="src" usage="req">
+                        <gloss>path to the image (usually a relative path)</gloss>
+                        <datatype>
+                           <dataRef key="teidata.pointer"/>
+                        </datatype>
+                     </attDef>
+                     <attDef ident="data-lg-version" usage="opt">
+                        <gloss>path to a larger version of the image to show as a popup (usually a
+                           relative path)</gloss>
+                        <datatype>
+                           <dataRef key="teidata.pointer"/>
+                        </datatype>
+                     </attDef>
+                     <attDef ident="alt" usage="opt">
+                        <gloss>description of the image for visually-impaired users. If not
+                           supplied, then figcaption will be used instead.</gloss>
+                        <datatype>
+                           <dataRef key="teidata.text"/>
+                        </datatype>
+                     </attDef>
+                     <attDef ident="title" usage="opt">
+                        <gloss>description of the image which will pop up on mouseover. If not
+                           supplied, then figcaption will be used instead.</gloss>
+                        <datatype>
+                           <dataRef key="teidata.text"/>
+                        </datatype>
+                     </attDef>
+                     <attDef ident="class" mode="change" usage="opt">
+                        <valList type="closed" mode="add">
+                           <valItem ident="normal">
+                              <gloss>Present the image in normal rectangular format.</gloss>
+                           </valItem>
+                           <valItem ident="oval">
+                              <gloss>Present the image in oval portrait-style format.</gloss>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+
+               <elementSpec ident="em" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+                  <desc>Emphasized text; will be rendered by default in italics.</desc>
+                  <classes>
+                     <memberOf key="model.phrase"/>
+                     <memberOf key="att.classable"/>
+                  </classes>
+                  <content>
+                     <alternate minOccurs="0" maxOccurs="unbounded">
+                        <macroRef key="macro.paraContent"/>
+                        <elementRef key="br"/>
+                     </alternate>
+                  </content>
+               </elementSpec>
+
+               <elementSpec ident="a" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+                  <classes>
+                     <memberOf key="model.phrase"/>
+                     <memberOf key="att.classable"/>
+                  </classes>
+                  <content>
+                     <macroRef key="macro.paraContent"/>
+                  </content>
+                  <attList>
+                     <attDef ident="href" usage="req">
+                        <datatype>
+                           <dataRef key="teidata.pointer"/>
+                        </datatype>
+                     </attDef>
+                     <attDef ident="title" usage="opt">
+                        <gloss>explanation of what is being linked to. Will pop up when mousing over
+                           the link.</gloss>
+                        <datatype>
+                           <dataRef key="teidata.text"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+
+               
+
+               <elementSpec ident="figure" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+                  <desc>A figure consists of an image and a caption.</desc>
+                  <classes>
+                     <memberOf key="model.divBody"/>
+                     <memberOf key="att.classable"/>
+                     <memberOf key="att.identifiable"/>
+                  </classes>
+                  <content>
+                     <sequence>
+                        <elementRef key="img"/>
+                        <elementRef key="figcaption" minOccurs="0"/>
+                     </sequence>
+                  </content>
+                  <attList>
+                     <attDef ident="class" mode="change" usage="req">
+                        <valList type="closed" mode="add">
+                           <valItem ident="leftFloat">
+                              <gloss>Float this figure to the left and flow the text around
+                                 it.</gloss>
+                           </valItem>
+                           <valItem ident="center">
+                              <gloss>Centre this figure and do not float text around it.</gloss>
+                           </valItem>
+                           <valItem ident="rightFloat">
+                              <gloss>Float this figure to the right and flow the text around
+                                 it.</gloss>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+
+               
+
+               <elementSpec ident="figcaption"
+                            ns="http://www.w3.org/1999/xhtml"
+                            module="xhtml5">
+                  <desc>Caption for an image in a figure element.</desc>
+                  <classes>
+                     <memberOf key="model.phrase"/>
+                     <memberOf key="att.classable"/>
+                  </classes>
+                  <content>
+                     <macroRef key="macro.paraContent"/>
+                  </content>
+               </elementSpec>
+
+               <elementSpec ident="td" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+                  <desc>A table data cell.</desc>
+                  <content>
+                     <macroRef key="macro.paraContent"/>
+                  </content>
+               </elementSpec>
+
+               <elementSpec ident="th" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+                  <desc>A table label or heading cell.</desc>
+                  <content>
+                     <macroRef key="macro.paraContent"/>
+                  </content>
+                  <attList>
+                     <attDef ident="scope" usage="opt">
+                        <valList type="closed">
+                           <valItem ident="col">
+                              <gloss>Scope of this heading is the column below it.</gloss>
+                           </valItem>
+                           <valItem ident="row">
+                              <gloss>Scope of this heading is the row to the right of it.</gloss>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+
+               <elementSpec ident="tr" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+                  <desc>A table row.</desc>
+                  <content>
+                     <sequence minOccurs="1" maxOccurs="unbounded">
+                        <elementRef key="th" minOccurs="0" maxOccurs="unbounded"/>
+                        <elementRef key="td" minOccurs="0" maxOccurs="unbounded"/>
+                     </sequence>
+                  </content>
+               </elementSpec>
+
+               <elementSpec ident="caption" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+                  <desc>A table caption.</desc>
+                  <content>
+                     <macroRef key="macro.paraContent"/>
+                  </content>
+               </elementSpec>
+
+               <elementSpec ident="table" ns="http://www.w3.org/1999/xhtml" module="xhtml5">
+                  <desc>A table.</desc>
+                  <classes>
+                     <memberOf key="att.classable"/>
+                     <memberOf key="model.divBody"/>
+                  </classes>
+                  <content>
+                     <elementRef key="caption" minOccurs="0" maxOccurs="1"/>
+                     <elementRef key="tr" minOccurs="1" maxOccurs="unbounded"/>
+                  </content>
+               </elementSpec>
+
+               
+
+               <macroSpec ident="macro.paraContent" module="xhtml5">
+                  <desc>Content model for paragraph-type containers such as paragraphs, list items,
+                     and so on.</desc>
+                  <content>
+                     <alternate minOccurs="0" maxOccurs="unbounded">
+                        <textNode/>
+                        <classRef key="model.phrase"/>
+                     </alternate>
+                  </content>
+               </macroSpec>
+
+               <macroSpec ident="macro.divContent" module="xhtml5">
+                  <desc>Content model for div container.</desc>
+                  <content>
+                     <sequence>
+                        <classRef key="model.divHeading" minOccurs="0" maxOccurs="1"/>
+                        <classRef key="model.divBody" minOccurs="1" maxOccurs="unbounded"/>
+                     </sequence>
+                  </content>
+               </macroSpec>
+
+               <classSpec type="model" ident="model.phrase" module="xhtml5">
+                  <desc>Groups elements which can appear at the phrase level.</desc>
+               </classSpec>
+
+               <classSpec type="model" ident="model.divHeading" module="xhtml5">
+                  <desc>Groups elements which can function as headings at the top of a div.</desc>
+               </classSpec>
+
+               <classSpec type="model" ident="model.divBody" module="xhtml5">
+                  <desc>Groups elements which can appear below the heading in a div.</desc>
+               </classSpec>
+
+               <classSpec type="atts" ident="att.classable" module="xhtml5">
+                  <desc>Groups elements which can have a class attribute.</desc>
+                  <attList>
+                     <attDef ident="class" usage="opt">
+                        <gloss>The class attribute provides styles through rules in the CSS
+                           stylesheet. </gloss>
+                        <datatype maxOccurs="unbounded">
+                           <dataRef key="teidata.word"/>
+                        </datatype>
+                     </attDef>
+                     <attDef ident="style" usage="opt">
+                        <gloss>The style attribute provides one-off style options for specific and
+                           unusual cases. Do not use this unless you know that the element you're
+                           styling is unlike any other element on the site.</gloss>
+                        <datatype maxOccurs="1">
+                           <dataRef key="teidata.text"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </classSpec>
+
+               <classSpec type="atts" ident="att.identifiable" module="xhtml5">
+                  <desc>Groups elements which may have an id attribute.</desc>
+                  <attList>
+                     <attDef ident="id" usage="opt">
+                        <datatype>
+                           <dataRef name="ID"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </classSpec>
+
+               
+               <constraintSpec ident="schVariables" scheme="schematron">
+                  <constraint>
+                     <sch:ns uri="http://www.w3.org/1999/xhtml" prefix="xh"/>
+                     <sch:pattern>
+                        <sch:let name="smartDouble" value="'[“”]'"/>
+                        <sch:let name="smartSingle" value="'[‘’]'"/>
+                        <sch:let name="straightDouble" value="'&#34;'"/>
+                        <sch:let name="straightApos" value="''''"/>
+                        <sch:let name="straightQuotes"
+                                 value="concat('[', $straightDouble, $straightApos, ']')"/>
+                     </sch:pattern>
+                  </constraint>
+               </constraintSpec>
+               <constraintSpec ident="noQuotesInText" scheme="schematron">
+                  <constraint>
+                     <sch:rule context="text()[not(ancestor::xh:script)]">
+                        <sch:assert test="not(matches(., $straightQuotes))"> Do not use straight
+                           quotes in text. Use the q element wherever possible; for
+                           apostrophes, use the smart version (’). </sch:assert>
+                     </sch:rule>
+                  </constraint>
+               </constraintSpec>
+               <constraintSpec ident="noDivJustForFigure" scheme="schematron">
+                  <constraint>
+                     <sch:rule context="xh:div">
+                        <sch:assert test="not(count(*) = 1 and child::xh:figure)"> There's no need
+                           to wrap a figure element in a div. </sch:assert>
+                     </sch:rule>
+                  </constraint>
+               </constraintSpec>
+               <constraintSpec ident="onlyPermittedImgAttributes" scheme="schematron">
+                  <constraint>
+                     <sch:rule context="xh:img">
+                        <sch:assert test="every $att in @* satisfies local-name($att) = ('src', 'alt', 'title', 'width', 'height', 'id', 'style', 'class')"> Only the following attributes are allowed on img: 'src',
+                           'alt', 'title', 'id', 'style', 'class', 'width' and
+                           'height'. </sch:assert>
+                     </sch:rule>
+                  </constraint>
+               </constraintSpec>
+               <constraintSpec ident="spacesAfterPeriods" scheme="schematron">
+                  <constraint>
+                     <sch:rule context="xh:*/text()">
+                        <sch:assert test="not(matches(., '[^\.]\.[A-Z]'))"> Don't forget to put a
+                           space after every period. </sch:assert>
+                     </sch:rule>
+                  </constraint>
+               </constraintSpec>
+               <constraintSpec ident="noSpacesInHrefs" scheme="schematron">
+                  <constraint>
+                     <sch:rule context="xh:a">
+                        <sch:assert test="not(matches(@href, '\s+'))"> There should be no spaces in
+                           href attributes (links). </sch:assert>
+                     </sch:rule>
+                  </constraint>
+               </constraintSpec>
+               <constraintSpec ident="noLinksInLinks" scheme="schematron">
+                  <constraint>
+                     <sch:rule context="xh:a">
+                        <sch:assert test="not(descendant::xh:a[@href])"> Don't place links inside
+                           other links. </sch:assert>
+                     </sch:rule>
+                  </constraint>
+               </constraintSpec>
+               <constraintSpec ident="periodsAndCommasOutsideLinks" scheme="schematron">
+                  <constraint>
+                     <sch:rule context="xh:a[@href]">
+                        <sch:assert test="not(matches(., '[\.,:;]\s*$')) or matches(., '((Esq\.)|(A\.\s*W\.)|(\.\s*\.\s*\.))$')"> Don't include trailing periods and commas inside link text.
+                        </sch:assert>
+                     </sch:rule>
+                  </constraint>
+               </constraintSpec>
+            </schemaSpec>
+         </div>
+      </back>
+   </text>
+</TEI>
