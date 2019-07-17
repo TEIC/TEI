@@ -121,7 +121,7 @@ att.dimensions.attributes =
 att.dimensions.attribute.unit =
   
   ## noms des unités utilisées pour la mesure.
-  ## Suggested values include: 1] cm (centimetres); 2] mm (millimetres); 3] in (inches); 4] line; 5] char (characters)
+  ## Suggested values include: 1] cm (centimetres); 2] mm (millimetres); 3] in (inches); 4] lines; 5] chars (characters)
   attribute unit {
     
     ## (centimètres) 
@@ -134,10 +134,10 @@ att.dimensions.attribute.unit =
       "in"
     | 
       ## lignes de texte
-      "line"
+      "lines"
     | 
       ## (characters) caractères du texte
-      "char"
+      "chars"
     | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 att.dimensions.attribute.quantity =
@@ -388,9 +388,9 @@ sch:pattern [
     "            "
     sch:assert [
       test = "string-length(.) gt 0"
-      " @calendar indicates the system or calendar to\x{a}" ~
-      "              which the date represented by the content of this element belongs, but this\x{a}" ~
-      "              "
+      "\x{a}" ~
+      "@calendar indicates the system or calendar to which the date represented by the content of this element\x{a}" ~
+      "belongs, but this "
       sch:name [ ]
       " element has no textual content."
     ]
@@ -748,7 +748,6 @@ att.resourced.attribute.url =
   attribute url { xsd:anyURI }
 att.measurement.attributes =
   att.measurement.attribute.unit,
-  att.measurement.attribute.unitRef,
   att.measurement.attribute.quantity,
   att.measurement.attribute.commodity
 att.measurement.attribute.unit =
@@ -815,17 +814,6 @@ att.measurement.attribute.unit =
       "MiB"
     | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
-att.measurement.attribute.unitRef =
-  [
-    a:documentation [
-      "points to a unique identifier stored in the "
-      ns1:code [ "@xml:id" ]
-      " of a "
-      ns1:code [ "<unitDef>" ]
-      " element that defines a unit of measure."
-    ]
-  ]
-  attribute unitRef { xsd:anyURI }?
 att.measurement.attribute.quantity =
   
   ## (quantité) spécifie le nombre des unités indiquées que comprend la mesure.
@@ -842,26 +830,6 @@ att.measurement.attribute.commodity =
       xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
     }
   }?
-sch:pattern [
-  id =
-    "test21-att.measurement-att-measurement-unitRef-constraint-rule-5"
-  "\x{a}" ~
-  "      "
-  sch:rule [
-    context = "tei:*[@unitRef]"
-    "\x{a}" ~
-    "        "
-    sch:report [
-      test = "@unit"
-      role = "info"
-      "The @unit attribute may be unnecessary when @unitRef is present."
-    ]
-    "\x{a}" ~
-    "      "
-  ]
-  "\x{a}" ~
-  "   "
-]
 att.naming.attributes =
   att.canonical.attributes,
   att.naming.attribute.altname,
@@ -952,7 +920,7 @@ att.typed.attribute.subtype =
     xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 sch:pattern [
-  id = "test21-att.typed-subtypeTyped-constraint-rule-6"
+  id = "test21-att.typed-subtypeTyped-constraint-rule-5"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -995,7 +963,7 @@ att.pointing.attribute.targetLang =
        "")
   }?
 sch:pattern [
-  id = "test21-att.pointing-targetLang-targetLang-constraint-rule-7"
+  id = "test21-att.pointing-targetLang-targetLang-constraint-rule-6"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1105,7 +1073,7 @@ att.spanning.attribute.spanTo =
   ## indique la fin d'un passage introduit par l'élément portant cet attribut.
   attribute spanTo { xsd:anyURI }?
 sch:pattern [
-  id = "test21-att.spanning-spanTo-spanTo-2-constraint-rule-8"
+  id = "test21-att.spanning-spanTo-spanTo-2-constraint-rule-7"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1161,7 +1129,7 @@ att.styleDef.attribute.schemeVersion =
   }?
 sch:pattern [
   id =
-    "test21-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-9"
+    "test21-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-8"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -2000,7 +1968,6 @@ model.encodingDescPart =
   | listPrefixDef
   | classDecl
   | geoDecl
-  | unitDecl
   | appInfo
 model.editorialDeclPart =
   correction
@@ -2020,16 +1987,6 @@ model.profileDescPart =
   | correspDesc
   | handNotes
   | listTranspose
-att.formula.attributes = att.formula.attribute.formula
-att.formula.attribute.formula =
-  [
-    a:documentation [
-      "An "
-      ns1:code [ "@formula" ]
-      " is provided to describe a mathematical calculation such as a conversion between measurement systems."
-    ]
-  ]
-  attribute formula { text }?
 model.correspActionPart =
   model.dateLike | model.addressLike | model.nameLike | note
 model.correspContextPart = model.ptrLike | model.pLike | note
@@ -2690,7 +2647,6 @@ time =
     (text | model.gLike | model.phrase | model.global)*,
     att.global.attributes,
     att.datable.attributes,
-    att.canonical.attributes,
     att.editLike.attributes,
     att.dimensions.attributes,
     att.typed.attributes,
@@ -2807,7 +2763,7 @@ ref =
   
   ## (liste) contient une suite d'items ordonnés dans une liste. [3.7. Lists]
   element list {
-    ((model.divTop | model.global | desc*)*,
+    ((model.divTop | model.global)*,
      ((item, model.global*)+
       | (headLabel?,
          headItem?,
@@ -3290,7 +3246,6 @@ listBibl =
   ## (liste de références bibliographiques) contient une liste de références bibliographiques de toute nature. [3.11.1. Methods of Encoding Bibliographic References and Lists of References 2.2.7. The Source Description 15.3.2. Declarable Elements]
   element listBibl {
     (model.headLike*,
-     desc*,
      (model.biblLike | model.milestoneLike)+,
      (relation | listRelation)*),
     att.global.attributes,
@@ -3406,7 +3361,7 @@ lg =
              test =
                "count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) > 0"
              "An lg element\x{a}" ~
-             "        must contain at least one child l, lg, or gap element."
+             "        must contain at least one child l, lg or gap element."
            ]
            "\x{a}" ~
            "            "
@@ -4046,10 +4001,9 @@ event =
   
   ## (évènement) contient des données liées à tout type d'évènement significatif dans l'existence d'une personne, d'un lieu ou d'une organisation. [13.3.1. Basic Principles]
   element event {
-    (idno*,
-     model.headLike*,
+    (model.headLike*,
      (model.pLike+ | model.labelLike+),
-     (model.noteLike | model.biblLike | linkGrp | link | idno | ptr)*,
+     (model.noteLike | model.biblLike | linkGrp | link)*,
      event*),
     att.global.attributes,
     att.datable.attributes,
@@ -4162,10 +4116,7 @@ listOrg =
   
   ## (liste d'organisations) contient une liste d'éléments, chacun d'eux fournissant des informations sur une organisation identifiable. [13.2.2. Organizational Names]
   element listOrg {
-    (model.headLike*,
-     desc*,
-     (org | listOrg)+,
-     (relation | listRelation)*),
+    (model.headLike*, (org | listOrg)+, (relation | listRelation)*),
     att.global.attributes,
     att.typed.attributes,
     att.declarable.attributes,
@@ -4176,10 +4127,7 @@ listEvent =
   
   ## (liste d'événements) contient une liste de descriptions, chacune d'entre elles fournissant des informations sur un événement connu. [13.3.1. Basic Principles]
   element listEvent {
-    (model.headLike*,
-     desc*,
-     model.eventLike+,
-     (relation | listRelation)*),
+    (model.headLike*, model.eventLike+, (relation | listRelation)*),
     att.global.attributes,
     att.typed.attributes,
     att.declarable.attributes,
@@ -4191,7 +4139,6 @@ listPerson =
   ## (liste de personnes) contient une liste d'éléments, chacun d'entre eux apportant des informations sur une personne précise ou sur un groupe de personnes, par exemple les participants à une interaction linguistique, ou les personnes citées dans une source historique. [13.3.2. The Person Element 15.2. Contextual Information 2.4. The Profile Description 15.3.2. Declarable Elements]
   element listPerson {
     (model.headLike*,
-     desc*,
      (model.personLike | listPerson)+,
      (relation | listRelation)*),
     att.global.attributes,
@@ -4205,7 +4152,6 @@ listPlace =
   ## (liste de lieux) contient une liste de lieux, qui peut être suivie d'une liste de relations définies entre les lieux (autres que la relation d'inclusion). [2.2.7. The Source Description 13.3.4. Places]
   element listPlace {
     (model.headLike*,
-     desc*,
      (model.placeLike | listPlace)+,
      (relation | listRelation)*),
     att.global.attributes,
@@ -4294,7 +4240,7 @@ org =
          | model.placeLike
          | model.orgPart
          | model.milestoneLike)*),
-     (model.noteLike | model.biblLike | linkGrp | link | ptr)*,
+     (model.noteLike | model.biblLike | linkGrp | link)*,
      model.personLike*),
     att.global.attributes,
     att.typed.attributes,
@@ -4314,7 +4260,6 @@ listRelation =
   ## donne des informations sur les relations qui existent entre des personnes, des lieux, ou des organisations, soit de manière informelle en prose, soit de manière formelle. [13.3.2.3. Personal Relationships]
   element listRelation {
     (model.headLike*,
-     desc*,
      (model.pLike | (relation | listRelation)+)),
     att.global.attributes,
     att.typed.attributes,
@@ -4325,7 +4270,7 @@ person =
   
   ## (personne) fournit des informations sur un individu identifiable, par exemple un participant à une interaction linguistique, ou une personne citée dans une source historique. [13.3.2. The Person Element 15.2.2. The Participant Description]
   element person {
-    (model.pLike+ | (model.personPart | model.global | ptr)*),
+    (model.pLike+ | (model.personPart | model.global)*),
     att.global.attributes,
     att.editLike.attributes,
     att.sortable.attributes,
@@ -4424,7 +4369,7 @@ place =
     (model.headLike*,
      (model.pLike*
       | (model.labelLike | model.placeStateLike | model.eventLike)*),
-     (model.noteLike | model.biblLike | idno | ptr | linkGrp | link)*,
+     (model.noteLike | model.biblLike | idno | linkGrp | link)*,
      (model.placeLike | listPlace)*),
     att.global.attributes,
     att.typed.attributes,
@@ -4688,10 +4633,7 @@ listObject =
   
   ## (list of objects) contains a list of descriptions, each of which provides information about an identifiable physical object. [13.3.5. Objects]
   element listObject {
-    (model.headLike*,
-     desc*,
-     model.objectLike+,
-     (relation | listRelation)*),
+    (model.headLike*, model.objectLike+, (relation | listRelation)*),
     att.global.attributes,
     att.typed.attributes,
     att.declarable.attributes,
@@ -4737,7 +4679,7 @@ nym =
   
   ## (nom canonique) contient la définition de tout nom ou partie de nom dans leur forme canonique. [13.3.6. Names and Nyms]
   element nym {
-    (idno*, model.entryPart*, model.pLike*, nym*),
+    (model.entryPart*, model.pLike*, nym*),
     att.global.attributes,
     att.typed.attributes,
     att.sortable.attributes,
@@ -4752,10 +4694,7 @@ listNym =
   
   ## (liste de noms canoniques) contient une liste de noms normalisés pour tous types d'objets. [13.3.6. Names and Nyms]
   element listNym {
-    (model.headLike*,
-     desc*,
-     (nym | listNym)+,
-     (relation | listRelation)*),
+    (model.headLike*, (nym | listNym)+, (relation | listRelation)*),
     att.global.attributes,
     att.typed.attributes,
     att.declarable.attributes,
@@ -4874,7 +4813,7 @@ authority =
   }
 idno =
   
-  ## (identifiant) donne un numéro normalisé ou non qui peut être utilisé pour identifier une référence bibliographique. [13.3.1. Basic Principles 2.2.4. Publication, Distribution, Licensing, etc. 2.2.5. The Series Statement 3.11.2.4. Imprint, Size of a Document, and Reprint Information]
+  ## (identifiant) donne un numéro normalisé ou non qui peut être utilisé pour identifier une référence bibliographique. [2.2.4. Publication, Distribution, Licensing, etc. 2.2.5. The Series Statement 3.11.2.4. Imprint, Size of a Document, and Reprint Information]
   element idno {
     (text | model.gLike | idno)*,
     att.global.attributes,
@@ -5004,7 +4943,7 @@ encodingDesc =
   }
 schemaRef =
   
-  ## (schema reference) describes or points to a related customization or schema file [2.3.10. The Schema Specification]
+  ## (schema reference) describes or points to a related customization or schema file [2.3.9. The Schema Specification]
   element schemaRef {
     model.descLike?,
     att.global.attributes,
@@ -5244,7 +5183,7 @@ tagsDecl =
   }
 tagUsage =
   
-  ## (usage des balises) donne des informations sur l’utilisation d’un élément spécifique dans un texte. [2.3.4. The Tagging Declaration]
+  ## (usage des balises.) donne des informations sur l’utilisation d’un élément spécifique dans un texte. [2.3.4. The Tagging Declaration]
   element tagUsage {
     macro.limitedContent,
     att.global.attributes,
@@ -5344,9 +5283,7 @@ listPrefixDef =
   
   ## (list of prefix definitions) contains a list of definitions of prefixing schemes used in data.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
   element listPrefixDef {
-    (desc*, (prefixDef | listPrefixDef)+),
-    att.global.attributes,
-    empty
+    (prefixDef | listPrefixDef)+, att.global.attributes, empty
   }
 refState =
   
@@ -5434,62 +5371,15 @@ geoDecl =
     }?,
     empty
   }
-unitDecl =
-  
-  ## (unit declarations) provides information about units of measurement that are not members of the International System of Units. [2.3.9. The Unit Declaration]
-  element unitDecl {
-    unitDef+,
-    att.canonical.attributes,
-    att.datable.attributes,
-    att.global.attributes,
-    empty
-  }
-unitDef =
-  
-  ## (unit definition) contains descriptive information related to a specific unit of measurement. [2.3.9. The Unit Declaration]
-  element unitDef {
-    (model.labelLike | model.placeNamePart? | conversion? | unit?)+,
-    att.global.attributes,
-    att.datable.attributes,
-    att.canonical.attributes,
-    att.typed.attributes,
-    empty
-  }
-conversion =
-  
-  ## defines how to calculate one unit of measure in terms of another. [2.3.9. The Unit Declaration]
-  element conversion {
-    empty,
-    att.global.attributes,
-    att.datable.attributes,
-    att.formula.attributes,
-    [
-      a:documentation [
-        "indicates a source unit of measure that is to be converted into another unit indicated in "
-        ns1:code [ "@toUnit" ]
-        "."
-      ]
-    ]
-    attribute fromUnit { xsd:anyURI },
-    [
-      a:documentation [
-        "the target unit of measurement for a conversion from a source unit referenced in "
-        ns1:code [ "@fromUnit" ]
-        "."
-      ]
-    ]
-    attribute toUnit { xsd:anyURI },
-    empty
-  }
 appInfo =
   
-  ## (informations d'application) enregistre des informations sur l'application qui a été utilisée pour traiter le fichier TEI. [2.3.11. The Application Information Element]
+  ## (informations d'application) enregistre des informations sur l'application qui a été utilisée pour traiter le fichier TEI. [2.3.10. The Application Information Element]
   element appInfo {
     model.applicationLike+, att.global.attributes, empty
   }
 application =
   
-  ## fournit des informations sur une application qui a été utilisée pour le traitement du document. [2.3.11. The Application Information Element]
+  ## fournit des informations sur une application qui a été utilisée pour le traitement du document. [2.3.10. The Application Information Element]
   element application {
     (model.labelLike+, (model.ptrLike* | model.pLike*)),
     att.global.attributes,
@@ -5723,7 +5613,7 @@ listChange =
   
   ## groups a number of change descriptions associated with either the creation of a source text or the revision of an encoded text. [2.6. The Revision Description 11.7. Identifying Changes and Revisions]
   element listChange {
-    (desc*, (listChange | change)+),
+    (listChange | change)+,
     att.global.attributes,
     att.sortable.attributes,
     att.typed.attributes,
@@ -7142,18 +7032,10 @@ att.coordinated.attribute.points =
   ## identifies a two dimensional area within the bounding box specified by the other attributes by means of a series of pairs of numbers, each of which gives the x,y coordinates of a point on a line enclosing the area.
   attribute points {
     list {
-      xsd:token {
-        pattern = "(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)"
-      },
-      xsd:token {
-        pattern = "(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)"
-      },
-      xsd:token {
-        pattern = "(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)"
-      },
-      xsd:token {
-        pattern = "(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)"
-      }*
+      xsd:token { pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)" },
+      xsd:token { pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)" },
+      xsd:token { pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)" },
+      xsd:token { pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)" }*
     }
   }?
 facsimile =
@@ -7319,13 +7201,13 @@ path =
     attribute points {
       list {
         xsd:token {
-          pattern = "(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)"
+          pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)"
         },
         xsd:token {
-          pattern = "(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)"
+          pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)"
         },
         xsd:token {
-          pattern = "(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)"
+          pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)"
         }*
       }
     }?,
@@ -7735,9 +7617,7 @@ line =
 listTranspose =
   
   ## supplies a list of transpositions, each of which is indicated at some point in a document typically by means of metamarks. [11.3.4.5. Transpositions]
-  element listTranspose {
-    (desc*, transpose+), att.global.attributes, empty
-  }
+  element listTranspose { transpose+, att.global.attributes, empty }
 metamark =
   
   ## contains or describes any kind of graphic or written signal within a document the function of which is to determine how it should be read rather than forming part of the actual content of the document. [11.3.4.2. Metamarks]
@@ -8075,8 +7955,6 @@ trailer =
      | model.global)*,
     att.global.attributes,
     att.typed.attributes,
-    att.placement.attributes,
-    att.written.attributes,
     empty
   }
 byline =

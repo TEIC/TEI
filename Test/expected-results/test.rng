@@ -223,7 +223,7 @@
     <optional>
       <attribute name="unit">
         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">names the unit used for the measurement
-Suggested values include: 1] cm (centimetres); 2] mm (millimetres); 3] in (inches); 4] line; 5] char (characters)</a:documentation>
+Suggested values include: 1] cm (centimetres); 2] mm (millimetres); 3] in (inches); 4] lines; 5] chars (characters)</a:documentation>
         <choice>
           <value>cm</value>
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(centimetres) </a:documentation>
@@ -231,9 +231,9 @@ Suggested values include: 1] cm (centimetres); 2] mm (millimetres); 3] in (inche
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(millimetres) </a:documentation>
           <value>in</value>
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(inches) </a:documentation>
-          <value>line</value>
+          <value>lines</value>
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">lines of text</a:documentation>
-          <value>char</value>
+          <value>chars</value>
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(characters) characters of text</a:documentation>
           <data type="token">
             <param name="pattern">(\p{L}|\p{N}|\p{P}|\p{S})+</param>
@@ -495,9 +495,9 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
   </define>
   <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-att.datable-calendar-calendar-constraint-rule-4">
     <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" context="tei:*[@calendar]">
-      <sch:assert test="string-length(.) gt 0"> @calendar indicates the system or calendar to
-              which the date represented by the content of this element belongs, but this
-              <sch:name/> element has no textual content.</sch:assert>
+      <sch:assert test="string-length(.) gt 0">
+@calendar indicates the system or calendar to which the date represented by the content of this element
+belongs, but this <sch:name/> element has no textual content.</sch:assert>
     </sch:rule>
   </pattern>
   <define name="att.datable.attribute.period">
@@ -986,7 +986,6 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
   </define>
   <define name="att.measurement.attributes">
     <ref name="att.measurement.attribute.unit"/>
-    <ref name="att.measurement.attribute.unitRef"/>
     <ref name="att.measurement.attribute.quantity"/>
     <ref name="att.measurement.attribute.commodity"/>
   </define>
@@ -1041,14 +1040,6 @@ Suggested values include: 1] m (metre); 2] kg (kilogram); 3] s (second); 4] Hz (
       </attribute>
     </optional>
   </define>
-  <define name="att.measurement.attribute.unitRef">
-    <optional>
-      <attribute name="unitRef">
-        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to a unique identifier stored in the <code xmlns="http://www.w3.org/1999/xhtml">@xml:id</code> of a <code xmlns="http://www.w3.org/1999/xhtml">&lt;unitDef&gt;</code> element that defines a unit of measure.</a:documentation>
-        <data type="anyURI"/>
-      </attribute>
-    </optional>
-  </define>
   <define name="att.measurement.attribute.quantity">
     <optional>
       <attribute name="quantity">
@@ -1077,11 +1068,6 @@ Suggested values include: 1] m (metre); 2] kg (kilogram); 3] s (second); 4] Hz (
       </attribute>
     </optional>
   </define>
-  <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-att.measurement-att-measurement-unitRef-constraint-rule-5">
-    <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" context="tei:*[@unitRef]">
-      <sch:report test="@unit" role="info">The @unit attribute may be unnecessary when @unitRef is present.</sch:report>
-    </sch:rule>
-  </pattern>
   <define name="att.naming.attributes">
     <ref name="att.canonical.attributes"/>
     <ref name="att.naming.attribute.role"/>
@@ -1190,7 +1176,7 @@ Suggested values include: 1] below; 2] bottom; 3] margin; 4] top; 5] opposite; 6
       </attribute>
     </optional>
   </define>
-  <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-att.typed-subtypeTyped-constraint-rule-6">
+  <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-att.typed-subtypeTyped-constraint-rule-5">
     <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" context="tei:*[@subtype]">
       <sch:assert test="@type">The <sch:name/> element should not be categorized in detail with @subtype unless also categorized in general with @type</sch:assert>
     </sch:rule>
@@ -1214,7 +1200,7 @@ Suggested values include: 1] below; 2] bottom; 3] margin; 4] top; 5] opposite; 6
       </attribute>
     </optional>
   </define>
-  <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-att.pointing-targetLang-targetLang-constraint-rule-7">
+  <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-att.pointing-targetLang-targetLang-constraint-rule-6">
     <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" context="tei:*[not(self::tei:schemaSpec)][@targetLang]">
       <sch:assert test="@target">@targetLang should only be used on <sch:name/> if @target is specified.</sch:assert>
     </sch:rule>
@@ -1355,7 +1341,7 @@ Suggested values include: 1] below; 2] bottom; 3] margin; 4] top; 5] opposite; 6
       </attribute>
     </optional>
   </define>
-  <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-att.spanning-spanTo-spanTo-2-constraint-rule-8">
+  <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-att.spanning-spanTo-spanTo-2-constraint-rule-7">
     <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" context="tei:*[@spanTo]">
       <sch:assert test="id(substring(@spanTo,2)) and following::*[@xml:id=substring(current()/@spanTo,2)]">
 The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow the current element <sch:name/>
@@ -1393,7 +1379,7 @@ The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow 
       </attribute>
     </optional>
   </define>
-  <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-9">
+  <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-8">
     <sch:rule xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" context="tei:*[@schemeVersion]">
       <sch:assert test="@scheme and not(@scheme = 'free')">
               @schemeVersion can only be used if @scheme is specified.
@@ -2553,7 +2539,6 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
   <define name="model.entryPart.top">
     <choice>
       <ref name="cit"/>
-      <ref name="entry"/>
       <ref name="dictScrap"/>
       <ref name="form"/>
       <ref name="gramGrp"/>
@@ -3175,7 +3160,6 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
       <ref name="listPrefixDef"/>
       <ref name="classDecl"/>
       <ref name="geoDecl"/>
-      <ref name="unitDecl"/>
       <ref name="appInfo"/>
     </choice>
   </define>
@@ -3202,17 +3186,6 @@ Suggested values include: 1] volume; 2] issue; 3] page; 4] line; 5] chapter; 6] 
       <ref name="handNotes"/>
       <ref name="listTranspose"/>
     </choice>
-  </define>
-  <define name="att.formula.attributes">
-    <ref name="att.formula.attribute.formula"/>
-  </define>
-  <define name="att.formula.attribute.formula">
-    <optional>
-      <attribute name="formula">
-        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">An <code xmlns="http://www.w3.org/1999/xhtml">@formula</code> is provided to describe a mathematical calculation such as a conversion between measurement systems.</a:documentation>
-        <text/>
-      </attribute>
-    </optional>
   </define>
   <define name="model.correspActionPart">
     <choice>
@@ -3967,7 +3940,6 @@ Measures]</a:documentation>
       </zeroOrMore>
       <ref name="att.global.attributes"/>
       <ref name="att.datable.attributes"/>
-      <ref name="att.canonical.attributes"/>
       <ref name="att.editLike.attributes"/>
       <ref name="att.dimensions.attributes"/>
       <ref name="att.typed.attributes"/>
@@ -4048,9 +4020,6 @@ attributes @target and @cRef may be supplied on <name/>.</report>
           <choice>
             <ref name="model.divTop"/>
             <ref name="model.global"/>
-            <zeroOrMore>
-              <ref name="desc"/>
-            </zeroOrMore>
           </choice>
         </zeroOrMore>
         <choice>
@@ -4728,9 +4697,6 @@ Sample values include: 1] main; 2] sub (subordinate); 3] alt (alternate); 4] sho
         <zeroOrMore>
           <ref name="model.headLike"/>
         </zeroOrMore>
-        <zeroOrMore>
-          <ref name="desc"/>
-        </zeroOrMore>
         <oneOrMore>
           <choice>
             <ref name="model.biblLike"/>
@@ -4842,7 +4808,7 @@ relatedItem element must be empty</sch:report>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-lg-atleast1oflggapl-constraint-assert-9">
         <rule context="tei:lg">
           <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element
-        must contain at least one child l, lg, or gap element.</sch:assert>
+        must contain at least one child l, lg or gap element.</sch:assert>
         </rule>
       </pattern>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="test-lg-abstractModel-structure-l-constraint-report-11">
@@ -5215,7 +5181,7 @@ Sample values include: 1] index; 2] toc; 3] figlist; 4] tablist</a:documentation
   </define>
   <define name="idno">
     <element name="idno">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(identifier) supplies any form of identifier used to identify some object, such as a bibliographic item, a person, a title, an organization, etc. in a standardized way. [13.3.1. Basic Principles 2.2.4. Publication, Distribution, Licensing, etc. 2.2.5. The Series Statement 3.11.2.4. Imprint, Size of a Document, and Reprint Information]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(identifier) supplies any form of identifier used to identify some object, such as a bibliographic item, a person, a title, an organization, etc. in a standardized way. [2.2.4. Publication, Distribution, Licensing, etc. 2.2.5. The Series Statement 3.11.2.4. Imprint, Size of a Document, and Reprint Information]</a:documentation>
       <zeroOrMore>
         <choice>
           <text/>
@@ -5407,7 +5373,7 @@ Suggested values include: 1] ISBN; 2] ISSN; 3] DOI; 4] URI; 5] VIAF; 6] ESTC; 7]
   </define>
   <define name="schemaRef">
     <element name="schemaRef">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(schema reference) describes or points to a related customization or schema file [2.3.10. The Schema Specification]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(schema reference) describes or points to a related customization or schema file [2.3.9. The Schema Specification]</a:documentation>
       <optional>
         <ref name="model.descLike"/>
       </optional>
@@ -5787,17 +5753,12 @@ Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after</a:do
   <define name="listPrefixDef">
     <element name="listPrefixDef">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(list of prefix definitions) contains a list of definitions of prefixing schemes used in data.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]</a:documentation>
-      <group>
-        <zeroOrMore>
-          <ref name="desc"/>
-        </zeroOrMore>
-        <oneOrMore>
-          <choice>
-            <ref name="prefixDef"/>
-            <ref name="listPrefixDef"/>
-          </choice>
-        </oneOrMore>
-      </group>
+      <oneOrMore>
+        <choice>
+          <ref name="prefixDef"/>
+          <ref name="listPrefixDef"/>
+        </choice>
+      </oneOrMore>
       <ref name="att.global.attributes"/>
       <empty/>
     </element>
@@ -5939,63 +5900,9 @@ Suggested values include: 1] WGS84 (World Geodetic System); 2] MGRS (Military Gr
       <empty/>
     </element>
   </define>
-  <define name="unitDecl">
-    <element name="unitDecl">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(unit declarations) provides information about units of measurement that are not members of the International System of Units. [2.3.9. The Unit Declaration]</a:documentation>
-      <oneOrMore>
-        <ref name="unitDef"/>
-      </oneOrMore>
-      <ref name="att.canonical.attributes"/>
-      <ref name="att.datable.attributes"/>
-      <ref name="att.global.attributes"/>
-      <empty/>
-    </element>
-  </define>
-  <define name="unitDef">
-    <element name="unitDef">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(unit definition) contains descriptive information related to a specific unit of measurement. [2.3.9. The Unit Declaration]</a:documentation>
-      <oneOrMore>
-        <choice>
-          <ref name="model.labelLike"/>
-          <optional>
-            <ref name="model.placeNamePart"/>
-          </optional>
-          <optional>
-            <ref name="conversion"/>
-          </optional>
-          <optional>
-            <ref name="unit"/>
-          </optional>
-        </choice>
-      </oneOrMore>
-      <ref name="att.global.attributes"/>
-      <ref name="att.datable.attributes"/>
-      <ref name="att.canonical.attributes"/>
-      <ref name="att.typed.attributes"/>
-      <empty/>
-    </element>
-  </define>
-  <define name="conversion">
-    <element name="conversion">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">defines how to calculate one unit of measure in terms of another. [2.3.9. The Unit Declaration]</a:documentation>
-      <empty/>
-      <ref name="att.global.attributes"/>
-      <ref name="att.datable.attributes"/>
-      <ref name="att.formula.attributes"/>
-      <attribute name="fromUnit">
-        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">indicates a source unit of measure that is to be converted into another unit indicated in <code xmlns="http://www.w3.org/1999/xhtml">@toUnit</code>.</a:documentation>
-        <data type="anyURI"/>
-      </attribute>
-      <attribute name="toUnit">
-        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">the target unit of measurement for a conversion from a source unit referenced in <code xmlns="http://www.w3.org/1999/xhtml">@fromUnit</code>.</a:documentation>
-        <data type="anyURI"/>
-      </attribute>
-      <empty/>
-    </element>
-  </define>
   <define name="appInfo">
     <element name="appInfo">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(application information) records information about an application which has edited the TEI file. [2.3.11. The Application Information Element]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(application information) records information about an application which has edited the TEI file. [2.3.10. The Application Information Element]</a:documentation>
       <oneOrMore>
         <ref name="model.applicationLike"/>
       </oneOrMore>
@@ -6005,7 +5912,7 @@ Suggested values include: 1] WGS84 (World Geodetic System); 2] MGRS (Military Gr
   </define>
   <define name="application">
     <element name="application">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides information about an application which has acted upon the document. [2.3.11. The Application Information Element]</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides information about an application which has acted upon the document. [2.3.10. The Application Information Element]</a:documentation>
       <group>
         <oneOrMore>
           <ref name="model.labelLike"/>
@@ -6324,17 +6231,12 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
   <define name="listChange">
     <element name="listChange">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">groups a number of change descriptions associated with either the creation of a source text or the revision of an encoded text. [2.6. The Revision Description 11.7. Identifying Changes and Revisions]</a:documentation>
-      <group>
-        <zeroOrMore>
-          <ref name="desc"/>
-        </zeroOrMore>
-        <oneOrMore>
-          <choice>
-            <ref name="listChange"/>
-            <ref name="change"/>
-          </choice>
-        </oneOrMore>
-      </group>
+      <oneOrMore>
+        <choice>
+          <ref name="listChange"/>
+          <ref name="change"/>
+        </choice>
+      </oneOrMore>
       <ref name="att.global.attributes"/>
       <ref name="att.sortable.attributes"/>
       <ref name="att.typed.attributes"/>
@@ -6455,17 +6357,17 @@ Suggested values include: 1] sent; 2] received; 3] transmitted; 4] redirected; 5
         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">identifies a two dimensional area within the bounding box specified by the other attributes by means of a series of pairs of numbers, each of which gives the x,y coordinates of a point on a line enclosing the area.</a:documentation>
         <list>
           <data type="token">
-            <param name="pattern">(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)</param>
+            <param name="pattern">(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)</param>
           </data>
           <data type="token">
-            <param name="pattern">(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)</param>
+            <param name="pattern">(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)</param>
           </data>
           <data type="token">
-            <param name="pattern">(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)</param>
+            <param name="pattern">(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)</param>
           </data>
           <zeroOrMore>
             <data type="token">
-              <param name="pattern">(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)</param>
+              <param name="pattern">(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)</param>
             </data>
           </zeroOrMore>
         </list>
@@ -6630,14 +6532,14 @@ Sample values include: 1] glued; 2] pinned; 3] sewn</a:documentation>
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">identifies a line within the container or bounding box specified by the parent element by means of a series of two or more pairs of numbers, each of which gives the x,y coordinates of a point on the line.</a:documentation>
           <list>
             <data type="token">
-              <param name="pattern">(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)</param>
+              <param name="pattern">(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)</param>
             </data>
             <data type="token">
-              <param name="pattern">(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)</param>
+              <param name="pattern">(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)</param>
             </data>
             <zeroOrMore>
               <data type="token">
-                <param name="pattern">(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)</param>
+                <param name="pattern">(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)</param>
               </data>
             </zeroOrMore>
           </list>
@@ -6983,14 +6885,9 @@ Sample values include: 1] header; 2] footer; 3] pageNum (page number); 4] lineNu
   <define name="listTranspose">
     <element name="listTranspose">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">supplies a list of transpositions, each of which is indicated at some point in a document typically by means of metamarks. [11.3.4.5. Transpositions]</a:documentation>
-      <group>
-        <zeroOrMore>
-          <ref name="desc"/>
-        </zeroOrMore>
-        <oneOrMore>
-          <ref name="transpose"/>
-        </oneOrMore>
-      </group>
+      <oneOrMore>
+        <ref name="transpose"/>
+      </oneOrMore>
       <ref name="att.global.attributes"/>
       <empty/>
     </element>
@@ -7565,14 +7462,9 @@ Suggested values include: 1] initial; 2] final</a:documentation>
   <define name="listForest">
     <element name="listForest">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides for lists of forests. [19.3. Another Tree Notation]</a:documentation>
-      <group>
-        <zeroOrMore>
-          <ref name="desc"/>
-        </zeroOrMore>
-        <oneOrMore>
-          <ref name="forest"/>
-        </oneOrMore>
-      </group>
+      <oneOrMore>
+        <ref name="forest"/>
+      </oneOrMore>
       <ref name="att.global.attributes"/>
       <optional>
         <attribute name="type">
@@ -8338,8 +8230,6 @@ Suggested values include: 1] initial; 2] final</a:documentation>
       </zeroOrMore>
       <ref name="att.global.attributes"/>
       <ref name="att.typed.attributes"/>
-      <ref name="att.placement.attributes"/>
-      <ref name="att.written.attributes"/>
       <empty/>
     </element>
   </define>

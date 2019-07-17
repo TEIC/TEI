@@ -35,40 +35,43 @@
     </pattern>
    <pattern id="schematron-constraint-test-att.datable-calendar-calendar-4">
           <rule context="tei:*[@calendar]">
-            <assert test="string-length(.) gt 0"> @calendar indicates the system or calendar to
-              which the date represented by the content of this element belongs, but this
-              <name/> element has no textual content.</assert>
+            <assert test="string-length(.) gt 0">
+@calendar indicates the system or calendar to which the date represented by the content of this element
+belongs, but this <name/> element has no textual content.</assert>
           </rule>
         </pattern>
-   <pattern id="schematron-constraint-test-att.measurement-att-measurement-unitRef-5">
-      <rule context="tei:*[@unitRef]">
-        <report test="@unit" role="info">The @unit attribute may be unnecessary when @unitRef is present.</report>
-      </rule>
-    </pattern>
-   <pattern id="schematron-constraint-test-att.typed-subtypeTyped-6">
+   <pattern id="schematron-constraint-test-att.typed-subtypeTyped-5">
       <rule context="tei:*[@subtype]">
         <assert test="@type">The <name/> element should not be categorized in detail with @subtype unless also categorized in general with @type</assert>
       </rule>
     </pattern>
-   <pattern id="schematron-constraint-test-att.pointing-targetLang-targetLang-7">
+   <pattern id="schematron-constraint-test-att.pointing-targetLang-targetLang-6">
           <rule context="tei:*[not(self::tei:schemaSpec)][@targetLang]">
             <assert test="@target">@targetLang should only be used on <name/> if @target is specified.</assert>
           </rule>
         </pattern>
-   <pattern id="schematron-constraint-test-att.spanning-spanTo-spanTo-2-8">
+   <pattern id="schematron-constraint-test-att.spanning-spanTo-spanTo-2-7">
           <rule context="tei:*[@spanTo]">
             <assert test="id(substring(@spanTo,2)) and following::*[@xml:id=substring(current()/@spanTo,2)]">
 The element indicated by @spanTo (<value-of select="@spanTo"/>) must follow the current element <name/>
                   </assert>
           </rule>
         </pattern>
-   <pattern id="schematron-constraint-test-att.styleDef-schemeVersion-schemeVersionRequiresScheme-9">
+   <pattern id="schematron-constraint-test-att.styleDef-schemeVersion-schemeVersionRequiresScheme-8">
           <rule context="tei:*[@schemeVersion]">
             <assert test="@scheme and not(@scheme = 'free')">
               @schemeVersion can only be used if @scheme is specified.
             </assert>
           </rule>
         </pattern>
+   <pattern id="schematron-constraint-test-teidata.point-deprecate_trailing_decimal_point-9">
+    
+      <rule context="*[@points]">
+        <report test="matches( @points, '\.[, ]|\.$')">It is considered poor 
+          practice to end a number with a decimal point; as of 2019-02-25 TEI will 
+          consider this @points attribute of <name/> invalid</report>
+      </rule>
+    </pattern>
    <pattern id="schematron-constraint-test-p-abstractModel-structure-p-10">
       <rule context="tei:p">
          <report test="not(ancestor::tei:floatingText) and (ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure                )">
@@ -129,7 +132,7 @@ relatedItem element must be empty</report>
    <pattern id="schematron-constraint-test-lg-atleast1oflggapl-18">
       <rule context="tei:lg">
          <assert test="count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0">An lg element
-        must contain at least one child l, lg, or gap element.</assert>
+        must contain at least one child l, lg or gap element.</assert>
       </rule>
    </pattern>
    <pattern id="schematron-constraint-test-lg-abstractModel-structure-l-19">
@@ -227,4 +230,8 @@ You must supply at least two values for @target on <name/>
          </assert>
       </rule>
    </pattern>
+
+   <!-- *********** -->
+   <!-- deprecated: -->
+   <!-- *********** -->
 </schema>

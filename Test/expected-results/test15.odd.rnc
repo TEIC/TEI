@@ -120,7 +120,7 @@ att.dimensions.attributes =
 att.dimensions.attribute.unit =
   
   ## names the unit used for the measurement
-  ## Suggested values include: 1] cm (centimetres); 2] mm (millimetres); 3] in (inches); 4] line; 5] char (characters)
+  ## Suggested values include: 1] cm (centimetres); 2] mm (millimetres); 3] in (inches); 4] lines; 5] chars (characters)
   attribute unit {
     
     ## (centimetres) 
@@ -133,10 +133,10 @@ att.dimensions.attribute.unit =
       "in"
     | 
       ## lines of text
-      "line"
+      "lines"
     | 
       ## (characters) characters of text
-      "char"
+      "chars"
     | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 att.dimensions.attribute.quantity =
@@ -348,9 +348,9 @@ sch:pattern [
     "            "
     sch:assert [
       test = "string-length(.) gt 0"
-      " @calendar indicates the system or calendar to\x{a}" ~
-      "              which the date represented by the content of this element belongs, but this\x{a}" ~
-      "              "
+      "\x{a}" ~
+      "@calendar indicates the system or calendar to which the date represented by the content of this element\x{a}" ~
+      "belongs, but this "
       sch:name [ ]
       " element has no textual content."
     ]
@@ -706,7 +706,6 @@ att.resourced.attribute.url =
   attribute url { xsd:anyURI }
 att.measurement.attributes =
   att.measurement.attribute.unit,
-  att.measurement.attribute.unitRef,
   att.measurement.attribute.quantity,
   att.measurement.attribute.commodity
 att.measurement.attribute.unit =
@@ -773,17 +772,6 @@ att.measurement.attribute.unit =
       "MiB"
     | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
-att.measurement.attribute.unitRef =
-  [
-    a:documentation [
-      "points to a unique identifier stored in the "
-      ns1:code [ "@xml:id" ]
-      " of a "
-      ns1:code [ "<unitDef>" ]
-      " element that defines a unit of measure."
-    ]
-  ]
-  attribute unitRef { xsd:anyURI }?
 att.measurement.attribute.quantity =
   
   ## specifies the number of the specified units that comprise the measurement
@@ -800,26 +788,6 @@ att.measurement.attribute.commodity =
       xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
     }
   }?
-sch:pattern [
-  id =
-    "test15-att.measurement-att-measurement-unitRef-constraint-rule-5"
-  "\x{a}" ~
-  "      "
-  sch:rule [
-    context = "tei:*[@unitRef]"
-    "\x{a}" ~
-    "        "
-    sch:report [
-      test = "@unit"
-      role = "info"
-      "The @unit attribute may be unnecessary when @unitRef is present."
-    ]
-    "\x{a}" ~
-    "      "
-  ]
-  "\x{a}" ~
-  "   "
-]
 att.naming.attributes =
   att.canonical.attributes,
   att.naming.attribute.role,
@@ -900,7 +868,7 @@ att.typed.attribute.subtype =
     xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 sch:pattern [
-  id = "test15-att.typed-subtypeTyped-constraint-rule-6"
+  id = "test15-att.typed-subtypeTyped-constraint-rule-5"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -943,7 +911,7 @@ att.pointing.attribute.targetLang =
        "")
   }?
 sch:pattern [
-  id = "test15-att.pointing-targetLang-targetLang-constraint-rule-7"
+  id = "test15-att.pointing-targetLang-targetLang-constraint-rule-6"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1053,7 +1021,7 @@ att.spanning.attribute.spanTo =
   ## indicates the end of a span initiated by the element bearing this attribute.
   attribute spanTo { xsd:anyURI }?
 sch:pattern [
-  id = "test15-att.spanning-spanTo-spanTo-2-constraint-rule-8"
+  id = "test15-att.spanning-spanTo-spanTo-2-constraint-rule-7"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1109,7 +1077,7 @@ att.styleDef.attribute.schemeVersion =
   }?
 sch:pattern [
   id =
-    "test15-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-9"
+    "test15-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-8"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1605,7 +1573,6 @@ model.encodingDescPart =
   | listPrefixDef
   | classDecl
   | geoDecl
-  | unitDecl
   | appInfo
 model.editorialDeclPart =
   correction
@@ -1623,16 +1590,6 @@ model.profileDescPart =
   | textClass
   | calendarDesc
   | correspDesc
-att.formula.attributes = att.formula.attribute.formula
-att.formula.attribute.formula =
-  [
-    a:documentation [
-      "An "
-      ns1:code [ "@formula" ]
-      " is provided to describe a mathematical calculation such as a conversion between measurement systems."
-    ]
-  ]
-  attribute formula { text }?
 model.correspActionPart =
   model.dateLike | model.addressLike | model.nameLike | note
 model.correspContextPart = model.ptrLike | model.pLike | note
@@ -1724,7 +1681,7 @@ p =
   element para {
     macro.paraContent
     >> sch:pattern [
-         id = "test15-p-abstractModel-structure-p-constraint-report-5"
+         id = "test15-p-abstractModel-structure-p-constraint-report-4"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1745,7 +1702,7 @@ p =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-p-abstractModel-structure-l-constraint-report-6"
+         id = "test15-p-abstractModel-structure-l-constraint-report-5"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1923,7 +1880,7 @@ desc =
     macro.limitedContent
     >> sch:pattern [
          id =
-           "test15-desc-deprecationInfo-only-in-deprecated-constraint-rule-10"
+           "test15-desc-deprecationInfo-only-in-deprecated-constraint-rule-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2266,7 +2223,6 @@ time =
     (text | model.gLike | model.phrase | model.global)*,
     att.global.attributes,
     att.datable.attributes,
-    att.canonical.attributes,
     att.editLike.attributes,
     att.dimensions.attributes,
     att.typed.attributes,
@@ -2302,7 +2258,7 @@ ptr =
   element ptr {
     empty
     >> sch:pattern [
-         id = "test15-ptr-ptrAtts-constraint-report-7"
+         id = "test15-ptr-ptrAtts-constraint-report-6"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2336,7 +2292,7 @@ ref =
   element ref {
     macro.paraContent
     >> sch:pattern [
-         id = "test15-ref-refAtts-constraint-report-8"
+         id = "test15-ref-refAtts-constraint-report-7"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2369,7 +2325,7 @@ ref =
   
   ## contains any sequence of items organized as a list. [3.7. Lists]
   element list {
-    ((model.divTop | model.global | desc*)*,
+    ((model.divTop | model.global)*,
      ((item, model.global*)+
       | (headLabel?,
          headItem?,
@@ -2377,7 +2333,7 @@ ref =
      (model.divBottom, model.global*)*)
     >> sch:pattern [
          id =
-           "test15-list-gloss-list-must-have-labels-constraint-rule-11"
+           "test15-list-gloss-list-must-have-labels-constraint-rule-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2833,10 +2789,7 @@ listBibl =
   
   ## (citation list) contains a list of bibliographic citations of any kind. [3.11.1. Methods of Encoding Bibliographic References and Lists of References 2.2.7. The Source Description 15.3.2. Declarable Elements]
   element listBibl {
-    (model.headLike*,
-     desc*,
-     (model.biblLike | model.milestoneLike)+,
-     empty*),
+    (model.headLike*, (model.biblLike | model.milestoneLike)+, empty*),
     att.global.attributes,
     att.sortable.attributes,
     att.declarable.attributes,
@@ -2849,7 +2802,7 @@ relatedItem =
   element relatedItem {
     ((model.biblLike | model.ptrLike)?)
     >> sch:pattern [
-         id = "test15-relatedItem-targetorcontent1-constraint-report-9"
+         id = "test15-relatedItem-targetorcontent1-constraint-report-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2902,7 +2855,7 @@ l =
   element l {
     ((text | model.gLike | model.phrase | model.inter | model.global)*)
     >> sch:pattern [
-         id = "test15-l-abstractModel-structure-l-constraint-report-10"
+         id = "test15-l-abstractModel-structure-l-constraint-report-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2950,7 +2903,7 @@ lg =
              test =
                "count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) > 0"
              "An lg element\x{a}" ~
-             "        must contain at least one child l, lg, or gap element."
+             "        must contain at least one child l, lg or gap element."
            ]
            "\x{a}" ~
            "            "
@@ -2959,7 +2912,7 @@ lg =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-lg-abstractModel-structure-l-constraint-report-11"
+         id = "test15-lg-abstractModel-structure-l-constraint-report-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3229,7 +3182,7 @@ authority =
   }
 idno =
   
-  ## (identifier) supplies any form of identifier used to identify some object, such as a bibliographic item, a person, a title, an organization, etc. in a standardized way. [13.3.1. Basic Principles 2.2.4. Publication, Distribution, Licensing, etc. 2.2.5. The Series Statement 3.11.2.4. Imprint, Size of a Document, and Reprint Information]
+  ## (identifier) supplies any form of identifier used to identify some object, such as a bibliographic item, a person, a title, an organization, etc. in a standardized way. [2.2.4. Publication, Distribution, Licensing, etc. 2.2.5. The Series Statement 3.11.2.4. Imprint, Size of a Document, and Reprint Information]
   element idno {
     (text | model.gLike | idno)*,
     att.global.attributes,
@@ -3359,7 +3312,7 @@ encodingDesc =
   }
 schemaRef =
   
-  ## (schema reference) describes or points to a related customization or schema file [2.3.10. The Schema Specification]
+  ## (schema reference) describes or points to a related customization or schema file [2.3.9. The Schema Specification]
   element schemaRef {
     model.descLike?,
     att.global.attributes,
@@ -3459,7 +3412,7 @@ quotation =
   element quotation {
     (model.pLike*)
     >> sch:pattern [
-         id = "test15-quotation-quotationContents-constraint-report-12"
+         id = "test15-quotation-quotationContents-constraint-report-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3704,9 +3657,7 @@ listPrefixDef =
   
   ## (list of prefix definitions) contains a list of definitions of prefixing schemes used in data.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
   element listPrefixDef {
-    (desc*, (prefixDef | listPrefixDef)+),
-    att.global.attributes,
-    empty
+    (prefixDef | listPrefixDef)+, att.global.attributes, empty
   }
 refState =
   
@@ -3793,62 +3744,15 @@ geoDecl =
     }?,
     empty
   }
-unitDecl =
-  
-  ## (unit declarations) provides information about units of measurement that are not members of the International System of Units. [2.3.9. The Unit Declaration]
-  element unitDecl {
-    unitDef+,
-    att.canonical.attributes,
-    att.datable.attributes,
-    att.global.attributes,
-    empty
-  }
-unitDef =
-  
-  ## (unit definition) contains descriptive information related to a specific unit of measurement. [2.3.9. The Unit Declaration]
-  element unitDef {
-    (model.labelLike | model.placeNamePart? | conversion? | unit?)+,
-    att.global.attributes,
-    att.datable.attributes,
-    att.canonical.attributes,
-    att.typed.attributes,
-    empty
-  }
-conversion =
-  
-  ## defines how to calculate one unit of measure in terms of another. [2.3.9. The Unit Declaration]
-  element conversion {
-    empty,
-    att.global.attributes,
-    att.datable.attributes,
-    att.formula.attributes,
-    [
-      a:documentation [
-        "indicates a source unit of measure that is to be converted into another unit indicated in "
-        ns1:code [ "@toUnit" ]
-        "."
-      ]
-    ]
-    attribute fromUnit { xsd:anyURI },
-    [
-      a:documentation [
-        "the target unit of measurement for a conversion from a source unit referenced in "
-        ns1:code [ "@fromUnit" ]
-        "."
-      ]
-    ]
-    attribute toUnit { xsd:anyURI },
-    empty
-  }
 appInfo =
   
-  ## (application information) records information about an application which has edited the TEI file. [2.3.11. The Application Information Element]
+  ## (application information) records information about an application which has edited the TEI file. [2.3.10. The Application Information Element]
   element appInfo {
     model.applicationLike+, att.global.attributes, empty
   }
 application =
   
-  ## provides information about an application which has acted upon the document. [2.3.11. The Application Information Element]
+  ## provides information about an application which has acted upon the document. [2.3.10. The Application Information Element]
   element application {
     (model.labelLike+, (model.ptrLike* | model.pLike*)),
     att.global.attributes,
@@ -4079,7 +3983,7 @@ listChange =
   
   ## groups a number of change descriptions associated with either the creation of a source text or the revision of an encoded text. [2.6. The Revision Description 11.7. Identifying Changes and Revisions]
   element listChange {
-    (desc*, (listChange | change)+),
+    (listChange | change)+,
     att.global.attributes,
     att.sortable.attributes,
     att.typed.attributes,
@@ -4190,7 +4094,7 @@ floatingText =
       (model.divBottom, model.global*)*)?)
     >> sch:pattern [
          id =
-           "test15-div-abstractModel-structure-l-constraint-report-13"
+           "test15-div-abstractModel-structure-l-constraint-report-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4211,7 +4115,7 @@ floatingText =
        ]
     >> sch:pattern [
          id =
-           "test15-div-abstractModel-structure-p-constraint-report-14"
+           "test15-div-abstractModel-structure-p-constraint-report-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4359,8 +4263,6 @@ trailer =
      | model.global)*,
     att.global.attributes,
     att.typed.attributes,
-    att.placement.attributes,
-    att.written.attributes,
     empty
   }
 byline =
@@ -4692,7 +4594,7 @@ ab =
     macro.paraContent
     >> sch:pattern [
          id =
-           "test15-ab-abstractModel-structure-ab-constraint-report-15"
+           "test15-ab-abstractModel-structure-ab-constraint-report-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4713,7 +4615,7 @@ ab =
          "         "
        ]
     >> sch:pattern [
-         id = "test15-ab-abstractModel-structure-l-constraint-report-16"
+         id = "test15-ab-abstractModel-structure-l-constraint-report-15"
          "\x{a}" ~
          "            "
          sch:rule [

@@ -2126,71 +2126,6 @@
               { "type" : "classRef",
                 "key" : "model.global" } ] } ] },
       
-      { "ident" : "conversion",
-        "ns" : "http:\/\/foo.foo\/foo",
-        "type" : "elementSpec",
-        "module" : "header",
-        "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2019-07-03\" xml:lang=\"en\">defines how to calculate one unit of measure in terms of another.<\/desc>" ],
-        "shortDesc" : "defines how to calculate one unit of measure in terms of another.",
-        "gloss" : 
-        [  ],
-        "altIdent" : 
-        [  ],
-        "classes" : 
-        { "model" : 
-          [  ],
-          "atts" : 
-          [ "att.global",
-            "att.datable",
-            "att.formula" ],
-          "unknown" : 
-          [  ] },
-        "attributes" : 
-        [ 
-          { "onElement" : true,
-            "ident" : "fromUnit",
-            "mode" : "add",
-            "ns" : "",
-            "usage" : "req",
-            "desc" : 
-            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2019-06-26\" xml:lang=\"en\">indicates a source unit of measure that is to be converted into another unit indicated in <att>toUnit<\/att>.<\/desc>" ],
-            "shortDesc" : "indicates a source unit of measure that is to be converted into another unit indicated in toUnit.",
-            "gloss" : 
-            [  ],
-            "altIdent" : 
-            [  ],
-            "valDesc" : 
-            [  ],
-            "datatype" : 
-            { "min" : "1",
-              "max" : "1",
-              "dataRef" : 
-              { "key" : "teidata.pointer" } } },
-          
-          { "onElement" : true,
-            "ident" : "toUnit",
-            "mode" : "add",
-            "ns" : "",
-            "usage" : "req",
-            "desc" : 
-            [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2019-06-26\" xml:lang=\"en\">the target unit of measurement for a conversion from a source unit referenced in <att>fromUnit<\/att>.<\/desc>" ],
-            "shortDesc" : "the target unit of measurement for a conversion from a source unit referenced in fromUnit.",
-            "gloss" : 
-            [  ],
-            "altIdent" : 
-            [  ],
-            "valDesc" : 
-            [  ],
-            "datatype" : 
-            { "min" : "1",
-              "max" : "1",
-              "dataRef" : 
-              { "key" : "teidata.pointer" } } } ],
-        "content" : 
-        [ 
-          { "type" : "empty" } ] },
-      
       { "ident" : "corr",
         "ns" : "http:\/\/foo.foo\/foo",
         "type" : "elementSpec",
@@ -6237,10 +6172,7 @@
                     "key" : "model.divTop" },
                   
                   { "type" : "classRef",
-                    "key" : "model.global" },
-                  
-                  { "type" : "elementRef",
-                    "key" : "desc" } ] },
+                    "key" : "model.global" } ] },
               
               { "type" : "alternate",
                 "minOccurs" : "1",
@@ -6331,9 +6263,6 @@
               { "type" : "classRef",
                 "key" : "model.headLike" },
               
-              { "type" : "elementRef",
-                "key" : "desc" },
-              
               { "type" : "alternate",
                 "minOccurs" : "1",
                 "maxOccurs" : "unbounded",
@@ -6399,24 +6328,16 @@
               { "key" : "teidata.truthValue" } } } ],
         "content" : 
         [ 
-          { "type" : "sequence",
+          { "type" : "alternate",
             "minOccurs" : "1",
-            "maxOccurs" : "1",
+            "maxOccurs" : "unbounded",
             "content" : 
             [ 
               { "type" : "elementRef",
-                "key" : "desc" },
+                "key" : "listChange" },
               
-              { "type" : "alternate",
-                "minOccurs" : "1",
-                "maxOccurs" : "unbounded",
-                "content" : 
-                [ 
-                  { "type" : "elementRef",
-                    "key" : "listChange" },
-                  
-                  { "type" : "elementRef",
-                    "key" : "change" } ] } ] } ] },
+              { "type" : "elementRef",
+                "key" : "change" } ] } ] },
       
       { "ident" : "listPrefixDef",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -6440,24 +6361,16 @@
         [  ],
         "content" : 
         [ 
-          { "type" : "sequence",
+          { "type" : "alternate",
             "minOccurs" : "1",
-            "maxOccurs" : "1",
+            "maxOccurs" : "unbounded",
             "content" : 
             [ 
               { "type" : "elementRef",
-                "key" : "desc" },
+                "key" : "prefixDef" },
               
-              { "type" : "alternate",
-                "minOccurs" : "1",
-                "maxOccurs" : "unbounded",
-                "content" : 
-                [ 
-                  { "type" : "elementRef",
-                    "key" : "prefixDef" },
-                  
-                  { "type" : "elementRef",
-                    "key" : "listPrefixDef" } ] } ] } ] },
+              { "type" : "elementRef",
+                "key" : "listPrefixDef" } ] } ] },
       
       { "ident" : "measure",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -9934,7 +9847,6 @@
           "atts" : 
           [ "att.global",
             "att.datable",
-            "att.canonical",
             "att.editLike",
             "att.dimensions",
             "att.typed" ],
@@ -10460,9 +10372,7 @@
           [ "model.divBottomPart" ],
           "atts" : 
           [ "att.global",
-            "att.typed",
-            "att.placement",
-            "att.written" ],
+            "att.typed" ],
           "unknown" : 
           [  ] },
         "attributes" : 
@@ -10665,75 +10575,6 @@
         [ 
           { "type" : "macroRef",
             "key" : "macro.phraseSeq" } ] },
-      
-      { "ident" : "unitDecl",
-        "ns" : "http:\/\/foo.foo\/foo",
-        "type" : "elementSpec",
-        "module" : "header",
-        "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2018-07-18\" xml:lang=\"en\">provides information about units of measurement that are not members of the International System of Units.<\/desc>" ],
-        "shortDesc" : "(unit declarations) provides information about units of measurement that are not members of the International System of Units.",
-        "gloss" : 
-        [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2018-07-18\" xml:lang=\"en\">unit declarations<\/gloss>" ],
-        "altIdent" : 
-        [  ],
-        "classes" : 
-        { "model" : 
-          [ "model.encodingDescPart" ],
-          "atts" : 
-          [ "att.canonical",
-            "att.datable",
-            "att.global" ],
-          "unknown" : 
-          [  ] },
-        "attributes" : 
-        [  ],
-        "content" : 
-        [ 
-          { "type" : "elementRef",
-            "key" : "unitDef" } ] },
-      
-      { "ident" : "unitDef",
-        "ns" : "http:\/\/foo.foo\/foo",
-        "type" : "elementSpec",
-        "module" : "header",
-        "desc" : 
-        [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2018-07-18\" xml:lang=\"en\">contains descriptive information related to a specific unit of measurement.<\/desc>" ],
-        "shortDesc" : "(unit definition) contains descriptive information related to a specific unit of measurement.",
-        "gloss" : 
-        [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2018-07-18\" xml:lang=\"en\">unit definition<\/gloss>" ],
-        "altIdent" : 
-        [  ],
-        "classes" : 
-        { "model" : 
-          [  ],
-          "atts" : 
-          [ "att.global",
-            "att.datable",
-            "att.canonical",
-            "att.typed" ],
-          "unknown" : 
-          [  ] },
-        "attributes" : 
-        [  ],
-        "content" : 
-        [ 
-          { "type" : "alternate",
-            "minOccurs" : "1",
-            "maxOccurs" : "unbounded",
-            "content" : 
-            [ 
-              { "type" : "classRef",
-                "key" : "model.labelLike" },
-              
-              { "type" : "classRef",
-                "key" : "model.placeNamePart" },
-              
-              { "type" : "elementRef",
-                "key" : "conversion" },
-              
-              { "type" : "elementRef",
-                "key" : "unit" } ] } ] },
       
       { "ident" : "when",
         "ns" : "http:\/\/foo.foo\/foo",
@@ -12670,8 +12511,8 @@
           "type" : "classSpec",
           "module" : "tei",
           "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-06-12\" xml:lang=\"en\">provides attributes for normalization of elements\n    that contain dates, times, or datable events.<\/desc>" ],
-          "shortDesc" : "provides attributes for normalization of elements\n    that contain dates, times, or datable events.",
+          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-06-12\" xml:lang=\"en\">provides attributes for normalization of elements that contain\n  dates, times, or datable events.<\/desc>" ],
+          "shortDesc" : "provides attributes for normalization of elements that contain\n  dates, times, or datable events.",
           "gloss" : 
           [  ],
           "altIdent" : 
@@ -12691,8 +12532,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2011-11-25\" xml:lang=\"en\">indicates the system or calendar to which the\n        date represented by the content of this element belongs.<\/desc>" ],
-              "shortDesc" : "indicates the system or calendar to which the\n        date represented by the content of this element belongs.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2011-11-25\" xml:lang=\"en\">indicates the system or calendar to which the date represented by the content of this\n        element belongs.<\/desc>" ],
+              "shortDesc" : "indicates the system or calendar to which the date represented by the content of this\n        element belongs.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -12711,8 +12552,8 @@
               "ns" : "",
               "usage" : "opt",
               "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2011-11-25\" xml:lang=\"en\">supplies a pointer to some location defining a\n        named period of time within which the datable item is understood to have occurred.<\/desc>" ],
-              "shortDesc" : "supplies a pointer to some location defining a\n        named period of time within which the datable item is understood to have occurred.",
+              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2011-11-25\" xml:lang=\"en\">supplies a pointer to some location defining a named\n        period of time within which the datable item is understood to\n        have occurred.<\/desc>" ],
+              "shortDesc" : "supplies a pointer to some location defining a named\n        period of time within which the datable item is understood to\n        have occurred.",
               "gloss" : 
               [  ],
               "altIdent" : 
@@ -13048,7 +12889,7 @@
                     "altIdent" : 
                     [  ] },
                   
-                  { "ident" : "line",
+                  { "ident" : "lines",
                     "desc" : 
                     [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-08-02\" xml:lang=\"en\">lines of text<\/desc>" ],
                     "shortDesc" : "lines of text",
@@ -13057,7 +12898,7 @@
                     "altIdent" : 
                     [  ] },
                   
-                  { "ident" : "char",
+                  { "ident" : "chars",
                     "desc" : 
                     [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2007-08-02\" xml:lang=\"en\">characters of text<\/desc>" ],
                     "shortDesc" : "(characters) characters of text",
@@ -13611,39 +13452,6 @@
                 "max" : "unbounded",
                 "dataRef" : 
                 { "key" : "teidata.pointer" } } } ] },
-        
-        { "ident" : "att.formula",
-          "ns" : "http:\/\/foo.foo\/foo",
-          "type" : "classSpec",
-          "module" : "tei",
-          "desc" : 
-          [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2019-06-25\" xml:lang=\"en\">provides attributes for defining a mathematical formula.<\/desc>" ],
-          "shortDesc" : "provides attributes for defining a mathematical formula.",
-          "gloss" : 
-          [  ],
-          "altIdent" : 
-          [  ],
-          "attributes" : 
-          [ 
-            { "onElement" : false,
-              "ident" : "formula",
-              "mode" : "add",
-              "ns" : "",
-              "usage" : "opt",
-              "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2019-06-25\" xml:lang=\"en\">An <att>formula<\/att> is provided to describe a mathematical calculation such as a conversion between measurement systems.<\/desc>" ],
-              "shortDesc" : "An formula is provided to describe a mathematical calculation such as a conversion between measurement systems.",
-              "gloss" : 
-              [  ],
-              "altIdent" : 
-              [  ],
-              "valDesc" : 
-              [  ],
-              "datatype" : 
-              { "min" : "1",
-                "max" : "1",
-                "dataRef" : 
-                { "key" : "teidata.xpath" } } } ] },
         
         { "ident" : "att.fragmentable",
           "ns" : "http:\/\/foo.foo\/foo",
@@ -14618,26 +14426,6 @@
                     [ "<gloss xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2005-11-18\" xml:lang=\"en\">mebibyte<\/gloss>" ],
                     "altIdent" : 
                     [  ] } ] } },
-            
-            { "onElement" : false,
-              "ident" : "unitRef",
-              "mode" : "add",
-              "ns" : "",
-              "usage" : "opt",
-              "desc" : 
-              [ "<desc xmlns=\"http:\/\/www.tei-c.org\/ns\/1.0\" versionDate=\"2019-07-09\" xml:lang=\"en\">points to a unique identifier stored in the <att>xml:id<\/att> of a <gi>unitDef<\/gi> element that defines a unit of measure.<\/desc>" ],
-              "shortDesc" : "points to a unique identifier stored in the xml:id of a unitDef element that defines a unit of measure.",
-              "gloss" : 
-              [  ],
-              "altIdent" : 
-              [  ],
-              "valDesc" : 
-              [  ],
-              "datatype" : 
-              { "min" : "1",
-                "max" : "1",
-                "dataRef" : 
-                { "key" : "teidata.pointer" } } },
             
             { "onElement" : false,
               "ident" : "quantity",

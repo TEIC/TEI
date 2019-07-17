@@ -464,9 +464,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element listBibl/tei:bibl</desc>
    </doc>
-  <xsl:template match="tei:listBibl/tei:bibl">
-      <xsl:text> \bibitem {</xsl:text>
-      <xsl:choose>
+  <xsl:template match="tei:listBibl/tei:bibl"> \bibitem {<xsl:choose>
          <xsl:when test="@xml:id">
 	           <xsl:value-of select="@xml:id"/>
          </xsl:when>
@@ -474,6 +472,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:otherwise>
       </xsl:choose>
       <xsl:text>}</xsl:text>
+      <xsl:sequence select="tei:makeHyperTarget(@xml:id)"/>
       <xsl:choose>
          <xsl:when test="parent::tei:listBibl/@xml:lang='zh-TW' or @xml:lang='zh-TW'">
 	           <xsl:text>{\textChinese </xsl:text>

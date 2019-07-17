@@ -143,13 +143,6 @@ of this software, even if advised of the possibility of such damage.
 		       <xsl:value-of select="@xml:id"/>
 		       <xsl:text>}</xsl:text>
 		     </xsl:when>
-		      <!-- Check whether the current ptr is a reference to a bibliographic object 
-		          and use \cite rather than \hyperref -->
-		      <xsl:when test="self::tei:biblStruct[ancestor::tei:div/@xml:id='BIB']">
-		         <xsl:text>\cite{</xsl:text>
-		         <xsl:value-of select="$dest"/>
-		         <xsl:text>}</xsl:text>
-		      </xsl:when>
 		     <xsl:when test="starts-with(local-name(.),'div')">
 		       <xsl:text>\textit{\hyperref[</xsl:text>
 		       <xsl:value-of select="$dest"/>
