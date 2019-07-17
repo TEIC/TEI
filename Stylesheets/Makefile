@@ -1,5 +1,5 @@
 SFUSER=rahtz
-DEFAULTSOURCE=https://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml
+DEFAULTSOURCE=../P5/p5subset.xml
 SAXON=java -jar lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
 DOTSAXON=java -jar ../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
 DOTDOTSAXON=java -jar ../../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE) 
@@ -179,7 +179,7 @@ deb: debversion
 	rm -f tei*xsl*_*deb
 	rm -f tei*xsl*_*changes
 	rm -f tei*xsl*_*build
-	(cd debian-tei-xsl; debclean;debuild --no-lintian --preserve-envvar PATH -nc -b -uc -us)
+	(cd debian-tei-xsl; debclean;debuild --no-lintian  -nc -b -uc -us)
 tag:
 	git tag -a v`cat VERSION` -m 'release version `cat VERSION`'
 	git push --follow-tags

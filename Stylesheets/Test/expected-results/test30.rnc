@@ -123,7 +123,7 @@ Tatt.dimensions.attributes =
 Tatt.dimensions.attribute.unit =
   
   ## names the unit used for the measurement
-  ## Suggested values include: 1] cm (centimetres); 2] mm (millimetres); 3] in (inches); 4] line; 5] char (characters)
+  ## Suggested values include: 1] cm (centimetres); 2] mm (millimetres); 3] in (inches); 4] lines; 5] chars (characters)
   attribute unit {
     
     ## (centimetres) 
@@ -136,10 +136,10 @@ Tatt.dimensions.attribute.unit =
       "in"
     | 
       ## lines of text
-      "line"
+      "lines"
     | 
       ## (characters) characters of text
-      "char"
+      "chars"
     | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 Tatt.dimensions.attribute.quantity =
@@ -399,9 +399,9 @@ sch:pattern [
     "            "
     sch:assert [
       test = "string-length(.) gt 0"
-      " @calendar indicates the system or calendar to\x{a}" ~
-      "              which the date represented by the content of this element belongs, but this\x{a}" ~
-      "              "
+      "\x{a}" ~
+      "@calendar indicates the system or calendar to which the date represented by the content of this element\x{a}" ~
+      "belongs, but this "
       sch:name [ ]
       " element has no textual content."
     ]
@@ -728,7 +728,6 @@ Tatt.resourced.attribute.url =
   attribute url { xsd:anyURI }
 Tatt.measurement.attributes =
   Tatt.measurement.attribute.unit,
-  Tatt.measurement.attribute.unitRef,
   Tatt.measurement.attribute.quantity,
   Tatt.measurement.attribute.commodity
 Tatt.measurement.attribute.unit =
@@ -795,17 +794,6 @@ Tatt.measurement.attribute.unit =
       "MiB"
     | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
-Tatt.measurement.attribute.unitRef =
-  [
-    a:documentation [
-      "points to a unique identifier stored in the "
-      ns1:code [ "@xml:id" ]
-      " of a "
-      ns1:code [ "<unitDef>" ]
-      " element that defines a unit of measure."
-    ]
-  ]
-  attribute unitRef { xsd:anyURI }?
 Tatt.measurement.attribute.quantity =
   
   ## specifies the number of the specified units that comprise the measurement
@@ -822,26 +810,6 @@ Tatt.measurement.attribute.commodity =
       xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
     }
   }?
-sch:pattern [
-  id =
-    "testbasic-att.measurement-att-measurement-unitRef-constraint-rule-5"
-  "\x{a}" ~
-  "      "
-  sch:rule [
-    context = "tei:*[@unitRef]"
-    "\x{a}" ~
-    "        "
-    sch:report [
-      test = "@unit"
-      role = "info"
-      "The @unit attribute may be unnecessary when @unitRef is present."
-    ]
-    "\x{a}" ~
-    "      "
-  ]
-  "\x{a}" ~
-  "   "
-]
 Tatt.naming.attributes =
   Tatt.canonical.attributes,
   Tatt.naming.attribute.role,
@@ -922,7 +890,7 @@ Tatt.typed.attribute.subtype =
     xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 sch:pattern [
-  id = "testbasic-att.typed-subtypeTyped-constraint-rule-6"
+  id = "testbasic-att.typed-subtypeTyped-constraint-rule-5"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -965,7 +933,7 @@ Tatt.pointing.attribute.targetLang =
        "")
   }?
 sch:pattern [
-  id = "testbasic-att.pointing-targetLang-targetLang-constraint-rule-7"
+  id = "testbasic-att.pointing-targetLang-targetLang-constraint-rule-6"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1075,7 +1043,7 @@ Tatt.spanning.attribute.spanTo =
   ## indicates the end of a span initiated by the element bearing this attribute.
   attribute spanTo { xsd:anyURI }?
 sch:pattern [
-  id = "testbasic-att.spanning-spanTo-spanTo-2-constraint-rule-8"
+  id = "testbasic-att.spanning-spanTo-spanTo-2-constraint-rule-7"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1131,7 +1099,7 @@ Tatt.styleDef.attribute.schemeVersion =
   }?
 sch:pattern [
   id =
-    "testbasic-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-9"
+    "testbasic-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-8"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1967,7 +1935,6 @@ Tmodel.encodingDescPart =
   | TlistPrefixDef
   | TclassDecl
   | TgeoDecl
-  | TunitDecl
   | TappInfo
 Tmodel.editorialDeclPart =
   Tcorrection
@@ -1988,16 +1955,6 @@ Tmodel.profileDescPart =
   | ThandNotes
   | TlistTranspose
   | TsettingDesc
-Tatt.formula.attributes = Tatt.formula.attribute.formula
-Tatt.formula.attribute.formula =
-  [
-    a:documentation [
-      "An "
-      ns1:code [ "@formula" ]
-      " is provided to describe a mathematical calculation such as a conversion between measurement systems."
-    ]
-  ]
-  attribute formula { text }?
 Tmodel.correspActionPart =
   Tmodel.dateLike | Tmodel.addressLike | Tmodel.nameLike | Tnote
 Tmodel.correspContextPart = Tmodel.ptrLike | Tmodel.pLike | Tnote
@@ -2632,7 +2589,6 @@ Ttime =
     (text | Tmodel.gLike | Tmodel.phrase | Tmodel.global)*,
     Tatt.global.attributes,
     Tatt.datable.attributes,
-    Tatt.canonical.attributes,
     Tatt.editLike.attributes,
     Tatt.dimensions.attributes,
     Tatt.typed.attributes,
@@ -2735,7 +2691,7 @@ Tlist =
   
   ## contains any sequence of items organized as a list. [3.7. Lists]
   element list {
-    ((Tmodel.divTop | Tmodel.global | Tdesc*)*,
+    ((Tmodel.divTop | Tmodel.global)*,
      ((Titem, Tmodel.global*)+
       | (TheadLabel?,
          TheadItem?,
@@ -3232,7 +3188,6 @@ TlistBibl =
   ## (citation list) contains a list of bibliographic citations of any kind. [3.11.1. Methods of Encoding Bibliographic References and Lists of References 2.2.7. The Source Description 15.3.2. Declarable Elements]
   element listBibl {
     (Tmodel.headLike*,
-     Tdesc*,
      (Tmodel.biblLike | Tmodel.milestoneLike)+,
      (Trelation | TlistRelation)*),
     Tatt.global.attributes,
@@ -3355,7 +3310,7 @@ Tlg =
              test =
                "count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) > 0"
              "An lg element\x{a}" ~
-             "        must contain at least one child l, lg, or gap element."
+             "        must contain at least one child l, lg or gap element."
            ]
            "\x{a}" ~
            "            "
@@ -3635,7 +3590,7 @@ Tauthority =
   }
 Tidno =
   
-  ## (identifier) supplies any form of identifier used to identify some object, such as a bibliographic item, a person, a title, an organization, etc. in a standardized way. [13.3.1. Basic Principles 2.2.4. Publication, Distribution, Licensing, etc. 2.2.5. The Series Statement 3.11.2.4. Imprint, Size of a Document, and Reprint Information]
+  ## (identifier) supplies any form of identifier used to identify some object, such as a bibliographic item, a person, a title, an organization, etc. in a standardized way. [2.2.4. Publication, Distribution, Licensing, etc. 2.2.5. The Series Statement 3.11.2.4. Imprint, Size of a Document, and Reprint Information]
   element idno {
     (text | Tmodel.gLike | Tidno)*,
     Tatt.global.attributes,
@@ -3765,7 +3720,7 @@ TencodingDesc =
   }
 TschemaRef =
   
-  ## (schema reference) describes or points to a related customization or schema file [2.3.10. The Schema Specification]
+  ## (schema reference) describes or points to a related customization or schema file [2.3.9. The Schema Specification]
   element schemaRef {
     Tmodel.descLike?,
     Tatt.global.attributes,
@@ -4111,9 +4066,7 @@ TlistPrefixDef =
   
   ## (list of prefix definitions) contains a list of definitions of prefixing schemes used in data.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
   element listPrefixDef {
-    (Tdesc*, (TprefixDef | TlistPrefixDef)+),
-    Tatt.global.attributes,
-    empty
+    (TprefixDef | TlistPrefixDef)+, Tatt.global.attributes, empty
   }
 TrefState =
   
@@ -4201,62 +4154,15 @@ TgeoDecl =
     }?,
     empty
   }
-TunitDecl =
-  
-  ## (unit declarations) provides information about units of measurement that are not members of the International System of Units. [2.3.9. The Unit Declaration]
-  element unitDecl {
-    TunitDef+,
-    Tatt.canonical.attributes,
-    Tatt.datable.attributes,
-    Tatt.global.attributes,
-    empty
-  }
-TunitDef =
-  
-  ## (unit definition) contains descriptive information related to a specific unit of measurement. [2.3.9. The Unit Declaration]
-  element unitDef {
-    (Tmodel.labelLike | Tmodel.placeNamePart? | Tconversion? | Tunit?)+,
-    Tatt.global.attributes,
-    Tatt.datable.attributes,
-    Tatt.canonical.attributes,
-    Tatt.typed.attributes,
-    empty
-  }
-Tconversion =
-  
-  ## defines how to calculate one unit of measure in terms of another. [2.3.9. The Unit Declaration]
-  element conversion {
-    empty,
-    Tatt.global.attributes,
-    Tatt.datable.attributes,
-    Tatt.formula.attributes,
-    [
-      a:documentation [
-        "indicates a source unit of measure that is to be converted into another unit indicated in "
-        ns1:code [ "@toUnit" ]
-        "."
-      ]
-    ]
-    attribute fromUnit { xsd:anyURI },
-    [
-      a:documentation [
-        "the target unit of measurement for a conversion from a source unit referenced in "
-        ns1:code [ "@fromUnit" ]
-        "."
-      ]
-    ]
-    attribute toUnit { xsd:anyURI },
-    empty
-  }
 TappInfo =
   
-  ## (application information) records information about an application which has edited the TEI file. [2.3.11. The Application Information Element]
+  ## (application information) records information about an application which has edited the TEI file. [2.3.10. The Application Information Element]
   element appInfo {
     Tmodel.applicationLike+, Tatt.global.attributes, empty
   }
 Tapplication =
   
-  ## provides information about an application which has acted upon the document. [2.3.11. The Application Information Element]
+  ## provides information about an application which has acted upon the document. [2.3.10. The Application Information Element]
   element application {
     (Tmodel.labelLike+, (Tmodel.ptrLike* | Tmodel.pLike*)),
     Tatt.global.attributes,
@@ -4499,7 +4405,7 @@ TlistChange =
   
   ## groups a number of change descriptions associated with either the creation of a source text or the revision of an encoded text. [2.6. The Revision Description 11.7. Identifying Changes and Revisions]
   element listChange {
-    (Tdesc*, (TlistChange | Tchange)+),
+    (TlistChange | Tchange)+,
     Tatt.global.attributes,
     Tatt.sortable.attributes,
     Tatt.typed.attributes,
@@ -4965,15 +4871,9 @@ Tevent =
   
   ## contains data relating to any kind of significant event associated with a person, place, or organization. [13.3.1. Basic Principles]
   element event {
-    (Tidno*,
-     Tmodel.headLike*,
+    (Tmodel.headLike*,
      (Tmodel.pLike+ | Tmodel.labelLike+),
-     (Tmodel.noteLike
-      | Tmodel.biblLike
-      | TlinkGrp
-      | Tlink
-      | Tidno
-      | Tptr)*,
+     (Tmodel.noteLike | Tmodel.biblLike | TlinkGrp | Tlink)*,
      Tevent*),
     Tatt.global.attributes,
     Tatt.datable.attributes,
@@ -5086,7 +4986,6 @@ TlistOrg =
   ## (list of organizations) contains a list of elements, each of which provides information about an identifiable organization. [13.2.2. Organizational Names]
   element listOrg {
     (Tmodel.headLike*,
-     Tdesc*,
      (Torg | TlistOrg)+,
      (Trelation | TlistRelation)*),
     Tatt.global.attributes,
@@ -5099,10 +4998,7 @@ TlistEvent =
   
   ## (list of events) contains a list of descriptions, each of which provides information about an identifiable event. [13.3.1. Basic Principles]
   element listEvent {
-    (Tmodel.headLike*,
-     Tdesc*,
-     Tmodel.eventLike+,
-     (Trelation | TlistRelation)*),
+    (Tmodel.headLike*, Tmodel.eventLike+, (Trelation | TlistRelation)*),
     Tatt.global.attributes,
     Tatt.typed.attributes,
     Tatt.declarable.attributes,
@@ -5114,7 +5010,6 @@ TlistPerson =
   ## (list of persons) contains a list of descriptions, each of which provides information about an identifiable person or a group of people, for example the participants in a language interaction, or the people referred to in a historical source. [13.3.2. The Person Element 15.2. Contextual Information 2.4. The Profile Description 15.3.2. Declarable Elements]
   element listPerson {
     (Tmodel.headLike*,
-     Tdesc*,
      (Tmodel.personLike | TlistPerson)+,
      (Trelation | TlistRelation)*),
     Tatt.global.attributes,
@@ -5128,7 +5023,6 @@ TlistPlace =
   ## (list of places) contains a list of places, optionally followed by a list of relationships (other than containment) defined amongst them. [2.2.7. The Source Description 13.3.4. Places]
   element listPlace {
     (Tmodel.headLike*,
-     Tdesc*,
      (Tmodel.placeLike | TlistPlace)+,
      (Trelation | TlistRelation)*),
     Tatt.global.attributes,
@@ -5217,7 +5111,7 @@ Torg =
          | Tmodel.placeLike
          | Tmodel.orgPart
          | Tmodel.milestoneLike)*),
-     (Tmodel.noteLike | Tmodel.biblLike | TlinkGrp | Tlink | Tptr)*,
+     (Tmodel.noteLike | Tmodel.biblLike | TlinkGrp | Tlink)*,
      Tmodel.personLike*),
     Tatt.global.attributes,
     Tatt.typed.attributes,
@@ -5237,7 +5131,6 @@ TlistRelation =
   ## provides information about relationships identified amongst people, places, and organizations, either informally as prose or as formally expressed relation links. [13.3.2.3. Personal Relationships]
   element listRelation {
     (Tmodel.headLike*,
-     Tdesc*,
      (Tmodel.pLike | (Trelation | TlistRelation)+)),
     Tatt.global.attributes,
     Tatt.typed.attributes,
@@ -5248,7 +5141,7 @@ Tperson =
   
   ## provides information about an identifiable individual, for example a participant in a language interaction, or a person referred to in a historical source. [13.3.2. The Person Element 15.2.2. The Participant Description]
   element person {
-    (Tmodel.pLike+ | (Tmodel.personPart | Tmodel.global | Tptr)*),
+    (Tmodel.pLike+ | (Tmodel.personPart | Tmodel.global)*),
     Tatt.global.attributes,
     Tatt.editLike.attributes,
     Tatt.sortable.attributes,
@@ -5342,12 +5235,7 @@ Tplace =
     (Tmodel.headLike*,
      (Tmodel.pLike*
       | (Tmodel.labelLike | Tmodel.placeStateLike | Tmodel.eventLike)*),
-     (Tmodel.noteLike
-      | Tmodel.biblLike
-      | Tidno
-      | Tptr
-      | TlinkGrp
-      | Tlink)*,
+     (Tmodel.noteLike | Tmodel.biblLike | Tidno | TlinkGrp | Tlink)*,
      (Tmodel.placeLike | TlistPlace)*),
     Tatt.global.attributes,
     Tatt.typed.attributes,
@@ -5617,7 +5505,6 @@ TlistObject =
   ## (list of objects) contains a list of descriptions, each of which provides information about an identifiable physical object. [13.3.5. Objects]
   element listObject {
     (Tmodel.headLike*,
-     Tdesc*,
      Tmodel.objectLike+,
      (Trelation | TlistRelation)*),
     Tatt.global.attributes,
@@ -5657,7 +5544,7 @@ Tnym =
   
   ## (canonical name) contains the definition for a canonical name or name component of any kind. [13.3.6. Names and Nyms]
   element nym {
-    (Tidno*, Tmodel.entryPart*, Tmodel.pLike*, Tnym*),
+    (Tmodel.entryPart*, Tmodel.pLike*, Tnym*),
     Tatt.global.attributes,
     Tatt.typed.attributes,
     Tatt.sortable.attributes,
@@ -5673,7 +5560,6 @@ TlistNym =
   ## (list of canonical names) contains a list of nyms, that is, standardized names for any thing. [13.3.6. Names and Nyms]
   element listNym {
     (Tmodel.headLike*,
-     Tdesc*,
      (Tnym | TlistNym)+,
      (Trelation | TlistRelation)*),
     Tatt.global.attributes,
@@ -5749,18 +5635,10 @@ Tatt.coordinated.attribute.points =
   ## identifies a two dimensional area within the bounding box specified by the other attributes by means of a series of pairs of numbers, each of which gives the x,y coordinates of a point on a line enclosing the area.
   attribute points {
     list {
-      xsd:token {
-        pattern = "(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)"
-      },
-      xsd:token {
-        pattern = "(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)"
-      },
-      xsd:token {
-        pattern = "(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)"
-      },
-      xsd:token {
-        pattern = "(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)"
-      }*
+      xsd:token { pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)" },
+      xsd:token { pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)" },
+      xsd:token { pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)" },
+      xsd:token { pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)" }*
     }
   }?
 Tfacsimile =
@@ -5927,13 +5805,13 @@ Tpath =
     attribute points {
       list {
         xsd:token {
-          pattern = "(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)"
+          pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)"
         },
         xsd:token {
-          pattern = "(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)"
+          pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)"
         },
         xsd:token {
-          pattern = "(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)"
+          pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)"
         }*
       }
     }?,
@@ -6324,9 +6202,7 @@ Tline =
 TlistTranspose =
   
   ## supplies a list of transpositions, each of which is indicated at some point in a document typically by means of metamarks. [11.3.4.5. Transpositions]
-  element listTranspose {
-    (Tdesc*, Ttranspose+), Tatt.global.attributes, empty
-  }
+  element listTranspose { Ttranspose+, Tatt.global.attributes, empty }
 Tmetamark =
   
   ## contains or describes any kind of graphic or written signal within a document the function of which is to determine how it should be read rather than forming part of the actual content of the document. [11.3.4.2. Metamarks]
@@ -7063,8 +6939,6 @@ Ttrailer =
      | Tmodel.global)*,
     Tatt.global.attributes,
     Tatt.typed.attributes,
-    Tatt.placement.attributes,
-    Tatt.written.attributes,
     empty
   }
 Tbyline =

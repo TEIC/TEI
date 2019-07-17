@@ -3,7 +3,7 @@ VERSION=`cat VERSION`
 REGENERATING=0
 # 0 = do diff; 1 = dont do diff
 BINDIR=../bin
-DEFAULTSOURCE=https://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml
+DEFAULTSOURCE=../../P5/p5subset.xml
 SAXONOPT=useFixedDate=true
 SAXON=java -Djava.awt.headless=true -jar ../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
 DOTDOTSAXON=java -Djava.awt.headless=true -jar ../../lib/saxon9he.jar defaultSource=$(DEFAULTSOURCE)
@@ -566,7 +566,7 @@ clean:
 	rm -f cocoatest*.xml
 
 oddtree:
-	$(SAXON) -s:http://www.tei-c.org/release/xml/tei/odd/p5subset.xml -xsl:../tools/odd-to-tree.xsl -o:oddtree.xml
+	$(SAXON) -s:../../P5/p5subset.xml -xsl:../tools/odd-to-tree.xsl -o:oddtree.xml
 	../bin/teitohtml --profile=oxford oddtree.xml oddtree.html
 
 regenerate:

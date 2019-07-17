@@ -128,7 +128,7 @@ tei_att.dimensions.attributes =
 tei_att.dimensions.attribute.unit =
   
   ## names the unit used for the measurement
-  ## Suggested values include: 1] cm (centimetres); 2] mm (millimetres); 3] in (inches); 4] line; 5] char (characters)
+  ## Suggested values include: 1] cm (centimetres); 2] mm (millimetres); 3] in (inches); 4] lines; 5] chars (characters)
   attribute unit {
     
     ## (centimetres) 
@@ -141,10 +141,10 @@ tei_att.dimensions.attribute.unit =
       "in"
     | 
       ## lines of text
-      "line"
+      "lines"
     | 
       ## (characters) characters of text
-      "char"
+      "chars"
     | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 tei_att.dimensions.attribute.quantity =
@@ -356,9 +356,9 @@ sch:pattern [
     "            "
     sch:assert [
       test = "string-length(.) gt 0"
-      " @calendar indicates the system or calendar to\x{a}" ~
-      "              which the date represented by the content of this element belongs, but this\x{a}" ~
-      "              "
+      "\x{a}" ~
+      "@calendar indicates the system or calendar to which the date represented by the content of this element\x{a}" ~
+      "belongs, but this "
       sch:name [ ]
       " element has no textual content."
     ]
@@ -717,7 +717,6 @@ tei_att.resourced.attribute.url =
   attribute url { xsd:anyURI }
 tei_att.measurement.attributes =
   tei_att.measurement.attribute.unit,
-  tei_att.measurement.attribute.unitRef,
   tei_att.measurement.attribute.quantity,
   tei_att.measurement.attribute.commodity
 tei_att.measurement.attribute.unit =
@@ -784,17 +783,6 @@ tei_att.measurement.attribute.unit =
       "MiB"
     | xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
-tei_att.measurement.attribute.unitRef =
-  [
-    a:documentation [
-      "points to a unique identifier stored in the "
-      ns1:code [ "@xml:id" ]
-      " of a "
-      ns1:code [ "<unitDef>" ]
-      " element that defines a unit of measure."
-    ]
-  ]
-  attribute unitRef { xsd:anyURI }?
 tei_att.measurement.attribute.quantity =
   
   ## specifies the number of the specified units that comprise the measurement
@@ -811,25 +799,6 @@ tei_att.measurement.attribute.commodity =
       xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
     }
   }?
-sch:pattern [
-  id = "foo-att.measurement-att-measurement-unitRef-constraint-rule-5"
-  "\x{a}" ~
-  "      "
-  sch:rule [
-    context = "tei:*[@unitRef]"
-    "\x{a}" ~
-    "        "
-    sch:report [
-      test = "@unit"
-      role = "info"
-      "The @unit attribute may be unnecessary when @unitRef is present."
-    ]
-    "\x{a}" ~
-    "      "
-  ]
-  "\x{a}" ~
-  "   "
-]
 tei_att.naming.attributes =
   tei_att.canonical.attributes,
   tei_att.naming.attribute.role,
@@ -910,7 +879,7 @@ tei_att.typed.attribute.subtype =
     xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
   }?
 sch:pattern [
-  id = "foo-att.typed-subtypeTyped-constraint-rule-6"
+  id = "foo-att.typed-subtypeTyped-constraint-rule-5"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -953,7 +922,7 @@ tei_att.pointing.attribute.targetLang =
        "")
   }?
 sch:pattern [
-  id = "foo-att.pointing-targetLang-targetLang-constraint-rule-7"
+  id = "foo-att.pointing-targetLang-targetLang-constraint-rule-6"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1063,7 +1032,7 @@ tei_att.spanning.attribute.spanTo =
   ## indicates the end of a span initiated by the element bearing this attribute.
   attribute spanTo { xsd:anyURI }?
 sch:pattern [
-  id = "foo-att.spanning-spanTo-spanTo-2-constraint-rule-8"
+  id = "foo-att.spanning-spanTo-spanTo-2-constraint-rule-7"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1120,7 +1089,7 @@ tei_att.styleDef.attribute.schemeVersion =
   }?
 sch:pattern [
   id =
-    "foo-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-9"
+    "foo-att.styleDef-schemeVersion-schemeVersionRequiresScheme-constraint-rule-8"
   "\x{a}" ~
   "      "
   sch:rule [
@@ -1713,7 +1682,6 @@ tei_model.encodingDescPart =
   | tei_listPrefixDef
   | tei_classDecl
   | tei_geoDecl
-  | tei_unitDecl
   | tei_appInfo
 tei_model.editorialDeclPart =
   tei_correction
@@ -1731,16 +1699,6 @@ tei_model.profileDescPart =
   | tei_textClass
   | tei_calendarDesc
   | tei_correspDesc
-tei_att.formula.attributes = tei_att.formula.attribute.formula
-tei_att.formula.attribute.formula =
-  [
-    a:documentation [
-      "An "
-      ns1:code [ "@formula" ]
-      " is provided to describe a mathematical calculation such as a conversion between measurement systems."
-    ]
-  ]
-  attribute formula { text }?
 tei_model.correspActionPart =
   tei_model.dateLike
   | tei_model.addressLike
@@ -1837,7 +1795,7 @@ tei_p =
   element tei:p {
     tei_macro.paraContent
     >> sch:pattern [
-         id = "foo-p-abstractModel-structure-p-constraint-report-5"
+         id = "foo-p-abstractModel-structure-p-constraint-report-4"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -1858,7 +1816,7 @@ tei_p =
          "         "
        ]
     >> sch:pattern [
-         id = "foo-p-abstractModel-structure-l-constraint-report-6"
+         id = "foo-p-abstractModel-structure-l-constraint-report-5"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2044,7 +2002,7 @@ tei_desc =
     tei_macro.limitedContent
     >> sch:pattern [
          id =
-           "foo-desc-deprecationInfo-only-in-deprecated-constraint-rule-10"
+           "foo-desc-deprecationInfo-only-in-deprecated-constraint-rule-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2399,7 +2357,6 @@ tei_time =
     (text | tei_model.gLike | tei_model.phrase | tei_model.global)*,
     tei_att.global.attributes,
     tei_att.datable.attributes,
-    tei_att.canonical.attributes,
     tei_att.editLike.attributes,
     tei_att.dimensions.attributes,
     tei_att.typed.attributes,
@@ -2435,7 +2392,7 @@ tei_ptr =
   element tei:ptr {
     empty
     >> sch:pattern [
-         id = "foo-ptr-ptrAtts-constraint-report-7"
+         id = "foo-ptr-ptrAtts-constraint-report-6"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2469,7 +2426,7 @@ tei_ref =
   element tei:ref {
     tei_macro.paraContent
     >> sch:pattern [
-         id = "foo-ref-refAtts-constraint-report-8"
+         id = "foo-ref-refAtts-constraint-report-7"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -2502,14 +2459,14 @@ tei_list =
   
   ## contains any sequence of items organized as a list. [3.7. Lists]
   element tei:list {
-    ((tei_model.divTop | tei_model.global | tei_desc*)*,
+    ((tei_model.divTop | tei_model.global)*,
      ((tei_item, tei_model.global*)+
       | (tei_headLabel?,
          tei_headItem?,
          (tei_label, tei_model.global*, tei_item, tei_model.global*)+)),
      (tei_model.divBottom, tei_model.global*)*)
     >> sch:pattern [
-         id = "foo-list-gloss-list-must-have-labels-constraint-rule-11"
+         id = "foo-list-gloss-list-must-have-labels-constraint-rule-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3001,7 +2958,6 @@ tei_listBibl =
   ## (citation list) contains a list of bibliographic citations of any kind. [3.11.1. Methods of Encoding Bibliographic References and Lists of References 2.2.7. The Source Description 15.3.2. Declarable Elements]
   element tei:listBibl {
     (tei_model.headLike*,
-     tei_desc*,
      (tei_model.biblLike | tei_model.milestoneLike)+,
      empty*),
     tei_att.global.attributes,
@@ -3016,7 +2972,7 @@ tei_relatedItem =
   element tei:relatedItem {
     ((tei_model.biblLike | tei_model.ptrLike)?)
     >> sch:pattern [
-         id = "foo-relatedItem-targetorcontent1-constraint-report-9"
+         id = "foo-relatedItem-targetorcontent1-constraint-report-8"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3073,7 +3029,7 @@ tei_l =
       | tei_model.inter
       | tei_model.global)*)
     >> sch:pattern [
-         id = "foo-l-abstractModel-structure-l-constraint-report-10"
+         id = "foo-l-abstractModel-structure-l-constraint-report-9"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3124,7 +3080,7 @@ tei_lg =
              test =
                "count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) > 0"
              "An lg element\x{a}" ~
-             "        must contain at least one child l, lg, or gap element."
+             "        must contain at least one child l, lg or gap element."
            ]
            "\x{a}" ~
            "            "
@@ -3133,7 +3089,7 @@ tei_lg =
          "         "
        ]
     >> sch:pattern [
-         id = "foo-lg-abstractModel-structure-l-constraint-report-11"
+         id = "foo-lg-abstractModel-structure-l-constraint-report-10"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3388,7 +3344,7 @@ tei_authority =
   }
 tei_idno =
   
-  ## (identifier) supplies any form of identifier used to identify some object, such as a bibliographic item, a person, a title, an organization, etc. in a standardized way. [13.3.1. Basic Principles 2.2.4. Publication, Distribution, Licensing, etc. 2.2.5. The Series Statement 3.11.2.4. Imprint, Size of a Document, and Reprint Information]
+  ## (identifier) supplies any form of identifier used to identify some object, such as a bibliographic item, a person, a title, an organization, etc. in a standardized way. [2.2.4. Publication, Distribution, Licensing, etc. 2.2.5. The Series Statement 3.11.2.4. Imprint, Size of a Document, and Reprint Information]
   element tei:idno {
     (text | tei_model.gLike | tei_idno)*,
     tei_att.global.attributes,
@@ -3524,7 +3480,7 @@ tei_encodingDesc =
   }
 tei_schemaRef =
   
-  ## (schema reference) describes or points to a related customization or schema file [2.3.10. The Schema Specification]
+  ## (schema reference) describes or points to a related customization or schema file [2.3.9. The Schema Specification]
   element tei:schemaRef {
     tei_model.descLike?,
     tei_att.global.attributes,
@@ -3624,7 +3580,7 @@ tei_quotation =
   element tei:quotation {
     (tei_model.pLike*)
     >> sch:pattern [
-         id = "foo-quotation-quotationContents-constraint-report-12"
+         id = "foo-quotation-quotationContents-constraint-report-11"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -3869,7 +3825,7 @@ tei_listPrefixDef =
   
   ## (list of prefix definitions) contains a list of definitions of prefixing schemes used in data.pointer values, showing how abbreviated URIs using each scheme may be expanded into full URIs. [16.2.3. Using Abbreviated Pointers]
   element tei:listPrefixDef {
-    (tei_desc*, (tei_prefixDef | tei_listPrefixDef)+),
+    (tei_prefixDef | tei_listPrefixDef)+,
     tei_att.global.attributes,
     empty
   }
@@ -3961,65 +3917,15 @@ tei_geoDecl =
     }?,
     empty
   }
-tei_unitDecl =
-  
-  ## (unit declarations) provides information about units of measurement that are not members of the International System of Units. [2.3.9. The Unit Declaration]
-  element tei:unitDecl {
-    tei_unitDef+,
-    tei_att.canonical.attributes,
-    tei_att.datable.attributes,
-    tei_att.global.attributes,
-    empty
-  }
-tei_unitDef =
-  
-  ## (unit definition) contains descriptive information related to a specific unit of measurement. [2.3.9. The Unit Declaration]
-  element tei:unitDef {
-    (tei_model.labelLike
-     | tei_model.placeNamePart?
-     | tei_conversion?
-     | tei_unit?)+,
-    tei_att.global.attributes,
-    tei_att.datable.attributes,
-    tei_att.canonical.attributes,
-    tei_att.typed.attributes,
-    empty
-  }
-tei_conversion =
-  
-  ## defines how to calculate one unit of measure in terms of another. [2.3.9. The Unit Declaration]
-  element tei:conversion {
-    empty,
-    tei_att.global.attributes,
-    tei_att.datable.attributes,
-    tei_att.formula.attributes,
-    [
-      a:documentation [
-        "indicates a source unit of measure that is to be converted into another unit indicated in "
-        ns1:code [ "@toUnit" ]
-        "."
-      ]
-    ]
-    attribute fromUnit { xsd:anyURI },
-    [
-      a:documentation [
-        "the target unit of measurement for a conversion from a source unit referenced in "
-        ns1:code [ "@fromUnit" ]
-        "."
-      ]
-    ]
-    attribute toUnit { xsd:anyURI },
-    empty
-  }
 tei_appInfo =
   
-  ## (application information) records information about an application which has edited the TEI file. [2.3.11. The Application Information Element]
+  ## (application information) records information about an application which has edited the TEI file. [2.3.10. The Application Information Element]
   element tei:appInfo {
     tei_model.applicationLike+, tei_att.global.attributes, empty
   }
 tei_application =
   
-  ## provides information about an application which has acted upon the document. [2.3.11. The Application Information Element]
+  ## provides information about an application which has acted upon the document. [2.3.10. The Application Information Element]
   element tei:application {
     (tei_model.labelLike+, (tei_model.ptrLike* | tei_model.pLike*)),
     tei_att.global.attributes,
@@ -4257,7 +4163,7 @@ tei_listChange =
   
   ## groups a number of change descriptions associated with either the creation of a source text or the revision of an encoded text. [2.6. The Revision Description 11.7. Identifying Changes and Revisions]
   element tei:listChange {
-    (tei_desc*, (tei_listChange | tei_change)+),
+    (tei_listChange | tei_change)+,
     tei_att.global.attributes,
     tei_att.sortable.attributes,
     tei_att.typed.attributes,
@@ -4373,7 +4279,7 @@ tei_div =
            tei_model.global*)*)),
       (tei_model.divBottom, tei_model.global*)*)?)
     >> sch:pattern [
-         id = "foo-div-abstractModel-structure-l-constraint-report-13"
+         id = "foo-div-abstractModel-structure-l-constraint-report-12"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4393,7 +4299,7 @@ tei_div =
          "         "
        ]
     >> sch:pattern [
-         id = "foo-div-abstractModel-structure-p-constraint-report-14"
+         id = "foo-div-abstractModel-structure-p-constraint-report-13"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4542,8 +4448,6 @@ tei_trailer =
      | tei_model.global)*,
     tei_att.global.attributes,
     tei_att.typed.attributes,
-    tei_att.placement.attributes,
-    tei_att.written.attributes,
     empty
   }
 tei_byline =
@@ -4895,7 +4799,7 @@ tei_ab =
   element tei:ab {
     tei_macro.paraContent
     >> sch:pattern [
-         id = "foo-ab-abstractModel-structure-ab-constraint-report-15"
+         id = "foo-ab-abstractModel-structure-ab-constraint-report-14"
          "\x{a}" ~
          "            "
          sch:rule [
@@ -4916,7 +4820,7 @@ tei_ab =
          "         "
        ]
     >> sch:pattern [
-         id = "foo-ab-abstractModel-structure-l-constraint-report-16"
+         id = "foo-ab-abstractModel-structure-l-constraint-report-15"
          "\x{a}" ~
          "            "
          sch:rule [
