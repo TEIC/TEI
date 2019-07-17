@@ -12,7 +12,7 @@ VERBOSE=
 PREFIX=/usr
 SOURCETREE=Source
 DRIVER=${SOURCETREE}/guidelines-${INPUTLANGUAGE}.xml
-XSL=/usr/share/xml/tei/stylesheet
+XSL=Stylesheests
 # If you have not installed the Debian packages, uncomment one
 # of the next two lines:
 #XSL=../Stylesheets/release/tei-xsl/p5
