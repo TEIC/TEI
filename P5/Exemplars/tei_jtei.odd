@@ -2166,7 +2166,7 @@
             <constraintSpec ident="jtei.sch-bibl-endpunctuation" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl">
-                  <sch:assert role="warning" test="ends-with(normalize-space(), '.')">
+                  <sch:assert role="warning" test="descendant::node()[last()][ends-with(normalize-space(), '.')]">
                     A bibliographic entry should end with a period.
                   </sch:assert>
                 </sch:rule>
@@ -2541,7 +2541,7 @@
                   </sch:report>
                 </sch:rule>                
               <sch:rule context="tei:note">
-                  <sch:assert role="warning" test="matches(normalize-space(), '[.?!]$')">
+                <sch:assert role="warning" test="descendant::node()[last()][matches(normalize-space(), '[.?!]$')]">
                     A footnote should end with closing punctuation.
                   </sch:assert>
                 </sch:rule>
