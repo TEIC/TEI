@@ -2165,10 +2165,14 @@
             </constraintSpec>
             <constraintSpec ident="jtei.sch-bibl-endpunctuation" scheme="schematron">
               <constraint>
-                <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl">
-                  <sch:assert role="warning" test="descendant::node()[last()][ends-with(normalize-space(), '.')]">
-                    A bibliographic entry should end with a period.
-                  </sch:assert>
+                <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl" role="warning">
+                  <sch:report test="descendant::node()[last()][
+                    not(matches(normalize-space(), '(^|[^.?!:;,])\.$')) or
+                    preceding-sibling::node()[1]/descendant-or-self::*[last()]
+                      [matches(normalize-space(), '[.?!:;,]$')]
+                    ]">
+                    A bibliographic entry should end with a single period.
+                  </sch:report>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -2540,10 +2544,14 @@
                     Otherwise, move it after the closing parenthesis.
                   </sch:report>
                 </sch:rule>                
-              <sch:rule context="tei:note">
-                <sch:assert role="warning" test="descendant::node()[last()][matches(normalize-space(), '[.?!]$')]">
-                    A footnote should end with closing punctuation.
-                  </sch:assert>
+              <sch:rule context="tei:note" role="warning">
+                <sch:report test="descendant::node()[last()][
+                  not(matches(normalize-space(), '(^|[^.?!:;,])[.?!]$')) or
+                  preceding-sibling::node()[1]/descendant-or-self::*[last()]
+                      [matches(normalize-space(), '[.?!:;,]$')]
+                  ]">
+                  A footnote should end a with a single closing punctuation character.
+                  </sch:report>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -3171,6 +3179,22 @@
                     <sqf:title>Add a comma.</sqf:title>
                   </sqf:description>
                   <sqf:stringReplace regex="([iI]\.[eE]\.|[eE]\.[gG]\.)([^,])">$1,$2</sqf:stringReplace>
+                </sqf:fix>
+              </sch:rule>
+            </constraint>
+          </constraintSpec>
+          <constraintSpec ident="jtei.sch-nonbreakingspace" scheme="schematron">
+            <constraint>
+              <sch:rule role="warning" context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag)]">
+                <sch:report test="matches(., '&#160;')" sqf:fix="nonbreakingspace.remove">
+                  This text contains a non-breaking space character. Please consider changing this to a normal space character.
+                </sch:report>
+                <sqf:fix id="nonbreakingspace.remove">
+                  <sqf:description>
+                    <sqf:title>Normalize non-breaking space to normal space character.</sqf:title>
+                  </sqf:description>
+                  <!-- using XPath replace(), as sqf:stringReplace has problems matching literal character entities -->
+                  <sqf:replace match="." select="replace(., '&#160;', '&#32;')"/>
                 </sqf:fix>
               </sch:rule>
             </constraint>
