@@ -1,6 +1,6 @@
 # Text Encoding Initiative Repository
 
-[![Build Status](https://travis-ci.com/TEIC/TEI.svg?branch=dev)](https://travis-ci.org/TEIC/TEI)
+[![Build Status](https://travis-ci.com/TEIC/TEI.svg?branch=dev)](https://travis-ci.com/TEIC/TEI)
 
 The [TEI](https://www.tei-c.org) is an international and interdisciplinary standard used by libraries, museums, publishers, and academics to represent all kinds of literary and linguistic texts, using an encoding scheme that is maximally expressive and minimally obsolescent.
 
