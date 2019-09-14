@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright TEI Consortium.
+    Dual-licensed under CC-by and BSD2 licences
+    See the file COPYING.txt for details
+    $Date$
+    $Id$
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="noteGrp">
+  <desc versionDate="2005-01-14" xml:lang="en">contains a group of notes</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="model.noteLike"/>
+    <memberOf key="att.placement"/>
+    <memberOf key="att.pointing"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.written"/>
+    <memberOf key="model.correspDescPart"/>
+    <memberOf key="model.correspActionPart"/>
+    <memberOf key="model.correspContextPart"/>
+  </classes>
+  <content>
+    <sequence>
+        <classRef key="model.headLike" minOccurs="0"/>
+        <elementRef key="desc" minOccurs="0" maxOccurs="unbounded"/>
+        <alternate minOccurs="1" maxOccurs="unbounded">
+          <elementRef key="note"/>
+          <elementRef key="noteGrp"/>
+        </alternate>
+    </sequence>
+  </content>
+
+  <exemplum xml:lang="la">
+    <p>In the following example, two notes specifying the content of the annotation relating to the
+      preceding fragment of text in different languages are grouped within <gi>noteGrp</gi>:</p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <p>... Parwum vadit theoloneum, tamen reuerendos dominos archiepiscopum et canonicos Leopolienses
+           necnon episcopum in duplicibus Quatuortemporibus
+           <noteGrp>
+              <note xml:lang="en">Quatuor Tempora, so called dry fast days (Wednesday, Friday and Saturday)
+                 falling on each of the quarters of the year. In the first quarter they were called Cinerum (following Ash Wednesday),
+                 second Spiritus (following Pentecost), third Crucis (after the Exaltation of the Holy Cross, September 14th),
+                 and Luciae in the fourth (after the feast of St. Lucia, December 13th).
+                 </note>
+              <note xml:lang="pl">Quatuor Tempora, tzw. Suche dni postne (środa, piątek i sobota) przypadające cztery razy w roku.
+                 W pierwszym kwartale zwały się Cinerum (po Popielcu), w drugim Spiritus (po Zielonych Świętach),
+                 w trzecim Crucis (po święcie Podwyższenia Krzyża 14 września), w czwartym Luciae (po dniu św. Łucji 13 grudnia).
+              </note>
+           </noteGrp>
+           totaliter expediui.</p>
+</egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#CONONO"/>
+  </listRef>
+</elementSpec>
