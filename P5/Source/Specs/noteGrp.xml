@@ -27,7 +27,87 @@
         </alternate>
     </sequence>
   </content>
-
+  <attList>
+    <attDef ident="anchored" usage="opt">
+      <gloss versionDate="2017-06-25" xml:lang="de">verankert</gloss>
+      <desc versionDate="2005-01-14" xml:lang="en">indicates whether the copy text shows the exact place of reference for the note.</desc>
+      <desc versionDate="2009-01-06" xml:lang="fr">indique si l'exemplaire du texte montre l'emplacement
+        de référence exact pour la note</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">indica si el texto de copia muestra el lugar exacto
+        de referencia para una nota.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">說明來源文件是否指出附註的確切參照位置。</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica se il testo copia mostra l'esatta posizione di
+        riferimento della nota.</desc>
+      <desc versionDate="2006-10-28" xml:lang="ja">当該注釈がある場所への参照は，正確にその場所を示しているかどうか．</desc>
+      <desc versionDate="2017-06-25" xml:lang="de">gibt an, ob eine Vorlage den exakten Referenzort der Anmerkung anzeigt.</desc>
+      <datatype><dataRef key="teidata.truthValue"/></datatype>
+      <defaultVal>true</defaultVal>
+      <remarks versionDate="2007-04-22" xml:lang="en">
+        <p>In modern texts, notes are usually anchored by means of explicit footnote or endnote
+          symbols. An explicit indication of the phrase or line annotated may however be used
+          instead (e.g. <q>page 218, lines 3–4</q>). The <att>anchored</att> attribute indicates
+          whether any explicit location is given, whether by symbol or by prose cross-reference. The
+          value <val>true</val> indicates that such an explicit location is indicated in the copy
+          text; the value <val>false</val> indicates that the copy text does not indicate a specific
+          place of attachment for the note. If the specific symbols used in the copy text at the
+          location the note is anchored are to be recorded, use the <att>n</att> attribute.</p>
+      </remarks>
+      <remarks xml:lang="fr" versionDate="2007-06-12">
+        <p>Dans des textes modernes, les notes sont habituellement ancrées au moyen d’appels de
+          notes explicites (pour des notes de bas de page ou des notes de fin de texte). A la place, une indication explicite de
+          l'expression ou de la ligne annotée peut cependant être employée (par exemple <q>page 218,
+            lignes 3–4</q>). L'attribut <att>anchored</att> indique si un emplacement est donné
+          explicitement ou s'il est exprimé par un symbole ou par un renvoi. La valeur
+          <val>true</val> indique qu'un endroit explicite est indiqué dans le texte ; la valeur
+            <val>false</val> indique que le texte n'indique pas un endroit spécifique d'attachement
+          pour la note. Si des symboles spécifiques utilisés dans le texte à l'endroit où la note
+          est ancrée doivent être enregistrés, l'attribut <att>n</att> sera utilisé.</p>
+      </remarks>
+      <remarks versionDate="2017-06-25" xml:lang="de">
+        <p>In modernen Texten wird auf Anmerkungen üblicherweise durch explizite Fuß- oder Endnotensymbole
+          verwiesen. Stattdessen kann aber auch ein expliziter Hinweis auf die Phrase oder Zeile verwendet
+          werden (z. B. <q>Seite 218, Zeile 3–4</q>). Das <att>anchored</att>-Attribut gibt an, ob ein
+          expliziter Ort durch ein Symbol oder einen Querverweis angegeben ist. Der Wert <val>true</val>
+          gibt an, dass ein expliziter Ort in der Vorlage angegeben ist; der Wert <val>false</val> gibt
+          an, dass die Vorlage kein spezifisches Verweisziel für die Anmerkung angibt. Zur Verzeichnung
+          von spezifischen Referenzzeichen, die in der Vorlage verwendet werden, wird das
+          <att>n</att>-Attribut benutzt.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="targetEnd" usage="opt">
+      <gloss versionDate="2017-06-25" xml:lang="de">Bereichsende</gloss>
+      <desc versionDate="2005-01-14" xml:lang="en">points to the end of the span to which the note is attached, if the note is not embedded
+        in the text at that point.</desc>
+      <desc versionDate="2009-01-06" xml:lang="fr">pointe vers la fin d'un passage auquel la note est
+        attachée, si la note n'est pas enchâssée dans le texte à cet endroit</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">indica el final de un periodo al cual una nota está
+        enlazada, si la nota no está insertada en ese punto del texto.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">如果附註不是嵌在正文中，則用以標明附註所註段落的終點。</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">rimanda alla fine della porzione di testo a cui la
+        nota è allegata nel caso in cui la nota non sia inclusa nel testo in quel punto.</desc>
+      <desc versionDate="2006-10-28" xml:lang="ja">当該注釈・コメントの終了点を示す．(当該注釈が注釈先の場所に埋め込 まれていない場合)</desc>
+      <desc versionDate="2017-06-25" xml:lang="de">verweist auf das Ende eines Bereichs, dem das <gi>note</gi>-Element angefügt ist, es sei denn die
+        Anmerkung ist in den Text an diesem Punkt bereits eingebettet.</desc>
+      <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
+      <remarks versionDate="2009-01-23" xml:lang="en">
+        <p>This attribute is retained for backwards compatibility; it may be removed at a subsequent
+          release of the Guidelines. The recommended way of pointing to a span of elements is by
+          means of the <ident>range</ident> function of XPointer, as further described in <ptr target="#SATSRN"/>. </p>
+      </remarks>
+      <remarks xml:lang="fr" versionDate="2007-06-12">
+        <p>Cet attribut est conservé pour assurer un arrière-plan compatible ; il sera supprimé dans la
+          prochaine mise à jour des Recommandations. La procédure recommandée pour pointer en
+          direction d'une expansion des éléments est de le faire au moyen de la fonction
+            <ident>range</ident> de XPointer, telle que la description en est faite  à <ptr target="#SATSRN"/>. </p>
+      </remarks>
+      <remarks versionDate="2017-06-25" xml:lang="de">
+        <p>Dieses Attribut wurde beibehalten, um eine Abwärtskompatibilität zu gewährleisten; bei einem
+          zukünftigen Release der Guidelines kann es entfernt werden. Der empfohlene Weg, um auf einen
+          Bereich zu verweisen, ist die Verwendung der <ident>range</ident>-Funktion von XPointer, wie in
+          <ptr target="#SATSRN"/> beschrieben.</p>
+      </remarks>
+    </attDef>
+  </attList>
   <exemplum xml:lang="la">
     <p>In the following example, two notes specifying the content of the annotation relating to the
       preceding fragment of text in different languages are grouped within <gi>noteGrp</gi>:</p>
