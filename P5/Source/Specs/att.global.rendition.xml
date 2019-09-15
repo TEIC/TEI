@@ -6,7 +6,7 @@ $Date$
 $Id$
 --><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" predeclare="true" module="tei" type="atts" ident="att.global.rendition">
   <desc versionDate="2014-12-02" xml:lang="en">provides rendering attributes common to all elements in the TEI encoding scheme.</desc>
-  
+  <desc versionDate="2019-07-21" xml:lang="ja">TEIの符号化スキーマにおけるすべての要素に共通するレンダリング属性を提供する。</desc>
   <classes/>
     
   
@@ -20,6 +20,7 @@ $Id$
       <gloss versionDate="2008-04-06" xml:lang="es">interpretación</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">interprétation</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">resa</gloss>
+      <gloss versionDate="2019-07-21" xml:lang="ja">見た目の表示</gloss>
       <desc versionDate="2005-10-10" xml:lang="en">indicates how the element in question was rendered or presented in the source text.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">문제의 요소가 원본 텍스트에 제시된 방법을 나타낸다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指出該元素如何呈現於來源文件中</desc>
@@ -72,10 +73,7 @@ $Id$
           varía demasiado de proyecto a proyecto. Observar algunas convenciones que puedan resultar
           útiles en los puntos indicados en las guías de consulta.</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
-        <p> 本ガイドラインでは，当該属性<att>rend</att>の値として推奨するも のはない．活字表現の特徴は様々であり，それらのどれを採用するかは
-          プロジェクトごとで異なるからである．当ガイドラインでは，有用な記 述法があれば，その都度示すことになっている． </p>
-      </remarks>
+      <remarks versionDate="2019-07-21" xml:lang="ja"><p>本ガイドラインでは、当該属性<att>rend</att>の値として推奨するものはない。活字化の特徴は様々であり、それらのどれを採用するかはプロジェクトごとでおそろしく異なるからである。当ガイドラインでは、有用な記述法があれば、その都度示すことになっている。<att>rend</att>属性の値は、空白によって区切られる順序不定の個々のトークンの集合である。</p></remarks>
     </attDef>
     <attDef ident="style" usage="opt">
       <desc versionDate="2012-10-05" xml:lang="en">contains an expression in some formal style definition language
@@ -98,6 +96,10 @@ the TEI header.</p>
           not be used in conjunction with <att>rend</att>, because the latter does not employ a
           formal style definition language.</p>
       </remarks>
+      <remarks versionDate="2019-07-21" xml:lang="ja">
+        <p>空白を区切り記号とする<att>rend</att>の属性値とは異なり、<att>style</att>属性は空白を含んでもよい。この属性は資料における行に埋め込まれたスタイル情報を記録するためのものであり、何らかの出力を対象とするものではない。</p>
+        <p>この属性の値を表現する形式言語はTEIヘッダにおいて<gi>styleDefDecl</gi>要素を用いて指定されてもよい。</p>
+        <p>もし<att>style</att>と<att>rendition</att>の両方が一つの要素に現れる場合、<att>style</att>は<att>rendition</att>を上書きもしくは補完する。<att>style</att>は<att>rend</att>と同時に用いられるべきではない。後者は形式的なスタイル定義言語を採用しているわけではないから。</p></remarks>
     </attDef>
     <attDef ident="rendition" usage="opt">
       <desc versionDate="2007-09-22" xml:lang="en">points to a description of the rendering or presentation used for this element in the
@@ -142,6 +144,10 @@ the TEI header.</p>
           rendition in terms of some appropriate style language, as indicated by the
           <att>scheme</att> attribute.</p>
       </remarks>
+      <remarks versionDate="2019-07-21" xml:lang="ja">
+        <p>属性<att>rendition</att>は，XHTMLの属性<att>class</att>と大変 似たように使用される。但し，重要な違いとして、当該属性は、元資 料の表現を記述するものであり、スクリーン上または紙上でどう表示 されているかを示すものではない。</p>
+        <p> もし<att>rendition</att>属性がCSSのような形式言語において定義されるスタイル定義を参照するのに用いられているなら、<att>rend</att>属性と同時に用いないことが推奨される。属性<att>rendition</att>と属性<att>rend</att>の両方が使用されている場合、後者の値が前者の値を上書きする、または補うと判断される。</p>
+        <p> 当該属性値となるURIは、属性<att>scheme</att>で提示されているス タイル言語により、当該表現を定義する要素<gi>rendition</gi>を示すべきである。</p></remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
         <p>L'attribut <att>rendition</att> est employé à peu près de la même manière que l'attribut
             <att>class</att> défini pour XHTML mais avec cette sérieuse différence que sa fonction
