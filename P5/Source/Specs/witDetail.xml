@@ -22,9 +22,10 @@ witnesses, to a particular reading.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">fornisce ulteriori dettagli in merito a un testimone o più testimoni relativi a una data lettura</desc>
   <classes>
     <memberOf key="att.global"/>
-    <memberOf key="model.noteLike"/>
+    <memberOf key="model.global.edit"/>
     <memberOf key="att.placement"/>
     <memberOf key="att.pointing"/>
+    <memberOf key="att.typed"/>
   </classes>
   <content>
     <alternate minOccurs="0"
@@ -55,7 +56,7 @@ detail refers.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la sigla o le sigle relative ai testimoni ai quali si riferiscono i dettagli</desc>
       <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
     </attDef>
-    <attDef ident="type" usage="opt">
+    <attDef ident="type" mode="change" usage="opt">
       <desc versionDate="2005-01-14" xml:lang="en">describes the type of information given about the witness.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">비교 대상 텍스트에 관해 제시된 정보의 유형을 기술한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">版本的資訊種類。</desc>
@@ -70,44 +71,18 @@ detail refers.</desc>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <app type="substantive">
-        <rdgGrp type="subvariants">
-          <lem xml:id="W026x" wit="#El #HG">Experience</lem>
-          <rdg wit="#Ha4">Experiens</rdg>
-        </rdgGrp>
+        <lem xml:id="W026x" wit="#El #HG">Experience</lem>
+        <rdg wit="#Ha4">Experiens</rdg>
+        <witDetail target="#W026x" resp="#PR" wit="#El" type="presentation">Ornamental capital.</witDetail>
       </app>
-      <witDetail target="#W026x" resp="#PR" wit="#El" type="presentation">Ornamental capital.</witDetail>
     </egXML>
   </exemplum>
-  <remarks versionDate="2013-06-08" xml:lang="en">
-    <p>The <gi>witDetail</gi> element should be regarded as a
-    specialized type of <gi>note</gi> element; it is synonymous with
-    <tag>note type='witnessDetail'</tag>, but  differs in the omission of some attributes
-    seldom applicable to notes within critical apparatus, and in the
-    provision of the <att>wit</att> attribute, which permits an
-    application to extract all annotation concerning a particular
-    witness or witnesses from the apparatus. It also differs in that
-    the location of a <gi>witDetail</gi> element is not significant
-    and may not be used to imply the point of attachment for the
-    annotation; this must be explicitly given by means of the
-    <att>target</att> attribute. </p>
-
-  </remarks>
-  <remarks xml:lang="fr" versionDate="2007-06-12">
-    <p> L'élément <gi>witDetail</gi> devrait être considéré comme un type spécifique de
-                l'élément <gi>note</gi> ; il est synonyme de <tag>note type='witnessDetail'</tag>.
-                Il diffère de la note <gi>note</gi> générale par l'omission d'attributs rarement
-                applicables aux notes d'apparat critique et par la présence de l'attribut
-                <att>wit</att> qui permet à une application d'extraire de l'apparat toute annotation
-                concernant un ou des témoins particuliers.</p>
-  </remarks>
-  <remarks xml:lang="ja" versionDate="2008-04-05">
-    <p>
-    当該要素<gi>witDetail</gi>は，要素<gi>note</gi>の特別な種類と捉え
-    るべきである．これは，<tag>note type='witnessDetail'</tag>と同義に
-    なる．一般的な用途を目的とする要素<gi>note</gi>とは，校勘資料中の
-    注釈に関する属性や，属性<att>wit</att>をとることが異なっている．こ
-    れにより，ソフトウェアは，校勘資料中から特定の文献に関する注釈を全
-    て抜き出すことができる．
+  <remarks versionDate="2019-01-17" xml:lang="en">
+    <p>The <gi>witDetail</gi> element was formerly permitted anywhere that <gi>note</gi>
+    could appear, but since it should only be used in association with <gi>lem</gi> and
+    <gi>rdg</gi>, it is recommended that it be placed immediately following the reading that it modifies, 
+    in the same <gi>app</gi>. A <gi>witDetail</gi> without a <att>target</att> attribute 
+    should be assumed to refer to the closest preceding <gi>lem</gi> or <gi>rdg</gi>.
     </p>
   </remarks>
   <listRef>

@@ -6,7 +6,9 @@ XSL=/usr/share/xml/tei/stylesheet/
 TRANG=java -jar ../Utilities/lib/trang.jar
 JING=java -jar ../Utilities/lib/jing.jar
 SAXON=java -Xmx752m -jar ../Utilities/lib/saxon9he.jar -ext:on
-ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -lib ../Utilities/lib/saxon9he.jar:../Utilities/lib/jing.jar -Dtrang=../Utilities/lib/trang.jar  -DdefaultSource=`pwd`/../p5subset.xml -DXSL=${XSL}
+ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -lib \
+  ../Utilities/lib/saxon9he.jar:../Utilities/lib/jing.jar:../Utilities/lib/xml-resolver-1.2.jar \
+	-Dtrang=../Utilities/lib/trang.jar  -DdefaultSource=`pwd`/../p5subset.xml -DXSL=${XSL}
 
 NORMALFILES= \
 	testbare.dtd \
@@ -103,7 +105,7 @@ detest: checkrnv
 	sed 's/.*detest.xml:/detest.xml:/' detest2.log >> detest.log
 	sed 's/.*detest.xml:/detest.xml:/' detest3.log >> detest.log
 	diff detest.log expected-results/detest.log
-	rm -f detest*log
+	rm -f detest1.log detest2.log detest3.log
 
 clean:
 	rm -f test*.doc.xml test*.rnc test*.dtd test*.compiled.* test*.xsd test*.rnc test*.rng test*.xsl test*.isosch

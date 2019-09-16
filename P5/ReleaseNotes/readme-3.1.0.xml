@@ -31,9 +31,7 @@ See the file COPYING.txt for details
         introduced in the previous release. First, Pure ODD is now completely pure: all content
         models in TEI ODDs may now be represented entirely in TEI, with no requirement for RELAX NG
         (which may still be used if desired). In the previous release, RELAX NG was still needed in
-        macros that permitted any XML content, which are used in content models such as <ref
-          target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-egXML.html"
-          ><gi>egXML</gi></ref>. Second, this release contains the first Exemplar which implements
+        macros that permitted any XML content, which are used in content models such as <gi>egXML</gi>. Second, this release contains the first Exemplar which implements
         the Processing Model specification introduced in 3.0.0 and produced as part of the work of
         the <ref target="https://github.com/TEIC/TEI-Simple"><title>TEI Simple</title></ref>
         project, which was funded by the <ref target="https://mellon.org/">Andrew W. Mellon
@@ -46,92 +44,50 @@ See the file COPYING.txt for details
         number of issues raised by the TEI community. As always, the majority of these changes and
         corrections are a consequence of feature requests or bugs reported by the TEI community
         using the GitHub tracking system. If you find something you think needs to change in the TEI
-        Guidelines, schemas, tools, or website, please submit a feature request or bug issue at <ref
-          target="https://github.com/TEIC/TEI/issues">https://github.com/TEIC/TEI/issues</ref> for
+        Guidelines, schemas, tools, or website, please submit a feature request or bug issue at <ref target="https://github.com/TEIC/TEI/issues">https://github.com/TEIC/TEI/issues</ref> for
         consideration. A full list of the issues resolved in the course of this release cycle may be
         found under the <ref target="https://github.com/TEIC/TEI/milestone/2?closed=1">3.1.0
           milestone</ref>.</p>
       <p>
         <list>
-          <item>The <ref
-              target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-att.global.source.html"
-                ><att>source</att></ref> attribute is now global.</item>
-		<item>There is a new <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-schemaRef.html"><gi>schemaRef</gi></ref> element for pointing to one's TEI ODD customization.</item>
-          <item><ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-note.html"
-                ><gi>note</gi></ref> and <ref
-              target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-witDetail.html"
-                ><gi>witDetail</gi></ref> are now permitted in <ref
-              target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-rdgGrp.html"
-                ><gi>rdgGrp</gi></ref>.</item>
-          <item>A new datatype <ref
-              target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-teidata.prefix.html"
-                ><ident type="datatype">teidata.prefix</ident></ref> has been introduced to allow
+          <item>The <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-att.global.source.html"><att>source</att></ref> attribute is now global.</item>
+		<item>There is a new <gi>schemaRef</gi> element for pointing to one's TEI ODD customization.</item>
+          <item><gi>note</gi> and <gi>witDetail</gi> are now permitted in <gi>rdgGrp</gi>.</item>
+          <item>A new datatype <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-teidata.prefix.html"><ident type="datatype">teidata.prefix</ident></ref> has been introduced to allow
             restricting an attribute value to one that could be use as a URI scheme name.</item>
-          <item>The <att>ident</att> attribute of <ref
-              target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-prefixDef.html"
-                ><gi>prefixDef</gi></ref> is now restricted to the new <ident type="datatype"
-              >teidata.prefix</ident> datatype. This will avoid errors which would occur if a
+          <item>The <att>ident</att> attribute of <gi>prefixDef</gi> is now restricted to the new <ident type="datatype">teidata.prefix</ident> datatype. This will avoid errors which would occur if a
             character that is not legal as a URI scheme were used as part of this attribute’s
             value.</item>
           <item>Further formal constraints on the <att>output</att> and <att>predicate</att>
-            attributes of <ref
-              target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-model.html"
-                ><gi>model</gi></ref> have been added to try to help users avoid ambiguous sets of
+            attributes of <gi>model</gi> have been added to try to help users avoid ambiguous sets of
               <gi>model</gi>s elements.</item>
           <item>ISO Schematron is now the only flavor of Schematron used or supported by the
               <title>Guidelines</title>.</item>
           <item>The following constructs are now deprecated: <list>
-              <item>the value <val>isoschematron</val> of <att>scheme</att> of <ref
-                  target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-constraintSpec.html"
-                    ><gi>constraintSpec</gi></ref> (use <val>schematron</val> instead, as they mean
+              <item>the value <val>isoschematron</val> of <att>scheme</att> of <gi>constraintSpec</gi> (use <val>schematron</val> instead, as they mean
                 the same thing now).</item>
-              <item>the default value (<val>false</val>) of <att>defective</att> of <ref
-                  target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-att.msExcerpt.html"
-                    ><ident type="class">att.msExcerpt</ident></ref></item>
-              <item>the default value (<val>unknown</val>) of <att>status</att> of <ref
-                  target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-availability.html"
-                    ><gi>availability</gi></ref></item>
-              <item>the default value (<val>unknown</val>) of <att>status</att> of <ref
-                  target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-correction.html"
-                    ><gi>correction</gi></ref></item>
-              <item>the default value (<val>unknown</val>) of <att>aloud</att> of <ref
-                  target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-said.html"
-                    ><gi>said</gi></ref></item>
-              <item>the default value (<val>unknown</val>) of <att>discrete</att> of <ref
-                  target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-sound.html"
-                    ><gi>sound</gi></ref></item>
+              <item>the default value (<val>false</val>) of <att>defective</att> of <ident type="class">att.msExcerpt</ident></item>
+              <item>the default value (<val>unknown</val>) of <att>status</att> of <gi>availability</gi></item>
+              <item>the default value (<val>unknown</val>) of <att>status</att> of <gi>correction</gi></item>
+              <item>the default value (<val>unknown</val>) of <att>aloud</att> of <gi>said</gi></item>
+              <item>the default value (<val>unknown</val>) of <att>discrete</att> of <gi>sound</gi></item>
             </list>
           </item>
-          <item>The rules regarding <ref
-              target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-f.html"
-              ><gi>f</gi></ref>, its content, and its <att>fVal</att> attribute, have been cleaned up
+          <item>The rules regarding <gi>f</gi>, its content, and its <att>fVal</att> attribute, have been cleaned up
             to fix a contradiction.</item>
-          <item>The <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-title.html"
-                ><gi>title</gi></ref> element is now a member of <ident type="class"
-              >att.datable</ident>.</item>
-          <item>The <ref
-              target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-listBibl.html"
-                ><gi>listBibl</gi></ref> element is now a member of <ident type="class"
-              >model.frontPart</ident>.</item>
-          <item>A new element called <ref
-              target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-anyElement.html"
-                ><gi>anyElement</gi></ref> has been introduced, which permits any XML content in a
+          <item>The <gi>title</gi> element is now a member of <ident type="class">att.datable</ident>.</item>
+          <item>The <gi>listBibl</gi> element is now a member of <ident type="class">model.frontPart</ident>.</item>
+          <item>A new element called <gi>anyElement</gi> has been introduced, which permits any XML content in a
             content model. This removes the last remaining requirement for RELAX NG in content
             models, allowing us to define TEI entirely in TEI.</item>
-          <item>A new element called <ref
-              target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-dataFacet.html"
-                ><gi>dataFacet</gi></ref> for restricting references to W3C datatypes in ODD has
+          <item>A new element called <gi>dataFacet</gi> for restricting references to W3C datatypes in ODD has
             been introduced.</item>
-          <item><ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-supplied.html"
-                ><gi>supplied</gi></ref> is now part of <ident type="class">model.choicePart</ident>,
+          <item><gi>supplied</gi> is now part of <ident type="class">model.choicePart</ident>,
 	        so it can be used within
-		<ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-choice.html"
-                ><gi>choice</gi></ref>.</item>
-          <item>A new attribute <att>require</att> has been added to <ref
-              target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-att.textCritical.html"
-                ><ident type="class">att.textCritical</ident></ref>. It can be used to indicate
+		<gi>choice</gi>.</item>
+          <item>A new attribute <att>require</att> has been added to <ident type="class">att.textCritical</ident>. It can be used to indicate
             interdependance between variant readings.</item>
-          <item>The <att>extent</att> attribute on the <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-orth.html"><gi>orth</gi></ref> and <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-pron.html"><gi>pron</gi></ref> elements no longer has a default value.
+          <item>The <att>extent</att> attribute on the <gi>orth</gi> and <gi>pron</gi> elements no longer has a default value.
           </item>
           <item>A new Exemplar called <ident>simplePrint</ident> has been added. Developed as part
             of the <title>TEI Simple</title> project, it makes extensive use of the processing model
@@ -150,8 +106,7 @@ See the file COPYING.txt for details
           <att>minOccurs</att> and <att>maxOccurs</att> attributes used by Pure ODD have been made
         to the XSL stylesheets (which provide processing of TEI ODD files for Roma and OxGarage as
         well as other TEI conversions). The Stylesheets are maintained separately from the
-        Guidelines and are at <ref target="https://github.com/TEIC/Stylesheets"
-          >https://github.com/TEIC/Stylesheets</ref>. </p>
+        Guidelines and are at <ref target="https://github.com/TEIC/Stylesheets">https://github.com/TEIC/Stylesheets</ref>. </p>
       
     </body>
   </text>

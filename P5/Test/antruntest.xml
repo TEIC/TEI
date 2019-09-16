@@ -143,12 +143,13 @@
     </xslt>
   </target>
   <target name="rng">
-    <echo level="info">XSLT generate RELAXNG ${outputname}.rng using ${defaultSource}</echo>
+    <echo level="info">XSLT generate RELAXNG ${outputname}.rng using ${odd2relax} with ${defaultSource} as the source</echo>
     <xslt processor="trax" force="yes" style="${odd2relax}" in="${outputname}.odd.processed" out="${outputname}.rng" >
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
           <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+          <pathelement location="../Exemplars/catalog.xml"/>
         </catalogpath>
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
@@ -390,6 +391,11 @@
       <param name="verbose" expression="${verbose}" if="verbose"/>
     </xslt>
     <xslt processor="trax" force="yes" style="${odd2relax}" in="${outputname}-examples.processed" out="${outputname}-examples.rng">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="../Exemplars/catalog.xml"/>
+        </catalogpath>
+      </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="patternprefix" expression="${patternprefix}" if="patternprefix"/>
       <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
@@ -400,7 +406,6 @@
     </xslt>
     <delete file="${outputname}-examples.odd"/>
     <delete file="${outputname}-examples.processed"/>
-
   </target>
 
 

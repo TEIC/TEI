@@ -131,7 +131,7 @@ mobi:  Guidelines.mobi
 
 Guidelines.mobi: check.stamp p5.xml
 	${ANT}  -f ${XSL}/epub/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=teikindle -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines-kindle.epub -Dcoverimage=`pwd`/Utilities/cover.jpg
-	-command -v  kindlegen && kindlegen Guidelines-kindle.epub -o Guidelines.mobi
+	-export PATH=/usr/share/kindlegen:$$PATH ; command -v  kindlegen && kindlegen Guidelines-kindle.epub -o Guidelines.mobi
 	rm Guidelines-kindle.epub
 
 fonttest:
@@ -207,8 +207,7 @@ dist-source.stamp: check.stamp p5.xml  schemas.stamp
 	mkdir -p release/tei-p5-source/share/xml/tei/odd
 	tar -c -f - --exclude "*~" --exclude .svn 	\
 	p5subset.xml \
-	p5subset.json \
-	p5subset.js \
+	p5subset*.json \
 	stripspace.xsl.model \
 	p5attlist.txt \
 	Makefile \
@@ -248,7 +247,7 @@ dist-source.stamp: check.stamp p5.xml  schemas.stamp
 	(cd release/tei-p5-source/share/xml/tei/odd/Source/Guidelines/en; for i in *.xml; do sed -i""  -e 's/http:\/\/jenkins.tei-c.org\/job\/TEIP5\/lastSuccessfulBuild\/artifact\/release\/xml\/tei\/odd\/p5.nvdl/..\/..\/..\/p5.nvdl/' $$i;done)
 	(cd release/tei-p5-source/share/xml/tei/odd/Source/Guidelines/fr; for i in *.xml; do sed -i"" -e 's/http:\/\/jenkins.tei-c.org\/job\/TEIP5\/lastSuccessfulBuild\/artifact\/release\/xml\/tei\/odd\/p5.nvdl/..\/..\/..\/p5.nvdl/' $$i;done)
 	touch dist-source.stamp
-	rm p5subset.json p5subset.js p5attlist.txt stripspace.xsl.model
+	rm p5subset*.json p5attlist.txt stripspace.xsl.model
 
 dist-schema.stamp:check.stamp p5.xml schemas.stamp
 	@echo BUILD: Make distribution directory for schema
@@ -407,6 +406,7 @@ dependencies:
 clean:
 	(cd Exemplars; make clean)
 	(cd Test; make clean)
+	rm -f repodate.xml
 	rm -rf release Guidelines Guidelines-web Schema DTD dtd Split
 	rm -rf Guidelines.??? Guidelines-*
 	rm -f *.isosch.xsl
@@ -418,7 +418,7 @@ clean:
 	rm -f Test/stdout
 	rm -f Utilities/guidelines.xsl
 	rm -f anything buildweb.xml
-	rm -f p5.sch p5.isosch p5.xml p5subset.xml p5subset.json p5subset.js
+	rm -f p5.sch p5.isosch p5.xml p5subset.xml p5subset*.json
 	rm -f p5attlist.txt
 	rm -f p5odds-examples.rng p5odds-examples.rnc p5odds.rng p5odds.rnc p5odds.isosch
 	rm -f pdfbuild.log

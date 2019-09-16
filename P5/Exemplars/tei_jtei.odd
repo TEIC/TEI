@@ -764,9 +764,9 @@
         <!-- [RvdB] The use of <ident> in the current articles should be evaluated (should it be used for file names etc, or is <code> the right tag for those?). -->
         <p>The <gi>ident</gi> element should be used to encode identifiers in a formal language, such as variable, class, and function names in a programming language. When discussing the TEI encoding scheme or customizations, the names of model and attribute classes, datatypes, macros, and TEI customizations should be encoded with <gi>ident</gi>:
           <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <p>For example <ident>data.duration.iso</ident>, <ident>data.outputMeasurement</ident>,
-              <ident>data.pattern</ident>, <ident>data.point</ident>, <ident>data.version</ident>, 
-              and <ident>data.word</ident> all map to the same datatype CDATA in XML DTD, and to 
+            <p>For example <ident>teidata.duration.iso</ident>, <ident>teidata.outputMeasurement</ident>,
+              <ident>teidata.pattern</ident>, <ident>teidata.point</ident>, <ident>teidata.version</ident>, 
+              and <ident>teidata.word</ident> all map to the same datatype CDATA in XML DTD, and to 
               various TEI-defined regular expressions in RELAX NG or W3C Schema.</p>
           </egXML>
         </p>
@@ -2157,9 +2157,17 @@
               <constraint>
                 <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl"
                   role="warning">
-                  <sch:let name="currId" value="@xml:id"/>
                   <sch:assert test="key('idrefs', @xml:id)/parent::tei:ref[@type='bibl']">
                     This bibliographic entry is an orphan: no ref[@type="bibl"] references to it occur in the text.
+                  </sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
+            <constraintSpec ident="jtei.sch-bibl-endpunctuation" scheme="schematron">
+              <constraint>
+                <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl">
+                  <sch:assert role="warning" test="descendant::node()[last()][ends-with(normalize-space(), '.')]">
+                    A bibliographic entry should end with a period.
                   </sch:assert>
                 </sch:rule>
               </constraint>
@@ -2526,19 +2534,17 @@
                   </sch:report>
                 </sch:rule>
                 <sch:rule context="tei:note" role="warning">
-                  <sch:report test="not(@rend='inside.parenthesis') and following::text()[not(ancestor::tei:note)][1][matches(., '^\)')]" sqf:fix="note.rend.add">
+                  <sch:report test="following::text()[not(ancestor::tei:note)][1][matches(normalize-space(), '^\)')]">
                     Footnotes may be placed before closing parentheses, though this is
-                    exceptionial. If this note's placement is intentional, please mark
-                    this with a @rend='inside.parenthesis' attribute. Otherwise, move
-                    it after the closing parenthesis.
+                    exceptional. Please check if this note's placement is correct.
+                    Otherwise, move it after the closing parenthesis.
                   </sch:report>
-                  <sqf:fix id="note.rend.add">
-                    <sqf:description>
-                      <sqf:title>Add a @rend='inside.parentheses' attribute to the &lt;note&gt;.</sqf:title>
-                    </sqf:description>
-                    <sqf:add match="self::tei:note" node-type="attribute" target="rend">inside.parenthesis</sqf:add>
-                  </sqf:fix>                  
                 </sch:rule>                
+              <sch:rule context="tei:note">
+                <sch:assert role="warning" test="descendant::node()[last()][matches(normalize-space(), '[.?!]$')]">
+                    A footnote should end with closing punctuation.
+                  </sch:assert>
+                </sch:rule>
               </constraint>
             </constraintSpec>
             <constraintSpec ident="jtei.sch-note-blocks" scheme="schematron">
@@ -2729,7 +2735,6 @@
                     </sqf:description>
                     <sqf:add match="." node-type="attribute" target="type" select="'bibl'"/>
                   </sqf:fix>
-                  
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -2757,7 +2762,7 @@
             <constraintSpec ident="jtei.sch-rendition" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:rendition">
-                  <sch:assert test="key('idrefs', @xml:id)[name() = 'rendition']">
+                  <sch:assert test="key('idrefs', @xml:id) instance of attribute(rendition)">
                     Please remove all <sch:name/> definitions that aren't actually being used in the article.
                   </sch:assert>
                 </sch:rule>
@@ -2965,13 +2970,15 @@
           <constraintSpec ident="jtei.sch-variables" scheme="schematron">
             <constraint>
               <sch:pattern>
-                <xsl:key name="idrefs" match="@target[starts-with(., '#')]|@rendition[starts-with(., '#')]" use="for $i in tokenize(., '\s+') return substring-after($i, '#')"/>
+                <xsl:key name="idrefs" match="@target[starts-with(normalize-space(.), '#')]|@rendition[starts-with(normalize-space(.), '#')]" use="for $i in tokenize(., '\s+') return substring-after($i, '#')"/>
                 <sch:let name="double.quotes" value="'[&quot;“”]'"/>
                 <sch:let name="apos.typographic" value="'[‘’]'"/>
                 <sch:let name="apos.straight" value="''''"/>
                 <sch:let name="quotes" value="concat('[', $apos.straight, '&quot;]')"/>
                 <sch:let name="div.types.front" value="('abstract', 'acknowledgements', 'authorNotes', 'editorNotes', 'corrections', 'dedication')"/>
-                <sch:let name="tei.version.url" value="'http://www.tei-c.org/release/doc/tei-p5-doc/VERSION'"/>
+                <!-- http://www.tei-c.org/release/doc/tei-p5-doc/VERSION produces 
+                     429 "Too Many Requests" errors -->
+                <sch:let name="tei.version.url" value="'https://jenkins.tei-c.org/job/TEIP5/lastStableBuild/artifact/P5/release/doc/tei-p5-doc/VERSION'"/>
                 <sch:let name="tei.version" value="if (unparsed-text-available($tei.version.url)) then normalize-space(unparsed-text($tei.version.url)) else ()"/>
               </sch:pattern>
             </constraint>
@@ -3148,7 +3155,7 @@
                   <sqf:description>
                     <sqf:title>Replace hyphen with –.</sqf:title>
                   </sqf:description>
-                  <sqf:stringReplace regex="((?:^|[\W-[-]])\d+)-(\d+(?:[\W-[-]]|$))">$1–$2</sqf:stringReplace>
+                  <sqf:stringReplace regex="((^|[\W-[-]])\d+)-(\d+([\W-[-]]|$))">$1–$3</sqf:stringReplace>
                 </sqf:fix>
               </sch:rule>
             </constraint>
@@ -3170,10 +3177,23 @@
           </constraintSpec>
           <constraintSpec ident="jtei.sch-localLinkTarget" scheme="schematron">
             <constraint>
-              <sch:rule context="@*[not(ancestor::eg:egXML)][name() = ('corresp', 'target', 'from', 'to', 'ref', 'rendition', 'resp', 'source')][some $i in tokenize(., '\s+') satisfies starts-with($i, '#')]">
-                <sch:assert test="every $i in tokenize(., '\s+')[starts-with(., '#')] satisfies id( substring-after($i, '#'))">
-                  There's no local target for this link. Please make sure you use an existing @xml:id value.
-                </sch:assert>
+              <sch:rule context="@*[self::attribute(corresp)|self::attribute(target)|self::attribute(from)|self::attribute(to)|self::attribute(ref)|self::attribute(rendition)|self::attribute(resp)|self::attribute(source)][not(ancestor::eg:egXML)][some $i in tokenize(., '\s+') satisfies starts-with($i, '#')]">
+                <sch:let name="orphan.pointers"
+                  value="for $p in tokenize(., '\s+')[starts-with(., '#')] return if (not(id(substring-after($p, '#')))) then $p else ()"/>
+                <sch:report test="exists($orphan.pointers)">
+                  There's no local target for <sch:value-of select="if (count($orphan.pointers) > 1) then 'these pointers' else 'this pointer'"/>: <sch:value-of select="string-join($orphan.pointers, ', ')"/>. Please make sure you're referring to an existing @xml:id value.
+                </sch:report>
+              </sch:rule>
+            </constraint>
+          </constraintSpec>
+          <constraintSpec ident="jtei.sch-renditionTarget" scheme="schematron">
+            <constraint>
+              <sch:rule context="@rendition">
+                <sch:let name="orphan.pointers"
+                  value="for $p in tokenize(., '\s+')[starts-with(., '#')] return for $id in id(substring-after($p, '#'))[not(self::tei:rendition)] return $p"/>
+                <sch:report test="exists($orphan.pointers)">
+                  <sch:value-of select="if (count($orphan.pointers) > 1) then 'These pointers don''t' else 'This pointer doesn''t'"/> point to a &lt;rendition&gt; target: <sch:value-of select="string-join($orphan.pointers, ', ')"/>.
+                </sch:report>
               </sch:rule>
             </constraint>
           </constraintSpec>
@@ -3217,9 +3237,11 @@
           <constraintSpec ident="jtei.sch-crossrefTargetType" scheme="schematron">
             <constraint>
               <sch:rule context="tei:ptr[@type='crossref']|tei:ref[@type='crossref']">
-                <sch:assert test="id(substring-after(@target, '#'))/(self::tei:div|self::tei:figure|self::tei:table|self::tei:note)">
-                  Cross-links (<sch:name/>[@type="crossref"]) should be targeted at div, figure, table, or note elements.
-                </sch:assert>
+                <sch:let name="orphan.pointers"
+                  value="for $p in tokenize(@target, '\s+')[starts-with(., '#')] return for $id in id(substring-after($p, '#'))[not(self::tei:div or self::tei:figure or self::tei:table or self::tei:note)] return $p"/>
+                <sch:report test="exists($orphan.pointers)">
+                  Cross-links (<sch:name/>[@type="crossref"]) should be targeted at div, figure, table, or note elements. The target of <sch:value-of select="if (count($orphan.pointers) > 1) then 'these pointers' else 'this pointer'"/> doesn't satisfy this condition: <sch:value-of select="string-join($orphan.pointers, ', ')"/>.
+                </sch:report>
               </sch:rule>
             </constraint>
           </constraintSpec>
@@ -3249,11 +3271,11 @@
           </constraintSpec>
           <constraintSpec ident="jtei.sch-teiVersion" scheme="schematron">
             <constraint>
-              <sch:rule context="@target[matches(., '^https?://www\.tei-c\.org/release/doc/tei-p5-doc')]">
+              <sch:rule context="@target[matches(., '^https?://(www\.)?tei-c\.org/release/doc/tei-p5-doc')]">
                 <sch:assert test="false()" sqf:fix="teiURL.fix">
-                  Please refer to the exact version of the TEI Guidelines<sch:value-of select="if (normalize-space($tei.version)) then concat(' (currently at version ', $tei.version, ')') else ()"/>, and link to the version that can be found in the Vault section. For an overview of all archived versions, see http://www.tei-c.org/Vault/P5/.
+                  Please refer to the exact version of the TEI Guidelines<sch:value-of select="if (normalize-space($tei.version)) then concat(' (currently at version ', $tei.version, ')') else ()"/>, and link to the version that can be found in the Vault section. For an overview of all archived versions, see https://www.tei-c.org/Vault/P5/.
                   
-                  If you're referring to the English version, the correct URL will likely take the form of http://www.tei-c.org/Vault/P5/{$version-number}/doc/tei-p5-doc/en/html/.
+                  If you're referring to the English version, the correct URL will likely take the form of https://www.tei-c.org/Vault/P5/{$version-number}/doc/tei-p5-doc/en/html/.
                 </sch:assert>
                 <sqf:fix id="teiURL.fix" use-when="normalize-space($tei.version)">
                   <sqf:description>
@@ -3261,14 +3283,14 @@
                   </sqf:description>
                   <sqf:replace node-type="attribute"
                     target="target"
-                    select="replace(., '^https?://www\.tei-c\.org/release/', concat('https://www.tei-c.org/Vault/P5/', $tei.version, '/'))"/>
+                    select="replace(., '^https?://(www\.)?tei-c\.org/release/', concat('https://www.tei-c.org/Vault/P5/', $tei.version, '/'))"/>
                 </sqf:fix>
               </sch:rule>
             </constraint>
           </constraintSpec>
           <constraintSpec ident="jtei.jtei-url" scheme="schematron">
             <constraint>
-              <sch:rule context="@target[matches(., '^https?://(www\.)?jtei\.revues\.org/?')]">
+              <sch:rule context="@target[matches(., '^https?://(www\.)?jtei\.revues\.org/?')]" role="warning">
                 <sch:let name="URL.fixed" value="replace(., '^https?://(www\.)?jtei\.revues\.org/?', 'https://journals.openedition.org/jtei/')"/>
                 <sch:assert test="false()" sqf:fix="jteiURL.fix">
                   Please refer to the correct jTEI URL: <sch:value-of select="$URL.fixed"/>.

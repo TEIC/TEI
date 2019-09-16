@@ -4,7 +4,7 @@ Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" xml:id="MEASUREMENT" ident="att.measurement">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" type="atts" xml:id="MEASUREMENT" ident="att.measurement">
   <desc versionDate="2006-01-05" xml:lang="en">provides attributes to represent a regularized or normalized measurement.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">정상화 또는 규격화된 측정 방식을 표상하는 속성을 제시한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供屬性，代表一般化或規格化的度量。</desc>
@@ -14,6 +14,13 @@ $Id$
       régularisée ou normalisée.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos que representen una medición regularizada o normalizada.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">assegna degli attributi che rappresentano una misurazione regolarizzata o normalizzata</desc>
+  <constraintSpec ident="att-measurement-unitRef" scheme="schematron">
+    <constraint>
+      <sch:rule context="tei:*[@unitRef]">
+        <sch:report test="@unit" role="info">The @unit attribute may be unnecessary when @unitRef is present.</sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList xmlns:rng="http://relaxng.org/ns/structure/1.0">
     <attDef ident="unit" usage="opt">
       <gloss versionDate="2009-05-28" xml:lang="fr">unité</gloss>
@@ -362,6 +369,10 @@ $Id$
 -->
       </remarks>
     </attDef>
+    <attDef ident="unitRef" usage="opt">
+      <desc versionDate="2019-07-09" xml:lang="en">points to a unique identifier stored in the <att>xml:id</att> of a <gi>unitDef</gi> element that defines a unit of measure.</desc>
+     <datatype maxOccurs="1"><dataRef key="teidata.pointer"/></datatype>
+    </attDef>
     <attDef ident="quantity" usage="opt">
       <gloss versionDate="2009-05-28" xml:lang="fr">quantité</gloss>
       <desc versionDate="2005-11-18" xml:lang="en">specifies the number of the specified units that
@@ -421,20 +432,24 @@ a gallon</measure>, baby?</l></egXML>
          <!-- 1st is from several places, including http://www.azlyrics.com/lyrics/weirdalyankovic/iloverockyroad.html-->
          <!-- 2nd is from http://www.lyricsdownload.com/weird-al-yankovic-1985-food-medley08i-love-rocky-road-lyrics.html -->
       </p>
+    
+    <p>The unit should normally be named using the standard
+      abbreviation for an SI unit (see further <ptr target="http://www.bipm.org/en/publications/si-brochure/"/>; <ptr target="http://physics.nist.gov/cuu/Units/"/>). However, encoders
+      may also specify measurements using informally defined units such
+      as <val>lines</val> or <val>characters</val>.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p> Cette classe d'attributs fournit un ensemble de trois attributs qui peuvent être
                 employés soit pour régulariser les valeurs de la mesure encodée, soit pour les
                 normaliser en conformité avec un système de mesure normalisé.</p>
+    <p>L'unité doit normalement être nommée avec une abréviation normalisée issue d'une unité SI (voir plus loin <ptr target="http://www.bipm.org/en/publications/si-brochure/"/>; <ptr target="http://physics.nist.gov/cuu/Units/"/>). 
+      Cependant  les encodeurs peuvent aussi spécifier des mesures avec des unités définies de manière informelle, telles que <val>lines</val> ou <val>characters</val>.</p>
   </remarks>
   <remarks xml:lang="es" versionDate="2008-04-06">
-    <p>Esta clase de atributo proporciona un trío de atributos que se pueden utilizar para regularizar los valores de medida que se codifican, o normalizarlos en un sistema de medida estándar.  
-
+    <p>Esta clase de atributo proporciona un trío de atributos que se pueden utilizar para regularizar los valores de medida que se codifican, o normalizarlos en un sistema de medida estándar.
     </p>
-  </remarks>
-  <remarks xml:lang="es" versionDate="2008-04-06">
     <p>La unidad  debe ser nombrada normalmente usando la abreviatura estándar para una unidad SI (véase <ptr target="http://www.bipm.org/en/publications/si-brochure/"/>; <ptr target="http://physics.nist.gov/cuu/Units/"/>). 
-    Sin embargo, los codificadores pueden también especificar las medidas usando unidades definidas informalmente, por ejemplo como <val>líneas</val> o <val>caracteres</val>.</p>
+      Sin embargo, los codificadores pueden también especificar las medidas usando unidades definidas informalmente, por ejemplo como <val>líneas</val> o <val>caracteres</val>.</p>
   </remarks>
   <remarks xml:lang="ja" versionDate="2008-04-05">
     <p>
@@ -450,24 +465,12 @@ baby?</l></egXML>
          <!-- 1st is from several places, including http://www.azlyrics.com/lyrics/weirdalyankovic/iloverockyroad.html-->
          <!-- 2nd is from http://www.lyricsdownload.com/weird-al-yankovic-1985-food-medley08i-love-rocky-road-lyrics.html -->
       </p>
-  </remarks>
-  <remarks xml:lang="ja" versionDate="2008-04-05">
     <p>
-    当該単位は，一般には，国際単位系の標準的な略式表記で示されるべきで
-    ある．(詳細は，<ptr target="http://www.bipm.org/en/publications/si-brochure/"/>, 
-    <ptr target="http://physics.nist.gov/cuu/Units/"/>を参照のこと．)
-    けれども，符号化する人は，非公式な計測単位，例えば，
-    <val>lines</val>や<val>characters</val>も使用してもよい．
-</p>
-  </remarks>
-  <remarks versionDate="2005-11-20" xml:lang="en">
-    <p>The unit should normally be named using the standard
-      abbreviation for an SI unit (see further <ptr target="http://www.bipm.org/en/publications/si-brochure/"/>; <ptr target="http://physics.nist.gov/cuu/Units/"/>). However, encoders
-    may also specify measurements using informally defined units such
-    as <val>lines</val> or <val>characters</val>.</p>
-  </remarks>
-  <remarks xml:lang="fr" versionDate="2007-06-12">
-    <p>L'unité doit normalement être nommée avec une abréviation normalisée issue d'une unité SI (voir plus loin <ptr target="http://www.bipm.org/en/publications/si-brochure/"/>; <ptr target="http://physics.nist.gov/cuu/Units/"/>). 
-    Cependant  les encodeurs peuvent aussi spécifier des mesures avec des unités définies de manière informelle, telles que <val>lines</val> ou <val>characters</val>.</p>
+      当該単位は，一般には，国際単位系の標準的な略式表記で示されるべきで
+      ある．(詳細は，<ptr target="http://www.bipm.org/en/publications/si-brochure/"/>, 
+      <ptr target="http://physics.nist.gov/cuu/Units/"/>を参照のこと．)
+      けれども，符号化する人は，非公式な計測単位，例えば，
+      <val>lines</val>や<val>characters</val>も使用してもよい．
+    </p>
   </remarks>
 </classSpec>
