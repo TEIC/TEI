@@ -17,50 +17,41 @@ connect the nodes.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">codifica un grafo, cioè una raccolta di nodi e archi che collegano i nodi</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.typed"/>
     <memberOf key="model.divPart"/>
   </classes>
   <content>
     <sequence>
       <sequence minOccurs="0">
-        <elementRef key="label"/>
-        
-          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-        
+	<elementRef key="label"/>        
+	<classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
       </sequence>
       <alternate>
-        <sequence>
-          <sequence minOccurs="1" maxOccurs="unbounded">
-            <elementRef key="node"/>
-            
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-            
-          </sequence>
-          <sequence minOccurs="0" maxOccurs="unbounded">
-            <elementRef key="arc"/>
-            
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-            
-          </sequence>
-        </sequence>
-        <sequence>
-          <sequence minOccurs="1" maxOccurs="unbounded">
-            <elementRef key="arc"/>
-            
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-            
-          </sequence>
-          <sequence minOccurs="1" maxOccurs="unbounded">
-            <elementRef key="node"/>
-            
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-            
-          </sequence>
-        </sequence>
+	<sequence>
+	  <sequence minOccurs="1" maxOccurs="unbounded">
+	    <elementRef key="node"/>
+	    <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	  </sequence>
+	  <sequence minOccurs="0" maxOccurs="unbounded">
+	    <elementRef key="arc"/>
+	    <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	  </sequence>
+	</sequence>
+	<sequence>
+	  <sequence minOccurs="1" maxOccurs="unbounded">
+	    <elementRef key="arc"/>
+	    <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	  </sequence>
+	  <sequence minOccurs="1" maxOccurs="unbounded">
+	    <elementRef key="node"/>
+	    <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	  </sequence>
+	</sequence>
       </alternate>
     </sequence>
   </content>
   <attList>
-    <attDef ident="type" usage="rec">
+    <attDef ident="type" mode="change" usage="rec">
       <desc versionDate="2005-01-14" xml:lang="en">describes the type of graph.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">그래프의 유형을 기술한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">描述圖形類型。</desc>

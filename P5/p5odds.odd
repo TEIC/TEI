@@ -515,6 +515,22 @@ $Id$
     </constraint>
   </constraintSpec>
 </elementSpec>
+        <elementSpec ident="remarks" mode="change">
+          
+          <constraintSpec ident="only-one-remark-per-lang" scheme="schematron" mode="add">
+            <constraint>
+              <rule context="tei:remarks[@xml:lang]" xmlns="http://purl.oclc.org/dsdl/schematron">
+                <let name="langVal" value="@xml:lang"/>
+                <assert test="not(following-sibling::tei:remarks[@xml:lang=$langVal])">
+                  Error: There should only be one <value-of select="@ident"/> element per 
+                  language. Merge the contents of multiple <value-of select="@ident"/> elements
+                  using separate p elements.
+                </assert>
+              </rule>
+            </constraint>
+          </constraintSpec>
+        </elementSpec>
+        
       </schemaSpec>
     </body>
   </text>
