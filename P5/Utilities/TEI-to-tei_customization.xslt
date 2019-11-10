@@ -51,6 +51,13 @@
 
   <xsl:variable name="revisionDesc">
     <revisionDesc>
+      <change who="#sbauman.emt" when="2019-11-08">
+	As part of working through <ref
+	target="https://github.com/TEIC/Stylesheets/issues/402">Stylesheets
+	ticket #402</ref>, Martin Holmes and I thought that an
+	<gi>elementSpec</gi> addressing a TEI element should not be in
+	mode <val>add</val>. This is intended to enforce that rule.
+      </change>
       <change who="#sbauman.emt" when="2018-07-19">
 	Further addressing <ref
 	target="https://github.com/TEIC/TEI/issues/1735">TEI ticket
@@ -1156,6 +1163,13 @@
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
+		<constraintSpec scheme="schematron" ident="add_implies_ns">
+                  <constraint>
+                    <sch:rule context="tei:elementSpec[ @mode eq 'add'  or  not( @mode ) ]">
+                      <sch:assert test="ancestor-or-self::*/@ns">When used to add an element, ＜elementSpec＞ (or its ancestor ＜schemaSpec＞) should have an @ns attribute.</sch:assert>
+                    </sch:rule>
+                  </constraint>
+		</constraintSpec>
                 <attList>
                   <attDef ident="ident" mode="replace" usage="req">
                     <datatype minOccurs="1" maxOccurs="1">
