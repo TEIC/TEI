@@ -787,6 +787,35 @@
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
+		<constraintSpec scheme="schematron" ident="need-required">
+		  <constraint>
+		    <sch:rule context="tei:moduleRef[ @except ]">
+		      <sch:let name="exceptions" value="tokenize( @except, '\s+' )"/>
+		      <xsl:comment> We could get away with using a single test, i.e. </xsl:comment>
+		      <xsl:comment> "('TEI','teiHeader','fileDesc','titleStmt','title','publicationStmt','sourceDesc')=$exceptions", </xsl:comment>
+		      <xsl:comment> but then we wouldn't get individualized error msgs. </xsl:comment>
+		      <xsl:comment> In either case, if &amp; when TEI changes the list of </xsl:comment>
+		      <xsl:comment> elements which are *required*, we need to change this </xsl:comment>
+		      <xsl:comment> code (in <xsl:value-of select="$myName"/>) manually. </xsl:comment>
+		      <sch:report test="'TEI'=$exceptions">Removing ＜TEI＞ from your schema
+		      guarantees it is not TEI conformant, and will will likely be outright
+		      invalid</sch:report>
+		      <sch:report test="'teiHeader'=$exceptions">Removing ＜teiHeader＞ from your
+		      schema guarantees it is not TEI conformant</sch:report>
+		      <sch:report test="'fileDesc'=$exceptions">Removing ＜fileDesc＞ from your
+		      schema guarantees it is not TEI conformant</sch:report>
+		      <sch:report test="'titleStmt'=$exceptions">Removing ＜titleStmt＞ from your
+		      schema guarantees it is not TEI conformant</sch:report>
+		      <sch:report test="'title'=$exceptions">Removing ＜title＞ from your schema
+		      guarantees it is not TEI conformant</sch:report>
+		      <sch:report test="'publicationStmt'=$exceptions">Removing
+		      ＜publicationStmt＞ from your schema guarantees it is not TEI
+		      conformant</sch:report>
+		      <sch:report test="'sourceDesc'=$exceptions">Removing ＜sourceDesc＞ from
+		      your schema guarantees it is not TEI conformant</sch:report>
+		    </sch:rule>
+		  </constraint>
+		</constraintSpec>
                 <xsl:call-template name="element-is-in-module"/>
                 <attList org="group">
                   <attDef ident="include" mode="replace">
@@ -846,34 +875,10 @@
                       specified module into the schema being defined.</desc>
                     <datatype minOccurs="0" maxOccurs="unbounded">
                       <dataRef key="teidata.enumerated"/>
-                    </datatype>
-                    <constraintSpec scheme="schematron" ident="need-required">
-                      <constraint>
-                        <sch:let name="exceptions" value="tokenize( ., '\s+' )"/>
-                        <xsl:comment> We could get away with using a single test, i.e. </xsl:comment>
-                        <xsl:comment> "('TEI','teiHeader','fileDesc','titleStmt','title','publicationStmt','sourceDesc')=$exceptions", </xsl:comment>
-                        <xsl:comment> but then we wouldn't get individualized error msgs. </xsl:comment>
-                        <xsl:comment> In either case, if &amp; when TEI changes the list of </xsl:comment>
-                        <xsl:comment> elements which are *required*, we need to change this </xsl:comment>
-                        <xsl:comment> code (in <xsl:value-of select="$myName"/>) manually. </xsl:comment>
-                        <sch:report test="'TEI'=$exceptions">Removing ＜TEI＞ from your schema
-                          guarantees it is not TEI conformant, and will will likely be outright
-                          invalid</sch:report>
-                        <sch:report test="'teiHeader'=$exceptions">Removing ＜teiHeader＞ from your
-                          schema guarantees it is not TEI conformant</sch:report>
-                        <sch:report test="'fileDesc'=$exceptions">Removing ＜fileDesc＞ from your
-                          schema guarantees it is not TEI conformant</sch:report>
-                        <sch:report test="'titleStmt'=$exceptions">Removing ＜titleStmt＞ from your
-                          schema guarantees it is not TEI conformant</sch:report>
-                        <sch:report test="'title'=$exceptions">Removing ＜title＞ from your schema
-                          guarantees it is not TEI conformant</sch:report>
-                        <sch:report test="'publicationStmt'=$exceptions">Removing
-                          ＜publicationStmt＞ from your schema guarantees it is not TEI
-                          conformant</sch:report>
-                        <sch:report test="'sourceDesc'=$exceptions">Removing ＜sourceDesc＞ from
-                          your schema guarantees it is not TEI conformant</sch:report>
-                      </constraint>
-                    </constraintSpec>
+		    </datatype>
+		    <!-- Note: constraint "need-required" should (in
+			 some sense) be defined here, but was moved to
+			 address #1950. —sb, 2019-12-06 -->
                     <valList type="semi">
                       <xsl:copy-of select="$elements"/>
                     </valList>
