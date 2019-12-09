@@ -37,26 +37,32 @@
     <sequence>
       <elementRef key="teiHeader"/>
       <alternate>
-        <sequence>
-          
-            <classRef key="model.resourceLike" minOccurs="1" maxOccurs="unbounded"/>
-          
-          
-            <alternate minOccurs="0" maxOccurs="unbounded">
-              <elementRef key="TEI"/>
-              <elementRef key="teiCorpus"/>
-            </alternate>
-          
-        </sequence>
-        
-          <alternate minOccurs="1" maxOccurs="unbounded">
-            <elementRef key="TEI"/>
-            <elementRef key="teiCorpus"/>
-          </alternate>
-        
+	<sequence>
+	  <classRef key="model.resourceLike" minOccurs="1" maxOccurs="unbounded"/>
+	  <sequence minOccurs="0" maxOccurs="1">
+	    <elementRef key="teiCorpus"/>
+	    <alternate minOccurs="0" maxOccurs="unbounded">
+	      <elementRef key="TEI"/>
+	      <elementRef key="teiCorpus"/>
+	    </alternate>
+	  </sequence>
+	</sequence>
+	<sequence minOccurs="0" maxOccurs="1">
+	  <elementRef key="teiCorpus"/>
+	  <alternate minOccurs="0" maxOccurs="unbounded">
+	    <elementRef key="TEI"/>
+	    <elementRef key="teiCorpus"/>
+	  </alternate>
+	</sequence>
       </alternate>
     </sequence>
   </content>
+  <!--
+	  <classRef key="model.resourceLike" minOccurs="1" maxOccurs="unbounded"/>
+	  <elementRef key="teiCorpus" minOccurs="0" maxOccurs="unbounded"/>
+	  <elementRef key="TEI"/>
+	  <elementRef key="teiCorpus"/>
+  -->
   <attList>
     <attDef ident="version" usage="opt">
       <gloss versionDate="2017-06-13" xml:lang="de">Version</gloss>
@@ -164,10 +170,9 @@
       </teiCorpus>
     </egXML>
   </exemplum>
-  <remarks versionDate="2005-12-24" xml:lang="en">
-    <p rend="dataDesc">Must contain one TEI header for the corpus, and a series of <gi>TEI</gi>
-      elements, one for each text.</p>
-    <p>This element is mandatory when applicable.</p>
+  <remarks versionDate="2019-12-09" xml:lang="en">
+    <p rend="dataDesc">Should contain one TEI header for the corpus, and
+    a series of <gi>TEI</gi> elements, one for each text.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p rend="dataDesc">Cet élément doit contenir un en-tête TEI pour le corpus, et une suite
