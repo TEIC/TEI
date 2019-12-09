@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright TEI Consortium.
+    Dual-licensed under CC-by and BSD2 licences
+    See the file COPYING.txt for details
+    $Date$
+    $Id$
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="unitDef">
+  <gloss versionDate="2018-07-18" xml:lang="en">unit definition</gloss>
+  <desc versionDate="2018-07-18" xml:lang="en">contains descriptive information related to a specific unit of measurement.</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="att.datable"/>
+    <memberOf key="att.canonical"/>
+    <memberOf key="att.typed"/>
+  </classes>
+  <content>
+     <alternate minOccurs="1" maxOccurs="unbounded">
+       <classRef key="model.labelLike" minOccurs="1"/>
+       <classRef key="model.placeNamePart" minOccurs="0"/>
+       <elementRef key="conversion" minOccurs="0"/>
+       <elementRef key="unit" minOccurs="0"/>     
+     </alternate>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+      <unitDecl>
+      <unitDef xml:id="pechys" type="length">
+        <label>πῆχυς</label>
+        <placeName ref="#athens"/>
+        <conversion fromUnit="#daktylos" toUnit="#pechys" formula="$fromUnit div 24"/>
+        <desc>Equivalent to a cubit or 24 daktyloi.</desc>
+      </unitDef>
+      <unitDef xml:id="daktylos" type="length">
+        <label>δάκτυλος</label>
+        <placeName ref="#athens"/>
+        <desc>A basic unit of length equivalent to one finger (or the size of a thumb) in ancient Greece.</desc>
+      </unitDef>
+     </unitDecl>
+    </egXML>
+  </exemplum> 
+  <listRef>
+    <ptr target="#HDUDECL" type="div3"/>
+  </listRef>
+</elementSpec>
