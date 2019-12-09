@@ -40,7 +40,7 @@ P5=`(cd ..; pwd)`
 DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
 SOURCE=${P5}/p5subset.xml
-ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -lib ../Utilities/lib/saxon9he.jar:../Utilities/lib/jing.jar -Dtrang=../Utilities/lib/trang.jar  -Dprofile=tei -DdefaultSource=${SOURCE} -DXSL=${XSL} -Dbasedir=`pwd`
+ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -lib ../Utilities/lib/saxon9he.jar:../Utilities/lib/jing.jar:../Utilities/lib/xml-resolver-1.2.jar -Dtrang=../Utilities/lib/trang.jar  -Dprofile=tei -DdefaultSource=${SOURCE} -DXSL=${XSL} -Dbasedir=`pwd`
 
 default: schemas
 
@@ -146,3 +146,4 @@ clean:
 	rm -f enrich.rng isofs.rng
 	rm -f names.xml *properties
 	rm -f [A-Z]*xml
+	rm -f tei_customization.odd
