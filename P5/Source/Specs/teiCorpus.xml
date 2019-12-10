@@ -30,39 +30,18 @@
     einem oder mehreren <gi>TEI</gi>-Elementen, die jeweils einen eigenen TEI-Header und Text
     enthalten.</desc>
   <classes>
+    <memberOf key="model.describedResource"/>
     <memberOf key="att.global"/>
     <memberOf key="att.typed"/>
   </classes>
   <content>
+    <!-- teiHeader, model.resource*, model.describedResource+ -->
     <sequence>
       <elementRef key="teiHeader"/>
-      <alternate>
-	<sequence>
-	  <classRef key="model.resourceLike" minOccurs="1" maxOccurs="unbounded"/>
-	  <sequence minOccurs="0" maxOccurs="1">
-	    <elementRef key="teiCorpus"/>
-	    <alternate minOccurs="0" maxOccurs="unbounded">
-	      <elementRef key="TEI"/>
-	      <elementRef key="teiCorpus"/>
-	    </alternate>
-	  </sequence>
-	</sequence>
-	<sequence minOccurs="0" maxOccurs="1">
-	  <elementRef key="teiCorpus"/>
-	  <alternate minOccurs="0" maxOccurs="unbounded">
-	    <elementRef key="TEI"/>
-	    <elementRef key="teiCorpus"/>
-	  </alternate>
-	</sequence>
-      </alternate>
+      <classRef key="model.resource" minOccurs="0" maxOccurs="unbounded"/>
+      <classRef key="model.describedResource" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </content>
-  <!--
-	  <classRef key="model.resourceLike" minOccurs="1" maxOccurs="unbounded"/>
-	  <elementRef key="teiCorpus" minOccurs="0" maxOccurs="unbounded"/>
-	  <elementRef key="TEI"/>
-	  <elementRef key="teiCorpus"/>
-  -->
   <attList>
     <attDef ident="version" usage="opt">
       <gloss versionDate="2017-06-13" xml:lang="de">Version</gloss>
