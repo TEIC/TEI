@@ -8,18 +8,46 @@ $Id$
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="DS" n="7">
-<head>Default Text Structure</head>
-<p>This chapter describes the default high-level structure for TEI
-documents. A full TEI document combines metadata describing it,
-represented by a <gi>teiHeader</gi> element, with the document itself,
-represented by one or more <gi>text</gi> elements or other elements
-taken from the <ident>model.resource</ident> class. This group of
-elements makes up a <gi>TEI</gi> element. The <gi>teiHeader</gi>
-element is specified by the <ident type="module">header</ident>
-module, which is fully described in chapter <ptr target="#HD"/>. The
-remainder of the present chapter describes the <gi>text</gi> element
-and its high-level constituents.</p>
-
+  <head>Default Text Structure</head>
+  
+  <p>This chapter describes the default high-level structure for TEI
+  documents. A full TEI document combines metadata describing it,
+  represented by a <gi>teiHeader</gi> element, with the document
+  itself, represented by one or more <gi>text</gi> elements or other
+  elements taken from the <ident>model.resource</ident> class. That
+  is, the <gi>TEI</gi> element is used to group together metadata
+  about an encoded resource (in <gi>teiHeader</gi>, specified by the <ident
+  type="module">header</ident> module, which is fully described in
+  chapter <ptr target="#HD"/>) with an encoded
+  resource. Possible encoded resources are
+  <list rend="bulleted">
+    <item>a logical transcription of a source document in a
+    <gi>text</gi> element; the <gi>text</gi> element is specified
+    along with its high-level constituents in the <ident
+    type="module">textstructure</ident> module and described in the
+    remainder of the current chapter</item>
+    <item>a diplomatic transcription of a source document in a
+    <gi>sourceDoc</gi> element, which is specified in the <ident
+    type="module">transcr</ident> module and described in
+    chapter <ptr target="#PH"/></item>
+    <item>an encoded representation of a text bearing object as images
+    in a <gi>facsimile</gi> element, which is also specified in the
+    <ident type="module">transcr</ident> module and described in
+    chapter <ptr target="#PH"/></item>
+    <item>a collection of contextual information that provides more
+    information about another encoded resource (whether in the same or
+    a different TEI document), which is specified in the <?tei winita?>????
+    module and described in section <?tei winita?>????</item>
+    <item>a feature system declaration which can be used
+    to declare the use of <gi>fs</gi> elements in the rest of the
+    document, which is specified in the <ident
+    type="module">iso-fs</ident> module and described in section <ptr
+    target="#FD"/></item>
+  </list></p>
+  <p>In a case in which more than one resource related to the same
+  source document share the same metadata, they may be grouped
+  together in a <gi>TEI</gi> element following a single
+  <gi>teiHeader</gi>.</p>
 <p>Because <gi>TEI</gi> is itself a member of the <ident
 type="class">model.resource</ident> class, a set or collection of
 documents may be represented by an outermost <gi>TEI</gi> element that
