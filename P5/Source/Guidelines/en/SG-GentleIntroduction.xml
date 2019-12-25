@@ -730,12 +730,12 @@ containing two poems, the first of which contains two four-line
 stanzas and the second a single stanza,  by a tree structure like the following figure:</p>
 <figure><graphic width="80%" url="Images/xmlpic.png"/></figure>
 <!-- graphic needs redoing, took out scaling looks much better(JC)  -->
-<p>This graphic representation of the structure of an XML document is
-close to the abstract model implicit in most XML processing
-systems. Most such systems now use a standardized way of accessing
+ <!-- 2019-12-14 revising graphic to better correspond with example and XML hierarchy (JL) -->
+<p>This graphic represents the hierarchical structure of an XML document,
+resembling a family tree. Most XML processing systems now use a standardized way of accessing
 parts of an XML document called <term>XPath</term>.<note place="bottom">The official specification is at <ptr target="#XPATH"/>;  many
 introductory tutorials are available in the XML references cited above
-and elsewhere on the Web: good beginners' tutorials include <ptr target="http://www.w3schools.com/xml/xpath_intro.asp"/> and <ptr target="http://www.zvon.org/xxl/XPathTutorial/"/>, the latter being
+and elsewhere on the Web: good beginners' tutorials include <ptr target="http://dh.obdurodon.org/introduction-xpath.xhtml"/>, <ptr target="http://www.w3schools.com/xml/xpath_intro.asp"/> and <ptr target="http://www.zvon.org/xxl/XPathTutorial/"/>, the latter being
 available in several languages.</note> XPath gives us a
 non-graphical way of referring to any part of an XML document: for
 example, we might refer to the last line of Blake's poem as
@@ -748,14 +748,18 @@ poems contained by anthologies. An XPath expression can refer to any
 collection of elements: for example, the expression
 <code>/anthology/poem</code> refers to all poems in an anthology and
 the expression <code>/anthology/poem/heading</code> refers to all their headings. </p>
-<p>The solidus within an XPath expression behaves in much the same way
-as the solidus or backslash in a filename specification: it
-indicates that the item to the left directly contains the item to the
-right of it. In XPath it is also possible to indicate that any number
-of other items may intervene by repeating the solidus. For example,
-the XPath expression <code>/anthology/poem//line[1]</code> will refer
-to the first line of each poem in the anthology, irrespective of
-whether it is in a stanza.</p>
+<p>The forward slash within an XPath expression behaves in much the same way
+as a forward slash or backslash does in a filename specification.
+To use a family tree analogy, a single slash indicates that the item to the
+immediate left is a parent of the item(s) to the right of it. For example,
+in the XPath expression <code>/anthology/poem</code>, the single slash
+between anthology and poem indicates that anthology is a parent of the
+poem children elements. (The first forward slash in the XPath expression
+indicates the document node.) In XPath, it is also possible to refer to
+children, grandchildren, and other descendants of the family tree using two
+forward slashes together. For example, the XPath expression <code>/anthology/poem//line</code>
+will refer to all of the lines of all of the stanzas of all the poems, without
+having to represent the stanza element in the XPath.</p>
 
 <p>Clearly, there are many such trees that might be drawn to describe
 the structure of this or other anthologies.  Some of them might be
