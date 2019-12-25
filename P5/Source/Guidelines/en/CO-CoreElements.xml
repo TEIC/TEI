@@ -871,16 +871,20 @@ which case the same section might simply be tagged:
  elements <gi>said</gi> and <gi>q</gi> share the following attributes:
 <specList><specDesc key="att.ascribed" atts="who"/><specDesc key="att.ascribed.directed" atts="toWhom"/></specList>
 These may be used to make explicit who is speaking and who is being spoken to:
- <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COHQQ-eg-23" xml:lang="fr">Adolphe se tourna vers lui :
- <said who="#Ado" toWhom="#Alb">— Alors, Albert, quoi de neuf?</said>
- <said who="#Alb" toWhom="#Ado">— Pas grand-chose.</said>
- <said who="#Rob">— Il fait beau,</said> dit Robert.
-<!-- ... elsewhere in the document -->
- <listPerson type="speakers">
-   <person xml:id="Ado"><persName>Adolphe</persName></person>
-   <person xml:id="Alb"><persName>Albert</persName></person>
-   <person xml:id="Rob"><persName>Robert</persName></person>
- </listPerson></egXML>
+ <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COHQQ-eg-23" xml:lang="fr">
+   Adolphe se tourna vers lui :
+   <said who="#Ado" toWhom="#Alb">— Alors, Albert, quoi de neuf?</said>
+   <said who="#Alb" toWhom="#Ado">— Pas grand-chose.</said>
+   <said who="#Rob">— Il fait beau,</said> dit Robert.
+   <!-- ... elsewhere in the document -->
+   <standOff>
+     <listPerson type="speakers">
+       <person xml:id="Ado"><persName>Adolphe</persName></person>
+       <person xml:id="Alb"><persName>Albert</persName></person>
+       <person xml:id="Rob"><persName>Robert</persName></person>
+     </listPerson>
+   </standOff>
+ </egXML>
 
  The <att>who</att> attribute may be supplied whether
  or not an indication of the speaker is given explicitly in the
@@ -3830,7 +3834,7 @@ element, though the following example combines both fully structured
   included.</p>
 
 <p>The <gi>listBibl</gi> element is most appropriate 
-for  a more formal bibliography. The same <gi>bibl</gi> or
+for a more formal bibliography. The same <gi>bibl</gi> or
 <gi>biblStruct</gi> elements may however be embedded within an
 ordinary list, thus allowing them to be mixed with running prose or
 presented informally, as in the following version of the same example:
