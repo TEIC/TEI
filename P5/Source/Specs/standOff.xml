@@ -25,4 +25,107 @@ See the file COPYING.txt for details
       nested inside a <sch:name/></sch:assert>
     </constraint>
   </constraintSpec>
+  <exemplum xml:lang="en" versionDate="2019-12-25">
+    <p>This example shows an ecoding of morphosantactic features similar to the encoding
+    system used by <ref target="#ISO24611">ISO 24611 (MAF)</ref>.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NONE">
+      <TEI>
+        <teiHeader> <!-- ... --> </teiHeader>
+        <text>
+          <body>
+            <!-- ... -->
+            <p>
+              <w xml:id="w1">I</w>
+              <w xml:id="w2">wanna</w>
+              <w xml:id="w3">put</w>
+              <w xml:id="w4">up</w>
+              <w xml:id="w5">new</w>
+              <w xml:id="w6">wallpaper</w>
+              <pc>.</pc>
+            </p>
+            <!-- ... -->
+          </body>
+        </text>
+        <standOff type="morphosyntax">
+          <spanGrp type="wordForm">
+            <span target="#w1" ana="#fs1"/>
+            <span target="#w2" ana="#fs2"/>
+            <span target="#w2" ana="#fs3"/>
+            <span target="#w3 #w4" ana="#fs4"/>
+            <span target="#w5" ana="#fs5"/>
+            <span target="#w6" ana="#fs6"/>
+          </spanGrp>
+          <fs xml:id="fs1">
+            <f name="lemma"> <string>I</string> </f>
+            <f name="pos"> <symbol value="PP"/> </f>
+          </fs>
+          <fs xml:id="fs2">
+            <f name="lemma"> <string>want</string> </f>
+            <f name="pos"> <symbol value="VBP"/> </f>
+          </fs>
+          <fs xml:id="fs3">
+            <f name="lemma"> <string>to</string> </f>
+            <f name="pos"> <symbol value="TO"/> </f>
+          </fs>
+          <fs xml:id="fs4">
+            <f name="lemma"> <string>put up</string> </f>
+            <f name="pos"> <symbol value="VB"/> </f>
+          </fs>
+          <fs xml:id="fs5">
+            <f name="lemma"> <string>new</string> </f>
+            <f name="pos"> <symbol value="JJ"/> </f>
+          </fs>
+          <fs xml:id="fs6">
+            <f name="lemma"> <string>wallpaper</string> </f>
+            <f name="pos"> <symbol value="NN"/> </f>
+          </fs>
+        </standOff>
+      </TEI>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en" versionDate="2019-12-28">
+    <p>This example shows an encoding of contextual
+    information which is referred to from the main text.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#MLK01">
+      <TEI>
+	<teiHeader> <!-- ... --> </teiHeader>
+	<standOff>
+	  <listPlace>
+	    <place xml:id="LATL">
+	      <placeName>Atlanta</placeName>
+	      <location>
+		<region key="US-GA">Georgia</region>
+		<country key="USA">United States of America</country>
+		<geo>33.755 -84.39</geo>
+	      </location>
+	      <population when="1963" type="interpolatedCensus" quantity="489359" source="https://www.biggestuscities.com/city/atlanta-georgia"/>
+	    </place>
+	    <place xml:id="LBHM">
+	      <placeName>Birmingham</placeName>
+	      <location>
+		<region key="US-AL">Alabama</region>
+		<country key="USA">United States of America</country>
+		<geo>33.653333 -86.808889</geo>
+	      </location>
+	      <population when="1963" type="interpolatedCensus" quantity="332891" source="https://www.biggestuscities.com/city/birmingham-alabama"/>
+	    </place>
+	  </listPlace>
+	</standOff>
+	<text>
+	  <body>
+	    <!-- ... -->
+	    <p>Moreover, I am <choice><sic>congnizant</sic><corr>cognizant</corr></choice> of the interrelatedness of all communities and
+	    <lb/>states.  I cannot sit idly by in <placeName ref="#LATL">Atlanta</placeName> and not be concerned about what happens
+	    <lb/>in <placeName ref="#LBHM">Birmingham</placeName>.  <seg xml:id="FQ17">Injustice anywhere is a threat to justice everywhere.</seg>  We
+	    <lb/>are caught in an inescapable network of mutuality, tied in a single garment
+	    <lb/>of destiny.  Whatever affects one directly affects all indirectly. Never
+	    <lb/>again can we afford to live with the narrow, provincial <soCalled rendition="#Rqms">outside agitator</soCalled>
+	    <lb/>idea.  Anyone who lives inside the United States can never be considered
+	    <lb/>an outsider anywhere in this country.</p>
+	    <!-- ... -->
+	  </body>
+	</text>
+      </TEI>
+    </egXML>
+  </exemplum>
 </elementSpec>
