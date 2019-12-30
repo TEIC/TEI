@@ -391,7 +391,7 @@ been saved in one or other of the proprietary formats preferred by
 most word-processing programs.</p>
 
 <p>As we noted above, one of the attractions of XML is that it enables
-us to make up our own names for the elements rather than requiring us
+us to apply our own names for the elements rather than requiring us
 always to use names predefined by other agencies. Clearly, however, if
 we wish to exchange our poems with others, or to include poems others
 have marked up in our anthology, we will need to know a bit more about
@@ -475,31 +475,23 @@ also greatly simplify the task of tagging accurately elements of less
 rigidly constrained texts. By making these schema rules explicit, scholars reduce their own burdens with consistently marking up and verifying the
 electronic text. By defining and sharing their schema rules, scholars openly express a project-specific interpretation of the structure and significant particularities of the
 text being encoded.</p>
-
+  <p>Schema validation for XML is usually written in the RELAX NG language (<ptr target="http://relaxng.org/"/>) originally
+    developed within the OASIS Technical Committee and now an
+    ISO standard<note place="bottom"><ref target="https://www.iso.org/standard/52348.html">ISO/IEC FDIS 19757-2 Document
+      Schema Definition Language (DSDL) -- Part 2: Regular-grammar-based
+      validation -- RELAX NG</ref></note>, though other older methods include the Document Type Definition
+    (DTD) language which XML inherited from SGML and the XML Schema language (<ptr target="http://www.w3.org/XML/Schema"/>) defined by the W3C.<note>Schema validation languages co-evolved with early markup language specifications, as summarized in <ref target="http://xml.coverpages.org/Jelliffe-schema-family-tree3-20061130.jpg">Rick Jelliffe's Family Tree of Schema Languages for Markup Languages</ref>.</note> In this chapter, and throughout these
+    Guidelines, we give examples using the <soCalled>compact
+      syntax</soCalled> of RELAX NG for ease of reading. The specifications for the TEI Guidelines are first expressed in the TEI language itself and a RELAX NG schema is generated from them for processing convenience. In practice, the only part of a TEI element
+    specification not expressed using TEI-defined syntax is the content
+    model for an element, which is expressed using the RELAX NG schema
+    language for reasons of processing convenience. RELAX NG uses its own
+    XML vocabulary to define content models, which is adopted by the TEI
+    for the same purpose. Details about schema customization using the TEI ODD language are addressed in <ptr target="#TD"/>, <ptr target="#MD"/> and <ptr target="#IM"/>.  
+</p>
 
 <div type="div3" xml:id="SG141bis"><head>An Example Schema</head>
-<p>A schema can be expressed in a number of different ways;
-frequently-encountered methods include the Document Type Definition
-(DTD) language which XML inherited from SGML; the XML Schema language
-(<ptr target="http://www.w3.org/XML/Schema"/>) defined by the W3C; and
-the RELAX NG language (<ptr target="http://relaxng.org/"/>) originally
-developed within the OASIS Technical Committee and now an
-ISO standard<note place="bottom">ISO/IEC FDIS 19757-2 Document
-Schema Definition Language (DSDL) -- Part 2: Regular-grammar-based
-validation -- RELAX NG</note>. In this chapter, and throughout these
-Guidelines, we give examples using the <soCalled>compact
-syntax</soCalled> of RELAX NG, but the specifications within these
-Guidelines are expressed in a way that is largely independent of the
-specific language in which a schema generated from them is
-expressed.<note place="bottom">See further <ptr target="#TD"/> and <ptr target="#IM"/>. In practice, the only part of a TEI element
-specification not expressed using TEI-defined syntax is the content
-model for an element, which is expressed using the RELAX NG schema
-language for reasons of processing convenience. RELAX NG uses its own
-XML vocabulary to define content models, which is adopted by the TEI
-for the same purpose. </note> Although we will use the RELAX NG compact syntax
-for illustration in what follows, the reader should bear in mind that analogous
-concepts are expressed differently in other schema languages. </p>
-<p>The following schema might be used to validate our example poem:
+<p>For the purposes of illustrating how a schema works to restrict how XML may be written, we use the RELAX NG compact syntax in what follows. The following schema can be used to validate our example poem:
 <eg xml:space="preserve"><![CDATA[
 anthology_p = element anthology { poem_p+ }
 poem_p = element poem { heading_p?, stanza_p+ }
