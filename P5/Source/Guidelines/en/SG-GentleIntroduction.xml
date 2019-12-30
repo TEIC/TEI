@@ -480,7 +480,7 @@ text being encoded.</p>
     ISO standard<note place="bottom"><ref target="https://www.iso.org/standard/52348.html">ISO/IEC FDIS 19757-2 Document
       Schema Definition Language (DSDL) -- Part 2: Regular-grammar-based
       validation -- RELAX NG</ref></note>, though other older methods include the Document Type Definition
-    (DTD) language which XML inherited from SGML and the XML Schema language (<ptr target="http://www.w3.org/XML/Schema"/>) defined by the W3C.<note>Schema validation languages co-evolved with early markup language specifications, as summarized in <ref target="http://xml.coverpages.org/Jelliffe-schema-family-tree3-20061130.jpg">Rick Jelliffe's Family Tree of Schema Languages for Markup Languages</ref>.</note> In this chapter, and throughout these
+    (DTD) language which XML inherited from SGML and the XML Schema language (<ptr target="http://www.w3.org/XML/Schema"/>) defined by the W3C.<note place="bottom">Schema validation languages co-evolved with early markup language specifications, as summarized in <ref target="http://xml.coverpages.org/Jelliffe-schema-family-tree3-20061130.jpg">Rick Jelliffe's Family Tree of Schema Languages for Markup Languages</ref>.</note> In this chapter, and throughout these
     Guidelines, we give examples using the <soCalled>compact
       syntax</soCalled> of RELAX NG for ease of reading. The specifications for the TEI Guidelines are first expressed in the TEI language itself and a RELAX NG schema is generated from them for processing convenience. In practice, the only part of a TEI element
     specification not expressed using TEI-defined syntax is the content
@@ -503,16 +503,15 @@ start = anthology_p
 </p>
 
 <p>Note that this is not the only way in which a RELAX NG schema might
-be written;<note place="bottom">For a good tutorial introduction to RELAX
-NG, see <ptr target="#SG-BIBL-1"/>.</note> we have adopted this idiom, however, because it
-matches that used throughout the rest of these Guidelines.  </p>
+be written; we have adopted this idiom, however, because it
+matches that used throughout the rest of these Guidelines.</p>
 
 <p>A RELAX NG schema expresses rules about the possible structure of a
 document in terms of <term>patterns</term>; that is, it defines a
 number of named patterns, each of which acts as a kind of template
 against which an input document can be matched. The meaning of a
-pattern is expressed in a schema by reference to other patterns, or to
-a small number of built-in fundamental concepts, as we shall see. In
+pattern is expressed in a schema either by reference to other patterns, or to
+a small number of fundamental built-in concepts, as we shall see. In
 the example above, the word to the left of the equals sign is the
 pattern's name, and the material following it declares a meaning for
 the pattern. Patterns may also be of particular types; the ones that
@@ -524,7 +523,7 @@ example, the line <code>anthology_p = element anthology {poem_p+}</code> defines
 the value of which defines an element called
 <code>anthology</code>. These naming conventions are 
 arbitrary; we could use the same name for the pattern as
-for the element, since the two are syntactically quite distinct. The
+for the element, but we want to make clear that the two are syntactically quite distinct. The
 name, or <term>generic identifier</term>, of the element follows the
 word <q>element</q>, and the <term>content model</term> for the
 element is given within the curly braces following that. Each of
@@ -542,7 +541,7 @@ the generic identifier (often abbreviated to GI) of the element being
 defined, for example <mentioned>poem</mentioned>,
 <mentioned>heading</mentioned>, etc. A GI may contain letters,
 digits, hyphens, underscore characters, or full stops, but must begin
-with a letter.<note place="bottom">In XML, a single colon may also
+with a letter and may not contain a space.<note place="bottom">In XML, a single colon may also
 appear in a GI, where it has a special significance related to the use
 of <term>namespaces</term>, as further discussed in section <ptr target="#SGname"/>. The characters defined by Unicode as
 <term>combining characters</term> and as <term>extenders</term> are
@@ -584,7 +583,7 @@ mandatory, but may match more than once. Thus, if the content model for
 <gi scheme="imaginary">stanza</gi> were <code>{line_p*}</code>, stanzas with no lines
 would be possible as well as those with more than one line. If it
 were <code>{line_p?}</code>, again empty stanzas would be
-countenanced, but no stanza could have more than a single line. The
+permitted, but no stanza could have more than a single line. The
 declaration for <gi scheme="imaginary">poem</gi> in the example above thus states that a
 <gi scheme="imaginary">poem</gi> cannot have more than one heading, but may have none,
 and that it must have at least one <gi scheme="imaginary">stanza</gi> and may have
@@ -603,31 +602,26 @@ bar, then a <gi scheme="imaginary">poem</gi> would consist of either a heading o
 stanzas—but not both!</p></div>
 <div type="div4" xml:id="SG146"><head>Groups</head>
 <p>In our example so far, the components of each content model have
-been either single patterns or <code>text</code>. It is quite
-permissible, however, to define content models in which the components
+been either single patterns or <code>text</code>. We often need to define content models in more complicated ways, in which the components
 are lists of patterns, combined by connectors. Such lists may also be
 modified by occurrence indicators and themselves combined by
 connectors. To demonstrate these facilities, let us expand our
-example to include non-stanzaic types of verse. For the sake of
+example so that it may include non-stanzaic types of verse. For the sake of
 demonstration, we will categorize poems as one of the following:
 <term>stanzaic</term>, <term>couplets</term>, or <term>blank</term>
 (or <term>stichic</term>). A blank-verse poem consists simply of
 lines (we ignore the possibility of verse paragraphs for the
-moment),<note place="bottom">It will not have escaped the astute reader
+moment), <!--ebb: This note now seems unnecessary, and the linked example isn't about a poem not starting on a line boundary: <note place="bottom">It will not have escaped the astute reader
 that the fact that verse paragraphs need not start on a line boundary
-seriously complicates the issue; see further section <ptr target="#SG152"/>.</note> so no additional elements need be defined
-for it. A couplet is defined as a <gi scheme="imaginary">firstLine</gi> followed by a
-<gi scheme="imaginary">secondLine</gi>.  <eg><![CDATA[
+seriously complicates the issue; see further section <ptr target="#SG152"/>.</note>--> so no additional elements need be defined
+for it. We could define a couplet as a <gi scheme="imaginary">firstLine</gi> followed by a
+  <gi scheme="imaginary">secondLine</gi>, which distinction might be useful in a study of rhyme schemes.<note place="bottom">This example is probably not a good practice for most XML projects, since XPath provides ways of distinguishing elements in an XML structure by their position, or the order in which they appear in relation to one another, without the need to give them distinct names.</note> <eg><![CDATA[
 couplet_p = element couplet {firstLine_p, secondLine_p}]]></eg>
 <!-- Can't believe it's a good idea to use as an example -->
 	<!-- something we would never do ourselves.              -->
 	<!-- Why not define SONNET, OCTET, QUATRAIN, SESTET?     --></p>
 <p>The patterns firstLine_p and secondLine_p define elements
-<gi scheme="imaginary">firstLine</gi> and <gi scheme="imaginary">secondLine</gi> (which are distinguished to
-enable studies of rhyme scheme, for example<note place="bottom">This is
-however a rather artificial example; XPath, for example, provides ways of distinguishing
-elements in an XML structure by their position without the need to
-give them distinct names. </note> ); these will have exactly
+<gi scheme="imaginary">firstLine</gi> and <gi scheme="imaginary">secondLine</gi>; these will have exactly
 the same content model as the existing <gi scheme="imaginary">line</gi> element. We will
 therefore add the following two lines to our example schema: <eg><![CDATA[firstLine_p = element firstLine {text} 
 secondLine_p = element secondLine {text}]]></eg>
@@ -658,12 +652,10 @@ mixed content models may be defined, but in the XML DTD language, when
 must always appear as the first option in an alternation; it may
 appear once only, and in the outermost model group; and if the group
 containing it is repeated, the star operator must be used. Although
-these constraints do not apply to (for example) schemas expressed in
-the RELAX NG language, all TEI content models currently obey them.</p>
+these constraints are not strictly necessary in RELAX NG schemas, all TEI content models currently obey them.</p>
 
-<p>Quite complex models can easily be built up in this way, to match
-the structural complexity of many types of text. As a further
-example, consider the case of stanzaic verse in which a refrain or
+<p>Quite complex models can be built in this way, to match
+the structural complexity of many types of text. For example, consider the case of stanzaic verse in which a refrain or
 chorus appears. Like a stanza, a refrain consists of repetitions of
 the line element. A refrain can appear at the start of a poem only,
 or as an optional addition following each stanza. This could be
@@ -698,6 +690,8 @@ lines and refrains.</p>
   list {}
   other things?
 -->
+<!--2019-12-29 ebb: It's probably not necessary to give a complete introduction to Relax NG here, but we should now point in the main text (not in a footnote) to complete tutorial resources, and give the reader a glimpse of how the TEI schema is made, and how the TEI community customizes it. -->
+  <p>It is beyond the scope of this "Gentle Introduction to XML" to provide a complete orientation to schema writing with Relax NG, but interested readers may wish to consult more thorough tutorials on the subject.<note place="bottom">For a complete tutorial introduction to RELAX NG, see <ptr target="#SG-BIBL-1"/>.</note> The examples and explanation provided here may be helpful to consult when reading the schema declarations posted for groupings of TEI elements that share the same content model, such as <ref target="ref-macro.phraseSeq.html">macro.phraseSeq</ref>, whose declaration features an example of mixed text and element content. Due to the complexity of the TEI schema as expressed in Relax NG, it is best to customize its content model in TEI itself by writing an ODD, as discussed in <ptr target="#IM"/>.</p>
 </div>
 </div>
 </div>
