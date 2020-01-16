@@ -28,15 +28,12 @@ $(document).ready(function(){
 //Now we work through the links to footnotes.
   var links = document.getElementsByTagName('a');
   for (var i=0; i<links.length; i++){
-    if (links[i].getAttribute('href') != null){
-      if (links[i].getAttribute('href').substring(0, 5) == '#Note'){
-        if (links[i].getAttribute('class') != 'link_return'){
-          links[i].setAttribute('onclick', 'showPopupFootnote(\'' + links[i].getAttribute('href').substring(1) + '\')');
-          links[i].setAttribute('href', 'javascript:void(0)');
-        }
+    if (links[i].hasAttribute("href") && links[i].getAttribute('href').substring(0, 5) == '#Note'){
+      if (links[i].getAttribute('class') != 'link_return'){
+        links[i].setAttribute('onclick', 'showPopupFootnote(\'' + links[i].getAttribute('href').substring(1) + '\')');
+        links[i].setAttribute('href', 'javascript:void(0)');
       }
-    }
-    
+    }    
   }
   addBiblFrame();
 });
@@ -85,7 +82,7 @@ function setupBiblPopups (){
   var links = document.getElementsByTagName('a');
   for (var i=0; i<links.length; i++){
     var href = links[i].getAttribute('href');
-    if (href.substring(0, 9) == 'BIB.html#'){
+    if (href && href.substring(0, 9) == 'BIB.html#'){
       var biblId = href.substring(9, href.length);
         links[i].setAttribute('onclick', 'showPopupBibl(\'' + biblId + '\')');
         links[i].setAttribute('href', 'javascript:void(0)');
