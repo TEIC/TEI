@@ -16,56 +16,43 @@ $Id$
     </attDef>
   </attList>
       <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SMITHWM">
-          <encodingDesc>
-            <unitDecl>
-            <unitDef xml:id="stadium" type="linear">
-              <label>stadium</label>
-              <placeName ref="#rome"/>
-              <conversion fromUnit="#pes" toUnit="#stadium" formula="$fromUnit * 625"/>
-              <desc>The stadium was a Roman unit of linear measurement equivalent to 625 pedes, or Roman feet.</desc>
-            </unitDef>
-          </unitDecl>
-          </encodingDesc>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#MONLONDON">
+          <!--In the teiHeader-->
+          <listPlace>
+            <place xml:id="PAUL1">
+              <placeName>Paul's Chain</placeName>
+            </place>
+            <place xml:id="STPA3">
+              <placeName>Paul's Churchyard</placeName>
+            </place>
+          </listPlace>
+          <!--Elsewhere, in the body of the document-->
+          <p>This Shew hauing tendred this ſeruice to my
+            Lord vppon the Water, is after to be conueyed a
+            Shore, and in conuenient place employd for adorning the reſt of the Triumph.
+            After my Lord Maiors landing, and comming paſt <ref target="#PAUL1">Paules Chaine</ref>
+            firſt attends for his Honor in <ref target="#STPA3">Pauls Church–yarde</ref>
+            a beautifull Spectacle, called the
+            Temple of Honor
+            <!--More prose describing the scene-->
+          </p>
+          <move where="#PAUL1 #STPA3"/>
+          <div>
+            <head>The ſpeech of Troynouant.</head>
+            <sp>
+              <lg>
+                <l>HIſtory, Truth, and Vertue ſeeke by name,</l>
+                <!--...-->
+              </lg>
+            </sp>
+          </div>
         </egXML>
       </exemplum>
-  <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#KNUTHMAD">
-      <encodingDesc>
-        <unitDecl>
-          <unitDef xml:id="wmw" type="power">
-            <label>whatmeworry</label>
-            <conversion fromUnit="#hpk" toUnit="#wmw" formula="$fromUnit * 1"/>
-            <desc>In the Potrzebie system of measures as introduced by Donald Knuth, the whatmeworry unit of power is equivalent to one hah per kovac.</desc>
-          </unitDef>
-          <unitDef xml:id="kwmw" type="power">
-            <label>kilowhatmeworry</label>
-            <conversion fromUnit="#wmw" toUnit="#kwmw" formula="$fromUnit div 1000"/>
-            <desc>The kilowhatmeworry is equivalent to 1000 whatmeworries.</desc>
-          </unitDef>
-          <unitDef xml:id="ap" type="power">
-            <label>kilowhatmeworry</label>
-            <conversion fromUnit="#kwmw" toUnit="#ap" formula="$fromUnit div 100"/>
-            <desc>One unit of aeolipower (A.P.) is equivalent to 100 kilowhatmeworries.</desc>
-          </unitDef>
-        </unitDecl>
-      </encodingDesc>
-    </egXML>
-  </exemplum>
-  <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
-      <conversion fromUnit="#furlongsPerFortnight" toUnit="#milesPerHour" formula="$fromUnit cast as xs:decimal * 0.000372"/>
-    </egXML>
-  </exemplum>
-  <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
-      <conversion fromUnit="#deciday" toUnit="hour" formula="$fromUnit cast as xs:decimal * 144 div 60"/>
-    </egXML>
-  </exemplum>
-  <remarks versionDate="2019-06-25" xml:lang="en">
-    <p>This attribute class provides <att>formula</att> for use in defining a value used in mathematical calculation. It can be used to store a mathematical operation needed to convert from one system of measurement to another. We use the teidata.xpath datatype to express this value in order to communicate mathematical operations on an XML node or nodes. The $fromUnit variable notation simplifies referencing of the <att>fromUnit</att> attribute on the parent <gi>conversion</gi> element. Note that <q>div</q> is required to express the division operator in XPath.</p>
+ 
+  <remarks versionDate="2020-01-15" xml:lang="en">
+    <p>This attribute class provides <att>where</att> for use in pointing to a URI containing a canonical name or information about the locational context of an <gi>event</gi> or a <gi>move</gi> on stage. It can be used for pointing out blocking cues, as in stage left, right, or center, where these locations are defined in the <gi>teiHeader</gi> or an external source. It may also be used to point to a canonical <gi>place</gi> defined in a <gi>listPlace</gi>.</p>
   </remarks>
   <listRef>
-    <ptr target="#HDUDECL" type="div3"/>
+    <ptr target="#DRSTA" type="div3"/>
   </listRef>
 </classSpec>
