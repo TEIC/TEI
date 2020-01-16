@@ -52,19 +52,19 @@
   <xsl:variable name="revisionDesc">
     <revisionDesc>
       <change who="#sbauman.emt" when="2019-11-08">
-	As part of working through <ref
-	target="https://github.com/TEIC/Stylesheets/issues/402">Stylesheets
-	ticket #402</ref>, Martin Holmes and I thought that an
-	<gi>elementSpec</gi> addressing a TEI element should not be in
-	mode <val>add</val>. This is intended to enforce that rule.
+        As part of working through <ref
+        target="https://github.com/TEIC/Stylesheets/issues/402">Stylesheets
+        ticket #402</ref>, Martin Holmes and I thought that an
+        <gi>elementSpec</gi> addressing a TEI element should not be in
+        mode <val>add</val>. This is intended to enforce that rule.
       </change>
       <change who="#sbauman.emt" when="2018-07-19">
-	Further addressing <ref
-	target="https://github.com/TEIC/TEI/issues/1735">TEI ticket
-	#1735</ref>: constrain content of both <gi>dataSpec</gi> and
-	<gi>macroSpec</gi> so that at most 1 <gi>content</gi> or 1
-	<gi>valList</gi> child is permitted. While there give the
-	<att>ident</att> attribute a semi-controlled vocabulary.
+        Further addressing <ref
+        target="https://github.com/TEIC/TEI/issues/1735">TEI ticket
+        #1735</ref>: constrain content of both <gi>dataSpec</gi> and
+        <gi>macroSpec</gi> so that at most 1 <gi>content</gi> or 1
+        <gi>valList</gi> child is permitted. While there give the
+        <att>ident</att> attribute a semi-controlled vocabulary.
       </change>
       <change who="#sbauman.emt" when="2018-02-02">
         <list>
@@ -787,43 +787,35 @@
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
-		<constraintSpec scheme="schematron" ident="need-required">
-		  <constraint>
-		    <sch:rule context="tei:moduleRef[ @except ]">
-		      <sch:let name="exceptions" value="tokenize( @except, '\s+' )"/>
-		      <xsl:comment> We could get away with using a single test, i.e. </xsl:comment>
-		      <xsl:comment> "('TEI','teiHeader','fileDesc','titleStmt','title','publicationStmt','sourceDesc')=$exceptions", </xsl:comment>
-		      <xsl:comment> but then we wouldn't get individualized error msgs. </xsl:comment>
-		      <xsl:comment> In either case, if &amp; when TEI changes the list of </xsl:comment>
-		      <xsl:comment> elements which are *required*, we need to change this </xsl:comment>
-		      <xsl:comment> code (in <xsl:value-of select="$myName"/>) manually. </xsl:comment>
-		      <sch:report test="'TEI'=$exceptions">Removing ＜TEI＞ from your schema
-		      guarantees it is not TEI conformant, and will will likely be outright
-		      invalid</sch:report>
-		      <sch:report test="'teiHeader'=$exceptions">Removing ＜teiHeader＞ from your
-		      schema guarantees it is not TEI conformant</sch:report>
-		      <sch:report test="'fileDesc'=$exceptions">Removing ＜fileDesc＞ from your
-		      schema guarantees it is not TEI conformant</sch:report>
-		      <sch:report test="'titleStmt'=$exceptions">Removing ＜titleStmt＞ from your
-		      schema guarantees it is not TEI conformant</sch:report>
-		      <sch:report test="'title'=$exceptions">Removing ＜title＞ from your schema
-		      guarantees it is not TEI conformant</sch:report>
-		      <sch:report test="'publicationStmt'=$exceptions">Removing
-		      ＜publicationStmt＞ from your schema guarantees it is not TEI
-		      conformant</sch:report>
-		      <sch:report test="'sourceDesc'=$exceptions">Removing ＜sourceDesc＞ from
-		      your schema guarantees it is not TEI conformant</sch:report>
-		    </sch:rule>
-		  </constraint>
-		</constraintSpec>
-                <xsl:call-template name="element-is-in-module"/>
-                <attList org="group">
-                  <attDef ident="include" mode="replace">
-                    <desc xml:lang="en" versionDate="{$versionDate}">supplies a list of the elements which are to be copied from the specified
-                      module into the schema being defined.</desc>
-                    <datatype minOccurs="0" maxOccurs="unbounded">
-                      <dataRef key="teidata.enumerated"/>
-                    </datatype>
+                <constraintSpec scheme="schematron" ident="need-required">
+                  <constraint>
+                    <sch:rule context="tei:moduleRef[ @except ]">
+                      <sch:let name="exceptions" value="tokenize( @except, '\s+' )"/>
+                      <xsl:comment> We could get away with using a single test, i.e. </xsl:comment>
+                      <xsl:comment> "('TEI','teiHeader','fileDesc','titleStmt','title','publicationStmt','sourceDesc')=$exceptions", </xsl:comment>
+                      <xsl:comment> but then we wouldn't get individualized error msgs. </xsl:comment>
+                      <xsl:comment> In either case, if &amp; when TEI changes the list of </xsl:comment>
+                      <xsl:comment> elements which are *required*, we need to change this </xsl:comment>
+                      <xsl:comment> code (in <xsl:value-of select="$myName"/>) manually. </xsl:comment>
+                      <sch:report test="'TEI'=$exceptions">Removing ＜TEI＞ from your schema
+                      guarantees it is not TEI conformant, and will will likely be outright
+                      invalid</sch:report>
+                      <sch:report test="'teiHeader'=$exceptions">Removing ＜teiHeader＞ from your
+                      schema guarantees it is not TEI conformant</sch:report>
+                      <sch:report test="'fileDesc'=$exceptions">Removing ＜fileDesc＞ from your
+                      schema guarantees it is not TEI conformant</sch:report>
+                      <sch:report test="'titleStmt'=$exceptions">Removing ＜titleStmt＞ from your
+                      schema guarantees it is not TEI conformant</sch:report>
+                      <sch:report test="'title'=$exceptions">Removing ＜title＞ from your schema
+                      guarantees it is not TEI conformant</sch:report>
+                      <sch:report test="'publicationStmt'=$exceptions">Removing
+                      ＜publicationStmt＞ from your schema guarantees it is not TEI
+                      conformant</sch:report>
+                      <sch:report test="'sourceDesc'=$exceptions">Removing ＜sourceDesc＞ from
+                      your schema guarantees it is not TEI conformant</sch:report>
+                    </sch:rule>
+                  </constraint>
+                </constraintSpec>
                     <constraintSpec scheme="schematron" ident="include-required">
                       <constraint>
                         <sch:rule context="tei:moduleRef[ @key eq 'textstructure' and @include ]">
@@ -866,6 +858,17 @@
                         </sch:rule>
                       </constraint>
                     </constraintSpec>
+                <xsl:call-template name="element-is-in-module"/>
+                <attList org="group">
+                  <attDef ident="include" mode="replace">
+                    <desc xml:lang="en" versionDate="{$versionDate}">supplies a list of the elements which are to be copied from the specified
+                      module into the schema being defined.</desc>
+                    <datatype minOccurs="0" maxOccurs="unbounded">
+                      <dataRef key="teidata.enumerated"/>
+                    </datatype>
+                    <!-- Note: constraint "include-required" should (in
+                         some sense) be defined here, but was moved to
+                         address #1950. —sb, 2019-12-06 -->
                     <valList type="closed">
                       <xsl:copy-of select="$elements"/>
                     </valList>
@@ -875,10 +878,10 @@
                       specified module into the schema being defined.</desc>
                     <datatype minOccurs="0" maxOccurs="unbounded">
                       <dataRef key="teidata.enumerated"/>
-		    </datatype>
-		    <!-- Note: constraint "need-required" should (in
-			 some sense) be defined here, but was moved to
-			 address #1950. —sb, 2019-12-06 -->
+                    </datatype>
+                    <!-- Note: constraint "need-required" should (in
+                         some sense) be defined here, but was moved to
+                         address #1950. —sb, 2019-12-06 -->
                     <valList type="semi">
                       <xsl:copy-of select="$elements"/>
                     </valList>
@@ -931,22 +934,22 @@
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="macroSpec" mode="change">
-		<content>
-		  <sequence>
-		    <alternate minOccurs="0" maxOccurs="unbounded">
-		      <classRef key="model.glossLike"/>
-		      <classRef key="model.descLike"/>
-		    </alternate>
-		    <alternate minOccurs="0" maxOccurs="1">
-		      <elementRef key="content"/>
-		      <elementRef key="valList"/>
-		    </alternate>
-		    <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
-		    <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
-		    <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
-		    <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
-		  </sequence>
-		</content>
+                <content>
+                  <sequence>
+                    <alternate minOccurs="0" maxOccurs="unbounded">
+                      <classRef key="model.glossLike"/>
+                      <classRef key="model.descLike"/>
+                    </alternate>
+                    <alternate minOccurs="0" maxOccurs="1">
+                      <elementRef key="content"/>
+                      <elementRef key="valList"/>
+                    </alternate>
+                    <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
+                    <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
+                    <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
+                    <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
+                  </sequence>
+                </content>
                 <attList>
                   <attDef ident="ident" mode="replace" usage="req">
                     <datatype minOccurs="1" maxOccurs="1">
@@ -958,13 +961,13 @@
                   </attDef>
                 </attList>
                 <remarks xml:lang="en" versionDate="{$versionDate}">
-		  <p>In tei_customization the <gi>macroSpec</gi>
-		  element (and the <gi>dataSpec</gi> element) allows
-		  at most one <gi>content</gi> or one <gi>valList</gi>
-		  child (not both). TEI P5 permits any number of
-		  either or both, but does not define what multiples mean,
-		  and current ODD processors only process one.</p>
-		</remarks>
+                  <p>In tei_customization the <gi>macroSpec</gi>
+                  element (and the <gi>dataSpec</gi> element) allows
+                  at most one <gi>content</gi> or one <gi>valList</gi>
+                  child (not both). TEI P5 permits any number of
+                  either or both, but does not define what multiples mean,
+                  and current ODD processors only process one.</p>
+                </remarks>
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="macroRef" mode="change">
@@ -1012,22 +1015,22 @@
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="dataSpec" mode="change">
-		<content>
-		  <sequence>
-		    <alternate minOccurs="0" maxOccurs="unbounded">
-		      <classRef key="model.glossLike"/>
-		      <classRef key="model.descLike"/>
-		    </alternate>
-		    <alternate minOccurs="0" maxOccurs="1">
-		      <elementRef key="content"/>
-		      <elementRef key="valList"/>
-		    </alternate>
-		    <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
-		    <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
-		    <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
-		    <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
-		  </sequence>
-		</content>
+                <content>
+                  <sequence>
+                    <alternate minOccurs="0" maxOccurs="unbounded">
+                      <classRef key="model.glossLike"/>
+                      <classRef key="model.descLike"/>
+                    </alternate>
+                    <alternate minOccurs="0" maxOccurs="1">
+                      <elementRef key="content"/>
+                      <elementRef key="valList"/>
+                    </alternate>
+                    <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
+                    <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
+                    <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
+                    <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
+                  </sequence>
+                </content>
                 <attList>
                   <attDef ident="ident" mode="replace">
                     <datatype minOccurs="1" maxOccurs="1">
@@ -1039,16 +1042,16 @@
                   </attDef>
                 </attList>
                 <remarks xml:lang="en" versionDate="{$versionDate}">
-		  <p>In tei_customization the <gi>dataSpec</gi>
-		  element (and the <gi>macroSpec</gi> element) allows
-		  at most one <gi>content</gi> or one <gi>valList</gi>
-		  child (not both). TEI P5 permits any number of
-		  either or both, but does not define what multiples mean,
-		  and current ODD processors only process one.</p>
-		</remarks>
+                  <p>In tei_customization the <gi>dataSpec</gi>
+                  element (and the <gi>macroSpec</gi> element) allows
+                  at most one <gi>content</gi> or one <gi>valList</gi>
+                  child (not both). TEI P5 permits any number of
+                  either or both, but does not define what multiples mean,
+                  and current ODD processors only process one.</p>
+                </remarks>
               </elementSpec>
 
-	      <elementSpec module="tagdocs" ident="dataRef" mode="change">
+              <elementSpec module="tagdocs" ident="dataRef" mode="change">
                 <attList>
                   <attDef ident="key" mode="replace">
                     <datatype minOccurs="1" maxOccurs="1">
@@ -1168,13 +1171,13 @@
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
-		<constraintSpec scheme="schematron" ident="add_implies_ns">
+                <constraintSpec scheme="schematron" ident="add_implies_ns">
                   <constraint>
                     <sch:rule context="tei:elementSpec[ @mode eq 'add'  or  not( @mode ) ]">
                       <sch:assert test="ancestor-or-self::*/@ns">When used to add an element, ＜elementSpec＞ (or its ancestor ＜schemaSpec＞) should have an @ns attribute.</sch:assert>
                     </sch:rule>
                   </constraint>
-		</constraintSpec>
+                </constraintSpec>
                 <attList>
                   <attDef ident="ident" mode="replace" usage="req">
                     <datatype minOccurs="1" maxOccurs="1">
@@ -1268,7 +1271,7 @@
               <xsl:comment> of course &lt;xi:include> refers to &lt;xi:fallback>, so we need to declare</xsl:comment>
               <xsl:comment> that, too, just in case. </xsl:comment>
               <elementSpec ns="http://www.example.org/cannot/really/use/XInclude"
-			   ident="fallback" mode="add" >
+                           ident="fallback" mode="add" >
                 <content>
                   <alternate minOccurs="1" maxOccurs="unbounded">
                     <textNode/>
