@@ -30,8 +30,8 @@ install()
     echo unpack to ${Vault}/${name}/${version}
     ${ECHO} unzip -q -o ${pname}-${version}.zip -d ${Vault}/${name}/${version}
     case $package in
-	Roma)
-	    ${ECHO} unzip -q -o ${pname}-${version}.zip -d /usr/share;;
+	Stylesheets)
+	    ${ECHO} unzip -q -o ${pname}-${version}.zip -d ${Vault}/${name}/${version};;
 	TEIP5)
 	    ${ECHO} rm -f teiwebsiteguidelines.zip;
 	    echo Get special HTML pages for TEI web site;
