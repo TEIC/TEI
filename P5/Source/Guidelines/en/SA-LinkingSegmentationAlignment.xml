@@ -45,7 +45,8 @@ provides for the following common requirements:
     <item>to specify that different elements are
     alternatives to one another and to express
     preferences among the alternatives (section <ptr target="#SAAT"/>);</item>
-    <item>to store markup separately from the data it describes (section <ptr target="#SASO"/>);</item>
+    <item>to store markup separately from the data it describes
+    or is related to (section <ptr target="#SASO"/>);</item>
     <item>to associate segments of a text
     with interpretations or analyses of their significance (section
     <ptr target="#SAAN"/>);</item>
@@ -2885,67 +2886,101 @@ combination of exclusive and inclusive <gi>alt</gi> elements, as follows.
     a single markup tree is not the most faithful representation of the
     source material.</p>
 	<p>This section describes a generic mechanism for expressing
-	  <emph>all</emph> kinds of markup externally as stand-off tags, for use
-    whenever it is appropriate.</p>
-<!-- this list uses technical terms defined after it appears: it
-should be moved -->
+	<emph>all</emph> kinds of markup externally as stand-off tags,
+	for use whenever it is appropriate; and a place in the TEI
+	structure (<gi>standOff</gi>) to contain certain common kinds
+	of stand-off markup.</p>
+	<!-- this list uses technical terms defined after it appears: it should be moved -->
 	<p>Throughout this section the following terms will be systematically used in
 	specific senses.
-<list type="gloss">
-	<label>
-<term>source document</term>
-	</label>
-	<item>a document to which the stand-off markup refers (a source document can be either XML or
-plain text); there may be more than one source document.</item>
-	<label>
-<term>internal markup</term>
-	</label>
-	<item>markup that is already present in an XML source document</item>
-	<label>
-<term>stand-off markup</term>
-	</label>
-	<item>markup that is either outside of the source document and points in to it to the data it
-describes, or alternatively is in another part of the source document and points elsewhere
-within the document to the data it describes</item>
-	<label>
-<term>external document</term>
+	<list type="gloss">
+	  <label>
+	    <term>source document</term>
+	  </label>
+	  <item>a document to which the stand-off markup refers (a source document can be either XML or
+	  plain text); there may be more than one source document.</item>
+	  <label>
+	    <term>internal markup</term>
+	  </label>
+	  <item>markup that is already present in an XML source document</item>
+	  <label>
+	    <term>stand-off markup</term>
+	  </label>
+	  <item>markup that is either outside of the source document
+	  and points in to it to the data it describes, or is pointed
+	  at by the data that refers to it; or alternatively is in
+	  another part of the source document and points elsewhere
+	  within the document to the data it describes, or is pointed
+	  at by data elsewhere that refers to it.</item>
+	  <label>
+	    <term>external document</term>
 	</label>
 	<item>a document that contains stand-off markup that points to a different, source document</item>
 	<label>
-<term>internalize</term>
+	  <term>internalize</term>
 	</label>
 	<item>the action of creating a new XML document with external markup and data integrated with the
-source document data, and possibly some source document markup as well</item>
+	source document data, and possibly some source document markup as well</item>
 	<label>
-<term>externalize</term>
+	  <term>externalize</term>
 	</label>
-	<item>a process applied to markup from a pre-existing XML document, which splits it into two
-documents, an XML (external) document containing some of the markup of the original document,
-and another (source) XML document containing whatever text content and markup has not been
-extracted into the stand-off document; if all markup has been externalized from a document, the
-new source may be a plain text document</item>
-</list>
+	<item>a process applied to markup from a pre-existing XML
+	document, which splits it into two documents, an XML
+	(external) document containing some of the markup of the
+	original document, and another (source) XML document
+	containing whatever text content and markup has not been
+	extracted into the stand-off document; if all markup has been
+	externalized from a document, the new source may be a plain
+	text document</item>
+	</list>
 	</p>
 	<p>The three major requirements satisfied by this scheme for stand-off markup are:
-	  <list rend="numbered">
-	    <item n="a">any valid TEI markup can be either internal or
-	external,</item>
-	    <item n="b">external markup can be internalized by
-	applying it to the document content by either
-	substituting the existing markup or adding to it,
-	to form a valid TEI document, and</item>
-	    <item n="c">the external markup itself specifies whether
+	<list rend="numbered">
+	  <item n="a">any valid TEI markup can be either internal or
+	  external,</item>
+	  <item n="b">external markup can be internalized by
+	  applying it to the document content by either
+	  substituting the existing markup or adding to it,
+	  to form a valid TEI document, and</item>
+	  <item n="c">the external markup itself specifies whether
 	an internalized document is to be created by substituting
 	the existing internal markup or by adding to
-	it</item></list>.</p>
-  
-<!-- need simple example here -->
-   
+	it</item>
+	</list>.</p>
+	
+	<!-- need simple example here -->
+	
 </div>
+<div type="div3" xml:id="SASOstdf">
+  <head>The <gi>standOff</gi> Container</head>
+  <p>The <gi>standOff</gi> element is a catch-all element intended for
+  holding content that is neither transcribed from the source
+  document, nor strictly speaking metadata about said document. It may
+  also be used to hold transcribed text that does not, for some
+  reason, fit into the encoding model being used.</p>
+  <p>Examples of the former include contextual information about named
+  entities (typically encoded using <gi>listBibl</gi>,
+  <gi>listOrg</gi>, <gi>listNym</gi>, <gi>listPerson</gi>, or
+  <gi>listPlace</gi>), collections of <gi>alt</gi> elements for
+  encoding ambiguity of reference, and an encoded <gi>castList</gi>
+  used to record information about speaking characters in a drama who
+  were not mentioned in the source cast list.</p>
+  <p>Examples of the latter include encoding source authorial
+  footnotes in the <gi>standOff</gi> in order to more easily represent
+  source pages when a footnote runs across a page break, or to encode
+  words that appear in the source text as part of an acrostic<!-- (using
+  <gi>acrostic</gi> in <gi>extraTextual</gi>)-->.</p>
+  <p>As a member of <ident type="class">model.resource</ident>, it
+  occurs as a child of <gi>TEI</gi> (or <gi>teiCorpus</gi>). If the
+  metadata that describes the <gi>standOff</gi> is largely the same as
+  the metadata that describes the associated resource (e.g., the
+  transcribed text in <gi>text</gi>), then the <gi>standOff</gi> and
+  the encoded associated resource may appear as children of the same
+  <gi>TEI</gi> element.</p>
+</div>
+
 <div type="div3" xml:id="SASOov">
-<head>Overview of XInclude </head>
-
-
+  <head>Overview of XInclude </head>
    <p>Stand-off markup which relies on the inclusion of virtual
    content is adequately supported by the W3C XInclude recommendation,
    which is also recommended for use by these Guidelines.<note place="bottom">The version on which this text is based is the <ref target="http://www.w3.org/TR/2004/REC-xinclude-20041220/">W3C
