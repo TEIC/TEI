@@ -76,9 +76,10 @@ to the Unicode Standard.  </item>
 <p>Since there are now over 130,000 characters in Unicode,
 chances are good that what you need is already there, but it might
 not be easy to find, since it might have a different name in
-Unicode. Editors working with East Asian writing systems, should consult
+Unicode. Editors working with East Asian writing systems should consult
 the <ref target="https://unicode.org/charts/unihan.html">Unihan Database</ref>.
-Look again, this time at other sites, for example <ptr target="http://www.eki.ee/letter/"/> (no CJK) or <ptr target="https://www.chise.org"/> (CJK only), which also provide searches based on scripts and languages. Take care, however, that all the
+Look again, this time at other sites, preferably ones which also provide searches based on scripts and languages. For example <ptr target="https://www.chise.org"/> (for CJK characters) or <ptr target="http://www.eki.ee/letter/"/> (for non-CJK characters) .
+Take care, however, that all the
 properties of what seems to be a relevant character are consistent
 with those of the character you are looking for. For example, if
 your character is definitely a digit, but the properties of the
@@ -176,7 +177,7 @@ for use by such applications in a standard way.</p>
 <p> The list of attributes (properties) for characters is modelled on
 those in the Unicode Character Database, which distinguishes
 <term>normative</term> and <term>informative</term> character
-properties. The Unicode Consortium also maintains a separate set of character properties specific to East Asian characters in the <ref target="http://www.unicode.org/charts/unihan.html">Unihan database</ref> which TEI fully supports. Lastly, non-Unicode, properties may also be supplied.
+properties. The Unicode Consortium also maintains a separate set of character properties specific to East Asian characters in the <ref target="http://www.unicode.org/charts/unihan.html">Unihan database</ref> which TEI fully supports. Lastly, non-Unicode properties may also be supplied.
 Since the list of properties will vary with different versions of the
 Unicode Standard, there may not be an exact correspondence between
 them and the list of properties defined in these Guidelines.</p>
@@ -291,7 +292,7 @@ from the private use area as in this example:
 </egXML>
 </p>
 <p>A more precise documentation of the properties of any character or
-glyph may be supplied using one of the three: <gi>localProp</gi>, <gi>unicodeProp</gi>, or <gi>unihanProp</gi> elements described in the next section.</p>
+glyph may be supplied using one of the three <soCalled>property</soCalled> elements: <gi>localProp</gi>, <gi>unicodeProp</gi>, or <gi>unihanProp</gi>; these are described in the next section.</p>
 <div type="div3" xml:id="ucsprops"><head>Character Properties</head>
 <p>The Unicode Standard documents <soCalled>ideal</soCalled>
 characters, defined by reference to a number of
@@ -308,8 +309,23 @@ modifications, great care should be taken not to override standard
 informative properties for characters which already exist in the Unicode
 Standard, as documented in <ref target="#CH-eg-02">Freytag (2006)</ref>.</p>
 <!-- TODO phase 6 insert comment about validation of values -->
-<p>The <gi>unicodeProp</gi>, <gi>unihanProp</gi>, and <gi>localProp</gi> elements allow TEI encoders to record information about a character or glyph. Where the information concerned relates to
-a property which has already been identified in the Unicode Standard, use of the appropriate Unicode property name with <gi>unicodeProp</gi> is strongly encouraged. The use of available Unihan property names with <gi>unihanProp</gi>, is similarly encouraged. With these elements, validation rules for property names <!-- and values --> according to Unicode conventions are incorporated into TEI validation rules. Where neither of these standards suffices use <gi>localProp</gi>.</p>
+<p>The <gi>unicodeProp</gi>, <gi>unihanProp</gi>, and
+<gi>localProp</gi> elements allow a TEI encoder to record information
+about a character or glyph:
+<specList>
+  <specDesc key="unicodeProp" atts="name value"/>
+  <specDesc key="unihanProp" atts="name value"/>
+  <specDesc key="localProp" atts="name value"/>
+</specList>
+</p>
+<p>Where the information concerned relates to a property which has
+already been identified in the Unicode Standard, use of the
+appropriate Unicode property name with <gi>unicodeProp</gi> is
+strongly encouraged. The use of available Unihan property names with
+<gi>unihanProp</gi> is similarly encouraged. Validation rules for
+property names <!-- and values --> according to Unicode conventions
+are incorporated into the TEI schemas. Where neither of these
+standards suffices use <gi>localProp</gi>.</p>
 <!-- Phse 3-5 TODO add @version in here and override possible values for localProp -->
 <p>The three elements for recording Unicode or locally defined properties belong to the <gi>att.gaijiProp</gi> class. This class defines two required attributes for record key-value pairs for character properties:
 <!-- TODO phase 3: add version -->
@@ -317,9 +333,9 @@ a property which has already been identified in the Unicode Standard, use of the
 <specDesc key="att.gaijiProp" atts="name value"/>
 </specList>
 For each property, the encoder must supply both a
-<att>name</att> and a <att>value</att>. In cases of boolean properties TEI requires an explict true or false <gi>value</gi> attribute:
+<att>name</att> and a <att>value</att>. In cases of boolean properties TEI requires an explict <val>true</val> or <val>false</val> <att>value</att> attribute:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
-  <unicodeProp name="Ideographic" value="False"/>
+  <unicodeProp name="Ideographic" value="false"/>
 </egXML>
 </p>
 <p>For convenience, we list here some of the normative character
@@ -465,7 +481,7 @@ Character Database: Canonical Combining Class Values</ref>); these were taken fr
 	 the text direction: it has the value <code>Y</code>
 (character is mirrored) or <code>N</code> (code is not mirrored).</item>
 	</list></p>
-<p>The Unicode Standard also defines a set of informative (but non-normative) properties for Unicode characters. If encoders want to provide such properties, they may be included using the suggested Unicode name. If a Unicode name exists for a given character this should always be used, encoders may also supply locally defined names. To tag a unicode name, use <gi>unicodeProp</gi>, or <gi>unihanProp</gi> for Unihan properties. For names specified elsewhere or specified locally use <gi>localProp</gi>.</p>
+<p>The Unicode Standard also defines a set of informative (but non-normative) properties for Unicode characters. If encoders wish to provide such properties, they should be included using the Unicode name. If a Unicode name exists for a given character this should always be used, however encoders may also supply locally defined names. To tag a Unicode name, use <tag>unicodeProp name="Name"</tag> (or <tag>unihanProp name="Name"</tag>). For names specified elsewhere or specified locally use <gi>localProp</gi>.</p>
 </div>
    </div>
    <div type="div2" xml:id="D25-30">
@@ -473,7 +489,7 @@ Character Database: Canonical Combining Class Values</ref>); these were taken fr
 <p>Annotation of a character becomes necessary when it is desired
 to distinguish it on the basis of certain aspects (typically, its
 graphical appearance) only.  In a manuscript, for example, where
-distinctly different forms of the letter "r" can be recognized, it
+distinctly different forms of the letter <mentioned>r</mentioned> can be recognized, it
 might be useful to distinguish them for analytic purposes, quite
 distinct from the need to provide an accurate representation of the
 page. A digital facsimile, particularly one linked to a
@@ -502,7 +518,7 @@ the letter we wish to distinguish: <egXML xmlns="http://www.tei-c.org/ns/Example
  </glyph>
 </charDecl> </egXML>
  With these definitions in place, occurrences of these two special
- "r"s in the text can be annotated using the element <gi>g</gi>:
+ <mentioned>r</mentioned>s in the text can be represented using the element <gi>g</gi>:
  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 <p>Wo<g ref="#r1">r</g>ds in this
   manusc<g ref="#r2">r</g>ipt are sometimes
@@ -516,14 +532,14 @@ the letter we wish to distinguish: <egXML xmlns="http://www.tei-c.org/ns/Example
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p> ... <g ref="#Filig">Fi</g>lthy riches...</p>
 <!-- in the charDecl -->
   <glyph xml:id="Filig">
-   <localProp name="name" value="LATIN UPPER F AND LATIN LOWER I LIGATURE"/>
+   <localProp name="Name" value="LATIN UPPER F AND LATIN LOWER I LIGATURE"/>
    <figure><graphic url="Filig.png"/></figure>
  </glyph>
 </egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p> ... <abbr><g ref="#per">per</g></abbr> ardua</p>
 <!-- in the charDecl -->
   <glyph xml:id="per">
-   <localProp name="name" value="LATIN ABBREVIATION PER"/>
+   <localProp name="Name" value="LATIN ABBREVIATION PER"/>
    <figure><graphic url="per.png"/></figure>
  </glyph>
 
@@ -534,7 +550,7 @@ the letter we wish to distinguish: <egXML xmlns="http://www.tei-c.org/ns/Example
   such as indexing).</p>
 <p>With this
  markup in place, it will be possible to write programs to analyze
- the distribution of the different letters "r" as well as produce
+ the distribution of the different letters <mentioned>r</mentioned> as well as produce
  more <soCalled>faithful</soCalled> renderings of the original. It
  will also be possible to produce normalized versions by simply ignoring
  the annotation pointed to by the element <gi>g</gi>.  <!-- To make
@@ -649,7 +665,7 @@ representation is to use the <gi>g</gi> element defined by
 the module defined in this chapter: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#NONE"><g ref="#ydotacute"/></egXML>. This makes it possible for the encoder to
 provide useful documentation for the particular character or glyph so referenced:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><char xml:id="ydotacute">
-   <localProp name="name" value="LATIN SMALL LETTER Y WITH DOT ABOVE AND
+   <localProp name="Name" value="LATIN SMALL LETTER Y WITH DOT ABOVE AND
    ACUTE"/>
    <localProp name="entitiy" value="ydotacute"/>
  <mapping type="composed">&amp;#x0079;&amp;#x0307;&amp;#x0301;</mapping>
@@ -669,7 +685,7 @@ provide useful documentation for the particular character or glyph so referenced
   <mapping type="standard">偽</mapping>
 </glyph>
 </egXML>
-The composition rules and further examples appear in <ref target="https://www.unicode.org/versions/Unicode11.0.0/ch18.pdf#G28626">Chapter 18.2: Ideographic Description Characters</ref> of the Unicode Standard. Editors should be aware that different sequences can accurately describe the same character. In the example the character "人" (U+4EBA) could have been substituted with "亻" (U+4EBB). Local preferences about how sequences are constructed should be documented in the <ptr target="#HD5"/>. Additionally, a number of online services, such as <ref target="https://chise.org"> CHISE</ref>, offer quering and retrieving characters via IDS, which facilitates a greater degree of stablilty across different applications.</p>
+The composition rules and further examples appear in <ref target="https://www.unicode.org/versions/Unicode11.0.0/ch18.pdf#G28626">Chapter 18.2: Ideographic Description Characters</ref> of the Unicode Standard. Editors should be aware that different sequences can accurately describe the same character. In the example the character "人" (U+4EBA) could have been substituted with "亻" (U+4EBB). Local preferences about how sequences are constructed should be documented in the <gi>encodingDesc</gi> of the corresponding TEI header (see <ptr target="#HD5"/>). Additionally, a number of online services, such as <ref target="https://chise.org">CHISE</ref>, offer querying and retrieving characters via IDS, which facilitates a greater degree of stabililty across different applications.</p>
 <p>Under certain circumstances, Chinese Han characters can be written
 within a circle. Rather than considering this as simply an aspect of the rendering, an encoder may wish to treat such circled characters as entirely distinct derived characters. For a given character
 (say that represented by the numeric-character reference <code>&amp;#x4EBA;</code>)
@@ -678,7 +694,7 @@ the circled variant might conveniently be represented as
 definition such as the following:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><char xml:id="U4EBA-circled">
   <unicodeProp name="Decomposition_Mapping" value="cicle"/>
-  <localProp name="name" value="CIRCLED IDEOGRAPH 36"/>
+  <localProp name="Name" value="CIRCLED IDEOGRAPH 36"/>
   <localProp name="daikanwa" value="36"/>
   <mapping type="standard">
    &amp;#x4EBA;
