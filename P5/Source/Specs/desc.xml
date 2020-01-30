@@ -8,8 +8,8 @@
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0"
-	     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-	     module="core" ident="desc">
+             xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+             module="core" ident="desc">
   <gloss versionDate="2005-01-14" xml:lang="en">description</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">기술</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">描述</gloss>
@@ -53,38 +53,43 @@
     <gi>desc</gi> is a valid child of that element.</desc>
     <constraint>
       <sch:rule context="tei:desc[ @type eq 'deprecationInfo']">
-	<sch:assert test="../@validUntil">Information about a
-	deprecation should only be present in a specification element
-	that is being deprecated: that is, only an element that has a
-	@validUntil attribute should have a child &lt;desc
-	type="deprecationInfo">.</sch:assert>
+        <sch:assert test="../@validUntil">Information about a
+        deprecation should only be present in a specification element
+        that is being deprecated: that is, only an element that has a
+        @validUntil attribute should have a child &lt;desc
+        type="deprecationInfo">.</sch:assert>
       </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>
     <attDef ident="type" mode="change">
       <valList type="semi">
-	<valItem ident="deprecationInfo">
-	  <gloss versionDate="2018-09-14" xml:lang="en">deprecation
-	  information</gloss>
-	  <desc versionDate="2018-09-14" xml:lang="en">This element
-	  describes why or how its parent element is being deprecated,
-	  typically including recommendations for alternate
-	  encoding.</desc>
-	</valItem>
+        <valItem ident="deprecationInfo">
+          <gloss versionDate="2018-09-14" xml:lang="en">deprecation
+          information</gloss>
+          <desc versionDate="2018-09-14" xml:lang="en">This element
+          describes why or how its parent element is being deprecated,
+          typically including recommendations for alternate
+          encoding.</desc>
+        </valItem>
       </valList>
       <exemplum xml:lang="en">
-	<egXML xmlns="http://www.tei-c.org/ns/Examples">
-	   <dataSpec module="tei" ident="teidata.point" validUntil="2050-02-25">
-	     <!--2020-01-30 ebb I'm setting a date in the long distant future for this example because if I put its actual validUntil historic date (2019) in place, it breaks our build. -->
-	    <desc type="deprecationInfo" versionDate="2018-09-14"
-	    xml:lang="en">Several standards bodies, including NIST in the USA,
-	    strongly recommend against ending the representation of a number
-	    with a decimal point. So instead of <q>3.</q> use either <q>3</q>
-	    or <q>3.0</q>.</desc>
-	    <!-- ... -->
-	 </dataSpec>
-	</egXML>
+        <!-- 2020-01-30 EBB: I'm setting a date in the long distant
+             future for this example because if I put its actual
+             @validUntil historic date (2019) in place, it breaks our
+             build. -->
+        <!-- 2020-01-30 SB: Indeed it does, but why? Shouldn't. See
+             Stylesheets ticket #417. -->
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+           <dataSpec module="tei" ident="teidata.point" validUntil="2050-02-25">
+            <desc type="deprecationInfo" versionDate="2018-09-14"
+            xml:lang="en">Several standards bodies, including NIST in the USA,
+            strongly recommend against ending the representation of a number
+            with a decimal point. So instead of <q>3.</q> use either <q>3</q>
+            or <q>3.0</q>.</desc>
+            <!-- ... -->
+         </dataSpec>
+        </egXML>
       </exemplum>
     </attDef>
   </attList>
