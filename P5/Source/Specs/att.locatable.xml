@@ -7,8 +7,25 @@ $Date$
 $Id$
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" ident="att.locatable">
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" type="atts" ident="att.locatable">
   <desc versionDate="2020-01-15" xml:lang="en">provides attributes that specify locational information.</desc>
+<constraintSpec ident="att-locatable-where" scheme="schematron">
+    <constraint>
+      <sch:pattern id="testing-if-anyURI">
+      <sch:rule context="tei:*[@where[contains(string(), ':')]]">
+        <sch:assert test="matches(tokenize(@where/string(), ':')[1], '^[A-Za-z0-9+.-]+$')" role="warning">The value of the where attribute will need to conform to the xsd:anyURI datatype. If one or more colons are used, the first colon must only be preceded by one or more simple alphanumeric characters, the plus, minus, or period symbols: [A-Za-z0-9+.-]+.
+          Finally, if the # is present it must only appear once.</sch:assert>
+      </sch:rule>
+      <sch:rule context="tei:*[@where[contains(string(), '%')]]">
+        <sch:let name="tokens" value="tokenize(@where, '%')[position() gt 1]"/>
+        <sch:assert test="every $token in $tokens satisfies matches($token, '^[0-9a-fA-F]{2}')" role="warning">The value of the where attribute will need to conform to the xsd:anyURI datatype. If a percent sign is used it may only be followed by two hexadecimal characters (representing a codepoint).</sch:assert>
+      </sch:rule>
+      <sch:rule context="tei:*[@where[contains(string(), '#')]]">
+        <sch:assert test="count(tokenize(@where/string(), '#')) le 2" role="warning">The value of the where attribute will need to conform to the xsd:anyURI datatype. When the # character is present it must only appear once.</sch:assert>
+      </sch:rule>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="where" usage="opt">
       <desc versionDate="2020-01-15" xml:lang="en">The <att>where</att> attribute specifies a location by using a URI to point to another resource.</desc>
