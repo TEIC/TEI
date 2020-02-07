@@ -125,23 +125,25 @@ that practice. -->
 
 
     <p>This section explains how the TEI schema can be customized by suppressing elements, modifying
-      classes of elements, or adding elements<!--, and renaming elements-->. Documents which validate against
-      an application of the TEI schema which has been customized in this way may or may not be
-      considered <soCalled>TEI-conformant</soCalled>, as further discussed in section <ptr
-        target="#CF"/>.</p>
+      classes of elements, or adding elements<!--, and renaming elements-->. Documents which
+      validate against an application of the TEI schema which has been customized in this way may or
+      may not be considered <soCalled>TEI-conformant</soCalled>, as further discussed in section
+        <ptr target="#CF"/>.</p>
 
     <p>The TEI system is designed to support modification and customization in a documented way that
       can be validated by an XML processor. This is achieved by writing a small TEI-conformant
-      document, known informally as an ODD (One Document Does it all), from which an appropriate processor can generate both human-readable documentation,
-      and a schema expressed in a language such as RELAX NG or DTD. The mechanisms used to
-      instantiate a TEI schema differ for different schema languages, and are therefore not defined
-      here. In XML DTDs, for example, extensive use is made of parameter entities, while in RELAX NG
-      schemas, extensive use is made of patterns. In either case, the names of elements and,
-      wherever possible, their attributes and content models are defined indirectly. The syntax used
-      to implement this indirection also varies with the schema language used, but the underlying
-      constructs in the TEI Abstract Model are given the same names. 
+      document, known informally as an ODD (One Document Does it all), from which an appropriate
+      processor can generate both human-readable documentation, and a schema expressed in a language
+      such as RELAX NG or DTD. The mechanisms used to instantiate a TEI schema differ for different
+      schema languages, and are therefore not defined here. In XML DTDs, for example, extensive use
+      is made of parameter entities, while in RELAX NG schemas, extensive use is made of patterns.
+      In either case, the names of elements and, wherever possible, their attributes and content
+      models are defined indirectly. The syntax used to implement this indirection also varies with
+      the schema language used, but the underlying constructs in the TEI Abstract Model are given
+      the same names.
       <!--2018-07-20 ebb: ?? Readers may be confused about what we mean by "defined indirectly" in this paragraph, and why that's important. I suspect we can explain this a little more clearly by introducing ODD explicitly here, earlier than its first introduction in the paragraph after next. Maybe we could explain here that indirect definition should prioritize efficient, human-readable customizations of the TEI schema. -->
-    This indirection makes it simpler to implement customization of the TEI system in an accessible and human-readable way. </p>
+      This indirection makes it simpler to implement customization of the TEI system in an
+      accessible and human-readable way. </p>
 
     <p>As further discussed in section <ptr target="#ST"/>, the TEI encoding schema comprises a set
       of class and macro declarations, and a number of <term>modules</term>. Each module is made up
@@ -162,7 +164,7 @@ that practice. -->
         <list rend="numbered">
         <item>particular elements may be suppressed, removing them from any classes in which they
           are members, and also from any generated schema; </item>
-         <item>new elements may be added to an existing class, thus making them available in macros
+        <item>new elements may be added to an existing class, thus making them available in macros
           or content models defined in terms of those classes;</item>
         <item>additional attributes, or attribute values, may be specified for an individual element
           or for classes of elements; </item>
@@ -173,9 +175,9 @@ that practice. -->
           characteristics;</item>
         <item>the set of values legal for an attribute or attribute class may be constrained or
           relaxed by supplying or modifying a value list, or by modifying its datatype.</item>
-          <item>within certain limits, the name (generic identifier) associated with an element may be
-            changed, without changing the semantic or syntactic properties of the element;</item>
-          
+        <item>within certain limits, the name (generic identifier) associated with an element may be
+          changed, without changing the semantic or syntactic properties of the element;</item>
+
       </list> The modification mechanisms presented in this section are quite general, and may be
       used to make all the types of changes just listed. </p>
 
@@ -195,12 +197,13 @@ that practice. -->
       <p>For ease of discussion, we distinguish the following different kinds of modification: <list
           rend="numbered">
           <item>deletion of elements;</item>
-            <item>modification of content models;</item>
+          <item>modification of content models;</item>
           <item>modification of attribute and attribute-value lists;</item>
           <item>modification of class membership;</item>
           <item>addition of new elements.</item>
-  <!--      <item>renaming of elements;</item>
-   -->   </list> Each of these is described in the following sections.</p>
+          <item>renaming of elements;</item>
+  
+        </list> Each of these is described in the following sections.</p>
 
       <p>Each kind of modification changes the set of documents that will be considered valid
         according to the resulting schema. A schema derived from any combination of unmodified TEI
@@ -208,15 +211,15 @@ that practice. -->
         documents. A schema deriving from a combination of modified TEI declarations (a "modified
         schema") will define a different set of documents. The set of documents valid according to
         the modified schema may or may not be properly contained by the set of documents considered
-        to be valid according to the unmodified schema. The schema <ident>TEI-All</ident> is the special case of the
-        unmodified schema which includes all currently available TEI modules. We use the term <term>clean
-          modification</term> cases where the set of documents defined by a
-        modified schema is a proper subset of the set of documents defined by TEI-All.
-        Where this is not the case, that is, where the modified schema considers valid some
-        documents which TEI-All does not, we use the term <term>unclean
-          modification</term>. Despite this terminology, unclean modifications are not particularly
-        deprecated, and their use may often be vital to the success of a project. The concept is
-        introduced solely to distinguish the effects of different kinds of modification.</p>
+        to be valid according to the unmodified schema. The schema <ident>TEI-All</ident> is the
+        special case of the unmodified schema which includes all currently available TEI modules. We
+        use the term <term>clean modification</term> cases where the set of documents defined by a
+        modified schema is a proper subset of the set of documents defined by TEI-All. Where this is
+        not the case, that is, where the modified schema considers valid some documents which
+        TEI-All does not, we use the term <term>unclean modification</term>. Despite this
+        terminology, unclean modifications are not particularly deprecated, and their use may often
+        be vital to the success of a project. The concept is introduced solely to distinguish the
+        effects of different kinds of modification.</p>
 
       <!-- 
       <p>Cleanliness can only be assessed with reference to elements in the TEI namespace. </p>
@@ -248,8 +251,8 @@ that practice. -->
 
         <p>In most cases, deletion is a clean modification, since most elements are optional.
           Documents that are valid with respect to the modified schema are also valid according to
-          TEI-All. To say this another way, the set of documents matching the new
-          schema is contained by the set of documents matching the original schema.</p>
+          TEI-All. To say this another way, the set of documents matching the new schema is
+          contained by the set of documents matching the original schema.</p>
 
         <p>There are however some elements in the TEI schema which have mandatory children; for
           example, the element <gi>listPerson</gi> must contain at least one element from the
@@ -287,19 +290,18 @@ that practice. -->
             <content>
               <macroRef key="macro.phraseSeq"/>
             </content>
-          </egXML> This content model consists of a reference to a macro called
-            <ident type="macro">macro.phraseSeq</ident>. Further examination shows that this macro
-          in turn expands to an optional repeatable alternation of text (<gi>textNode</gi>) with
-          references to three other classes (<ident type="class">model.gLike</ident>, <ident
-            type="class">model.phrase</ident>, or <ident type="class">model.global</ident>). For
-          some particular application it might be preferable to insist that <gi>term</gi> elements
-          should only contain plain text, excluding these other possibilities.<note place="bottom"
-            >Excluding <ident type="class">model.gLike</ident> is generally inadvisable however,
-            since without it the resulting schema has no way of referencing non-Unicode
-            characters.</note> This could be achieved simply by supplying a specification for
-            <gi>term</gi> like the following: <egXML xmlns="http://www.tei-c.org/ns/Examples"
-            xml:lang="und" rend="full" source="#UND"><elementSpec ident="term" module="core"
-              mode="change">
+          </egXML> This content model consists of a reference to a macro called <ident type="macro"
+            >macro.phraseSeq</ident>. Further examination shows that this macro in turn expands to
+          an optional repeatable alternation of text (<gi>textNode</gi>) with references to three
+          other classes (<ident type="class">model.gLike</ident>, <ident type="class"
+            >model.phrase</ident>, or <ident type="class">model.global</ident>). For some particular
+          application it might be preferable to insist that <gi>term</gi> elements should only
+          contain plain text, excluding these other possibilities.<note place="bottom">Excluding
+              <ident type="class">model.gLike</ident> is generally inadvisable however, since
+            without it the resulting schema has no way of referencing non-Unicode characters.</note>
+          This could be achieved simply by supplying a specification for <gi>term</gi> like the
+          following: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" rend="full"
+            source="#UND"><elementSpec ident="term" module="core" mode="change">
               <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
                 <textNode/>
               </content>
@@ -334,14 +336,14 @@ that practice. -->
 
         <p>Content model changes which are not simple restrictions on an existing model should be
           undertaken with caution. The set of documents matching the schema which results from such
-          changes is unlikely to be contained by the set of documents matching TEI-All,
-          and such changes are therefore regarded as unclean. When content models are
-          changed or extended, care should be taken to respect the existing semantics of the element
-          concerned as stated in these Guidelines. For example, the element <gi>l</gi> is defined as
-          containing a line of verse. It would not therefore make sense to redefine its content
-          model so that it could also include members of the class <ident type="class"
-            >model.pLike</ident> such as <gi>p</gi> or <gi>ab</gi>. Although syntactically feasible, such a modification would not be
-          regarded as TEI-conformant because it breaks the TEI Abstract Model. </p>
+          changes is unlikely to be contained by the set of documents matching TEI-All, and such
+          changes are therefore regarded as unclean. When content models are changed or extended,
+          care should be taken to respect the existing semantics of the element concerned as stated
+          in these Guidelines. For example, the element <gi>l</gi> is defined as containing a line
+          of verse. It would not therefore make sense to redefine its content model so that it could
+          also include members of the class <ident type="class">model.pLike</ident> such as
+            <gi>p</gi> or <gi>ab</gi>. Although syntactically feasible, such a modification would
+          not be regarded as TEI-conformant because it breaks the TEI Abstract Model. </p>
 
       </div>
 
@@ -352,8 +354,8 @@ that practice. -->
         <p>The attributes applicable to a given element may be specified in two ways: they may be
           given explicitly, by means of an <gi>attList</gi> element within the corresponding
             <gi>elementSpec</gi>, or they may be inherited from an attribute class, as specified in
-          the <gi>classes</gi> element. To add a new attribute to an element, the designer
-          should therefore first check to see whether this attribute is already available from some
+          the <gi>classes</gi> element. To add a new attribute to an element, the designer should
+          therefore first check to see whether this attribute is already available from some
           existing attribute class. If it is, then the simplest method of adding it will be to make
           the element in question a member of that class, as further discussed below. If this is not
           possible, then a new <gi>attDef</gi> element must be added to the existing
@@ -396,8 +398,8 @@ that practice. -->
           alternatively, we can change some parts of an existing declaration only by supplying just
           the new parts, and setting <val>change</val> as the value for <att>mode</att>.</p>
 
-        <p>Because the new attribute is not defined by the TEI, it is good practice to specify a namespace for it
-          on the <gi>attDef</gi>; see further <ptr target="#MDNS"/>.</p>
+        <p>Because the new attribute is not defined by the TEI, it is good practice to specify a
+          namespace for it on the <gi>attDef</gi>; see further <ptr target="#MDNS"/>.</p>
 
 
         <p>As noted above, adding the new <att>type</att> attribute involves changing this element's
@@ -595,44 +597,44 @@ that practice. -->
           description for the new element and information about its content model, its attributes,
           etc., as further described in <ptr target="#TD"/>. </p>
       </div>
-<!--
+    
       <div type="div4" xml:id="MDMDNM">
         <head>Renaming of Elements</head>
         
         <p>Every element and other named markup construct in the TEI schema has a <term>canonical
-          name</term>, usually in the English language: this name is supplied as the value of the
+          name</term>, usually composed of English language words or syllables: this name is supplied as the value of the
           <att>ident</att> attribute on the <gi>elementSpec</gi>, <gi>attDef</gi>,
-          <gi>classSpec</gi>, or <gi>macroSpec</gi> used to define it. The element or attribute
-          declaration used within a schema generated from that specification may however be
-          different, thus permitting schemas to be written using elements with generic identifiers
-          from a different language, or otherwise modified. There may be many alternative
+          <gi>classSpec</gi>, or <gi>macroSpec</gi> used to define it. In some circumstances, it may be
+          convenient for the element or attribute
+          declaration used within a schema generated from that specification to take a different form, for example, permitting schemas to use generic identifiers
+          from a different language, or in an abbreviated form. There may be many alternative
           identifiers for the same markup construct, and an ODD processor may choose which of them
           to use for a given purpose. Each such alternative name is supplied by means of an
           <gi>altIdent</gi> element within the specification element concerned.</p>
         <p>For example, the following declaration converts <gi>note</gi> to <gi scheme="imaginary"
-          >annotation</gi>: <egXML source="#NONE" xmlns="http://www.tei-c.org/ns/Examples"
+          >nt</gi>: <egXML source="#NONE" xmlns="http://www.tei-c.org/ns/Examples"
             xml:lang="und"><elementSpec ident="note" module="core" mode="change">
-              <altIdent>annotation</altIdent>
+              <altIdent>nt</altIdent>
             </elementSpec></egXML> Note that the <att>mode</att> attribute on the
           <gi>elementSpec</gi> now takes the value <val>change</val> to indicate that those parts
           of the element specification not supplied are to be inherited from the standard
           definition. The content of the <gi>altIdent</gi> element is now available for use in place of the
           canonical <att>ident</att> value in the schema generated. </p>
         
-        <p>Renaming in this way is always a <term>reversible</term> modification. Although it is an
+        <p>Renaming in this way is <!--always a <term>reversible</term> modification. Although it--> is an
           inherently unclean modification (because the set of documents matched by the resulting
-          schema is not contained by the set matched by its unmodified equivalent, nor by TEI-All), the process of
+          schema is not contained by the set matched by TEI-All), even though the process of
           converting any document in which elements have been renamed into an exactly equivalent
-          document using canonical names is completely deterministic, requiring only access to thew
-          ODD in which the renaming has been specified. This assumes that the renamed elements used
-          are not placed in the TEI namespace but either use a null namespace or some user-defined
-          namespace, as further discussed in <ptr target="#MDNS"/>; if this is not the case, care
-          must be taken to avoid name collision between the new name and all existing TEI names.
-          Furthermore, unclean modifications which do not specify a namespace are not conformant
+          document using canonical names is completely deterministic<!--, and requires only access to the
+          ODD in which the renaming has been specified-->. Documents using such a schema should not claim to be
+          in the TEI namespace,  but either use a null namespace or some user-defined
+          namespace, as further discussed in <ptr target="#MDNS"/>; this is necessary to
+          avoid the risk of name collision between the new name and all existing TEI names as well as for reasons
+          of conformance
           (see further <ptr target="#MD"/>).</p>
         
       </div>
-      -->
+  
     </div>
 
     <div type="div3" xml:id="MDNS">
@@ -650,10 +652,11 @@ that practice. -->
         labelled with a namespace (such as, for example <att>xml:id</att>) also belong to the TEI
         namespace, and are defined by the TEI. --></p>
 
-      <p>This implies that any other modification <!--(including a renaming or reversible modification)-->
-        must either specify a different namespace or, equivalently, specify no namespace at all. The <att>ns</att>
-        attribute is provided on elements <gi>schemaSpec</gi>, <gi>elementSpec</gi>, and
-          <gi>attDef</gi> for this purpose. </p>
+      <p>This implies that any other modification
+        <!--(including a renaming or reversible modification)--> must either specify a different
+        namespace or, equivalently, specify no namespace at all. The <att>ns</att> attribute is
+        provided on elements <gi>schemaSpec</gi>, <gi>elementSpec</gi>, and <gi>attDef</gi> for this
+        purpose. </p>
       <p>Suppose, for example, that we wish to add a new attribute <att scheme="imaginary"
           >topic</att> to the existing TEI element <gi>p</gi>. In the absence of namespace
         considerations, this would be an unclean modification, since <gi>p</gi> does not currently
@@ -685,9 +688,10 @@ that practice. -->
           modern schema languages such as RELAX NG or W3C Schema.</note></p>
 
       <p>Similar considerations apply when modification is made to the content model or some other
-        aspect of an element, or when a new element is declared. <!--Clean modification requires that
-        all -->All such changes should be explicitly labelled as belonging to some non-TEI namespace or to no
-        namespace at all.</p>
+        aspect of an element, or when a new element is declared.
+        <!--Clean modification requires that
+        all -->All such changes should be explicitly
+        labelled as belonging to some non-TEI namespace or to no namespace at all.</p>
       <p>If the <att>ns</att> attribute is supplied on a <gi>schemaSpec</gi> element, it identifies
         the namespace applicable to all components of the schema being specified. Even if such a
         schema includes unmodified modules from the TEI namespace, the elements contained by such
@@ -703,7 +707,8 @@ that practice. -->
           </schemaSpec></egXML>
       </p>
       <p>In addition to the TEI canonical namespace mentioned above, the TEI may also define
-        namespaces for approved translations of the TEI schema into other languages. <!--These may be
+        namespaces for approved translations of the TEI schema into other languages.
+        <!--These may be
         used as appropriate to indicate that a customization uses a standardized set of renamings.-->
         The namespace for such translations is the same as that for the canonical namespace,
         suffixed by the appropriate ISO language identifier (<ptr target="#CHSH"/>). A schema
@@ -719,13 +724,13 @@ that practice. -->
           <gi>elementSpec</gi>, etc.) will typically be used within a TEI document which supplies
         further information about the intended use of the new schema, the meaning and application of
         any new or modified elements within it, and so on. This document will typically conform to a
-       <!-- TEI (or other) --> schema which includes components from the module described in chapter <ptr target="#TD"
-          />.<note place="bottom">This module can be used to document any XML schema, and has indeed
-          been used to document several non-TEI schemas.</note></p>
-      <p>Where the customization to be documented simply consists in a selection of TEI modules, perhaps
-        with some deletion of unwanted elements or attributes, the documentation need not specify
-        anything further. Even here however it may be considered worthwhile to replace some of the
-        semantic information provided by the unmodified TEI specification. For example, the
+        <!-- TEI (or other) --> schema which includes components from the module described in
+        chapter <ptr target="#TD"/>.<note place="bottom">This module can be used to document any XML
+          schema, and has indeed been used to document several non-TEI schemas.</note></p>
+      <p>Where the customization to be documented simply consists in a selection of TEI modules,
+        perhaps with some deletion of unwanted elements or attributes, the documentation need not
+        specify anything further. Even here however it may be considered worthwhile to replace some
+        of the semantic information provided by the unmodified TEI specification. For example, the
           <gi>desc</gi> element of an unmodified TEI <gi>elementSpec</gi> may describe an element in
         terms more general than appropriate to a particular project, or the <gi>exemplum</gi>
         elements within it may not illustrate the project's actual intended usage of the element, or
@@ -842,11 +847,12 @@ that practice. -->
     <p>A document is said to use a <term>TEI Extension</term> if it is a well-formed XML document
       which is valid against a TEI Schema which contains additional distinctions, representing
       concepts not present in the TEI Abstract Model, and therefore not documented in these
-      Guidelines. Such a document <!--cannot, in general, be algorithmically conformant since it--> cannot necessarily
-      be transformed automatically  to a TEI-conformant document without loss of information. However, since one of the goals of
-      the TEI is to support extensions and modifications, it should not be assumed that no TEI
-      document can include extensions: an extension which is expressed by means of the recommended
-      mechanisms is also a TEI-conformant document provided that those parts of it which are not extensions are
+      Guidelines. Such a document <!--cannot, in general, be algorithmically conformant since it-->
+      cannot necessarily be transformed automatically to a TEI-conformant document without loss of
+      information. However, since one of the goals of the TEI is to support extensions and
+      modifications, it should not be assumed that no TEI document can include extensions: an
+      extension which is expressed by means of the recommended mechanisms is also a TEI-conformant
+      document provided that those parts of it which are not extensions are
       TEI-conformant<!--, or -conformable-->.</p>
 
     <p>A TEI-conformant <!--(or -conformable) -->document is said to follow <term>TEI Recommended
@@ -867,7 +873,7 @@ that practice. -->
         <!--are at best
           <soCalled>TEI-conformable</soCalled>, and cannot --> should not be
         considered in any way TEI-conformant.</p>
-     
+
       <p>Previous versions of these Guidelines used SGML as a representation format. With the
         release of P5, the only representation format supported by these Guidelines became valid
         XML; legacy documents in SGML format should therefore be converted using appropriate
@@ -885,7 +891,8 @@ that practice. -->
           <term>valid</term> document, as being a well-formed document which matches a specific set
         of rules or syntactic constraints, defined by a <term>schema</term>. As noted above, TEI
         conformance implies that the schema used to determine validity of a given document should be
-        derived from the present Guidelines, by means of an ODD which references and documents components <!-- the
+        derived from the present Guidelines, by means of an ODD which references and documents
+        components <!-- the
         schema fragments -->which these Guidelines define. </p>
     </div>
 
@@ -1029,11 +1036,11 @@ that practice. -->
         schemas. </p>
 
       <p>A TEI Schema may be created which assigns TEI elements to some other namespace, or to no
-        namespace at all. A document using such a schema 
-        cannot be considered TEI-conformant<!--, though it may be TEI-conformable-->. A document
-        which places non-TEI elements or attributes within the TEI namespace cannot be considered
-        TEI-conformant; such practices are strongly deprecated as they may lead to serious
-        difficulties for processing or interchange. </p>
+        namespace at all. A document using such a schema cannot be considered
+        TEI-conformant<!--, though it may be TEI-conformable-->. A document which places non-TEI
+        elements or attributes within the TEI namespace cannot be considered TEI-conformant; such
+        practices are strongly deprecated as they may lead to serious difficulties for processing or
+        interchange. </p>
 
     </div>
 
@@ -1044,15 +1051,15 @@ that practice. -->
         which also serves to document the semantics of the elements defined by it. A TEI-conformant
         document should therefore always be accompanied by (or refer to) a valid <term>TEI ODD
           file</term> specifying which modules, elements, classes, etc. are in use together with any
-        modifications <!--or renamings -->applied, and from which a TEI Schema can be generated to validate
-        the document. The TEI supplies a number of predefined <term>TEI Customization exemplar ODD
-          files</term> and the schemas already generated from them (see <ptr target="#MDlite"/>),
-        but most projects will typically need to customize the TEI beyond what these examples
-        provide. It is assumed, for example, that most projects will customize the TEI schema by
-        removing those elements that are not needed for the texts they are encoding, and by
-        providing further constraints on the attribute values and element content models the TEI
-        provides. All such customizations must be specified by means of a valid <term>TEI ODD</term>
-        file. </p>
+        modifications <!--or renamings -->applied, and from which a TEI Schema can be generated to
+        validate the document. The TEI supplies a number of predefined <term>TEI Customization
+          exemplar ODD files</term> and the schemas already generated from them (see <ptr
+          target="#MDlite"/>), but most projects will typically need to customize the TEI beyond
+        what these examples provide. It is assumed, for example, that most projects will customize
+        the TEI schema by removing those elements that are not needed for the texts they are
+        encoding, and by providing further constraints on the attribute values and element content
+        models the TEI provides. All such customizations must be specified by means of a valid
+          <term>TEI ODD</term> file. </p>
 
       <p>As different sorts of customization have different implications for the interchange and
         interoperability of TEI documents, it cannot be assumed that every customization will
@@ -1802,7 +1809,8 @@ head =
                   <classRef key="model.phrase"/>
                   <classRef key="model.global"/>
                 </alternate>
-              </content> </macroSpec>
+              </content>
+            </macroSpec>
           </egXML> produces the following <egXML xmlns="http://www.tei-c.org/ns/Examples"
             xml:lang="und" source="#UND">
             <define xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq">
