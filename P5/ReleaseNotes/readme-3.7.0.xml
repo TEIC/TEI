@@ -27,7 +27,12 @@ See the file COPYING.txt for details
   </teiHeader>
   <text>
     <body>
-      <p>Release 3.7.0, the “XXX” of the TEI Guidelines introduces new features and resolves a
+      <p>Release 3.7.0, codenamed “Galileo” in honor of Galileo's arrival to Rome on 13 February 1633 to face the 
+        inquisition. We associate Galileo with decentering the earth in official western dogma of the universe. Similarly,
+        the stand-off model that we are releasing stand to decenter our models of digital texts and expand our frames of references.
+      </p>
+      <p>  
+        In addition to the stand-off model, this release of the TEI Guidelines introduces new features and resolves a
         number of issues raised by the TEI community. As always, the majority of these changes and
         corrections are a consequence of feature requests or bugs reported by the TEI community
         using the GitHub tracking system. A full list of the issues resolved in the course of this
@@ -76,7 +81,9 @@ See the file COPYING.txt for details
         <item>With the introduction of the <gi>standOff</gi> element the class <ident type="class"
           >model.describedResource</ident> has been introduced and <ident type="class"
             >model.resource</ident> has been revised.</item>
-        <!-- MS: should we mention that TEI can now be nested ? -->
+        
+        <!-- SB: should we mention that TEI can now be nested and make it a bullet point of the enumaration of the standoff issue? -->
+        
 
         <item>New elements, attributes, and an attribute class have been introduced for using
           Unihan properties in TEI (<ref target="https://github.com/TEIC/TEI/issues/1805">#1805</ref>): <list>
@@ -107,7 +114,19 @@ See the file COPYING.txt for details
           </list>
         </item>
         
-        <!-- 1588 missing -->
+        <item>Changes were made to improve the precision of language in the Guidelines referring to conformance (<ref
+          target="https://github.com/TEIC/TEI/issues/1588">#1588</ref>)</item>
+        
+        <item>Multiple Schematron rules, assertions, or reports in a
+          single <gi>constraintSpec</gi> are now correctly output as a
+          single sch:pattern in the RELAX NG schemas (<ref
+            target="https://github.com/TEIC/TEI/issues/1625">#1625</ref>).</item>	
+        
+        
+        <item>The handling of validation has been updated in <ref
+          target="https://www.tei-c.org/Vault/P5/3.7.0/doc/tei-p5-doc/en/html/SG.html"
+          >A Gentle Introduction to XML</ref> (<ref
+          target="https://github.com/TEIC/TEI/issues/1708">#1708</ref>).</item>
         
         <item>The attributes <att>mode</att> and <att>ident</att> have been added to the <gi>remarks</gi> element (<ref
           target="https://github.com/TEIC/TEI/issues/1713">#1713</ref>).</item>
@@ -125,6 +144,9 @@ See the file COPYING.txt for details
 
         <item>Travis has been migrated to travis.com (<ref
             target="https://github.com/TEIC/TEI/issues/1826">#1826</ref>).</item>
+        
+        <item>An example to specify the source of a translation has been added (<ref
+          target="https://github.com/TEIC/TEI/issues/1830">#1830</ref>).</item>
 
         <item>The description on manuscript description clarifies that <gi>msDesc</gi> can be used
           for all text-bearing objects (<ref target="https://github.com/TEIC/TEI/issues/1835"
@@ -150,21 +172,23 @@ See the file COPYING.txt for details
           >#1864</ref>).</item>
        
         <item>A schematron rule has been added to only allow one <gi>remarks</gi> element per language in specification files (<ref target="https://github.com/TEIC/TEI/issues/1872"
-          >#1872</ref>)</item>
+          >#1872</ref>).</item>
         
         <item>The datatype of the <att>name</att> attribute of the <gi>attRef</gi> element has been changed from teidata.text to teidata.name (<ref target="https://github.com/TEIC/TEI/issues/1878"
           >#1878</ref>).</item>
         
-        <!-- 1862 missing -->
         
-        <!-- 1867 missing -->
+        <item>The schema has been tightened to prevent a combination of <gi>valList</gi> in sequence with other members of <ident type="class">model.contentPart</ident> (<ref target="https://github.com/TEIC/TEI/issues/1862"
+          >#1862</ref>).</item>
         
-        <!-- 1913 missing -->
-
-        <!-- 1926 missing -->
+        <item>With the addition of the <att>subtype</att> attribute to the attribute class <ident type="class">att.textCritical</ident>, <att>subtype</att> is now available on <gi>lem</gi>, <gi>rdg</gi>, and <gi>rdgGrp</gi> (<ref target="https://github.com/TEIC/TEI/issues/1867"
+          >#1867</ref>).</item>
+        
+        <item>The content model of <gi>teiCorpus</gi> has been changed (<ref
+            target="https://github.com/TEIC/TEI/issues/1922">#1922</ref>).</item>
         
         <item>The constraints for teidata.word have been loosened to allow
-	any character except Unicode separators or control charactgeres (<ref
+	any character except Unicode separators or control characters (<ref
               target="https://github.com/TEIC/TEI/issues/1930">#1930</ref>).</item>
         
         <item>The explanation and the associated graphic in the chapter <ref
@@ -172,16 +196,15 @@ See the file COPYING.txt for details
           >A Gentle Introduction to XML</ref> have been revised (<ref
           target="https://github.com/TEIC/TEI/issues/1949">#1949</ref>).</item>
         
-        <!-- 1950 missing -->
+        <!-- SB: do you want to add 1950 here? -->
         
-        <!-- 1960 missing -->
 
 
           <item>Corrections of typographic errors and broken links, improvements on explanations, and corrections of
             examples have been conducted in various sections of the Guidelines (including 
-            <ref target="https://github.com/TEIC/TEI/issues/1760">#1760</ref>, <!-- correction of banner link on the Guidelines section of the website -->
-            <ref target="https://github.com/TEIC/TEI/issues/1847">#1847</ref>, <!-- tweak of wording for @minOccurs and @maxOccurs in <gi>datatype</gi> -->
-            <ref target="https://github.com/TEIC/TEI/issues/1887">#1887</ref>, <!-- correcting french example of <gi>msDesc</gi> -->
+            <ref target="https://github.com/TEIC/TEI/issues/1760">#1760</ref>,
+            <ref target="https://github.com/TEIC/TEI/issues/1847">#1847</ref>,
+            <ref target="https://github.com/TEIC/TEI/issues/1887">#1887</ref>,
             <ref target="https://github.com/TEIC/TEI/issues/1907">#1907</ref>,  
             <ref target="https://github.com/TEIC/TEI/issues/1909">#1909</ref>,
             <ref target="https://github.com/TEIC/TEI/issues/1927">#1927</ref>, 
@@ -193,24 +216,12 @@ See the file COPYING.txt for details
             <ref target="https://github.com/TEIC/TEI/issues/1965">#1965</ref>,
             <ref target="https://github.com/TEIC/TEI/issues/1968">#1968</ref>,
             <ref target="https://github.com/TEIC/TEI/issues/1969">#1969</ref>).</item>
+        
+        <item>Furthermore, a number of translations have been added or updated.</item>
 
         </list>
       </p>
 
-      <p>Furthermore, a number of translations have been added or updated.</p>
-
-      <p>Documentation of Council practices in <ref target="http://teic.github.io/TCW/tcw20.html"
-        >TCW 20</ref> is improved for working with branches in the TEIC GitHub repository <ref
-          target="https://github.com/TEIC/TEI/issues/1825">#1825</ref>.</p>
-      
-      <p>The documentation for updating the TEI Framework in oXygen to the latest release of the TEI Guidelines has been improved <ref
-        target="https://github.com/TEIC/TEI/issues/1673">#1673</ref> and added to the oxygen-tei repository, see <ref target="https://github.com/TEIC/oxygen-tei/blob/master/oxygen-tei-plugin.md">How to automatically update your TEI framework in oXygen</ref>.</p>
-      
-
-      <!-- MS: do we add corrections on the website?-->
-      <p>Corrections have been conducted in various sections of the TEI website (including <ref
-          target="https://github.com/TEIC/TEI/issues/1944">#1944</ref>), and <ref
-          target="https://github.com/TEIC/TEI/issues/1938">#1938</ref>.</p>
       
 
       <p>In addition, many improvements have been made to the XSLT stylesheets (which provide
@@ -240,20 +251,31 @@ See the file COPYING.txt for details
         <item>Special characters encoded as &lt;w:sym&gt; in DOCX are now converted to <gi>hi</gi> elements (<ref
           target="https://github.com/TEIC/Stylesheets/issues/389">#389</ref>).</item>
         
-        <!-- #393 missing -->
         
         <item>Correct handling of Schematron rules in <gi>attDef</gi> elements (<ref
           target="https://github.com/TEIC/Stylesheets/issues/403">#403</ref>).</item>
-        
-        <!-- #404 missing -->
+       
 
-	<item>Multiple Schematron rules, assertions, or reports in a
-	single <gi>constraintSpec</gi> are now correctly output as a
-	single <gi>sch:pattern</gi> in the RELAX NG schemas (<ref
-	target="https://github.com/TEIC/TEI/issues/1625">#1625</ref>.</item>	
+	
        
         </list>
       </p>
+      
+      
+      <p>Finally, we have made some significant updates to our documentation and the website.</p>
+      
+      <p>Documentation of Council practices in <ref target="http://teic.github.io/TCW/tcw20.html"
+        >TCW 20</ref> is improved for working with branches in the TEIC GitHub repository <ref
+          target="https://github.com/TEIC/TEI/issues/1825">#1825</ref>.</p>
+      
+      <p>The documentation for updating the TEI Framework in oXygen to the latest release of the TEI Guidelines has been improved <ref
+        target="https://github.com/TEIC/TEI/issues/1673">#1673</ref> and added to the oxygen-tei repository, see <ref target="https://github.com/TEIC/oxygen-tei/blob/master/oxygen-tei-plugin.md">How to automatically update your TEI framework in oXygen</ref>.</p>
+    
+      <p>Corrections have been conducted in various sections of the TEI website (including <ref
+        target="https://github.com/TEIC/TEI/issues/1944">#1944</ref>), and <ref
+          target="https://github.com/TEIC/TEI/issues/1938">#1938</ref>.</p>
+      
+      
     </body>
   </text>
 </TEI>
