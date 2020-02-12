@@ -6,7 +6,7 @@ $Date$
 $Id$
 --><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" xml:id="ATTNORM" type="atts" ident="att.normalized">
-  <desc versionDate="2019-11-07" xml:lang="en">provides the <att>norm</att> and <att>orig</att> attributes for usage within word-level elements in the analysis module and within lexicographic microstructure in the dictionaries module.</desc>
+  <desc versionDate="2020-02-12" xml:lang="en">provides the <att>norm</att> and <att>orig</att> attributes for usage within word-level elements in the analysis module and within lexicographic microstructure in the dictionaries module.</desc>
   <classes/>
   <attList>
     <attDef ident="norm" usage="opt">
@@ -63,13 +63,13 @@ $Id$
       <exemplum xml:lang="en">
         <p>Example of normalization from <ref target="http://www.deutschestextarchiv.de/anonym_aviso_1609/258">Aviso. Relation oder Zeitung. Wolfenbüttel, 1609. In: Deutsches Textarchiv</ref>.</p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <seg xmlns="">
+          <s xmlns="">
             <w norm="freiwillig">freywillig</w>
             <pc norm="," join="left">/</pc>
             <w norm="unbedrängt">vnbedraͤngt</w>
             <w norm="und">vnd</w>
             <w norm="unverhindert">vnuerhindert</w>
-          </seg>
+          </s>
         </egXML>
       </exemplum>
 
@@ -110,8 +110,23 @@ $Id$
           <w orig="ntsa sia'i">ntsasia'i</w>
         </egXML>
       </exemplum>
-      
-      
+      <exemplum xml:lang="en">
+        <p>Example from the <ref target="https://earlyprint.org">EarlyPrint</ref> project. Fragment
+          of text where obvious errors have been corrected but the original forms remain
+          recorded:</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <w lemma="he" pos="pns" xml:id="b1afj-003-a-0950">he</w>
+          <w lemma="have" pos="vvz" xml:id="b1afj-003-a-0960">hath</w>
+          <w lemma="bring" pos="vvn" xml:id="b1afj-003-a-0970">brought</w>
+          <w lemma="forth" pos="av" xml:id="b1afj-003-a-0980" orig="sorth">forth</w>
+        </egXML>
+      </exemplum>
+      <exemplum xml:lang="en">
+        <p>An example from the EarlyPrint project showing the use of both <att>norm</att> and <att>orig</att>. The <att>orig</att> attribute preserves the original version (sometimes with spelling errors, often with printer abbreviations), the element content resolves printer abbreviations but retains the original orthography, and the <att>norm</att> attributes holds normalized values.</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <w lemma="commandment" pos="n1" reg="commandment" xml:id="b9avr-018-a-7720" orig="commandemēt">commandement</w>
+        </egXML>
+      </exemplum>
     </attDef>
 
   </attList>
