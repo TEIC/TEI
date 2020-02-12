@@ -2199,8 +2199,8 @@ cross-reference, the <gi>ptr</gi> element would be used as follows:
 <p>The <att>cRef</att> attribute may be used to express the target of
 a cross reference using some canonical referencing scheme, such as
 those typically used for ancient texts.  In this case, the referencing
-scheme must be defined using the <gi>cRefPattern</gi> element
-discussed below (<ptr target="#CORS6"/>); the definition it provides is used
+scheme must be defined using the <gi>cRefPattern</gi> or <gi>citeStructure</gi> elements
+discussed below (<ptr target="#CORS6"/>); the definition these provide may be used
 to translate the value of the <att>cRef</att> attribute into a
 conventional pointer value, such as one that might be supplied by the
 <att>target</att> attribute. It is an error to supply both
@@ -3477,8 +3477,8 @@ is recommended that the TEI header contain a description of its
 construction in the <gi>refsDecl</gi> element described in section
 <ptr target="#HD54"/>. As described there, the declaration
 may consist either of a formal declaration using the
-<gi>cRefPattern</gi> element or an informal description in prose.  The
-former is recommended because unlike prose it can be processed by
+<gi>cRefPattern</gi> or <gi>citeStructure</gi> elements, or an informal description in prose.  One of the
+former is recommended because unlike prose they can be processed by
 software.</p>
 
 <p>The three examples given in section <ptr target="#CORS1"/> would be declared as follows. The first example encodes
@@ -3547,6 +3547,24 @@ declaration for such an encoding could be:
 although in general there seems to be little advantage in this case:
 it is no more difficult to use a standard relative URI reference as
 the value of <att>target</att>.</p>
+<p>In cases where a more complete formal declaration of text structure is desirable,
+for example in systems that will present the contents of a large TEI file in smaller chunks, the
+<gi>citeStructure</gi> element may be used. This method permits canonical references
+to be resolved and also allows them to be extracted, so, for example, a list of resolvable
+citations may be generated from the document. The example from the <title>Amores</title>
+above could be implemented using <gi>citeStructure</gi> thus:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <refsDecl>
+    <citeStructure unit="work" match="//div1" use="@n">
+      <citeStructure unit="book" match="div2" use="@n" delim=" ">
+        <citeStructure unit="poem" match="div3" use="@n" delim=".">
+          <citeStructure unit="line" match="l" use="@n" delim="."/>
+        </citeStructure>
+      </citeStructure>
+    </citeStructure>
+  </refsDecl>
+</egXML></p>
+<p><gi>citeStructure</gi> also provides a method for attaching informational properties to units of structure, by using the <gi>citeData</gi> element</p>
 <p>Reference systems recorded by means of milestone tags can also be
 declared; the following prose description could be used to declare
 the example given in section <ptr target="#CORS5"/>.
