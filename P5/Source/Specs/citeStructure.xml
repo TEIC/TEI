@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="citeStructure">
+  <gloss versionDate="2020-02-03" xml:lang="en">citation structure</gloss>
+  <desc versionDate="2008-01-13" xml:lang="en">declares a structure and method for citing the current document.</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="att.citeStructurePart"/>
+  </classes>
+  <content>
+    <elementRef key="citeData" maxOccurs="unbounded"/>
+    <elementRef key="citeStructure" maxOccurs="unbounded"/>    
+  </content>
+  <attList>
+    <attDef ident="delim" usage="opt">
+      <gloss versionDate="2020-02-03" xml:lang="en">delimiter</gloss>
+      <desc versionDate="2020-02-03" xml:lang="en">supplies a delimiting string preceding the structural component.</desc>
+      <datatype>
+        <dataRef key="teidata.text"/>
+      </datatype>
+    </attDef>
+    <attDef ident="match" usage="req">
+      <gloss versionDate="2020-02-03" xml:lang="en">match</gloss>
+      <desc versionDate="2020-02-03" xml:lang="en">supplies an XPath expression which returns a sequence of nodes which are 
+        citable structural components. The expression may be absolute (beginning with <code>/</code>) or relative. 
+        <att>match</att> on a <gi>citeStructure</gi> without a <gi>citeStructure</gi> parent must be an absolute XPath. If it is
+        relative, its context is set by the <att>match</att> of the parent <gi>citeStructure</gi>. </desc>
+      <datatype>
+        <dataRef key="teidata.xpath"/>
+      </datatype>
+    </attDef>
+    <attDef ident="unit" usage="opt">
+      <gloss versionDate="2020-02-03" xml:lang="en">unit</gloss>
+      <desc versionDate="2020-02-03" xml:lang="en">describes the structural unit indicated by the <gi>citeStructure</gi>.</desc>
+      <datatype>
+        <dataRef key="teidata.enumerated"/>
+      </datatype>
+      <valList type="open">
+        <valItem ident="book"/>
+        <valItem ident="chapter"/>
+        <valItem ident="verse"/>
+        <valItem ident="poem"/>
+        <valItem ident="line"/>
+      </valList>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+      <citeStructure unit="book" match="//body/div" use="@n">
+        <citeStructure unit="chapter" match="div" use="position()" delim=" ">
+          <citeStructure unit="verse" match="div" use="position()" delim=":"/>
+        </citeStructure>
+      </citeStructure>
+    </egXML>
+  </exemplum>
+    
+  <listRef>
+    <ref></ref>
+  </listRef>
+</elementSpec>
