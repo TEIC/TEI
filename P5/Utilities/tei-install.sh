@@ -30,8 +30,8 @@ install()
     echo unpack to ${Vault}/${name}/${version}
     ${ECHO} unzip -q -o ${pname}-${version}.zip -d ${Vault}/${name}/${version}
     case $package in
-	Roma)
-	    ${ECHO} unzip -q -o ${pname}-${version}.zip -d /usr/share;;
+	Stylesheets)
+	    ${ECHO} unzip -q -o ${pname}-${version}.zip -d ${Vault}/${name}/${version};;
 	TEIP5)
 	    ${ECHO} rm -f teiwebsiteguidelines.zip;
 	    echo Get special HTML pages for TEI web site;
@@ -66,7 +66,7 @@ die()
     exit 1
 }
 
-Vault=/projects/tei/web/Vault
+Vault=/data2/Vault
 Jenkins=http://jenkins.tei-c.org/
 ECHO=
 SFUSER=rahtz
@@ -106,9 +106,7 @@ jenkinsdir=${Jenkins}/job/${package}/lastSuccessfulBuild/artifact
 SFNAME=$package
 case $package in
   TEIP5)         name=P5;           pname=tei;      SFNAME=TEI-P5-all; jenkinsdir=${jenkinsdir}/P5;;
-  Stylesheets1)  name=Stylesheets1; pname=tei-xslt1;;
   Stylesheets)   name=Stylesheets;  pname=tei-xsl;;
-  Roma)          name=Roma;         pname=tei-roma;;
     *) echo "Error: package $package unsupported"; exit 1;;
 esac
 echo Try to fetch version $version of $package from $jenkinsdir

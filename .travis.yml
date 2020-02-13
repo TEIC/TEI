@@ -19,3 +19,6 @@ before_install:
 
 script:
   - docker run --rm -w /var/tei/P5 -it -v `pwd`:/var/tei -v $TRAVIS_BUILD_DIR/stylesheets/xml/tei/stylesheet:/usr/share/xml/tei/stylesheet -u $UID --entrypoint "make" teic/jenkins:dev clean validate test
+
+notifications:
+  slack: tei-c:3IFCBSmTvNx3j1GUMDWS9Dom

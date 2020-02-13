@@ -370,22 +370,26 @@ disen sumer gân.</l>
         editions (section <ptr target="#TCAPWL"/>).</p>
       <div type="div4" xml:id="TCAPWD">
         <head>Witness Detail Information</head>
-        <p>When it is desired to give additional information about a particular witness or witnesses
-          for the reading, the information may be given in a <gi>witDetail</gi> element. This is a
-          specialized form of note, which can be linked to both a reading and to one or more of the
-          witnesses for that reading. The former linkage is effected by the <att>target</att>
-          attribute which <gi>witDetail</gi> inherits from the attribute class <ident type="class">att.pointing</ident>, and the latter by the <att>wit</att> attribute. <specList>
+        <p>When it is desired to give additional information about the reading of a particular witness 
+          or witnesses, such as noting that it appears in the margin or was corrected
+          for the reading, that information may be given in a <gi>witDetail</gi> element. This is a
+          specialized note, which can be linked to both a reading and to one or more of the
+          witnesses for that reading. The link to the reading may be inferred from <gi>witDetail</gi>'s 
+          position or made explicit by the <att>target</att> attribute which <gi>witDetail</gi> inherits 
+          from the attribute class 
+          <ident type="class">att.pointing</ident>; the link to the witness, by the <att>wit</att> attribute. <specList>
             <specDesc key="att.pointing" atts="target"/>
             <specDesc key="witDetail" atts="wit"/>
           </specList></p>
         <p>Because it annotates an attribute value, <gi>witDetail</gi> cannot be included in the text at the point of
-          attachment; it must point to the reading(s) being annotated by means of its
-            <att>target</att> attribute. To indicate, on the authority of editor PR, that the
+          attachment; without a <att>target</att> attribute, it refers to the closest preceding <gi>lem</gi> or <gi>rdg</gi>. 
+          But if there is any ambiguity or if the <gi>witDetail</gi> refers to multiple readings, <att>target</att> must be 
+          used to point to the reading(s) being annotated. To indicate that the
           Ellesmere manuscript has an ornamental capital in the word
             <mentioned>Experience</mentioned>, for example, one might write:
           <egXML xmlns="http://www.tei-c.org/ns/Examples"><app type="substantive">
-  <lem xml:id="W026" wit="#El #Hg">Experience</lem>
-  <witDetail target="#W026" wit="#El">Ornamental capital.</witDetail>
+  <lem wit="#El #Hg">Experience</lem>
+  <witDetail wit="#El">Ornamental capital.</witDetail>
   <rdg wit="#Ha4">Experiens</rdg>
 </app>
 </egXML>
@@ -395,14 +399,15 @@ disen sumer gân.</l>
           information in the source text, even when the information itself is captured in some more
           formal way elsewhere. The example from the <title>Carmina Burana</title> above (section
             <ptr target="#TCAPLR"/>), for example, might be extended thus, to record the wording of
-          the note explaining the variant: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="gmh" source="#COBICOR-eg-251"><l>Swaz hi gât umbe</l>
+          the note explaining that the variant reading adds <mentioned>n</mentioned> to the original 
+          in a second hand: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="gmh" source="#COBICOR-eg-251"><l>Swaz hi gât umbe</l>
 <l>daz sint alle megede,</l>
 <l>die wellent ân man</l>
 <l>
    <app>
       <rdg wit="#Mu" hand="#m1">alle</rdg>
-      <rdg xml:id="anon.6.4" wit="#Mu" hand="#m2">allen</rdg>
-      <witDetail target="#anon.6.4" wit="#Mu">
+      <rdg wit="#Mu" hand="#m2">allen</rdg>
+      <witDetail wit="#Mu">
         <mentioned>n</mentioned> nachgetragen.
       </witDetail>
    </app>
@@ -411,11 +416,7 @@ disen sumer gân.</l>
           <!-- Des Minnesangs Fr&uuml;hling, ed.  Hugo Moser and        -->
           <!-- Helmut Tervooren (Stuttgart:  Hirzel, 1977), I, 20.      -->
           <!-- (Anonymous VI).                                          --></p>
-        <p>Observe that a single witness detail element may be linked to different readings, by having the
-          <att>target</att> attribute point at all the readings in question. It is, however, best practice 
-          from the encoder's perspective to keep <gi>witDetail</gi>s close to the readings they annotate, therefore
-          it is not recommended that a single <gi>witDetail</gi> be used to annotate many readings.
-          Similarly, feature structures containing information about the text in a witness (whether retroversion,
+        <p>Feature structures containing information about the text in a witness (whether retroversion,
           regularization, or other) can also be linked to specific <gi>lem</gi> and <gi>rdg</gi>
           instances. See chapter <ptr target="#FS"/>.</p>
         <specGrp xml:id="DTCAPWD" n="Witness Details"> <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/witDetail.xml"/> </specGrp>
