@@ -46,53 +46,41 @@ See the file COPYING.txt for details
       <p>The following changes are particularly worth highlighting in
       this release: <list>
 
-          <item>The <gi>standOff</gi> element functions as a container
-          element for linked data, contextual information, and
-          stand-off annotations embedded in a TEI document (<ref
-          target="https://github.com/TEIC/TEI/issues/374">#374</ref>).
-<!--          To support this new element, several chapters of the
-          <title>Guidelines</title> have been revised or
-          introduced:<list>
+      <item>The <gi>standOff</gi> element functions as a container
+      element for linked data, contextual information, and
+      stand-off annotations embedded in a TEI document (<ref
+      target="https://github.com/TEIC/TEI/issues/374">#374</ref>).
+      </item>
+      
+      <item>With the introduction of the <gi>standOff</gi> element a
+      new structural class
+      <ident type="class" >model.describedResource</ident> has
+      been introduced, and <ident type="class"
+      >model.resourceLike</ident> has been revised and renamed <ident
+      type="class">model.resource</ident>.</item>
+        
+      <item>As the <gi>TEI</gi> element is a member of the new <ident
+      type="class" >model.describedResource</ident> class, it can now
+      be a child of another <gi>TEI</gi> element.</item>
 
-              <item>The section <ref
-              target="https://www.tei-c.org/Vault/P5/3.7.0/doc/tei-p5-doc/en/html/DR.html#DRSP"
-              >Speeches and Speakers</ref> in <ref
-              target="https://www.tei-c.org/Vault/P5/3.7.0/doc/tei-p5-doc/en/html/DR.html"
-              >Performance Texts</ref>.</item>
-              <item>The <ref
-              target="https://www.tei-c.org/Vault/P5/3.7.0/doc/tei-p5-doc/en/html/DS.html"
-              >Default Text Structure</ref> module.</item>
-              <item>The section <ref
-              target="https://www.tei-c.org/Vault/P5/3.7.0/doc/tei-p5-doc/en/html/MS.html#msnames"
-              >Names of Persons, Places, and Organizations</ref> in
-              the <ref
-              target="https://www.tei-c.org/Vault/P5/3.7.0/doc/tei-p5-doc/en/html/MS.html"
-              >Manuscript Description</ref> module.</item>
-              <item>The sections on <ref
-              target="https://www.tei-c.org/Vault/P5/3.7.0/doc/tei-p5-doc/en/html/ND.html#NDPERSE"
-              >The Person Element</ref>, <ref
-              target="https://www.tei-c.org/Vault/P5/3.7.0/doc/tei-p5-doc/en/html/ND.html#NDGEOste"
-              >States, Traits, and Events</ref>, and <ref
-              target="https://www.tei-c.org/Vault/P5/3.7.0/doc/tei-p5-doc/en/html/ND.html#NDOBJ"
-              >Objects</ref> in the <ref
-              target="https://www.tei-c.org/Vault/P5/3.7.0/doc/tei-p5-doc/en/html/ND.html"
-              >Names, Dates, People, and Places</ref> module.</item>
-              <item>The section on <ref
-              target="https://www.tei-c.org/Vault/P5/3.7.0/doc/tei-p5-doc/en/html/SA.html#SASOstdf"
-              >The standOff Container</ref> in the <ref
-              target="https://www.tei-c.org/Vault/P5/3.7.0/doc/tei-p5-doc/en/html/SA.html"
-              >Linking, Segmentation, and Alignment</ref>
-              module.</item>
-            </list> -->
-          </item>
-        
-        <item>With the introduction of the <gi>standOff</gi> element
-        the class <ident type="class" >model.describedResource</ident>
-        has been introduced and <ident type="class"
-        >model.resourceLike</ident> has been revised and renamed
-        <ident type="class">model.resource</ident>.</item>
-        
-        <item>The <gi>TEI</gi> element can now be nested.</item>
+      <item>The new <gi>standOff</gi> element:
+      <list>
+	<item>is a child of <gi>TEI</gi> (or
+	<gi>teiCorpus</gi>);</item>
+	<item>may contain stand-off annotations, for example
+	morphosyntactic annotations encoded with <gi>spanGrp</gi> or
+	<gi>annotationBlock</gi>;</item>
+	<item>may contain stand-off markup, for example a series of
+	<gi>certainty</gi>, <gi>linkGrp</gi>, or <gi>alt</gi>
+	elements</item>;
+	<item>may contain contextual information, for example
+	<gi>listPerson</gi> and <gi>listPlace</gi>;</item>
+	<item>may contain information that must be pointed to from
+	elsewhere, but is not found in the source document, for
+	example a <gi>castList</gi> that represents characters who
+	speak in a drama, but whose roles are not listed in the source
+	document's printed cast list.</item>
+      </list></item>
 
 	<item>New elements, attributes, and an attribute class have
 	been introduced for using Unihan properties in TEI (<ref
@@ -278,7 +266,7 @@ See the file COPYING.txt for details
           <ref
           target="https://github.com/TEIC/TEI/issues/1969">#1969</ref>).</item>
 	  
-        <item>Furthermore, a number of translations have been added or
+	  <item>Furthermore, a number of translations have been added or
         updated.</item>
 	
         </list>
