@@ -32,27 +32,11 @@ $Id$
   </classes>
   <content>
     <alternate>
-      <!-- Change the minOccurs=0 to minOccurs=1 on 2019-08-25.
-	   Also change the prose in "DEFCONTEI" in TD, and remove the
-	   <remarks>, below. -->
-      <classRef key="model.contentPart" minOccurs="0" maxOccurs="unbounded"/>
+      <elementRef key="valList" minOccurs="1" maxOccurs="1"/>
+      <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>
       <anyElement require="http://relaxng.org/ns/structure/1.0" minOccurs="1" maxOccurs="unbounded"/>
     </alternate>
   </content>
-  <constraintSpec scheme="schematron" validUntil="2019-08-25"
-		  ident="empty-content-deprecated" type="deprecationWarning">
-    <desc type="deprecationInfo" xml:lang="en"
-    versionDate="2018-09-14">Use a child &lt;empty&gt; element to
-    indicate that the element being specified is not allowed to have
-    content.</desc>
-    <constraint>
-      <sch:assert test="*">The use of the &lt;content&gt; element
-      without any child elements is deprecated, and will be considered
-      invalid after 2019-08-25. Use a child &lt;empty&gt; element to
-      indicate that the element being specified is not allowed to have
-      content.</sch:assert>
-    </constraint>
-  </constraintSpec>
   <attList>
     <attDef ident="autoPrefix">
       <desc versionDate="2010-05-13" xml:lang="en">controls whether or
@@ -165,31 +149,6 @@ $Id$
       </content>
     </egXML>
   </exemplum>
-  <remarks versionDate="2017-05-11" xml:lang="en">
-    <p>As the example shows, content models may be expressed using the
-    RELAX NG syntax directly. To avoid ambiguity when schemas using
-    elements from different namespaces are created, the name supplied
-    for an element in a content model will be automatically prefixed
-    by a short string, as specified by the <att>prefix</att> attribute
-    on <gi>schemaSpec</gi>. The <att>autoPrefix</att> attribute may be
-    used to reverse this behaviour.</p>
-    <p>Alternatively, a content model may be expressed using the TEI
-    <gi>valList</gi> element.</p>
-  </remarks>
-  <remarks xml:lang="fr" versionDate="2007-06-12">
-    <p>Comme l'exemple le montre, les modèles de contenu dans la P5
-    peuvent être exprimés en utilisant directement la syntaxe RELAX
-    NG. Plus exactement, ils sont définis avec le modèle
-    <code>macro.schemaPattern</code>. Une autre manière d'exprimer un
-    modèle de contenu est d'utiliser l'élément TEI <gi>valList</gi>.
-    </p>
-  </remarks>
-  <remarks xml:lang="ja" versionDate="2008-04-05">
-    <p> 上例のように，P5の内容モデルはRELAX NGで表現されている．より厳
-    密に 言えば，P5の内容モデルは<code>macro.schemaPattern</code>で定
-    義されている．内容モデルは，要素<gi>valList</gi>を使い表現してもよ
-    い． </p>
-  </remarks>
   <listRef>
     <ptr target="#TDTAG"/>
   </listRef>

@@ -112,11 +112,7 @@ default, these Guidelines assume of a text only that:
 <item>it is internally cohesive,</item>
 <item>it is describable by a single header, and</item>
 <item>it represents a single stretch of time with no significant
-discontinuities.</item></list>
-Deviation from these assumptions may be specified (for example, the
-<att>org</att> attribute on the <gi>text</gi> element may take the value
-<val>compos</val> to specify that the components of the
-text are discrete) but is not recommended.
+discontinuities.</item></list> 
  </p>
 
 <p>Within a <gi>text</gi> it may be necessary to identify subdivisions
@@ -424,7 +420,15 @@ either with orthographic transcriptions or with the <gi>vocal</gi>
 element, and entirely non-linguistic but significant incidents such as
 the sound of the toy cat are represented by the <gi>incident</gi>
 elements (see section <ptr target="#TSBAVO"/>).
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#TSBA-eg-19"><u who="#mar">you
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#TSBA-eg-19">
+<!-- ... in the <particDesc>: -->
+<listPerson>
+  <person xml:id="mar"><!-- ... --></person>
+  <person xml:id="ros"><!-- ... --></person>
+  <person xml:id="fat"><!-- ... --></person>
+</listPerson>
+<!-- ... in the <text>: -->
+<u who="#mar">you
 never <pause/> take this cat for show and tell
 <pause/> meow meow</u>
 <u who="#ros">yeah well I dont want to</u>
@@ -437,12 +441,7 @@ never <pause/> take this cat for show and tell
 <u trans="pause" who="#fat">thats <pause/> darling</u>
 <u who="#mar"><seg>no <emph>mine</emph> isnt old</seg>
 <seg>mine is just um a little dirty</seg></u>
-<!-- ... -->
-<listPerson>
-<person xml:id="mar"><!-- ... --></person>
-<person xml:id="ros"><!-- ... --></person>
-<person xml:id="fat"><!-- ... --></person>
-</listPerson></egXML>
+</egXML>
 <!-- from MacWhinney 88, 87, cited by SJ --></p>
 <p>This example also uses some elements common to all TEI texts,
 notably the <gi>reg</gi> tag for editorial regularization. Unusually
@@ -468,7 +467,7 @@ by a <gi>u</gi> element, described as follows:
 <p>Use of the <att>who</att> attribute to associate the utterance with a
 particular speaker is recommended but not required. Its use implies as
 a further requirement that all speakers be identified by a
-<gi>person</gi> or <gi>personGrp</gi> element in the TEI
+<gi>person</gi> or <gi>personGrp</gi> element, typically in the TEI
 header (see section <ptr target="#CCAHPA"/>), but it may also point to another 
 external source of information about the speaker. Where utterances or
 other parts of the transcription cannot be
@@ -592,7 +591,7 @@ for all basic categories, the definition should be made clear in the
 <u who="#tom">I used to <vocal><desc>cough</desc></vocal> smoke a lot</u>
 <u who="#bob"><vocal><desc>sniffs</desc></vocal>He thinks he's tough</u>
 <vocal who="#ann"><desc>snorts</desc></vocal>
-<!-- ... -->
+<!-- ... elsewhere, e.g., in the <particDesc>: -->
 <listPerson>
 <person xml:id="ann"><!-- ... --></person>
 <person xml:id="bob"><!-- ... --></person>
@@ -1327,7 +1326,14 @@ These declarations might additionally provide information about
 how the characters concerned should be rendered,  their equivalent
 IPA form, etc. In the transcript itself references to them can then
 be included as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#TSTPPR-eg-58"><div n="Lod E-03" type="exchange">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#TSTPPR-eg-58">
+  <!-- ... in the <particDesc>: -->
+  <listPerson>
+    <person xml:id="cwn"><p>Customer WN</p></person>
+    <person xml:id="aj"><p>Assistant K</p></person>
+  </listPerson>
+  <!-- ... within the <text>: -->
+  <div n="Lod E-03" type="exchange">
    <note>C is with a friend</note>
    <u who="#cwn">
       <unclear>Excuse me<g ref="#lf"/></unclear> <pause/> You dont have some
@@ -1347,13 +1353,8 @@ be included as follows:
    <u who="#aj">
       Yes thats fine. <unclear>just as soon as it comes in we'll send
       you a postcard<g ref="#lf"/></unclear> </u>
-<listPerson>
-<person xml:id="cwn"><p>Customer WN</p></person>
-<person xml:id="aj"><p>Assistant K</p></person>
-</listPerson>
 </div></egXML>
-<!-- Recoded from Gavioli and Mansfield: The PIXI Corpora     -->
-	<!-- (Bologna, 1990, CLUEB), p74                              --></p>
+<!-- Recoded from Gavioli and Mansfield: The PIXI Corpora (Bologna, 1990, CLUEB), p74 --></p>
 <p>This example, which is taken from a corpus of bookshop service
 encounters, <!--(<ref target="#TS-BIBL-8">Gavioli and Mansfield 1990</ref>)-->
 also demonstrates the use of the <gi>unclear</gi> and <gi>gap</gi>
