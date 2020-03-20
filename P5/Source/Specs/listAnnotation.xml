@@ -19,13 +19,14 @@ $Id$
     <memberOf key="att.typed"/>
     <memberOf key="att.notated"/>
     <memberOf key="att.declaring"/>
-    <memberOf key="model.listLike"/>
     <memberOf key="model.annotationLike"/>
   </classes>
   <content>
-    <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
-    <classRef key="model.labelLike" minOccurs="0" maxOccurs="unbounded"/>
-    <classRef key="model.annotationLike" minOccurs="1" maxOccurs="unbounded"/>
+    <sequence>
+      <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      <classRef key="model.labelLike" minOccurs="0" maxOccurs="unbounded"/>
+      <classRef key="model.annotationLike" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
@@ -38,7 +39,12 @@ $Id$
     </egXML>
   </exemplum>
   <remarks versionDate="2020-03-09" xml:lang="en">
-    <p>remakrs HERE</p>
+    <p>The enclosed annotations may use the general-purpose
+    <gi>note</gi> element; or, for annotations pertaining to
+    transcriptions of speech, the special-purpose
+    <gi>annotationBlock</gi> element; or the <gi>annotation</gi>
+    element, which is intended to map cleanly onto the <ref
+    target="#WADM">Web Annotation Data Model</ref>.</p>
   </remarks>
   <listRef>
     <ptr target="#FIXME"/>
