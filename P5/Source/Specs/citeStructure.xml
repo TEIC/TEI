@@ -15,16 +15,21 @@ $Id$
     <memberOf key="att.citeStructurePart"/>
   </classes>
   <content>
-    <elementRef key="citeData" maxOccurs="unbounded"/>
-    <elementRef key="citeStructure" maxOccurs="unbounded"/>    
+    <sequence>
+      <elementRef key="citeData" maxOccurs="unbounded"/>
+      <elementRef key="citeStructure" maxOccurs="unbounded"/>
+    </sequence>
   </content>
   <attList>
     <attDef ident="delim" usage="opt">
       <gloss versionDate="2020-02-03" xml:lang="en">delimiter</gloss>
       <desc versionDate="2020-02-03" xml:lang="en">supplies a delimiting string preceding the structural component.</desc>
       <datatype>
-        <dataRef key="teidata.text"/>
+        <dataRef key="teidata.text" restriction=".+"/>
       </datatype>
+      <remarks versionDate="2020-03-24" xml:lang="en">
+        <p><att>delim</att> must contain at least one character.</p>
+      </remarks>
     </attDef>
     <attDef ident="match" usage="req">
       <gloss versionDate="2020-02-03" xml:lang="en">match</gloss>
@@ -60,8 +65,8 @@ $Id$
       </citeStructure>
     </egXML>
   </exemplum>
-    
   <listRef>
-    <ref></ref>
+    <ptr target="#CORS6"/>
+    <ptr target="#SACRCS"/>
   </listRef>
 </elementSpec>
