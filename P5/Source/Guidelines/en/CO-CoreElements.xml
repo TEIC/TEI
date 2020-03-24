@@ -3550,7 +3550,7 @@ the value of <att>target</att>.</p>
 <p>In cases where a more complete formal declaration of text structure is desirable,
 for example in systems that will present the contents of a large TEI file in smaller chunks, the
 <gi>citeStructure</gi> element may be used. This method permits canonical references
-to be resolved and also allows them to be extracted, so, for example, a list of resolvable
+to be resolved and also allows them to be extracted, so that, for example, a list of resolvable
 citations may be generated from the document. The example from the <title>Amores</title>
 above could be implemented using <gi>citeStructure</gi> thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -3564,7 +3564,29 @@ above could be implemented using <gi>citeStructure</gi> thus:
     </citeStructure>
   </refsDecl>
 </egXML></p>
-<p><gi>citeStructure</gi> also provides a method for attaching informational properties to units of structure, by using the <gi>citeData</gi> element</p>
+<p><gi>citeStructure</gi> also provides a method for attaching informational properties to 
+  units of structure, by means of the <gi>citeData</gi> element. The work, book, and poem 
+  divisions above might all have <gi>head</gi> elements which provide a title for the section.
+  If we wish that information to be extractable, we can use citeData to specify where it is to
+  be found:
+  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <refsDecl>
+      <citeStructure unit="work" match="//div1" use="@n">
+        <citeData property="http://purl.org/dc/terms/title" use="head"/>
+        <citeStructure unit="book" match="div2" use="@n" delim=" ">
+          <citeData property="http://purl.org/dc/terms/title" use="head"/>
+          <citeStructure unit="poem" match="div3" use="@n" delim=".">
+            <citeData property="http://purl.org/dc/terms/title" use="head"/>
+            <citeStructure unit="line" match="l" use="@n" delim="."/>
+          </citeStructure>
+        </citeStructure>
+      </citeStructure>
+    </refsDecl>
+  </egXML>
+  The example above maps the head element to the <ref target="#CO-BIBL-2">Dublin Core</ref> 
+  property <code>title</code> For convenience, property URIs may be abbreviated using
+  <gi>prefixDef</gi>.
+</p>
 <p>Reference systems recorded by means of milestone tags can also be
 declared; the following prose description could be used to declare
 the example given in section <ptr target="#CORS5"/>.
