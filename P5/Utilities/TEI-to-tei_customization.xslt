@@ -444,7 +444,7 @@
       xmlns:xi="http://www.w3.org/2001/XInclude"
       xmlns:rng="http://relaxng.org/ns/structure/1.0"
       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-      version="{teiHeader/fileDesc/editionStmt/ref[2]}">
+      version="{teiHeader/fileDesc/editionStmt/edition/ref[2]}">
       <teiHeader>
         <fileDesc>
           <titleStmt>
