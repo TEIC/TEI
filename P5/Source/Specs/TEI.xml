@@ -1,10 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="TEI">
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+	     module="textstructure" ident="TEI">
   <gloss versionDate="2005-12-24" xml:lang="en">TEI document</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">TEI 문서</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">TEI文件</gloss>
@@ -13,41 +18,49 @@ $Id$
   <gloss versionDate="2007-05-04" xml:lang="es">documento TEI</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">documento TEI</gloss>
   <gloss versionDate="2018-12-17" xml:lang="ja">TEI文書</gloss>
-  <desc versionDate="2017-02-07" xml:lang="en">contains a single TEI-conformant document, combining
-    a single TEI header with one or more members of the <ident type="class">model.resourceLike</ident> class. Multiple <gi>TEI</gi>
-    elements may be combined to form a <gi>teiCorpus</gi> element.</desc>
+  <desc versionDate="2019-06-27" xml:lang="en">contains a single TEI-conformant document, combining
+    a single TEI header with one or more members of the <ident type="class">model.resource</ident> class. Multiple <gi>TEI</gi>
+    elements may be combined within a <gi>TEI</gi> (or <gi>teiCorpus</gi>) element.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">TEI 헤더와 텍스트로 구성된 단일 TEI 구조 문서를 포함한다. 독립 요소 또는 <gi>teiCorpus</gi> 요소의 부분.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含符合TEI標準的單一文件，由一個TEI標頭及一份文本組成，可單獨出現或是作為元素<gi>teiCorpus</gi>的一部分。</desc>
-  <desc versionDate="2018-12-17" xml:lang="ja">一つ以上の<ident type="class">model.resourceLike</ident>クラスを持つ一つのTEIヘッダを持つ，単一のTEI準拠文書を含む．<gi>teiCorpus</gi>エレメントには複数の<gi>TEI</gi>要素が含まれてもよい．</desc>
+  <desc versionDate="2018-12-17" xml:lang="ja">一つ以上の<ident type="class">model.resource</ident>クラスを持つ一つのTEIヘッダを持つ，単一のTEI準拠文書を含む．<gi>teiCorpus</gi>エレメントには複数の<gi>TEI</gi>要素が含まれてもよい．</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">contient un seul document conforme à la TEI, qui
             comprend un en-tête TEI et un texte, soit de façon isolée, soit comme  partie d’un
             élément <gi>teiCorpus</gi>.</desc>
   <desc versionDate="2017-06-13" xml:lang="de">enthält ein einzelnes TEI-konformes Dokument, das aus einem einzigen TEI-Header und einem oder
-    mehreren Mitgliedern der <ident type="class">model.resourceLike</ident>-Klasse besteht. Mehrere
+    mehreren Mitgliedern der <ident type="class">model.resource</ident>-Klasse besteht. Mehrere
     <gi>TEI</gi>-Elemente können in einem <gi>teiCorpus</gi>-Element zusammengefasst werden.</desc>
-  <desc versionDate="2017-02-06" xml:lang="es">contiene un solo documento conforme a la norma TEI, combinando una sola cabecera TEI (teiHeader) con uno o más miembros de la clase <ident type="class">model.resourceLike</ident>. Múltiples elementos TEI se pueden combinar para formar un elemento <gi>teiCorpus</gi>.
+  <desc versionDate="2017-02-06" xml:lang="es">contiene un solo documento conforme a la norma TEI, combinando una sola cabecera TEI (teiHeader) con uno o más miembros de la clase <ident type="class">model.resource</ident>. Múltiples elementos TEI se pueden combinar para formar un elemento <gi>teiCorpus</gi>.
    </desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene un documento TEI-conforme, comprendente un'intestazione e un testo, sia esso isolato o parte di un elemento <gi>teiCorpus</gi>
    </desc>
   <classes>
+    <memberOf key="model.describedResource"/>
     <memberOf key="att.global"/>
     <memberOf key="att.typed"/>
   </classes>
   <content>
+    <!-- teiHeader, ( ( model.resource+, TEI* ) | TEI+ ) -->
     <sequence>
       <elementRef key="teiHeader"/>
-      <classRef key="model.resourceLike" minOccurs="1" maxOccurs="unbounded"/>
+      <alternate>
+	<sequence>
+	  <classRef key="model.resource" minOccurs="1" maxOccurs="unbounded"/>
+	  <elementRef key="TEI" minOccurs="0" maxOccurs="unbounded"/>
+	</sequence>
+	<elementRef key="TEI" minOccurs="1" maxOccurs="unbounded"/>
+      </alternate>
     </sequence>
   </content>
   <constraintSpec ident="c1" scheme="schematron">
     <constraint>
-      <ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
-      <ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="xs" uri="http://www.w3.org/2001/XMLSchema"/>
+      <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
+      <sch:ns prefix="xs" uri="http://www.w3.org/2001/XMLSchema"/>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="c2" scheme="schematron">
     <constraint>
-      <ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="rng" uri="http://relaxng.org/ns/structure/1.0"/>
+      <sch:ns prefix="rng" uri="http://relaxng.org/ns/structure/1.0"/>
     </constraint>
   </constraintSpec>
   <attList>
@@ -123,12 +136,12 @@ $Id$
             </sourceDesc>
           </fileDesc>
         </teiHeader>
-<facsimile>
-<graphic url="page1.png"/>
-<graphic url="page2.png"/>
-<graphic url="page3.png"/>
-<graphic url="page4.png"/>
-</facsimile>
+	<facsimile>
+	  <graphic url="page1.png"/>
+	  <graphic url="page2.png"/>
+	  <graphic url="page3.png"/>
+	  <graphic url="page4.png"/>
+	</facsimile>
       </TEI>
     </egXML>
   </exemplum>
@@ -183,7 +196,7 @@ $Id$
   </exemplum>
   <remarks versionDate="2015-03-10" xml:lang="en">
     <p>This element is required. It is customary to specify the
-TEI namespace <code>http://www.tei-c.org/ns/1.0</code> on it, using
+    TEI namespace <code>http://www.tei-c.org/ns/1.0</code> on it, using
     the <att>xmlns</att> attribute.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">

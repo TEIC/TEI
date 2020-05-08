@@ -72,9 +72,21 @@ that text is permitted within a document, when the module defined by
 this chapter is included in a schema.</p>
 
 <p>The <gi>w</gi> and <gi>pc</gi> elements belong to the <ident type="class">att.linguistic</ident> class, which supplies 
-  attributes that may be used for lightweight linguistic annotation (see section <ptr target="#AILALW"/> below): 
-  <specList><specDesc key="att.linguistic" atts="lemma lemmaRef pos msd join"/></specList></p>
-  
+attributes that may be used for lightweight linguistic annotation (see section <ptr target="#AILALW"/> below): 
+<specList><specDesc key="att.linguistic" atts="lemma lemmaRef pos msd join"/></specList></p>
+<p>Additionally, these elements also have access to the <ident type="class">att.lexicographic.normalized</ident> class, 
+which supplies the attributes <att>norm</att> and <att>orig</att>: the former for handling 
+normalization/regularization at the word level, the latter providing the original form if the element 
+content is modernized or regularized. Note that these attributes are a local (word-level) alternative 
+to the robust mechanism that uses the <gi>choice</gi>, <gi>orig</gi>, and <gi>reg</gi> elements, 
+discussed in section <ptr target="#COEDREG"/> and in chapter <ptr target="#TC"/>. The <gi>choice</gi>-based
+mechanism is the default descriptive device, while the <att>norm</att> and <att>orig</att> attributes are used to
+handle a subset of normalizations in linguistic contexts where a single sequence of tokens is a priority, for example 
+in historical corpora subject to linguistic analysis. It needs to be stressed that the simplified attribute-based 
+mechanism is not meant to be used for editorial interventions.
+<note place="bottom">The <ident type="class">att.lexicographic.normalized</ident> class is also used in dictionary 
+entries, as discussed in chapter <ptr target="#DI"/>.</note></p> 
+
 <p>The <gi>s</gi> element may be used simply to segment a text
 end-to-end  into a series of non-overlapping segments, referred to here
 and elsewhere as <term>s-units</term>, or <term>sentences</term>.
@@ -481,6 +493,7 @@ This matter is taken up in detail in section <ptr target="#AILA"/>.
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/pc.xml"/>
 </specGrp>
 <specGrp xml:id="DAILA" n="Linguistic Word-level Attributes">
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.lexicographic.normalized.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.linguistic.xml"/>
 </specGrp>
 </div>
@@ -1133,9 +1146,9 @@ have <att>join</att> with the value <val>right</val> on the tokens
 <mentioned>victim</mentioned> and <mentioned>surfaced</mentioned>, or whether information
 on a single direction of adjacency is enough. Strategies vary, and it is important to
 document them in the TEI header.</p>
-<p>This section concludes with an example German sentence <mentioned>Wir fahren in den
+<p>The following example shows a German sentence <mentioned>Wir fahren in den
 Urlaub</mentioned> (<q>We're going on vacation</q>) annotated with all the attributes discussed
-here.<note place="bottom">The annotation values have been adapted from the <ref
+above.<note place="bottom">The annotation values have been adapted from the <ref
   target="https://weblicht.sfs.uni-tuebingen.de/weblicht/">CLARIN Weblicht service</ref>,
 where e.g. the full morphosyntactic description of the first item reads: <code>[cat pronoun,
 personal true, substituting true, person 1, case nominative, number plural]</code>, and has been
@@ -1151,6 +1164,29 @@ compressed form that fits inside a single attribute value.</note>
 </s>
 </egXML>
 </p>
+<p>The final examples lay out a strategy for dealing with e.g. historical corpora where it is on
+the one hand important to maintain a steady stream of token-level elements (<gi>w</gi> and
+<gi>pc</gi>) for efficient processing, but, on the other hand, it is also important to
+either record the original spelling (when the corpus text is normalized) or to record the
+normalized variants (when the element content of the corpus preserves the original
+spelling). The attribute class <ident type="class">att.lexicographic.normalized</ident> can be used for that purpose:
+<specList><specDesc key="att.lexicographic.normalized" atts="norm orig"/></specList></p>
+<p>The first fragment below comes from "Gottfried, Newe Welt Vnd Americanische Historien. Frankfurt/M., 1631" 
+encoded in the Deutsches Textarchiv and records normalized forms in the <att>norm</att> attribute.
+  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <w norm="unvermutete">vnuermuthete</w>
+    <w norm="Freundschaft">Freundſchafft</w>
+    <w norm="angeboten">angebotten</w>
+  </egXML></p>  
+<p>The following example comes from the EarlyPrint project and uses the attribute <att>orig</att> to 
+record the original spelling (note that the <att>xml:id</att> attributes have been removed for the 
+sake of readability).
+  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <w lemma="he" pos="pns">he</w>
+    <w lemma="have" pos="vvz">hath</w>
+    <w lemma="bring" pos="vvn">brought</w>
+    <w lemma="forth" pos="av" orig="sorth">forth</w>
+  </egXML></p>
 </div>
 <div type="div3" xml:id="AILASP"><head>Spoken Text</head>
 <p>The mechanisms proposed in this chapter may also be used to encode

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
+Copyright TEI Consortium.
+Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details.
 $Date$
 $Id$
@@ -9,7 +9,7 @@ $Id$
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="WD" n="25">
 <head>Characters, Glyphs, and Writing Modes</head>
-    <!-- to become : head>Characters, Glyphs, and Writing Systems</head-->
+<!-- to become : head>Characters, Glyphs, and Writing Systems</head-->
 
 <p>Chapter <ptr target="#CH"/> introduced the fundamental notions of
 language identification and character representation in an encoded TEI
@@ -31,32 +31,32 @@ individual characters, and related questions. </p>
 
 
 <div type="div2" xml:id="WDNE"><head>Is Your Journey Really Necessary?</head>
-    <p>Despite the availability of Unicode, text encoders still
-    sometimes find that the published repertoire of available
-    characters is inadequate to their needs. This is particularly the
-    case when dealing with ancient languages, for which encoding
-    standards do not yet exist, or where an encoder wishes to
-    represent variant forms of a character or <term>glyphs</term>.
-    The module defined by this chapter provides a mechanism to satisfy
-    that need, while retaining compatibility with standards.
+<p>Despite the availability of Unicode, text encoders still
+sometimes find that the published repertoire of available
+characters is inadequate to their needs. This is particularly the
+case when dealing with ancient languages, for which encoding
+standards do not yet exist, or where an encoder wishes to
+represent variant forms of a character or <term>glyphs</term>.
+The module defined by this chapter provides a mechanism to satisfy
+that need, while retaining compatibility with standards.
 </p>
 <p>When encoders encounter some graphical unit in a document which is
 to be represented electronically, the first issue to be resolved
 should be <q>Is this really a different character?</q> To determine
 whether a particular graphical unit <emph>is</emph> a character or
 not, see <ptr target="#D4-42"/>. </p>
-    <p>If the unit is indeed determined to be a character, the next
-    question should be <q>Has this character been encoded already?</q>
-    In order to determine whether a character has been encoded,
-    encoders should follow the following steps:
+<p>If the unit is indeed determined to be a character, the next
+question should be <q>Has this character been encoded already?</q>
+In order to determine whether a character has been encoded,
+encoders should follow the following steps:
 <list rend="numbered">
-      <item><p>Check the Unicode
-      web site at <ptr target="http://www.unicode.org"/>, in particular the page <ref target="http://unicode.org/standard/where/">"Where is my
-      Character?"</ref>, and the associated character code charts.
-      Alternatively, users can check the latest published version of
-      <title>The Unicode Standard</title> (<ref target="#CH-BIBL-3">Unicode Consortium (2006)</ref>), though the web site is
-      often more up to date than the printed version, and should be
-      checked for preference.</p> 
+  <item><p>Check the Unicode
+  web site at <ptr target="http://www.unicode.org"/>, in particular the page <ref target="http://unicode.org/standard/where/">"Where is my
+  Character?"</ref>, and the associated character code charts.
+  Alternatively, users can check the latest published version of
+  <title>The Unicode Standard</title> (<ref target="#CH-BIBL-3">Unicode Consortium (2006)</ref>), though the web site is
+  often more up to date than the printed version, and should be
+  checked for preference.</p>
 <p>The pictures (<soCalled>glyphs</soCalled>) in the Unicode code
 charts are only meant to be representative, not definitive. If a
 specific form of an already encoded character is required for a
@@ -64,8 +64,8 @@ project, refer to the guidelines contained below under <ref target="#D25-30">Ann
 encoded document may be rendered on a system which has different fonts
 from yours: if the specific form of a character is important to you,
 then you should document it. </p></item>
-      <item>Check the Proposed New Characters web page (<ptr target="http://unicode.org/alloc/Pipeline.html"/>) to see whether
-      the character is in line for approval.</item>
+  <item>Check the Proposed New Characters web page (<ptr target="http://unicode.org/alloc/Pipeline.html"/>) to see whether
+  the character is in line for approval.</item>
 
 <item>Ask on the Unicode email list (<ptr target="http://www.unicode.org/consortium/distlist.html"/>) to
 see whether  a proposal is pending, or to determine whether this
@@ -73,70 +73,65 @@ character is considered eligible for addition
 to the Unicode Standard.  </item>
 
 </list> </p>
-    <p>Since there are now close to 100,000 characters in Unicode,
-    chances are good that what you need is already there, but it might
-    not be easy to find, since it might have a different name in
-    Unicode.  Look again, this time at other sites, for example <ptr target="http://www.eki.ee/letter/"/>, which also provide searches
-    based on scripts and languages. Take care, however, that all the
-    properties of what seems to be a relevant character are consistent
-    with those of the character you are looking for. For example, if
-    your character is definitely a digit, but the properties of the
-    best match you can find for it say that it is a letter, you may
-    have a character not yet defined in Unicode.  </p>
+<p>Since there are now over 130,000 characters in Unicode,
+chances are good that what you need is already there, but it might
+not be easy to find, since it might have a different name in
+Unicode. Editors working with East Asian writing systems should consult
+the <ref target="https://unicode.org/charts/unihan.html">Unihan Database</ref>.
+Look again, this time at other sites, preferably ones which also provide searches based on scripts and languages. For example <ptr target="https://www.chise.org"/> (for CJK characters) or <ptr target="http://www.eki.ee/letter/"/> (for non-CJK characters) .
+Take care, however, that all the
+properties of what seems to be a relevant character are consistent
+with those of the character you are looking for. For example, if
+your character is definitely a digit, but the properties of the
+best match you can find for it say that it is a letter, you may
+have a character not yet defined in Unicode.</p>
 <p>In general, it is advisable to avoid Unicode characters generally
 described as presentation forms.<note place="bottom">Specifically,
-characters in the Unicode blocks Alphabetic Presentation Forms, Arabic
-Presentation Forms-A, Arabic Presentation Forms-B, Letterlike Symbols,
-and Number Forms.</note> However, if the character you are looking for
-is being used in a notation (rather than as part of the orthography of
-a language) then it is quite acceptable to select characters from the
-Mathematical Operators block, provided that they have the appropriate
-properties (i.e. <code>So</code>: Symbol, Other; or <code>Sm</code>:
+characters in the Unicode blocks Alphabetic Presentation Forms, Arabic Presentation Forms-A, Arabic Presentation Forms-B, Letterlike Symbols,and Number Forms.</note> However, if the character you are looking for is being used in a notation (rather than as part of the orthography of a language) then it is quite acceptable to select characters from the Mathematical Operators block, provided that they have the appropriate properties (i.e. <code>So</code>: Symbol, Other; or <code>Sm</code>:
 Symbol, Math).</p>
-    <p>An encoded character may be precomposed or it may be formed
-    from base characters and combining diacritical marks. Either will
-    suffice for a character to be "found" as an encoded character. </p>
-<p>If there are several possible Unicode characters to choose amongst,
+<p>An encoded character may be precomposed or it may be formed
+from base characters and combining diacritical marks. Either will
+suffice for a character to be "found" as an encoded character. If there are several possible Unicode characters to choose amongst,
 it is good practice to consult other colleagues and practitioners to
 see whether a consensus has emerged in favour of one or other of
-them. </p>
+them.</p>
 <p>If, however, no suitable form of your character seems to exist,
-    the next question will be: <q>Does the graphical unit in question
-    represent a variant form of a known character, or does it
-    represent a completely unencoded character?</q> If the character
-    is determined to be missing from the Unicode Standard, it would be helpful to
-    submit the new character for inclusion (see <ptr target="http://unicode.org/pending/proposals.html"/>).  </p>
-    <p>These guidelines will help you proceed once you have
-     identified a given graphical unit as either a variant or an
-     unencoded character. Determining this will require knowledge of
-     the contents of the document that you have. The first case will
-     be called <emph>annotation</emph> of a character, while the
-     second case will be called <emph>adding</emph> of a new
-     character. How to handle graphical units that represent variants
-     will be discussed below (<ptr target="#D25-30"/>)
-     while the problem of representing new characters will be dealt
-     with in section <ptr target="#D25-40"/>.    </p>
-    <p>While there is some overlap between these requirements,
-    distinct specialized markup constructs have been created for each
-    of these cases. These constructs are presented in section <ptr target="#D25-20"/>
-    below.  </p>
+the next question will be: <q>Does the graphical unit in question
+represent a variant form of a known character, or does it
+represent a completely unencoded character?</q> If the character
+is determined to be missing from the Unicode Standard, it would be helpful to
+submit the new character for inclusion (see <ptr target="http://unicode.org/pending/proposals.html"/>).  </p>
+<p>These guidelines will help you proceed once you have
+ identified a given graphical unit as either a variant or an
+ unencoded character. Determining this will require knowledge of
+ the contents of the document that you have. The first case will
+ be called <emph>annotation</emph> of a character, while the
+ second case will be called <emph>adding</emph> of a new
+ character. How to handle graphical units that represent variants
+ will be discussed below (<ptr target="#D25-30"/>)
+ while the problem of representing new characters will be dealt
+ with in section <ptr target="#D25-40"/>.</p>
+<p>While there is some overlap between these requirements,
+distinct specialized markup constructs have been created for each
+of these cases. These constructs are presented in section <ptr target="#D25-20"/>
+below.  </p>
    </div>
    <div type="div2" xml:id="D25-20">
 <!--
-    <head>Markup constructs for representing non-standard characters</head>
-    <p>The gaiji module provides a mechanism to declare characters
-    additional to those available from the document character set. XML
-    allows for a document (or document component) to declare its
-    encoding, thus restricting the characters that can be encoded
-    directly within it without using numeric character references. For
-    example, an XML document which begins <code>&lt;?xml version="1.0"
-    encoding="iso-8859-1"?&gt;</code> can include non-ISO-8859-1
-    characters only by representing them as numeric character
-    references. In such a case, it might be convenient to declare as
-    additional characters some characters already defined by
-    the Unicode Standard. Generally speaking, however, the document character set
-    will be Unicode, and this mechanism will be needed only for
-    characters not defined by the Unicode Standard. </p>
+<head>Markup constructs for representing non-standard characters</head>
+<p>The gaiji module provides a mechanism to declare characters
+additional to those available from the document character set. XML
+allows for a document (or document component) to declare its
+encoding, thus restricting the characters that can be encoded
+directly within it without using numeric character references. For
+example, an XML document which begins <code>&lt;?xml version="1.0"
+encoding="iso-8859-1"?&gt;</code> can include non-ISO-8859-1
+characters only by representing them as numeric character
+references. In such a case, it might be convenient to declare as
+additional characters some characters already defined by
+the Unicode Standard. Generally speaking, however, the document character set
+will be Unicode, and this mechanism will be needed only for
+characters not defined by the Unicode Standard. </p>
 -->
 <head>Markup Constructs for Representation of Characters and Glyphs</head>
 <p>An XML document can, in principle, contain any defined Unicode
@@ -149,31 +144,30 @@ part of it) by adding a suitable encoding declaration. For example, if
 a document begins with the declaration <code>&lt;?xml
 encoding="iso-8859-1"?&gt;</code> any Unicode characters which are not
 in the ISO-8859-1 character set must be represented by NCRs. </p>
-     <p>The <mentioned>gaiji</mentioned> module defined by this
-     chapter adds a further way of representing specific characters
-     and glyphs in a document. (Gaiji is from Japanese <seg xml:lang="ja">外字</seg>, meaning <gloss>external
-     characters</gloss>.) This allows the encoder to distinguish
-     characters and glyphs which Unicode regards as identical, to add
-     new nonstandard characters or glyphs, and to represent Unicode
-     characters not available in the document encoding by an
-     alternative means.</p>
-    <p>The mechanism provided here consists functionally of two parts:
-     <list rend="numbered">
-      <item>an element <gi>g</gi>, which serves as a proxy for new
-       characters or glyphs</item>
-      <item>elements <gi>char</gi> and <gi>glyph</gi>, providing information about such characters or glyphs; these elements are stored in the
-       <gi>charDecl</gi> element in the header.</item>
-     </list>
-    </p>
+ <p>The <mentioned>gaiji</mentioned> module defined by this
+ chapter adds a further way of representing specific characters
+ and glyphs in a document. (Gaiji is from Japanese <seg xml:lang="ja">外字</seg>, meaning <gloss>external
+ characters</gloss>.) This allows the encoder to distinguish
+ characters and glyphs which Unicode regards as identical, to add
+ new nonstandard characters or glyphs, and to represent Unicode
+ characters not available in the document encoding by an
+ alternative means.</p>
+<p>The mechanism provided here consists functionally of two parts:
+ <list rend="numbered">
+  <item>an element <gi>g</gi>, which serves as a proxy for new
+   characters or glyphs</item>
+  <item>elements <gi>char</gi> and <gi>glyph</gi>, providing information about such characters or glyphs; these elements are stored in the
+   <gi>charDecl</gi> element in the header.</item>
+ </list>
+</p>
 <p>When the gaiji module is included in a schema, the
 <gi>charDecl</gi> element is added to the <ident type="class">model.encodingDescPart</ident>
 class, and the <gi>g</gi> element is added to the phrase class. These
 elements and their components are documented in the rest of this
 section. </p>
 <p>The Unicode standard defines properties for all the characters it
-defines in the Unicode Character Database, knowledge of which is
-usually built into text processing systems.  If the character
-represented by the <gi>g</gi> element does not exist in Unicode at
+defines in the <ref target="https://unicode.org/ucd/">Unicode Character Database </ref>, knowledge of which is usually built into text processing systems. If the
+character represented by the <gi>g</gi> element does not exist in Unicode at
 all, its properties are not available. If the character represented is
 an existing Unicode character, but is not available in the document
 character set recognized by a given text processing system, it may
@@ -183,11 +177,11 @@ for use by such applications in a standard way.</p>
 <p> The list of attributes (properties) for characters is modelled on
 those in the Unicode Character Database, which distinguishes
 <term>normative</term> and <term>informative</term> character
-properties. Additional, non-Unicode, properties may also be supplied.
+properties. The Unicode Consortium also maintains a separate set of character properties specific to East Asian characters in the <ref target="http://www.unicode.org/charts/unihan.html">Unihan database</ref> which TEI fully supports. Lastly, non-Unicode properties may also be supplied.
 Since the list of properties will vary with different versions of the
 Unicode Standard, there may not be an exact correspondence between
 them and the list of properties defined in these Guidelines.</p>
-
+<!-- TODO Phase 5 Preceding sentence needs to mention update mechanisn #1805 -->
 <p>Usage examples for these elements are given below at <ptr target="#D25-30"/> and <ptr target="#D25-40"/>.  The gaiji module
 itself is formally defined in section <ptr target="#WSD-DEF"/>
 below. It declares the following additional elements:
@@ -204,13 +198,13 @@ plain text, thus permitting the <gi>g</gi> element also to appear at
 such places when this module is included in a schema.
 </p>
 <p>The following elements may appear within a <gi>charDecl</gi>
-     element:
+ element:
 <specList>
 <specDesc key="desc"/>
 <specDesc key="char"/>
 <specDesc key="glyph"/>
-     </specList>
-    </p>
+ </specList>
+</p>
 <p>The <gi>char</gi> and <gi>glyph</gi> elements have similar contents
 and are used in similar ways, but their functions are different. The
 <gi>char</gi> element is provided to define a character which is not
@@ -235,32 +229,17 @@ further <ptr target="#D25-30"/>).</p>
 <p>The Unicode Standard recommends naming conventions which should be
 followed strictly where the intention is to annotate an existing
 Unicode character, and which may also be used as a model when
-creating new names for characters or glyphs<note place="bottom">It should be noted,
-however, that this naming convention cannot meaningfully be applied to
-East Asian characters; the typical Unicode descriptions for these
-characters take the form <q>CJK Unified Ideograph
-<code>U+4E00</code></q>, where <code>U+4E00</code> is simply the
-Unicode code point value of the character in question.  In cases where
-no Unicode code point exists, there is little hope of finding a name
-that helps to identify the character. Names should therefore be
-constructed in a way meaningful to local practice, for example by
-using a reference number from a well-known character dictionary or a
-project-specific serial number.</note>. For convenience of processing,
-the following distinct elements are proposed for naming characters and
-glyphs:
-<specList>
-<specDesc key="charName"/>
-<specDesc key="glyphName"/>
-</specList></p>
+creating new names for characters or glyphs<note place="bottom">It should be noted, however, that this naming convention cannot meaningfully be applied to East Asian characters; the typical Unicode descriptions for these characters take the form <q>CJK Unified Ideograph <code>U+4E00</code></q>, where <code>U+4E00</code> is simply the Unicode code point value of the character in question.  In cases where no Unicode code point exists, there is little hope of finding a name that helps to identify the character. Names should therefore be constructed in a way meaningful to local practice, for example by using a reference number from a well-known character dictionary or a project-specific serial number.</note>:</p>
 <p>Within both <gi>char</gi> and <gi>glyph</gi>, the following elements are available:
 <specList>
 <specDesc key="gloss"/>
-<specDesc key="charProp"/>
+<specDesc key="unicodeProp"/>
+<specDesc key="unihanProp"/>
+<specDesc key="localProp"/>
 <specDesc key="desc"/>
 <specDesc key="mapping"/>
 <specDesc key="figure"/>
 <specDesc key="note"/>
-
 </specList>
 </p>
 
@@ -276,7 +255,6 @@ resolution, or in different formats, or may itself be repeated. As
 elsewhere, the <att>mimeType</att> attribute
 of <gi>graphic</gi> should be used to specify
 the format of the image.</p>
-
 <p>The <gi>mapping</gi> element is similar to the standard TEI
 <gi>equiv</gi> element. While the latter is used to express
 correspondence relationships between TEI concepts or elements and
@@ -294,39 +272,33 @@ equivalences, <code>standard</code> for standardized forms, and
 <code>simplified</code> for simplified characters, etc., as in the
 following example: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><charDecl>
 <char xml:id="aenl">
-<charName>LATIN LETTER ENLARGED SMALL A</charName>
-<charProp>
-<localName>entity</localName>
-<value>aenl</value>
-</charProp>
+<localProp name="name" value="LATIN LETTER ENLARGED SMALL A"/>
+<localProp name="entity" value="aenl"/>
 <mapping type="standard">a</mapping>
 </char>
 </charDecl>
-</egXML> 
+</egXML>
 </p>
 <p>The mapping element may also be used to represent a mapping of the
 character or (more likely) glyph under discussion onto a character
 from the private use area as in this example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><charDecl>
 <glyph xml:id="z103">
-<glyphName>LATIN LETTER Z WITH TWO STROKES</glyphName>
+<localProp name="name" value="LATIN LETTER Z WITH TWO STROKES"/>
 <mapping type="standard">Z</mapping>
 <mapping type="PUA">U+E304</mapping>
 </glyph>
 </charDecl>
-</egXML> 
+</egXML>
 </p>
 <p>A more precise documentation of the properties of any character or
-glyph may be supplied using the generic <gi>charProp</gi> element
-described in the next section. Despite its name, this element may be
-used for either characters or glyphs.
-</p>
+glyph may be supplied using one of the three <soCalled>property</soCalled> elements: <gi>localProp</gi>, <gi>unicodeProp</gi>, or <gi>unihanProp</gi>; these are described in the next section.</p>
 <div type="div3" xml:id="ucsprops"><head>Character Properties</head>
 <p>The Unicode Standard documents <soCalled>ideal</soCalled>
 characters, defined by reference to a number of
 <term>properties</term> (or attribute-value pairs) which they are said
 to possess. For example, a lowercase letter is said to have the value
-<code>Ll</code> for the property <code>general-category</code>. The
+<code>Ll</code> for the property <code>General_Category</code>. The
 Standard distinguishes between <term>normative</term> properties
 (i.e. properties which form part of the definition of a given
 character), and <term>informative</term> or <term>additional</term>
@@ -336,24 +308,40 @@ currently assigned to certain properties. When making such
 modifications, great care should be taken not to override standard
 informative properties for characters which already exist in the Unicode
 Standard, as documented in <ref target="#CH-eg-02">Freytag (2006)</ref>.</p>
-<p>The <gi>charProp</gi> element allows an encoder to supply information
-about a character or glyph. Where the information concerned relates to
-a property which has already been identified in the Unicode Standard, encoders are
-urged to use the appropriate Unicode property name. </p>
-<p>The following elements are used to record character properties:
+<!-- TODO phase 6 insert comment about validation of values #1805 -->
+<p>The <gi>unicodeProp</gi>, <gi>unihanProp</gi>, and
+<gi>localProp</gi> elements allow a TEI encoder to record information
+about a character or glyph:
 <specList>
-<specDesc key="unicodeName"/>
-<specDesc key="localName"/>
-<specDesc key="value"/>
+  <specDesc key="unicodeProp" atts="name value"/>
+  <specDesc key="unihanProp" atts="name value"/>
+  <specDesc key="localProp" atts="name value"/>
 </specList>
-For each property, the encoder must supply either a
-<gi>unicodeName</gi> or a <gi>localName</gi>, followed by a
-<gi>value</gi>. </p>
+</p>
+<p>Where the information concerned relates to a property which has
+already been identified in the Unicode Standard, use of the
+appropriate Unicode property name with <gi>unicodeProp</gi> is
+strongly encouraged. The use of available Unihan property names with
+<gi>unihanProp</gi> is similarly encouraged. Validation rules for
+property names <!-- and values --> according to Unicode conventions
+are incorporated into the TEI schemas. Where neither of these
+standards suffices use <gi>localProp</gi>.</p>
+<!-- Phse 3-5 TODO add @version in here and override possible values for localProp #1805 -->
+<p>The three elements for recording Unicode or locally defined properties belong to the <gi>att.gaijiProp</gi> class. This class defines two required attributes for record key-value pairs for character properties:
+<!-- TODO phase 3: add version #1805 -->
+<specList>
+<specDesc key="att.gaijiProp" atts="name value"/>
+</specList>
+For each property, the encoder must supply both a
+<att>name</att> and a <att>value</att>. In cases of boolean properties TEI requires an explict <val>true</val> or <val>false</val> <att>value</att> attribute:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+  <unicodeProp name="Ideographic" value="false"/>
+</egXML>
+</p>
 <p>For convenience, we list here some of the normative character
-properties and their values. For full information, refer to chapter 4 of
-<title>The Unicode Standard</title>, or the online documentation of the Unicode Character Database.
+properties and their values. For full information, refer to chapter 4 of <title>The Unicode Standard</title>, or the online documentation of the Unicode Character Database.
 <list type="gloss">
-	 <label>general-category</label> <item>The general
+	 <label>General_Category</label> <item>The general
 	  category (described in the Unicode Standard chapter 4 section 5) is an assignment to some
 	  major classes and subclasses of characters.  Suggested
 	  values for this property are listed here:
@@ -390,41 +378,45 @@ properties and their values. For full information, refer to chapter 4 of
 <row><cell><code>Cn</code></cell><cell>Other, not assigned</cell></row>
 </table>
 	 </item>
-	 <label>directional-category</label> 
+	 <label>Bidi_Class</label>
 <item>This property applies to all Unicode characters. It governs the
 application of the algorithm for bi-directional behaviour, as further
 specified in Unicode Annex 9, <title>The Bidirectional
-Algorithm</title>. The following 19 different values are currently
-defined for this property in <ref target="#WD-bibl-01">Davis et al (2006)</ref>:
+Algorithm</title>. The following 21 different values are currently
+defined for this property:
 <table>
-<row><cell><code>L</code></cell><cell>left to right</cell></row>
-<row><cell><code>LRE</code></cell><cell>left to right embedding</cell></row>
-<row><cell><code>LRO</code></cell><cell>left to right override</cell></row>
-<row><cell><code>R</code></cell><cell>right to left</cell></row>
-<row><cell><code>AL</code></cell><cell>right to left Arabic</cell></row>
-<row><cell><code>RLE</code></cell><cell>right to left embedding</cell></row>
-<row><cell><code>RLO</code></cell><cell>right to left override</cell></row>
-<row><cell><code>PDF</code></cell><cell>Pop Directional Format</cell></row>
+<row><cell><code>L</code></cell><cell>Left-to-Right</cell></row>
+<row><cell><code>R</code></cell><cell>Right-to-Left</cell></row>
+<row><cell><code>AL</code></cell><cell>Right-to-Left Arabic</cell></row>
 <row><cell><code>EN</code></cell><cell>European Number</cell></row>
 <row><cell><code>ES</code></cell><cell>European Number Separator</cell></row>
 <row><cell><code>ET</code></cell><cell>European Number Terminator</cell></row>
 <row><cell><code>AN</code></cell><cell>Arabic Number</cell></row>
 <row><cell><code>CS</code></cell><cell>Common Number Separator</cell></row>
-<row><cell><code>NSM</code></cell><cell>Non-spacing Mark</cell></row>
+<row><cell><code>NSM</code></cell><cell>Nonspacing Mark</cell></row>
 <row><cell><code>BN</code></cell><cell>Boundary Neutral</cell></row>
-<row><cell><code>B</code></cell><cell>Paragraph separator</cell></row>
-<row><cell><code>S</code></cell><cell>Segment separator</cell></row>
+<row><cell><code>B</code></cell><cell>Paragraph Separator</cell></row>
+<row><cell><code>S</code></cell><cell>Segment Separator</cell></row>
 <row><cell><code>WS</code></cell><cell>Whitespace</cell></row>
-<row><cell><code>ON</code></cell><cell>Other neutrals</cell></row>
+<row><cell><code>ON</code></cell><cell>Other Neutrals</cell></row>
+<row><cell><code>LRE</code></cell><cell>Left-to-Right Embedding</cell></row>
+<row><cell><code>LRO</code></cell><cell>Left-to-Right Override</cell></row>
+<row><cell><code>RLE</code></cell><cell>Right-to-Left Embedding</cell></row>
+<row><cell><code>RLO</code></cell><cell>Right-to-Left Override</cell></row>
+<row><cell><code>PDF</code></cell><cell>Pop Directional Format</cell></row>
+<row><cell><code>LRI</code></cell><cell>Left-to-Right Isolate</cell></row>
+<row><cell><code>RLI</code></cell><cell>Right-to-Left Isolate</cell></row>
+<row><cell><code>FSI</code></cell><cell>First Strong Isolate</cell></row>
+<row><cell><code>PDI</code></cell><cell>Pop Directional Isolate</cell></row>
 </table></item>
-	 <label>canonical-combining-class</label> <item>This
+	 <label>Canonical_Combining_Class</label> <item>This
 	  property exists for characters that are not used
 	  independently, but in combination with other characters, for
 	  example the strokes making up CJK (Chinese, Japanese, and Korean) characters.  It
 	  records a class for these characters, which is used to
 	  determine how they interact typographically. The following
 	  values are defined in  the Unicode Standard: (see <ref target="http://www.unicode.org/reports/tr44/#Canonical_Combining_Class_Values">Unicode
-Character Database: Canonical Combining Class Values</ref>); these were taken from version 5.0:
+Character Database: Canonical Combining Class Values</ref>); these were taken from version 12.1:
 <table>
 <row><cell><code>0</code></cell><cell>Spacing, split, enclosing, reordrant, and Tibetan subjoined </cell></row>
 <row><cell><code>1</code></cell><cell>Overlays and interior </cell></row>
@@ -453,8 +445,8 @@ Character Database: Canonical Combining Class Values</ref>); these were taken fr
 <row><cell><code>234</code></cell><cell>Double above </cell></row>
 <row><cell><code>240</code></cell><cell>Below (iota subscript) </cell></row>
 </table></item>
-<label>character-decomposition-mapping</label> 
-          <item>This property is defined for characters,
+<label>Decomposition_Mapping</label>
+  <item>This property is defined for characters,
 	  which may be decomposed, for example to a canonical form
 	  plus a typographic variation of some kind. For such characters the Unicode standard  specifies both
 	  a decomposition type and a decomposition mapping
@@ -462,25 +454,25 @@ Character Database: Canonical Combining Class Values</ref>); these were taken fr
 	  mapped in the way specified by the decomposition type). The
 	  following types of mapping are defined in the Unicode Standard:
 <table>
-<row><cell><code>font</code></cell><cell>   A font variant (e.g. a blackletter form)</cell></row>
-<row><cell><code>noBreak</code></cell><cell>   A no-break version of a space or hyphen</cell></row>
-<row><cell><code>initial</code></cell><cell>   An initial presentation form (Arabic)</cell></row>
-<row><cell><code>medial</code></cell><cell>   A medial presentation form (Arabic)</cell></row>
-<row><cell><code>final</code></cell><cell>   A final presentation form (Arabic)</cell></row>
-<row><cell><code>isolated</code></cell><cell>   An isolated presentation form (Arabic)</cell></row>
-<row><cell><code>circle</code></cell><cell>   An encircled form</cell></row>
-<row><cell><code>super</code></cell><cell>   A superscript form</cell></row>
-<row><cell><code>sub</code></cell><cell>   A subscript form</cell></row>
-<row><cell><code>vertical</code></cell><cell>   A vertical layout presentation form</cell></row>
-<row><cell><code>wide</code></cell><cell>   A wide (or zenkaku) compatibility character</cell></row>
-<row><cell><code>narrow</code></cell><cell>   A narrow (or hankaku) compatibility character</cell></row>
-<row><cell><code>small</code></cell><cell>   A small variant form (CNS compatibility)</cell></row>
-<row><cell><code>square</code></cell><cell>   A CJK squared font variant</cell></row>
-<row><cell><code>fraction</code></cell><cell>   A vulgar fraction form</cell></row>
-<row><cell><code>compat</code></cell><cell>   Otherwise-unspecified compatibility character</cell></row>
+<row><cell><code>font</code></cell><cell>A font variant (e.g. a blackletter form)</cell></row>
+<row><cell><code>noBreak</code></cell><cell>A no-break version of a space or hyphen</cell></row>
+<row><cell><code>initial</code></cell><cell>An initial presentation form (Arabic)</cell></row>
+<row><cell><code>medial</code></cell><cell>A medial presentation form (Arabic)</cell></row>
+<row><cell><code>final</code></cell><cell>A final presentation form (Arabic)</cell></row>
+<row><cell><code>isolated</code></cell><cell>An isolated presentation form (Arabic)</cell></row>
+<row><cell><code>circle</code></cell><cell>An encircled form</cell></row>
+<row><cell><code>super</code></cell><cell>A superscript form</cell></row>
+<row><cell><code>sub</code></cell><cell>A subscript form</cell></row>
+<row><cell><code>vertical</code></cell><cell>A vertical layout presentation form</cell></row>
+<row><cell><code>wide</code></cell><cell>A wide (or zenkaku) compatibility character</cell></row>
+<row><cell><code>narrow</code></cell><cell>A narrow (or hankaku) compatibility character</cell></row>
+<row><cell><code>small</code></cell><cell>A small variant form (CNS compatibility)</cell></row>
+<row><cell><code>square</code></cell><cell>A CJK squared font variant</cell></row>
+<row><cell><code>fraction</code></cell><cell>A vulgar fraction form</cell></row>
+<row><cell><code>compat</code></cell><cell>Otherwise-unspecified compatibility character</cell></row>
 </table>
 </item>
-	 <label>numeric-value</label> <item>This property applies for
+	 <label>Numeric_Value</label> <item>This property applies for
 	 any character which expresses any kind of numeric value. Its
 	 value is the intended value in decimal notation.</item>
 <label>mirrored</label> <item>The mirrored
@@ -489,154 +481,140 @@ Character Database: Canonical Combining Class Values</ref>); these were taken fr
 	 the text direction: it has the value <code>Y</code>
 (character is mirrored) or <code>N</code> (code is not mirrored).</item>
 	</list></p>
-<p>The Unicode Standard also defines a set of informative (but non-normative)
-properties for Unicode characters.  If encoders want to provide such
-properties, they may be included using the suggested Unicode name,
-tagged using the <gi>unicodeName</gi> element. However, encoders may
-also supply other locally-defined properties, which must be named using
-the <gi>localName</gi> element to distinguish them. If a Unicode name
-exists for a given property, it should however always be preferred to
-a locally defined name. Locally defined names should be used only for   properties
-which are not specified by the Unicode Standard.</p>
+<p>The Unicode Standard also defines a set of informative (but non-normative) properties for Unicode characters. If encoders wish to provide such properties, they should be included using the Unicode name. If a Unicode name exists for a given character this should always be used, however encoders may also supply locally defined names. To tag a Unicode name, use <tag>unicodeProp name="Name"</tag> (or <tag>unihanProp name="Name"</tag>). For names specified elsewhere or specified locally use <gi>localProp</gi>.</p>
 </div>
    </div>
    <div type="div2" xml:id="D25-30">
-    <head>Annotating Characters</head>
-    <p>Annotation of a character becomes necessary when it is desired
-    to distinguish it on the basis of certain aspects (typically, its
-    graphical appearance) only.  In a manuscript, for example, where
-    distinctly different forms of the letter "r" can be recognized, it
-    might be useful to distinguish them for analytic purposes, quite
-    distinct from the need to provide an accurate representation of the
-    page. A digital facsimile, particularly one linked to a
-    transcribed and encoded version of the text, will always provide a
-    superior visual representation (for information on how to link a
-    digital facsimile to a transcribed text see <ptr target="#PHFAX"/>), but cannot be used to support arguments based
-    on the distribution of such different forms. Character annotation
-    as described here provides a solution to this problem.<note place="bottom"> It should be kept in mind that any kind of text
-    encoding is an abstraction and an interpretation of the text at
-    hand, which will not necessarily be useful in reproducing an exact
-    facsimile of the appearance of a manuscript.</note> </p>
+<head>Annotating Characters</head>
+<p>Annotation of a character becomes necessary when it is desired
+to distinguish it on the basis of certain aspects (typically, its
+graphical appearance) only.  In a manuscript, for example, where
+distinctly different forms of the letter <mentioned>r</mentioned> can be recognized, it
+might be useful to distinguish them for analytic purposes, quite
+distinct from the need to provide an accurate representation of the
+page. A digital facsimile, particularly one linked to a
+transcribed and encoded version of the text, will always provide a
+superior visual representation (for information on how to link a
+digital facsimile to a transcribed text see <ptr target="#PHFAX"/>), but cannot be used to support arguments based
+on the distribution of such different forms. Character annotation
+as described here provides a solution to this problem.<note place="bottom"> It should be kept in mind that any kind of text
+encoding is an abstraction and an interpretation of the text at
+hand, which will not necessarily be useful in reproducing an exact
+facsimile of the appearance of a manuscript.</note> </p>
 
 <p>Assuming that we wish to distinguish the variant glyphs from the
 standard representation for the character concerned, we will need to
 define distinct <gi>glyph</gi> elements, one for each of the forms of
 the letter we wish to distinguish: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><charDecl>
   <glyph xml:id="r1">
-  <glyphName>LATIN SMALL LETTER R WITH ONE FUNNY STROKE</glyphName>
-   <charProp>
-      <localName>entity</localName>
-       <value>r1</value>
-   </charProp>
-   <figure><graphic url="r1img.png"/></figure>
+  <localProp name="name" value="LATIN SMALL LETTER R WITH ONE FUNNY STROKE"/>
+  <localProp name="entity" value="r1"/>
+ <figure><graphic url="r1img.png"/></figure>
  </glyph>
   <glyph xml:id="r2">
-  <glyphName>LATIN SMALL LETTER R WITH TWO FUNNY STROKES</glyphName>
-   <charProp>
-      <localName>entity</localName>
-       <value>r2</value>
-   </charProp>
-   <figure><graphic url="r2img.png"/></figure>
+  <localProp name="name" value="LATIN SMALL LETTER R WITH TWO FUNNY STROKES"/>
+  <localProp name="entity" value="r2"/>
+  <figure><graphic url="r2img.png"/></figure>
  </glyph>
 </charDecl> </egXML>
-     With these definitions in place, occurrences of these two special
-     "r"s in the text can be annotated using the element <gi>g</gi>:
-     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
-    <p>Wo<g ref="#r1">r</g>ds in this 
-      manusc<g ref="#r2">r</g>ipt are sometimes
-      written in a funny way.</p> </egXML></p>
-    <p>
-     As can be seen in this example, the <gi>glyph</gi> element pointed
-     to from the <gi>g</gi> element will be interpreted as an
-     annotation on the content of the element <gi>g</gi>.  This mechanism
-     can be used to represent common manuscript abbreviations or ligatures, as in the
-     following examples:
+ With these definitions in place, occurrences of these two special
+ <mentioned>r</mentioned>s in the text can be represented using the element <gi>g</gi>:
+ <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+<p>Wo<g ref="#r1">r</g>ds in this
+  manusc<g ref="#r2">r</g>ipt are sometimes
+  written in a funny way.</p> </egXML></p>
+<p>
+ As can be seen in this example, the <gi>glyph</gi> element pointed
+ to from the <gi>g</gi> element will be interpreted as an
+ annotation on the content of the element <gi>g</gi>.  This mechanism
+ can be used to represent common manuscript abbreviations or ligatures, as in the
+ following examples:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p> ... <g ref="#Filig">Fi</g>lthy riches...</p>
 <!-- in the charDecl -->
   <glyph xml:id="Filig">
-   <glyphName>LATIN UPPER F AND LATIN LOWER I LIGATURE</glyphName>  
+   <localProp name="Name" value="LATIN UPPER F AND LATIN LOWER I LIGATURE"/>
    <figure><graphic url="Filig.png"/></figure>
  </glyph>
 </egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p> ... <abbr><g ref="#per">per</g></abbr> ardua</p>
 <!-- in the charDecl -->
   <glyph xml:id="per">
-   <glyphName>LATIN ABBREVIATION PER</glyphName>  
+   <localProp name="Name" value="LATIN ABBREVIATION PER"/>
    <figure><graphic url="per.png"/></figure>
  </glyph>
-  
+
 </egXML>
 (In fact the Unicode Standard does provide a character to represent the
-      <code>Fi</code> ligature; the encoder may however prefer not to
-      use it in order to simplify other text processing  operations,
-      such as indexing).    </p>
+  <code>Fi</code> ligature; the encoder may however prefer not to
+  use it in order to simplify other text processing  operations,
+  such as indexing).</p>
 <p>With this
-     markup in place, it will be possible to write programs to analyze
-     the distribution of the different letters "r" as well as produce
-     more <soCalled>faithful</soCalled> renderings of the original. It
-     will also be possible to produce normalized versions by simply ignoring
-     the annotation pointed to by the element <gi>g</gi>.  <!-- To make
-     this kind of processing more efficient, the "type" attribute on
-     <gi>g</gi> can be used, with an enumeration of different
-     types and their usage documented in the TEIHeader.-->
-    </p>
-    <p>For brevity of encoding, it may be preferred to predefine
-    internal entities such as the following:
+ markup in place, it will be possible to write programs to analyze
+ the distribution of the different letters <mentioned>r</mentioned> as well as produce
+ more <soCalled>faithful</soCalled> renderings of the original. It
+ will also be possible to produce normalized versions by simply ignoring
+ the annotation pointed to by the element <gi>g</gi>.  <!-- To make
+ this kind of processing more efficient, the "type" attribute on
+ <gi>g</gi> can be used, with an enumeration of different
+ types and their usage documented in the TEIHeader.-->
+</p>
+<p>For brevity of encoding, it may be preferred to predefine
+internal entities such as the following:
  <eg xml:space="preserve"><![CDATA[<!ENTITY r1 '<g ref="#r1">r</g>' >
 <!ENTITY r2 '<g ref="#r2">r</g>' >]]></eg>
 which would enable the same material to be encoded as follows:
-     <eg xml:space="preserve"><![CDATA[<p>Wo&r1;ds in this manusc&r2;ipt are 
-      sometimes written in a funny way.</p> ]]></eg>
-    </p>
+ <eg xml:space="preserve"><![CDATA[<p>Wo&r1;ds in this manusc&r2;ipt are
+  sometimes written in a funny way.</p> ]]></eg>
+</p>
 <p>The same technique may be used to represent particular
 abbreviation marks as well as to represent other characters or
 glyphs. For example, if we believe that the r-with-one-funny-stroke is
 being used as an abbreviation for <code>receipt</code>, this might be
 represented as follows:<eg><![CDATA[<abbr>&r1;</abbr>]]></eg></p>
-<!-- should become a choice element some time -->    <p>Note however that this technique employs markup objects to
-    provide a link between a character in the document and some
-    annotation on that character. Therefore, it cannot be used in
-    places where such markup constructs are not allowed, notably in
-    attribute values. 
-    </p>
-
-    <p>Since the need to use these constructs to annotate or define
-    characters occurs frequently in Chinese, Korean, and Japanese
-    documents, here are some issues that are specific to these
-    documents. There are two slightly different versions of the
-    problem. In the first case, due to the way Unicode is defined,
-    there are occasions when more than one glyph is defined for a
-    character. In such an occasion, one might want to retain the
-    character as used, but add information in a way so that a
-    normalizer (for search or indexing operations) could take
-    advantage of this information. To achieve this, we simply define
-    within a <gi>charDecl</gi> element a <gi>glyph</gi> that has two
-    <gi>mapping</gi> elements, as shown here:
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="zh" source="#NONE">
-      <charDecl>
+<!-- should become a choice element some time --><p>Note however that this technique employs markup objects to
+provide a link between a character in the document and some
+annotation on that character. Therefore, it cannot be used in
+places where such markup constructs are not allowed, notably in
+attribute values.
+</p>
+<!-- TODO Phase 5 add alternative unihanProp mechanism to define the relationship #1805 -->
+<p>Since the need to use these constructs to annotate or define
+characters occurs frequently in Chinese, Korean, and Japanese
+documents, here are some issues that are specific to these
+documents. There are two slightly different versions of the
+problem. In the first case, due to the way Unicode is defined,
+there are occasions when more than one glyph is defined for a
+character. In such an occasion, one might want to retain the
+character as used, but add information in a way so that a
+normalizer (for search or indexing operations) could take
+advantage of this information. To achieve this, we simply define
+within a <gi>charDecl</gi> element a <gi>glyph</gi> that has two
+<gi>mapping</gi> elements, as shown here:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="zh" source="#NONE">
+  <charDecl>
 	<glyph xml:id="u8aaa">
 	  <mapping type="Unicode">說</mapping>
 	  <mapping type="standard">説</mapping>
 	</glyph>
-      </charDecl>
-    </egXML>
-    The first of these <gi>mapping</gi>s, of type <val>Unicode</val>,
-    simply maps our glyph to the code point where Unicode defined it.
-    The other one, of type <val>standard</val>, encodes the fact that
-    in our view, this glyph is a variation of the standard character
-    given in the content of the element. We could then use this
-    <gi>glyph</gi> element's unique identifier <val>u8aaa</val> to
-    refer to it from within a text as follows.
-      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="zh" source="#NONE">
-      <g ref="#u8aaa">說</g>
-    </egXML>
-    </p>
-    <p>A slightly different, but related problem occurs when we have
-    multiple variants, none of which has been defined in Unicode. In
-    this case, we need to define one as a new character using
-    <gi>char</gi>, and the others as glyphs using <gi>glyph</gi>.
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
-      <charDecl>
+  </charDecl>
+</egXML>
+The first of these <gi>mapping</gi>s, of type <val>Unicode</val>,
+simply maps our glyph to the code point where Unicode defined it.
+The other one, of type <val>standard</val>, encodes the fact that
+in our view, this glyph is a variation of the standard character
+given in the content of the element. We could then use this
+<gi>glyph</gi> element's unique identifier <val>u8aaa</val> to
+refer to it from within a text as follows.
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="zh" source="#NONE">
+  <g ref="#u8aaa">說</g>
+</egXML>
+</p>
+<p>A slightly different, but related problem occurs when we have
+multiple variants, none of which has been defined in Unicode. In
+this case, we need to define one as a new character using
+<gi>char</gi>, and the others as glyphs using <gi>glyph</gi>.
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+  <charDecl>
 	<char xml:id="newchar1">
 	  <!-- more properties here -->
 	</char>
@@ -644,82 +622,80 @@ represented as follows:<eg><![CDATA[<abbr>&r1;</abbr>]]></eg></p>
 	  <!-- more properties here -->
 	  <mapping type="standard"><g ref="#newchar1"/></mapping>
 	</glyph>
-      </charDecl>
-    </egXML>
-    The <gi>char</gi> defines a new character, while the
-    <gi>glyph</gi> element then defines a variant glyph of this newly
-    defined character. Additional properties should be specified in
-    order to make these both identifiable.</p>
+  </charDecl>
+</egXML>
+The <gi>char</gi> defines a new character, while the
+<gi>glyph</gi> element then defines a variant glyph of this newly
+defined character. Additional properties should be specified in
+order to make these both identifiable.</p>
   </div>
 
    <div type="div2" xml:id="D25-40">
-    <head>Adding New Characters</head>
-    <p>The creation of additional characters for use in text encoding
-    is quite similar to the annotation of existing characters.  The
-    same element <gi>g</gi> is used to provide a link from the
-    character instance in the text to a character definition provided
-    within the <gi>charDecl</gi> element. This character definition
-    takes the form of a <gi>char</gi> element.  The element <gi>g</gi>
-    itself will usually be empty, but could contain a code point from
-    the Private Use Area (PUA) of the Unicode Standard, which is an
-    area set aside for the very purpose of privately adding new
-    characters to a document.  Recommendations on how to use such PUA
-    characters are given in the following section.  </p>
+<head>Adding New Characters</head>
+<p>The creation of additional characters for use in text encoding
+is quite similar to the annotation of existing characters. The
+same element <gi>g</gi> is used to provide a link from the
+character instance in the text to a character definition provided
+within the <gi>charDecl</gi> element. This character definition
+takes the form of a <gi>char</gi> element.  The element <gi>g</gi>
+itself will usually be empty, but could contain a code point from
+the Private Use Area (PUA) of the Unicode Standard, which is an
+area set aside for the very purpose of privately adding new
+characters to a document.  Recommendations on how to use such PUA
+characters are given in the following section.</p>
 <p>In some circumstances, it may be desirable to provide a single
 precomposed form of a character that is encoded in Unicode only as a
 sequence of code points. For example, in Medieval
 Nordic material, a character looking like a lowercase letter Y with a
 dot and an acute-accent above it may be encountered so frequently that
 the encoder wishes to treat it as a single precomposed character with
-    one single coded value. In the
+one single coded value. In the
 transcription concerned, the encoder enters this letter as
 <code>&amp;ydotacute;</code>, which  when the
 transcription is processed can then be expanded in one of three ways,
 depending on the mapping in force. The entity reference  might be
-translated into the sequence of corresponding Unicode code points 
-or into some locally-defined PUA character 
+translated into the sequence of corresponding Unicode code points
+or into some locally-defined PUA character
 (say <code>&amp;#xE0A4;</code>) for local
 processing only. Both these options have disadvantages; the former
 loses the fact that the sequence of composed characters is regarded as
-a single object; the second is not reliably portable. 
+a single object; the second is not reliably portable.
 Therefore, the recommended
 representation is to use the <gi>g</gi> element defined by
 the module defined in this chapter: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#NONE"><g ref="#ydotacute"/></egXML>. This makes it possible for the encoder to
 provide useful documentation for the particular character or glyph so referenced:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><char xml:id="ydotacute">
-       <charName>LATIN SMALL LETTER Y WITH DOT ABOVE AND
-       ACUTE</charName>
-     <charProp>
-       <localName>entity</localName>
-       <value>ydotacute</value>
-     </charProp>
-     <mapping type="composed">&amp;#x0079;&amp;#x0307;&amp;#x0301;</mapping>
-     <mapping type="PUA">U+E0A4</mapping> </char></egXML> This
-     definition specifies the mapping between this composed character
-     and the individual Unicode-defined code points which make it
-     up. It also supplies a single locally-defined property
-     (<soCalled>entity</soCalled>) for the character concerned, the
-     purpose of which is to supply a recommended character entity name
-     for the character.
+   <localProp name="Name" value="LATIN SMALL LETTER Y WITH DOT ABOVE AND
+   ACUTE"/>
+   <localProp name="entity" value="ydotacute"/>
+ <mapping type="composed">&amp;#x0079;&amp;#x0307;&amp;#x0301;</mapping>
+ <mapping type="PUA">U+E0A4</mapping> </char></egXML> This
+ definition specifies the mapping between this composed character
+ and the individual Unicode-defined code points which make it
+ up. It also supplies a single locally-defined property
+ (<soCalled>entity</soCalled>) for the character concerned, the
+ purpose of which is to supply a recommended character entity name
+ for the character.
 </p>
+<p>The composition rules for ideographic characters typically require more complex rules than the <code>&amp;ydotacute;</code> above. For these cases Unicode provides dedicated symbols to capture the composition in Ideographic Description Sequences (IDS). Encoders are strongly encouraged to provide IDS for each variant ideograph in the header component of the gaiji module to faciliated greater human and machine readability of rare or unencoded characters, as in the following example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+<glyph xml:id="U507D-var">
+  <!-- more properties here -->
+  <mapping type="IDS">⿻人為</mapping>
+  <mapping type="standard">偽</mapping>
+</glyph>
+</egXML>
+The composition rules and further examples appear in <ref target="https://www.unicode.org/versions/Unicode11.0.0/ch18.pdf#G28626">Chapter 18.2: Ideographic Description Characters</ref> of the Unicode Standard. Editors should be aware that different sequences can accurately describe the same character. In the example, the character "人" (U+4EBA) could have been substituted with "亻" (U+4EBB). Local preferences about how sequences are constructed should be documented in the <gi>encodingDesc</gi> of the corresponding TEI header (see <ptr target="#HD5"/>). Additionally, a number of online services, such as <ref target="https://chise.org">CHISE</ref>, offer querying and retrieving characters via IDS, which facilitates a greater degree of stability across different applications.</p>
 <p>Under certain circumstances, Chinese Han characters can be written
-    within a circle.  Rather than considering this as simply an aspect of the
-    rendering, an encoder may wish to treat such circled characters as
-    entirely distinct  derived characters. For a given character
-    (say that represented by the numeric-character reference <code>&amp;#x4EBA;</code>)
-    the circled variant might conveniently be represented as
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#NONE"> <g ref="#U4EBA-circled"/></egXML>, which references a
-    definition such as the following:
+within a circle. Rather than considering this as simply an aspect of the rendering, an encoder may wish to treat such circled characters as entirely distinct derived characters. For a given character
+(say that represented by the numeric-character reference <code>&amp;#x4EBA;</code>)
+the circled variant might conveniently be represented as
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#NONE"> <g ref="#U4EBA-circled"/></egXML>, which references a
+definition such as the following:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><char xml:id="U4EBA-circled">
-  <charName>CIRCLED IDEOGRAPH</charName>
-  <charProp>
-    <unicodeName>character-decomposition-mapping</unicodeName>
-    <value>circle</value>
-  </charProp>
-  <charProp>
-   <localName>daikanwa</localName>
-   <value>36</value>
-  </charProp>
+  <unicodeProp name="Decomposition_Mapping" value="cicle"/>
+  <localProp name="Name" value="CIRCLED IDEOGRAPH 36"/>
+  <localProp name="daikanwa" value="36"/>
   <mapping type="standard">
    &amp;#x4EBA;
   </mapping>
@@ -732,32 +708,26 @@ character has been defined with two mappings, and with two
 properties. The two properties are the Unicode-defined
 character-decomposition which specifies that this is a circled
 character, using the appropriate terminology (see <ptr target="#ucsprops"/> above) and a locally defined property known as
-<soCalled>daikanwa</soCalled> <!-- whatever that means -->. The two
-mappings indicate firstly that the standard form of this character is
-the character <code>&amp;#x4EBA;</code>, and secondly that the
-character used to represent this character locally is the PUA
-character  <code>&amp;#xE000;</code>. For convenience of local
-processing this PUA character may in fact appear  as content of
-the <gi>g</gi> element. In general, however, the <gi>g</gi> element
+<soCalled>daikanwa</soCalled>. The two mappings indicate firstly that the standard form of this character is the character <code>&amp;#x4EBA;</code>, and secondly that the character used to represent this character locally is the PUA character  <code>&amp;#xE000;</code>. For convenience of local processing this PUA character may in fact appear as content of the <gi>g</gi> element. In general, however, the <gi>g</gi> element
 will be empty.</p>
    </div>
    <div type="div2" xml:id="D25-50">
-    <head>How to Use Code Points from the Private Use Area</head>
-    <p>The developers of the Unicode Standard have set aside an
-    area of the codespace for the private use of software vendors,
-    user groups, or individuals.  As of this writing (Unicode 5.0),
-    there are around 137,000 code points available in this area, which
-    should be enough for most needs. No code point assignments will be made
-    to this area by standard bodies and only some very basic default
-    properties have been assigned (which may be overridden where
-    necessary by the mechanism outlined in this chapter). Therefore,
-    unlike all other code points defined by the Unicode Standard, PUA code points should
-    <emph>not</emph> be used directly in documents intended for blind interchange.
-<!--    Instead of using PUA code points directly in the document content,
-    entity references should be used.  This will make it easier for
-    receiving parties to find out what PUA characters are used in a
-    document and where possible code point clashes with local use on
-    the receiving site might occur.--></p>
+<head>How to Use Code Points from the Private Use Area</head>
+<p>The developers of the Unicode Standard have set aside an
+area of the codespace for the private use of software vendors,
+user groups, or individuals.  As of this writing (Unicode 12.1),
+there are around 137,000 code points available in this area, which
+should be enough for most needs. No code point assignments will be made
+to this area by standard bodies and only some very basic default
+properties have been assigned (which may be overridden where
+necessary by the mechanism outlined in this chapter). Therefore,
+unlike all other code points defined by the Unicode Standard, PUA code points should
+<emph>not</emph> be used directly in documents intended for blind interchange.
+<!--Instead of using PUA code points directly in the document content,
+entity references should be used.  This will make it easier for
+receiving parties to find out what PUA characters are used in a
+document and where possible code point clashes with local use on
+the receiving site might occur.--></p>
 <p>In the two previous examples, we mentioned that the variant
 characters concerned might well be assigned specific code points from
 the PUA. This might, for example, facilitate the use of a particular
@@ -776,12 +746,12 @@ local processing environment at the receiving site will be necessary
 to handle such characters, during which variant letters can be
 converted to hitherto unused code points on the basis of the
 information provided in the <gi>char</gi> element.</p>
-    <p>This mechanism is rather weak in cases where DOM trees or
-    parsed XML fragments are exchanged, which may increasingly be the
-    case.  The best an application can do here is to treat any
-    occurrence of a PUA character only in the context of the local
-    document and use the properties provided through the <gi>char</gi>
-    element as a handle to the character in other contexts.  </p>
+<p>This mechanism is rather weak in cases where DOM trees or
+parsed XML fragments are exchanged, which may increasingly be the
+case.  The best an application can do here is to treat any
+occurrence of a PUA character only in the context of the local
+document and use the properties provided through the <gi>char</gi>
+element as a handle to the character in other contexts.  </p>
 <p>In the fullness of time, a character may become standardized, and
 thus assigned a specific code point outside the PUA. Documents which
 have been encoded using the mechanism must at the least ensure that
@@ -794,8 +764,8 @@ character. </p>
 
 
 <div type="div2" xml:id="WDWM">
-               <head>
-                 Writing Modes</head>
+   <head>
+ Writing Modes</head>
 
 <p>The scripts used for writing human languages vary not only in the
 glyphs they use, but also in the way (or ways) that those glyphs are
@@ -819,7 +789,7 @@ often written horizontally, the traditional vertical writing mode is
 still widely used. There are also comparatively rare cases of ancient
 scripts written with lines running left to right, each line being read
 top to bottom (Ancient Uighur, classical Mongolian and Manchu), or
-scripts such as Ogham where the writing direction may start from the 
+scripts such as Ogham where the writing direction may start from the
 bottom left and run around the edge of an inscribed object.</p>
 
 <p>When different languages are combined, it is possible that
@@ -909,23 +879,23 @@ situations where this approach may result in ambiguity or lack of
 precision, or if the encoder wishes to record directional information
 explicitly in their encoding, we recommend using the global @style
 attribute to supply detail about the writing mode applicable to the
-content of any element. The <att>style</att> attribute (discussed in 
+content of any element. The <att>style</att> attribute (discussed in
 <ptr target="#STGAre"/>) permits use of any formatting language; for
 these purposes however, we recommend use of CSS, which  includes a
 Writing Modes module <note place="foot"> At the time of writing, this
 W3C module has the status of a candidate recommendation: see further
 <ptr target="#CSSWM"/> <!--
 http://www.w3.org/TR/css-writing-modes-3/ -->
-</note> which permits direct specification of a number of useful properties 
-associated with writing modes, notably <code>direction</code> (<code>ltr</code> 
-or <code>rtl</code>);  <code>writing-mode</code> 
-(<code>horizontal-tb</code>, <code>vertical-rl</code>, or <code>vertical-lr</code>); 
-and <code>text-orientation</code> (<code>mixed</code>, <code>upright</code>,  
+</note> which permits direct specification of a number of useful properties
+associated with writing modes, notably <code>direction</code> (<code>ltr</code>
+or <code>rtl</code>);  <code>writing-mode</code>
+(<code>horizontal-tb</code>, <code>vertical-rl</code>, or <code>vertical-lr</code>);
+and <code>text-orientation</code> (<code>mixed</code>, <code>upright</code>,
 <code>sideways</code> ...)  <!-- | use-glyph-orientation<anchor xml:id="id_cite_ref-2"/>
-                  <ref target="#cite_note-2">[3]<note>The value "use-glyph-orientation" may be dropped from the CSS Writing Modes specification.</note></ref> -->
+  <ref target="#cite_note-2">[3]<note>The value "use-glyph-orientation" may be dropped from the CSS Writing Modes specification.</note></ref> -->
 <!-- suppressing this because we dont discuss it and its likely to be dropped (LB) -->
-as well as properties affecting the behaviour of the unicode-bidi (bidirectional) algorithm. 
-We discuss and exemplify how these properties may be used below.</p> 
+as well as properties affecting the behaviour of the unicode-bidi (bidirectional) algorithm.
+We discuss and exemplify how these properties may be used below.</p>
 
 <p>The global TEI <att>style</att> attribute applies to the element on
 which it is specified (and in most cases, its descendants). Rather
@@ -937,16 +907,16 @@ provide instructions for software when rendering a digital text, they
 also provide a useful means of describing the visual properties of a
 pre-existing document in a formal and standardized way. </p>
 
-<p>The next section presents some examples of how CSS can be used to 
+<p>The next section presents some examples of how CSS can be used to
 describe a variety of writing modes. A full description of the appearance
 of a document will probably include many other properties of course. </p>
-            </div>
-  
-            <div type="div2" xml:id="WDWMEG">
-               <head>Examples of Different Writing Modes</head>
+</div>
+
+<div type="div2" xml:id="WDWMEG">
+   <head>Examples of Different Writing Modes</head>
 <p>The CSS recommendations provides several properties which can be used to encode aspects of the "writing mode". The most useful of these is the property "writing-mode" which may be used to specify a reading-order for both characters within a single line and lines within a single block of text. The property "text-orientation" may also used to indicate the orientation of individual characters with respect to the line, and the property "direction" to determine the reading order of characters within a line only. We give some examples of each below. </p>
-               <div type="div3" xml:id="WDWMEG1">
-                  <head> Vertical Writing Modes</head>
+   <div type="div3" xml:id="WDWMEG1">
+  <head> Vertical Writing Modes</head>
    <p>The <code>writing-mode</code> property is particularly useful for languages
    which can be written in different writing modes, such as Chinese
    and Japanese. Its possible values include <code>horizontal-tb</code>,
@@ -958,18 +928,18 @@ of a document will probably include many other properties of course. </p>
    which lines and paragraphs are arranged from top to bottom on a
    page), from right to left (as in the case of Japanese written vertically), or
    left-to-right (as in the case of Mongolian). </p>
-   <p>The following example shows three versions of the same poem: first in 
-     Japanese, written top to bottom; next in <term>romaji</term> (Japanese in 
-     Latin script); and finally in an English translation. </p>
+   <p>The following example shows three versions of the same poem: first in
+ Japanese, written top to bottom; next in <term>romaji</term> (Japanese in
+ Latin script); and finally in an English translation. </p>
    <p>
-                     <figure>
-                        <graphic width="250px" url="Images/basho_furu_ike_ya.png"/>
+ <figure>
+<graphic width="250px" url="Images/basho_furu_ike_ya.png"/>
 			<head>Taken from p.42 of <title>Haiku: Japanese Art and Poetry</title>. Judith Patt, Michiko Warkentyne (calligraphy) and Barry Till. 2010. </head>
-               </figure>
-                  </p>
+   </figure>
+  </p>
    <p/>
    <p>We might encode this as follows: </p>
-                                 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#WD-BASHO"><div>
+ <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#WD-BASHO"><div>
  <lg xml:lang="ja" style="writing-mode: vertical-rl">
  <l>古池や</l>
  <l>蛙</l>
@@ -999,9 +969,9 @@ of a document will probably include many other properties of course. </p>
    script. Its <att>style</att> attribute specifies a horizontal
    writing mode; this may seem superfluous, but vertically-written
    romaji is not unknown.</p>
-               </div>
-               <div type="div3" xml:id="WDWMEG2">
-                  <head>Vertical Text with Embedded Horizontal Text</head>
+   </div>
+   <div type="div3" xml:id="WDWMEG2">
+  <head>Vertical Text with Embedded Horizontal Text</head>
 
    <p>When Japanese is written vertically, the glyph orientation
    remains the same as when it is written horizontally. In other
@@ -1017,17 +987,17 @@ of a document will probably include many other properties of course. </p>
    Japanese article about the Indonesian language, which takes the
    form of a glossary list: </p>
    <p>
-                     <figure>
-                        <graphic width="500px" height="624px" url="Images/ja_vertical_indonesian_frag.jpg"/>
+ <figure>
+<graphic width="500px" height="624px" url="Images/ja_vertical_indonesian_frag.jpg"/>
 <head>Detail from p.62 of <title xml:lang="ja">インドネシア語". 崎山理. 1985. 外国語との対照  II. 講座日本語学 11.</title></head>
-                     </figure>
-                  </p>
+ </figure>
+  </p>
 
-   <p>The text-orientation property allows us to indicate whether or 
-     not glyphs are rotated. In the following example, we have indicated 
-     that the list uses a <code>vertical-rl</code> writing mode, but that the orientation 
-     of individual glyphs may vary: </p>
- 
+   <p>The text-orientation property allows us to indicate whether or
+ not glyphs are rotated. In the following example, we have indicated
+ that the list uses a <code>vertical-rl</code> writing mode, but that the orientation
+ of individual glyphs may vary: </p>
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#WD-VERT-IND"><list type="gloss" xml:lang="ja" style="writing-mode: vertical-rl; text-orientation: mixed">
  <label xml:lang="id">hampir</label>
  <item>「近い、ほとんど」</item>
@@ -1046,20 +1016,20 @@ of a document will probably include many other properties of course. </p>
    not strictly required. However, if the Indonesian glyphs (which are
    roman characters) had been set vertically, like this:</p>
    <p>
-     <figure>
-       <graphic width="150px" url="Images/ja_vertical_indonesian_frag_rotated.jpg"/>
-       <head>Fragment of previous image with Indonesian glyphs upright.</head>
-     </figure>
+ <figure>
+   <graphic width="150px" url="Images/ja_vertical_indonesian_frag_rotated.jpg"/>
+   <head>Fragment of previous image with Indonesian glyphs upright.</head>
+ </figure>
    </p>
    <p>then an encoding like the following could be used to make this explicit: </p>
    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
-     <list type="gloss" xml:lang="ja" style="writing-mode: vertical-rl; text-orientation: upright">
-       <label xml:lang="id">hampir</label>
-       <item>「近い、ほとんど」</item>
-       <label xml:lang="id">baru</label>
-       <item>「新しい、ばかい」</item>
-       <!-- ... -->
-     </list>
+ <list type="gloss" xml:lang="ja" style="writing-mode: vertical-rl; text-orientation: upright">
+   <label xml:lang="id">hampir</label>
+   <item>「近い、ほとんど」</item>
+   <label xml:lang="id">baru</label>
+   <item>「新しい、ばかい」</item>
+   <!-- ... -->
+ </list>
    </egXML>
    <p>The rule <code>text-orientation: upright</code> specifies that
    <quote>characters from horizontal-only scripts are rendered
@@ -1070,44 +1040,44 @@ of a document will probably include many other properties of course. </p>
    2014</ref>).</p>
    </div>
    <div type="div3" xml:id="WDWMEG3">
-     <head>Vertical Orientation in Horizontal Scripts</head>
-     <p>It is not unusual to see text from horizontal languages
-     written vertically even where no vertically-written script is
-     involved. This example is a fragment from a table of information
-     about agricultural development on Vancouver Island, written in
-     1855: </p>
-     <p>
-       <figure>
+ <head>Vertical Orientation in Horizontal Scripts</head>
+ <p>It is not unusual to see text from horizontal languages
+ written vertically even where no vertically-written script is
+ involved. This example is a fragment from a table of information
+ about agricultural development on Vancouver Island, written in
+ 1855: </p>
+ <p>
+   <figure>
 	 <graphic width="450px" url="Images/bcgenesis_co_305_06_00131v_table_extract.jpg"/>
 	 <head>Enclosure with <title>Despatch to London</title> 10048, CO
 	 305/6, p. 131v from <ptr target="http://bcgenesis.uvic.ca/getDoc.htm?id=V55116.scx"/></head>
-       </figure>
-     </p>
-     <p>Four of the subheading cells in this fragment contain English text written vertically, 
-     bottom-to-top, to conserve space on the page. To describe this sort of phenomenon, 
-     we can use the <code>text-orientation</code> property again: </p>
-                 
+   </figure>
+ </p>
+ <p>Four of the subheading cells in this fragment contain English text written vertically,
+ bottom-to-top, to conserve space on the page. To describe this sort of phenomenon,
+ we can use the <code>text-orientation</code> property again: </p>
+
    <p><code>text-orientation: mixed | upright | sideways-right | sideways-left | sideways | use-glyph-orientation</code></p>
-                 
-   <p>For full details on this property, we refer the reader to the CSS Writing Modes specification. 
-     For the present example, we will make use only of the <soCalled>sideways-left</soCalled> value, 
-     which <quote>causes text to be set as if in a horizontal layout, but rotated 90° counter-clockwise.</quote> 
-     We might encode the third of the four cells containing vertical text like this: </p>
-     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
-       <cell style="writing-mode: vertical-lr; text-orientation: sideways-left">
+
+   <p>For full details on this property, we refer the reader to the CSS Writing Modes specification.
+ For the present example, we will make use only of the <soCalled>sideways-left</soCalled> value,
+ which <quote>causes text to be set as if in a horizontal layout, but rotated 90° counter-clockwise.</quote>
+ We might encode the third of the four cells containing vertical text like this: </p>
+ <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+   <cell style="writing-mode: vertical-lr; text-orientation: sideways-left">
 	 <lb/>Cash Value
 	 <lb/>of
 	 <lb/>Farms
-       </cell>
-     </egXML>
-   <p>The <code>writing-mode</code> property captures the fact that the script is written vertically, and 
-     its lines are to be read from left to right (so the line containing <quote>of</quote> 
-     is to the right of that containing <quote>Cash value</quote>), while the <code>text-orientation</code> 
-     value encodes the orientation (rotated 90° counter-clockwise). We might also add 
-     <code>text-align: center</code> to the style, to express the fact that the text is centrally-aligned.</p>
-               </div>
-               <div type="div3" xml:id="WDWMEG4">
-                  <head>Bottom-to-top Writing</head>
+   </cell>
+ </egXML>
+   <p>The <code>writing-mode</code> property captures the fact that the script is written vertically, and
+ its lines are to be read from left to right (so the line containing <quote>of</quote>
+ is to the right of that containing <quote>Cash value</quote>), while the <code>text-orientation</code>
+ value encodes the orientation (rotated 90° counter-clockwise). We might also add
+ <code>text-align: center</code> to the style, to express the fact that the text is centrally-aligned.</p>
+   </div>
+   <div type="div3" xml:id="WDWMEG4">
+  <head>Bottom-to-top Writing</head>
    <p>Of the rather small number of scripts which appear to be written
    bottom-to-top, perhaps the best-known is Ogham, an alphabet used
    mainly to write Archaic Irish. Ogham is typically found inscribed
@@ -1120,130 +1090,130 @@ of a document will probably include many other properties of course. </p>
    scripts are analogous to the vertical English text-runs in the
    table cells in the example above, and can be handled in exactly the
    same manner (<code>writing-mode: vertical-lr; text-orientation:
-   sideways-left</code>). In cases where writing follows a curved path 
-   (such as Ogham running around the edge of a stone), a meticulous 
-   encoder might resort to the use of SVG to describe the path, rather 
+   sideways-left</code>). In cases where writing follows a curved path
+   (such as Ogham running around the edge of a stone), a meticulous
+   encoder might resort to the use of SVG to describe the path, rather
    than treating the phenomenon as a writing mode.</p>
-               </div>
-               <div type="div3" xml:id="WDWMEG5">
-                  <head>Mixed Horizontal Directionality</head>
-                  <!-- [Question MDH to LB: Why is this bit detached from the original horizontal text section above? Because he section above isn't specifically about horizontal texts only, though it uses one as an initial example] </p-->
+   </div>
+   <div type="div3" xml:id="WDWMEG5">
+  <head>Mixed Horizontal Directionality</head>
+  <!-- [Question MDH to LB: Why is this bit detached from the original horizontal text section above? Because he section above isn't specifically about horizontal texts only, though it uses one as an initial example] </p-->
    <p>Returning to our previous simple example </p>
-                  <eg> The Arabic term قلم رصاص means "pencil".</eg>
+  <eg> The Arabic term قلم رصاص means "pencil".</eg>
    <p>we could use the direction property to make directionality explicit:</p>
    <p><code>direction: ltr | rtl</code></p>
    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
-     <s xml:lang="en" style="direction: ltr">The Arabic term
-     <term xml:lang="ar" style="direction: rtl; unicode-bidi: embed">قلم رصاص</term> means "pencil".</s>
+ <s xml:lang="en" style="direction: ltr">The Arabic term
+ <term xml:lang="ar" style="direction: rtl; unicode-bidi: embed">قلم رصاص</term> means "pencil".</s>
    </egXML>
-   <p>The use of the <code>direction</code> property to record the observed directionality 
-     of the text is unambiguous, even though it is (as we noted above) superfluous. 
-     The use of the <code>unicode-bidi</code> property here may require some explanation. 
-     By default this property has the value <soCalled>normal</soCalled>, the effect of which in this 
-     context would be to ignore any value supplied for the direction property. The CSS Writing 
-     Modes specification stipulates that the direction property <quote>has no effect on bidi 
-       reordering when specified on inline boxes whose <code>unicode-bidi</code> property’s 
-       value is <soCalled>normal</soCalled>, because the element does not open an additional 
-       level of embedding with respect to the bidirectional algorithm.</quote>
-                  </p>
-                 
+   <p>The use of the <code>direction</code> property to record the observed directionality
+ of the text is unambiguous, even though it is (as we noted above) superfluous.
+ The use of the <code>unicode-bidi</code> property here may require some explanation.
+ By default this property has the value <soCalled>normal</soCalled>, the effect of which in this
+ context would be to ignore any value supplied for the direction property. The CSS Writing
+ Modes specification stipulates that the direction property <quote>has no effect on bidi
+   reordering when specified on inline boxes whose <code>unicode-bidi</code> property’s
+   value is <soCalled>normal</soCalled>, because the element does not open an additional
+   level of embedding with respect to the bidirectional algorithm.</quote>
+  </p>
+
    <p>Mixed horizontal directionality is very common in languages such as Arabic
    and Hebrew, particularly when numbers (which are always given LTR)
    or phrases from LTR languages are embedded. It is not
-   impossible, though quite unusual, for ambiguities 
-    to arise in such situations, which may give rise to the
-    parts of a document being displayed in unexpected ways that do
-    not correspond to the natural reading order. A more detailed 
+   impossible, though quite unusual, for ambiguities
+to arise in such situations, which may give rise to the
+parts of a document being displayed in unexpected ways that do
+not correspond to the natural reading order. A more detailed
    discussion of this issue from an HTML perspective is provided by a
    W3C Internationalization Working Group report <ref target="http://www.w3.org/International/articles/inline-bidi-markup/#where">Inline
    markup and bidirectional text in HTML</ref>. </p>
 
 
-                  <!--p>[Would it be helpful to have another example presenting ambiguity arising out of the use of a g element at the end of a text run?] [how might a <g> element introduce ambiguity? only if the glyph or character concerned is vague about its directionality surely] [(MDH) A <g> element would normally be used for a glyph which has no Unicode representation; therefore it has no directionality per the Unicode character database; therefore its effect would be potentially disruptive. Imagine a case where a rtl text run ends with a weak-directionality character such as a period, followed by a <g> for a glyph which the encoder knows should represent an rtl character, but which isn't in Unicode, followed by a strongly ltr character.] [If the encoder knows that the glyph or character concerned has a strongly ltr character then they should use the <charProp> element to document this fact within the <glyph> or <char> definition, as per <ptr target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/WD.html#ucsprops"/>. If they want a rendering agent to deal with the character properly, they are at liberty to put a strongly ltr character as content for the <g> ]</p-->
+  <!--p>[Would it be helpful to have another example presenting ambiguity arising out of the use of a g element at the end of a text run?] [how might a <g> element introduce ambiguity? only if the glyph or character concerned is vague about its directionality surely] [(MDH) A <g> element would normally be used for a glyph which has no Unicode representation; therefore it has no directionality per the Unicode character database; therefore its effect would be potentially disruptive. Imagine a case where a rtl text run ends with a weak-directionality character such as a period, followed by a <g> for a glyph which the encoder knows should represent an rtl character, but which isn't in Unicode, followed by a strongly ltr character.] [If the encoder knows that the glyph or character concerned has a strongly ltr character then they should use the <charProp> element to document this fact within the <glyph> or <char> definition, as per <ptr target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/WD.html#ucsprops"/>. If they want a rendering agent to deal with the character properly, they are at liberty to put a strongly ltr character as content for the <g> ]</p-->
 <!-- <p>The title is "مدخل إلى C++" in Arabic.</p>-->
 
-              </div>
-               <div type="div3">
-                  <head>
-                     Summary</head>
-   <p>For most texts,  information about text directionality need not be explicitly 
-     encoded in a TEI text, either because it follows unambiguously from 
-     <att>xml:lang</att> values, or because it can be expected to be handled 
-     unequivocally by the Unicode Bidi Algorithm. Where it is considered important 
-     to encode such information, properties and values taken from the CSS Writing 
-     Modes module may be used by means of the global TEI <att>style</att> attribute 
-     (or using the TEI <gi>rendition</gi> element, linked with the <att>rendition</att> 
-     attribute). Most  phenomena can be well described in this way; of those which 
-     cannot, other approaches based on the CSS Transforms module are presented 
-     in the next section.</p>
-               </div>
-            </div>
-            <div xml:id="WDWMTT">
-               <head>
-                  Text Rotation</head>
+  </div>
+   <div type="div3">
+  <head>
+ Summary</head>
+   <p>For most texts,  information about text directionality need not be explicitly
+ encoded in a TEI text, either because it follows unambiguously from
+ <att>xml:lang</att> values, or because it can be expected to be handled
+ unequivocally by the Unicode Bidi Algorithm. Where it is considered important
+ to encode such information, properties and values taken from the CSS Writing
+ Modes module may be used by means of the global TEI <att>style</att> attribute
+ (or using the TEI <gi>rendition</gi> element, linked with the <att>rendition</att>
+ attribute). Most  phenomena can be well described in this way; of those which
+ cannot, other approaches based on the CSS Transforms module are presented
+ in the next section.</p>
+   </div>
+</div>
+<div xml:id="WDWMTT">
+   <head>
+  Text Rotation</head>
    <p>In what follows, we examine a range of textual phenomena which
    in some ways appear very similar to those examined above, and even
    overlap with them. We can categorize these as text transformation
    features, and suggest some strategies for encoding them based on
-   the properties detailed in the <ref target="#CSSTM">CSS Transforms (Fraser et al 2013)</ref> specification. 
-     This CSS module provides a complex array of properties, values and 
-     functions which can be used to rotate, skew, translate and otherwise 
-     transform textual and graphical objects. We can borrow this vocabulary 
-     in order to describe textual phenomena in a precise manner.</p>
-              
+   the properties detailed in the <ref target="#CSSTM">CSS Transforms (Fraser et al 2013)</ref> specification.
+ This CSS module provides a complex array of properties, values and
+ functions which can be used to rotate, skew, translate and otherwise
+ transform textual and graphical objects. We can borrow this vocabulary
+ in order to describe textual phenomena in a precise manner.</p>
+
    <p>We begin with a simple example of a rotational transform: </p>
    <p>
-                     <figure>
-                        <graphic url="Images/rotation_on_z_axis.png"/>
-                     </figure>
-                  </p>
-   <p>Here a block of text has been rotated around its z-axis. This is clearly 
-     not a <soCalled>writing mode</soCalled>; the writing mode for this text 
-     is horizontal, left to right. Furthermore, even if we wished to treat this 
-     as a writing mode, we could not do so, because there is no way to use 
-     writing modes properties to describe an text orientation which is angled 
-     at 45 degrees; no human languages are consistently written in this 
-     orientation. It is more appropriate to treat this as a rotational transformation. 
-     We can do this using two properties: <code>transform</code> and 
-     <code>transform-origin</code>. (Both of these properties have quite complex 
-     value sets, and we will not look at all of them here. See the 
-     <ref target="#CSSTM">specification</ref> for full details.)</p>
-              
-   <p>The <code>transform</code> property takes as its value one or more of the transform functions, 
-     one of which is the function <code>rotateZ()</code>:</p>
-              
-                           <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><ab style="transform:rotateZ(-45deg)">TEI-C.ORG</ab></egXML>
-              
-   <p>Any rotation must take place clockwise around an axis positioned relative 
-     to the element being rotated, and the <code>transform-origin</code> property 
-     can be used to specify the pivot point. By default, the value of <code>transform-origin</code> 
-     is <soCalled>50% 50%</soCalled>, the point at the centre of the element, but these 
-     values can be changed to reflect rotation around a different origin point. 
-     (The TEI <gi>zone</gi> element also bears an attribute <att>rotate</att> which can 
-     specify rotation in degrees around the z-axis, but it is not available for any other 
-     element.)</p>
-              
-   <p>A block of text may also be rotated about either of its other axes. For example, 
-     this shows rotation around the Y (vertical) axis: </p>
+ <figure>
+<graphic url="Images/rotation_on_z_axis.png"/>
+ </figure>
+  </p>
+   <p>Here a block of text has been rotated around its z-axis. This is clearly
+ not a <soCalled>writing mode</soCalled>; the writing mode for this text
+ is horizontal, left to right. Furthermore, even if we wished to treat this
+ as a writing mode, we could not do so, because there is no way to use
+ writing modes properties to describe an text orientation which is angled
+ at 45 degrees; no human languages are consistently written in this
+ orientation. It is more appropriate to treat this as a rotational transformation.
+ We can do this using two properties: <code>transform</code> and
+ <code>transform-origin</code>. (Both of these properties have quite complex
+ value sets, and we will not look at all of them here. See the
+ <ref target="#CSSTM">specification</ref> for full details.)</p>
+
+   <p>The <code>transform</code> property takes as its value one or more of the transform functions,
+ one of which is the function <code>rotateZ()</code>:</p>
+
+   <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><ab style="transform:rotateZ(-45deg)">TEI-C.ORG</ab></egXML>
+
+   <p>Any rotation must take place clockwise around an axis positioned relative
+ to the element being rotated, and the <code>transform-origin</code> property
+ can be used to specify the pivot point. By default, the value of <code>transform-origin</code>
+ is <soCalled>50% 50%</soCalled>, the point at the centre of the element, but these
+ values can be changed to reflect rotation around a different origin point.
+ (The TEI <gi>zone</gi> element also bears an attribute <att>rotate</att> which can
+ specify rotation in degrees around the z-axis, but it is not available for any other
+ element.)</p>
+
+   <p>A block of text may also be rotated about either of its other axes. For example,
+ this shows rotation around the Y (vertical) axis: </p>
    <p>
-                     <figure>
-                        <graphic url="Images/rotation_on_y_axis.png"/>
-                     </figure>
-                  </p>
-                                 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"> <ab style="transform:rotateY(45deg)">TEI-C.ORG</ab></egXML>
-              
-   <p>These are obviously trivial examples, but similar features do appear in historical texts. 
-     George Herbert's <title level="m">The Temple</title> includes two stanzas headed 
-     <title level="a">Easter Wings</title> which are both normally printed in a rotated form 
-     so that they represent a pair of wings:</p>
+ <figure>
+<graphic url="Images/rotation_on_y_axis.png"/>
+ </figure>
+  </p>
+ <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"> <ab style="transform:rotateY(45deg)">TEI-C.ORG</ab></egXML>
+
+   <p>These are obviously trivial examples, but similar features do appear in historical texts.
+ George Herbert's <title level="m">The Temple</title> includes two stanzas headed
+ <title level="a">Easter Wings</title> which are both normally printed in a rotated form
+ so that they represent a pair of wings:</p>
    <p>
-                     <figure>
-                        <graphic url="Images/herbert_church_p35_sm.jpg" width="300px"/>
+ <figure>
+<graphic url="Images/herbert_church_p35_sm.jpg" width="300px"/>
    <head>Page 35 of George Herbert's <title level="m">The Temple</title>
    (1633), from a copy in the Folger Library.</head>
-                     </figure>
-                  </p>
-              
+ </figure>
+  </p>
+
    <p>This could be encoded thus: </p>
    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 				   <lg style="transform:rotateZ(90deg)">
@@ -1266,12 +1236,12 @@ of a document will probably include many other properties of course. </p>
    lines in boustrophedon have another unexpected feature: their
    glyphs are reversed, so that these lines appear as <soCalled>mirror
    writing</soCalled>, as in the following ancient Greek inscription:
-                     <figure>
-                        <graphic width="592px" height="502px" url="Images/boustrophedon_small_J_NW_Epeiros_13_p03.jpg"/>
+ <figure>
+<graphic width="592px" height="502px" url="Images/boustrophedon_small_J_NW_Epeiros_13_p03.jpg"/>
 <head>Leaden plaque bearing an inquiry by Hermon from the oracular
 precinct at Dodona. (L.H. Jeffery Archive)</head>
-                     </figure>
-                  </p>
+ </figure>
+  </p>
    <p>This might be transcribed as follows (ignoring word boundaries for the moment): </p>
    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#WD-BOUS"> <ab>
  <lb/>ΗΕΡΜΟΝΤΙΝA
@@ -1282,27 +1252,27 @@ precinct at Dodona. (L.H. Jeffery Archive)</head>
  <lb/><seg style="rotateY(180deg)">ΣΙΜΟΣΟΤΤΑΙΕ</seg>
  <lb/>ΑΣΣΑΙ
  </ab></egXML>
-              <p>The 180-degree rotation around the Y (vertical) axis here 
-     describes what is happening in the RTL  line in boustrophedon; the order of glyphs 
-     is reversed, and so is their individual orientation (in fact, we see them 
-     <soCalled>from the back</soCalled>, as it were). <gi>seg</gi> elements 
-     have been used here because these are clearly not <soCalled>lines</soCalled> 
-     in the sense of poetic lines; the text is continuous prose, and linebreaks 
-     are incidental.</p>
-              
-   <p>There are obviously some unsatisfactory aspects of this manner of encoding 
-     boustrophedon. In the inscription above, some words run across linebreaks, 
-     so if we wished to tag both words and the right-to-left phenomena, one 
-     hierarchy would have to be privileged over the other. By using a transform 
-     function rather than a writing mode property, we are apparently suggesting 
-     that boustrophedon is not in fact a writing mode, whereas it clearly is. But 
-     the CSS Writing Modes specification does not provide support for boustrophedon, 
-     because it is a rather obscure historical phenomenon; using a rotational transform 
-     is one practical alternative. </p>
+  <p>The 180-degree rotation around the Y (vertical) axis here
+ describes what is happening in the RTL  line in boustrophedon; the order of glyphs
+ is reversed, and so is their individual orientation (in fact, we see them
+ <soCalled>from the back</soCalled>, as it were). <gi>seg</gi> elements
+ have been used here because these are clearly not <soCalled>lines</soCalled>
+ in the sense of poetic lines; the text is continuous prose, and linebreaks
+ are incidental.</p>
 
-               </div>
-               <div xml:id="WDCAV">
-                  <head>Caveat</head>
+   <p>There are obviously some unsatisfactory aspects of this manner of encoding
+ boustrophedon. In the inscription above, some words run across linebreaks,
+ so if we wished to tag both words and the right-to-left phenomena, one
+ hierarchy would have to be privileged over the other. By using a transform
+ function rather than a writing mode property, we are apparently suggesting
+ that boustrophedon is not in fact a writing mode, whereas it clearly is. But
+ the CSS Writing Modes specification does not provide support for boustrophedon,
+ because it is a rather obscure historical phenomenon; using a rotational transform
+ is one practical alternative. </p>
+
+   </div>
+   <div xml:id="WDCAV">
+  <head>Caveat</head>
 
    <p>As with other parts of the CSS specification, the intended
    effect of CSS Transforms properties and values is defined with
@@ -1345,17 +1315,24 @@ The selection and combination of modules to form a TEI schema is described in
 <ptr target="#STIN"/>.
 </p>
 <specGrp>
-
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/g.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/char.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/charName.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/charProp.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/charDecl.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/char.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/glyph.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/glyphName.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/localName.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/localProp.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/mapping.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unihanProp.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unicodeProp.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.gaijiProp.xml"/>
+
+<!-- duncdrum to be deprecated -->
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/value.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unicodeName.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/value.xml"/></specGrp>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/localName.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/glyphName.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/charProp.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/charName.xml"/>
+
+</specGrp>
 </div>
 </div>
