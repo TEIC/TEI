@@ -11,19 +11,22 @@ $Id$
 <head>Manuscript Description</head>
 <div type="div2" xml:id="msov">
 <head>Overview</head>
-<p>The <ident type="module">msdescription</ident> module<note place="bottom">This chapter is based on the work of the European MASTER (Manuscript Access
+<p>The <ident type="module">msdescription</ident> module<note place="bottom">
+ This chapter is based on the work of the European MASTER (Manuscript Access
 through Standards for Electronic Records) project, funded by the European Union
 from January 1999 to June 2001, and led by Peter Robinson, then at the Centre
 for Technology and the Arts at De Montfort University, Leicester (UK).
 Significant input also came from a TEI Workgroup headed by Consuelo W. Dutschke
 of the Rare Book and Manuscript Library, Columbia University (USA) and Ambrogio
-Piazzoni of the Biblioteca Apostolica Vaticana (IT) during 1998-2000.</note>
+Piazzoni of the Biblioteca Apostolica Vaticana (IT) during 1998-2000.</note> 
 defines a special purpose element which can be used to provide detailed
-descriptive information about handwritten primary sources. Although originally
-developed to meet the needs of cataloguers and scholars working with medieval
+descriptive information about handwritten primary sources and other text-bearing objects. 
+Although originally developed to meet the needs of cataloguers and scholars working with medieval
 manuscripts in the European tradition, the scheme presented here is general
 enough that it can also be extended to other traditions and materials, and is
-potentially useful for any kind of inscribed artefact.</p>
+potentially useful for any kind of text-bearing artefact. Where the textuality of 
+an object is not the primary concern, encoders may wish to use the <gi>object</gi>
+element which provides a very similar system of description (see <ptr target="#NDOBJ"/>.</p>
 <p>The scheme described here is also intended to accommodate the needs of many
 different classes of encoders. On the one hand, encoders may be engaged in
 <term>retrospective conversion</term> of existing detailed descriptions and
@@ -54,7 +57,8 @@ original, whether as an encoded transcription, as a collection of digital images
 However, in cases where the document being encoded is essentially a collection
 of manuscript descriptions, the <gi>msDesc</gi> element may be used in the same
 way as the bibliographic elements (<gi>bibl</gi>, <gi>biblFull</gi>, and
-<gi>biblStruct</gi>) making up the TEI element class <ident type="class">model.biblLike</ident>. These typically appear within the <gi>listBibl</gi>
+<gi>biblStruct</gi>) making up the TEI element class <ident type="class">model.biblLike</ident>. 
+These typically appear within the <gi>listBibl</gi>
 element. <specList>
 <specDesc key="msDesc"/>
 </specList></p>
@@ -319,7 +323,7 @@ being transcribed, for example within a rubric in the following case:
 <p>It may also appear as part of the detailed description of a binding:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <binding><p>Modern calf recasing with original armorial stamp <stamp>with legend
-<mentioned xml:lang="LA">Ex Bibliotheca J. Richard
+<mentioned xml:lang="la">Ex Bibliotheca J. Richard
 D.M.</mentioned></stamp></p></binding>
 </egXML>
 </p>
@@ -651,13 +655,13 @@ other digital resources for this purpose, the unique codes used by such
 interchangeability of the resulting encoded texts, they may be judged more
 convenient or practical in certain situations. As explained in <ptr target="#CONARS"/>, interchange is improved by use of tag URIs in <att>ref</att>
 instead of <att>key</att>. </p>
-<p>All the <gi>person</gi> elements referenced by a particular document set
-should be collected together within a <gi>listPerson</gi>
-<!-- need xref --> element, located in the TEI header. This functions as a kind
-of prosopography for all the people referenced by the set of manuscripts being
-described, in much the same way as a <gi>listBibl</gi> element in the back
-matter may be used to hold bibliographic information for all the works
-referenced.</p>
+<p>All the <gi>person</gi> elements referenced by a particular
+document set should be collected together within a <gi>listPerson</gi>
+<!-- need xref --> element, located in a <gi>standOff</gi> element.
+This functions as a kind of prosopography for all the people
+referenced by the set of manuscripts being described, in much the same
+way as a <gi>listBibl</gi> element may be used to hold bibliographic
+information for all the works referenced.</p>
 <p>When the <ident type="module">namesdates</ident> module described in chapter
 <ptr target="#ND"/> is included in a schema, similar mechanisms are used to
 maintain and reference canonical lists of places or organizations, as further
@@ -1490,13 +1494,19 @@ must be given in the order specified below.</p>
 <head>Object Description</head>
 <p>The <gi>objectDesc</gi> element is used to group together those parts of the
 physical description which relate specifically to the text-bearing object, its
-format, constitution, layout, etc. The <att>form</att> attribute is used to
+format, constitution, layout, etc. The <gi>objectDesc</gi> element is used for grouping 
+ elements relating to the physicality of a text-bearing object as part of a manuscript 
+ description. If a full description of an object (text-bearing or not) is desired, the 
+ more general <gi>object</gi> element may be preferred. 
+ </p>
+ <p>The <att>form</att> attribute is used to
 indicate the specific type of writing vehicle being described, for example, as a
 codex, roll, tablet, etc. If used it must appear first in the sequence of
 specialized elements. The <gi>objectDesc</gi> element has two parts: a
 description of the <term>support</term>, i.e. the physical carrier on which the
 text is inscribed; and a description of the <term>layout</term>, i.e. the way
-text is organized on the carrier.</p>
+text is organized on the carrier.
+</p>
 <p>Taking these in turn, the description of the support is tagged using the
 following elements, each of which is discussed in more detail below: <specList>
 <specDesc key="supportDesc"/>
@@ -2427,16 +2437,16 @@ element, -->
 </msDesc>
 </egXML>-->
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<msDesc xml:id="KBR_ms_10066-77" xml:lang="eng" type="composite">
+<msDesc xml:id="KBR_ms_10066-77" xml:lang="en" type="composite">
 <msIdentifier>
 <settlement key="tgn_7007868">Brussels</settlement>
 <repository>Koninklijke Bibliotheek van België / Bibliothèque royale de
 Belgique</repository>
 <idno>ms. 10066-77</idno>
 </msIdentifier>
-<msContents><summary xml:lang="lat">Miscellany of various texts; Prudentius,
+<msContents><summary xml:lang="la">Miscellany of various texts; Prudentius,
 Psychomachia; Physiologus de natura animantium</summary>
-<textLang mainLang="lat">Latin</textLang>
+<textLang mainLang="la">Latin</textLang>
 </msContents>
 <physDesc>
 <objectDesc form="composite_manuscript"/>
@@ -2444,16 +2454,16 @@ Psychomachia; Physiologus de natura animantium</summary>
 <msPart>
 <msIdentifier><idno>ms. 10066-77 ff. 140r-156v</idno>
 </msIdentifier>
-<msContents><summary xml:lang="lat">Physiologus</summary>
-<textLang mainLang="lat">Latin</textLang>
+<msContents><summary xml:lang="la">Physiologus</summary>
+<textLang mainLang="la">Latin</textLang>
 </msContents>
 </msPart>
 <msPart>
 <msIdentifier><idno>ms. 10066-77 ff. 112r-139r</idno>
 </msIdentifier>
 <msContents>
-<summary xml:lang="lat">Prudentius, Psychomachia</summary>
-<textLang mainLang="lat">Latin</textLang>
+<summary xml:lang="la">Prudentius, Psychomachia</summary>
+<textLang mainLang="la">Latin</textLang>
 </msContents>
 </msPart>
 </msDesc>
