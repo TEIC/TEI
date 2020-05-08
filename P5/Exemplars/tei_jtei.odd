@@ -332,7 +332,7 @@
                 <bibl xml:id="bowers12">
                   <author>Bowers, John</author>. <date>2012</date>. 
                   <title level="a">The Logic of Annotated Portfolios: Communicating the 
-                    Value of <soCalled>Research through Design.</soCalled></title> In 
+                    Value of <soCalled>Research through Design.</soCalled></title>  
                   <title level="j">Proceedings of the Designing Interactive Systems 
                     Conference</title>, <biblScope unit="page">68–77</biblScope>. 
                   <title level="s">DIS ’12</title>. <pubPlace>New York</pubPlace>:
@@ -2165,13 +2165,30 @@
             </constraintSpec>
             <constraintSpec ident="jtei.sch-bibl-endpunctuation" scheme="schematron">
               <constraint>
-                <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl">
-                  <sch:assert role="warning" test="descendant::node()[last()][ends-with(normalize-space(), '.')]">
-                    A bibliographic entry should end with a period.
-                  </sch:assert>
+                <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl" role="warning">
+                  <sch:report test="descendant::node()[last()][
+                    not(matches(normalize-space(), '(^|[^.?!:;,])\.$')) or
+                    preceding-sibling::node()[1]/descendant-or-self::*[last()]
+                      [matches(normalize-space(), '[.?!:;,]$')]
+                    ]">
+                    A bibliographic entry should end with a single period.
+                  </sch:report>
                 </sch:rule>
               </constraint>
             </constraintSpec>
+            <constraintSpec ident="jtei.sch-title-journal-CMOS" scheme="schematron">
+              <constraint>
+                <sch:rule context="tei:bibl/tei:title[@level='j']"
+                  role="warning">
+                  <sch:report test="self::*[preceding-sibling::*[1]/self::tei:title[@level='a']]
+                    [not(preceding-sibling::node()[normalize-space()][1][matches(normalize-space(), '[.,!?]$')])]
+                    ">
+                    An analytic title and a journal title in a bibliographic entry should only be separated by a comma or a period (or the end punctuation of the analytic title). 
+                  </sch:report>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
+            
             <attList>
               <attDef ident="type" mode="delete"/>
             </attList>
@@ -2540,10 +2557,14 @@
                     Otherwise, move it after the closing parenthesis.
                   </sch:report>
                 </sch:rule>                
-              <sch:rule context="tei:note">
-                <sch:assert role="warning" test="descendant::node()[last()][matches(normalize-space(), '[.?!]$')]">
-                    A footnote should end with closing punctuation.
-                  </sch:assert>
+              <sch:rule context="tei:note" role="warning">
+                <sch:report test="descendant::node()[last()][
+                  not(matches(normalize-space(), '(^|[^.?!:;,])[.?!]$')) or
+                  preceding-sibling::node()[1]/descendant-or-self::*[last()]
+                      [matches(normalize-space(), '[.?!:;,]$')]
+                  ]">
+                  A footnote should end a with a single closing punctuation character.
+                  </sch:report>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -2569,7 +2590,7 @@
             <constraintSpec ident="jtei.sch-head-number" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:head">
-                  <sch:report test="matches(., '^\s*((figure|table|example|section) )?\d', 'i')">
+                  <sch:report test="matches(., '^\s*(((figure|fig\.|table|example|ex\.|section) )\d|\d+\.\d?)', 'i')">
                     Headings are numbered and labeled automatically, please remove the hard-coded label from the text.
                   </sch:report>
                 </sch:rule>
@@ -3175,6 +3196,22 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
+          <constraintSpec ident="jtei.sch-nonbreakingspace" scheme="schematron">
+            <constraint>
+              <sch:rule role="warning" context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag)]">
+                <sch:report test="matches(., '&#160;')" sqf:fix="nonbreakingspace.remove">
+                  This text contains a non-breaking space character. Please consider changing this to a normal space character.
+                </sch:report>
+                <sqf:fix id="nonbreakingspace.remove">
+                  <sqf:description>
+                    <sqf:title>Normalize non-breaking space to normal space character.</sqf:title>
+                  </sqf:description>
+                  <!-- using XPath replace(), as sqf:stringReplace has problems matching literal character entities -->
+                  <sqf:replace match="." select="replace(., '&#160;', '&#32;')"/>
+                </sqf:fix>
+              </sch:rule>
+            </constraint>
+          </constraintSpec>
           <constraintSpec ident="jtei.sch-localLinkTarget" scheme="schematron">
             <constraint>
               <sch:rule context="@*[self::attribute(corresp)|self::attribute(target)|self::attribute(from)|self::attribute(to)|self::attribute(ref)|self::attribute(rendition)|self::attribute(resp)|self::attribute(source)][not(ancestor::eg:egXML)][some $i in tokenize(., '\s+') satisfies starts-with($i, '#')]">
@@ -3207,7 +3244,7 @@
                   <sqf:description>
                     <sqf:title>Remove quotation marks.</sqf:title>
                   </sqf:description>
-                  <sqf:stringReplace regex="{concat('^', $double.quotes, '|', $double.quotes, '$')}"></sqf:stringReplace>
+                  <sqf:replace match="text()" select="replace(., concat('^', $double.quotes, '|', $double.quotes, '$'), '')"/>
                 </sqf:fix>
               </sch:rule>
             </constraint>
