@@ -152,7 +152,7 @@ Guidelines.pdf: check.stamp p5.xml Utilities/guidelines-latex.xsl
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
 		Utilities/guidelines-latex.xsl > Utilities/guidelines.xsl
 	@echo BUILD: build Lite version of Guidelines, then LaTeX version of Guidelines from Lite, then run to PDF using XeLaTeX
-	@echo Make sure you have Junicode, Arphic and Mincho fonts installed
+	@echo Make sure you have Junicode, Noto CJK, Arphic and Mincho fonts installed
 	${ANT} -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfonce
 
 pdf-complete:
@@ -402,7 +402,7 @@ dependencies:
 	@echo	fonts-ipafont-mincho
 	@echo	zip
 	@echo   ttf-linux-libertine
-	@echo 	ttf-hannom
+	@echo 	fonts-noto-cjk
 clean:
 	(cd Exemplars; make clean)
 	(cd Test; make clean)
