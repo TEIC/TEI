@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI with RDFa</title>
+        <author>Martina Scholger</author>
+        <author>Peter Stadler</author>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>TEI Consortium</publisher>
+        <availability status="free">
+          <licence target="http://creativecommons.org/licenses/by-sa/3.0/"> Distributed under a
+            Creative Commons Attribution-ShareAlike 3.0 Unported License </licence>
+          <licence target="http://www.opensource.org/licenses/BSD-2-Clause">
+            <p>Copyright 2020 TEI Consortium.</p>
+            <p>All rights reserved.</p>
+            <p>Redistribution and use in source and binary forms, with or without modification, are
+              permitted provided that the following conditions are met:</p>
+            <list>
+              <item>Redistributions of source code must retain the above copyright notice, this list
+                of conditions and the following disclaimer.</item>
+              <item>Redistributions in binary form must reproduce the above copyright notice, this
+                list of conditions and the following disclaimer in the documentation and/or other
+                materials provided with the distribution.</item>
+            </list>
+            <p>This software is provided by the copyright holders and contributors "as is" and any
+              express or implied warranties, including, but not limited to, the implied warranties
+              of merchantability and fitness for a particular purpose are disclaimed. In no event
+              shall the copyright holder or contributors be liable for any direct, indirect,
+              incidental, special, exemplary, or consequential damages (including, but not limited
+              to, procurement of substitute goods or services; loss of use, data, or profits; or
+              business interruption) however caused and on any theory of liability, whether in
+              contract, strict liability, or tort (including negligence or otherwise) arising in any
+              way out of the use of this software, even if advised of the possibility of such
+              damage.</p>
+          </licence>
+          <p>TEI material can be licensed differently depending on the use you intend to make of it.
+            Hence it is made available under both the CC+BY and BSD-2 licences. The CC+BY licence is
+            generally appropriate for usages which treat TEI content as data or documentation. The
+            BSD-2 licence is generally appropriate for usage of TEI content in a software
+            environment. For further information or clarification, please contact the <ref
+              target="mailto:info@tei-c.org">TEI Consortium</ref>. </p>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <p>born digital</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <schemaSpec ident="tei_rdfa" start="TEI">
+        <moduleRef key="tei"/>                              <!-- required -->
+        <moduleRef key="core"/>                             <!-- required -->
+        <moduleRef key="analysis"/>
+        <moduleRef key="certainty"/>
+        <moduleRef key="corpus"/>
+        <moduleRef key="dictionaries"/>
+        <moduleRef key="drama"/>
+        <moduleRef key="figures"/>
+        <moduleRef key="gaiji"/>
+        <moduleRef key="header"/>                           <!-- required -->
+        <moduleRef key="iso-fs"/>
+        <moduleRef key="linking"/>
+        <moduleRef key="msdescription"/>
+        <moduleRef key="namesdates"/>
+        <moduleRef key="nets"/>
+        <moduleRef key="spoken"/>
+        <moduleRef key="textcrit"/>
+        <moduleRef key="textstructure"/>                    <!-- required -->
+        <moduleRef key="transcr"/>
+        <moduleRef key="verse"/>
+        
+        <!-- 
+          The tagdocs module is disabled due to attribute name clashes
+          for the attribute `@prefix` which is both defined locally on
+          elementSpec, moduleRef, and schemaSpec, as well as by our new 
+          class `att.global.analytic.rdfa`
+        -->
+        <!--<moduleRef key="tagdocs"/>-->
+        
+        <classSpec type="atts" ident="att.global.analytic.rdfa" mode="add">
+          <desc xml:lang="en" versionDate="2020-07-01">provides additional global attributes for
+            embedding RDF following the RDFa Core 1.1 specification</desc>
+          <attList>
+            <attDef mode="add" ident="about">
+              <gloss xml:lang="en" versionDate="2020-07-01">rdfa-about</gloss>
+              <desc xml:lang="en" versionDate="2020-07-01">a SafeCURIEorCURIEorIRI, used for stating
+                what the data is about (a 'subject' in RDF terminology)</desc>
+              <datatype>
+                <dataRef key="teidata.enumerated"/>
+              </datatype>
+            </attDef>
+            <attDef mode="add" ident="content">
+              <gloss xml:lang="en" versionDate="2020-07-01">rdfa-content</gloss>
+              <desc xml:lang="en" versionDate="2020-07-01">a CDATA string, for supplying
+                machine-readable content for a literal (a 'literal object', in RDF
+                terminology)</desc>
+              <datatype>
+                <dataRef key="teidata.text"/>
+              </datatype>
+            </attDef>
+            <attDef mode="add" ident="datatype">
+              <gloss xml:lang="en" versionDate="2020-07-01">rdfa-datatype</gloss>
+              <desc xml:lang="en" versionDate="2020-07-01">a TERMorCURIEorAbsIRI representing a
+                datatype, to express the datatype of a literal</desc>
+              <datatype>
+                <dataRef key="teidata.enumerated"/>
+              </datatype>
+            </attDef>
+            <attDef mode="add" ident="href">
+              <gloss xml:lang="en" versionDate="2020-07-01">rdfa-href</gloss>
+              <desc xml:lang="en" versionDate="2020-07-01">a traditionally navigable IRI for
+                expressing the partner resource of a relationship (a 'resource object', in RDF
+                terminology)</desc>
+              <datatype>
+                <dataRef key="teidata.enumerated"/>
+              </datatype>
+            </attDef>
+            <attDef mode="add" ident="inlist">
+              <gloss xml:lang="en" versionDate="2020-07-01">rdfa-inlist</gloss>
+              <desc xml:lang="en" versionDate="2020-07-01">An attribute used to indicate that the
+                object associated with a rel or property attribute on the same element is to be added
+                to the list for that predicate. The value of this attribute MUST be ignored. Presence
+                of this attribute causes a list to be created if it does not already exist.</desc>
+              <datatype>
+                <dataRef key="teidata.enumerated"/>
+              </datatype>
+            </attDef>
+            <attDef mode="add" ident="prefix">
+              <gloss xml:lang="en" versionDate="2020-07-01">rdfa-prefix</gloss>
+              <desc xml:lang="en" versionDate="2020-07-01">a white space separated list of prefix-name
+                IRI pairs of the form NCName ':' ' '+ xsd:anyURI </desc>
+              <datatype maxOccurs="unbounded">
+                <dataRef key="teidata.enumerated"/>
+              </datatype>
+            </attDef>
+            <attDef mode="add" ident="property">
+              <gloss xml:lang="en" versionDate="2020-07-01">rdfa-property</gloss>
+              <desc xml:lang="en" versionDate="2020-07-01">a white space separated list of
+                TERMorCURIEorAbsIRIs, used for expressing relationships between a subject and either a
+                resource object if given or some literal text (also a 'predicate')</desc>
+              <datatype maxOccurs="unbounded">
+                <dataRef key="teidata.enumerated"/>
+              </datatype>
+            </attDef>
+            <attDef mode="add" ident="rel">
+              <gloss xml:lang="en" versionDate="2020-07-01">rdfa-rel</gloss>
+              <desc xml:lang="en" versionDate="2020-07-01">a white space separated list of
+                TERMorCURIEorAbsIRIs, used for expressing relationships between two resources
+                ('predicates' in RDF terminology)</desc>
+              <datatype maxOccurs="unbounded">
+                <dataRef key="teidata.enumerated"/>
+              </datatype>
+            </attDef>
+            <attDef mode="add" ident="resource">
+              <gloss xml:lang="en" versionDate="2020-07-01">rdfa-resource</gloss>
+              <desc xml:lang="en" versionDate="2020-07-01">a SafeCURIEorCURIEorIRI for expressing the
+                partner resource of a relationship that is not intended to be navigable (e.g., a
+                'clickable' link) (also an 'object')</desc>
+              <datatype>
+                <dataRef key="teidata.enumerated"/>
+              </datatype>
+            </attDef>
+            <attDef mode="add" ident="rev">
+              <gloss xml:lang="en" versionDate="2020-07-01">rdfa-rev</gloss>
+              <desc xml:lang="en" versionDate="2020-07-01">a white space separated list of
+                TERMorCURIEorAbsIRIs, used for expressing reverse relationships between two resources
+                (also 'predicates')</desc>
+              <datatype maxOccurs="unbounded">
+                <dataRef key="teidata.enumerated"/>
+              </datatype>
+            </attDef>
+            <attDef mode="add" ident="src">
+              <gloss xml:lang="en" versionDate="2020-07-01">rdfa-src</gloss>
+              <desc xml:lang="en" versionDate="2020-07-01">an IRI for expressing the partner resource
+                of a relationship when the resource is embedded (also a 'resource object')</desc>
+              <datatype>
+                <dataRef key="teidata.enumerated"/>
+              </datatype>
+            </attDef>
+            <attDef mode="add" ident="typeof">
+              <gloss xml:lang="en" versionDate="2020-07-01">rdfa-typeof</gloss>
+              <desc xml:lang="en" versionDate="2020-07-01">a white space separated list of
+                TERMorCURIEorAbsIRIs that indicate the RDF type(s) to associate with a subject</desc>
+              <datatype maxOccurs="unbounded">
+                <dataRef key="teidata.enumerated"/>
+              </datatype>
+            </attDef>
+            <attDef mode="add" ident="vocab">
+              <gloss xml:lang="en" versionDate="2020-07-01">rdfa-vocab</gloss>
+              <desc xml:lang="en" versionDate="2020-07-01">an IRI that defines the mapping to use when
+                a TERM is referenced in an attribute value. See General Use of Terms in Attributes and
+                the section on Vocabulary Expansion.</desc>
+              <datatype>
+                <dataRef key="teidata.enumerated"/>
+              </datatype>
+            </attDef>
+          </attList>
+        </classSpec>
+        
+        <!--
+          Hook the new class `att.global.analytic.rdfa` into the existing
+          class `att.global.analytic`
+        -->
+        <classSpec type="atts" ident="att.global.analytic" mode="change">
+          <classes mode="change">
+            <memberOf key="att.global.analytic.rdfa" mode="add"/>
+          </classes>
+        </classSpec>
+        
+      </schemaSpec>
+    </body>
+  </text>
+</TEI>
