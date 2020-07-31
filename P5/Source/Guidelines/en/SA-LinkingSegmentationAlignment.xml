@@ -3199,45 +3199,128 @@ will only select the text of the poem, with no markup inside.</p>
 </div>
 </div>
 
-<div type="div2" xml:id="SASOstdf">
-  <!-- head>Placement of Stand-off Markup and Contextual Information</head -->
-  <head>The <gi>standOff</gi> Container</head>
-  <p>The <gi>standOff</gi> element is a catch-all element intended for
-  holding content that is neither transcribed from the source
-  document, nor strictly speaking metadata about said document.
-  Examples include contextual information about named entities
-  (typically encoded using <gi>listBibl</gi>, <gi>listOrg</gi>,
-  <gi>listNym</gi>, <gi>listPerson</gi>, or <gi>listPlace</gi>),
-  annotations indicating the morphosyntactic features of a text,
-  collections of <gi>alt</gi> elements for encoding ambiguity of
-  reference, and an encoded <gi>castList</gi> used to record
-  information about speaking characters in a drama who were not
-  mentioned in the source cast list.</p>
-  <p>The <gi>standOff</gi> element may also be used to hold
-  transcribed text that does not, for some reason, fit into the
-  encoding model being used. Examples include encoding source
-  authorial footnotes in the <gi>standOff</gi> in order to more easily
-  represent source pages when a footnote runs across a page break, or
-  to encode words that appear in the source text as part of an
-  acrostic<!-- (using <gi>acrostic</gi> in <gi>extraTextual</gi>)-->.
-  <specList>
-    <specDesc key="standOff"/>
-  </specList>
-  </p>
-  <p>As a member of <ident type="class">model.resource</ident>,
-  <gi>standOff</gi> may occur as a child of <gi>TEI</gi> (or
-  <gi>teiCorpus</gi>). If the metadata that describes the
-  <gi>standOff</gi> is largely the same as the metadata that describes
-  the associated resource (e.g., the transcribed text in
-  <gi>text</gi>), then the <gi>standOff</gi> and the encoded
-  associated resource may appear as children of the same <gi>TEI</gi>
-  element.</p>
-  <xi:include href="../../Specs/standOff.xml"/>
-  <!-- the inclusion of <listAnnotation> probably does not belong
-       here, but I have to put it *somewhere* to start testing. — Syd,
-       2020-03-08 -->
-  <xi:include href="../../Specs/listAnnotation.xml"/>
-</div>
+  <div type="div2" xml:id="SASOstdf">
+    <!-- head>Placement of Stand-off Markup and Contextual Information</head -->
+    <head>The <gi>standOff</gi> Container and Annotations</head>
+    <p>The <gi>standOff</gi> element is intended to hold content that is neither transcribed from
+      the source document, nor strictly speaking metadata about said document. Examples include
+      contextual information about named entities (typically encoded using <gi>listBibl</gi>,
+        <gi>listOrg</gi>, <gi>listNym</gi>, <gi>listPerson</gi>, or <gi>listPlace</gi>), annotations
+      indicating the morphosyntactic features of a text, and annotations commenting on or
+      associating parts of a text with additional information. <specList>
+        <specDesc key="standOff"/>
+        <specDesc key="listAnnotation"/>
+        <specDesc key="annotation"/>
+      </specList>
+    </p>
+    <p>An encoder might use <gi>annotation</gi> to associate names in the text with <gi>person</gi>
+      elements, for example, instead of using inline <gi>persName</gi>. TEI <gi>annotation</gi>s can
+      also be used to encode input from external annotation tools using Web Annotation. So
+      annotations on a text can, e.g., be imported into a document without disturbing the
+        <gi>text</gi> content of that document. Annotations adapt the Web Annotation Data Model
+      (WADM) to the TEI context. Although they follow WADM, using TEI elements and attributes to
+      encode the same information, they do not attempt to reproduce it comprehensively. TEI
+      annotations should be able to be exported to WADM's JSON-LD format, and WADM to be imported
+      into TEI, but in the latter case, there may be some information loss.</p>
+    <p>Annotations have a target, an optional body, and may contain metadata specifying the person
+      or agent responsible for lifecycle events, the nature of those events, and the license of the
+      annotation. Targets are expressed using the <att>target</att> attribute on the
+        <gi>annotation</gi>, and at least one target is required. Bodies may be expressed using
+        <gi>ptr</gi> or <gi>ref</gi> with <att>target</att> if they are URIs, or using <gi>note</gi>
+      for a textual body. Lifecycle metadata may be encoded using <gi>respStmt</gi> and
+        <gi>revisionDesc</gi>, while licenses use <gi>license</gi>.</p>
+    <p>The example below illustrates how standoff annotations can be used to connect
+      words in a text with <gi>place</gi> elements in a list. <egXML
+        xmlns="http://www.tei-c.org/ns/Examples">
+        <TEI>
+          <teiHeader>
+            <fileDesc>
+              <titleStmt>
+                <title>Title</title>
+              </titleStmt>
+              <publicationStmt>
+                <p>Publication Information</p>
+              </publicationStmt>
+              <sourceDesc>
+                <p>Information about the source</p>
+              </sourceDesc>
+            </fileDesc>
+          </teiHeader>
+          <text>
+            <body>
+              <div type="edition">
+                <div type="textpart" subtype="chapter" n="1" xml:id="c1">
+                  <p n="1" xml:id="c1p1">
+                    <seg n="1" xml:id="c1p1s1">Gallia est omnis divisa in partes tres, quarum unam
+                      incolunt Belgae, aliam Aquitani, tertiam qui ipsorum lingua Celtae, nostra
+                      Galli appellantur.</seg>
+                    <!-- ... -->
+                    <seg n="6" xml:id="c1p1s6">Belgae ab extremis Galliae finibus oriuntur,
+                      pertinent ad inferiorem partem fluminis Rheni, spectant in septentrionem et
+                      orientem solem.</seg>
+                    <seg n="7" xml:id="c1p1s7">Aquitania a Garumna flumine ad Pyrenaeos montes et
+                      eam partem Oceani quae est ad Hispaniam pertinet; spectat inter occasum solis
+                      et septentriones.]</seg>
+                  </p>
+                </div>
+              </div>
+            </body>
+          </text>
+          <TEI type="annotations">
+            <teiHeader>
+              <fileDesc>
+                <titleStmt>
+                  <title>My Annotations</title>
+                </titleStmt>
+                <publicationStmt>
+                  <authority>Me</authority>
+                </publicationStmt>
+                <sourceDesc>
+                  <p>Annotations generated by...</p>
+                </sourceDesc>
+              </fileDesc>
+            </teiHeader>
+            <standOff>
+              <listPlace>
+                <place xml:id="Gallia">
+                  <placeName xml:lang="la">Gallia</placeName>
+                  <placeName xml:lang="en">Gaul</placeName>
+                  <idno type="URI">https://pleiades.stoa.org/places/993</idno>
+                </place>
+                <!-- ... -->
+              </listPlace>
+              <listAnnotation>
+                <annotation motivation="linking" target="#Gallia">
+                  <respStmt xml:id="ed">
+                    <resp>creator</resp>
+                    <persName>Fred Editor</persName>
+                  </respStmt>
+                  <revisionDesc>
+                    <change status="created" when="2020-05-21T13:59:00Z" who="#ed"/>
+                    <change status="modified" when="2020-05-21T19:48:00Z" who="#ed"/>
+                  </revisionDesc>
+                  <license target="http://creativecommons.org/licenses/by/3.0/"/>
+                  <listRef>
+                    <ptr target="#string-range(c1p1s1,0,6)"/>
+                    <ptr target="#string-range(c1p1s6,19,7)"/>
+                  </listRef>
+                </annotation>
+                <!-- ... -->
+              </listAnnotation>
+            </standOff>
+          </TEI>
+        </TEI>
+      </egXML>
+    </p>
+    <p>As a member of <ident type="class">model.resource</ident>, <gi>standOff</gi> may occur as a
+      child of <gi>TEI</gi> (or <gi>teiCorpus</gi>). If the metadata that describes the
+        <gi>standOff</gi> is largely the same as the metadata that describes the associated resource
+      (e.g., the transcribed text in <gi>text</gi>), then the <gi>standOff</gi> and the encoded
+      associated resource may appear as children of the same <gi>TEI</gi> element.</p>
+    <xi:include href="../../Specs/standOff.xml"/>
+    <xi:include href="../../Specs/listAnnotation.xml"/>
+    <xi:include href="../../Specs/annotation.xml"/>
+  </div>
   
 <div type="div2" xml:id="SAAN">
 <head>Connecting Analytic and Textual Markup</head>
