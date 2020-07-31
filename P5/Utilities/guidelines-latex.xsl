@@ -105,6 +105,9 @@
 <xsl:param name="typewriterFont">DejaVu Sans Mono</xsl:param>
 <xsl:param name="sansFont">DejaVu Sans Mono</xsl:param>
 <xsl:param name="romanFont">Linux Libertine O</xsl:param>
+<xsl:param name="chineseFont">Noto Sans CJK SC</xsl:param>
+<xsl:param name="koreanFont">Noto Sans CJK KR</xsl:param>
+<xsl:param name="japaneseFont">Noto Sans CJK JP</xsl:param>
 
 
   <xsl:variable name="docClass">book</xsl:variable>
@@ -223,9 +226,10 @@
    \def\makelabel##1{\hfil##1\hfil}}%
   }
   {\end{list}}
-\catcode`說=\active \def說{{\fontspec{UMingCN}\char35498}}
-\catcode`説=\active \def説{{\fontspec{IPAMincho}\char35500}}
-\catcode`人=\active \def人{{\fontspec{IPAMincho}\char20154}}
+\catcode`說=\active \def說{{\fontspec{</xsl:text><xsl:value-of select="$japaneseFont"/><xsl:text>}\char35498}}
+\catcode`説=\active \def説{{\fontspec{</xsl:text><xsl:value-of select="$japaneseFont"/><xsl:text>}\char35500}}
+\catcode`人=\active \def人{{\fontspec{</xsl:text><xsl:value-of select="$japaneseFont"/><xsl:text>}\char20154}}
+\catcode`&#x4EBB;=\active \def&#x4EBB;{{\fontspec{</xsl:text><xsl:value-of select="$japaneseFont"/><xsl:text>}\char20155}}
 \catcode`⁊=\active \def⁊{{\fontspec{Junicode}\char8266}} 
 \catcode`Å=\active \defÅ{{\fontspec{DejaVu Serif}\char8491}} 
 \catcode`⁻=\active \def⁻{\textsuperscript{-}}
