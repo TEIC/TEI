@@ -3202,8 +3202,8 @@ will only select the text of the poem, with no markup inside.</p>
   <div type="div2" xml:id="SASOstdf">
     <!-- head>Placement of Stand-off Markup and Contextual Information</head -->
     <head>The <gi>standOff</gi> Container and Annotations</head>
-    <p>The <gi>standOff</gi> element is intended to hold content that is neither transcribed from
-      the source document, nor strictly speaking metadata about said document. Examples include
+    <p>The <gi>standOff</gi> element is intended to hold content that does not fit well in the <gi>text</gi> (e.g. because it is not transcribed from the source
+      document), nor in the <gi>teiHeader</gi> (e.g. because it is not metadata about said document). Examples include
       contextual information about named entities (typically encoded using <gi>listBibl</gi>,
         <gi>listOrg</gi>, <gi>listNym</gi>, <gi>listPerson</gi>, or <gi>listPlace</gi>), annotations
       indicating the morphosyntactic features of a text, and annotations commenting on or
@@ -3213,22 +3213,21 @@ will only select the text of the poem, with no markup inside.</p>
         <specDesc key="annotation"/>
       </specList>
     </p>
-    <p>An encoder might use <gi>annotation</gi> to associate names in the text with <gi>person</gi>
-      elements, for example, instead of using inline <gi>persName</gi>. TEI <gi>annotation</gi>s can
-      also be used to encode input from external annotation tools using Web Annotation. So
-      annotations on a text can, e.g., be imported into a document without disturbing the
-        <gi>text</gi> content of that document. Annotations adapt the Web Annotation Data Model
-      (WADM) to the TEI context. Although they follow WADM, using TEI elements and attributes to
+    
+    <p>As a member of <ident type="class">model.resource</ident>, <gi>standOff</gi> may occur as a
+      child of <gi>TEI</gi> (or <gi>teiCorpus</gi>). If the metadata that describes the
+      <gi>standOff</gi> is largely the same as the metadata that describes the associated resource
+      (e.g., the transcribed text in <gi>text</gi>), then the <gi>standOff</gi> and the encoded
+      associated resource may appear as children of the same <gi>TEI</gi> element.</p>
+    
+    <p>The annotation element is modeled after the <ref target="#WADM">Web Annotation Data Model</ref> (WADM). Web annotations model the act of annotation using one or more targets, which are URIs, and zero or more bodies, which may be either URIs or embedded text. Web annotations may also contain metadata about the annotation, such as the creator, creation and modification dates, and license information. TEI annotations implement the features of WADM that are likely to be useful for annotating TEI documents. Targets are represented using the <att>target</att> attribute on <gi>annotation</gi>. URI bodies are represented using <gi>ref</gi> or <gi>ptr</gi> and embedded text bodies using <gi>note</gi>. Lifecycle and license information may be given using <gi>respStmt</gi>, <gi>revisionDesc</gi>, and <gi>licence</gi>. Although TEI annotations follow WADM, using TEI elements and attributes to
       encode the same information, they do not attempt to reproduce it comprehensively. TEI
-      annotations should be able to be exported to WADM's JSON-LD format, and WADM to be imported
-      into TEI, but in the latter case, there may be some information loss.</p>
-    <p>Annotations have a target, an optional body, and may contain metadata specifying the person
-      or agent responsible for lifecycle events, the nature of those events, and the license of the
-      annotation. Targets are expressed using the <att>target</att> attribute on the
-        <gi>annotation</gi>, and at least one target is required. Bodies may be expressed using
-        <gi>ptr</gi> or <gi>ref</gi> with <att>target</att> if they are URIs, or using <gi>note</gi>
-      for a textual body. Lifecycle metadata may be encoded using <gi>respStmt</gi> and
-        <gi>revisionDesc</gi>, while licenses use <gi>license</gi>.</p>
+      annotations may be exported to WADM's JSON-LD format, and WADM imported
+      into TEI, but some adaptation may be required during the conversion process.</p>
+      
+      <p>TEI annotations are, in general, intended to capture the output of processes that annotate TEI texts without altering the text and markup in the <gi>text</gi>. They allow this kind of output to be represented directly in TEI, and thus to be processed using the same toolchains as the texts they annotate. A named entity recognition workflow might use <gi>annotation</gi>, for example to associate names in the text with <gi>person</gi>
+      elements, instead of attempting to rewrite the TEI text using inline <gi>persName</gi>. Projects may wish to use this mechanism to layer information onto a TEI text in case where using inline elements might result in complicated markup.</p>
+    
     <p>The example below illustrates how standoff annotations can be used to connect words in a text
       with <gi>place</gi> elements in a list. The words <q>Gallia</q> and <q>Galliae</q> in the
       edition are connected by an annotation in the standOff section which points to them using
@@ -3297,11 +3296,7 @@ will only select the text of the poem, with no markup inside.</p>
         </TEI>
       </egXML>
     </p>
-    <p>As a member of <ident type="class">model.resource</ident>, <gi>standOff</gi> may occur as a
-      child of <gi>TEI</gi> (or <gi>teiCorpus</gi>). If the metadata that describes the
-        <gi>standOff</gi> is largely the same as the metadata that describes the associated resource
-      (e.g., the transcribed text in <gi>text</gi>), then the <gi>standOff</gi> and the encoded
-      associated resource may appear as children of the same <gi>TEI</gi> element.</p>
+    
     <xi:include href="../../Specs/standOff.xml"/>
     <xi:include href="../../Specs/listAnnotation.xml"/>
     <xi:include href="../../Specs/annotation.xml"/>
