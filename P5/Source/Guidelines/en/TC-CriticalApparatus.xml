@@ -29,14 +29,14 @@ $Id$
     included in the apparatus, are described in section <ptr target="#TCAPLL"/>. Special tags for
     fragmentary witnesses are described in section <ptr target="#TCAPMI"/>. The available methods
     for embedding the apparatus in the rest of the text, or for linking an external apparatus to the
-    edition text, are described in section <ptr target="#TCAPLK"/>. Finally, several extra attributes
-    for some tags of the core tag set, made available when the additional tag set for text criticism
-    is selected, are documented in section <ptr target="#PHCO"/>. </p>
+    text of the edition, are described in section <ptr target="#TCAPLK"/>. Finally, several extra
+    attributes for some tags of the core tag set, made available when the additional tag set for
+    text criticism is selected, are documented in section <ptr target="#PHCO"/>. </p>
   
   <p>Scholarly practice in representing critical editions differs widely across disciplines, time
     periods, and languages. The TEI does not make any recommendations as to which text-critical
     methods are best suited to any given text. Editors will wish to consider questions such as:
-    <list type="simple">
+      <list type="simple">
       <item>What is a nature of the source(s)? Are there many witnesses, few, or one?</item>
       <item>Will there be a single <q>base</q> text? Or will witnesses be separately
         transcribed?</item>
@@ -49,7 +49,22 @@ $Id$
         selection the editor deems relevant?</item>
       <item>Will conjectures (variant readings suggested by an editor) be treated differently than
         readings found in witness?</item>
+      <item>Will there be a need to distinguish different types of variation, for example,
+        orthographic vs. morphological or lexical variants?</item>
     </list></p>
+  
+  <p>The answers to these questions may influence choices of markup use in the edition. For example,
+    if there will be multiple witness transcriptions and a single apparatus, then the <ref
+      target="#TCAPDE">double end-point attachment</ref> method may be the best choice of apparatus
+    linking style. The <ref target="#TCAPPS">parallel segmentation</ref> method may present several
+    advantages to editors producing an edition with a single base text. Editors of single-source
+    editions may care to note material aspects of the text (such as <gi>damage</gi> or
+      <gi>unclear</gi> text). On the other hand, editors attempting to synthesize an ideal or
+    original text from many witnesses may feel little need to represent the material aspects of
+    individual witnesses. Editors wishing to distinguish witness readings from conjectures by modern
+    editors may wish to use <att>wit</att> to indicate the former and <att>source</att> for the
+    latter. Differences in types of variation might be marked using <att>type</att> or
+      <att>ana</att> on the <gi>rdg</gi> element.</p>
   
   <p>Many examples given in this chapter refer to the following texts of the opening (usually just
     line 1) of Chaucer's <title>Wife of Bath's Prologue</title>, as it appears in each of the four
@@ -912,56 +927,59 @@ Barcelona, 1518, Carles Amorós. </bibl>
       <head>The Parallel Segmentation Method</head>
       <p>This method differs from the double end-point attachment method in that all variants at any
         point of the text are expressed as variants on one another. In this method, no two
-        variations can overlap, although they may nest. The texts compared are divided into matching segments all
-        synchronized with one another. This permits direct comparison of any span of text in any
-        witness with that in any other witness. It is also very easy (if the apparatus is positive) for an
-        application to extract the full text of any one witness from the apparatus.</p>
+        variations can overlap, although they may nest. The texts compared are divided into matching
+        segments all synchronized with one another. This permits direct comparison of any span of
+        text in any witness with that in any other witness. With a positive apparatus, it is
+        straightforward for an application to extract the full text of any one witness from the
+          apparatus.<note place="bottom">Some care must be taken with this approach, as a derived
+          view of a witness may not be a complete and accurate transcription of that witness. It is
+          more likely to be the base text with all readings from that witness applied.</note></p>
       <p>This method will (by definition) always be satisfactory when there are just two texts for
-        comparison (assuming they are in the same language and script). It will however be less convenient 
-        for very complex traditions, where establishing a base text with variations from it is not a 
-        satisfactory goal for the edition, or in some cases where every detail of variation needs
-        to be modeled.</p>
+        comparison (assuming they are in the same language and script). It will however be less
+        convenient for very complex traditions, where establishing a base text with variations from
+        it is not a satisfactory goal for the edition, or in some cases where every detail of
+        variation needs to be modeled.</p>
       <p>In the parallel segmentation method, each segment of text on which there is variation is
-        marked by an <gi>app</gi> element. If there is a preferred (or base) reading it is tagged 
-        with <gi>lem</gi>; each reading is given in a <gi>rdg</gi> element:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"><variantEncoding method="parallel-segmentation" location="internal"/>
-<!-- ... -->
-  <l n="1">
-    <app><lem wit="#El #Hg">Experience</lem>
-         <rdg wit="#La">Experiment</rdg>
-         <rdg wit="#Ra2">Eryment</rdg></app>
-    though noon Auctoritee</l>
-  <l>Were in this world ...</l></egXML></p>
+        marked by an <gi>app</gi> element. If there is a preferred (or base) reading it is tagged
+        with <gi>lem</gi>; each reading is given in a <gi>rdg</gi> element: <egXML
+          xmlns="http://www.tei-c.org/ns/Examples"><variantEncoding method="parallel-segmentation"
+            location="internal"/>
+          <!-- ... -->
+          <l n="1">
+            <app><lem wit="#El #Hg">Experience</lem>
+              <rdg wit="#La">Experiment</rdg>
+              <rdg wit="#Ra2">Eryment</rdg></app> though noon Auctoritee</l>
+          <l>Were in this world ...</l></egXML></p>
       <p>This method cannot be used with external apparatus: it must be used in-line. Note that
         apparatus encoded with this method may be translated into the double end-point attachment
         method and back without loss of information. Where double-end-point-attachment encodings
         have no overlapping lemmata, translation of these to the parallel segmentation encoding and
         back will also be possible without loss of information.</p>
-      
+
       <p>As noted, apparatus entries may nest in this method: if an imaginary fifth manuscript of
         the text read <mentioned>Auctoritee, though none experience</mentioned>, the variation on
-        the individual words of the line would nest within that for the line as a whole:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"><l n="1">
-   <app>
-      <rdg wit="#Chi3">Auctoritee, though none experience</rdg>
-      <rdg>    
-         <app>
-            <rdg wit="#El #Hg">Experience</rdg>
-            <rdg wit="#La">Experiment</rdg>
-            <rdg wit="#Ra2">Eryment</rdg>
-         </app>
-         <app>
-            <rdg wit="#El #Ra2">though</rdg>
-            <rdg wit="#Hg">thogh</rdg>
-            <rdg wit="#La">thouh</rdg>
-         </app>
-         <app>
-            <rdg wit="#El #Hg">noon Auctorite</rdg>
-            <rdg wit="#La #Ra2">none auctorite</rdg>
-         </app>
-      </rdg>
-   </app>
-</l></egXML></p>
+        the individual words of the line would nest within that for the line as a whole: <egXML
+          xmlns="http://www.tei-c.org/ns/Examples"><l n="1">
+            <app>
+              <rdg wit="#Chi3">Auctoritee, though none experience</rdg>
+              <rdg>
+                <app>
+                  <rdg wit="#El #Hg">Experience</rdg>
+                  <rdg wit="#La">Experiment</rdg>
+                  <rdg wit="#Ra2">Eryment</rdg>
+                </app>
+                <app>
+                  <rdg wit="#El #Ra2">though</rdg>
+                  <rdg wit="#Hg">thogh</rdg>
+                  <rdg wit="#La">thouh</rdg>
+                </app>
+                <app>
+                  <rdg wit="#El #Hg">noon Auctorite</rdg>
+                  <rdg wit="#La #Ra2">none auctorite</rdg>
+                </app>
+              </rdg>
+            </app>
+          </l></egXML></p>
       <p>Parallel segmentation cannot, however, deal very gracefully with variants which overlap
         without nesting: such variants must be broken up into pieces in order to keep all witnesses
         synchronized. </p>
