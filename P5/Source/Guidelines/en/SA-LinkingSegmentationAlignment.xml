@@ -3201,7 +3201,7 @@ will only select the text of the poem, with no markup inside.</p>
 
   <div type="div2" xml:id="SASOstdf">
     <!-- head>Placement of Stand-off Markup and Contextual Information</head -->
-    <head>The <gi>standOff</gi> Container and Annotations</head>
+    <head>The <gi>standOff</gi> Container</head>
     <p>The <gi>standOff</gi> element is intended to hold content that does not fit well in the
         <gi>text</gi> (e.g. because it is not transcribed from the source), nor in the
         <gi>teiHeader</gi> (e.g. because it is not metadata about the source or transcription).
@@ -3210,8 +3210,6 @@ will only select the text of the poem, with no markup inside.</p>
         <gi>listPlace</gi>), annotations indicating the morphosyntactic features of a text, and
       annotations commenting on or associating parts of a text with additional information. <specList>
         <specDesc key="standOff"/>
-        <specDesc key="listAnnotation"/>
-        <specDesc key="annotation"/>
       </specList>
     </p>
 
@@ -3219,9 +3217,73 @@ will only select the text of the poem, with no markup inside.</p>
       child of <gi>TEI</gi> (or <gi>teiCorpus</gi>). If the metadata that describes the
         <gi>standOff</gi> is largely the same as the metadata that describes the associated resource
       (e.g., the transcribed text in <gi>text</gi>), then the <gi>standOff</gi> and the encoded
-      associated resource may appear as children of the same <gi>TEI</gi> element.</p>
-
-    <p>The annotation element's structure is based on the <ref target="#WADM">Web Annotation Data
+      associated resource may appear as children of the same <gi>TEI</gi> element. The example below
+      has a transcription with <gi>placename</gi> elements in the text linked to a list of <gi>place</gi> elements in the
+      <gi>standOff</gi> section.
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <TEI>
+          <teiHeader>
+            <!-- ... -->
+          </teiHeader>
+          <standOff>
+            <listPlace>
+              <!-- ... -->      
+              <place xml:id="Cilicia">
+                <placeName>Cilicia</placeName>
+                <idno type="URI">https://pleiades.stoa.org/places/658440</idno>
+              </place>
+              <place xml:id="Creta">
+                <placeName xml:lang="la">Creta</placeName>
+                <placeName xml:lang="en">Crete</placeName>
+                <idno type="URI">https://pleiades.stoa.org/places/589748</idno>
+              </place>
+              <!-- ... -->
+              <place xml:id="Rhodus">
+                <placeName xml:lang="la">Rhodus</placeName>
+                <placeName xml:lang="en">Rhodes</placeName>
+                <idno type="URI">https://pleiades.stoa.org/places/590031</idno>
+              </place>
+              <place xml:id="Syria">
+                <placeName>Syria</placeName>
+                <idno type="URI">https://pleiades.stoa.org/places/1306</idno>
+              </place>
+              <!-- ... -->
+            </listPlace>
+          </standOff>
+          <text>
+            <body>
+              <div type="edition" xml:id="edition-text">
+                <div type="textpart" n="1" xml:id="part1">
+                  <head>Bellum Alexandrinum</head>
+                  <p n="1" xml:id="p1">
+                    <seg n="1" xml:id="seg-1.1">Bello Alexandrino conflato <persName ref="#Caesar"
+                      >Caesar</persName>
+                      <app>
+                        <lem><placeName ref="#Rhodus">Rhodo</placeName></lem>
+                        <rdg wit="#S" ana="#orthographical">Ordo</rdg>
+                      </app> atque ex <placeName ref="#Syria">Syria</placeName>
+                      <placeName ref="#Cilicia">Cilicia</placeName>que omnem classem arcessit; <app>
+                        <lem><placeName ref="#Creta">Creta</placeName></lem>
+                        <rdg wit="#S" ana="#orthographical">certa</rdg>
+                      </app> sagittarios, equites ab rege <orgName ref="#Nabataei"
+                        >Nabataeorum</orgName>
+                      <persName ref="#Malchus">Malcho</persName> euocat; tormenta undique conquiri et
+                      frumentum mitti, auxilia adduci iubet.</seg>
+                    <!-- ... -->
+                  </p>
+                  <!-- ... -->
+                </div>
+                <!-- ... -->
+              </div>
+            </body>
+          </text>
+        </TEI>
+      </egXML>
+    </p>
+  </div>
+  <div type="div2" xml:id="SASOann">
+    <head>Annotations</head>
+    <p>The <gi>annotation</gi> element's structure is based on the <ref target="#WADM">Web Annotation Data
         Model</ref> (WADM). A Web Annotation may have one or more targets, which are URIs, and zero
       or more bodies, which may be either URIs or embedded text. A Web Annotation may also contain
       metadata about the annotation, such as the creator, creation and modification dates, and
@@ -3231,7 +3293,11 @@ will only select the text of the poem, with no markup inside.</p>
         <gi>ptr</gi> and embedded text bodies using <gi>note</gi>. Lifecycle and license information
       may be given using <gi>respStmt</gi>, <gi>revisionDesc</gi>, and <gi>licence</gi>. The
         <gi>annotation</gi> element implements a subset of WADM, using TEI elements and attributes
-      to encode the same information.</p>
+      to encode the same information.
+      <specList>
+        <specDesc key="listAnnotation"/>
+        <specDesc key="annotation"/>
+      </specList></p>
 
     <p>TEI annotations are, in general, intended to capture the output of processes that annotate
       TEI texts without altering the text and markup in the <gi>text</gi>. They allow this kind of
@@ -3246,7 +3312,10 @@ will only select the text of the poem, with no markup inside.</p>
       text with <gi>place</gi> elements in a list. The words <q>Gallia</q> and <q>Galliae</q> in the
       edition are connected by an annotation in the <gi>standOff</gi> section which points to them
       using <code>string-range()</code> pointers and references the definition of the place (also in
-      the <gi>standOff</gi> section). <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      the <gi>standOff</gi> section). If the set of annotations were created in a process separate
+      from the creation of the transcription and then imported into the transcription document, then
+      wrapping them in a <gi>TEI</gi> element with its own <gi>teiHeader</gi> providing metadata for
+      the annotations might be advisable. <egXML xmlns="http://www.tei-c.org/ns/Examples">
         <TEI>
           <teiHeader>
             <fileDesc>
@@ -3293,23 +3362,32 @@ will only select the text of the poem, with no markup inside.</p>
               </place>
               <!-- ... -->
             </listPlace>
-            <listAnnotation>
-              <annotation xml:id="ann01" motivation="linking" target="#Gallia">
-                <respStmt xml:id="ed">
-                  <resp>creator</resp>
-                  <persName>Fred Editor</persName>
-                </respStmt>
-                <revisionDesc>
-                  <change status="created" when="2020-05-21T13:59:00Z" who="#ed"/>
-                  <change status="modified" when="2020-05-21T19:48:00Z" who="#ed"/>
-                </revisionDesc>
-                <licence target="http://creativecommons.org/licenses/by/3.0/"/>
-                <ptr target="#string-range(c1p1s1,0,6)"/>
-                <ptr target="#string-range(c1p1s6,19,7)"/>
-              </annotation>
-              <!-- ... -->
-            </listAnnotation>
           </standOff>
+          <TEI>
+            <teiHeader>
+              <!-- Metadata applying just to the set of annotations -->
+            </teiHeader>
+            <standOff>
+              <listAnnotation>
+                <annotation xml:id="ann01" motivation="linking" target="#Gallia">
+                  <respStmt xml:id="ed">
+                    <resp>creator</resp>
+                    <persName>Fred Editor</persName>
+                  </respStmt>
+                  <revisionDesc>
+                    <change status="created" when="2020-05-21T13:59:00Z" who="#ed"/>
+                    <change status="modified" when="2020-05-21T19:48:00Z" who="#ed"/>
+                  </revisionDesc>
+                  <licence target="http://creativecommons.org/licenses/by/3.0/"/>
+                  <!-- Gallia in seg 1 -->
+                  <ptr target="#string-range(c1p1s1,0,6)"/>
+                  <!-- Galliae in seg 6 -->
+                  <ptr target="#string-range(c1p1s6,19,7)"/>
+                </annotation>
+                <!-- ... -->
+              </listAnnotation>
+            </standOff>
+          </TEI>
         </TEI>
       </egXML>
     </p>
