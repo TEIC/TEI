@@ -4987,18 +4987,22 @@ or is not to be encoded, the <gi>ptr</gi> element is used, as in the
 following example:
   <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">As shown above (<ptr target="#NEL80"/>) ...</egXML>
  </p>
-<p>Where the form of the reference is important, or contains additional
-qualifying information which is to be kept but distinguished from the
-surrounding text, the <gi>ref</gi> element should be used, as in the
-following example:
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">Nelson claims <ref target="#NEL80">(ibid, passim)</ref> ...</egXML>
-It may be important to distinguish between the short form of a
-bibliographic reference and some qualifying or additional information.
-The latter should not appear within the scope of the <gi>ref</gi>
-element when this is the case, as for example in an application
-concerned to normalize bibliographic references:
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">Nelson claims (<ref target="#NEL80">Nelson [1980]</ref> pages 13–37) ...</egXML>
- </p>
+<p>Where the form of the reference is important, or contains additional qualifying information
+  which is to be kept but distinguished from the surrounding text, the <gi>ref</gi> element
+  should be used, as in the following example: <egXML xmlns="http://www.tei-c.org/ns/Examples"
+    source="#NONE">Nelson claims <ref target="#NEL80">(ibid, passim)</ref> ...</egXML> It may
+  be important to distinguish between the short form of a bibliographic reference and some
+  qualifying or additional information. The latter should not appear within the scope of the
+    <gi>ref</gi> element when this is the case, as for example in an application concerned to
+  normalize bibliographic references: <egXML xmlns="http://www.tei-c.org/ns/Examples"
+    source="#NONE">Nelson claims (<ref target="#NEL80">Nelson [1980]</ref> pages 13–37)
+    ...</egXML> 
+  If it is desired to capture additional information like this in a short-form
+  reference, then <gi>bibl</gi> may be used with the <att>corresp</att> attribute pointing to
+  the full bibliographic reference: <egXML xmlns="http://www.tei-c.org/ns/Examples"
+    source="#NONE">Nelson claims (<bibl corresp="#NEL80">Nelson [1980] pages <biblScope
+        unit="page" from="13" to="37">13–37</biblScope></bibl>) ...</egXML>
+</p>
 <p>The <gi>ref</gi> element may also be used to provide a reference to a copy of the bibliographic item itself, particularly if this is available online, as in the following example: 
   <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 <biblStruct>

@@ -1282,6 +1282,7 @@ entities in the XML DTD fragments.--></p>
           <specDesc key="teidata.pattern"/>
           <specDesc key="teidata.point"/>
           <specDesc key="teidata.pointer"/>
+          <specDesc key="teidata.authority"/>
           <specDesc key="teidata.version"/>
           <specDesc key="teidata.versionNumber"/>
           <specDesc key="teidata.replacement"/>
@@ -1289,16 +1290,17 @@ entities in the XML DTD fragments.--></p>
         </specList>
       </p>
       <specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:id="DTYPES-3" n="Notation and pointer datatypes">
-        <xi:include href="../../Specs/teidata.namespace.xml"/>
-        <xi:include href="../../Specs/teidata.namespaceOrName.xml"/>
-        <xi:include href="../../Specs/teidata.outputMeasurement.xml"/>
-        <xi:include href="../../Specs/teidata.pattern.xml"/>
-        <xi:include href="../../Specs/teidata.point.xml"/>
-        <xi:include href="../../Specs/teidata.pointer.xml"/>
-        <xi:include href="../../Specs/teidata.version.xml"/>
-        <xi:include href="../../Specs/teidata.versionNumber.xml"/>
-        <xi:include href="../../Specs/teidata.replacement.xml"/>
-        <xi:include href="../../Specs/teidata.xpath.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.namespace.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.namespaceOrName.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.outputMeasurement.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.pattern.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.point.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.pointer.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.authority.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.version.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.versionNumber.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.replacement.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.xpath.xml"/>
       </specGrp>
       <p>By far the largest number of TEI attributes take values which are coded values or names of
         some kind. These values may be constrained or defined in a number of different ways, each of
@@ -1416,17 +1418,5 @@ entities in the XML DTD fragments.--></p>
         sections</term> to effect a kind of conditional construction; the RELAX NG schema fragment
       similarly predeclares a number of patterns with null (<soCalled>notAllowed</soCalled>) values.
       These issues are further discussed in chapter <ptr target="#IM"/>.</p>
-  </div>
-  <div xml:id="STDD">
-    <head>Deprecated Datatype Macros</head>
-    <p>For each of the datatypes mentioned in <ptr target="#DTYPES"/> above, an older datatype
-      macro also exists which uses RELAX NG syntax rather than the pure ODD syntax used throughout
-      these Guidelines. These older macros have the prefix <code>data.</code> rather than
-        <code>teidata.</code>. They have been retained for backwards compatability, but will be
-      removed at a future release. A TEI customization which makes reference to an old style
-      datatype, for example <ident>data.xxxx</ident> should continue to work until that time; it is
-      however recommended to replace such references with the new form <ident>teidata.xxxx</ident>
-      as soon as convenient. </p>
-
   </div>
 </div>
