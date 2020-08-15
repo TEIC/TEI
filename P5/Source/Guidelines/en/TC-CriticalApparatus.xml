@@ -21,7 +21,7 @@ $Id$
     notes at the bottom of each page. TEI’s critical apparatus module allows variation to be encoded
     so that such notes may be generated, but it also models the variation so that, for example,
     interactive editions in which readers can choose which witness readings to display are possible.</p>
-
+  
   <p>Information about variant readings (whether or not represented by a critical apparatus in the
     source text) may be recorded in a series of <term>apparatus entries</term>, each entry
     documenting one <term>variation</term>, or set of readings, in the text. Elements for the
@@ -29,10 +29,47 @@ $Id$
     included in the apparatus, are described in section <ptr target="#TCAPLL"/>. Special tags for
     fragmentary witnesses are described in section <ptr target="#TCAPMI"/>. The available methods
     for embedding the apparatus in the rest of the text, or for linking an external apparatus to the
-    base text, are described in section <ptr target="#TCAPLK"/>. Finally, several extra attributes
-    for some tags of the core tag set, made available when the additional tag set for text criticism
-    is selected, are documented in section <ptr target="#PHCO"/>. </p>
-
+    text of the edition, are described in section <ptr target="#TCAPLK"/>. Finally, several extra
+    attributes for some tags of the core tag set, made available when the additional tag set for
+    text criticism is selected, are documented in section <ptr target="#PHCO"/>. </p>
+  
+  <p>Scholarly practice in representing critical editions differs widely across disciplines, time
+    periods, and languages. The TEI does not make any recommendations as to which text-critical
+    methods are best suited to any given text. Editors will wish to consider questions such as:
+    <list type="simple">
+      <item>What source documents will be used? Are there many witnesses, few, or one? Are the
+        sources relatively close copies or not?</item>
+      <item>Will there be a single <q>base</q> text? Or will witnesses be separately
+        transcribed?</item>
+      <item>If a single base text will be used, will it be that of a particular witness, or will the
+        editor attempt to reconstruct an ideal or original text?</item>
+      <item>Will each reading in an apparatus entry record every attestation (a <q>positive</q>
+        apparatus), or merely witnesses that deviate from the base text (a <q>negative</q>
+        apparatus)?</item>
+      <item>Will the readings of most or all witnesses be represented in the apparatus, or only a
+        selection the editor deems relevant?</item>
+      <item>What level of variation will require distinguishing one witness reading from another?
+        For example, will the editor consider an abbreviated word in a witness as agreeing with the
+        base text, or not?</item>
+      <item>Will conjectures (variant readings suggested by an editor) be treated differently than
+        readings found in witness?</item>
+      <item>Will there be a need to distinguish different types of variation, for example,
+        orthographic vs. morphological or lexical variants?</item>
+    </list></p>
+  
+  <p>Different editorial methodologies will produce different answers to these questions, and those
+    answers may influence choices of markup used in the edition. For example, if there will be
+    multiple witness transcriptions and a single apparatus, then the <ref target="#TCAPDE">double
+      end-point attachment</ref> method may be the best choice of apparatus linking style. The <ref
+      target="#TCAPPS">parallel segmentation</ref> method may present several advantages to editors
+    producing an edition with a single base text. Editors of single-source editions may care to note
+    material aspects of the text (such as <gi>damage</gi> or <gi>unclear</gi> text). On the other
+    hand, editors attempting to synthesize an ideal or original text from many witnesses may feel
+    little need to represent the material aspects of individual witnesses. Editors wishing to
+    distinguish witness readings from conjectures by modern editors may wish to use <att>wit</att>
+    to indicate the former and <att>source</att> for the latter. Differences in types of variation
+    might be marked using <att>type</att> or <att>ana</att> on the <gi>rdg</gi> element.</p>
+  
   <p>Many examples given in this chapter refer to the following texts of the opening (usually just
     line 1) of Chaucer's <title>Wife of Bath's Prologue</title>, as it appears in each of the four
     different manuscripts <list rend="bulleted">
@@ -77,10 +114,9 @@ To speke of wo that is in mariage; ...</q>-->
       <head>The Apparatus Entry</head>
       <p>Individual textual variations are encoded using the <gi>app</gi> element, which groups
         together all the readings constituting the variation. The identification of discrete textual
-        variations or apparatus entries is not a purely mechanical process; different editors may
-        group readings differently. No rules are given here as to how to group readings into
-        apparatus entries; the tags given here may be used to group readings in whatever way the
-        editor finds most perspicuous or useful.</p>
+        variations or apparatus entries is not a purely mechanical process; different editors will
+        group readings differently. No rules are given here as to how to collect readings into
+        apparatus entries.</p>
       <p>The individual apparatus entry is encoded with the <gi>app</gi> element: <specList>
           <specDesc key="app" atts="type from to loc"/>
         </specList></p>
@@ -129,7 +165,7 @@ proposition; a helping theorem.</q>--></p>
         without the notion of a base text or who are not using the parallel segmentation method 
         may prefer not to use it at all. How it is used depends in part on the method chosen for 
         linking the apparatus to the text; for more information, see section <ptr target="#TCAPLK"/>.</p>
-      <p>Readings may be encoded individually, or grouped for perspicuity using the <gi>rdgGrp</gi>
+      <p>Readings may be encoded individually, or grouped for clarity using the <gi>rdgGrp</gi>
         element described in section <ptr target="#TCAPSU"/>.</p>
       <p>As members of the attribute classes <ident type="class">att.witnessed</ident> and <ident type="class">att.textCritical</ident>, both of these elements inherit the following
         attributes. 
@@ -700,9 +736,8 @@ Barcelona, 1518, Carles Amorós. </bibl>
       </list></p>
     <p>Both the location-referenced and the double end-point methods may be used with either
         <term>in-line</term> or <term>external</term> apparatus, the former dispersed within the
-      base text, the latter held in some separate location, within or outside the document with the
-      base text. The parallel segmentation method does not use the concept of a base text and may
-      only be used for in-line apparatus.</p>
+      base text, the latter held in some separate location, within or outside the document containing the
+      base text. The parallel segmentation method may only be used for in-line apparatus.</p>
     
     
 <!-- MDH 2012-08-06: Added information about the new <listApp> element.   -->
@@ -896,71 +931,59 @@ Barcelona, 1518, Carles Amorós. </bibl>
       <head>The Parallel Segmentation Method</head>
       <p>This method differs from the double end-point attachment method in that all variants at any
         point of the text are expressed as variants on one another. In this method, no two
-        variations can overlap, although they may nest. The texts compared are divided into matching segments all
-        synchronized with one another. This permits direct comparison of any span of text in any
-        witness with that in any other witness. It is also very easy with this method for an
-        application to extract the full text of any one witness from the apparatus.</p>
+        variations can overlap, although they may nest. The texts compared are divided into matching
+        segments all synchronized with one another. This permits direct comparison of any span of
+        text in any witness with that in any other witness. With a positive apparatus, it is
+        straightforward for an application to extract the full text of any one witness from the
+          apparatus.<note place="bottom">Some care must be taken with this approach, as a derived
+          view of a witness may not be a complete and accurate transcription of that witness. It is
+          more likely to be the base text with all readings from that witness applied.</note></p>
       <p>This method will (by definition) always be satisfactory when there are just two texts for
-        comparison (assuming they are in the same language and script). It will however be less convenient 
-        for very complex traditions, where establishing a base text with variations from it is not a 
-        satisfactory goal for the edition, or in some cases where every detail of variation needs
-        to be modeled.</p>
+        comparison (assuming they are in the same language and script). It will however be less
+        convenient for textual traditions where establishing a base text with variations from
+        it is not a satisfactory goal for the edition, or in some cases where every detail of
+        variation needs to be modeled.</p>
       <p>In the parallel segmentation method, each segment of text on which there is variation is
-        marked by an <gi>app</gi> element. If there is a preferred (or base) reading it is tagged 
-        with <gi>lem</gi>; each reading is given in a <gi>rdg</gi> element:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"><variantEncoding method="parallel-segmentation" location="internal"/>
-<!-- ... -->
-  <l n="1">
-    <app><lem wit="#El #Hg">Experience</lem>
-         <rdg wit="#La">Experiment</rdg>
-         <rdg wit="#Ra2">Eryment</rdg></app>
-    though noon Auctoritee</l>
-  <l>Were in this world ...</l></egXML></p>
+        marked by an <gi>app</gi> element. If there is a preferred (or base) reading it is tagged
+        with <gi>lem</gi>; each reading is given in a <gi>rdg</gi> element: <egXML
+          xmlns="http://www.tei-c.org/ns/Examples"><variantEncoding method="parallel-segmentation"
+            location="internal"/>
+          <!-- ... -->
+          <l n="1">
+            <app><lem wit="#El #Hg">Experience</lem>
+              <rdg wit="#La">Experiment</rdg>
+              <rdg wit="#Ra2">Eryment</rdg></app> though noon Auctoritee</l>
+          <l>Were in this world ...</l></egXML></p>
       <p>This method cannot be used with external apparatus: it must be used in-line. Note that
         apparatus encoded with this method may be translated into the double end-point attachment
         method and back without loss of information. Where double-end-point-attachment encodings
         have no overlapping lemmata, translation of these to the parallel segmentation encoding and
         back will also be possible without loss of information.</p>
-      <p>For economy, the witnesses to the reading most widely attested need not be stated. Since
-        all manuscripts must be represented in all apparatus entries, it will be possible for an
-        application to read a <gi>listWit</gi> declaring all the witnesses to the text and then
-        calculate which witnesses have not been named. In the example below, only La and Ra2 are
-        identified explicitly with a reading; an application might successfully infer from this that
-          <mentioned>Experience</mentioned>, whose witnesses are not given, must be attested by El
-        and Hg. To avoid confusion, however, witnesses may be omitted only for a single reading.
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"><l n="1">    
-   <app>
-      <lem>Experience</lem>
-      <rdg wit="#La">Experiment</rdg>
-      <rdg wit="#Ra2">Eryment</rdg>
-   </app>
-   though noon Auctoritee</l>
-<l>Were in this world ...</l></egXML></p>
-      <p>Alternatively, the witnesses for every reading may be stated, as in the first example.</p>
+
       <p>As noted, apparatus entries may nest in this method: if an imaginary fifth manuscript of
         the text read <mentioned>Auctoritee, though none experience</mentioned>, the variation on
-        the individual words of the line would nest within that for the line as a whole:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"><l n="1">
-   <app>
-      <rdg wit="#Chi3">Auctoritee, though none experience</rdg>
-      <rdg>    
-         <app>
-            <rdg wit="#El #Hg">Experience</rdg>
-            <rdg wit="#La">Experiment</rdg>
-            <rdg wit="#Ra2">Eryment</rdg>
-         </app>
-         <app>
-            <rdg wit="#El #Ra2">though</rdg>
-            <rdg wit="#Hg">thogh</rdg>
-            <rdg wit="#La">thouh</rdg>
-         </app>
-         <app>
-            <rdg wit="#El #Hg">noon Auctorite</rdg>
-            <rdg wit="#La #Ra2">none auctorite</rdg>
-         </app>
-      </rdg>
-   </app>
-</l></egXML></p>
+        the individual words of the line would nest within that for the line as a whole: <egXML
+          xmlns="http://www.tei-c.org/ns/Examples"><l n="1">
+            <app>
+              <rdg wit="#Chi3">Auctoritee, though none experience</rdg>
+              <rdg>
+                <app>
+                  <rdg wit="#El #Hg">Experience</rdg>
+                  <rdg wit="#La">Experiment</rdg>
+                  <rdg wit="#Ra2">Eryment</rdg>
+                </app>
+                <app>
+                  <rdg wit="#El #Ra2">though</rdg>
+                  <rdg wit="#Hg">thogh</rdg>
+                  <rdg wit="#La">thouh</rdg>
+                </app>
+                <app>
+                  <rdg wit="#El #Hg">noon Auctorite</rdg>
+                  <rdg wit="#La #Ra2">none auctorite</rdg>
+                </app>
+              </rdg>
+            </app>
+          </l></egXML></p>
       <p>Parallel segmentation cannot, however, deal very gracefully with variants which overlap
         without nesting: such variants must be broken up into pieces in order to keep all witnesses
         synchronized. </p>
@@ -984,7 +1007,7 @@ Barcelona, 1518, Carles Amorós. </bibl>
         place. The contents of an element pointed to are understood to be equivalent to a
           <gi>lem</gi> if none exists in the <gi>app</gi>, and if a <gi>lem</gi> does exist this
         should replace any content. </p>
-      <p>The <att>from</att> attribute is a <ident type="datatype">data.pointer</ident> datatype and
+      <p>The <att>from</att> attribute is a <ident type="datatype">teidata.pointer</ident> datatype and
         thus contains a URI as a value. This means that it can point directly to an
           <att>xml:id</att>, an <att>xml:id</att> in another local file, or indeed a file identified
         by any URL or URN.

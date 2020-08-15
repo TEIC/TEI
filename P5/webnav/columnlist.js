@@ -25,7 +25,7 @@ jQuery.fn.columnizeList = function(settings){
     }, settings);  
       
     var prevColNum = 0;  
-    var size = $('li',this).size();  
+    var size = $('li',this).length;  
     var computedColHeight = 0;  
     var baseFontSize = parseFloat($(this).css('font-size'));  
     $('li',this).each(function(i) {  
