@@ -10,7 +10,7 @@ $Id$
   <gloss versionDate="2008-04-06" xml:lang="es">substitución</gloss>
   <gloss versionDate="2007-11-06" xml:lang="it">sostituzione</gloss>
   <gloss versionDate="2008-10-02" xml:lang="fr"> substitution</gloss>
-  <desc versionDate="2007-09-02" xml:lang="en">groups one or more deletions with one or more additions when
+  <desc versionDate="2020-08-11" xml:lang="en">groups one or more deletions (or surplus text) with one or more additions when
   the combination is to be regarded as a single intervention in the text.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">결합이 텍스트에서 단일 조작으로 간주될 때 하나 이상의 삭제를 하나 이상의 추가 사항으로 대체한다.</desc>
   <desc xml:lang="fr" versionDate="2009-11-16">regroupe une ou plusieurs parties de texte supprimées et une ou plusieurs parties de texte ajoutées, lorsque cette combinaison peut être considérée comme une intervention unique sur le texte.</desc>
@@ -27,13 +27,14 @@ $Id$
   <content>    
     <alternate minOccurs="1" maxOccurs="unbounded">
       <elementRef key="add"/>
+      <elementRef key="surplus"/>
       <elementRef key="del"/>
       <classRef key="model.milestoneLike"/>
     </alternate>
   </content>
   <constraintSpec ident="substContents1" scheme="schematron">
     <constraint>
-      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="child::tei:add and child::tei:del"><name/> must have at least one child add and at least one child del</assert>
+      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="child::tei:add and (child::tei:del or child::tei:surplus)"><name/> must have at least one child add and at least one child del or surplus</assert>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
