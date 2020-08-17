@@ -7,7 +7,7 @@ $Date$
 $Id$
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="SA" n="14">
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="SA" n="14" xmlns:xi="http://www.w3.org/2001/XInclude">
   <head>Linking, Segmentation, and Alignment</head>
   
 <p>This chapter discusses a number of ways in which encoders may
@@ -404,46 +404,9 @@ the preceding example thus:
    <!-- ... -->
 </linkGrp></egXML></p>
 <specGrp xml:id="DSAPT" n="Links">
-  
-
-
-
-
-
-
-
-
-
-
-
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/link.xml"/>
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/linkGrp.xml"/>
-
-
-
-
-
-
+<xi:include href="../../Specs/link.xml"/>
+<xi:include href="../../Specs/linkGrp.xml"/>
 </specGrp>
-
     </div>
     <div type="div3" xml:id="SAPTIP">
 <head>Intermediate Pointers</head>
@@ -1554,13 +1517,11 @@ Enter a Ship-master, and a Boteswaine.</stage>
 </div1></egXML>
 See further <ptr target="#CODR"/> and <ptr target="#DRPAL"/>.</p>
 <specGrp xml:id="DSASA" n="Blocks Segments and Anchors">
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/ab.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/anchor.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/seg.xml"/>
+<xi:include href="../../Specs/ab.xml"/>
+<xi:include href="../../Specs/anchor.xml"/>
+<xi:include href="../../Specs/seg.xml"/>
 </specGrp>
-
   </div>
-  
   <div type="div2" xml:id="SASY">
 <head>Synchronization</head>
 <p>In the previous section we discussed two particular kinds of
@@ -1757,12 +1718,8 @@ transcribed text.</p>
 <p>For further discussion of this and related aspects of encoding
 transcribed speech, refer to chapter <ptr target="#TS"/>.</p>
 <specGrp xml:id="DSASYMP" n="Temporal specification">
-
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/when.xml"/>
-
-
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/timeline.xml"/>
-
+<xi:include href="../../Specs/when.xml"/>
+<xi:include href="../../Specs/timeline.xml"/>
 </specGrp></div></div>
     <div type="div2" xml:id="SACS">
 
@@ -2514,8 +2471,8 @@ The <att>xml:id</att> attributes of
 element of the current document.</q></p>
 
 <specGrp xml:id="DSAAG" n="Aggregation">
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/join.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/joinGrp.xml"/>
+<xi:include href="../../Specs/join.xml"/>
+<xi:include href="../../Specs/joinGrp.xml"/>
 </specGrp></div>
 <div type="div2" xml:id="SAAT">
 <head>Alternation</head>
@@ -2858,8 +2815,8 @@ combination of exclusive and inclusive <gi>alt</gi> elements, as follows.
     <alt target="#bb #db" weights="0.45 0.90"/>
   </altGrp></egXML></p>
 <specGrp xml:id="DSAAT" n="Alternation">
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/alt.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/altGrp.xml"/>
+<xi:include href="../../Specs/alt.xml"/>
+<xi:include href="../../Specs/altGrp.xml"/>
 </specGrp></div>
 
 <div type="div2" xml:id="SASO">
@@ -3242,41 +3199,196 @@ will only select the text of the poem, with no markup inside.</p>
 </div>
 </div>
 
-<div type="div2" xml:id="SASOstdf">
-  <!-- head>Placement of Stand-off Markup and Contextual Information</head -->
-  <head>The <gi>standOff</gi> Container</head>
-  <p>The <gi>standOff</gi> element is a catch-all element intended for
-  holding content that is neither transcribed from the source
-  document, nor strictly speaking metadata about said document.
-  Examples include contextual information about named entities
-  (typically encoded using <gi>listBibl</gi>, <gi>listOrg</gi>,
-  <gi>listNym</gi>, <gi>listPerson</gi>, or <gi>listPlace</gi>),
-  annotations indicating the morphosyntactic features of a text,
-  collections of <gi>alt</gi> elements for encoding ambiguity of
-  reference, and an encoded <gi>castList</gi> used to record
-  information about speaking characters in a drama who were not
-  mentioned in the source cast list.</p>
-  <p>The <gi>standOff</gi> element may also be used to hold
-  transcribed text that does not, for some reason, fit into the
-  encoding model being used. Examples include encoding source
-  authorial footnotes in the <gi>standOff</gi> in order to more easily
-  represent source pages when a footnote runs across a page break, or
-  to encode words that appear in the source text as part of an
-  acrostic<!-- (using <gi>acrostic</gi> in <gi>extraTextual</gi>)-->.
-  <specList>
-    <specDesc key="standOff"/>
-  </specList>
-  </p>
-  <p>As a member of <ident type="class">model.resource</ident>,
-  <gi>standOff</gi> may occur as a child of <gi>TEI</gi> (or
-  <gi>teiCorpus</gi>). If the metadata that describes the
-  <gi>standOff</gi> is largely the same as the metadata that describes
-  the associated resource (e.g., the transcribed text in
-  <gi>text</gi>), then the <gi>standOff</gi> and the encoded
-  associated resource may appear as children of the same <gi>TEI</gi>
-  element.</p>
-  <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/standOff.xml"/>
-</div>
+  <div type="div2" xml:id="SASOstdf">
+    <!-- head>Placement of Stand-off Markup and Contextual Information</head -->
+    <head>The <gi>standOff</gi> Container</head>
+    <p>The <gi>standOff</gi> element is intended to hold content that does not fit well in the
+        <gi>text</gi> (e.g. because it is not transcribed from the source), nor in the
+        <gi>teiHeader</gi> (e.g. because it is not metadata about the source or transcription).
+      Examples include contextual information about named entities (typically encoded using
+        <gi>listBibl</gi>, <gi>listOrg</gi>, <gi>listNym</gi>, <gi>listPerson</gi>, or
+        <gi>listPlace</gi>), annotations indicating the morphosyntactic features of a text, and
+      annotations commenting on or associating parts of a text with additional information. <specList>
+        <specDesc key="standOff"/>
+      </specList>
+    </p>
+
+    <p>As a member of <ident type="class">model.resource</ident>, <gi>standOff</gi> may occur as a
+      child of <gi>TEI</gi> (or <gi>teiCorpus</gi>). If the metadata that describes the
+        <gi>standOff</gi> is largely the same as the metadata that describes the associated resource
+      (e.g., the transcribed text in <gi>text</gi>), then the <gi>standOff</gi> and the encoded
+      associated resource may appear as children of the same <gi>TEI</gi> element. The example below
+      has a transcription with <gi>placename</gi> elements in the text linked to a list of <gi>place</gi> elements in the
+      <gi>standOff</gi> section.
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+        <TEI>
+          <teiHeader>
+            <!-- ... -->
+          </teiHeader>
+          <standOff>
+            <listPlace>
+              <!-- ... -->      
+              <place xml:id="Cilicia">
+                <placeName>Cilicia</placeName>
+                <idno type="URI">https://pleiades.stoa.org/places/658440</idno>
+              </place>
+              <place xml:id="Creta">
+                <placeName xml:lang="la">Creta</placeName>
+                <placeName xml:lang="en">Crete</placeName>
+                <idno type="URI">https://pleiades.stoa.org/places/589748</idno>
+              </place>
+              <!-- ... -->
+              <place xml:id="Rhodus">
+                <placeName xml:lang="la">Rhodus</placeName>
+                <placeName xml:lang="en">Rhodes</placeName>
+                <idno type="URI">https://pleiades.stoa.org/places/590031</idno>
+              </place>
+              <place xml:id="Syria">
+                <placeName>Syria</placeName>
+                <idno type="URI">https://pleiades.stoa.org/places/1306</idno>
+              </place>
+              <!-- ... -->
+            </listPlace>
+          </standOff>
+          <text>
+            <body>
+              <div type="edition" xml:id="edition-text">
+                <div type="textpart" n="1" xml:id="part1">
+                  <head>Bellum Alexandrinum</head>
+                  <p n="1" xml:id="p1">
+                    <seg n="1" xml:id="seg-1.1">Bello Alexandrino conflato <persName ref="#Caesar"
+                      >Caesar</persName>
+                      <app>
+                        <lem><placeName ref="#Rhodus">Rhodo</placeName></lem>
+                        <rdg wit="#S" ana="#orthographical">Ordo</rdg>
+                      </app> atque ex <placeName ref="#Syria">Syria</placeName>
+                      <placeName ref="#Cilicia">Cilicia</placeName>que omnem classem arcessit; <app>
+                        <lem><placeName ref="#Creta">Creta</placeName></lem>
+                        <rdg wit="#S" ana="#orthographical">certa</rdg>
+                      </app> sagittarios, equites ab rege <orgName ref="#Nabataei"
+                        >Nabataeorum</orgName>
+                      <persName ref="#Malchus">Malcho</persName> euocat; tormenta undique conquiri et
+                      frumentum mitti, auxilia adduci iubet.</seg>
+                    <!-- ... -->
+                  </p>
+                  <!-- ... -->
+                </div>
+                <!-- ... -->
+              </div>
+            </body>
+          </text>
+        </TEI>
+      </egXML>
+    </p>
+  </div>
+  <div type="div2" xml:id="SASOann">
+    <head>Annotations</head>
+    <p>The <gi>annotation</gi> element's structure is based on the <ref target="#WADM">Web
+        Annotation Data Model</ref> (WADM). A Web Annotation may have one or more targets, which are
+      URIs, and zero or more bodies, which may be either URIs or embedded text. A Web Annotation may
+      also contain metadata about the annotation, such as the creator, creation and modification
+      dates, and license information. The <gi>annotation</gi> element implements a subset of WADM,
+      using TEI elements and attributes to encode the same information, with a focus on annotating
+      TEI documents. Targets are represented using the <att>target</att> attribute on
+        <gi>annotation</gi>. URI bodies are represented using <gi>ref</gi> or <gi>ptr</gi> and
+      embedded text bodies using <gi>note</gi>. Lifecycle and license information may be given using
+        <gi>respStmt</gi>, <gi>revisionDesc</gi>, and <gi>licence</gi>. <specList>
+        <specDesc key="listAnnotation"/>
+        <specDesc key="annotation"/>
+      </specList></p>
+
+    <p>TEI annotations are, in general, intended to capture the output of processes that annotate
+      TEI texts without altering the text and markup in the <gi>text</gi>. They allow this kind of
+      output to be represented directly in TEI, and thus to be processed using the same toolchains
+      as the texts they annotate. A named entity recognition workflow might use <gi>annotation</gi>,
+      for example to associate names in the text with <gi>person</gi> elements instead of attempting
+      to rewrite the TEI text using inline <gi>persName</gi>. Projects may wish to use this
+      mechanism to layer information onto a TEI text in case where using inline elements might
+      result in complicated markup.</p>
+
+    <p>The example below illustrates how stand-off annotations can be used to connect words in a
+      text with <gi>place</gi> elements in a list. The words <q>Gallia</q> and <q>Galliae</q> in the
+      edition are connected by an annotation in the <gi>standOff</gi> section which points to them
+      using <code>string-range()</code> pointers and references the definition of the place (also in
+      the <gi>standOff</gi> section). If the set of annotations were created in a process separate
+      from the creation of the transcription and then imported into the transcription document, then
+      wrapping them in a <gi>TEI</gi> element with its own <gi>teiHeader</gi> providing metadata for
+      the annotations might be advisable. <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+        <TEI>
+          <teiHeader>
+            <fileDesc>
+              <titleStmt>
+                <title>De Bello Gallico</title>
+              </titleStmt>
+            <!-- ... -->
+            </fileDesc>
+          </teiHeader>
+          <text>
+            <body>
+              <div type="edition">
+                <div type="textpart" subtype="chapter" n="1" xml:id="ch1">
+                  <p n="1" xml:id="c1p1">
+                    <seg n="1" xml:id="c1p1s1">Gallia est omnis divisa in partes tres, quarum unam
+                      incolunt Belgae, aliam Aquitani, tertiam qui ipsorum lingua Celtae, nostra
+                      Galli appellantur.</seg>
+                    <!-- ... -->
+                    <seg n="6" xml:id="c1p1s6">Belgae ab extremis Galliae finibus oriuntur,
+                      pertinent ad inferiorem partem fluminis Rheni, spectant in septentrionem et
+                      orientem solem.</seg>
+                    <seg n="7" xml:id="c1p1s7">Aquitania a Garumna flumine ad Pyrenaeos montes et
+                      eam partem Oceani quae est ad Hispaniam pertinet; spectat inter occasum solis
+                      et septentriones.]</seg>
+                    <!-- ... -->
+                  </p>
+                  <!-- ... -->
+                </div>
+                <!-- Ch. 2 etc. ... -->
+              </div>
+            </body>
+          </text>
+          <standOff>
+            <listPlace>
+              <place xml:id="Gallia">
+                <placeName xml:lang="la">Gallia</placeName>
+                <placeName xml:lang="en">Gaul</placeName>
+                <idno type="URI">https://pleiades.stoa.org/places/993</idno>
+              </place>
+              <!-- ... -->
+            </listPlace>
+          </standOff>
+          <TEI>
+            <teiHeader>
+              <!-- Metadata applying just to the set of annotations -->
+            </teiHeader>
+            <standOff>
+              <listAnnotation>
+                <annotation xml:id="ann01" motivation="linking" target="#Gallia">
+                  <respStmt xml:id="ed">
+                    <resp>creator</resp>
+                    <persName>Fred Editor</persName>
+                  </respStmt>
+                  <revisionDesc>
+                    <change status="created" when="2020-05-21T13:59:00Z" who="#ed"/>
+                    <change status="modified" when="2020-05-21T19:48:00Z" who="#ed"/>
+                  </revisionDesc>
+                  <licence target="http://creativecommons.org/licenses/by/3.0/"/>
+                  <!-- Gallia in seg 1 -->
+                  <ptr target="#string-range(c1p1s1,0,6)"/>
+                  <!-- Galliae in seg 6 -->
+                  <ptr target="#string-range(c1p1s6,19,7)"/>
+                </annotation>
+                <!-- ... -->
+              </listAnnotation>
+            </standOff>
+          </TEI>
+        </TEI>
+      </egXML>
+    </p>
+
+    <xi:include href="../../Specs/standOff.xml"/>
+    <xi:include href="../../Specs/listAnnotation.xml"/>
+    <xi:include href="../../Specs/annotation.xml"/>
+  </div>
   
 <div type="div2" xml:id="SAAN">
 <head>Connecting Analytic and Textual Markup</head>
@@ -3306,7 +3418,7 @@ chapters<!-- , particularly in sections <ptr target="#AILA"/>, <ptr target="#FSF
   The selection and combination of modules to form a TEI schema is
   described in <ptr target="#STIN"/>.
   <specGrp>
-    <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.global.linking.xml"/>
+    <xi:include href="../../Specs/att.global.linking.xml"/>
     <specGrpRef target="#DSAPT"/>
     <specGrpRef target="#DSASA"/>
     <specGrpRef target="#DSASYMP"/>
