@@ -27,7 +27,7 @@ See the file COPYING.txt for details
   </teiHeader>
   <text>
     <body>
-      <p>Release 4.1.0 is codenamed <q>XXX</q>. </p>
+      <p>Release 4.1.0 is codenamed <q>XXX</q>.</p>
       <p>This release introduces new features and resolves a number of issues raised by the TEI
         community. As always, the majority of these changes and corrections are a consequence of
         feature requests or bugs reported by the TEI community using the GitHub tracking system. A
@@ -38,32 +38,35 @@ See the file COPYING.txt for details
 
       <p>The following changes are particularly worth highlighting in this release: <list>
 
-          <item>Chapter 11 on <ref
+          <item>Chapter 11, <ref
               target="https://www.tei-c.org/Vault/P5/4.1.0/doc/tei-p5-doc/en/html/PH.html"
-              >Representation of Primary Sources</ref> has been restructured and the language on the
-            usage of <gi>sourceDoc</gi> for encoding spatial features and <gi>text</gi> for textual
-            phenomena to represent primary source materials has been clarified (<ref
-              target="https://github.com/TEIC/TEI/issues/1427">#1427</ref>). </item>
+              >Representation of Primary Sources</ref>, has been restructured. In addition, the
+            language on the usage of <gi>sourceDoc</gi> for encoding spatial features and
+              <gi>text</gi> for encoding textual phenomena to represent primary source materials has
+            been clarified (<ref target="https://github.com/TEIC/TEI/issues/1427">#1427</ref>).</item>
 
-          <item>The Guidelines have been expanded on encoding short-form citations with
-            bibliographic details using the <att>corresp</att> attribute on the <gi>bibl</gi>
-            element (<ref target="https://github.com/TEIC/TEI/issues/1431">#1431</ref>).</item>
+          <item>The guidelines on encoding short-form citations with bibliographic details using the
+              <att>corresp</att> attribute on the <gi>bibl</gi> element have been expanded (<ref
+              target="https://github.com/TEIC/TEI/issues/1431">#1431</ref>).</item>
 
-          <item>The TEI customization tei_minimal has been replaced with a new version (<ref
-              target="https://github.com/TEIC/TEI/issues/1540">#1540</ref>).</item>
+          <item>The <soCalled>minimal</soCalled> exemplar TEI customization has been entirely
+            replaced with a new version (<ref target="https://github.com/TEIC/TEI/issues/1540"
+              >#1540</ref>).</item>
 
-          <item>A constraint for the usage of the <att>restriction</att> attribute on the
-              <gi>dataRef</gi> element has been added; it can only be used together with the
-              <att>name</att> attribute (<ref target="https://github.com/TEIC/TEI/issues/1606"
-              >#1606</ref>).</item>
+          <item>A constraint on the usage of the <att>restriction</att> attribute on the
+              <gi>dataRef</gi> element has been added: <att>restriction</att> can only be used
+            together with the <att>name</att> attribute (<ref
+              target="https://github.com/TEIC/TEI/issues/1606">#1606</ref>).</item>
 
-          <item>Most of the ODD customizations provided by the TEI have been purified (<ref
-              target="https://github.com/TEIC/TEI/issues/1609">#1609</ref>).</item>
+          <item>Most of the exemplar ODD customizations have been <soCalled>purified</soCalled> —
+            converted to use the ODD language, not RELAX NG, to describe element content models
+              (<ref target="https://github.com/TEIC/TEI/issues/1609">#1609</ref>).</item>
 
           <item>The class membership of <gi>q</gi> has been changed. In the course of this, the
-            element class model.qLike was renamed to <ident type="class">model.attributable</ident>.
-            Consequently, the use of the <gi>q</gi> element is allowed in additional contexts (<ref
-              target="https://github.com/TEIC/TEI/issues/1918">#1918</ref>), including <list>
+            element class <ident type="class">model.qLike</ident> was renamed to <ident type="class"
+              >model.attributable</ident>. Consequently, the use of the <gi>q</gi> element is
+            allowed in additional contexts (<ref target="https://github.com/TEIC/TEI/issues/1918"
+              >#1918</ref>), including <list>
               <item>the <gi>byline</gi> element (<ref
                   target="https://github.com/TEIC/TEI/issues/1858">#1858</ref>), and</item>
               <item>the <gi>span</gi> element (<ref target="https://github.com/TEIC/TEI/issues/1658"
@@ -74,46 +77,49 @@ See the file COPYING.txt for details
           <item>The <gi>surplus</gi> element has been added to the content model of <gi>subst</gi>.
             The <gi>subst</gi> element must have at least one child <gi>add</gi> and at least one
             child <gi>del</gi> or <gi>surplus</gi> (<ref
-              target="https://github.com/TEIC/TEI/issues/1661">#1661</ref>). </item>
+              target="https://github.com/TEIC/TEI/issues/1661">#1661</ref>).</item>
 
-          <item>A new datatype teidata.authority that permits values from an enumerated list defined
-            in the document's schema or URIs from other authority lists has been introduced. The new
-            datatype is used by the <att>where</att> attribute of the <gi>move</gi> element (<ref
-              target="https://github.com/TEIC/TEI/issues/1769">#1769</ref>).</item>
-
+          <item>A new datatype, <ident type="datatype">teidata.authority</ident> has been
+            introduced. Its value may be either a value from an enumerated list defined in the
+            document's schema, or a URI (ostensibly referring to an authority list that is not in
+            the document's schema). The new datatype is used by the <att>where</att> attribute of
+            the <gi>move</gi> element (<ref target="https://github.com/TEIC/TEI/issues/1769"
+              >#1769</ref>).</item>
 
           <item>A new attribute class <ident type="class">att.lexicographic.normalized</ident>
             holding the attributes <att>norm</att> and <att>orig</att> has been introduced. The
             existing attribute classes <ident type="class">att.lexicographic</ident> and <ident
               type="class">att.linguistic</ident> are now members of the new attribute class (<ref
               target="https://github.com/TEIC/TEI/issues/1776">#1776</ref> and <ref
-              target="https://github.com/TEIC/TEI/issues/1973">#1973</ref>), thanks to Piotr Bański. </item>
+              target="https://github.com/TEIC/TEI/issues/1973">#1973</ref>), thanks to Piotr
+            Bański.</item>
 
           <item>The elements <gi>interp</gi>, <gi>interpGrp</gi>, <gi>span</gi>, and
               <gi>spanGrp</gi> are now members of the attribute class <ident type="class"
               >att.typed</ident> (<ref target="https://github.com/TEIC/TEI/issues/1844"
-            >#1844</ref>). </item>
+            >#1844</ref>).</item>
 
-          <item>The <gi>titlePage</gi> element and elements from the classes <ident type="class"
-              >model.titlepagePart</ident> and <ident type="class">model.frontPart.drama</ident> are
-            now available in the <gi>rdg</gi> element (<ref
-              target="https://github.com/TEIC/TEI/issues/1848">#1848</ref>).</item>
+          <item>The <gi>titlePage</gi> element and most elements from the classes <ident
+              type="class">model.titlepagePart</ident> and <ident type="class"
+              >model.frontPart.drama</ident> are now available in the <gi>rdg</gi> and <gi>lem</gi>
+            elements (<ref target="https://github.com/TEIC/TEI/issues/1848">#1848</ref>).</item>
 
-          <item>The discussion on editorial theory and practice of text critical information has
-            been elaborated in chapter 12 on the <ref
+          <item>Further discussion of editorial theory and practice has been added to chapter 12,
+              <ref target="https://www.tei-c.org/Vault/P5/4.1.0/doc/tei-p5-doc/en/html/TC.html"
+              >Critical Apparatus</ref> (<ref target="https://github.com/TEIC/TEI/issues/1849"
+              >#1849</ref>).</item>
+
+          <item>A discussion of the use of <gi>witDetail</gi> without <att>target</att> has been
+            added to chapter 12, <ref
               target="https://www.tei-c.org/Vault/P5/4.1.0/doc/tei-p5-doc/en/html/TC.html">Critical
-              Apparatus</ref> (<ref target="https://github.com/TEIC/TEI/issues/1849"
-            >#1849</ref>).</item>
-
-          <item>The semantics of the <gi>witDetail</gi> element without using the <att>target</att>
-            attribute have been explained in chapter 12 on the <ref
-              target="https://www.tei-c.org/Vault/P5/4.1.0/doc/tei-p5-doc/en/html/TC.html">Critical
-              Apparatus</ref> (<ref target="https://github.com/TEIC/TEI/issues/1852">#1852</ref>). </item>
+              Apparatus</ref> — such a <gi>witDetail</gi> refers to the closest preceding
+              <gi>rdg</gi> or <gi>lem</gi> (<ref target="https://github.com/TEIC/TEI/issues/1852"
+              >#1852</ref>).</item>
 
           <item>The rendering of the <ref
               target="https://www.tei-c.org/Vault/P5/4.1.0/doc/tei-p5-doc/en/html/DEPRECATIONS.html"
               >Deprecation Appendix</ref> has been improved (<ref
-              target="https://github.com/TEIC/TEI/issues/1854">#1854</ref>). </item>
+              target="https://github.com/TEIC/TEI/issues/1854">#1854</ref>).</item>
 
           <item>The class <ident type="class">model.graphicLike</ident> and the <gi>pc</gi> element
             have been added to the content model of the <gi>cit</gi> element (<ref
@@ -125,12 +131,13 @@ See the file COPYING.txt for details
               >teidata.enumerated</ident> (<ref target="https://github.com/TEIC/TEI/issues/1908"
               >#1908</ref>).</item>
 
-          <item>The content model of the <gi>transpose</gi> element has been purified (<ref
-              target="https://github.com/TEIC/TEI/issues/1979">#1979</ref>). </item>
+          <!--<item>The content model of the <gi>transpose</gi> element has been updated to take
+            advantage of the occurrence attribute <att>minOccurs</att> (<ref
+              target="https://github.com/TEIC/TEI/issues/1979">#1979</ref>).</item>-->
 
           <item>Multiple <gi>seriesStmt</gi> elements are now allowed in the TEI Header and in the
               <gi>biblFull</gi> element (<ref target="https://github.com/TEIC/TEI/issues/1998"
-              >#1998</ref>). </item>
+              >#1998</ref>).</item>
 
           <item>The <gi>pron</gi> element is now a member of the attribute class <ident type="class"
               >att.typed</ident> (<ref target="https://github.com/TEIC/TEI/issues/2020"
@@ -153,13 +160,13 @@ See the file COPYING.txt for details
             </list>
           </item>
 
-        <item>Corrections of typographic errors and broken links, improvements on explanations,
+          <item>Corrections of typographic errors and broken links, improvements on explanations,
             and corrections of examples, constraints and references have been conducted in various
             sections of the Guidelines (including <ref
               target="https://github.com/TEIC/TEI/issues/1781">#1781</ref>, <ref
               target="https://github.com/TEIC/TEI/issues/1980">#1980</ref>, <ref
               target="https://github.com/TEIC/TEI/issues/1982">#1982</ref>, <ref
-              target="https://github.com/TEIC/TEI/issues/2025">#2025</ref>). </item>
+              target="https://github.com/TEIC/TEI/issues/2025">#2025</ref>).</item>
 
         </list>
       </p>
@@ -182,26 +189,26 @@ See the file COPYING.txt for details
               target="https://github.com/TEIC/Stylesheets/issues/148">#148</ref>, and <ref
               target="https://github.com/TEIC/Stylesheets/issues/202">#202</ref>).</item>
 
-          <item>Several http references have been replaced with https (<ref
-              target="https://github.com/TEIC/Stylesheets/issues/378">#378</ref> and <ref
+          <item>Several <code>http</code> references have been replaced with <code>https</code>
+              (<ref target="https://github.com/TEIC/Stylesheets/issues/378">#378</ref> and <ref
               target="https://github.com/TEIC/TEI/issues/400">#400</ref>). </item>
 
           <item>The handling of the <gi>dataRef</gi> element with <att>name</att> attributes has
             been corrected (<ref target="https://github.com/TEIC/Stylesheets/issues/408"
             >#408</ref>).</item>
 
-          <item>The automatic centering of table cells spanning multiple columns in JTEI has been
-            implemented (<ref target="https://github.com/TEIC/Stylesheets/issues/409"
+          <item>Table cells spanning multiple columns are now automatically centered in jTEI
+            conversions (<ref target="https://github.com/TEIC/Stylesheets/issues/409"
             >#409</ref>).</item>
 
-          <item>Rendering bugs in processing unsupported TEI elements in the JTEI OpenEdition schema
-            have been corrected (<ref target="https://github.com/TEIC/Stylesheets/issues/430"
-              >#430</ref>).</item>
+          <item>In the conversion from jTEI to OpenEdition, the unrecognized elements <tag>title
+              level="s"</tag> and <gi>email</gi> are now ignored rather than incorrectly rendered
+              (<ref target="https://github.com/TEIC/Stylesheets/issues/430">#430</ref>).</item>
 
-          <item>The JQuery library has been updated to the current version 3.5.1 (<ref
+          <item>The JQuery library has been updated to the current version: 3.5.1 (<ref
               target="https://github.com/TEIC/Stylesheets/issues/433">#433</ref>).</item>
 
-          <item>The wrong rendering of Arabic in the PDF version of the Guidelines has been resolved
+          <item>Incorrect rendering of Arabic in the PDF version of the Guidelines has been resolved
               (<ref target="https://github.com/TEIC/Stylesheets/issues/442">#442</ref>).</item>
 
           <!--<ref target="https://github.com/TEIC/Stylesheets/issues/413">#413</ref>-->
