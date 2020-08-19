@@ -46,9 +46,12 @@ install()
 
 makecurrent()
 {
-    ${ECHO} rm ${Vault}/${name}/current
+    sPWD=$(pwd)
+    cd ${Vault}/${name}
+    ${ECHO} rm current
     echo link ${Vault}/${name}/${version} to ${Vault}/${name}/current
-    ${ECHO} ln -s ${Vault}/${name}/${version} ${Vault}/${name}/current
+    ${ECHO} ln -s ${version} current
+    cd ${sPWD}
 }
 
 upload()

@@ -332,7 +332,7 @@
                 <bibl xml:id="bowers12">
                   <author>Bowers, John</author>. <date>2012</date>. 
                   <title level="a">The Logic of Annotated Portfolios: Communicating the 
-                    Value of <soCalled>Research through Design.</soCalled></title> In 
+                    Value of <soCalled>Research through Design.</soCalled></title>  
                   <title level="j">Proceedings of the Designing Interactive Systems 
                     Conference</title>, <biblScope unit="page">68–77</biblScope>. 
                   <title level="s">DIS ’12</title>. <pubPlace>New York</pubPlace>:
@@ -2176,6 +2176,19 @@
                 </sch:rule>
               </constraint>
             </constraintSpec>
+            <constraintSpec ident="jtei.sch-title-journal-CMOS" scheme="schematron">
+              <constraint>
+                <sch:rule context="tei:bibl/tei:title[@level='j']"
+                  role="warning">
+                  <sch:report test="self::*[preceding-sibling::*[1]/self::tei:title[@level='a']]
+                    [not(preceding-sibling::node()[normalize-space()][1][matches(normalize-space(), '[.,!?]$')])]
+                    ">
+                    An analytic title and a journal title in a bibliographic entry should only be separated by a comma or a period (or the end punctuation of the analytic title). 
+                  </sch:report>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
+            
             <attList>
               <attDef ident="type" mode="delete"/>
             </attList>
@@ -2351,7 +2364,7 @@
             <desc xml:lang="en" versionDate="2015-03-03"> The <gi>emph</gi> element is used for emphasized text, and will be rendered in
               italics. </desc>
           </elementSpec>
-          <elementSpec ident="figure" mode="change" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+          <elementSpec ident="figure" mode="change">
             <gloss xml:lang="en" versionDate="2015-03-03">figure</gloss>
             <desc xml:lang="en" versionDate="2015-03-03">groups elements representing or containing graphic information
               such as a graphic illustration, or a block of example code. Figure must contain
@@ -2577,7 +2590,7 @@
             <constraintSpec ident="jtei.sch-head-number" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:head">
-                  <sch:report test="matches(., '^\s*((figure|table|example|section) )?\d', 'i')">
+                  <sch:report test="matches(., '^\s*(((figure|fig\.|table|example|ex\.|section) )\d|\d+\.\d?)', 'i')">
                     Headings are numbered and labeled automatically, please remove the hard-coded label from the text.
                   </sch:report>
                 </sch:rule>
@@ -3231,7 +3244,7 @@
                   <sqf:description>
                     <sqf:title>Remove quotation marks.</sqf:title>
                   </sqf:description>
-                  <sqf:stringReplace regex="{concat('^', $double.quotes, '|', $double.quotes, '$')}"></sqf:stringReplace>
+                  <sqf:replace match="text()" select="replace(., concat('^', $double.quotes, '|', $double.quotes, '$'), '')"/>
                 </sqf:fix>
               </sch:rule>
             </constraint>
