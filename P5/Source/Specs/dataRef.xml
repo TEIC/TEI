@@ -33,6 +33,13 @@
       </sch:rule>
     </constraint>
   </constraintSpec>
+  <constraintSpec ident="restrictAttResctrictionName" scheme="schematron">
+    <constraint>
+      <sch:rule context="tei:dataRef">
+        <sch:report test="@restriction and not(@name)" role="fatal">The attribute restriction can only be used with a name attribute.</sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attList org="choice">
       <attDef ident="key">
@@ -86,6 +93,7 @@
     </p>
     <p><gi>dataFacet</gi> children are only allowed when <gi>dataRef</gi> refers with <att>name</att> to a datatype from the specification <ref target="#XSD2">XML Schemas: Part 2: Datatypes</ref>.
     </p>
+    <p><att>restriction</att> is only permitted when <gi>dataRef</gi> uses the <att>name</att> attribute.</p>
   </remarks>
   <listRef>
     <ptr target="#TD-datatypes"/>

@@ -1,10 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textcrit" ident="lem">
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textcrit" ident="lem">
   <gloss versionDate="2005-01-14" xml:lang="en">lemma</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">레마</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">主題</gloss>
@@ -15,7 +18,7 @@ $Id$
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含一個原文變異的主題或基礎文件。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">異なるテキストにおける対象語，すなわち基底テキスト(base text)を示す．</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">contient le lemme ou le texte de base d'une
-			variante textuelle</desc>
+                        variante textuelle</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene el lema, o texto base, de una variante textuale</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene il lemma, o testo base, di una variante testuale</desc>
   <classes>
@@ -23,19 +26,44 @@ $Id$
     <memberOf key="att.textCritical"/>
     <memberOf key="att.witnessed"/>
   </classes>
-  <content>
-    
-      <alternate minOccurs="0" maxOccurs="unbounded">
-        <textNode/>
-        <classRef key="model.divLike"/>
-        <classRef key="model.divPart"/>
-        <classRef key="model.gLike"/>
-        <classRef key="model.phrase"/>
-        <classRef key="model.inter"/>
-        <classRef key="model.global"/>
-        <classRef key="model.rdgPart"/>
-      </alternate>
-    
+  <content>    
+    <alternate minOccurs="0" maxOccurs="unbounded">
+      <textNode/>
+      <classRef key="model.divLike"/>
+      <classRef key="model.divPart"/>
+      <elementRef key="titlePage"/>
+      <!-- WINITA: begin 454 hack section -->
+      <!--
+          model.titlepagePart sans <binaryObject> and <graphic>, i.e.
+          change to <classRef key="model.titlepagePart" except="binaryObject graphic"/>
+          once https://github.com/TEIC/Stylesheets/issues/454 is fixed:
+      -->
+      <elementRef key="argument"/>
+      <elementRef key="byline"/>
+      <elementRef key="docAuthor"/>
+      <elementRef key="docDate"/>
+      <elementRef key="docEdition"/>
+      <elementRef key="docImprint"/>
+      <elementRef key="docTitle"/>
+      <elementRef key="epigraph"/>
+      <elementRef key="imprimatur"/>
+      <elementRef key="titlePart"/>
+      <!--
+          model.frontPart.drama sans <castList>, i.e.
+          change to <classRef key="model.frontPart.drama" except="castList"/>
+          once https://github.com/TEIC/Stylesheets/issues/454 is fixed:
+      -->
+      <elementRef key="epilogue"/>
+      <elementRef key="performance"/>
+      <elementRef key="prologue"/>
+      <elementRef key="set"/>
+      <!-- WINITA: end 454 hack section -->
+      <classRef key="model.gLike"/>
+      <classRef key="model.phrase"/>
+      <classRef key="model.inter"/>
+      <classRef key="model.global"/>
+      <classRef key="model.rdgPart"/>
+    </alternate>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
