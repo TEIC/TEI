@@ -6,7 +6,7 @@
   <!--
     Read in p5.xml (the TEI P5 Guidelines source XML), and write out
     a subset thereof that contains only:
-     * the metadata (i.e., the <teiHeader>),
+     * the metadata (that is, the <teiHeader>),
      * the division structure (each <div> with just its attributes and
        heading),
      * the bibliography structure (each bibliographic entry with just
@@ -45,7 +45,7 @@
   <xsl:template name="keep_important_stuff_with_contents"
       match="teiHeader | elementSpec | macroSpec | classSpec | moduleSpec | dataSpec">
     <xsl:text>&#x0A;</xsl:text>
-    <xsl:copy-of select="." /> <!--Note that comments & PIs are copied, too-->
+    <xsl:copy-of select="." /> <!--Comments & PIs inside me are copied, too-->
   </xsl:template>
 
   <!-- Each main structural element is kept, but its contents is kept
