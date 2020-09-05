@@ -33,7 +33,7 @@ $Id$
       <!-- We'd like the following clause to be a simple one: -->
       <!-- ( a*, b+ ) | ( a+, b* ) -->
       <!-- where: -->
-      <!--   'a' = (glossLike|descLike), and -->
+      <!--   'a' = (descLike|equiv|gloss), and -->
       <!--   'b' = (category|taxonomy) -->
       <!-- but that is non-deterministic or ambigious. Thus we -->
       <!-- rewrite it as the mildly more confusing -->
@@ -45,8 +45,9 @@ $Id$
         </alternate>
         <sequence>
           <alternate minOccurs="1" maxOccurs="unbounded">
-            <classRef key="model.glossLike"/>
-            <classRef key="model.descLike"/>
+            <classRef key="model.descLike" minOccurs="1" maxOccurs="1"/>
+            <elementRef key="equiv" minOccurs="1" maxOccurs="1"/>
+            <elementRef key="gloss" minOccurs="1" maxOccurs="1"/>
           </alternate>
           <alternate minOccurs="0" maxOccurs="unbounded">
             <elementRef key="category"/>
