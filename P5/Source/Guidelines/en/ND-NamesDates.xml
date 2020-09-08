@@ -3285,11 +3285,12 @@ Journal r&#xE9;dig&#xE9; par Camille Desmoulins</title>,
         significant software support. It is essentially a profile of
         ISO 8601 <title>Data elements and interchange formats —
         Information interchange — Representation of dates and
-        times</title>. The full ISO standard provides formats not
-        available in the W3C recommendation, for example, the
-        capability to refer to a date by its ordinal date or week
-        date, or to refer to a century. It also provides ways of
-        indicating duration and range.</p>
+        times</title>. The full <ref target="#ISO-8601">ISO
+        standard</ref> provides formats not available in the W3C
+        recommendation, for example, the capability to refer to a date
+        by its ordinal date or week date, or to refer to a century or
+        a season. It also provides ways of indicating duration,
+        ranges, uncertainty, and approximation.</p>
 
         <p>When this module is included in a schema, the following
         additional attributes are provided: 
@@ -3314,10 +3315,53 @@ Journal r&#xE9;dig&#xE9; par Camille Desmoulins</title>,
           possible to express the same normalized value in any of the
           following additional ways:
           <egXML xmlns="http://www.tei-c.org/ns/Examples">
-	    <date when-iso="13">fourteenth century</date>
-            <date when-iso="1301/1400">fourteenth century</date>
-            <date when-iso="1301/P100Y">fourteenth century</date>
-          </egXML></p>
+	    <date when-iso="13">the fourteenth century</date>
+	    <date when-iso="14C">the fourteenth century</date>
+	    <date when-iso="13XX">the fourteenth century</date>
+            <date when-iso="1300/1399">the fourteenth century</date>
+            <date when-iso="1300/P100Y">the fourteenth century</date>
+	  </egXML>
+	  Or, more strictly correct:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <date when-iso="1301/1400">the fourteenth century</date>
+            <date when-iso="1301/P100Y">the fourteenth century</date>
+	  </egXML></p>
+
+	  <p>The ISO standard also has mechanisms to represent
+	  decades, seasons, multiple dates, multiple possible dates,
+	  unspecified components, uncertainty, and approximation. Here
+	  are some brief examples. For full details see the <ref
+	  target="#ISO-8601">standard</ref>.
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <date when-iso="196J">the 1960s</date>
+	  </egXML>
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <date when-iso="1963-26">Summer of ’63</date>
+	    </egXML><note place="bottom">This represents the summer of
+	    1963 in the northern hemisphere; <val>1963-30</val> would
+	    be summer in the southern hemisphere and
+	    <val>1963-22</val> would be summer independant of
+	    location.</note>
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <date when-iso="{1960-01,1962-10,1964-06}">Their birth months.</date>
+	  </egXML>
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <date when-iso="[1960-01,1962-10,1964-06]">One of their birth months.</date>
+	  </egXML>
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <date when-iso="{1946-06-04..1955-09-21,1973-10-12..1974-07-01}">During his reigns</date>
+	  </egXML>
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <l>Show business kept us all alive,</l>
+	    <l><date when-iso="1945-10-17..">Since seventeen October nineteenfortyfive</date>.</l>
+	  </egXML>
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <time when-iso="~12">approximately noon</time>
+	  </egXML>
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <date when-iso="1807-05?-12">12th day, probably of May 1807</date>
+	  </egXML>
+	  </p>
 
         <specGrp>
           <xi:include href="../../Specs/model.orgStateLike.xml"/>
