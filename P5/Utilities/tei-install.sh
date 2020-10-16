@@ -11,7 +11,8 @@
 # release 7.46.0:
 # New feature (already falsely documented in TCW 22 :-) --
 # Add commandline switch --Jenkins so the server URL can be specified
-# at run time. E.g., --Jenkins==http://jenkins17.tei-c.org/
+# at run time. E.g., --Jenkins==http://jenkins17.tei-c.org (note no
+# trailing slash)
 
 # changed 2014-09-16 by Syd in the middle of trying to release 2.7.0:
 # bug fix: changed $dir to $jenkinsdir in the "Get special HTML pages
@@ -70,7 +71,7 @@ die()
 }
 
 Vault=/data2/Vault
-Jenkins=http://jenkins.tei-c.org/
+Jenkins=https://jenkins.tei-c.org
 ECHO=
 SFUSER=rahtz
 version=
