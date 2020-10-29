@@ -1,74 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<TEI xml:lang="en"
-     xmlns="http://www.tei-c.org/ns/1.0"
-    >
-   <teiHeader>
-      <fileDesc>
-         <titleStmt>
-            <title>TEI with maximal setup</title>
-            <author>Sebastian Rahtz</author>
-         </titleStmt>
-         <publicationStmt>
-	   <publisher>TEI Consortium</publisher>
-           <availability status="free">
-	     <p>TEI  material can be licensed differently depending on the use you intend to 
-	     make of it. Hence it is made available under both the CC+BY and BSD-2 
-	     licences.  The CC+BY licence is generally appropriate for usages which 
-	     treat TEI content as data or documentation. The BSD-2 licence is 
-	     generally appropriate for usage of TEI content in a software 
-	     environment. For further information or clarification, please contact 
-	     the TEI Consortium (info@tei-c.org).</p>
-           </availability>
-         </publicationStmt>
-         <sourceDesc>
-            <p>Written from scratch.</p>
-         </sourceDesc>
-      </fileDesc>
-   </teiHeader>
-   <text>
-     <body>
-       <head>TEI Complete</head>
-       <p>This TEI customization describes a schema that includes
-       <emph>all</emph> of the TEI (P5) modules. This is a very useful
-       starting place for manually creating your own customizations
-       — it is much easier to delete the modules you do not
-       want than to add the modules you do. Furthermore this
-       customization often proves helpful for testing TEI
-       software.</p>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI with maximal setup</title>
+        <author>Sebastian Rahtz</author>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>TEI Consortium</publisher>
+        <availability status="free">
+          <p>TEI material can be licensed differently depending on the
+          use you intend to make of it. Hence it is made available
+          under both the CC+BY and BSD-2 licences. The CC+BY licence
+          is generally appropriate for usages which treat TEI content
+          as data or documentation. The BSD-2 licence is generally
+          appropriate for usage of TEI content in a software
+          environment. For further information or clarification,
+          please contact the TEI Consortium (info@tei-c.org).</p>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Written from scratch.</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <head>TEI Complete</head>
+      <p>This TEI customization describes a schema that includes
+      <emph>all</emph> of the TEI P5 modules. This is a very useful
+      starting place for manually creating your own customizations —
+      it is much easier to delete the modules you do not want than to
+      add the modules you do. Furthermore this customization often
+      proves helpful for testing TEI software.</p>
       <p>However, this particular TEI customization is <emph>not
       recommended</emph> for actual use for encoding documents. It
       produces schemas and reference documentation that will be much
-      larger, and include many more elements, than almost anyone could
+      larger and include many more elements than almost anyone could
       conceivably ever need. Tempting though it may be simply to have
       absolutely everything, and <q>just ignore</q> elements not
       required, experience has shown that their presence makes the
       documentation harder to read and use, and makes a schema that is
       far more lax than desired.</p>
-       <schemaSpec ident="tei_all" start="TEI teiCorpus">
-         <moduleRef key="tei"/>                              <!-- required -->
-         <moduleRef key="core"/>                             <!-- required -->
-         <moduleRef key="analysis"/>
-         <moduleRef key="certainty"/>
-         <moduleRef key="corpus"/>
-         <moduleRef key="dictionaries"/>
-         <moduleRef key="drama"/>
-         <moduleRef key="figures"/>
-         <moduleRef key="gaiji"/>
-         <moduleRef key="header"/>                           <!-- required -->
-         <moduleRef key="iso-fs"/>
-         <moduleRef key="linking"/>
-         <moduleRef key="msdescription"/>
-         <moduleRef key="namesdates"/>
-         <moduleRef key="nets"/>
-         <moduleRef key="spoken"/>
-         <moduleRef key="textcrit"/>
-         <moduleRef key="textstructure"/>                    <!-- required -->
-         <moduleRef key="transcr"/>
-         <moduleRef key="verse"/>
-
-	 <moduleRef key="tagdocs"/>
-
-       </schemaSpec>
-     </body>
-   </text>
+      <p>The <att>n</att> attribute of each <gi>moduleRef</gi> below
+      reflects the chapter number of the TEI <title>Guidelines</title>
+      in which the module being referenced is defined. Note that the
+      modules are generally referred to in the order defined, with the
+      exception that the module for <title level="a">Simple Analytic
+      Mechanisms</title> is referred to before the module for <title
+      level="a">Dictionaries</title>. This is because the class <name
+      type="class">att.lexicographic.normalized</name> (which is
+      defined in <name type="module">analysis</name>) needs to be
+      specified before the class <name
+      type="class">att.lexicographic</name> (which is defined in <name
+      type="module">dictionaries</name>).</p>
+      <p>The first four modules are often
+      called the <soCalled>required</soCalled> modules. However, these
+      modules are not themselves technically required to create a TEI
+      conformant markup language (let alone a useful non-TEI
+      conformant markup language). Rather, they each contain one or
+      more <emph>elements</emph> which are required for TEI
+      conformance.</p>
+      <schemaSpec ident="tei_all" start="TEI teiCorpus">
+        <moduleRef n="01" key="tei"/>
+        <moduleRef n="02" key="header"/>
+        <moduleRef n="03" key="core"/>
+        <moduleRef n="04" key="textstructure"/>
+        <moduleRef n="05" key="gaiji"/>
+        <moduleRef n="06" key="verse"/>
+        <moduleRef n="07" key="drama"/>
+        <moduleRef n="08" key="spoken"/>
+        <moduleRef n="17" key="analysis"/>
+        <moduleRef n="09" key="dictionaries"/>
+        <moduleRef n="10" key="msdescription"/>
+        <moduleRef n="11" key="transcr"/>
+        <moduleRef n="12" key="textcrit"/>
+        <moduleRef n="13" key="namesdates"/>
+        <moduleRef n="14" key="figures"/>
+        <moduleRef n="15" key="corpus"/>
+        <moduleRef n="16" key="linking"/>
+        <moduleRef n="18" key="iso-fs"/>
+        <moduleRef n="19" key="nets"/>
+        <moduleRef n="21" key="certainty"/>
+        <moduleRef n="22" key="tagdocs"/>
+      </schemaSpec>
+    </body>
+  </text>
 </TEI>
