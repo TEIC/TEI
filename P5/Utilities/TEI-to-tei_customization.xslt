@@ -1493,7 +1493,7 @@
                     <sch:assert
                       test="matches(normalize-space(@source), '^tei:([0-9]+\.[0-9]+\.[0-9]+|current)$')"
                       role="information">The @source attribute of ＜<sch:name/>＞ is not in the
-                      recommended format</sch:assert>
+                      recommended format, which is either "tei:current" or "tei:x.y.z", where x.y.z is a version number.</sch:assert>
                   </sch:rule>
                 </constraint>
               </constraintSpec>
