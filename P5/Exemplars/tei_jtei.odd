@@ -59,6 +59,8 @@
           <item>Simplified + refined initial version</item>
         </list>
       </change>
+      <change who="#pietro" when="2020-10-27">Added @see attributes to sch:assert statements and
+        improved errors reports.</change>
     </revisionDesc>
   </teiHeader>
   <text>
@@ -237,7 +239,11 @@
             <item>The title of your article (in <code>fileDesc/titleStmt/title[@type='main']</code>).</item>
             <item>Author information for each author (in <code>fileDesc/titleStmt/author</code>).
               Provide one <gi>author</gi> element for each author. Encode the names as shown, using
-                <gi>forename</gi> and <gi>surname</gi>, inside <gi>name</gi>. Then provide a brief
+                <gi>forename</gi> and <gi>surname</gi>, inside <gi>name</gi> if possible. 
+<!--       [PL]       forename and surname are very much western habits. Ethiopian colleagues do not have this habit, for example.
+              why not allow all what is possible in name? I also do not see constraints here in the ODD about this.
+              -->
+              Then provide a brief
               biographical paragraph for each author in <gi>affiliation</gi>, and an email
               address.</item>
             <item>Keywords (in <code>profileDesc/textClass/keywords</code>). Provide a handful 
@@ -245,7 +251,8 @@
             ontology of article categories to choose from. You may consult the 
               <ref target="https://journals.openedition.org/jtei/108">list of keywords from 
             previous articles</ref> on the journal website, but if you don't see what you need, feel free 
-              to use new ones. The editors may formalize these categories in future.</item>
+              to use new ones. The editors may formalize these categories in future.<!--  [PL]  really ?-->
+            </item>
           </list>
         </div>
         <div xml:id="front">
@@ -266,6 +273,7 @@
             <gi>div</gi> elements may be nested to provide subsections. </p>
           <p>Do not provide section numbering in explicitly in the <gi>head</gi>s of your <gi>div</gi>s.
           These will be provided automatically by the rendering tools.</p>
+        <p>An Editorial Introduction can be added in the body using a <tag>div type="editorialIntroduction"</tag>. This is the only <gi>div</gi> which does not require <gi>head</gi>.</p>
         </div>
         <div xml:id="back">
           <head>Back Matter: the Bibliography and Appendices</head>
@@ -888,7 +896,7 @@
           <p>Literal quotation marks can be straight double, straight single, curly 
           double, curly single, or (if you happen to be on a non-English keyboard)
           a range of other symbols. All copyeditors are familiar with the tedium of 
-          checking that they're all the right form, and that all the inital ones are 
+          checking that they're all the right form, and that all the initial ones are 
           opening ones and the closing ones are the matching closing ones. It's much
           simpler if you tag your text as <gi>quote</gi>, <gi>soCalled</gi> or whatever,
           and let the XSLT provide the quotation marks in a reliable way.</p>
@@ -2127,7 +2135,7 @@
             <constraintSpec ident="jtei.sch-author" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:titleStmt/tei:author">
-                  <sch:assert test="tei:name and tei:affiliation and tei:email">
+                  <sch:assert test="tei:name and tei:affiliation and tei:email" see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#structure">
                     Author information in the &lt;titleStmt&gt; must include &lt;name&gt;, &lt;affiliation&gt; and &lt;email&gt;.
                   </sch:assert>
                 </sch:rule>
@@ -2146,6 +2154,7 @@
             <constraintSpec ident="jtei.sch-bibl-id" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl"
+                  see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#back"
                   role="warning">
                   <sch:assert test="@xml:id">
                     A bibliographic entry should have a unique value for @xml:id.
@@ -2157,7 +2166,8 @@
               <constraint>
                 <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl"
                   role="warning">
-                  <sch:assert test="key('idrefs', @xml:id)/parent::tei:ref[@type='bibl']">
+                  <sch:assert test="key('idrefs', @xml:id)/parent::tei:ref[@type='bibl']"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#back">
                     This bibliographic entry is an orphan: no ref[@type="bibl"] references to it occur in the text.
                   </sch:assert>
                 </sch:rule>
@@ -2165,7 +2175,9 @@
             </constraintSpec>
             <constraintSpec ident="jtei.sch-bibl-endpunctuation" scheme="schematron">
               <constraint>
-                <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl" role="warning">
+                <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl"
+                  see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#back"
+                  role="warning">
                   <sch:report test="descendant::node()[last()][
                     not(matches(normalize-space(), '(^|[^.?!:;,])\.$')) or
                     preceding-sibling::node()[1]/descendant-or-self::*[last()]
@@ -2182,7 +2194,9 @@
                   role="warning">
                   <sch:report test="self::*[preceding-sibling::*[1]/self::tei:title[@level='a']]
                     [not(preceding-sibling::node()[normalize-space()][1][matches(normalize-space(), '[.,!?]$')])]
-                    ">
+                    "
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#back"
+                    >
                     An analytic title and a journal title in a bibliographic entry should only be separated by a comma or a period (or the end punctuation of the analytic title). 
                   </sch:report>
                 </sch:rule>
@@ -2224,7 +2238,8 @@
             <constraintSpec ident="jtei.sch-cit" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:cit" role="warning">
-                  <sch:assert test="tei:ref">
+                  <sch:assert test="tei:ref"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#quotations">
                     <sch:name/> is normally expected to have a bibliographic reference (ref[@type="bibl"]). Please make sure you intended not to add one here.
                   </sch:assert>
                 </sch:rule>
@@ -2248,16 +2263,17 @@
             <constraintSpec ident="jtei.sch-divtypes-front" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:div[@type = $div.types.front]">
-                  <sch:assert test="parent::tei:front">
-                    A text division of type <sch:value-of select="@type"/> may only occur inside front.
-                  </sch:assert>
+                  <sch:assert test="parent::tei:front"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#front">
+                    A text division of type <sch:value-of select="@type"/> may only occur inside &lt;front&gt;. </sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
             <constraintSpec ident="jtei.sch-divtypes-front2" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:front/tei:div">
-                  <sch:assert test="@type = $div.types.front">
+                  <sch:assert test="@type = $div.types.front"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#front">
                     Only text divisions of type <sch:value-of select="string-join(for $i in $div.types.front return concat(if (index-of($div.types.front, $i) = count($div.types.front)) then 'or ' else (), '&quot;', $i, '&quot;'), ', ')"/> may appear in the &lt;front&gt;.
                   </sch:assert>
                 </sch:rule>
@@ -2265,18 +2281,19 @@
             </constraintSpec>
             <constraintSpec ident="jtei.sch-divtypes-back" scheme="schematron">
               <constraint>
-                <sch:rule context="tei:div[@type = ('bibliography', 'appendix')]">
+                <sch:rule context="tei:div[@type = ('bibliography', 'appendix')]"
+                  see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#back">
                   <sch:assert test="parent::tei:back">
-                    Bibliography (<sch:name/>[@type="bibliography"]) and appendices (<sch:name/>[@type="appendix"]) may only occur inside back.
-                  </sch:assert>
+                    Bibliography (<sch:name/>[@type="bibliography"]) and appendices (<sch:name/>[@type="appendix"]) may only occur inside &lt;back&gt;. </sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
             <constraintSpec ident="jtei.sch-divtypes-body" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:div[@type = ('editorialIntroduction')]">
-                  <sch:assert test="parent::tei:body">
-                    An editorial introduction (<sch:name/>[@type="editorialIntroduction"]) may only occur inside body.
+                  <sch:assert test="parent::tei:body"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#body">
+                    An editorial introduction (<sch:name/>[@type="editorialIntroduction"]) may only occur inside &lt;body&gt;.
                   </sch:assert>
                 </sch:rule>
               </constraint>
@@ -2284,9 +2301,9 @@
             <constraintSpec ident="jtei.sch-div-head" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:body//tei:div[not(@type = ('editorialIntroduction'))]">
-                  <sch:assert test="tei:head">
-                    A <sch:name/> must contain a head.
-                  </sch:assert>
+                  <sch:assert test="tei:head"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#divs">
+                    A <sch:name/> must contain a &lt;head&gt;. </sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -2539,30 +2556,42 @@
             <constraintSpec ident="jtei.sch-note-punctuation" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:note">
-                  <sch:assert test="not(following::text()[not(ancestor::tei:note)][1][matches(., '^[,\.:;!?\]]')])">
+                  <sch:assert
+                    test="not(following::text()[not(ancestor::tei:note)][1][matches(., '^[,\.:;!?\]]')])"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#footnotes"
+                    >
                     Footnotes should follow punctuation marks, not precede them. Place 
                     your &lt;<sch:name/>&gt; element after the punctuation mark.
                   </sch:assert>
                 </sch:rule>
                 <sch:rule context="tei:note">
-                  <sch:report test="preceding::text()[not(ancestor::tei:note)][1][matches(., '—$')]">
+                  <sch:report 
+                    test="preceding::text()[not(ancestor::tei:note)][1][matches(., '—$')]"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#footnotes"
+                    >
                     Footnotes should precede the dash, not follow it. Place 
                     your &lt;<sch:name/>&gt; element before the dash.
                   </sch:report>
                 </sch:rule>
                 <sch:rule context="tei:note" role="warning">
-                  <sch:report test="following::text()[not(ancestor::tei:note)][1][matches(normalize-space(), '^\)')]">
+                  <sch:report
+                    test="following::text()[not(ancestor::tei:note)][1][matches(normalize-space(), '^\)')]"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#footnotes"
+                    >
                     Footnotes may be placed before closing parentheses, though this is
                     exceptional. Please check if this note's placement is correct.
                     Otherwise, move it after the closing parenthesis.
                   </sch:report>
                 </sch:rule>                
               <sch:rule context="tei:note" role="warning">
-                <sch:report test="descendant::node()[last()][
+                <sch:report
+                    test="descendant::node()[last()][
                   not(matches(normalize-space(), '(^|[^.?!:;,])[.?!]$')) or
                   preceding-sibling::node()[1]/descendant-or-self::*[last()]
                       [matches(normalize-space(), '[.?!:;,]$')]
-                  ]">
+                      ]"
+                      see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#footnotes"
+                    >
                   A footnote should end a with a single closing punctuation character.
                   </sch:report>
                 </sch:rule>
@@ -2571,9 +2600,10 @@
             <constraintSpec ident="jtei.sch-note-blocks" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:note">
-                  <sch:report test=".//(tei:cit|tei:table|tei:list[not(tokenize(@rend, '\s+')[. eq 'inline'])]|tei:figure|eg:egXML|tei:eg)">
-                    No block-level elements are allowed inside note.
-                  </sch:report>
+                  <sch:report
+                    test=".//(tei:cit|tei:table|tei:list[not(tokenize(@rend, '\s+')[. eq 'inline'])]|tei:figure|eg:egXML|tei:eg)"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#footnotes"
+                    > No block-level elements (&lt;cit&gt;, &lt;table&gt;, &lt;figure&gt;, &lt;egXML&gt;, &lt;eg&gt;, &lt;list&gt; which do not have the value inline for @rend) are allowed inside <sch:name/>. </sch:report>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -2590,7 +2620,10 @@
             <constraintSpec ident="jtei.sch-head-number" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:head">
-                  <sch:report test="matches(., '^\s*(((figure|fig\.|table|example|ex\.|section) )\d|\d+\.\d?)', 'i')">
+                  <sch:report
+                    test="matches(., '^\s*(((figure|fig\.|table|example|ex\.|section) )\d|\d+\.\d?)', 'i')"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#body"
+                    >
                     Headings are numbered and labeled automatically, please remove the hard-coded label from the text.
                   </sch:report>
                 </sch:rule>
@@ -2599,9 +2632,9 @@
             <constraintSpec ident="jtei.sch-figure-head" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:figure/tei:head">
-                  <sch:assert test="@type = ('legend', 'license')">
-                    Figure titles must have a type 'legend' or 'license'.
-                  </sch:assert>
+                  <sch:assert test="@type = ('legend', 'license')"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#figures"> Figure titles (&lt;head>) must have a type
+                    'legend' or 'license'. </sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -2675,8 +2708,9 @@
             <constraintSpec ident="jtei.sch-ptr-multipleTargets" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:ptr[not(@type='crossref')]">
-                  <sch:report test="count(tokenize(normalize-space(@target), '\s+')) > 1">
-                    Multiple targets are only allowed for <sch:name/>[@type='crossref'].
+                  <sch:report test="count(tokenize(normalize-space(@target), '\s+')) > 1"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#internal_linking"> Multiple
+                    values in @target are only allowed for <sch:name/>[@type='crossref'].
                   </sch:report>
                 </sch:rule>
               </constraint>
@@ -2706,9 +2740,11 @@
             <constraintSpec ident="jtei.sch-core" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:quote">
-                  <sch:assert test="id(substring-after(@source, '#'))/(self::tei:ref[@type eq 'bibl']|self::tei:bibl[ancestor::tei:body])">
-                    <sch:name/> must be accompanied by a bibliographic reference (ref[@type="bibl"]) or a bibliographic description in the running text.
-                  </sch:assert>
+                  <sch:assert
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#quotations"
+                    test="id(substring-after(@source, '#'))/(self::tei:ref[@type eq 'bibl']|self::tei:bibl[ancestor::tei:body])">
+                    <sch:name/> must have a @source that points to the @xml:id of either a
+                    ref[type='bibl'], or a &lt;bibl&gt; in the &lt;body&gt;. </sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -2720,16 +2756,17 @@
             <constraintSpec ident="jtei.sch-ref-multipleTargets" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:ref">
-                  <sch:report test="count(tokenize(normalize-space(@target), '\s+')) > 1">
-                    <sch:name/> with multiple targets is not supported.
-                  </sch:report>
+                  <sch:report test="count(tokenize(normalize-space(@target), '\s+')) > 1"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#external_linking">
+                    <sch:name/> with multiple values for @target is not supported. </sch:report>
                 </sch:rule>
               </constraint>
             </constraintSpec>
             <constraintSpec ident="jtei.sch-biblref-parentheses" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:ref[@type eq 'bibl']">
-                  <sch:assert test="not(matches(., '^\(.*\)$'))">
+                  <sch:assert test="not(matches(., '^\(.*\)$'))"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#internal_linking">
                     Parentheses are not part of bibliographic references. Please move them out of <sch:name/>.
                   </sch:assert>
                 </sch:rule>
@@ -2738,8 +2775,10 @@
             <constraintSpec ident="jtei.sch-biblref-target" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:ref[@type eq 'bibl']">
-                  <sch:assert test="id(substring-after(@target, '#'))/(self::tei:bibl|self::tei:person[ancestor::tei:particDesc/parent::tei:profileDesc])">
-                    A bibliographic reference must point to an entry in the bibliography.
+                  <sch:assert
+                    test="id(substring-after(@target, '#'))/(self::tei:bibl|self::tei:person[ancestor::tei:particDesc/parent::tei:profileDesc])"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#internal_linking"
+                    > A bibliographic reference must point with a @target to the @xml:id of an entry in the div[@type="bibliography"].
                   </sch:assert>
                 </sch:rule>
               </constraint>
@@ -2747,7 +2786,9 @@
             <constraintSpec ident="jtei.sch-biblref-type" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:ref[id(substring-after(@target, '#'))/self::tei:bibl]">
-                  <sch:assert test="@type eq 'bibl'" sqf:fix="bibltype.add">
+                  <sch:assert test="@type eq 'bibl'"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#internal_linking"
+                    sqf:fix="bibltype.add">
                     A bibliographic reference must be typed as @type="bibl".
                   </sch:assert>
                   <sqf:fix id="bibltype.add">
@@ -2829,27 +2870,29 @@
             <constraintSpec ident="jtei.sch-article-keywords" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:text[not(tei:body/tei:div[@type = ('editorialIntroduction')])]">
-                  <sch:assert test="parent::tei:TEI/tei:teiHeader/tei:profileDesc/tei:textClass/tei:keywords">
-                    An article must have a keyword list in the header.
-                  </sch:assert>
+                  <sch:assert
+                    test="parent::tei:TEI/tei:teiHeader/tei:profileDesc/tei:textClass/tei:keywords"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#header"
+                    >
+                    An article must have a keyword list in the header. This should be a list of &lt;term&gt; elements in TEI/teiHeader/profileDesc/textClass/keywords </sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
             <constraintSpec ident="jtei.sch-article-abstract" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:text[not(tei:body/tei:div[@type = ('editorialIntroduction')])]">
-                  <sch:assert test="tei:front/tei:div[@type='abstract']">
-                    An article must have a front section with an abstract.
-                  </sch:assert>
+                  <sch:assert test="tei:front/tei:div[@type='abstract']"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#front"> An article must have a
+                    front section with an abstract (div[@type='abstract']). </sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
             <constraintSpec ident="jtei.sch-article-back" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:text[not(tei:body/tei:div[@type = ('editorialIntroduction')])]">
-                  <sch:assert test="tei:back/tei:div[@type='bibliography']/tei:listBibl">
-                    An article must have a back section with a bibliography.
-                  </sch:assert>
+                  <sch:assert test="tei:back/tei:div[@type='bibliography']/tei:listBibl"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#back"> An article
+                    must have a back section with a bibliography (div[@type='bibliography']). </sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -2958,7 +3001,8 @@
             <constraintSpec ident="jtei.sch-body" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:body[child::tei:div[not(@type=('editorialIntroduction'))]]">
-                  <sch:assert test="count(child::tei:div) gt 1">
+                  <sch:assert test="count(child::tei:div) gt 1"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#body">
                     If <sch:name/> contains a div, and that div is not an editorial introduction, then there should be 
                     more than one div. Rather than using only a single div, you may place the content directly
                     in the <sch:name/> element.
@@ -2971,9 +3015,10 @@
             <constraintSpec ident="jtei.sch-back" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:back">
-                  <sch:assert test="tei:div[@type='bibliography']/tei:listBibl">
-                    <sch:name/> must have a bibliography (div[@type="bibliography"]), which must be organized inside a listBibl element.
-                  </sch:assert>
+                  <sch:assert test="tei:div[@type='bibliography']/tei:listBibl"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#back">
+                    <sch:name/> must have a bibliography (div[@type="bibliography"]), which must be
+                    organized inside a &lt;listBibl&gt; element. </sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -3008,7 +3053,8 @@
             <constraintSpec ident="jtei.sch-tag" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:tag">
-                  <sch:assert test="not(matches(., '^[&lt;!?-]|[&gt;/?\-]$'))">
+                  <sch:assert test="not(matches(., '^[&lt;!?-]|[&gt;/?\-]$'))"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#inline_technical">
                     Tag delimiters such as angle brackets and tag-closing slashes are not allowed for <sch:name/>: they are completed at processing time via XSLT.
                   </sch:assert>
                 </sch:rule>
@@ -3020,7 +3066,8 @@
             <constraintSpec ident="jtei.sch-att" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:val">
-                  <sch:assert test="not(matches(., concat('^', $quotes, '|', $quotes, '$')))">
+                  <sch:assert test="not(matches(., concat('^', $quotes, '|', $quotes, '$')))"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#inline_technical">
                     Attribute value delimiters are not allowed for <sch:name/>: they are completed at processing time via XSLT.
                   </sch:assert>
                 </sch:rule>
@@ -3031,7 +3078,8 @@
             <constraintSpec ident="jtei.sch-supplied" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:supplied">
-                  <sch:assert test="not(matches(., '^\[|\]$'))">
+                  <sch:assert test="not(matches(., '^\[|\]$'))"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#inline_rhetorical">
                     Please remove square brackets from <sch:name/>: they are completed at processing time via XSLT.
                   </sch:assert>
                 </sch:rule>
@@ -3043,7 +3091,8 @@
             <constraintSpec ident="jtei.sch-doi-order" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:idno[@type eq 'doi']">
-                  <sch:report test="following-sibling::tei:ref">
+                  <sch:report test="following-sibling::tei:ref"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#back">
                     If a bibliographic entry has a formal DOI code, it should be placed at the very end of the bibliographic description.
                   </sch:report>
                 </sch:rule>
@@ -3054,7 +3103,8 @@
             <constraintSpec ident="jtei.sch-graphic-dimensions" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:graphic">
-                  <sch:assert test="matches(@width, '\d+px') and matches(@height, '\d+px')">
+                  <sch:assert test="matches(@width, '\d+px') and matches(@height, '\d+px')"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#figures">
                     Width and height in pixels must be specified for any <sch:name/>.
                   </sch:assert>
                 </sch:rule>
@@ -3063,9 +3113,8 @@
             <constraintSpec ident="jtei.sch-graphic-context" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:graphic">
-                  <sch:assert test="parent::tei:figure">
-                    <sch:name/> may only occur inside figure.
-                  </sch:assert>
+                  <sch:assert test="parent::tei:figure" see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#figures">
+                    <sch:name/> may only occur inside &lt;figure&gt;. </sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -3074,7 +3123,8 @@
             <constraintSpec ident="jtei.sch-front-abstract" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:front">
-                  <sch:assert test="tei:div[@type='abstract']">
+                  <sch:assert test="tei:div[@type='abstract']"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#front">
                     <sch:name/> must have an abstract (div[@type='abstract']).
                   </sch:assert>
                 </sch:rule>
@@ -3085,9 +3135,9 @@
             <constraintSpec ident="jtei.sch-table" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:table">
-                  <sch:assert test="not(ancestor::tei:list)">
-                    No tables are are allowed inside lists.
-                  </sch:assert>
+                  <sch:assert test="not(ancestor::tei:list)"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#lists"> No tables are allowed inside
+                    lists. </sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -3096,7 +3146,10 @@
             <constraintSpec ident="jtei.sch-gap" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:gap">
-                  <sch:report test="following-sibling::node()[1][self::text()] and starts-with(following-sibling::node()[1], '.')">
+                  <sch:report
+                    test="following-sibling::node()[1][self::text()] and starts-with(following-sibling::node()[1], '.')"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#inline_rhetorical"
+                    >
                     A <sch:name/> element should follow a period rather than precede it when an ellipsis follows the end of a sentence.
                   </sch:report>
                 </sch:rule>
@@ -3105,7 +3158,9 @@
             <constraintSpec ident="jtei.sch-gap-ws" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:gap">
-                  <sch:report test="preceding-sibling::node()[1][self::text()][matches(., '\.\s+$')]">
+                  <sch:report
+                    test="preceding-sibling::node()[1][self::text()][matches(., '\.\s+$')]"
+                    see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#inline_rhetorical">
                     A <sch:name/> should follow a period directly, without preceding whitespace.
                   </sch:report>
                 </sch:rule>
@@ -3116,7 +3171,9 @@
           <constraintSpec ident="jtei.sch-straightApos" scheme="schematron">
             <constraint>
               <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag)]">
-                <sch:report test="matches(., $apos.straight)" sqf:fix="apostrophe.replace">
+                <sch:report test="matches(., $apos.straight)" 
+                  see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#faq"
+                  sqf:fix="apostrophe.replace">
                   "Straight apostrophe" characters are not permitted. Please use the
                   Right Single Quotation Mark (U+2019 or ’) character instead. On the other hand, if the straight 
                   apostrophe characters function as quotation marks, please replace them with appropriate mark-up 
@@ -3134,7 +3191,9 @@
           <constraintSpec ident="jtei.sch-LRquotes" scheme="schematron">
             <constraint>
               <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag)][matches(., $apos.typographic)]">
-                <sch:report test="matches(., '\W[’]\D') or matches(., '[‘](\W|$)') or matches(., '\w[‘]\w')">
+                <sch:report
+                  test="matches(., '\W[’]\D') or matches(., '[‘](\W|$)') or matches(., '\w[‘]\w')"
+                  see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#faq">
                   Left and Right Single Quotation Marks should be used in the right place.
                 </sch:report>
               </sch:rule>
@@ -3143,7 +3202,9 @@
           <constraintSpec ident="jtei.sch-quotationMarks" scheme="schematron">
             <constraint>
               <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag)]">
-                <sch:report test="matches(., $double.quotes) or matches(., '(^|\W)[‘][^‘’]+[’](\W|$)')">
+                <sch:report
+                  test="matches(., $double.quotes) or matches(., '(^|\W)[‘][^‘’]+[’](\W|$)')"
+                  see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#faq">
                   Quotation marks are not permitted in plain text. Please use appropriate mark-up that will ensure the appropriate quotation marks will be generated consistently.
                 </sch:report>
               </sch:rule>
@@ -3277,7 +3338,8 @@
                 <sch:let name="orphan.pointers"
                   value="for $p in tokenize(@target, '\s+')[starts-with(., '#')] return for $id in id(substring-after($p, '#'))[not(self::tei:div or self::tei:figure or self::tei:table or self::tei:note)] return $p"/>
                 <sch:report test="exists($orphan.pointers)">
-                  Cross-links (<sch:name/>[@type="crossref"]) should be targeted at div, figure, table, or note elements. The target of <sch:value-of select="if (count($orphan.pointers) > 1) then 'these pointers' else 'this pointer'"/> doesn't satisfy this condition: <sch:value-of select="string-join($orphan.pointers, ', ')"/>.
+                  Cross-links (<sch:name/>[@type="crossref"]) should be targeted at &lt;div&gt;, &lt;figure&gt;, &lt;table&gt;, or &lt;note&gt;
+                  elements. The target of <sch:value-of select="if (count($orphan.pointers) > 1) then 'these pointers' else 'this pointer'"/> doesn't satisfy this condition: <sch:value-of select="string-join($orphan.pointers, ', ')"/>.
                 </sch:report>
               </sch:rule>
             </constraint>
@@ -3348,3 +3410,4 @@
 
   </text>
 </TEI>
+
