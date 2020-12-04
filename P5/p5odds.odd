@@ -531,6 +531,22 @@ $Id$
           </constraintSpec>
         </elementSpec>
         
+        <dataSpec ident="teidata.temporal.working" mode="change">
+          <constraintSpec ident="not_in_future" scheme="schematron">
+            <desc>When a <att>versionDate</att> is specified, its value
+            should not be in the future.</desc>
+            <!-- Note that this constraint is fired on the specific *attributes* that
+            are members of teidata.temporal.working. So if the membership of the datatype
+            changes, we should change the context, below, to match. -->
+            <constraint>
+              <sch:rule context="*[@versionDate]">
+                <sch:let name="tomorrow" value="current-date() + 'P1D' cast as xs:dayTimeDuration"/>
+                <sch:assert test="@versionDate cast as xs:date le $tomorrow">The date of a translation should not be in the future.</sch:assert>
+              </sch:rule>
+            </constraint>
+          </constraintSpec>
+        </dataSpec>
+        
       </schemaSpec>
     </body>
   </text>
