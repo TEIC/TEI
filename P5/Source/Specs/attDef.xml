@@ -39,6 +39,13 @@ $Id$
         <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
+  <constraintSpec ident="attDefNsNCIdent" scheme="schematron">
+    <constraint>
+      <sch:rule context="tei:attDef[@ns]">
+        <sch:report test="not(contains(@ident, ':'))" role="nonfatal">Attribute: This definition of the @<sch:value-of select="@ident"/> attribute declares a namespace URI and uses an unprefixed name. By definition unprefixed attributes are in no namespace. The declared namespace URI will not have an effect.</sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <constraintSpec ident="attDefContents" scheme="schematron">
     <constraint>
       <ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="teix" uri="http://www.tei-c.org/ns/Examples"/>
