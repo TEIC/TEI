@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="persPronouns">
+  <gloss versionDate="2020-12-10" xml:lang="en">personal pronouns</gloss>
+  <desc versionDate="2020-12-10" xml:lang="en">lists personal pronouns.</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="att.editLike"/>
+    <memberOf key="att.datable"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="model.persStateLike"/>
+  </classes>
+  <content>
+    <macroRef key="macro.phraseSeq"/>
+  </content>
+  <attList>
+    <attDef ident="instant" mode="delete"/>
+    <attDef ident="evidence" mode="replace" usage="rec">
+      <gloss versionDate="2020-12-10" xml:lang="en">evidence</gloss>
+      <desc versionDate="2020-12-10" xml:lang="en">indicates support
+      for the listed personal pronouns.</desc>
+      <datatype>
+        <dataRef key="teidata.enumerated"/>
+      </datatype>
+      <valList type="semi">
+        <valItem ident="conjecture">
+	  <gloss versionDate="2020-12-10" xml:lang="en">conjecture</gloss>
+	  <desc versionDate="2020-12-10" xml:lang="en">The given value
+	  was selected based on assumptions by someone besides the
+	  person to whom this pronoun applies. As a result, the value
+	  may be erroneous.</desc>
+        </valItem>
+        <valItem ident="selfIdentification">
+	  <gloss versionDate="2020-12-10" xml:lang="en">self identification</gloss>
+          <desc versionDate="2020-12-10" xml:lang="en">The given value
+          has been explicitly stated or confirmed by the person to
+          whom this pronoun applies.</desc>
+        </valItem>
+	<valItem ident="trustedThirdParty">
+	  <gloss versionDate="2020-12-10" xml:lang="en">trusted third party</gloss>
+	  <desc versionDate="2020-12-10" xml:lang="en">The given value
+	  has been supplied by another individual trusted by the
+	  encoder to know the preferences of the person to whom this
+	  pronoun applies.</desc>
+	</valItem>
+      </valList>
+    </attDef>
+    <attDef ident="value" usage="rec">
+      <gloss versionDate="2020-12-10" xml:lang="en">value</gloss>
+      <desc versionDate="2020-12-10" xml:lang="en">supplies a
+      regularized value for personal pronouns.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+	<dataRef key="teidata.enumerated"/>
+      </datatype>
+      <valList type="open">
+	<valItem ident="e">      
+	  <gloss versionDate="2020-12-10" xml:lang="en">e</gloss>
+	  <desc versionDate="2020-12-10" xml:lang="en">e/eirs</desc>
+	</valItem>
+	<valItem ident="he">      
+	  <gloss versionDate="2020-12-10" xml:lang="en">he</gloss>
+	  <desc versionDate="2020-12-10" xml:lang="en">he/him/his</desc>
+	</valItem>
+	<valItem ident="she">      
+	  <gloss versionDate="2020-12-10" xml:lang="en">she</gloss>
+	  <desc versionDate="2020-12-10" xml:lang="en">she/her/hers</desc>
+	</valItem>
+	<valItem ident="they">      
+	  <gloss versionDate="2020-12-10" xml:lang="en">they</gloss>
+	  <desc versionDate="2020-12-10" xml:lang="en">they/them/theirs</desc>
+	</valItem>
+      </valList>
+      <remarks xml:lang="en" versionDate="2020-12-10">
+	<p>
+	  The sample values list shown here is intended to be
+	  reflective of English usage. There is nothing restricting
+	  users from defining lists reflective of other languages,
+	  e.g. <val xml:lang="fr">elle</val>, <val
+	  xml:lang="fr">il</val>, and <val xml:lang="fr">ils</val>.
+	</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#issue2010">
+      <person>
+	<persName>
+	  <forename>SUE</forename>
+	  <addName>the T. rex</addName>
+	</persName>
+	<residence>The Field Museum. Chicago, Illinois, United States.</residence>
+	<sex value="0"/>
+	<persPronouns value="they">they/them</persPronouns>
+	<note>
+	  <cit>
+	    <quote>Specimen FMNH PR 2081. Legendary Fossil. Apex
+	    Predator. National Treasure. <emph
+	    style="text-transform:uppercase;
+	    letter-spacing:0.25rem;">Murderbird.</emph></quote>
+	    <bibl>SUEtheTrex, Twitter biography.
+	    <ptr target="https://twitter.com/SUEtheTrex"/>. 
+	    Accessed <date when="2020-03-25">March 25th, 2020</date>.</bibl>
+	  </cit>
+	</note>
+      </person>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      PUT EXAMPLE OF TRANSCRIBED <gi>persPronouns</gi> HERE
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#NDPERSEpc"/>
+  </listRef>
+</elementSpec>

@@ -7,7 +7,7 @@ $Date$
 $Id$
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="ND" n="20">
+<div xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" type="div1" xml:id="ND" n="20">
 
   <head>Names, Dates, People, and Places</head>
 
@@ -565,14 +565,14 @@ target="#CONA"/>).  The tag -->The
 
       <p>
         <specGrp xml:id="DNDPER" n="Personal and organizational names">
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/orgName.xml"/>
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/persName.xml"/>
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/surname.xml"/>
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/forename.xml"/>
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/genName.xml"/>
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/nameLink.xml"/>
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/addName.xml"/>
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/roleName.xml"/>
+          <xi:include href="../../Specs/orgName.xml"/>
+          <xi:include href="../../Specs/persName.xml"/>
+          <xi:include href="../../Specs/surname.xml"/>
+          <xi:include href="../../Specs/forename.xml"/>
+          <xi:include href="../../Specs/genName.xml"/>
+          <xi:include href="../../Specs/nameLink.xml"/>
+          <xi:include href="../../Specs/addName.xml"/>
+          <xi:include href="../../Specs/roleName.xml"/>
         </specGrp>
       </p>
     </div>
@@ -720,15 +720,15 @@ target="#CONA"/>).  The tag -->The
           meaning structure itself may be represented using feature structures (<ptr target="#FS"/>).</p>
         <p>
           <specGrp xml:id="DNDPLAC" n="Names for places">
-            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/placeName.xml"/>
-            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/bloc.xml"/>
-            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/country.xml"/>
-            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/region.xml"/>
-            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/settlement.xml"/>
-            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/district.xml"/>
-            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/offset.xml"/>
-            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/geogName.xml"/>
-            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/geogFeat.xml"/>
+            <xi:include href="../../Specs/placeName.xml"/>
+            <xi:include href="../../Specs/bloc.xml"/>
+            <xi:include href="../../Specs/country.xml"/>
+            <xi:include href="../../Specs/region.xml"/>
+            <xi:include href="../../Specs/settlement.xml"/>
+            <xi:include href="../../Specs/district.xml"/>
+            <xi:include href="../../Specs/offset.xml"/>
+            <xi:include href="../../Specs/geogName.xml"/>
+            <xi:include href="../../Specs/geogFeat.xml"/>
           </specGrp>
         </p>
       </div>
@@ -1014,6 +1014,7 @@ target="#CONA"/>).  The tag -->The
             <specDesc key="langKnowledge"/>
             <!--<specDesc key="langKnown"/>-->
             <specDesc key="nationality"/>
+	    <specDesc key="persPronouns"/>
             <specDesc key="sex"/>
             <specDesc key="age"/>
             <specDesc key="socecStatus"/>
@@ -1064,7 +1065,50 @@ exemplifying here too? -->
           one specific individual, from a role, which is a set of characteristics that many different people can assume. An actor
           does not change their persona when adopting a different role, but none of the personas associated with one person can
           properly be associated with another.</p>
-        <p>The <gi>sex</gi> element carries a <att>value</att> attribute to give values from a project-internal taxonomy, or an
+
+	  <p>The <gi>persPronouns</gi> element may be used to indicate
+	  the personal pronouns used, or assumed to be used, by the
+	  individual being described. It is common practice in email
+	  signatures and biographies, for people to include their
+	  preferred personal pronouns along with their name or handle.
+	  This allows transgender and gender variant people to express
+	  how they wish to be identified, without having to share
+	  their gender identity (though some do). Cisgender people
+	  have also adopted the practice, which normalizes the idea
+	  that a person's personal pronouns should not be inferred by
+	  their name, sex, gender, or gender presentation. The
+	  <gi>persPronouns</gi> element may be used either in
+	  transcribed content to encode a phrase used to indicate
+	  preferred personal pronouns, or may be used inside a
+	  <gi>person</gi> or <gi>persona</gi> element to indicate
+          the associated pronouns.</p>
+
+          <p>For example, the following entry from a hypothetical
+          prosopography lists only the nominative case of the
+          preferred pronouns as identified by Miss Major
+          Griffin-Gracy, a historical figure.
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#issue2010">
+            <person>
+              <persName>
+                <forename>Miss Major</forename>
+                <surname>Griffin-Gracy</surname>
+              </persName>
+              <birth when="1940-10-25"/>
+              <sex value="transFemale" evidence="selfIdentification">trans woman</sex>
+              <persPronouns value="she" evidence="selfIdentification"/>
+              <note>
+                <p>Veteran of the Stonewall Riots. Founder of the
+                Griffin-Gracy Educational Retreat and Historical
+                Center (the House of GG). Activist and advocate for
+                transgender and gender-nonconforming people of
+                color.</p>
+              </note>
+            </person>
+          </egXML>
+	  </p>
+	  <p>EXAMPLE OF TRANSCRIBED PERSONAL PRONOUNS GOES in an <gi>egXML</gi> HERE.</p>
+	  
+	  <p>The <gi>sex</gi> element carries a <att>value</att> attribute to give values from a project-internal taxonomy, or an
           external standard, such as vCard's sex property <ptr target="http://microformats.org/wiki/gender-formats"/> (in which
             <val>M</val> indicates male, <val>F</val> indicates female, <val>O</val> indicates other, <val>N</val> indicates none
           or not applicable, <val>U</val> indicates unknown) or the often used ISO 5218:2004 <title>Representation of Human
@@ -1968,83 +2012,46 @@ occupation and residence.</p>
 </div3>
 -->
         <specGrp xml:id="DCCAHPA" n="Historical data">
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/affiliation.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/age.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/birth.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/climate.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/death.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/education.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/event.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/faith.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/floruit.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/geo.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/langKnowledge.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/langKnown.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/listOrg.xml"/>
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/listEvent.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/listPerson.xml"/>
-
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/listPlace.xml"/>
-
-          <!-- PB, 19-04-2012
-    &listState;-->
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/location.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/nationality.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/occupation.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/org.xml"/>
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/listRelation.xml"/>
-
+          <xi:include href="../../Specs/affiliation.xml"/>
+          <xi:include href="../../Specs/age.xml"/>
+          <xi:include href="../../Specs/birth.xml"/>
+          <xi:include href="../../Specs/climate.xml"/>
+          <xi:include href="../../Specs/death.xml"/>
+          <xi:include href="../../Specs/education.xml"/>
+          <xi:include href="../../Specs/event.xml"/>
+          <xi:include href="../../Specs/faith.xml"/>
+          <xi:include href="../../Specs/floruit.xml"/>
+          <xi:include href="../../Specs/geo.xml"/>
+          <xi:include href="../../Specs/langKnowledge.xml"/>
+          <xi:include href="../../Specs/langKnown.xml"/>
+          <xi:include href="../../Specs/listOrg.xml"/>
+          <xi:include href="../../Specs/listEvent.xml"/>
+          <xi:include href="../../Specs/listPerson.xml"/>
+          <xi:include href="../../Specs/listPlace.xml"/>
+          <xi:include href="../../Specs/listRelation.xml"/>
+          <!-- PB, 19-04-2012 &listState;-->
+          <xi:include href="../../Specs/location.xml"/>
+          <xi:include href="../../Specs/nationality.xml"/>
+          <xi:include href="../../Specs/occupation.xml"/>
+          <xi:include href="../../Specs/org.xml"/>
           <!--        MDH: Deleted now-obsolete relationGrp element 2014-05-21.  -->
-          <!--<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/relationGrp.xml"/> -->
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/person.xml"/>
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/persona.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/personGrp.xml"/>
-
-
-
-
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/place.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/population.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/relation.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/residence.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/sex.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/socecStatus.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/state.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/terrain.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/trait.xml"/>
+          <!--<xi:include href="../../Specs/relationGrp.xml"/> -->
+          <xi:include href="../../Specs/person.xml"/>
+          <xi:include href="../../Specs/persona.xml"/>
+          <xi:include href="../../Specs/personGrp.xml"/>
+          <xi:include href="../../Specs/persPronouns.xml"/>
+          <xi:include href="../../Specs/place.xml"/>
+          <xi:include href="../../Specs/population.xml"/>
+          <xi:include href="../../Specs/relation.xml"/>
+          <xi:include href="../../Specs/residence.xml"/>
+          <xi:include href="../../Specs/sex.xml"/>
+          <xi:include href="../../Specs/socecStatus.xml"/>
+          <xi:include href="../../Specs/state.xml"/>
+          <xi:include href="../../Specs/terrain.xml"/>
+          <xi:include href="../../Specs/trait.xml"/>
         </specGrp>
       </div>
     </div>
-
 
     <div xml:id="NDOBJ">
       <head>Objects</head>
@@ -2372,11 +2379,11 @@ There is no restriction on the form, size, or type of object that may be describ
 
       <!-- Include all the necessary object-related elements  -->
       <specGrp xml:id="DNDOBJ" n="Names for objects">
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/objectName.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/object.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/listObject.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.objectLike.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/objectIdentifier.xml"/>
+        <xi:include href="../../Specs/objectName.xml"/>
+        <xi:include href="../../Specs/object.xml"/>
+        <xi:include href="../../Specs/listObject.xml"/>
+        <xi:include href="../../Specs/model.objectLike.xml"/>
+        <xi:include href="../../Specs/objectIdentifier.xml"/>
       </specGrp>
 
     </div>
@@ -2513,9 +2520,8 @@ There is no restriction on the form, size, or type of object that may be describ
 
       <p>
         <specGrp xml:id="DNDNYM" n="Canonical names">
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/nym.xml"/>
-
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/listNym.xml"/>
+          <xi:include href="../../Specs/nym.xml"/>
+          <xi:include href="../../Specs/listNym.xml"/>
         </specGrp> As noted above, use of these elements implies that both the <ident type="module">dictionaries</ident> and the
           <ident type="module">namesdates</ident> modules are included in a schema.</p>
     </div>
@@ -2681,13 +2687,13 @@ Journal r&#xE9;dig&#xE9; par Camille Desmoulins</title>,
         </p>
 
         <specGrp>
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.orgStateLike.xml"/>
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.personal.xml"/>
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.placeLike.xml"/>
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.datable.iso.xml"/>
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.duration.iso.xml"/>
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.temporal.iso.xml"/>
-          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.duration.iso.xml"/>
+          <xi:include href="../../Specs/model.orgStateLike.xml"/>
+          <xi:include href="../../Specs/att.personal.xml"/>
+          <xi:include href="../../Specs/model.placeLike.xml"/>
+          <xi:include href="../../Specs/att.datable.iso.xml"/>
+          <xi:include href="../../Specs/att.duration.iso.xml"/>
+          <xi:include href="../../Specs/teidata.temporal.iso.xml"/>
+          <xi:include href="../../Specs/teidata.duration.iso.xml"/>
           <specGrpRef target="#DNDPER"/>
           <specGrpRef target="#DNDPLAC"/>
           <specGrpRef target="#DCCAHPA"/>
