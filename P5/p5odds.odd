@@ -61,7 +61,23 @@ $Id$
 	      <anyElement/>
 	    </alternate>
           </content>
-        </elementSpec>
+	</elementSpec>
+	<elementSpec ident="eg" mode="change" module="tagdocs">
+	  <constraintSpec ident="no_leading_nor_trailing_new_newlines" scheme="schematron">
+	    <desc xml:lang="en" versionDate="2020-12-18">
+	      In order to prevent inconsistent <soCalled>sizes</soCalled> of the box
+	      that holds the example in the HTML output, and even moreso to avoid
+	      getting the <quote>bibliography Show all ⚓</quote> looking ugly at the
+	      bottom, there should be no leading nor trailing newlines. If you really
+	      want a newline at the beginning, precede it with U+00A0 (NO-BREAK SPACE);
+	      if you really want a newline at the end, follow it with U+00A0.
+	    </desc>
+	    <constraint>
+	      <sch:report test="matches( .//text()[last()], '&#x0A;\s*$')">trailing newline not allowed</sch:report>
+	      <sch:report test="matches( .//text()[1],      '^\s*&#x0A;')">leading newline not allowed</sch:report>
+	    </constraint>
+	  </constraintSpec>
+	</elementSpec>
         <macroSpec ident="anyISOSchematron" mode="add">
           <content>
             <element xmlns="http://relaxng.org/ns/structure/1.0">
