@@ -50,7 +50,7 @@ $Id$
   <constraintSpec ident="noDefault4Required" scheme="schematron">
     <constraint>
       <sch:rule context="tei:attDef[@usage eq 'req']">
-        <sch:report test="tei:defaultVal">It does not make sense to make "<sch:value-of select="normalize-space(tei:defaultVal)"/>" the default value of @<sch:value-of select="@ident"/>, because that attribute is required.</sch:report>
+	<sch:report test="tei:defaultVal">Since the @<sch:value-of select="@ident"/> attribute is required, it will always be specified. Thus the default value (of "<sch:value-of select="normalize-space(tei:defaultVal)"/>") will never be used. Either change the definition of the attribute so it is not required ("rec" or "opt"), or remove the defaultVal element.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -139,7 +139,6 @@ $Id$
       <desc versionDate="2007-01-21" xml:lang="it">indica lo spazio del nome al quale appartiene
       l'attributo</desc>
       <datatype><dataRef key="teidata.namespace"/></datatype>
-      <defaultVal>http://www.tei-c.org/ns/1.0</defaultVal>
     </attDef>
   </attList>
   <exemplum xml:lang="en">

@@ -2,10 +2,8 @@
 # $Id$
 VCS := git
 ALLLANGUAGES=en
-LANGUAGE=en
 INJENKINS=false
 INPUTLANGUAGE=en
-DOCUMENTATIONLANGUAGE=en
 LATEX=pdflatex
 XELATEX=xelatex
 VERBOSE=
@@ -76,7 +74,7 @@ schemas.stamp: p5.xml
 html-web: check.stamp p5.xml  html-web.stamp
 
 html-web.stamp:  check.stamp p5.xml  Utilities/guidelines.xsl.model
-	@echo BUILD: Making HTML Guidelines for language ${LANGUAGE}
+	@echo BUILD: Making HTML Guidelines for language ${INPUTLANGUAGE}
 	@# remove vestiges of previous run
 	rm -rf Guidelines-web
 	@# generate XSL stylesheet by modifying paths in our model stylesheet
@@ -152,7 +150,7 @@ Guidelines.pdf: check.stamp p5.xml Utilities/guidelines-latex.xsl
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
 		Utilities/guidelines-latex.xsl > Utilities/guidelines.xsl
 	@echo BUILD: build Lite version of Guidelines, then LaTeX version of Guidelines from Lite, then run to PDF using XeLaTeX
-	@echo Make sure you have Junicode, Arphic and Mincho fonts installed
+	@echo Make sure you have Junicode and Noto CJK fonts installed
 	${ANT} -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfonce
 
 pdf-complete:
@@ -394,15 +392,10 @@ dependencies:
 	@echo	msttcorefonts
 	@echo	rnv
 	@echo	tei-p5-xsl
-	@echo	fonts-arphic-ukai
-	@echo	fonts-arphic-uming
-	@echo	ttf-baekmuk
 	@echo	ttf-junicode
-	@echo	fonts-ipafont-gothic
-	@echo	fonts-ipafont-mincho
 	@echo	zip
 	@echo   ttf-linux-libertine
-	@echo 	ttf-hannom
+	@echo 	fonts-noto-cjk
 clean:
 	(cd Exemplars; make clean)
 	(cd Test; make clean)

@@ -1,6 +1,4 @@
-LANGUAGE=en
 INPUTLANGUAGE=en
-DOCUMENTATIONLANGUAGE=en
 DRIVER=guidelines-${INPUTLANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
 TRANG=java -jar ../Utilities/lib/trang.jar
@@ -22,7 +20,7 @@ EXTENDEDFILES = \
 	testplace-kml.special
 #testi18n.xsd \
 
-default: normal special testmeta2010 test-extns test-frag detest
+default: normal special testmeta2010 test-frag detest
 
 normal: $(NORMALFILES)
 special: $(EXTENDEDFILES)
@@ -80,16 +78,6 @@ test-frag: checkrnv
 	@echo BUILD: Testing files which exercise inclusion of fragments
 	${JING} -t -c frag.rnc testfrag.xml
 	rnv frag.rnc testfrag.xml
-
-
-test-extns:
-	@echo BUILD: Testing files which demonstrate user extensions
-	xmllint --noout --valid extns.xml
-	xmllint --noout --valid extns2.xml
-
-test-sgml:
-	@echo BUILD: Test SGML extension mechanism
-	onsgmls -e -g -s  sgmldecl.tei extns.sgm
 
 detest: checkrnv
 	@echo BUILD: Test file with deliberate mistakes
