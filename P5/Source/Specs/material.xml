@@ -1,33 +1,81 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="MATERIAL" ident="material">
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="MATERIAL" ident="material">
   <gloss versionDate="2009-04-17" xml:lang="fr">matériau</gloss>
   <desc versionDate="2019-01-17" xml:lang="en" xml:id="material.desc">contains a word or phrase describing the material of which the object being described is composed.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">원고(또는 원고의 일부)를 구성하는 자료를 기술하는 단어 또는 구를 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">用一個字詞描述手稿 (或手稿部分) 的組成材料。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">手書き資料を構成する素材を表す語句を示す．</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">Contient un mot ou une expression décrivant le ou les matériau(x)
-      utilisé(s) pour fabriquer un manuscrit (ou une partie d'un manuscrit).</desc>
+  utilisé(s) pour fabriquer un manuscrit (ou une partie d'un manuscrit).</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene una palabra o sintagma que describe el material del que se compone un manuscrito (o parte del manuscrito).</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una parola o un'espressione che descrive il materiale di cui è composto un manoscritto (o una sua parte)</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.pPart.msdesc"/>
     <memberOf key="att.canonical"/>
+    <memberOf key="att.typed"/>
   </classes>
   <content>
-    <!--<!ELEMENT material  - -  (%phrase.seq;)>-->
     <macroRef key="macro.phraseSeq"/>
   </content>
+  <attList>
+    <attDef ident="function">
+      <desc versionDate="2020-11-12" xml:lang="en">describes the
+      function or use of the material in relation to the object
+      as a whole.</desc>
+      <datatype minOccurs="1" maxOccurs="1">
+	<dataRef key="teidata.enumerated"/>
+      </datatype>
+      <valList type="open">
+	<valItem ident="binding">
+	  <desc xml:lang="en" versionDate="2020-11-12">covering
+	  material of a codex</desc>
+	</valItem>
+	<valItem ident="endband">
+	  <desc xml:lang="en" versionDate="2020-11-12">sewing at the
+	  head or tail of the codex spine to strengthen the binding,
+	  often decorative</desc>
+	</valItem>
+	<valItem ident="slipcase">
+	  <desc xml:lang="en" versionDate="2020-11-12">removable
+	  protective cover for a set of one or more codices</desc>
+	</valItem>
+	<valItem ident="support">
+	  <desc xml:lang="en" versionDate="2020-11-12">the surface for writing</desc>
+	</valItem>
+	<valItem ident="tie">
+	  <desc xml:lang="en" versionDate="2020-11-12">a ribbon or
+	  string used to bind or close a codex or rolled scroll</desc>
+	</valItem>
+      </valList>
+      <remarks xml:lang="en" versionDate="2020-11-12">
+	<p>The sample values here are for descriptive bibliography.
+	Other sets of sample values might include <val>armrests</val>,
+	<val>legs</val>, <val>tabletop</val>, <val>pan</val>, and
+	<val>back</val> for furniture; or <val>wall</val>,
+	<val>floor</val>, <val>window</val>, <val>column</val>,
+	<val>ceiling</val>, <val>roof</val>, <val>stairs</val>,
+	<val>chimney</val> for architecture.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="target">
+      <desc versionDate="2013-04-16" xml:lang="en">identifies one or more elements to which the metamark applies.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
+    </attDef>
+  </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <physDesc>
         <p><material>Parchment</material> leaves with a
-<material>sharkskin</material> binding.</p>
+        <material>sharkskin</material> binding.</p>
       </physDesc>
     </egXML>
   </exemplum>
@@ -40,16 +88,16 @@ $Id$
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <physDesc>
         <p><material>羊皮</material> 頁面用
-    <material>鯊魚皮</material>
-    捆綁</p>
+        <material>鯊魚皮</material>
+        捆綁</p>
       </physDesc>
     </egXML>
   </exemplum>
   <remarks versionDate="2010-05-06" xml:lang="en">
     <p>The <att>ref</att> attribute may be used to point to one
-or more items within a
-taxonomy of types of material, defined either internally or
-externally. </p>
+    or more items within a
+    taxonomy of types of material, defined either internally or
+    externally.</p>
   </remarks>
   <listRef>
     <ptr target="#msmat"/>
