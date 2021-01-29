@@ -12,20 +12,20 @@ $Id$
   <gloss versionDate="2009-05-04" xml:lang="fr">taxinomie</gloss>
   <gloss versionDate="2016-11-17" xml:lang="de">Taxonomie</gloss>
   <desc versionDate="2011-11-02" xml:lang="en">defines a typology either implicitly, by means of a bibliographic
-    citation, or explicitly by a structured taxonomy.</desc>
+  citation, or explicitly by a structured taxonomy.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">définit une typologie 
-    soit implicitement au moyen d’une référence bibliographique, soit explicitement au moyen d’une
-    taxinomie structurée.</desc>
+  soit implicitement au moyen d’une référence bibliographique, soit explicitement au moyen d’une
+  taxinomie structurée.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">서지 정보 인용으로 비명시적으로 또는 구조화된 분류법으로 명시적으로 텍스트를 분류하는 유형을 정의한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">定義文件分類的類型學，可以是潛在地以書目資料的方式，或是明確地以結構分類法的方式來分類。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">テキストの分類法を，書誌情報を参照したり，または構造化された分類法を 示すことで，定義する．</desc>
-    <desc versionDate="2016-11-17" xml:lang="de">definiert eine Typologie entweder implizit durch einen bibliografischen Verweis oder explizit durch eine strukturierte Taxonomie.</desc>
+  <desc versionDate="2016-11-17" xml:lang="de">definiert eine Typologie entweder implizit durch einen bibliografischen Verweis oder explizit durch eine strukturierte Taxonomie.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">define una tipología o
-    implícitamente, mediante una cita bibliográfica, o explícitamente, mediante una taxonomía
-    estructurada.</desc>
+  implícitamente, mediante una cita bibliográfica, o explícitamente, mediante una taxonomía
+  estructurada.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">definisce una tipologia o
-    in modo implicito, usando una citazione bibliograficha, o in modo esplicito attraverso una
-    tassonomia strutturata.</desc>
+  in modo implicito, usando una citazione bibliograficha, o in modo esplicito attraverso una
+  tassonomia strutturata.</desc>
   <classes>
     <memberOf key="att.global"/>
   </classes>
@@ -34,26 +34,27 @@ $Id$
       <!-- We'd like the following clause to be a simple one: -->
       <!-- ( a*, b+ ) | ( a+, b* ) -->
       <!-- where: -->
-      <!--   'a' = (glossLike|descLike), and -->
+      <!--   'a' = (descLike|equiv|gloss), and -->
       <!--   'b' = (category|taxonomy) -->
       <!-- but that is non-deterministic or ambigious. Thus we -->
       <!-- rewrite it as the mildly more confusing -->
       <!-- ( b+ | ( a+, b* ) ) -->
       <alternate>
-	<alternate minOccurs="1" maxOccurs="unbounded">
+        <alternate minOccurs="1" maxOccurs="unbounded">
           <elementRef key="category"/>
           <elementRef key="taxonomy"/>
-	</alternate>
-	<sequence>
-	  <alternate minOccurs="1" maxOccurs="unbounded">
-            <classRef key="model.glossLike"/>
-            <classRef key="model.descLike"/>
-	  </alternate>
-	  <alternate minOccurs="0" maxOccurs="unbounded">
+        </alternate>
+        <sequence>
+          <alternate minOccurs="1" maxOccurs="unbounded">
+            <classRef key="model.descLike" minOccurs="1" maxOccurs="1"/>
+            <elementRef key="equiv" minOccurs="1" maxOccurs="1"/>
+            <elementRef key="gloss" minOccurs="1" maxOccurs="1"/>
+          </alternate>
+          <alternate minOccurs="0" maxOccurs="unbounded">
             <elementRef key="category"/>
             <elementRef key="taxonomy"/>
-	  </alternate>
-	</sequence>
+          </alternate>
+        </sequence>
       </alternate>
       <sequence>
         <classRef key="model.biblLike"/>
@@ -133,7 +134,7 @@ $Id$
         </category>
       </taxonomy>
       <bibl>indexation selon le système d'indexation RAMEAU, géré par la Bibliothèque nationale de
-          France</bibl>
+      France</bibl>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
@@ -173,71 +174,68 @@ $Id$
       </taxonomy>
     </egXML>
   </exemplum>
-<exemplum xml:lang="en">
-         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<taxonomy>
-<category xml:id="literature">
-   <catDesc>Literature</catDesc>
-   <category xml:id="poetry">
-      <catDesc>Poetry</catDesc>
-      <category xml:id="sonnet">
-         <catDesc>Sonnet</catDesc>
-         <category xml:id="shakesSonnet">
-            <catDesc>Shakespearean Sonnet</catDesc>
-         </category>
-         <category xml:id="petraSonnet">
-            <catDesc>Petrarchan Sonnet</catDesc>
-         </category>
-      </category>
-      <category xml:id="haiku">
-         <catDesc>Haiku</catDesc>
-      </category>
-   </category>
-   <category xml:id="drama">
-      <catDesc>Drama</catDesc>
-   </category>
-   </category>
-<category xml:id="meter">
-   <catDesc>Metrical Categories</catDesc>
-   <category xml:id="feet">
-      <catDesc>Metrical Feet</catDesc>
-      <category xml:id="iambic">
-      <catDesc>Iambic</catDesc>
-   </category>
-   <category xml:id="trochaic">
-      <catDesc>trochaic</catDesc>
-   </category>
-   </category>
-   <category xml:id="feetNumber">
-      <catDesc>Number of feet</catDesc>
-      <category xml:id="pentameter">
-         <catDesc>&gt;Pentameter</catDesc>
-      </category>
-      <category xml:id="tetrameter">
-         <catDesc>&gt;Tetrameter</catDesc>
-      </category>
-   </category>
-</category>
-</taxonomy>
-            
-            <!-- elsewhere in document -->
-            
-            <lg ana="#shakesSonnet #iambic #pentameter">
-               <l>Shall I compare thee to a summer's day</l>
-               <!-- ... -->
-            </lg>
-            
-         </egXML>
-</exemplum>
-    <remarks versionDate="2015-10-31" xml:lang="en">
-      <p>Nested taxonomies are common in many fields, so the
-      <gi>taxonomy</gi> element can be nested.</p>
-    </remarks>
-    <remarks versionDate="2016-11-17" xml:lang="de">
-        <p>
-            Da in vielen Bereichen verschachtelte Taxonomien gängig sind, kann das <gi>taxonomy</gi>-Element verschachtelt werden.
-        </p>
-    </remarks>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <taxonomy>
+        <category xml:id="literature">
+          <catDesc>Literature</catDesc>
+          <category xml:id="poetry">
+            <catDesc>Poetry</catDesc>
+            <category xml:id="sonnet">
+              <catDesc>Sonnet</catDesc>
+              <category xml:id="shakesSonnet">
+                <catDesc>Shakespearean Sonnet</catDesc>
+              </category>
+              <category xml:id="petraSonnet">
+                <catDesc>Petrarchan Sonnet</catDesc>
+              </category>
+            </category>
+            <category xml:id="haiku">
+              <catDesc>Haiku</catDesc>
+            </category>
+          </category>
+          <category xml:id="drama">
+            <catDesc>Drama</catDesc>
+          </category>
+        </category>
+        <category xml:id="meter">
+          <catDesc>Metrical Categories</catDesc>
+          <category xml:id="feet">
+            <catDesc>Metrical Feet</catDesc>
+            <category xml:id="iambic">
+              <catDesc>Iambic</catDesc>
+            </category>
+            <category xml:id="trochaic">
+              <catDesc>trochaic</catDesc>
+            </category>
+          </category>
+          <category xml:id="feetNumber">
+            <catDesc>Number of feet</catDesc>
+            <category xml:id="pentameter">
+              <catDesc>&gt;Pentameter</catDesc>
+            </category>
+            <category xml:id="tetrameter">
+              <catDesc>&gt;Tetrameter</catDesc>
+            </category>
+          </category>
+        </category>
+      </taxonomy>
+      <!-- elsewhere in document -->
+      <lg ana="#shakesSonnet #iambic #pentameter">
+        <l>Shall I compare thee to a summer's day</l>
+        <!-- ... -->
+      </lg>
+    </egXML>
+  </exemplum>
+  <remarks versionDate="2015-10-31" xml:lang="en">
+    <p>Nested taxonomies are common in many fields, so the
+    <gi>taxonomy</gi> element can be nested.</p>
+  </remarks>
+  <remarks versionDate="2016-11-17" xml:lang="de">
+    <p>
+      Da in vielen Bereichen verschachtelte Taxonomien gängig sind, kann das <gi>taxonomy</gi>-Element verschachtelt werden.
+    </p>
+  </remarks>
   <listRef>
     <ptr target="#HD55"/>
   </listRef>
