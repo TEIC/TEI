@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -10,15 +10,16 @@ $Id$
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0"
      xmlns:rng="http://relaxng.org/ns/structure/1.0"
+     xmlns:sqf="http://www.schematron-quickfix.com/validator/process"
      xmlns:sch="http://purl.oclc.org/dsdl/schematron" >
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title>TEI with ODD elements</title>
+        <title>TEI for the TEI Guidelines</title>
         <author>Sebastian Rahtz</author>
       </titleStmt>
       <publicationStmt>
-        <p> </p>
+        <publisher>TEI Consortium</publisher>
       </publicationStmt>
       <sourceDesc>
         <p>authored from scratch</p>
@@ -47,20 +48,115 @@ $Id$
         </moduleRef>
         <moduleRef url="Exemplars/mathml2-main.rng"/>
         <moduleRef url="Exemplars/relaxng.rng"/>
+
+	<constraintSpec scheme="schematron" ident="when_glosses_English_required">
+	  <desc>Per <ref
+	  target="https://github.com/TEIC/TEI/issues/2037">ticket
+	  237</ref>, Council has decided that every specification
+	  element that has any <gi>gloss</gi> child must have a
+	  <gi>gloss</gi> child in English. This is in order to make
+	  figuring out which glosses need translation easier (or
+	  possible).</desc>
+	  <constraint>
+	    <sch:pattern abstract="true" id="en-gloss-if-any">
+	      <!-- parameter 'gse' is for "glossed specification element (type)" -->
+	      <sch:rule context="$gse[tei:gloss]">
+		<sch:assert test="tei:gloss[ lang('en') ]">If there is any gloss inside <sch:value-of select="name(.)"/>, there must be an English gloss.</sch:assert>
+	      </sch:rule>
+	    </sch:pattern>
+	  </constraint>
+	</constraintSpec>
+
+	<elementSpec ident="elementSpec" mode="change" module="tagdocs">
+	  <constraintSpec scheme="schematron" ident="EGIA_elementSpec">
+	    <constraint>
+	      <sch:pattern id="egia-elementSpec" is-a="en-gloss-if-any">
+		<sch:param name="gse" value="tei:elementSpec"/>
+	      </sch:pattern>
+	    </constraint>
+	  </constraintSpec>
+	</elementSpec>
+	
+	<elementSpec ident="valItem" mode="change" module="tagdocs">
+	  <constraintSpec scheme="schematron" ident="EGIA_valItem">
+	    <constraint>
+	      <sch:pattern id="egia-valItem" is-a="en-gloss-if-any">
+		<sch:param name="gse" value="tei:valItem"/>
+	      </sch:pattern>
+	    </constraint>
+	  </constraintSpec>
+	</elementSpec>
+	
+	<elementSpec ident="attDef" mode="change" module="tagdocs">
+	  <constraintSpec scheme="schematron" ident="EGIA_attDef">
+	    <constraint>
+	      <sch:pattern id="egia-attDef" is-a="en-gloss-if-any">
+		<sch:param name="gse" value="tei:attDef"/>
+	      </sch:pattern>
+	    </constraint>
+	  </constraintSpec>
+	</elementSpec>
+	
+	<elementSpec ident="macroSpec" mode="change" module="tagdocs">
+	  <constraintSpec scheme="schematron" ident="EGIA_macroSpec">
+	    <constraint>
+	      <sch:pattern id="egia-macroSpec" is-a="en-gloss-if-any">
+		<sch:param name="gse" value="tei:macroSpec"/>
+	      </sch:pattern>
+	    </constraint>
+	  </constraintSpec>
+	</elementSpec>
+	
+	<elementSpec ident="classSpec" mode="change" module="tagdocs">
+	  <constraintSpec scheme="schematron" ident="EGIA_classSpec">
+	    <constraint>
+	      <sch:pattern id="egia-classSpec" is-a="en-gloss-if-any">
+		<sch:param name="gse" value="tei:classSpec"/>
+	      </sch:pattern>
+	    </constraint>
+	  </constraintSpec>
+	</elementSpec>
+	
+	<elementSpec ident="dataSpec" mode="change" module="tagdocs">
+	  <constraintSpec scheme="schematron" ident="EGIA_dataSpec">
+	    <constraint>
+	      <sch:pattern id="egia-dataSpec" is-a="en-gloss-if-any">
+		<sch:param name="gse" value="tei:dataSpec"/>
+	      </sch:pattern>
+	    </constraint>
+	  </constraintSpec>
+	</elementSpec>
+	
         <elementSpec ident="egXML" mode="change" module="tagdocs"
-		     ns="http://www.tei-c.org/ns/Examples">
-	  <!-- 
-	       This definition of <teix:egXML> overrides that of P5 which, for
-	       some reason I don't grok, does not allow a <teix:egXML> descendant.
-	       —Syd, 2018-06-13
-	  -->
+                     ns="http://www.tei-c.org/ns/Examples">
+          <!-- 
+               This definition of <teix:egXML> overrides that of P5 which, for
+               some reason I don't grok, does not allow a <teix:egXML> descendant.
+               —Syd, 2018-06-13
+          -->
           <content>
-	    <alternate minOccurs="1" maxOccurs="unbounded">
-	      <textNode/>
-	      <elementRef key="egXML"/>
-	      <anyElement/>
-	    </alternate>
+            <alternate minOccurs="1" maxOccurs="unbounded">
+              <textNode/>
+              <elementRef key="egXML"/>
+              <anyElement/>
+            </alternate>
           </content>
+        </elementSpec>
+        <elementSpec ident="eg" mode="change" module="tagdocs">
+          <constraintSpec ident="no_leading_nor_trailing_new_newlines" scheme="schematron">
+            <desc xml:lang="en" versionDate="2020-12-18">
+              In order to prevent inconsistent <soCalled>sizes</soCalled> of the box
+              that holds the example in the HTML output, and even moreso to avoid
+              getting the <quote>bibliography Show all ⚓</quote> looking ugly at the
+              bottom, there should be no leading nor trailing newlines. If you really
+              want a newline at the beginning, precede it with U+00A0 (NO-BREAK SPACE);
+              if you really want a newline at the end, follow it with U+00A0.
+            </desc>
+            <constraint>
+              <sch:report test="matches( .//text()[last()], '&#x0A;\s*$')">trailing newline not allowed</sch:report>
+              <sch:report test="matches( .//text()[1],      '^\s*&#x0A;')">leading newline not allowed</sch:report>
+            </constraint>
+          </constraintSpec>
         </elementSpec>
         <macroSpec ident="anyISOSchematron" mode="add">
           <content>
@@ -79,6 +175,7 @@ $Id$
             </element>
           </content>
         </macroSpec>
+
         <macroSpec ident="anySchematronQuickFix" mode="add">
           <content>
             <element xmlns="http://relaxng.org/ns/structure/1.0">
@@ -89,20 +186,21 @@ $Id$
                     <anyName/>
                   </attribute>
                   <ref name="anySchematronQuickFix"/>
-		  <ref name="anyISOSchematron"/>
+                  <ref name="anyISOSchematron"/>
                   <text/>
                 </choice>
               </zeroOrMore>
             </element>
           </content>
         </macroSpec>
+
         <!-- in examples we'd like to be able to show use of <xi:include>; of course, -->
         <!-- we can't put in an <xi:include> element, or it will be processed! Thus, -->
         <!-- here we use a bogus namespace -->
         <elementSpec ident="include" ns="http://www.example.org/cannot/really/use/XInclude" mode="add">
           <!-- the content and attributes were devised based on my reading of the spec at
-             http://www.w3.org/TR/2006/REC-xinclude-20061115/, also having looked at
-             Norm Walsh's implementation for DocBook. -sb -->
+               http://www.w3.org/TR/2006/REC-xinclude-20061115/, also having looked at
+               Norm Walsh's implementation for DocBook. -sb -->
           <content>
             <optional xmlns="http://relaxng.org/ns/structure/1.0">
               <ref name="fallback"/>
@@ -145,6 +243,7 @@ $Id$
             </attDef>
           </attList>
         </elementSpec>
+
         <!-- of course <xi:include> refers to <xi:fallback>, so we need to declare-->
         <!-- that, too, just in case. -->
         <elementSpec ident="fallback" ns="http://www.example.org/cannot/really/use/XInclude" mode="add">
@@ -157,6 +256,7 @@ $Id$
             </oneOrMore>
           </content>
         </elementSpec>
+
         <elementSpec module="tagdocs" ident="gi" mode="change">
           <attList>
             <attDef mode="replace" ident="scheme">
@@ -164,7 +264,7 @@ $Id$
                 <valItem ident="imaginary"/>
                 <valItem ident="extreme">
                   <gloss versionDate="2013-10-30" xml:lang="en">Extreme conference
-            proceedings markup</gloss>
+                  proceedings markup</gloss>
                 </valItem>
                 <valItem ident="DBK">
                   <gloss versionDate="2013-10-30" xml:lang="en">Docbook</gloss>
@@ -178,6 +278,7 @@ $Id$
             </attDef>
           </attList>
         </elementSpec>
+
         <elementSpec ident="biblScope" mode="change">
           <attList>
             <attDef mode="replace" ident="type">
@@ -204,6 +305,7 @@ $Id$
             </attDef>
           </attList>
         </elementSpec>
+
         <elementSpec ident="divGen" mode="change">
           <attList>
             <attDef mode="replace" ident="type">
@@ -236,6 +338,7 @@ $Id$
             </attDef>
           </attList>
         </elementSpec>
+
         <elementSpec ident="div" mode="change">
           <attList>
             <attDef mode="replace" ident="type">
@@ -253,10 +356,11 @@ $Id$
             </attDef>
           </attList>
         </elementSpec>
+
         <elementSpec ident="list" mode="change">          
           <!-- MDH 2014-07-29: per https://sourceforge.net/p/tei/bugs/460, 
-          changes made to specs should be reflected in Guidelines usage, so 
-          the values for @type and @rend below should be reviewed. -->
+               changes made to specs should be reflected in Guidelines usage, so 
+               the values for @type and @rend below should be reviewed. -->
           <attList>
             <attDef mode="replace" ident="type">
               <valList type="closed">
@@ -294,8 +398,9 @@ $Id$
                 <valItem ident="inline">
                   <gloss versionDate="2013-10-30" xml:lang="en">Inline list</gloss>
                 </valItem>
-<!-- MDH 2014-07-29: added this value to make changes to 
-     Guidelines source valid per https://sourceforge.net/p/tei/bugs/460.                -->
+                <!-- MDH 2014-07-29: added this value to make changes to 
+                     Guidelines source valid per https://sourceforge.net/p/tei/bugs/460.
+                -->
                 <valItem ident="bulleted">
                   <gloss versionDate="2013-10-30" xml:lang="en">Bulleted list</gloss>
                 </valItem>
@@ -303,6 +408,7 @@ $Id$
             </attDef>
           </attList>
         </elementSpec>
+
         <elementSpec module="tagdocs" ident="ident" mode="change">
           <attList>
             <attDef mode="replace" ident="type">
@@ -341,7 +447,7 @@ $Id$
                           ident="require-translatability"
                           scheme="schematron">
             <constraint>
-                <sch:rule context="tei:elementSpec/tei:desc
+              <sch:rule context="tei:elementSpec/tei:desc
                                  | tei:elementSpec/tei:gloss
                                  | tei:elementSpec/tei:remarks
                                  | tei:classSpec/tei:desc
@@ -360,66 +466,66 @@ $Id$
                                  | tei:moduleSpec/tei:gloss
                                  | tei:moduleSpec/tei:remarks
                                  ">
-                  <sch:report test="not( @xml:lang and @versionDate )">
-                    Error: both the versionDate and xml:lang attributes on "<sch:name/>" are required when it is a child of "<sch:value-of select="local-name(..)"/>".
-                  </sch:report>
-                </sch:rule>
+                <sch:report test="not( @xml:lang and @versionDate )">
+                  Error: both the versionDate and xml:lang attributes on "<sch:name/>" are required when it is a child of "<sch:value-of select="local-name(..)"/>".
+                </sch:report>
+              </sch:rule>
             </constraint>
           </constraintSpec>
           <constraintSpec ident="all-sibling-parent-desc" scheme="schematron">
             <constraint>
               <sch:rule context="*[tei:desc[@versionDate]]">
                 <sch:report role="nonfatal" test="
-                     count( tei:desc )
-                     ne
-                     count( tei:desc[@versionDate] )
-                     ">
+                                                  count( tei:desc )
+                                                  ne
+                                                  count( tei:desc[@versionDate] )
+                                                  ">
                   Error: sibling 'desc' elements with and without @versionDate.
                 </sch:report>
               </sch:rule>
-	    </constraint>
-	  </constraintSpec>
+            </constraint>
+          </constraintSpec>
           <constraintSpec ident="all-sibling-parent-gloss" scheme="schematron">
             <constraint>
               <sch:rule context="*[tei:gloss[@versionDate]]">
                 <sch:report role="nonfatal" test="
-                     count( tei:gloss )
-                     ne
-                     count( tei:gloss[@versionDate] )
-                     ">
+                                                  count( tei:gloss )
+                                                  ne
+                                                  count( tei:gloss[@versionDate] )
+                                                  ">
                   Error: sibling 'gloss' elements with and without @versionDate.
                 </sch:report>
               </sch:rule>
-	    </constraint>
-	  </constraintSpec>
+            </constraint>
+          </constraintSpec>
           <constraintSpec ident="all-sibling-parent-remarks" scheme="schematron">
             <constraint>
               <sch:rule context="*[tei:remarks[@versionDate]]">
                 <sch:report role="nonfatal" test="
-                     count( tei:remarks )
-                     ne
-                     count( tei:remarks[@versionDate] )
-                     ">
+                                                  count( tei:remarks )
+                                                  ne
+                                                  count( tei:remarks[@versionDate] )
+                                                  ">
                   Error: sibling 'remarks' elements with and without @versionDate.
                 </sch:report>
               </sch:rule>
-	    </constraint>
-	  </constraintSpec>
+            </constraint>
+          </constraintSpec>
           <constraintSpec ident="all-sibling-parent-valDesc" scheme="schematron">
             <constraint>
               <sch:rule context="*[tei:valDesc[@versionDate]]">
                 <sch:report role="nonfatal" test="
-                     count( tei:valDesc )
-                     ne
-                     count( tei:valDesc[@versionDate] )
-                     ">
+                                                  count( tei:valDesc )
+                                                  ne
+                                                  count( tei:valDesc[@versionDate] )
+                                                  ">
                   Error: sibling 'valDesc' elements with and without @versionDate.
                 </sch:report>
               </sch:rule>
             </constraint>
           </constraintSpec>
         </classSpec>
-          
+        
         <classSpec ident="att.identified" mode="change" type="atts">
           <attList>
             <attDef ident="module" mode="replace">
@@ -455,6 +561,7 @@ $Id$
             <attDef mode="change" ident="xml:lang" usage="req"/>
           </attList>
         </elementSpec>
+
         <elementSpec ident="idno" mode="change">
           <attList>
             <attDef mode="replace" ident="type">
@@ -474,20 +581,20 @@ $Id$
         </elementSpec>
 
         <elementSpec ident="content" mode="change" module="tagdocs">
-	  <content>
-	    <choice xmlns="http://relaxng.org/ns/structure/1.0">
-	      <group>
-		<ref name="valList"/>
-	      </group>
-	      <oneOrMore>
-		<ref name="anyRelax"/>
-	      </oneOrMore>
-	      <zeroOrMore>
-		<ref name="model.contentPart"/>
-	      </zeroOrMore>
-	    </choice>
-	  </content>
-	</elementSpec>
+          <content>
+            <choice xmlns="http://relaxng.org/ns/structure/1.0">
+              <group>
+                <ref name="valList"/>
+              </group>
+              <oneOrMore>
+                <ref name="anyRelax"/>
+              </oneOrMore>
+              <zeroOrMore>
+                <ref name="model.contentPart"/>
+              </zeroOrMore>
+            </choice>
+          </content>
+        </elementSpec>
 
         <macroSpec ident="anyRelax" mode="add">
           <content>
@@ -506,17 +613,17 @@ $Id$
           </content>
         </macroSpec>
 
-<elementSpec mode="change" ident="TEI">
-  <constraintSpec ident="must-have-attglobal" scheme="schematron" mode="add">
-    <constraint>
-      <rule context="tei:elementSpec[not(@mode)]" xmlns="http://purl.oclc.org/dsdl/schematron">
-        <assert test="tei:classes/tei:memberOf[@key='att.global']">Error: TEI element <value-of select="@ident"/> must be member of att.global class</assert>
-      </rule>
-    </constraint>
-  </constraintSpec>
-</elementSpec>
-        <elementSpec ident="remarks" mode="change">
-          
+        <elementSpec mode="change" ident="TEI">
+          <constraintSpec ident="must-have-attglobal" scheme="schematron" mode="add">
+            <constraint>
+              <rule context="tei:elementSpec[not(@mode)]" xmlns="http://purl.oclc.org/dsdl/schematron">
+                <assert test="tei:classes/tei:memberOf[@key='att.global']">Error: TEI element <value-of select="@ident"/> must be member of att.global class</assert>
+              </rule>
+            </constraint>
+          </constraintSpec>
+        </elementSpec>
+
+        <elementSpec ident="remarks" mode="change">          
           <constraintSpec ident="only-one-remark-per-lang" scheme="schematron" mode="add">
             <constraint>
               <rule context="tei:remarks[@xml:lang]" xmlns="http://purl.oclc.org/dsdl/schematron">
