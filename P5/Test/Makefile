@@ -1,6 +1,4 @@
-LANGUAGE=en
 INPUTLANGUAGE=en
-DOCUMENTATIONLANGUAGE=en
 DRIVER=guidelines-${INPUTLANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
 TRANG=java -jar ../Utilities/lib/trang.jar
