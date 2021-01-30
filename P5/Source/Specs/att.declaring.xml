@@ -15,6 +15,41 @@ $Id$
       ainsi la valeur dont cet élément devrait hériter par défaut</desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos a los elementos que pueden ser asociados autonomamente a un elemento determinado declarado en el encabezado, no teniendo en cuenta el default heredato por aquel elemento.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">assegna attributi agli elementi che possono essere autonomamente associati a un determinato elemento dichiarato nell'intestazione, non tenendo conto del default ereditato per quell'elemento</desc>
+  <constraintSpec ident="att-declaring-decls" scheme="schematron">
+    <constraint>
+      <sch:pattern id="decls" abstract="false">
+        <!--
+      Use element as context, as some processors inappropriately barf when a context
+      is an attribute node:
+    -->
+        <sch:rule context="tei:*[@decls]">
+          <!-- sequence of decls pointers: -->
+          <sch:let name="dptrs" value="tokenize( normalize-space( @decls ), '&#x20;')"/>
+          <!-- sequence of the @xml:ids pointed at by each decls pointer: -->
+          <sch:let name="dxids" value="for $dptr in $dptrs return substring-after( $dptr, '#')"/>
+          <!-- sequence of the target elements of the decls pointers: -->
+          <sch:let name="dtars" value="for $dptr in $dptrs return
+            if ( starts-with( $dptr, '#') )
+            then id( substring-after( $dptr, '#') )
+            else if ( contains( $dptr, '#') )
+            then doc( $dptr )/id( substring-after( $dptr, '#') )
+            else current()"/>
+          <!-- sequence of the element types of the taret elements of the decls ptrs: -->
+          <sch:let name="dtGIs" value="for $dtar in $dtars return name( $dtar )"/>
+          <!-- sequence of the children of the targets of the decls pointers: -->
+          <sch:let name="dtars_kids" value="$dtars/tei:*"/>
+          <!-- sequence of the names of the children: -->
+          <sch:let name="dtars_kids_GIs" value="for $kid in $dtars_kids return name( $kid )"/>
+          <!-- sequence of all the GIs (target and target children): -->
+          <sch:let name="decls_GIs" value="( $dtGIs, $dtars_kids_GIs )"/>
+          <sch:assert test="count( $decls_GIs ) eq count( distinct-values( $decls_GIs ) )">
+            Two or more of the elements referred to either explicitly or implicitly by the @decls if this <sch:name/> (<sch:value-of
+              select="$dptrs"/>) are the same kind of metadata element. 
+          </sch:assert>
+        </sch:rule>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="decls" usage="opt">
       <desc versionDate="2005-10-10" xml:lang="en">identifies one or more <term>declarable elements</term> within the

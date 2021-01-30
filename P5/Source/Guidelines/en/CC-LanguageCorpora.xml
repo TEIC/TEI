@@ -798,7 +798,7 @@ will be more than one instance of a header element of the relevant type.
 <item>A given element may appear in the corpus header only, in the
 header of one or more texts only, or in both places</item>
 <item>There may be multiple occurrences of certain elements in either
-corpus or text header.</item></list>
+the corpus or a text header.</item></list>
  </p>
 <p>To simplify the exposition, we deal with these two possibilities
 separately in what follows; however, they may be combined as
@@ -877,7 +877,7 @@ encoding description. The second one has its own encoding description.
 <p>Certain of the elements which can appear within a TEI header are
 known as <term>declarable elements</term>. These elements have in
 common the fact that they may be linked explicitly with a particular
-part of a text or corpus by means of a <att>decls</att> attribute on
+part of a text header or the corpus header by means of a <att>decls</att> attribute on
 that element. This linkage is used to over-ride the default
 association between declarations in the header and a corpus or corpus
 text. The only header elements which may be associated in this way are
@@ -918,15 +918,15 @@ elements are all members of the class <ident type="class">att.declaring</ident>.
 <specDesc key="textDesc"/>
 <specDesc key="xenoData"/>
 </specList>
-All of the above elements may be multiply defined within a single
-header, that is, there may be more than one instance of any declarable
-element type at a given level.  When this occurs, the following rules
+Each of the above elements is repeatable within a single
+header; that is, there may be more than one instance of any declarable
+element type at a given level. When this occurs, the following rules
 apply:
 <list rend="bulleted">
 <item>every declarable element must bear a unique identifier</item>
 <item>for each different type of declarable element which occurs more
 than once within the same parent element, exactly one element must be
-specified as the default, by means of the <att>default</att> attribute
+specified as the default, by having a <att>default</att> attribute with the value "true".
 </item></list>
  </p>
 <p>In the following example, an editorial declaration contains two
@@ -947,32 +947,31 @@ specified as the default: <egXML xmlns="http://www.tei-c.org/ns/Examples"><edito
 </editorialDecl></egXML> For texts associated with the header in which
 this declaration appears, correction method <val>CorPol1</val> will be
 assumed, unless they explicitly state otherwise.  Here is the
-structure for a text which does state otherwise: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><text>
+structure of a text in which a division states otherwise: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><text>
   <body>
-    <div1 n="d1">  </div1>
-    <div1 n="d2" decls="#CorPol2">  </div1>
-    <div1 n="d3">  </div1>
+    <div1 n="D1">  </div1>
+    <div1 n="D2" decls="#CorPol2">  </div1>
+    <div1 n="D3">  </div1>
   </body>
 </text></egXML> In this case, the contents of the divisions D1 and D3
 will both use correction policy <val>CorPol1</val>, and those of
 division D2 will use correction policy <val>CorPol2</val>.
  </p>
 <p>The <att>decls</att> attribute is defined for any element which is a
-member of the class <term>declaring</term>.  This includes the major
+member of the class <term>declaring</term>. This includes the major
 structural elements <gi>text</gi>, <gi>group</gi>, and <gi>div</gi>, as
 well as smaller structural units, down to the level of paragraphs in
 prose, individual utterances in spoken texts, and entries in
-dictionaries.  However, TEI recommended practice is to limit the number
+dictionaries. However, TEI recommended practice is to limit the number
 of multiple declarable elements used by a document as far as possible,
 for simplicity and ease of processing.
  </p>
-<p>The identifier or identifiers specified by the <att>decls</att>
-attribute are subject to two further restrictions:
+<p>The identifier or identifiers to which the <att>decls</att>
+attribute points must follow two further restrictions:
 <list rend="bulleted">
-<item>An identifier specifying an element which contains multiple
-instances of one or more other elements should be interpreted as if it
-explicitly identified the elements identified as the default in each
-such set of repeated elements</item>
+<item>When <att>decl</att> references an element that itself contains multiple
+elements of the same type, only the children elements with <att>default</att>
+set to "true" are considered referenced.</item>
 <item>Each element specified, explicitly or implicitly, by the list of
 identifiers must be of a different kind.</item></list>
  </p>
@@ -1003,18 +1002,18 @@ identified as <val>ED1</val> (the default) and <val>ED2</val>.  For texts not sp
 otherwise, <val>ED1</val> will apply.  If <val>ED1</val> applies, correction method C1A and
 normalization method N1 apply, since these are the specified defaults
 within <val>ED1</val>.  In the same way, for a text specifying <att>decls</att> as
-<q><val>ED2</val></q>, correction C2A, 
+<q><val>#ED2</val></q>, correction C2A, 
  and normalization N2B will
 apply.
  </p>
 <p>A finer grained approach is also possible.  A text might specify
-<tag>text decls='C2B N2A'</tag>, 
+<tag>text decls='#C2B #N2A'</tag>, 
  to <soCalled>mix and match</soCalled> declarations as
-required.  A tag such as <tag>text decls='ED1 ED2'</tag> would
+required.  A tag such as <tag>text decls='#ED1 #ED2'</tag> would
 (obviously) be illegal, since it includes two elements of the same type;
-a tag such as <tag>text decls='ED2 C1A'</tag> is also illegal, since in
-this context <val>ED2</val> is synonymous with the defaults for that
-editorial declaration, namely <val>C2A N2B</val>, resulting in a list
+a tag such as <tag>text decls='#ED2 #C1A'</tag> is also illegal, since in
+this context <val>#ED2</val> is synonymous with the defaults for that
+editorial declaration, namely <val>#C2A #N2B</val>, resulting in a list
 that identifies two correction elements (C1A and C2A).
  </p></div>
 <div type="div3" xml:id="CCAS3"><head>Summary</head>
@@ -1028,12 +1027,12 @@ within the corpus.</item>
 element in the text header, then it applies by default to all elements
 of that text irrespective of the contents of the corpus header.</item>
 <item>Where there are multiple occurrences of declarable elements
-within either corpus or text header,
+  within a text’s header or its corpus header,
 <list rend="bulleted">
 <item>each must have a unique value specified as the value
 of its <att>xml:id</att> attribute;</item>
-<item>one only must bear a <att>default</att> attribute with
-the value <!-- JC: 2018-07-20: This should be changed to 'true' --><val>YES</val>.</item></list></item>
+<item>one and only one must bear a <att>default</att> attribute with
+  the value <val>true</val> (or <val>1</val>).</item></list></item>
 <item>It is a semantic error for an element to be associated
 with more than one occurrence of any declarable element.</item>
 <item>Selecting an element which contains multiple occurrences of a
