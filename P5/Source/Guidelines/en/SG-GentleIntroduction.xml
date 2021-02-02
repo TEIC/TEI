@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -487,14 +487,12 @@ text being encoded.</p>
 
 <div type="div3" xml:id="SG141bis"><head>An Example Schema</head>
 <p>For the purposes of illustrating how a schema works to restrict how XML may be written, we use the RELAX NG compact syntax in what follows. The following schema can be used to validate our example poem:
-<eg xml:space="preserve"><![CDATA[
-anthology_p = element anthology { poem_p+ }
+<eg xml:space="preserve"><![CDATA[anthology_p = element anthology { poem_p+ }
 poem_p = element poem { heading_p?, stanza_p+ }
 stanza_p = element stanza {line_p+}
 heading_p = element heading { text }
 line_p = element line { text }
-start = anthology_p
-]]></eg>
+start = anthology_p]]></eg>
 </p>
 
 <p>Note that this is not the only way in which a RELAX NG schema might
@@ -610,8 +608,8 @@ moment), <!--ebb: This note now seems unnecessary, and the linked example isn't 
 that the fact that verse paragraphs need not start on a line boundary
 seriously complicates the issue; see further section <ptr target="#SG152"/>.</note>--> so no additional elements need be defined
 for it. We could define a couplet as a <gi scheme="imaginary">firstLine</gi> followed by a
-  <gi scheme="imaginary">secondLine</gi>, which distinction might be useful in a study of rhyme schemes.<note place="bottom">This example is probably not a good practice for most XML projects, since XPath provides ways of distinguishing elements in an XML structure by their position, or the order in which they appear in relation to one another, without the need to give them distinct names.</note> <eg><![CDATA[
-couplet_p = element couplet {firstLine_p, secondLine_p}]]></eg>
+  <gi scheme="imaginary">secondLine</gi>, which distinction might be useful in a study of rhyme schemes.<note place="bottom">This example is probably not a good practice for most XML projects, since XPath provides ways of distinguishing elements in an XML structure by their position, or the order in which they appear in relation to one another, without the need to give them distinct names.</note>
+  <eg><![CDATA[couplet_p = element couplet {firstLine_p, secondLine_p}]]></eg>
 <!-- Can't believe it's a good idea to use as an example -->
 	<!-- something we would never do ourselves.              -->
 	<!-- Why not define SONNET, OCTET, QUATRAIN, SESTET?     --></p>
@@ -848,8 +846,7 @@ within the definition for every element to which the attribute is
 attached. We therefore modify the definition for the
 <code>poem_p</code> pattern given above as follows:
 
-<eg xml:space="preserve"><![CDATA[poem_p = element poem {att.status?, heading_p?, stanza_p+}
-]]></eg>
+<eg xml:space="preserve"><![CDATA[poem_p = element poem { att.status?, heading_p?, stanza_p+ }]]></eg>
 
 In RELAX NG, an element pattern simply includes any attribute patterns
 applicable to it along with its other constituents, as shown
@@ -1027,15 +1024,31 @@ document may contain references to predefined strings of data that a
 validator must resolve before attempting to validate the document's
 structure; these are called <term>entity references</term>. They may
 be useful as a means of providing <soCalled>boilerplate</soCalled> text or
-representing character data which cannot easily be keyboarded. An XML
-document may also contain arbitrary signals or flags for use when the
-document is processed in a particular way by some class of processor
-(a common example in document production is the need to force a
-formatter to start a new page at some specific point in a document);
-such flags are called <term>processing instructions</term>. And, as
+representing character data which cannot easily be keyboarded. As
 noted earlier, an XML document may also contain instances of elements
-taken from some other <term>namespace</term>. We discuss each of these
-three cases in the rest of this section.</p>
+taken from some other <term>namespace</term>. And an XML
+ document may also contain arbitrary signals or flags for use when the
+ document is processed in a particular way by some class of processor
+ (a common example in document production is the need to force a
+ formatter to start a new page at some specific point in a document);
+ such flags are called <term>processing instructions</term>. We discuss each of these
+ three cases in the rest of this section.
+ </p>
+<p>A construct which looks like a processing instruction (but is not)
+is the <term>XML declaration</term> which should be supplied at the
+beginning of every XML document, for example: <eg><![CDATA[<?xml
+version="1.0" encoding="UTF-8"?>]]></eg> The XML declaration
+specifies the version number of the XML Recommendation applicable to
+the document it introduces (in this case, version 1.0), and optionally
+also the character encoding used to represent the Unicode characters
+within it. By default an XML document uses the character encoding
+UTF-8 or UTF-16; other commonly-encountered encodings include ISO 8859-1. If any
+character present in the document is not available in the specified 
+character encoding, it must be represented as a character
+reference (<ptr target="#SG-er"/>). The XML declaration is 
+documentary, but should normally be supplied at the start of any XML file. 
+If it is missing many XML-aware processors will be
+unable to process the associated text correctly.</p>
 
 <div type="div3" xml:id="SG-er"><head>Character References</head>
 
@@ -1096,52 +1109,6 @@ then references such as <code>&amp;TEI;</code> may be used within it,
 each of which will be expanded in the same way and replaced by the
 string <q>Text Encoding Initiative</q> before the text is validated.</p>
 
-
-</div>
-
-<div type="div3" xml:id="SG-pi"><head>Processing Instructions</head>
-
-<p>Although one of the aims of using XML is to remove any information
-specific to the processing of a document from the document itself, it
-is occasionally very convenient to be able to include such information—if 
-only so that it can be clearly distinguished from the
-structure of the document. As suggested above, one common example is
-the need, when processing an XML document for printed output, to
-include a suggestion that the formatting processor might use to
-determine where to begin a new page of output. Page-breaking decisions
-are usually best made by the formatting engine alone, but there will
-always be occasions when it may be necessary to override these. An XML
-processing instruction inserted into the document is one very simple
-and effective way of doing this without interfering with other aspects
-of the markup.</p>
-<p>Here is an example XML processing instruction: 
-<eg><![CDATA[<?tex \newpage ?>]]></eg> It begins with
-<code>&lt;?</code> and ends with
-<code>?&gt;</code>. In between are two space-separated strings: by
-convention, the first is the name of some processor (<code>tex</code>
-in the above example) and the second is some data intended for the use
-of that processor (in this case, the instruction to start a new
-page). The only constraint placed by XML on the strings is that the
-first one must be a valid XML name; the other can be any arbitrary
-sequence of characters, not including the closing character-sequence
-<code>?&gt;</code>.
-</p>
-
-<p>A construct which looks like a processing instruction (but is not)
-is the <term>XML declaration</term> which can be supplied at the
-beginning of an XML document, for example: <eg><![CDATA[<?xml
-version="1.0" encoding="iso-8859-1"?>]]></eg> The XML declaration
-specifies the version number of the XML Recommendation applicable to
-the document it introduces (in this case, version 1.0), and optionally
-also the character encoding used to represent the Unicode characters
-within it. By default an XML document uses the character encoding
-UTF-8 or UTF-16; in this case, the 16-bit characters of Unicode have
-been mapped to the 8-bit character set known as ISO 8859-1; any
-characters present in the document but not available in the target
-character set will therefore need to be represented as character
-references (<ptr target="#SG-er"/>). The XML declaration is purely
-documentary, but if it is wrong many XML-aware processors will be
-unable to process the associated text.</p>
 
 </div>
 <div type="div3" xml:id="SGname"><head>Namespaces</head>
@@ -1279,13 +1246,41 @@ references encountered are therefore treated as if they were plain
 text. For example, when we come to write the users' manual for our
 anthology, we may find ourselves often producing text like the
 following:
-<eg xml:space="preserve"><![CDATA[
-Here is an example of the use of the <gi>line</gi> element:
-<![CDATA[<line>[...]</line>]]]]><![CDATA[>
-]]></eg>
-</p>
+<eg xml:space="preserve"><![CDATA[Here is an example of the use of the <gi>line</gi> element:
+<![CDATA[<line>[...]</line>]]]]><![CDATA[>]]></eg></p>
 
 </div>
+</div>
+
+<div type="div3" xml:id="SG-pi"><head>Processing Instructions</head>
+
+<p>Although one of the aims of using XML is to remove any information
+specific to the processing of a document from the document itself, it
+is occasionally very convenient to be able to include such information—if 
+only so that it can be clearly distinguished from the
+structure of the document. As suggested above, one common example is
+the need, when processing an XML document for printed output, to
+include a suggestion that the formatting processor might use to
+determine where to begin a new page of output. Page-breaking decisions
+are usually best made by the formatting engine alone, but there will
+always be occasions when it may be necessary to override these. An XML
+processing instruction inserted into the document is one very simple
+and effective way of doing this without interfering with other aspects
+of the markup.</p>
+<p>Here is an example XML processing instruction: 
+<eg><![CDATA[<?tex \newpage ?>]]></eg> It begins with
+<code>&lt;?</code> and ends with
+<code>?&gt;</code>. In between are two space-separated strings: by
+convention, the first is the name of some processor (<code>tex</code>
+in the above example) and the second is some data intended for the use
+of that processor (in this case, the instruction to start a new
+page). The only constraint placed by XML on the strings is that the
+first one must be a valid XML name; the other can be any arbitrary
+sequence of characters, not including the closing character-sequence
+<code>?&gt;</code>.
+</p>
+
+
 </div>
 </div>
 
