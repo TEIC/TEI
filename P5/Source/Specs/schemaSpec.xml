@@ -45,28 +45,38 @@ $Id$
       </alternate>      
     </sequence>
   </content>
-  <constraintSpec scheme="schematron" ident="deprecate_schemaSpec_in_bizarre_places">
-    <desc>enforces the deprecation of <gi>schemaSpec</gi> as a child
-    of anything other than <gi>encodingDesc</gi>, <gi>front</gi>, <gi>body</gi>,
+  <constraintSpec validUntil="2021-10-23" scheme="schematron" ident="deprecate_schemaSpec_in_bizarre_places">
+    <desc xml:lang="en" versionDate="2021-02-02">enforces the
+    deprecation of <gi>schemaSpec</gi> as a child of anything other
+    than <gi>encodingDesc</gi>, <gi>front</gi>, <gi>body</gi>,
     <gi>back</gi>, <gi>div</gi>, or any of the numbered division
-    elements; it should be removed when the class memberships and
-    content models are altered so that this restriction is enforced by
-    closed schema.</desc>
+    elements. <!-- this <constraintSpec> should be removed when the
+    class memberships and content models are altered so that this
+    restriction is enforced by closed schema, which is expected to
+    occur in October 2021. --></desc>
+    <desc type="deprecationInfo">
+      The use of <gi>schemaSpec</gi> as a child of any element other
+      than <gi>encodingDesc</gi>, <gi>front</gi>, <gi>body</gi>,
+      <gi>back</gi>, <gi>div</gi>, or one of the numbered division
+      elements is being withdrawn.</desc>
     <constraint>
-      <sch:assert test="  parent::teix:egXML
-                        | parent::tei:encodingDesc
-                        | parent::tei:front
-                        | parent::tei:back
-                        | parent::tei:body
-                        | parent::tei:div
-                        | parent::tei:div1
-                        | parent::tei:div2
-                        | parent::tei:div3
-                        | parent::tei:div4
-                        | parent::tei:div5
-                        | parent::tei:div6
-                        | parent::tei:div7">WARNING: use of deprecated construct — the schemaSpec element will no longer be a valid child of <sch:value-of
-                        select="name(..)"/> as of 2021-10-23; instead, it should be a child of “encodingDesc”, “front”, “body”, “back”, or a division element.</sch:assert>
+      <sch:rule context="tei:schemaSpec|teix:schemaSpec">
+	<sch:assert test="             parent::teix:egXML
+			  | parent::tei:encodingDesc  | parent::teix:encodingDesc
+			  | parent::tei:front         | parent::teix:front
+			  | parent::tei:back          | parent::teix:back
+			  | parent::tei:body          | parent::teix:body
+			  | parent::tei:div           | parent::teix:div
+			  | parent::tei:div1          | parent::teix:div1
+			  | parent::tei:div2          | parent::teix:div2
+			  | parent::tei:div3          | parent::teix:div3
+			  | parent::tei:div4          | parent::teix:div4
+			  | parent::tei:div5          | parent::teix:div5
+			  | parent::tei:div6          | parent::teix:div6
+			  | parent::tei:div7          | parent::teix:div7"
+		    role="nonfatal">WARNING: use of deprecated construct — the “schemaSpec” element will no longer be a valid child of “<sch:value-of
+                        select="name(..)"/>” as of 2021-10-23; instead, it should be a child of “encodingDesc”, “front”, “body”, “back”, or a division element.</sch:assert>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>
@@ -194,32 +204,37 @@ from an existing RELAX NG schema available from the URL indicated.</p>
       The <gi>q</gi> element is not available in TEI Bare, but it can be brought back. In this case, we will get
       the version defined in TEI P5 release 3.0.0 </p>
   </exemplum>
-  <remarks versionDate="2020-10-24" xml:lang="en">
-    <p>The <gi>schemaSpec</gi> element should be a child of
-    <gi>encodingDesc</gi>, <gi>front</gi>, <gi>body</gi>,
+  <remarks versionDate="2021-02-02" xml:lang="en">
+    <!--
+	oddRef:
+	classRef, dataRef, elementRef, macroRef, and moduleRef
+
+	oddDecl:
+	classSpec, constraintSpec, dataSpec, elementSpec, listRef,
+	macroSpec, moduleSpec, outputRendition, specGrp, and specGrpRef
+    -->
+    <p>A <gi>schemaSpec</gi> combines references to elements that
+    document a schema with individual specification elements that
+    document a schema to form a unified schema. It should be a child
+    of <gi>encodingDesc</gi>, <gi>front</gi>, <gi>body</gi>,
     <gi>back</gi>, <gi>div</gi>, <gi>div1</gi>, <gi>div2</gi>,
     <gi>div3</gi>, <gi>div4</gi>, <gi>div5</gi>, <gi>div6</gi>, or
-    <gi>div7</gi>.</p>    
-    <p>A <gi>schemaSpec</gi> combines references to modules,
-    individual element or macro declarations, and specification groups
-    together to form a unified schema. The processing of the
-    <gi>schemaSpec</gi> element must resolve any conflicts amongst the
-    declarations it contains or references. Different ODD processors
-    may generate schemas and documentation using different concrete
-    syntaxes. </p>
-    
-    <!-- noted moved from removed att.readFrom -->
-      <p>The source may be specified in the form of a private URI, for which
-        the form recommended is <code>tei:x.y.z</code>, where
-        <code>x.y.z</code> indicates the version number,
-        e.g. <code>tei:1.5.1</code> for 1.5.1 release of TEI P5
-        or (as a special case) <code>tei:current</code> for whatever is the
-        latest release. The context indicated must provide a set of TEI-conformant
-          specifications in a form directly usable by an ODD processor. By
-          default, this will be the location of the current release of the TEI
-          Guidelines.</p>
-    
-    
+    <gi>div7</gi>.</p>
+    <p>The processing of the <gi>schemaSpec</gi> element must resolve
+    any conflicts amongst the declarations it either contains or
+    refers to. Different ODD processors may generate schemas and
+    documentation using different concrete syntaxes.</p>
+    <!-- note: moved from removed att.readFrom -->
+    <p>The source may be specified (on the <att>source</att>
+    attribute) in the form of a private URI, for which the recommended
+    format is <code>tei:x.y.z</code>, where <code>x.y.z</code>
+    indicates the version number, e.g. <code>tei:1.5.1</code> for
+    1.5.1 release of TEI P5 or (as a special case)
+    <code>tei:current</code> for whatever is the latest release. The
+    source indicated must provide a set of TEI-conformant
+    specifications in a form directly usable by an ODD processor. By
+    default, this will be the location of the current release of the
+    TEI Guidelines.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Un schéma combine des références aux modules ou aux groupes de spécifications avec
