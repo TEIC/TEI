@@ -1025,7 +1025,7 @@ overshadows the historical content</quote>.</egXML>
 </div>
 
 </div>
-  <div type="div2" xml:id="COHTGEDR"><head>Terms, Glosses, Equivalents, Descriptions, and Ruby Annotations</head>
+  <div type="div2" xml:id="COHTGEDR"><head>Terms and Glosses, Ruby Annotations, and Equivalents and Descriptions</head>
     <p>This section describes a set of textual elements which are
       used to provide a gloss, alternate identification, or description of
       something.</p>
@@ -1093,90 +1093,90 @@ overshadows the historical content</quote>.</egXML>
       in section <ptr target="#CONARS"/> below are available on the
       <gi>term</gi> element for this purpose.
     </p>
-      
-     
     
     <specGrp xml:id="DCOHTG">
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/desc.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/gloss.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/term.xml"/></specGrp>
+      
+      <div type="div4" xml:id="COHTGEG"><head>Some Further Examples</head>
+        <p>As a simple example of the elements discussed here and in 
+          <ptr target="#COHQ"/>, consider the
+          following sentence:
+          <q rend="display">On the one hand the <title>Nibelungenlied</title> 
+            is associated with the new rise of romance of twelfth-century
+            France, the <foreign>romans d'antiquité</foreign>,
+            the romances of Chrétien de Troyes, and the German
+            adaptations of these works by Heinrich van Veldeke,
+            Hartmann von Aue, and Wolfram von Eschenbach.</q>
+          A first approximation to the encoding of this sentence might be simply
+          to record the fact that the phrases printed above in italics are
+          highlighted, as follows:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#CONADA-eg-144">On the one hand the <hi rend="italic">Nibelungenlied</hi> is
+            associated with the new rise of romance of twelfth-century France,
+            the <hi xml:lang="fr" rend="italic">romans d'antiquité</hi>,
+            the romances of Chrétien de Troyes, ...</egXML>
+          This encoding would, however, lose the important distinction between
+          an italicized title and an italicized foreign phrase.  Many other
+          phrases might also be italicized in the text, and a retrieval
+          program seeking to identify foreign terms (for example) would not
+          be able to produce reliable results by simply looking for italicized
+          words.  Where economic and intellectual constraints permit, therefore,
+          it would be preferable to encode both the function of the
+          highlighted phrases and their appearance, as follows:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#CONADA-eg-144">On the one hand the <title rend="italic">Nibelungenlied</title>
+            is associated with the new rise of romance of twelfth-century France,
+            the <foreign rend="italic">romans d'antiquité</foreign>, the
+            romances of Chrétien de Troyes, ...</egXML></p>
+        <p>In this example, the decision as to which textual features
+          are distinguished by the highlighting is relatively
+          uncontroversial.  As a less straightforward example, consider the
+          use of italic font in the following passage:
+          <q rend="display">A pretty common case, I believe; in all
+            <hi rend="italic">vehement</hi> debatings.  She says I am
+            <hi rend="italic">too witty</hi>; Anglicé,
+            <hi rend="italic">too pert</hi>; I, that she is
+            <hi rend="italic">too wise</hi>; that is to say, being
+            likewise put into English, <hi rend="italic">not so young as
+              she has been</hi>:  in short, she is grown so much into
+            a <hi rend="italic">mother</hi>, that she had forgotten
+            she ever was a <hi rend="italic">daughter</hi>. ...</q>
+        </p>
+        <p>Clearly, the word <mentioned>vehement</mentioned> is not italicized for the
+          same reason as the phrase <mentioned>not so young as she has been</mentioned>;
+          the former is emphasized, while the latter is proverbial.  It also
+          provides an ironic gloss for the words <mentioned>too wise</mentioned>, in the
+          same way as <mentioned>too pert</mentioned> glosses <mentioned>too witty</mentioned>.
+          The glossed phrases are not, however, technical terms or cited words, but
+          quoted phrases, as if the writer were putting words into her own and her
+          mother's mouths.  Finally, the words <mentioned>mother</mentioned> and
+          <mentioned>daughter</mentioned> are apparently italicized simply to oppose them
+          in the sentence; certainly they do not fit into any of the categories so
+          far proposed as reasons for italicizing.  Note also that the word
+          <mentioned>Anglicé</mentioned> is not italicized although it is not
+          generally considered an English word.
+        </p>
+        <p>The following sample encoding for the above passage attempts to take
+          into account all the above points:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COHTGEG-eg-02">A pretty common case, I believe; in all <emph>vehement</emph>
+            debatings. She says I am <q rend="italic">too witty</q>;
+            <foreign xml:lang="la" rend="roman">Anglicé</foreign>,
+            <gloss rend="italic">too pert</gloss>; I, that she is
+            <q rend="italic"> too wise</q>; that is to say, being likewise
+            put into English, <gloss rend="italic">not so young as she has
+              been</gloss>: in short, she is grown so much into a
+            <hi rend="italic">mother</hi>, that she had forgotten she ever
+            was a <hi rend="italic">daughter</hi>.</egXML>
+          <!-- WWP proofer points out inconsistency between tagging     -->
+          <!-- and commentary.  "too witty" and "too wise" retagged     -->
+          <!-- from TERM (which the prose says they are *not*) to Q     -->
+          <!-- (which the prose says they *are*).  WWP proofer also     -->
+          <!-- suggests EMPH for 'mother' and 'daughter', but our       -->
+          <!-- imaginary interpretation says we don't understand the    -->
+          <!-- italics there, so we leave it undisambiguated.  (msm)    -->
+        </p></div>
     </div>
-    <div type="div3" xml:id="COHTGEG"><head>Some Further Examples</head>
-      <p>As a simple example of the elements discussed here and in 
-        <ptr target="#COHQ"/>, consider the
-        following sentence:
-        <q rend="display">On the one hand the <title>Nibelungenlied</title> 
-          is associated with the new rise of romance of twelfth-century
-          France, the <foreign>romans d'antiquité</foreign>,
-          the romances of Chrétien de Troyes, and the German
-          adaptations of these works by Heinrich van Veldeke,
-          Hartmann von Aue, and Wolfram von Eschenbach.</q>
-        A first approximation to the encoding of this sentence might be simply
-        to record the fact that the phrases printed above in italics are
-        highlighted, as follows:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#CONADA-eg-144">On the one hand the <hi rend="italic">Nibelungenlied</hi> is
-          associated with the new rise of romance of twelfth-century France,
-          the <hi xml:lang="fr" rend="italic">romans d'antiquité</hi>,
-          the romances of Chrétien de Troyes, ...</egXML>
-        This encoding would, however, lose the important distinction between
-        an italicized title and an italicized foreign phrase.  Many other
-        phrases might also be italicized in the text, and a retrieval
-        program seeking to identify foreign terms (for example) would not
-        be able to produce reliable results by simply looking for italicized
-        words.  Where economic and intellectual constraints permit, therefore,
-        it would be preferable to encode both the function of the
-        highlighted phrases and their appearance, as follows:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#CONADA-eg-144">On the one hand the <title rend="italic">Nibelungenlied</title>
-          is associated with the new rise of romance of twelfth-century France,
-          the <foreign rend="italic">romans d'antiquité</foreign>, the
-          romances of Chrétien de Troyes, ...</egXML></p>
-      <p>In this example, the decision as to which textual features
-        are distinguished by the highlighting is relatively
-        uncontroversial.  As a less straightforward example, consider the
-        use of italic font in the following passage:
-        <q rend="display">A pretty common case, I believe; in all
-          <hi rend="italic">vehement</hi> debatings.  She says I am
-          <hi rend="italic">too witty</hi>; Anglicé,
-          <hi rend="italic">too pert</hi>; I, that she is
-          <hi rend="italic">too wise</hi>; that is to say, being
-          likewise put into English, <hi rend="italic">not so young as
-            she has been</hi>:  in short, she is grown so much into
-          a <hi rend="italic">mother</hi>, that she had forgotten
-          she ever was a <hi rend="italic">daughter</hi>. ...</q>
-      </p>
-      <p>Clearly, the word <mentioned>vehement</mentioned> is not italicized for the
-        same reason as the phrase <mentioned>not so young as she has been</mentioned>;
-        the former is emphasized, while the latter is proverbial.  It also
-        provides an ironic gloss for the words <mentioned>too wise</mentioned>, in the
-        same way as <mentioned>too pert</mentioned> glosses <mentioned>too witty</mentioned>.
-        The glossed phrases are not, however, technical terms or cited words, but
-        quoted phrases, as if the writer were putting words into her own and her
-        mother's mouths.  Finally, the words <mentioned>mother</mentioned> and
-        <mentioned>daughter</mentioned> are apparently italicized simply to oppose them
-        in the sentence; certainly they do not fit into any of the categories so
-        far proposed as reasons for italicizing.  Note also that the word
-        <mentioned>Anglicé</mentioned> is not italicized although it is not
-        generally considered an English word.
-      </p>
-      <p>The following sample encoding for the above passage attempts to take
-        into account all the above points:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COHTGEG-eg-02">A pretty common case, I believe; in all <emph>vehement</emph>
-          debatings. She says I am <q rend="italic">too witty</q>;
-          <foreign xml:lang="la" rend="roman">Anglicé</foreign>,
-          <gloss rend="italic">too pert</gloss>; I, that she is
-          <q rend="italic"> too wise</q>; that is to say, being likewise
-          put into English, <gloss rend="italic">not so young as she has
-            been</gloss>: in short, she is grown so much into a
-          <hi rend="italic">mother</hi>, that she had forgotten she ever
-          was a <hi rend="italic">daughter</hi>.</egXML>
-        <!-- WWP proofer points out inconsistency between tagging     -->
-        <!-- and commentary.  "too witty" and "too wise" retagged     -->
-        <!-- from TERM (which the prose says they are *not*) to Q     -->
-        <!-- (which the prose says they *are*).  WWP proofer also     -->
-        <!-- suggests EMPH for 'mother' and 'daughter', but our       -->
-        <!-- imaginary interpretation says we don't understand the    -->
-        <!-- italics there, so we leave it undisambiguated.  (msm)    -->
-      </p></div>
+    
     
     <div type="div3" xml:id="COHTGRB">
         <head>Ruby Annotations</head>
@@ -1265,8 +1265,7 @@ overshadows the historical content</quote>.</egXML>
           
           Where <att>place</att> is not provided, the default assumption is that the 
           ruby gloss is <emph>above</emph> where the text is horizontal, and to the
-          <emph>right</emph> of the text where it is vertical. [NOTE: if proposed layout/@rubyPlace
-          is implemented, it should be explained here.]
+          <emph>right</emph> of the text where it is vertical.
           
         </p>
         
@@ -1311,7 +1310,7 @@ overshadows the historical content</quote>.</egXML>
             </p>
           </egXML>
           
-          We could also use a standoff approach with anchors and 
+          We could also use a standoff approach with <gi>anchors</gi> and 
           pointers:
           
           <egXML xmlns="http://www.tei-c.org/ns/Examples">
