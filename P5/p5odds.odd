@@ -28,7 +28,8 @@ $Id$
   </teiHeader>
   <text>
     <body>
-      <schemaSpec ident="p5odds" prefix="TEI_" start="TEI schemaSpec elementSpec classSpec macroSpec dataSpec div">
+      <schemaSpec ident="p5odds" prefix="TEI_"
+		  start="TEI schemaSpec elementSpec classSpec macroSpec dataSpec div">
         <moduleRef key="header"/>
         <moduleRef key="core"/>
         <moduleRef key="tei"/>
@@ -58,74 +59,103 @@ $Id$
 	  figuring out which glosses need translation easier (or
 	  possible).</desc>
 	  <constraint>
-	    <sch:pattern abstract="true" id="en-gloss-if-any">
-	      <!-- parameter 'gse' is for "glossed specification element (type)" -->
-	      <sch:rule context="$gse[tei:gloss]">
+	    <!-- We attempted to enforce this with an abstract
+	         pattern, but found that oNVDL does not support
+	         abstract patterns. Thus, at least for now, just use
+	         a bulky, straightfoward, ineligant, but easier to
+	         process pattern. -->
+	    <sch:pattern id="en-gloss-if-any">
+	      <sch:rule context="  tei:elementSpec[tei:gloss]
+				 | tei:valItem[tei:gloss]
+				 | tei:attDef[tei:gloss]
+				 | tei:macroSpec[tei:gloss]
+				 | tei:classSpec[tei:gloss]
+				 | tei:dataSpec[tei:gloss]
+				 ">
 		<sch:assert test="tei:gloss[ lang('en') ]">If there is any gloss inside <sch:value-of select="name(.)"/>, there must be an English gloss.</sch:assert>
 	      </sch:rule>
 	    </sch:pattern>
 	  </constraint>
 	</constraintSpec>
 
-	<elementSpec ident="elementSpec" mode="change" module="tagdocs">
-	  <constraintSpec scheme="schematron" ident="EGIA_elementSpec">
-	    <constraint>
-	      <sch:pattern id="egia-elementSpec" is-a="en-gloss-if-any">
-		<sch:param name="gse" value="tei:elementSpec"/>
-	      </sch:pattern>
-	    </constraint>
-	  </constraintSpec>
-	</elementSpec>
+	<!-- The abstract pattern version of the same constraint as above: -->
+	<!-- <constraintSpec scheme="schematron" ident="when_glosses_English_required"> -->
+	<!--   <desc>Per <ref -->
+	<!--   target="https://github.com/TEIC/TEI/issues/2037">ticket -->
+	<!--   237</ref>, Council has decided that every specification -->
+	<!--   element that has any <gi>gloss</gi> child must have a -->
+	<!--   <gi>gloss</gi> child in English. This is in order to make -->
+	<!--   figuring out which glosses need translation easier (or -->
+	<!--   possible).</desc> -->
+	<!--   <constraint> -->
+	<!--     <sch:pattern abstract="true" id="en-gloss-if-any"> -->
+	<!--       <!\-\- parameter 'gse' is for "glossed specification element (type)" \-\-> -->
+	<!--       <sch:rule context="$gse[tei:gloss]"> -->
+	<!-- 	<sch:assert test="tei:gloss[ lang('en') ]">If there is any gloss inside <sch:value-of select="name(.)"/>, there must be an English gloss.</sch:assert> -->
+	<!--       </sch:rule> -->
+	<!--     </sch:pattern> -->
+	<!--   </constraint> -->
+	<!-- </constraintSpec> -->
+
+	<!-- <elementSpec ident="elementSpec" mode="change" module="tagdocs"> -->
+	<!--   <constraintSpec scheme="schematron" ident="EGIA_elementSpec"> -->
+	<!--     <constraint> -->
+	<!--       <sch:pattern id="egia-elementSpec" is-a="en-gloss-if-any"> -->
+	<!-- 	<sch:param name="gse" value="tei:elementSpec"/> -->
+	<!--       </sch:pattern> -->
+	<!--     </constraint> -->
+	<!--   </constraintSpec> -->
+	<!-- </elementSpec> -->
 	
-	<elementSpec ident="valItem" mode="change" module="tagdocs">
-	  <constraintSpec scheme="schematron" ident="EGIA_valItem">
-	    <constraint>
-	      <sch:pattern id="egia-valItem" is-a="en-gloss-if-any">
-		<sch:param name="gse" value="tei:valItem"/>
-	      </sch:pattern>
-	    </constraint>
-	  </constraintSpec>
-	</elementSpec>
+	<!-- <elementSpec ident="valItem" mode="change" module="tagdocs"> -->
+	<!--   <constraintSpec scheme="schematron" ident="EGIA_valItem"> -->
+	<!--     <constraint> -->
+	<!--       <sch:pattern id="egia-valItem" is-a="en-gloss-if-any"> -->
+	<!-- 	<sch:param name="gse" value="tei:valItem"/> -->
+	<!--       </sch:pattern> -->
+	<!--     </constraint> -->
+	<!--   </constraintSpec> -->
+	<!-- </elementSpec> -->
 	
-	<elementSpec ident="attDef" mode="change" module="tagdocs">
-	  <constraintSpec scheme="schematron" ident="EGIA_attDef">
-	    <constraint>
-	      <sch:pattern id="egia-attDef" is-a="en-gloss-if-any">
-		<sch:param name="gse" value="tei:attDef"/>
-	      </sch:pattern>
-	    </constraint>
-	  </constraintSpec>
-	</elementSpec>
+	<!-- <elementSpec ident="attDef" mode="change" module="tagdocs"> -->
+	<!--   <constraintSpec scheme="schematron" ident="EGIA_attDef"> -->
+	<!--     <constraint> -->
+	<!--       <sch:pattern id="egia-attDef" is-a="en-gloss-if-any"> -->
+	<!-- 	<sch:param name="gse" value="tei:attDef"/> -->
+	<!--       </sch:pattern> -->
+	<!--     </constraint> -->
+	<!--   </constraintSpec> -->
+	<!-- </elementSpec> -->
 	
-	<elementSpec ident="macroSpec" mode="change" module="tagdocs">
-	  <constraintSpec scheme="schematron" ident="EGIA_macroSpec">
-	    <constraint>
-	      <sch:pattern id="egia-macroSpec" is-a="en-gloss-if-any">
-		<sch:param name="gse" value="tei:macroSpec"/>
-	      </sch:pattern>
-	    </constraint>
-	  </constraintSpec>
-	</elementSpec>
+	<!-- <elementSpec ident="macroSpec" mode="change" module="tagdocs"> -->
+	<!--   <constraintSpec scheme="schematron" ident="EGIA_macroSpec"> -->
+	<!--     <constraint> -->
+	<!--       <sch:pattern id="egia-macroSpec" is-a="en-gloss-if-any"> -->
+	<!-- 	<sch:param name="gse" value="tei:macroSpec"/> -->
+	<!--       </sch:pattern> -->
+	<!--     </constraint> -->
+	<!--   </constraintSpec> -->
+	<!-- </elementSpec> -->
 	
-	<elementSpec ident="classSpec" mode="change" module="tagdocs">
-	  <constraintSpec scheme="schematron" ident="EGIA_classSpec">
-	    <constraint>
-	      <sch:pattern id="egia-classSpec" is-a="en-gloss-if-any">
-		<sch:param name="gse" value="tei:classSpec"/>
-	      </sch:pattern>
-	    </constraint>
-	  </constraintSpec>
-	</elementSpec>
+	<!-- <elementSpec ident="classSpec" mode="change" module="tagdocs"> -->
+	<!--   <constraintSpec scheme="schematron" ident="EGIA_classSpec"> -->
+	<!--     <constraint> -->
+	<!--       <sch:pattern id="egia-classSpec" is-a="en-gloss-if-any"> -->
+	<!-- 	<sch:param name="gse" value="tei:classSpec"/> -->
+	<!--       </sch:pattern> -->
+	<!--     </constraint> -->
+	<!--   </constraintSpec> -->
+	<!-- </elementSpec> -->
 	
-	<elementSpec ident="dataSpec" mode="change" module="tagdocs">
-	  <constraintSpec scheme="schematron" ident="EGIA_dataSpec">
-	    <constraint>
-	      <sch:pattern id="egia-dataSpec" is-a="en-gloss-if-any">
-		<sch:param name="gse" value="tei:dataSpec"/>
-	      </sch:pattern>
-	    </constraint>
-	  </constraintSpec>
-	</elementSpec>
+	<!-- <elementSpec ident="dataSpec" mode="change" module="tagdocs"> -->
+	<!--   <constraintSpec scheme="schematron" ident="EGIA_dataSpec"> -->
+	<!--     <constraint> -->
+	<!--       <sch:pattern id="egia-dataSpec" is-a="en-gloss-if-any"> -->
+	<!-- 	<sch:param name="gse" value="tei:dataSpec"/> -->
+	<!--       </sch:pattern> -->
+	<!--     </constraint> -->
+	<!--   </constraintSpec> -->
+	<!-- </elementSpec> -->
 	
         <elementSpec ident="egXML" mode="change" module="tagdocs"
                      ns="http://www.tei-c.org/ns/Examples">
