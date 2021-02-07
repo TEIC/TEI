@@ -1209,50 +1209,50 @@ overshadows the historical content</quote>.</egXML>
           Data Model (<ptr target="#SASOann"/>). However, ruby is a particular, distinct, and widely-used 
           form of annotation that appears in script, print, calligraphy, and web pages, and the TEI therefore 
           provides specific  elements for it:
-          
           <specList>
             <specDesc key="ruby"/>
             <specDesc key="rb"/>
             <specDesc key="rt"/>
           </specList>
-          The <gi>rt</gi> element also has <att>place</att>:
-          
+          The <gi>rt</gi> element is a member of <ident
+          type="class">att.placement</ident>, and thus the
+          <att>place</att> attribute may be used to indicate where the
+          ruby gloss is with respect to the base text:
           <specList>
             <specDesc key="att.placement" atts="place"/>
           </specList>
-          
-          Most of the suggested values for <att>place</att> will not be relevant for ruby text.
-        </p>
+	  The most relevant suggested values of <att>place</att> for
+	  ruby text are <val>above</val>, <val>below</val>,
+	  <val>left</val>, and <val>right</val>.</p>
         
         <p>In its simplest representation, a glossed form consists of an <gi>rb</gi> (ruby base) element containing the
           base form, an <gi>rt</gi> (ruby text) element containing the gloss, and a <gi>ruby</gi> element which
           wraps them together:
-          
           <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <ruby>
               <rb>大学</rb>
               <rt place="above">だいがく</rt>
             </ruby>
-          </egXML>
-          
-          Here the word <mentioned>大学</mentioned> (<mentioned>daigaku</mentioned> = university) is provided with
-          a phonation gloss in hiragana. Here the full gloss is applied to the complete word, but it might also be broken down
-          by character:
-          
+          </egXML>          
+          In the example above, the word <mentioned>大学</mentioned>
+          (<mentioned>daigaku</mentioned> = university) is provided
+          with a phonation gloss in hiragana. The full gloss is
+          applied to the complete word. However, it might instead be
+          broken down by character:
           <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <ruby>
               <rb>大</rb>
               <rt place="above">だい</rt>
             </ruby>
-            <ruby>
+	    <ruby>
               <rb>学</rb>
               <rt place="above">がく</rt>
             </ruby>
           </egXML>
-          
-          Here is a similar example from Taiwan using bopomofo  (pinyin <mentioned>píngzi</mentioned> = bottle, taken from 
-          <ref target="https://en.wikipedia.org/wiki/Bopomofo">Wikipedia</ref>):
-          
+          Here is a similar example from Taiwan using bopomofo (pinyin
+          <mentioned>píngzi</mentioned> = bottle)<note
+          place="foot">Taken from <ref
+          target="https://en.wikipedia.org/wiki/Bopomofo#Example">Wikipedia</ref>.</note>:          
           <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <ruby>
               <rb>瓶</rb>
