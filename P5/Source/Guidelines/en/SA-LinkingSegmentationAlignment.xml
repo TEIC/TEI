@@ -750,7 +750,7 @@ the <ref target="http://www.w3.org/TR/xpath-datamodel/">XQuery
 1.0 and XPath 2.0 Data Model (Second Edition)</ref>. It represents 
 a single item in the XML information 	set for a document. For pointing
 purposes, the only nodes that are of interest are Text Nodes,
-Element Nodes, and Attribute nodes.</item> 
+Element Nodes, and Attribute Nodes.</item> 
 <label>Sequence</label>
 <item>A Sequence follows the definition in the XPath 2.0 Data 
 Model, with one alteration. A Sequence is an ordered collection
@@ -851,7 +851,7 @@ to the following TEI fragment<anchor xml:id="SATSXP-ex"/>:
 <lb n="5"/>auge et opto u<unclear>t</unclear> bene valeas</ab></div>
 </egXML>
 </p>
-<p>A TEI Pointer that referenced the "normalized" form in the 
+<p>A TEI Pointer that referenced the <gi>reg</gi> element in the 
 <code>choice</code> in line 1 of the example might look like:
 <lb/><code>#xpath(//lb[@n='1']/following-sibling::choice[1]/reg)</code>. 
   Note that XPath values must be assumed to start from the document root. They cannot be relative 
@@ -955,7 +955,7 @@ non-contiguous nodes. For example, a range() might select text beginning
 before an <gi>app</gi>, encompassing the content of a single <gi>rdg</gi> 
 and continuing after the <gi>app</gi>.</p>
 <p>Example: <code>#range(left(//lb[@n='3']),left(//lb[@n='4']))</code> indicates 
-the whole of <ref target="#SATSXP-ex">line 4</ref> from the 
+the whole of <ref target="#SATSXP-ex">line 3</ref> from the 
 <code><![CDATA[<lb n="3"/>]]></code> to the point right before the 
 following <code><![CDATA[<lb n="4"/>]]></code>.</p>
 <p>Example: <code>#range(right(//lb[@n='3']),string-index(//lb[@n='3'],15))</code>
@@ -1010,7 +1010,7 @@ modifications:
     occurring inside the expression must be escaped using the URI 
     percent-encoding scheme <code>%27</code>. </item>
   <item>Regular expressions in <code>match()</code> are assumed to
-    operate in multi-line mode. The end of the string to be matched
+    operate in single-line mode. The end of the string to be matched
     against is either the end of the text contained by the element in the
     first parameter or the end of the document, if that parameter
     indicates an empty element. The meta-character <code>^</code>
@@ -1023,7 +1023,7 @@ The optional INDEX parameter is an integer greater than 0 which specifies which
 match should be chosen when there is more than one possibility. If omitted, the 
 first match in the text stream will be used.</p>
 <p>Like <code>string-range()</code>, <code>match()</code> may capture elements 
-in the returned sequence, even though they are ignored for purposes of evaluating 
+in the indicated sequence, even though they are ignored for purposes of evaluating 
 the match.</p>
 <p>Example: <code>#match(//lb[@n='5'],'opto.*valeas')</code> indicates the sequence
 <code><![CDATA[opto u<unclear>t</unclear> bene valeas]]></code> in 
