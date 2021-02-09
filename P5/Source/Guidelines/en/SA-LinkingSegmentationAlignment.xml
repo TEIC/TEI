@@ -736,8 +736,8 @@ Nodes are entities available only in the tree, while points are available
 only in the stream. For this reason, the schemes below that rely upon 
 character positions (<code>string-index()</code>, 
 <code>string-range()</code>, and <code>match()</code>) cannot take nodes 
-into account. Similarly, XPath, being a method for locating nodes in the 
-tree, treats those nodes as atomic, and is unable to address parts of nodes 
+into account. Conversely, XPath (disregarding functions that return atomic values) is a method for locating nodes in the 
+tree and treats those nodes as indivisible units, meaning it is unable to address parts of nodes 
 in their document context.</p>
 
 <p>The TEI pointer scheme thus distinguishes the following
@@ -828,18 +828,15 @@ scheme.</p>
 <div type="div4" xml:id="SATSXP">
 <head>xpath()</head>
 <p><code>Sequence xpath(XPATH)</code></p>
-<p>The <name type="xpscheme">xpath()</name> scheme locates a node
-within an XML Information Set. The single argument
-<rs>XPATH</rs> is an XPath path expression, following the latest 
-scheme adopted by the W3C (currently 
-<ref target="http://www.w3.org/TR/xpath20/">XPath 2.0</ref>), that 
-returns a sequence. XPaths returning atomic values (e.g. 
-<name>substring()</name>) are illegal in the 
-<name type="xpscheme">xpath()</name> scheme because they 
-represent extracted values rather than locations in the source 
-document. XPath expressions that address attribute nodes are only 
-advisable in the <name type="xpscheme">xpath()</name> scheme.
-</p>
+<p>The <name type="xpscheme">xpath()</name> scheme locates zero or more nodes within an XML Information
+  Set. The single argument <rs>XPATH</rs> is an XPath path expression, following the latest
+  scheme adopted by the W3C (currently <ref target="http://www.w3.org/TR/xpath20/">XPath
+    2.0</ref>), that returns a sequence. XPaths returning atomic values (e.g.
+    <name>substring()</name>) are illegal in the <name type="xpscheme">xpath()</name> scheme
+  because they represent extracted values rather than locations in the source document.
+  Because the schemes below involve starting at a node and navigating from there, and
+  because attribute nodes have no intrinsic order, XPath expressions that address attribute
+  nodes should be avoided in schemes other than <name type="xpscheme">xpath()</name>. </p>
 <p>The example below, and all subsequent examples in this section refer 
 to the following TEI fragment<anchor xml:id="SATSXP-ex"/>:
 <!-- Ostrakon from Trimithis (O.Trim 1, 1)  http://papyri.info/ddbdp/o.trim;1;1 -->
@@ -856,7 +853,9 @@ to the following TEI fragment<anchor xml:id="SATSXP-ex"/>:
 </p>
 <p>A TEI Pointer that referenced the "normalized" form in the 
 <code>choice</code> in line 1 of the example might look like:
-<lb/><code>#xpath(//lb[@n='1']/following-sibling::choice/reg)</code>. 
+<lb/><code>#xpath(//lb[@n='1']/following-sibling::choice[1]/reg)</code>. 
+  Note that XPath values must be assumed to start from the document root. They cannot be relative 
+  to the element bearing the attribute that uses the pointer because TEI Pointers are URIs.
 </p>
 <p>When an XPath is interpreted by a TEI processor, the
 information set of the referenced document is interpreted
