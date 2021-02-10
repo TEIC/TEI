@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet 
     xmlns:s="http://www.ascc.net/xml/schematron" 
     xmlns:sch="http://purl.oclc.org/dsdl/schematron"

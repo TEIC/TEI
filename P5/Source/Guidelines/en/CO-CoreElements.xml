@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -2395,7 +2395,7 @@ it is a semantic error for a list tagged with <code>type="gloss"</code> not to h
   <label xml:lang="la">bellum, -ī, N. </label> <item>war</item>
   <label xml:lang="la">bonus, -a, -um       </label> <item>good</item>
 </list></egXML>
-Additionally, the  <gi>term</gi> and <gi>gloss</gi> elements discussed
+Additionally, the <gi>term</gi> and <gi>gloss</gi> elements discussed
 in section <ptr target="#COHQU"/> might be used to make explicit the role
 that each column in the glossary list has, as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#CO-eg-04"><list type="gloss">
@@ -2611,7 +2611,48 @@ text, the <gi>span</gi> and <gi>interp</gi> elements may be more
 effective than the free form <gi>note</gi> element; these elements are
 available when the module for simple analysis is selected (see section
 <ptr target="#AISP"/>).
- </p>
+</p>
+
+<div type="div4" xml:id="CONONOGR"><head>Encoding Grouped Notes</head>
+<p>The following element is provided for the grouping of notes:
+    <specList><specDesc key="noteGrp"/></specList>	
+</p>
+<p>
+A text may have multiple alternative versions of the same note, such as
+the same annotation expressed in multiple languages, or
+both an extensive note and a short form for different audiences. In
+such cases multiple <gi>note</gi> elements may be grouped within a
+<gi>noteGrp</gi> element.
+</p>
+<p>
+Typically, the <gi>note</gi> elements within a <gi>noteGrp</gi> would
+be differentiated by use of attributes such as <att>xml:lang</att> or
+<att>type</att>, while sharing the same point of attachment. This differentiation 
+can be made either implicitly in case of inline notes, or explicitly via a
+<att>target</att> attribute, which may be specified on the
+<gi>noteGrp</gi> itself.
+</p>
+
+<p>The simple example below demonstrates the grouping of a short and a full version of
+    the same note, where the short version might be intended for use in contexts 
+    with space constraints.
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
+      <p>... reuerendos dominos archiepiscopum et canonicos Leopolienses
+        in duplicibus Quatuortemporibus
+        <noteGrp>
+          <note type="short">Quatuor Tempora, so called dry fast days.</note>
+          <note type="full">Quatuor Tempora, so called dry fast days (Wednesday, Friday, and Saturday)
+            falling on each of the quarters of the year. In the first quarter they were called Cinerum
+            (following Ash Wednesday), second Spiritus (following Pentecost), third Crucis
+            (after the Exaltation of the Holy Cross, September 14th), and Luciae
+            in the fourth (after the feast of St. Lucia, December 13th).
+          </note>
+        </noteGrp>
+        totaliter expediui.
+      </p>
+    </egXML>
+</p>
+</div>
 </div>
 <div type="div3" xml:id="CONOIX"><head>Index Entries</head>
 <p>The indexing of scholarly texts is a skilled activity, involving
@@ -2711,7 +2752,7 @@ dependent on the application software in use):
 <eg><![CDATA[<?tei indexplacement ?>]]></eg>
 Alternatively, the special purpose  <gi>divGen</gi> element might be used.</p>
 <p>In the simplest case, a single headword is supplied  by
-an  <gi>term</gi> elements contained by an
+a <gi>term</gi> element contained by an
 <gi>index</gi> element:
   <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p>The students understand procedures for Arabic lemmatisation
 <index>
@@ -2895,6 +2936,7 @@ internal cross-references must be added as part of the post-editing
 phase for an auto-generated index.</p>
 <specGrp xml:id="DCONO" n="Annotation">
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/note.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/noteGrp.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/index.xml"/>
 </specGrp>	
 </div>
