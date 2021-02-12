@@ -736,8 +736,8 @@ Nodes are entities available only in the tree, while points are available
 only in the stream. For this reason, the schemes below that rely upon 
 character positions (<code>string-index()</code>, 
 <code>string-range()</code>, and <code>match()</code>) cannot take nodes 
-into account. Similarly, XPath, being a method for locating nodes in the 
-tree, treats those nodes as atomic, and is unable to address parts of nodes 
+into account. Conversely, XPath (disregarding functions that return atomic values) is a method for locating nodes in the 
+tree and treats those nodes as indivisible units, meaning it is unable to address parts of nodes 
 in their document context.</p>
 
 <p>The TEI pointer scheme thus distinguishes the following
@@ -750,7 +750,7 @@ the <ref target="http://www.w3.org/TR/xpath-datamodel/">XQuery
 1.0 and XPath 2.0 Data Model (Second Edition)</ref>. It represents 
 a single item in the XML information 	set for a document. For pointing
 purposes, the only nodes that are of interest are Text Nodes,
-Element Nodes, and Attribute nodes.</item> 
+Element Nodes, and Attribute Nodes.</item> 
 <label>Sequence</label>
 <item>A Sequence follows the definition in the XPath 2.0 Data 
 Model, with one alteration. A Sequence is an ordered collection
@@ -828,18 +828,15 @@ scheme.</p>
 <div type="div4" xml:id="SATSXP">
 <head>xpath()</head>
 <p><code>Sequence xpath(XPATH)</code></p>
-<p>The <name type="xpscheme">xpath()</name> scheme locates a node
-within an XML Information Set. The single argument
-<rs>XPATH</rs> is an XPath path expression, following the latest 
-scheme adopted by the W3C (currently 
-<ref target="http://www.w3.org/TR/xpath20/">XPath 2.0</ref>), that 
-returns a sequence. XPaths returning atomic values (e.g. 
-<name>substring()</name>) are illegal in the 
-<name type="xpscheme">xpath()</name> scheme because they 
-represent extracted values rather than locations in the source 
-document. XPath expressions that address attribute nodes are only 
-advisable in the <name type="xpscheme">xpath()</name> scheme.
-</p>
+<p>The <name type="xpscheme">xpath()</name> scheme locates zero or more nodes within an XML Information
+  Set. The single argument <rs>XPATH</rs> is an XPath path expression, following the latest
+  scheme adopted by the W3C (currently <ref target="http://www.w3.org/TR/xpath20/">XPath
+    2.0</ref>), that returns a sequence. XPaths returning atomic values (e.g.
+    <name>substring()</name>) are illegal in the <name type="xpscheme">xpath()</name> scheme
+  because they represent extracted values rather than locations in the source document.
+  Because the schemes below involve starting at a node and navigating from there, and
+  because attribute nodes have no intrinsic order, XPath expressions that address attribute
+  nodes should be avoided in schemes other than <name type="xpscheme">xpath()</name>. </p>
 <p>The example below, and all subsequent examples in this section refer 
 to the following TEI fragment<anchor xml:id="SATSXP-ex"/>:
 <!-- Ostrakon from Trimithis (O.Trim 1, 1)  http://papyri.info/ddbdp/o.trim;1;1 -->
@@ -854,9 +851,11 @@ to the following TEI fragment<anchor xml:id="SATSXP-ex"/>:
 <lb n="5"/>auge et opto u<unclear>t</unclear> bene valeas</ab></div>
 </egXML>
 </p>
-<p>A TEI Pointer that referenced the "normalized" form in the 
+<p>A TEI Pointer that referenced the <gi>reg</gi> element in the 
 <code>choice</code> in line 1 of the example might look like:
-<lb/><code>#xpath(//lb[@n='1']/following-sibling::choice/reg)</code>. 
+<lb/><code>#xpath(//lb[@n='1']/following-sibling::choice[1]/reg)</code>. 
+  Note that XPath values must be assumed to start from the document root. They cannot be relative 
+  to the element bearing the attribute that uses the pointer because TEI Pointers are URIs.
 </p>
 <p>When an XPath is interpreted by a TEI processor, the
 information set of the referenced document is interpreted
@@ -956,7 +955,7 @@ non-contiguous nodes. For example, a range() might select text beginning
 before an <gi>app</gi>, encompassing the content of a single <gi>rdg</gi> 
 and continuing after the <gi>app</gi>.</p>
 <p>Example: <code>#range(left(//lb[@n='3']),left(//lb[@n='4']))</code> indicates 
-the whole of <ref target="#SATSXP-ex">line 4</ref> from the 
+the whole of <ref target="#SATSXP-ex">line 3</ref> from the 
 <code><![CDATA[<lb n="3"/>]]></code> to the point right before the 
 following <code><![CDATA[<lb n="4"/>]]></code>.</p>
 <p>Example: <code>#range(right(//lb[@n='3']),string-index(//lb[@n='3'],15))</code>
@@ -978,8 +977,8 @@ The <rs>LENGTH</rs> parameter is a positive integer that denotes
 the length of the text stream captured by the sequence. As with 
 <name type="xpscheme">range()</name>, the addressed sequence may 
 contain text nodes and/or elements. The 
-<name type="xpscheme">string-range()</name> scheme, can accept multiple 
-OFFSET, LENGTH pairs to address a non-contiguous sequence in mauch the
+<name type="xpscheme">string-range()</name> scheme can accept multiple 
+OFFSET, LENGTH pairs to address a non-contiguous sequence in much the
 same way that range() can accept multiple pairs of pointers.</p> 
 <p>Because string-range() addresses points in the text stream, tags are
 invisible to it. For example, if an empty tag like <gi>lb</gi> is
@@ -1011,7 +1010,7 @@ modifications:
     occurring inside the expression must be escaped using the URI 
     percent-encoding scheme <code>%27</code>. </item>
   <item>Regular expressions in <code>match()</code> are assumed to
-    operate in multi-line mode. The end of the string to be matched
+    operate in single-line mode. The end of the string to be matched
     against is either the end of the text contained by the element in the
     first parameter or the end of the document, if that parameter
     indicates an empty element. The meta-character <code>^</code>
@@ -1024,7 +1023,7 @@ The optional INDEX parameter is an integer greater than 0 which specifies which
 match should be chosen when there is more than one possibility. If omitted, the 
 first match in the text stream will be used.</p>
 <p>Like <code>string-range()</code>, <code>match()</code> may capture elements 
-in the returned sequence, even though they are ignored for purposes of evaluating 
+in the indicated sequence, even though they are ignored for purposes of evaluating 
 the match.</p>
 <p>Example: <code>#match(//lb[@n='5'],'opto.*valeas')</code> indicates the sequence
 <code><![CDATA[opto u<unclear>t</unclear> bene valeas]]></code> in 
@@ -2107,7 +2106,7 @@ alignment, as shown next (for further discussion of the handling of
 <p>The first kind of alignment might be represented by using the
 <att>corresp</att> attribute on the <gi>seg</gi> element. The second
 kind might be represented by using the <gi>gloss</gi> and <gi>term</gi>
-mechanism described in section <ptr target="#COHQU"/>. The third kind of
+mechanism described in section <ptr target="#COHTG"/>. The third kind of
 alignment might be represented using pointers embedded within the
 texts, for example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
@@ -3438,6 +3437,9 @@ either with the pointing attributes <att>ana</att> (for
 <mentioned>instance</mentioned>), or by means of <gi>link</gi> and
 <gi>linkGrp</gi> elements. Numerous examples are given in these
 chapters<!-- , particularly in sections <ptr target="#AILA"/>, <ptr target="#FSFL"/> and <ptr target="#FSIL"/>-->.</p>
+  <p>Another more specific form of annotation is available through the TEI <gi>ruby</gi> element and its
+    children, described in detail in <ptr target="#COHTGRB"/>.</p>
+  
 </div>
 <div type="div2" xml:id="SAref">
   <head>Module for Linking, Segmentation, and Alignment</head>
