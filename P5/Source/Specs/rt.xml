@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright TEI Consortium.
+    Dual-licensed under CC-by and BSD2 licences
+    See the file COPYING.txt for details
+    $Date$
+    $Id$
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="rt" module="core">
+  <gloss versionDate="2021-01-30" xml:lang="en">ruby text</gloss>
+  <gloss versionDate="2021-01-31" xml:lang="ja">ルビのテキスト。</gloss>
+  <desc versionDate="2020-02-28" xml:lang="en">contains a ruby
+    text, an annotation closely associated with a passage of the
+    main text.</desc>
+  <desc versionDate="2021-01-31" xml:lang="ja">本文の一部と密接な関連を持つ注釈（主に読み方）としてのルビテキストを含む。</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.placement"/>
+    <memberOf key="att.transcriptional"/>
+  </classes>
+  <content>
+      <macroRef key="macro.phraseSeq"/>
+  </content>
+  <attList>
+    <attDef ident="target" usage="opt">
+      <desc versionDate="2021-01-08" xml:lang="en">supplies a pointer to the
+        base being glossed by this ruby text.</desc>
+      <desc versionDate="2021-01-31" xml:lang="ja">ルビテキストの対象へのポインタを示す。</desc>
+      <datatype><dataRef key="teidata.pointer"/></datatype>
+      <constraintSpec scheme="schematron" ident="rt-target-not-span">
+        <!-- Note: this constraint should not be necessary, as
+                     the desired semantics should be something we
+                     could describe in PureODD using attList/@org. But
+                     I don’t think we can. —Syd -->
+        <desc>Enforce that <emph>either</emph>
+          <att>target</att> or both <att>from</att> and
+          <att>to</att> (or none) are used, but not
+          <att>target</att> in combination with either
+          <att>from</att> or <att>to</att>.</desc>
+        <constraint>
+          <sch:report test="../@from | ../@to">When target= is
+            present, neither from= nor to= should be.</sch:report>
+        </constraint>
+      </constraintSpec>
+      <remarks xml:lang="en" versionDate="2020-02-01">
+        <p>Should point to a single <gi>rb</gi> or an element
+          that is inside an <gi>rb</gi>. To refer to multiple
+          elements or text nodes at once use <att>from</att> and
+          <att>to</att>.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="from" usage="opt" mode="add">
+      <desc xml:lang="en" versionDate="2021-01-06">points to the starting point of the span of text
+        being glossed by this ruby text.</desc>
+      <desc versionDate="2021-01-31" xml:lang="ja">ルビテキストの対象範囲の始点を示す。</desc>
+      <datatype>
+        <dataRef key="teidata.pointer"/>
+      </datatype>
+      <constraintSpec scheme="schematron" ident="rt-from">
+        <!-- Note: this constraint should not be necessary, as
+                       the desired semantics should be something we
+                       could describe in PureODD using attList/@org. But
+                       I don’t think we can. —Syd -->
+        <desc>Enforce the presence of <att>to</att> iff there
+          is a <att>from</att>.</desc>
+        <constraint>
+          <sch:assert test="../@to" >When from= is present, the to=
+            attribute of <sch:name/> is required.</sch:assert>
+        </constraint>
+      </constraintSpec>
+    </attDef>
+    <attDef ident="to" usage="opt" mode="add">
+      <desc xml:lang="en" versionDate="2021-01-06">points to the ending point of the span of text
+        being glossed.</desc>
+      <desc versionDate="2021-01-31" xml:lang="ja">ルビテキストの対象範囲の終点を示す。</desc>
+      <datatype>
+        <dataRef key="teidata.pointer"/>
+      </datatype>
+      <constraintSpec scheme="schematron" ident="rt-to">
+        <!-- Note: this constraint should not be necessary, as
+                       the desired semantics should be something we
+                       could describe in PureODD using attList/@org. But
+                       I don’t think we can. —Syd -->
+        <desc>Enforce the presence of <att>from</att> iff there
+          is a <att>to</att>.</desc>
+        <constraint>
+          <sch:assert test="../@from" >When to= is present, the from=
+            attribute of <sch:name/> is required.</sch:assert>
+        </constraint>
+      </constraintSpec>
+    </attDef>
+  </attList>
+  <!-- More examples to be added. -->
+  <exemplum xml:lang="ja" versionDate="2021-02-01">
+    <p>The word <mentioned>大統領</mentioned> <mentioned>daitōryō</mentioned>
+      (president) is glossed character by character in hiragana to provide a pronunciation guide.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <p style="writing-mode: vertical-rl" xml:lang="ja"> 
+        <!--...-->
+        <ruby><rb>大</rb><rt place="right">だい</rt></ruby>
+        <ruby><rb>統</rb><rt place="right">とう</rt></ruby>
+        <ruby><rb>領</rb><rt place="right">りょう</rt></ruby>
+        <!--...-->
+      </p>
+    </egXML>
+  </exemplum>
+  <remarks xml:lang="en" versionDate="2021-02-02">
+    <p>Where the <att>place</att> attribute is not provided on the <gi>rt</gi>
+      element, the default assumption is that the 
+      ruby gloss is <val>above</val> where the text is horizontal, and to the
+      <val>right</val> of the text where it is vertical. </p>
+  </remarks>
+  <listRef>
+    <ptr target="#COHTGRB"/>
+  </listRef>
+</elementSpec>

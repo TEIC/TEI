@@ -12,19 +12,17 @@ $Id$
     within a document.</desc>
   <attList>
     <attDef ident="target" usage="opt">
-      <desc versionDate="2010-01-25" xml:lang="en">points at one or several elements or sets of
-        elements by means of one or more data pointers, using the URI syntax.</desc>
+      <desc versionDate="2021-01-30" xml:lang="en">points at one or more sets of zero or more elements each.</desc>
       <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to <persName xml:id="ESSEX">Essex</persName>
           <certainty target="#ESSEX" locus="name" degree="0.6"/>
         </egXML>
       </exemplum>
-
     </attDef>
     <attDef ident="match" usage="opt">
-      <desc versionDate="2010-02-01" xml:lang="en">supplies an arbitrary XPath expression using the
-        syntax defined in <ptr target="#XSLT2"/> which identifies a set of nodes, selected within
+      <desc versionDate="2021-01-30" xml:lang="en">supplies an XPath selection pattern using the
+        syntax defined in <ptr target="#XSLT3"/> which identifies a set of nodes, selected within
         the context identified by the <att>target</att> attribute if this is supplied, or within the 
         context of the parent element if it is not. </desc>
       <datatype>
@@ -37,24 +35,21 @@ $Id$
           </gap>
         </egXML>
       </exemplum>
-
-      <remarks versionDate="2016-03-15" xml:lang="en">
-        <p>The expression of certainty applies to the nodeset identified by the value of the
-            <att>target</att> attribute, possibly modified additionally by the value of the
-            <att>match</att> attribute. If more than one identifier is given, the implication is
-          that all elements (or nodesets) are intended. The <att>match</att> attribute may also be
-          used as a means of identifying groups of elements. </p>
-        <p>If <att>target</att> and <att>match</att> are present, <att>target</att> selects an
-          element and the XPath expression in <att>match</att> is evaluated in the context of that
-          element. If neither attribute is present, the expression applies to its parent element. If
-          only <att>target</att> is given, the expression refers to the selected element or nodeset.
-          If only <att>match</att> is given, the XPath expression is evaluated in the context of the
-          parent element of the bearing element. </p>
-        <p>Note that the value of the <att>target</att> attribute may include an XPointer expression
-          including an XPath expression (see <ptr target="#SATS"/>). </p>
-      </remarks>
-
-
     </attDef>
   </attList>
+  <remarks versionDate="2021-01-30" xml:lang="en">
+    <p>The semantics of this element apply to the nodeset identified by the value of the
+      <att>target</att> attribute, possibly modified by the value of the
+      <att>match</att> attribute. If more than one identifier is given, the implication is
+      that all elements (or nodesets) are intended. The <att>match</att> attribute may also be
+      used as a means of identifying groups of elements. </p>
+    <p>If <att>target</att> and <att>match</att> are present, <att>target</att> selects an
+      element and the XPath expression in <att>match</att> is evaluated in the context of that
+      element. If neither attribute is present, the expression applies to its parent element. If
+      only <att>target</att> is given, the expression refers to the selected element or nodeset.
+      If only <att>match</att> is given, the XPath expression is evaluated in the context of the
+      parent element of the bearing element. </p>
+    <p>Note that the value of the <att>target</att> attribute may include an XPointer expression
+      including an XPath expression (see <ptr target="#SATS"/>). </p>
+  </remarks>
 </classSpec>
