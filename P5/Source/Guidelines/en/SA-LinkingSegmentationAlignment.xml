@@ -1212,48 +1212,65 @@ to <code>$</code> during processing.</p>
     references in non-TEI documents (such as plain text
     documents), possibly as part of their conversion to TEI.</p>
 </div>
-  <div type="div4" xml:id="SACRCS">
-    <head>Citation Structures</head>
-    <p>The equivalent structure to the set of <gi>cRefPattern</gi>s in <ptr target="#SACRWE"/> would be:
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <refsDecl xml:id="biblical2">
-        <citeStructure unit="book" match="//div" use="@n">
-          <citeStructure unit="chapter" match="div" use="@n" delim=" ">
-            <citeStructure unit="verse" match="div" use="@n" delim=":"/>
-          </citeStructure>
-        </citeStructure>
-      </refsDecl>
-    </egXML>
-    </p>
-    <p>An application wishing to resolve a canonical reference such as <val>Matt 5:7</val> might follow this procedure:
-      <list rend="numbered">
-        <item>Ascertain the correct <gi>refsDecl</gi>
-          following the rules summarized in section <ptr target="#CCAS3"/>.</item>
-        <item>Begin with the outer <gi>citeStructure</gi>. If it has a <att>delim</att> attribute 
-          and the reference begins with the value of <att>delim</att> then take the portion of 
-          the reference after the value of <att>delim</att> as input for the next child citeStructure.</item>
-        <item>For each nested citeStructure, if the input reference string contains the value 
-          of the <att>delim</att>, then split the string on the value of the <att>delim</att> attribute. 
-          If the input string does not contain <att>delim</att>, then stop. Take the portion of the input 
-          string after the value of <att>delim</att> and use it as the input string for the child citeStructure. 
-          After processing the outer citeStructure, the output will be <code>('Matt 5:7')</code>, after 
-          the second, <code>('Matt', '5:7')</code>. The end result will be a 
-          sequence like <code>('Matt','5','7')</code>.</item>
-        <item>For each item in the resulting sequence, resolve the matching node by evaluating 
-          the XPath in <att>match</att> with the predicate found in <att>use</att>, using the 
-          context of the previously matched node, if any. Start with the outer <gi>citeStructure</gi> 
-          and move to the next child citeStructure for each step in the sequence. For 
-          example, for the first citeStructure, we could construct an XPath 
-          <code>//div[@n='Matt']</code>. The full XPath after the reference <val>Matt 5:7</val> is resolved will be 
-          <code>//div[@n='Matt']/div[@n='5']/div[@n='7']</code>.</item>
-      </list>
-      One advantage <gi>citeStructure</gi> has is that it can be used to <emph>generate</emph> canonical 
-      references, using the declared citation structure to query the text structure. This means it is 
-      possible to automatically produce a list of resolvable citations for a TEI document. It also 
-      enables the automatic breaking of documents into smaller chunks for presentation and automated 
-      generation of tables of contents.</p>
-  </div>
-      
+      <div type="div4" xml:id="SACRCS">
+        <head>Citation Structures</head>
+        <p>Citation structures provide a more thorough and concise mechanism for describing canonical references
+           and the ways those references map on to parts of a TEI document. A <gi>citeStructure</gi> element
+           describes a single step in a reference, such as <q>Matt</q>, and may nest to handle multi-part references.
+        </p>
+        <p>The equivalent structure to the set of <gi>cRefPattern</gi>s in <ptr target="#SACRWE"/> would be:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <refsDecl xml:id="biblical2">
+            <citeStructure unit="book" match="//div" use="@n">
+              <citeStructure unit="chapter" match="div" use="@n" delim=" ">
+                <citeStructure unit="verse" match="div" use="@n" delim=":"/>
+              </citeStructure>
+            </citeStructure>
+          </refsDecl>
+        </egXML>
+        </p>
+        <p>An application wishing to resolve a canonical reference such as <val>Matt 5:7</val> might follow this procedure:
+          <list rend="numbered">
+            <item>Ascertain the correct <gi>refsDecl</gi>
+              following the rules summarized in section <ptr target="#CCAS3"/>.</item>
+            <item>Begin with the outer <tag>citeStructure</tag>. If it has a <att>delim</att> attribute 
+              and the reference begins with the value of <att>delim</att> then take the portion of 
+              the reference after the value of <att>delim</att> as input for the next child <tag>citeStructure</tag>.</item>
+            <item>For each nested <tag>citeStructure</tag>, if the input reference string contains the value 
+              of the <att>delim</att>, then split the string on the value of the <att>delim</att> attribute. 
+              If the input string does not contain <att>delim</att>, then stop. Take the portion of the input 
+              string after the value of <att>delim</att> and use it as the input string for the child <tag>citeStructure</tag>. 
+              After processing the outer <tag>citeStructure</tag>, the output will be <code>('Matt 5:7')</code>, after 
+              the second, <code>('Matt', '5:7')</code>. The end result will be a 
+              sequence like <code>('Matt','5','7')</code>.</item>
+            <item>For each item in the resulting sequence, resolve the matching node by evaluating 
+              the XPath in <att>match</att> with the predicate found in <att>use</att>, using the 
+              context of the previously matched node, if any. Start with the outer <gi>citeStructure</gi> 
+              and move to the next child <tag>citeStructure</tag> for each step in the sequence. For 
+              example, for the first <tag>citeStructure</tag>, we could construct an XPath 
+              <code>//div[@n='Matt']</code>. The full XPath after the reference <val>Matt 5:7</val> is resolved will be 
+              <code>//div[@n='Matt']/div[@n='5']/div[@n='7']</code>.</item>
+          </list>
+          One advantage <gi>citeStructure</gi> has is that it can be used to <emph>generate</emph> canonical 
+          references, using the declared citation structure to query the text structure. This means it is 
+          possible to automatically produce a list of resolvable citations for a TEI document. It also 
+          enables the automatic breaking of documents into smaller chunks for presentation and automated 
+          generation of tables of contents.</p>
+        <p>Citation structures may in addition specify how informational properties are to be extracted from the
+          document sections they identify, using the <gi>citeData</gi> element. For example, if a TEI document 
+          is divided into chapters with a <gi>div</gi> per chapter and those chapters have titles, contained in
+          <gi>head</gi> elements, then we might declare a citation structure for the document thus:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <citeStructure unit="chapter" match="/TEI/text/body/div" use="position()" delim="ch. ">
+              <citeData property="http://purl.org/dc/terms/title" use="head"/>
+            </citeStructure>
+          </egXML>
+        </p>
+        <p>This specifies that chapter references are given in the form <q>ch. n</q>, where <q>n</q>
+          is the position of the <gi>div</gi> in the <gi>body</gi> of the document, and that we may obtain
+          the title of the chapter (identified by the Dublin Core property <code>title</code>) from the chapter
+          heading. This would, for example, enable the automated generation of a chapter listing for the document.</p>
+      </div>
     </div>
   </div>
   <div type="div2" xml:id="SASE">
