@@ -784,10 +784,10 @@ they cannot be said to have a fixed position.
 <p>The TEI recommends the following seven pointer schemes:
 <list type="gloss">
 <label><name type="xpscheme">xpath()</name></label>
-<item>Addresses a node or nodeset using the XPath syntax. (<ptr target="#SATSXP"/>)</item>
+<item>Addresses a node or node sequence using the XPath syntax. (<ptr target="#SATSXP"/>)</item>
 <label><name type="xpscheme">left()</name> and <name type="xpscheme">right()</name></label>
 <item>addresses the point before (left) or after (right) a node or node 
-set (<ptr target="#SATSL"/> and <ptr target="#SATSR"/>)</item>
+sequence (<ptr target="#SATSL"/> and <ptr target="#SATSR"/>)</item>
 <label><name type="xpscheme">string-index()</name></label>
 <item>addresses a point inside a text node (<ptr target="#SATSSI"/></item>
 <label><name type="xpscheme">range()</name></label>
@@ -828,15 +828,16 @@ scheme.</p>
 <div type="div4" xml:id="SATSXP">
 <head>xpath()</head>
 <p><code>Sequence xpath(XPATH)</code></p>
-<p>The <name type="xpscheme">xpath()</name> scheme locates zero or more nodes within an XML Information
-  Set. The single argument <rs>XPATH</rs> is an XPath path expression, following the latest
-  scheme adopted by the W3C (currently <ref target="http://www.w3.org/TR/xpath20/">XPath
-    2.0</ref>), that returns a sequence. XPaths returning atomic values (e.g.
-    <name>substring()</name>) are illegal in the <name type="xpscheme">xpath()</name> scheme
-  because they represent extracted values rather than locations in the source document.
-  Because the schemes below involve starting at a node and navigating from there, and
-  because attribute nodes have no intrinsic order, XPath expressions that address attribute
-  nodes should be avoided in schemes other than <name type="xpscheme">xpath()</name>. </p>
+<p>The <name type="xpscheme">xpath()</name> scheme locates zero or more nodes within an XML
+  Information Set. The single argument <rs>XPATH</rs> is an XPath selection pattern, as
+  defined in <ref target="https://www.w3.org/TR/xslt-30/#dt-selection-pattern">XSLT
+    3.0</ref>, that returns a node or sequence of nodes. XPaths returning atomic values
+  (e.g. <name>substring()</name>) are illegal in the <name type="xpscheme">xpath()</name>
+  scheme because they represent extracted values rather than locations in the source
+  document. Because the schemes below involve starting at a node and navigating from there,
+  and because attribute nodes have no intrinsic order, XPath expressions that address
+  attribute nodes should be avoided in schemes other than <name type="xpscheme"
+    >xpath()</name>. </p>
 <p>The example below, and all subsequent examples in this section refer 
 to the following TEI fragment<anchor xml:id="SATSXP-ex"/>:
 <!-- Ostrakon from Trimithis (O.Trim 1, 1)  http://papyri.info/ddbdp/o.trim;1;1 -->
@@ -855,8 +856,10 @@ to the following TEI fragment<anchor xml:id="SATSXP-ex"/>:
 <code>choice</code> in line 1 of the example might look like:
 <lb/><code>#xpath(//lb[@n='1']/following-sibling::choice[1]/reg)</code>. 
   Note that XPath values must be assumed to start from the document root. They cannot be relative 
-  to the element bearing the attribute that uses the pointer because TEI Pointers are URIs.
-</p>
+  to the element bearing the attribute that uses the pointer because TEI Pointers are URIs. Care
+  should be taken to ensure that XPaths used in TEI Pointers match only a single node, unless
+  multiple matches are desired. The examples that follow are relatively simple because the
+  document they refer to is short and does not contain many elements.</p>
 <p>When an XPath is interpreted by a TEI processor, the
 information set of the referenced document is interpreted
 without any additional information supplied by any schema
@@ -886,7 +889,7 @@ which is either an <rs>XPATH</rs> as defined above or an
 <rs>IDREF</rs>, the value of an <att>xml:id</att>
 occurring in the document addressed by the base URI in effect
 for the pointer.</p>
-<p>Example: the pointer <code>#left(//supplied)</code>
+<p>Example: the pointer <code>#left(//supplied[1])</code>
 indicates the point between the first <code>lb</code> and the first
 <code>supplied</code> in the <ref target="#SATSXP-ex">example</ref> above.</p>
 <p>Example: <code>#left(//gap[1])</code> indicates the point immediately before
