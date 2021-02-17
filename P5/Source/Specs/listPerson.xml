@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright TEI Consortium. 
-  Dual-licensed under CC-by and BSD2 licences 
+  Copyright TEI Consortium.
+  Dual-licensed under CC-by and BSD2 licences
   See the file COPYING.txt for details
   $Date$
   $Id$
@@ -44,14 +44,20 @@
     <sequence>
       <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
       <elementRef key="desc" minOccurs="0" maxOccurs="unbounded"/>
-      <alternate minOccurs="1" maxOccurs="unbounded">
-        <classRef key="model.personLike"/>
-        <elementRef key="listPerson"/>
-      </alternate>
       <alternate minOccurs="0" maxOccurs="unbounded">
-        <elementRef key="relation"/>
-        <elementRef key="listRelation"/>
-      </alternate>      
+        <elementRef key="relation" minOccurs="1" maxOccurs="1"/>
+        <elementRef key="listRelation" minOccurs="1" maxOccurs="1"/>
+      </alternate>
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <alternate minOccurs="1" maxOccurs="unbounded">
+          <classRef key="model.personLike" minOccurs="1" maxOccurs="1"/>
+          <elementRef key="listPerson" minOccurs="1" maxOccurs="1"/>
+        </alternate>
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <elementRef key="relation" minOccurs="1" maxOccurs="1"/>
+          <elementRef key="listRelation" minOccurs="1" maxOccurs="1"/>
+        </alternate>
+      </sequence>
     </sequence>
   </content>
   <exemplum xml:lang="en">
