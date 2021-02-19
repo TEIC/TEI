@@ -7,7 +7,11 @@ $Date$
 $Id$
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" xml:id="SCHEMASPEC" ident="schemaSpec">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+             xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+             xmlns:teix="http://www.tei-c.org/ns/Examples"
+             module="tagdocs" xml:id="SCHEMASPEC" ident="schemaSpec">
   <gloss versionDate="2007-07-04" xml:lang="en">schema specification</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">스키마 명시</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">especificación de esquema</gloss>
@@ -18,7 +22,7 @@ $Id$
   <desc versionDate="2007-05-02" xml:lang="zh-TW">建立一個符合TEI標準的模型以及該模型文件。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">TEI準拠のスキーマや文書を示す．</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">génère un schéma conforme à la TEI et la
-			documentation qui l'accompagne.</desc>
+                        documentation qui l'accompagne.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">genera un esquema TEI-conforme y la documentación relativa.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">genera uno schema TEI-conforme e la relativa documentazione</desc>
   <classes>
@@ -31,20 +35,51 @@ $Id$
   </classes>
   <content>
     <sequence>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.glossLike"/>
-          <classRef key="model.descLike"/>
-        </alternate>
-      
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.oddRef"/>
-          <classRef key="model.oddDecl"/>
-        </alternate>
-      
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.glossLike"/>
+        <classRef key="model.descLike"/>
+      </alternate>
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.oddRef"/>
+        <classRef key="model.oddDecl"/>
+      </alternate>      
     </sequence>
   </content>
+  <constraintSpec validUntil="2021-10-23" scheme="schematron" ident="deprecate_schemaSpec_in_bizarre_places">
+    <!-- This <constraintSpec> should be removed when the class
+         memberships and content models are altered so that this
+         restriction is enforced by closed schema, which is expected
+         to occur in October 2021. -->
+    <desc xml:lang="en" versionDate="2021-02-02">enforces the
+    deprecation of <gi>schemaSpec</gi> as a child of anything other
+    than <gi>front</gi>, <gi>body</gi>, <gi>back</gi>,
+    <gi>encodingDesc</gi>, <gi>div</gi>, or any of the numbered
+    division elements. </desc>
+    <desc type="deprecationInfo" xml:lang="en" versionDate="2021-02-02">
+      The use of <gi>schemaSpec</gi> as a child of any element other
+      than <gi>front</gi>, <gi>body</gi>, <gi>back</gi>,
+      <gi>encodingDesc</gi>, <gi>div</gi>, or one of the numbered
+      division elements is being withdrawn.</desc>
+    <constraint>
+      <sch:rule context="tei:schemaSpec|teix:schemaSpec">
+	<sch:assert test="             parent::teix:egXML
+			  | parent::tei:encodingDesc  | parent::teix:encodingDesc
+			  | parent::tei:front         | parent::teix:front
+			  | parent::tei:back          | parent::teix:back
+			  | parent::tei:body          | parent::teix:body
+			  | parent::tei:div           | parent::teix:div
+			  | parent::tei:div1          | parent::teix:div1
+			  | parent::tei:div2          | parent::teix:div2
+			  | parent::tei:div3          | parent::teix:div3
+			  | parent::tei:div4          | parent::teix:div4
+			  | parent::tei:div5          | parent::teix:div5
+			  | parent::tei:div6          | parent::teix:div6
+			  | parent::tei:div7          | parent::teix:div7"
+		    role="nonfatal">WARNING: use of deprecated construct — the “schemaSpec” element will no longer be a valid child of “<sch:value-of
+                        select="name(..)"/>” as of 2021-10-23; instead, it should be a child of “front”, “body”, “back”, “encodingDesc”, or a division element.</sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="start" usage="opt">
       <desc versionDate="2010-05-14" xml:lang="en">specifies entry points to the schema, i.e. which patterns
@@ -55,8 +90,8 @@ $Id$
       <desc versionDate="2008-04-05" xml:lang="ja">当該スキーマの開始点を示す．すなわち，TEI準拠文書の根要素となる
       要素を示す．</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">précise les points d'accès au schéma,
-					i.e. quels sont les éléments permis comme racine des documents XML qui se
-					conforment à ce schéma.</desc>
+                                        i.e. quels sont les éléments permis comme racine des documents XML qui se
+                                        conforment à ce schéma.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica los puntos de acceso al esquema, es decir, qué elementos son los permitidos para ser usados como raíz de los documentos conforme al esquema mismo.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica i punti di accesso allo schema, cioè quali elementi sono consentiti come radice dei documenti conformi allo schema stesso</desc>
       <datatype maxOccurs="unbounded"><dataRef key="teidata.name"/></datatype>
@@ -70,8 +105,8 @@ $Id$
       <desc versionDate="2008-04-05" xml:lang="ja">TEI要素の全パタンに対応する接頭辞を示す．これにより，TEIと同じ名
       前を持つ外部スキーマを混在させることができる．</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">précise un préfixe qui sera ajouté à tous
-					les modèles de définition des éléments de la TEI. Cela autorise l'introduction
-					des schémas externes ayant des éléments de même nom que ceux de la TEI</desc>
+                                        les modèles de définition des éléments de la TEI. Cela autorise l'introduction
+                                        des schémas externes ayant des éléments de même nom que ceux de la TEI</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica un prefijo que será antepuesto a todos los patrones relativos a los elementos TEI.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica un prefisso che sarà anteposto a tutti i pattern relativi a elementi TEI; questo consente</desc>
       <datatype minOccurs="0">
@@ -79,8 +114,8 @@ $Id$
       </datatype>
       <remarks versionDate="2013-05-06" xml:lang="en">
         <p>Use of this attribute allows an external schema which
-	   has an element with the same local name as a TEI element to
-	   be mixed in.</p>
+           has an element with the same local name as a TEI element to
+           be mixed in.</p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
         <p>Les deux-points, bien qu'ils soient permis à l'intérieur de la valeur, provoqueront la
@@ -106,8 +141,8 @@ $Id$
       <desc versionDate="2008-04-05" xml:lang="ja">要素や属性の名前が複数言語である場合には，スキーマ中の対象を作成
       する際に使用される言語を特定する．</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">lorsque des noms pour un élément ou pour
-					un attribut sont disponibles en plusieurs langues, précise quelle langue
-					utiliser lors de la création d'objets dans un schéma .</desc>
+                                        un attribut sont disponibles en plusieurs langues, précise quelle langue
+                                        utiliser lors de la création d'objets dans un schéma .</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica la lengua que se utiliza para la creación de objetos en el esquema en el caso en que los nombres de elementos o atributos esten disponibles en otras lenguas.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la lingua da utilizzare per la creazione di oggetti nello schema nel caso in cui i nomi di elementi o attributi siano disponibili in più lingue</desc>
       <datatype><dataRef key="teidata.language"/></datatype>
@@ -126,8 +161,8 @@ $Id$
       <desc versionDate="2008-04-05" xml:lang="ja">要素，属性，クラス，マクロの解説が複数言語で可能な場合，解説の言
       語を特定する．</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">lorsque la description pour un élément,
-					un attribut, une classe ou une macro est disponible en plusieurs langues,
-					précise quelle langue utiliser lors de la création de la documentation.</desc>
+                                        un attribut, une classe ou une macro est disponible en plusieurs langues,
+                                        précise quelle langue utiliser lors de la création de la documentation.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica la lengua que se ha de utilizar para la creación de la documentación en el caso en que las descripciones de elementos, atributos, clases o macros esten disponibles en más lenguas.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la lingua da utilizzare per la creazione della documentazione nel caso in cui le descrizioni di elementi, attributi, classi o macro siano disponibili in più lingue</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.language"/></datatype>
@@ -170,27 +205,37 @@ from an existing RELAX NG schema available from the URL indicated.</p>
       The <gi>q</gi> element is not available in TEI Bare, but it can be brought back. In this case, we will get
       the version defined in TEI P5 release 3.0.0 </p>
   </exemplum>
-  <remarks versionDate="2010-05-14" xml:lang="en">
-    <p>A <gi>schemaSpec</gi> combines references to modules,
-    individual element or macro declarations, and specification groups
-    together to form a unified schema. The processing of the
-    <gi>schemaSpec</gi> element must resolve any conflicts amongst the
-    declarations it contains or references. Different ODD processors
-    may generate schemas and documentation using different concrete
-    syntaxes. </p>
-    
-    <!-- noted moved from removed att.readFrom -->
-      <p>The source may be specified in the form of a private URI, for which
-        the form recommended is <code>tei:x.y.z</code>, where
-        <code>x.y.z</code> indicates the version number,
-        e.g. <code>tei:1.5.1</code> for 1.5.1 release of TEI P5
-        or (as a special case) <code>tei:current</code> for whatever is the
-        latest release. The context indicated must provide a set of TEI-conformant
-          specifications in a form directly usable by an ODD processor. By
-          default, this will be the location of the current release of the TEI
-          Guidelines.</p>
-    
-    
+  <remarks versionDate="2021-02-02" xml:lang="en">
+    <!--
+	oddRef:
+	classRef, dataRef, elementRef, macroRef, and moduleRef
+
+	oddDecl:
+	classSpec, constraintSpec, dataSpec, elementSpec, listRef,
+	macroSpec, moduleSpec, outputRendition, specGrp, and specGrpRef
+    -->
+    <p>A <gi>schemaSpec</gi> combines references to elements that
+    document a schema with individual specification elements that
+    document a schema to form a unified schema. It should be a child
+    of <gi>front</gi>, <gi>body</gi>, <gi>back</gi>,
+    <gi>encodingDesc</gi>, <gi>div</gi>, <gi>div1</gi>, <gi>div2</gi>,
+    <gi>div3</gi>, <gi>div4</gi>, <gi>div5</gi>, <gi>div6</gi>, or
+    <gi>div7</gi>.</p>
+    <p>The processing of the <gi>schemaSpec</gi> element must resolve
+    any conflicts amongst the declarations it either contains or
+    refers to. Different ODD processors may generate schemas and
+    documentation using different concrete syntaxes.</p>
+    <!-- note: moved from removed att.readFrom -->
+    <p>The source may be specified (on the <att>source</att>
+    attribute) in the form of a private URI, for which the recommended
+    format is <code>tei:x.y.z</code>, where <code>x.y.z</code>
+    indicates the version number, e.g. <code>tei:1.5.1</code> for
+    1.5.1 release of TEI P5 or (as a special case)
+    <code>tei:current</code> for whatever is the latest release. The
+    source indicated must provide a set of TEI-conformant
+    specifications in a form directly usable by an ODD processor. By
+    default, this will be the location of the current release of the
+    TEI Guidelines.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Un schéma combine des références aux modules ou aux groupes de spécifications avec
