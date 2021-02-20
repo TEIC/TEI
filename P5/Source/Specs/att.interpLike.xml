@@ -1,10 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="CLINTERP" type="atts" ident="att.interpLike">
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="CLINTERP" type="atts" ident="att.interpLike">
   <desc versionDate="2006-01-05" xml:lang="en">provides attributes for elements which represent a formal analysis or interpretation.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">형식적 분석 또는 해석을 표상하는 요소의 속성을 제공한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供元素的屬性，這些元素代表一正式分析或詮釋。</desc>
@@ -14,7 +16,19 @@ $Id$
   <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos para elementos que represental un análisis o interpretación formal.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">assegna degli attributi agli elementi che rappresentano un'analisi o un'interpretazione formali</desc>
   <classes>
+    <memberOf key="att.typed"/>
   </classes>
+  <!--
+      We would like to have a replacement @type attribute defined
+      here, so that all members of this class (currently just
+      <(interp|span)(Grp)?>) can inherit better semantics. But due to
+      a known bug (Stylesheets issue #370) doing so breaks the build.
+      Thus I am TEMPORARILY (I hope) copying the definition of @type
+      out of this file and into each of the four memebers: <interp>,
+      <interpGrp>, <span>, and <spanGrp>. So if you need to make any
+      changes to the @type attribute, sorry to say you will need to
+      make it in 4 different places.
+  -->
   <attList>
     <attDef ident="inst" usage="opt">
       <gloss versionDate="2007-07-02" xml:lang="en">instances</gloss>
@@ -34,7 +48,7 @@ by the current element.</desc>
       <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
       <remarks versionDate="2005-10-10" xml:lang="en">
         <p>The current element should be an analytic one.  The element
-	pointed at should be a textual one.</p>
+        pointed at should be a textual one.</p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
         <p>L'élément courant doit être analytique. L'élément pointé doit être textuel.
@@ -46,7 +60,7 @@ by the current element.</desc>
       <remarks xml:lang="ja" versionDate="2008-04-05">
         <p>当該要素は，分析的なものであるべき．参照されている要素は，
         テキストであるべき．
-	</p>
+        </p>
       </remarks>
     </attDef>
   </attList>
