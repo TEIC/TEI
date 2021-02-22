@@ -1,10 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" ident="span">
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+             xmlns:xi="http://www.w3.org/2001/XInclude"
+             module="analysis" ident="span">
   <desc versionDate="2005-01-14" xml:lang="en">associates an interpretative annotation directly with a span of text.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">해석적 부호를 텍스트의 일정 부분과 직접적으로 연결시킨다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">將詮釋性註釋直接和一段文字段連結。</desc>
@@ -19,7 +24,6 @@ $Id$
     <memberOf key="att.global"/>
     <memberOf key="att.interpLike"/>
     <memberOf key="att.pointing"/>
-    <memberOf key="att.typed" />
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
@@ -29,7 +33,7 @@ $Id$
     <constraint>
       <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@from and @target">
 Only one of the attributes @target and @from may be supplied on <name/>
-         </report>
+      </report>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="targetto" scheme="schematron">
@@ -52,6 +56,65 @@ The attributes @to and @from on <name/> may each contain only a single value</re
     </constraint>
   </constraintSpec>
   <attList>
+    <!--
+        The following <attDef> is a copy of the one in the
+        specifications of <interpGrp>, <span>, and <spanGrp>. It
+        *should* be part of the specification of att.interpLike rather
+        than in the specifications of the individual members of that
+        class. However, a bug in the Stylesheets means that won't work
+        at the moment. (See Stylesheets issue #370.)
+    -->
+    <attDef ident="type" usage="rec" mode="replace">
+      <desc versionDate="2005-10-10" xml:lang="en">indicates what kind of phenomenon is being noted in the passage.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">현 단락에 표기되고 있는 현상의 종류를 나타낸다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出段落中所註解的現象類別。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該部分で，どのような面が指摘されているのかを示す．</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">indique quel genre de phénomène est noté dans le
+      passage.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">indica que tipo de fenómeno está siendo anotado en el pasaje.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica quale sia il fenomeno osservato nella porzione di testo in questione</desc>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
+      <valList type="open">
+        <valItem ident="image">
+          <desc versionDate="2007-06-27" xml:lang="en">identifies an image in the passage.</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">단락에서 이미지를 식별한다.</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">標明段落中的影像。</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">identifica una imagen en el pasaje.</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">当該部分の画像を指示する．</desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">identifie une image dans le passage.</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">identifica un'immagine all'interno della porzione di testo</desc>
+        </valItem>
+        <valItem ident="character">
+          <desc versionDate="2007-06-27" xml:lang="en">identifies a character associated with the passage.</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">단락과 연관된 문자를 식별한다.</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">標明與段落相關聯的人物。</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">identifica un carácter asociado al pasaje.</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">当該部分に関連する文字を指示する．</desc>
+          <desc versionDate="2009-05-27" xml:lang="fr">identifie un personnage associé au
+          passage.</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">identifica un personaggio associato al brano in questione</desc>
+        </valItem>
+        <valItem ident="theme">
+          <desc versionDate="2007-06-27" xml:lang="en">identifies a theme in the passage.</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">단락에서 주제를 식별한다.</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">標明段落中的主題。</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">identifica un tema en el pasaje.</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">当該部分にあるテーマを指示する．</desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">identifie un thème dans le passage.</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">identifica un tema rispetto al brano in questione</desc>
+        </valItem>
+        <valItem ident="allusion">
+          <desc versionDate="2007-06-27" xml:lang="en">identifies an allusion to another text.</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">다른 텍스트에 대한 언급을 식별한다.</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">標明另一個文本的引用。</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">identifica una alusión a otro texto.</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">別テキストへの言及．</desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">identifie une allusion à un autre
+          texte.</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">identifica un'allusione a un altro testo</desc>
+        </valItem>
+      </valList>
+    </attDef>
     <attDef ident="from" usage="opt">
       <desc versionDate="2013-01-15" xml:lang="en">gives the identifier of the node which is the starting point of the span of text being annotated; if not accompanied by a <att>to</att> attribute, gives the identifier of the node of the entire span of text being annotated.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">현재 부호를 붙이는 단락의 처음을 명시함; <att>to</att> 속성과 같이 쓰이지 않으면

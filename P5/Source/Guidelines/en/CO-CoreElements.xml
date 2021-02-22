@@ -550,7 +550,7 @@ the rest of the text by virtue of its function (for example, because
 it is a name, a technical term, a quotation, a mentioned word, etc.)
 then the global <att>xml:lang</att> attribute should be used to
 specify additionally that its language distinguishes it from the
-surrounding text. Any element in the TEI scheme may take a
+surrounding text. Any element in the TEI scheme may take an
 <att>xml:lang</att> attribute, which specifies both the writing system
 and the language used by its content (see sections <ptr target="#STGAla"/> and <ptr target="#CHSH"/> for discussion of this
 attribute and its values respectively). Where there is no other
@@ -1386,7 +1386,7 @@ overshadows the historical content</quote>.</egXML>
         <specList>
           <specDesc key="altIdent"/>
           <specDesc key="desc"/>
-          <specDesc key="equiv" atts="uri filter name"/>
+          <specDesc key="equiv" atts="uri filter name predicate"/>
         </specList>
         Along with the <gi>gloss</gi> element mentioned above, these elements
         constitute the <ident type="class">model.glossLike</ident> class. They
@@ -2414,8 +2414,8 @@ cross-reference, the <gi>ptr</gi> element would be used as follows:
 <p>The <att>cRef</att> attribute may be used to express the target of
 a cross reference using some canonical referencing scheme, such as
 those typically used for ancient texts.  In this case, the referencing
-scheme must be defined using the <gi>cRefPattern</gi> element
-discussed below (<ptr target="#CORS6"/>); the definition it provides is used
+scheme must be defined using the <gi>cRefPattern</gi> or <gi>citeStructure</gi> elements
+discussed below (<ptr target="#CORS6"/>); the definition these provide may be used
 to translate the value of the <att>cRef</att> attribute into a
 conventional pointer value, such as one that might be supplied by the
 <att>target</att> attribute. It is an error to supply both
@@ -3198,7 +3198,7 @@ namespace in the second case, and its content will fully define the
 graphic to be produced. In the first case, however, one of the elements
 <gi>graphic</gi> or <gi>media</gi> is used to mark the presence of the graphic only and the
 visual content itself is stored outside the XML document at a location 
-referenced by means of an <att>url</att> attribute. This attribute is
+referenced by means of a <att>url</att> attribute. This attribute is
 provided by membership of these elements in the <ident type="class">att.resourced</ident> class. Alternatively, if
 it is small, the media information may be embedded directly within the document
 using some suitable binary format such as Base64; in this case the
@@ -3734,8 +3734,8 @@ is recommended that the TEI header contain a description of its
 construction in the <gi>refsDecl</gi> element described in section
 <ptr target="#HD54"/>. As described there, the declaration
 may consist either of a formal declaration using the
-<gi>cRefPattern</gi> element or an informal description in prose.  The
-former is recommended because unlike prose it can be processed by
+<gi>cRefPattern</gi> or <gi>citeStructure</gi> elements, or an informal description in prose.  One of the
+former is recommended because unlike prose they can be processed by
 software.</p>
 
 <p>The three examples given in section <ptr target="#CORS1"/> would be declared as follows. The first example encodes
@@ -3804,6 +3804,46 @@ declaration for such an encoding could be:
 although in general there seems to be little advantage in this case:
 it is no more difficult to use a standard relative URI reference as
 the value of <att>target</att>.</p>
+<p>In cases where a more complete formal declaration of text structure is desirable,
+for example in systems that will present the contents of a large TEI file in smaller chunks, the
+<gi>citeStructure</gi> element may be used. This method permits canonical references
+to be resolved and also allows them to be extracted, so that, for example, a list of resolvable
+citations may be generated from the document. The example from the <title>Amores</title>
+above could be implemented using <gi>citeStructure</gi> thus:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <refsDecl>
+    <citeStructure unit="work" match="//div1" use="@n">
+      <citeStructure unit="book" match="div2" use="@n" delim=" ">
+        <citeStructure unit="poem" match="div3" use="@n" delim=".">
+          <citeStructure unit="line" match="l" use="@n" delim="."/>
+        </citeStructure>
+      </citeStructure>
+    </citeStructure>
+  </refsDecl>
+</egXML></p>
+<p><gi>citeStructure</gi> also provides a method for attaching informational properties to 
+  units of structure, by means of the <gi>citeData</gi> element. The work, book, and poem 
+  divisions above might all have <gi>head</gi> elements which provide a title for the section.
+  If we wish that information to be extractable, we can use citeData to specify where it is to
+  be found:
+  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <refsDecl>
+      <citeStructure unit="work" match="//div1" use="@n">
+        <citeData property="http://purl.org/dc/terms/title" use="head"/>
+        <citeStructure unit="book" match="div2" use="@n" delim=" ">
+          <citeData property="http://purl.org/dc/terms/title" use="head"/>
+          <citeStructure unit="poem" match="div3" use="@n" delim=".">
+            <citeData property="http://purl.org/dc/terms/title" use="head"/>
+            <citeStructure unit="line" match="l" use="@n" delim="."/>
+          </citeStructure>
+        </citeStructure>
+      </citeStructure>
+    </refsDecl>
+  </egXML>
+  The example above maps the head element to the <ref target="#CO-BIBL-2">Dublin Core</ref> 
+  property <code>title</code>. For convenience, property URIs may be abbreviated using
+  <gi>prefixDef</gi>.
+</p>
 <p>Reference systems recorded by means of milestone tags can also be
 declared; the following prose description could be used to declare
 the example given in section <ptr target="#CORS5"/>.
