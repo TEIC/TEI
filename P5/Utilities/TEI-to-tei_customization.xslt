@@ -11,7 +11,7 @@
   >
 
   <xsl:variable name="myName" select="'TEI-to-tei_customization.xslt'"/>
-  <xsl:variable name="version" select="'0.6.0b'"/>
+  <xsl:variable name="version" select="'0.6.1b'"/>
   <xsl:param name="versionDate" select="format-date(current-date(),'[Y]-[M01]-[D01]')"/>
 
   <!--
@@ -51,6 +51,16 @@
 
   <xsl:variable name="revisionDesc">
     <revisionDesc>
+      <change who="#sbauman.emt" when="2020-10-29">
+        Per <ref
+        target="https://github.com/TEIC/TEI/issues/2050">#2050</ref>,
+        replace <val>nonfatal</val> with <val>warning</val> or
+        <val>information</val> on <att>role</att> attributes. Turns
+        out there is only one such case (on <val>tei-source</val>),
+        which I changed to <val>information</val>. Also fix the
+        comment that precedes that rule, as P5 no longer has the
+        att.readFrom class.
+      </change>
       <change who="#sbauman.emt" when="2019-11-08">
         As part of working through <ref
         target="https://github.com/TEIC/Stylesheets/issues/402">Stylesheets
@@ -1463,10 +1473,16 @@
               <classSpec ident="att.global.responsibility" module="tei" mode="delete" type="atts"/>
 
               <constraintSpec scheme="schematron" ident="tei-source">
-                <desc>Constrains the <att>source</att> from <ident type="class">att.readFrom</ident>
-                  to those values recommended by TEI</desc>
-                <!-- WARNING: this rule/@context is not auto-generated, and -->
-                <!-- may need to be updated to match TEI Guidelines -->
+                <desc>Constrains the <att>source</att> attribute of
+                various tagset documentation elements to those values
+                recommended by TEI</desc>
+		<!--
+		    WARNING: this rule/@context is not auto-generated,
+		    and may need to be updated to match the TEI
+		    Guidelines. Sadly, TEI P5 no longer has a separate
+		    class for this (it used to be att.readFrom),
+		    @source is now global.
+		-->
                 <constraint>
                   <sch:rule context=" tei:classRef[@source]
                                      |tei:dataRef[@source]
@@ -1476,8 +1492,8 @@
                                      |tei:schemaSpec[@source]">
                     <sch:assert
                       test="matches(normalize-space(@source), '^tei:([0-9]+\.[0-9]+\.[0-9]+|current)$')"
-                      role="nonfatal">The @source attribute of ＜<sch:name/>＞ is not in the
-                      recommended format</sch:assert>
+                      role="information">The @source attribute of ＜<sch:name/>＞ is not in the
+                      recommended format, which is either "tei:current" or "tei:x.y.z", where x.y.z is a version number.</sch:assert>
                   </sch:rule>
                 </constraint>
               </constraintSpec>

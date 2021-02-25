@@ -1,10 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" ident="interp">
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" ident="interp">
   <gloss versionDate="2005-01-14" xml:lang="en">interpretation</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">해석</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">解釋</gloss>
@@ -12,32 +14,95 @@ $Id$
   <gloss versionDate="2007-06-12" xml:lang="fr">interprétation</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">interpretación</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">interpretazione</gloss>
-  <desc versionDate="2005-07-30" xml:lang="en">summarizes a specific interpretative annotation which can be linked to a span of text.</desc>
+  <desc versionDate="2005-07-30" xml:lang="en">summarizes a specific
+  interpretative annotation which can be linked to a span of
+  text.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">텍스트의 범위에 연결될 수 있는 명시적인 해석적 부호를 요약한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">標明和某一文字段相連結的特定解釋性註釋。</desc>
   <desc versionDate="2008-04-06" xml:lang="ja">あるテキスト部分とリンクする，特定の解釈的注釈をまとめる．</desc>
-  <desc versionDate="2009-02-13" xml:lang="fr">interprétation sous la forme d'une annotation concise,
-    pouvant être liée à un passage dans un texte</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">resume una anotación interpretativa específica que puede
-    ser conectada con un periodo de texto.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">riassume una specifica annotazione interpretativa che può
-    essere associata ad una porzione di testo</desc>
+  <desc versionDate="2009-02-13" xml:lang="fr">interprétation sous la
+  forme d'une annotation concise, pouvant être liée à un passage dans
+  un texte</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">resume una anotación
+  interpretativa específica que puede ser conectada con un periodo de
+  texto.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">riassume una specifica
+  annotazione interpretativa che può essere associata ad una porzione
+  di testo</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.interpLike"/>
-    <memberOf key="att.typed" />
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
-    
-      <alternate minOccurs="0" maxOccurs="unbounded">
-        <textNode/>
-        <classRef key="model.gLike"/>
-        <classRef key="model.descLike"/>
-        <classRef key="model.certLike"/>
-      </alternate>
-    
+    <alternate minOccurs="0" maxOccurs="unbounded">
+      <textNode/>
+      <classRef key="model.gLike"/>
+      <classRef key="model.descLike"/>
+      <classRef key="model.certLike"/>
+    </alternate>
   </content>
+  <attList>
+    <!--
+	The following <attDef> is a copy of the one in the
+	specifications of <interpGrp>, <span>, and <spanGrp>. It
+	*should* be part of the specification of att.interpLike rather
+	than in the specifications of the individual members of that
+	class. However, a bug in the Stylesheets means that won't work
+	at the moment. (See Stylesheets issue #370.)
+    -->
+    <attDef ident="type" usage="rec" mode="replace">
+      <desc versionDate="2005-10-10" xml:lang="en">indicates what kind of phenomenon is being noted in the passage.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">현 단락에 표기되고 있는 현상의 종류를 나타낸다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出段落中所註解的現象類別。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該部分で，どのような面が指摘されているのかを示す．</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">indique quel genre de phénomène est noté dans le
+      passage.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">indica que tipo de fenómeno está siendo anotado en el pasaje.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica quale sia il fenomeno osservato nella porzione di testo in questione</desc>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
+      <valList type="open">
+	<valItem ident="image">
+	  <desc versionDate="2007-06-27" xml:lang="en">identifies an image in the passage.</desc>
+	  <desc versionDate="2007-12-20" xml:lang="ko">단락에서 이미지를 식별한다.</desc>
+	  <desc versionDate="2007-05-02" xml:lang="zh-TW">標明段落中的影像。</desc>
+	  <desc versionDate="2008-04-06" xml:lang="es">identifica una imagen en el pasaje.</desc>
+	  <desc versionDate="2008-04-05" xml:lang="ja">当該部分の画像を指示する．</desc>
+	  <desc versionDate="2008-03-30" xml:lang="fr">identifie une image dans le passage.</desc>
+	  <desc versionDate="2007-01-21" xml:lang="it">identifica un'immagine all'interno della porzione di testo</desc>
+	</valItem>
+	<valItem ident="character">
+	  <desc versionDate="2007-06-27" xml:lang="en">identifies a character associated with the passage.</desc>
+	  <desc versionDate="2007-12-20" xml:lang="ko">단락과 연관된 문자를 식별한다.</desc>
+	  <desc versionDate="2007-05-02" xml:lang="zh-TW">標明與段落相關聯的人物。</desc>
+	  <desc versionDate="2008-04-06" xml:lang="es">identifica un carácter asociado al pasaje.</desc>
+	  <desc versionDate="2008-04-05" xml:lang="ja">当該部分に関連する文字を指示する．</desc>
+	  <desc versionDate="2009-05-27" xml:lang="fr">identifie un personnage associé au
+	  passage.</desc>
+	  <desc versionDate="2007-01-21" xml:lang="it">identifica un personaggio associato al brano in questione</desc>
+	</valItem>
+	<valItem ident="theme">
+	  <desc versionDate="2007-06-27" xml:lang="en">identifies a theme in the passage.</desc>
+	  <desc versionDate="2007-12-20" xml:lang="ko">단락에서 주제를 식별한다.</desc>
+	  <desc versionDate="2007-05-02" xml:lang="zh-TW">標明段落中的主題。</desc>
+	  <desc versionDate="2008-04-06" xml:lang="es">identifica un tema en el pasaje.</desc>
+	  <desc versionDate="2008-04-05" xml:lang="ja">当該部分にあるテーマを指示する．</desc>
+	  <desc versionDate="2008-03-30" xml:lang="fr">identifie un thème dans le passage.</desc>
+	  <desc versionDate="2007-01-21" xml:lang="it">identifica un tema rispetto al brano in questione</desc>
+	</valItem>
+	<valItem ident="allusion">
+	  <desc versionDate="2007-06-27" xml:lang="en">identifies an allusion to another text.</desc>
+	  <desc versionDate="2007-12-20" xml:lang="ko">다른 텍스트에 대한 언급을 식별한다.</desc>
+	  <desc versionDate="2007-05-02" xml:lang="zh-TW">標明另一個文本的引用。</desc>
+	  <desc versionDate="2008-04-06" xml:lang="es">identifica una alusión a otro texto.</desc>
+	  <desc versionDate="2008-04-05" xml:lang="ja">別テキストへの言及．</desc>
+	  <desc versionDate="2008-03-30" xml:lang="fr">identifie une allusion à un autre
+	  texte.</desc>
+	  <desc versionDate="2007-01-21" xml:lang="it">identifica un'allusione a un altro testo</desc>
+	</valItem>
+      </valList>
+    </attDef>
+  </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <interp type="structuralunit" xml:id="ana_am">aftermath</interp>
