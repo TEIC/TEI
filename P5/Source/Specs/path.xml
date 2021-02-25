@@ -7,9 +7,8 @@ $Date$
 $Id$
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" 
-  xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="path" module="transcr"  
-  xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="path" module="transcr">
+  <gloss xml:lang="en" versionDate="2018-07-13">path</gloss>
   <desc versionDate="2018-03-28" xml:lang="en">defines any line passing through two or more points within a <gi>surface</gi>
 element.</desc>
   <gloss versionDate="2018-07-13" xml:lang="de">Pfad</gloss>
@@ -34,12 +33,12 @@ element.</desc>
         repeat the first coordinate, otherwise we have a closed polygon, not a
         path.
       -->
-        <sch:let name="firstPair" value="tokenize( normalize-space( @points ), '&#x20;')[1]"/>
-        <sch:let name="lastPair"  value="tokenize( normalize-space( @points ), '&#x20;')[last()]"/>
-        <sch:let name="firstX"  value="xs:float( substring-before( $firstPair, ',') )"/>
+        <sch:let name="firstPair" value="tokenize( normalize-space( @points ), ' ')[1]"/>
+        <sch:let name="lastPair" value="tokenize( normalize-space( @points ), ' ')[last()]"/>
+        <sch:let name="firstX" value="xs:float( substring-before( $firstPair, ',') )"/>
         <sch:let name="firstY" value="xs:float( substring-after( $firstPair, ',') )"/>
-        <sch:let name="lastX"   value="xs:float( substring-before( $lastPair, ',') )"/>
-        <sch:let name="lastY"  value="xs:float( substring-after( $lastPair, ',') )"/>
+        <sch:let name="lastX" value="xs:float( substring-before( $lastPair, ',') )"/>
+        <sch:let name="lastY" value="xs:float( substring-after( $lastPair, ',') )"/>
         <sch:report test="$firstX eq $lastX  and  $firstY eq $lastY">The first and
           last elements of this path are the same. To specify a closed polygon, use
           the zone element rather than the path element. </sch:report>
