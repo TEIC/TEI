@@ -1,0 +1,708 @@
+
+\section[{Simple Analytic Mechanisms}]{Simple Analytic Mechanisms}\label{AI}\par
+This chapter describes a module for associating simple analyses and interpretations with text elements. We use the term \textit{analysis} here to refer to any kind of semantic or syntactic interpretation which an encoder wishes to attach to all or part of a text. Examples discussed in this chapter include familiar linguistic categorizations (such as ‘clause’, ‘morpheme’, ‘part-of-speech’ etc.) and characterizations of narrative structure (such as ‘theme’, ‘reconciliation’ etc.). The mechanisms presented in this chapter are simpler but less powerful than those described in chapter \textit{\hyperref[FS]{18.\ Feature Structures}}.\par
+Section \textit{\hyperref[AILC]{17.1.\ Linguistic Segment Categories}} introduces elements which can be used to characterize text segments according to the familiar linguistic categories of \textit{sentence} or \textit{s-unit}, \textit{clause}, \textit{phrase}, \textit{word}, \textit{morpheme}, \textit{character}, and \textit{punctuation mark}. These elements represent special cases of the generic \hyperref[TEI.seg]{<seg>} element described in section \textit{\hyperref[SASE]{16.3.\ Blocks, Segments, and Anchors}}.\par
+Section \textit{\hyperref[AIATTS]{17.2.\ Global Attributes for Simple Analyses}} introduces an additional global attribute which allows passages of text to be associated with specialized elements representing their interpretation. These ‘interpretative’ elements (\hyperref[TEI.span]{<span>} and \hyperref[TEI.interp]{<interp>}) are described in detail in section \textit{\hyperref[AISP]{17.3.\ Spans and Interpretations}}. They allow the encoder to specify an analysis as a series of names and associated values,\footnote{Or, as they are widely known, \textit{attribute-value pairs}; this term should not be confused, however, with XML attributes and their values, which are similar in concept but distinct in their formal definitions.} each such pair being linked to one or more stretches of text, either directly, in the case of spans, or indirectly, in the case of interpretations.\par
+Finally section \textit{\hyperref[AILA]{17.4.\ Linguistic Annotation}} revisits the topic of linguistic analysis, and illustrates how these interpretative mechanisms may be used to associate simple linguistic analysis with text segments.
+\subsection[{Linguistic Segment Categories}]{Linguistic Segment Categories}\label{AILC}\par
+In this section we introduce specialized \textit{linguistic segment category} elements which may be used to represent the segmentation of a text into the traditional linguistic categories of \textit{sentence}, \textit{clause}, \textit{phrase}, \textit{word}, \textit{morpheme}, \textit{characters}, and \textit{punctuation marks}.
+\subsubsection[{Words and Above}]{Words and Above}\label{AILCW}\par
+Although different languages have very different rules about what constitutes a ‘word’ or a ‘sentence’, these remain generally useful concepts. In this section we discuss elements provided for marking up linguistic units down to the word level, however defined. 
+\begin{sansreflist}
+  
+\item [\textbf{<s>}] (s-unit) contains a sentence-like division of a text.
+\item [\textbf{<cl>}] (clause) represents a grammatical clause.
+\item [\textbf{<phr>}] (phrase) represents a grammatical phrase.
+\item [\textbf{<w>}] (word) represents a grammatical (not necessarily orthographic) word.
+\end{sansreflist}
+\par
+As members of the \textsf{att.segLike} class, these elements all share the following attribute: 
+\begin{sansreflist}
+  
+\item [\textbf{att.segLike}] provides attributes for elements used for arbitrary segmentation.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape function}]
+  (function) characterizes the function of the segment.
+\end{sansreflist}  
+\end{sansreflist}
+ They also share attributes from \textsf{att.typed}: 
+\begin{sansreflist}
+  
+\item [\textbf{att.typed}] provides attributes which can be used to classify or subclassify elements in any way.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape type}]
+  characterizes the element in some sense, using any convenient classification scheme or typology.
+    \item[@{\itshape subtype}]
+  (subtype) provides a sub-categorization of the element, if needed
+\end{sansreflist}  
+\end{sansreflist}
+\par
+These elements are also all members of the \textsf{model.segLike} class, which is a subclass of \textsf{model.phrase}. They may thus appear anywhere that text is permitted within a document, when the module defined by this chapter is included in a schema.\par
+The \hyperref[TEI.w]{<w>} and \hyperref[TEI.pc]{<pc>} elements belong to the \textsf{att.linguistic} class, which supplies attributes that may be used for lightweight linguistic annotation (see section \textit{\hyperref[AILALW]{17.4.2.\ Lightweight Linguistic Annotation}} below): 
+\begin{sansreflist}
+  
+\item [\textbf{att.linguistic}] provides a set of attributes concerning linguistic features of tokens, for usage within token-level elements, specifically \hyperref[TEI.w]{<w>} and \hyperref[TEI.pc]{<pc>} in the analysis module.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape lemma}]
+  provides a lemma (base form) for the word, typically uninflected and serving both as an identifier (e.g. in dictionary contexts, as a headword), and as a basis for potential inflections.
+    \item[@{\itshape lemmaRef}]
+  provides a pointer to a definition of the lemma for the word, for example in an online lexicon.
+    \item[@{\itshape pos}]
+  (part of speech) indicates the part of speech assigned to a token (i.e. information on whether it is a noun, adjective, or verb), usually according to some official reference vocabulary (e.g. for German: STTS, for English: CLAWS, for Polish: NKJP, etc.).
+    \item[@{\itshape msd}]
+  (morphosyntactic description) supplies morphosyntactic information for a token, usually according to some official reference vocabulary (e.g. for German: \xref{http://www.ims.uni-stuttgart.de/forschung/ressourcen/lexika/TagSets/stts-1999.pdf}{STTS-large tagset}; for a feature description system designed as (pragmatically) universal, see \xref{http://universaldependencies.org/u/feat/index.html}{Universal Features}).
+    \item[@{\itshape join}]
+  when present, it provides information on whether the token in question is adjacent to another, and if so, on which side. The definition of this attribute is adapted from ISO MAF (Morpho-syntactic Annotation Framework), ISO 24611:2012.
+\end{sansreflist}  
+\end{sansreflist}
+\par
+Additionally, these elements also have access to the \textsf{att.lexicographic.normalized} class, which supplies the attributes {\itshape norm} and {\itshape orig}: the former for handling normalization/regularization at the word level, the latter providing the original form if the element content is modernized or regularized. Note that these attributes are a local (word-level) alternative to the robust mechanism that uses the \hyperref[TEI.choice]{<choice>}, \hyperref[TEI.orig]{<orig>}, and \hyperref[TEI.reg]{<reg>} elements, discussed in section \textit{\hyperref[COEDREG]{3.5.2.\ Regularization and Normalization}} and in chapter \textit{\hyperref[TC]{12.\ Critical Apparatus}}. The \hyperref[TEI.choice]{<choice>}-based mechanism is the default descriptive device, while the {\itshape norm} and {\itshape orig} attributes are used to handle a subset of normalizations in linguistic contexts where a single sequence of tokens is a priority, for example in historical corpora subject to linguistic analysis. It needs to be stressed that the simplified attribute-based mechanism is not meant to be used for editorial interventions. \footnote{The \textsf{att.lexicographic.normalized} class is also used in dictionary entries, as discussed in chapter \textit{\hyperref[DI]{9.\ Dictionaries}}.}\par
+The \hyperref[TEI.s]{<s>} element may be used simply to segment a text end-to-end into a series of non-overlapping segments, referred to here and elsewhere as \textit{s-units}, or \textit{sentences}. \par\bgroup\index{p=<p>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}>}Nineteen fifty-four, when I was eighteen years old,\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} is held to be a crucial turning point in the history of\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} the Afro-American — for the U.S.A. as a whole — the\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} year segregation was outlawed by the U.S. Supreme Court.{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}>}It was also a crucial year for me because on June 18,\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} 1954, I began serving a sentence in state prison for\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} possession of marijuana.{</\textbf{s}>}\mbox{}\newline 
+{</\textbf{p}>}\end{shaded}\egroup\par \noindent  The \hyperref[TEI.s]{<s>} element is more restricted both in its content and its usage than the generic \hyperref[TEI.seg]{<seg>} element. The \hyperref[TEI.seg]{<seg>} unit may contain anything which can appear within a paragraph: thus it may be used to enclose members of the \textsf{model.inter} class (such as \hyperref[TEI.bibl]{<bibl>} or \hyperref[TEI.list]{<list>}) as well as other phrase elements; the \hyperref[TEI.s]{<s>} unit may only contain phrase-level elements or text. Also, unlike \hyperref[TEI.seg]{<seg>} elements, \hyperref[TEI.s]{<s>} elements should not be nested within each other.\footnote{Neither this constraint, nor the requirement that the whole of the text be segmented by \hyperref[TEI.s]{<s>} elements is required by the TEI Guidelines.} The \hyperref[TEI.seg]{<seg>} element is intended for use as a generic segmentation element, the specific function of which may be indicated by its {\itshape type} attribute; the other members of the class are more specialized. Thus, the \hyperref[TEI.s]{<s>}, \hyperref[TEI.cl]{<cl>}, and \hyperref[TEI.phr]{<phr>} elements may be thought of as equivalent to <seg type="s-unit">, <seg type="clause"> and <seg type="phrase">, respectively, but with the above-mentioned restrictions.\par
+The \hyperref[TEI.s]{<s>} element may be further subdivided into \textit{clauses}, marked with the \hyperref[TEI.cl]{<cl>} element, as in the following example: \par\bgroup\index{p=<p>|exampleindex}\index{s=<s>|exampleindex}\index{cl=<cl>|exampleindex}\index{cl=<cl>|exampleindex}\index{cl=<cl>|exampleindex}\index{cl=<cl>|exampleindex}\index{cl=<cl>|exampleindex}\index{cl=<cl>|exampleindex}\index{cl=<cl>|exampleindex}\index{cl=<cl>|exampleindex}\index{cl=<cl>|exampleindex}\index{s=<s>|exampleindex}\index{cl=<cl>|exampleindex}\index{cl=<cl>|exampleindex}\index{cl=<cl>|exampleindex}\index{cl=<cl>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}>}It was about the beginning of September, 1664,\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}>}that I, among the rest of my neighbours,\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} heard in ordinary discourse\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{cl}>}that the plague was returned again to Holland; {</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}>}for it had been very violent there, and particularly at\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} Amsterdam and Rotterdam, in the year 1663, {</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}>}whither, {<\textbf{cl}>}they say,{</\textbf{cl}>} it was brought,\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}>}some said{</\textbf{cl}>} from Italy, others from the Levant, among some goods\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}>}which were brought home by their Turkey fleet;{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}>}others said it was brought from Candia;\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} others from Cyprus. {</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}>}It mattered not {<\textbf{cl}>}from whence it came;{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}>}but all agreed {<\textbf{cl}>}it was come into Holland again.{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{s}>}\mbox{}\newline 
+{</\textbf{p}>}\end{shaded}\egroup\par \par
+Clauses may be further divided into \hyperref[TEI.phr]{<phr>} elements in the same way. A text may be segmented directly into clauses, or into phrases, with no need to include segmentation at a higher level as well.\par
+For verse texts, the overlapping of metrical and syntactic structure requires that special care be given to representing both using an element hierarchy. One simple approach is to split the syntactic phrases into fragments when they cross verse boundaries, reuniting them with the {\itshape part} attribute: \par\bgroup\index{div=<div>|exampleindex}\index{type=@type!<div>|exampleindex}\index{l=<l>|exampleindex}\index{cl=<cl>|exampleindex}\index{part=@part!<cl>|exampleindex}\index{l=<l>|exampleindex}\index{cl=<cl>|exampleindex}\index{part=@part!<cl>|exampleindex}\index{l=<l>|exampleindex}\index{cl=<cl>|exampleindex}\index{part=@part!<cl>|exampleindex}\index{cl=<cl>|exampleindex}\index{part=@part!<cl>|exampleindex}\index{l=<l>|exampleindex}\index{cl=<cl>|exampleindex}\index{part=@part!<cl>|exampleindex}\index{cl=<cl>|exampleindex}\index{part=@part!<cl>|exampleindex}\index{div=<div>|exampleindex}\index{type=@type!<div>|exampleindex}\index{l=<l>|exampleindex}\index{cl=<cl>|exampleindex}\index{part=@part!<cl>|exampleindex}\index{l=<l>|exampleindex}\index{cl=<cl>|exampleindex}\index{part=@part!<cl>|exampleindex}\index{l=<l>|exampleindex}\index{cl=<cl>|exampleindex}\index{part=@part!<cl>|exampleindex}\index{l=<l>|exampleindex}\index{cl=<cl>|exampleindex}\index{part=@part!<cl>|exampleindex}\index{cl=<cl>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{div}\hspace*{1em}{type}="{stanza}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}\hspace*{1em}{part}="{I}">}Tweedledum and Tweedledee{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}\hspace*{1em}{part}="{F}">}Agreed to have a battle;{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}\hspace*{1em}{part}="{I}">}For Tweedledum said {<\textbf{cl}\hspace*{1em}{part}="{I}">}Tweedledee{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}\hspace*{1em}{part}="{F}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{cl}\hspace*{1em}{part}="{F}">}Had spoiled his nice new rattle.{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{l}>}\mbox{}\newline 
+{</\textbf{div}>}\mbox{}\newline 
+{<\textbf{div}\hspace*{1em}{type}="{stanza}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}\hspace*{1em}{part}="{I}">}Just then flew down a monstrous crow,{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}\hspace*{1em}{part}="{F}">}As black as a tar barrel;{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}\hspace*{1em}{part}="{I}">}Which frightened both the heroes so,{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}\hspace*{1em}{part}="{F}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{cl}>}They quite forgot their quarrel.{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{l}>}\mbox{}\newline 
+{</\textbf{div}>}\end{shaded}\egroup\par \noindent  Another approach is to use the {\itshape next} and {\itshape prev} attributes defined in the additional module for linking (chapter \textit{\hyperref[SA]{16.\ Linking, Segmentation, and Alignment}}): \par\bgroup\index{l=<l>|exampleindex}\index{cl=<cl>|exampleindex}\index{next=@next!<cl>|exampleindex}\index{part=@part!<cl>|exampleindex}\index{cl=<cl>|exampleindex}\index{next=@next!<cl>|exampleindex}\index{part=@part!<cl>|exampleindex}\index{l=<l>|exampleindex}\index{cl=<cl>|exampleindex}\index{prev=@prev!<cl>|exampleindex}\index{part=@part!<cl>|exampleindex}\index{cl=<cl>|exampleindex}\index{prev=@prev!<cl>|exampleindex}\index{part=@part!<cl>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{cl}\hspace*{1em}{next}="{\#c5}"\hspace*{1em}{xml:id}="{c3}"\hspace*{1em}{part}="{I}">}For Tweedledum said\mbox{}\newline 
+\hspace*{1em}{<\textbf{cl}\hspace*{1em}{next}="{\#c6}"\hspace*{1em}{xml:id}="{c4}"\hspace*{1em}{part}="{I}">}Tweedledee{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{cl}>}\mbox{}\newline 
+{</\textbf{l}>}\mbox{}\newline 
+{<\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{cl}\hspace*{1em}{prev}="{\#c3}"\hspace*{1em}{xml:id}="{c5}"\hspace*{1em}{part}="{F}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}\hspace*{1em}{prev}="{\#c4}"\hspace*{1em}{xml:id}="{c6}"\hspace*{1em}{part}="{F}">}Had spoiled his nice new rattle.{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{cl}>}\mbox{}\newline 
+{</\textbf{l}>}\end{shaded}\egroup\par \noindent  Other methods are also possible; for discussion, see chapter \textit{\hyperref[NH]{20.\ Non-hierarchical Structures}}.\par
+The {\itshape type} attribute on linguistic segment categories can be used to provide additional interpretative information about the category. The {\itshape function} attribute on the \hyperref[TEI.cl]{<cl>} and \hyperref[TEI.phr]{<phr>} elements can be used to provide additional information about the function of the category. Legal values for these two attributes are not defined by these Guidelines, but should be documented in the \hyperref[TEI.segmentation]{<segmentation>} element of the \hyperref[TEI.encodingDesc]{<encodingDesc>} element within the document's header. A general approach to the encoding of linguistic categories for parts of a text is discussed in section \textit{\hyperref[AILA]{17.4.\ Linguistic Annotation}} below.\par
+Using traditional terminology, these attributes provide a convenient way of specifying, for example, that the clause \textit{from whence it came} is a relative clause modifying another, or that the phrase \textit{by the U.S. Supreme Court} is a prepositional post-modifier: \par\bgroup\index{cl=<cl>|exampleindex}\index{cl=<cl>|exampleindex}\index{type=@type!<cl>|exampleindex}\index{function=@function!<cl>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{cl}>}It mattered not\mbox{}\newline 
+{<\textbf{cl}\hspace*{1em}{type}="{relative}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{function}="{clause\textunderscore modifier}">}from whence it came;{</\textbf{cl}>}\mbox{}\newline 
+{</\textbf{cl}>}\end{shaded}\egroup\par \noindent  \par\bgroup\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{phr}\hspace*{1em}{type}="{NP}">}the year segregation{</\textbf{phr}>}\mbox{}\newline 
+{<\textbf{phr}>}was outlawed{</\textbf{phr}>}\mbox{}\newline 
+{<\textbf{phr}\hspace*{1em}{type}="{PP}"\mbox{}\newline 
+\hspace*{1em}{function}="{postmodifier-agent}">}by the U.S. Supreme Court.{</\textbf{phr}>}\end{shaded}\egroup\par \par
+Segmentation into clauses and phrases can, of course, be combined. Such detailed encodings as the following may require careful formatting if they are to be easily readable however. \par\bgroup\index{p=<p>|exampleindex}\index{s=<s>|exampleindex}\index{cl=<cl>|exampleindex}\index{type=@type!<cl>|exampleindex}\index{function=@function!<cl>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{cl=<cl>|exampleindex}\index{type=@type!<cl>|exampleindex}\index{function=@function!<cl>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{cl=<cl>|exampleindex}\index{type=@type!<cl>|exampleindex}\index{function=@function!<cl>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{cl=<cl>|exampleindex}\index{type=@type!<cl>|exampleindex}\index{function=@function!<cl>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{s=<s>|exampleindex}\index{cl=<cl>|exampleindex}\index{type=@type!<cl>|exampleindex}\index{function=@function!<cl>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{cl=<cl>|exampleindex}\index{type=@type!<cl>|exampleindex}\index{function=@function!<cl>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{type=@type!<phr>|exampleindex}\index{function=@function!<phr>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}\hspace*{1em}{type}="{finite-declarative}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{function}="{independent}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{NP}"\hspace*{1em}{function}="{subject}">}Nineteen fifty-four,\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{cl}\hspace*{1em}{type}="{finite-relative-declarative}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{function}="{appositive}">}when {<\textbf{phr}\hspace*{1em}{type}="{NP}"\hspace*{1em}{function}="{subject}">}I{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{VP}"\hspace*{1em}{function}="{predicate}">}was eighteen years old{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{phr}>},\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{VP}"\hspace*{1em}{function}="{predicate}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{V}"\hspace*{1em}{function}="{verb-main}">}is held{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{NP}"\hspace*{1em}{function}="{complement}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{cl}\hspace*{1em}{type}="{nonfinite}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{function}="{predicate-nom.}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{V}"\hspace*{1em}{function}="{copula}">}to be{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{NP}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{function}="{predicate-nom.}">}a crucial turning point\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{PP}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{function}="{postmodifier}">}in\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{NP}"\hspace*{1em}{function}="{prep.obj.}">}the history\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{PP}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{function}="{postmodifier}">}of the Afro-American{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} —\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{PP}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{function}="{postmodifier-appositive}">}for\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{NP}"\hspace*{1em}{function}="{prep.obj.}">}the U.S.A.\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{PP}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{function}="{postmodifier}">}as a whole{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} —\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{NP}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{function}="{appositive-predicate-nom.}">}the year\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{cl}\hspace*{1em}{type}="{finite-relative}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{function}="{adjectival}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{NP}"\hspace*{1em}{function}="{subject}">}segregation{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{VP}"\hspace*{1em}{function}="{predicate}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{V}"\hspace*{1em}{function}="{verb-main}">}was outlawed{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{PP}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{function}="{postmodifier}">}by the U.S. Supreme Court{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{phr}>}.{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}\hspace*{1em}{type}="{finite-declarative}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{function}="{independent}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{NP}"\hspace*{1em}{function}="{subject}">}It{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{VP}"\hspace*{1em}{function}="{predicate}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{V}"\hspace*{1em}{function}="{verb-main}">}was{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} also\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{NP}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{function}="{predicate-nom.}">}a crucial year for me{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{cl}\hspace*{1em}{type}="{declarative-finite}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{function}="{dependent-causative}">}because\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{PP}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{function}="{sentence\textunderscore adverb}">}on June 18, 1954{</\textbf{phr}>},\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{NP}"\hspace*{1em}{function}="{subject}">}I{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{VP}"\hspace*{1em}{function}="{predicate}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{V}"\hspace*{1em}{function}="{verb-main}">}began serving{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{NP}"\hspace*{1em}{function}="{complement}">}a sentence in state prison\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{type}="{PP}"\hspace*{1em}{function}="{complement}">}for possession of marijuana{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{s}>}.\mbox{}\newline 
+{</\textbf{p}>}\end{shaded}\egroup\par \par
+This style of markup may introduce spurious new lines and blanks into the text. If the original layout is important, it should be explicitly encoded, using such facilities as the \hyperref[TEI.lb]{<lb>} element, the global {\itshape rend} or {\itshape rendition} attributes, etc.\par
+The \hyperref[TEI.w]{<w>}, \hyperref[TEI.m]{<m>}, and \hyperref[TEI.c]{<c>} elements are identical in meaning to the \hyperref[TEI.seg]{<seg>} element with a {\itshape type} attribute of ‘w’, ‘m’, or ‘c’ respectively, and may occur wherever \hyperref[TEI.seg]{<seg>} is permitted to occur. However, their content is more constrained than \hyperref[TEI.seg]{<seg>}: for example, the \hyperref[TEI.w]{<w>} element should only contain \hyperref[TEI.w]{<w>}, \hyperref[TEI.m]{<m>}, \hyperref[TEI.c]{<c>} elements or \hyperref[TEI.pc]{<pc>} elements, or plain text; the \hyperref[TEI.m]{<m>} element should contain only \hyperref[TEI.c]{<c>} or \hyperref[TEI.pc]{<pc>} elements or plain text; both the \hyperref[TEI.c]{<c>} and \hyperref[TEI.pc]{<pc>} elements should contain only plain text, most often only a single character or a sequence of graphemes to be treated as a single character. Consequently, while these more specific elements can be translated directly into typed \hyperref[TEI.seg]{<seg>} elements, the reverse is not necessarily the case.\par
+The restriction on the content of the \hyperref[TEI.w]{<w>} element in particular requires that a certain care must be exercised when using it, especially in relation to the use of other tags that one may think of as \textit{word level}, but which are in fact defined as \textit{phrase level}. Consider the problem of segmenting an occurrence of the \hyperref[TEI.mentioned]{<mentioned>} element as a word. \par\bgroup\index{mentioned=<mentioned>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{mentioned}>}grandiloquent{</\textbf{mentioned}>}\end{shaded}\egroup\par \noindent  The first of the following two encodings is legitimate; the second is not, since the \hyperref[TEI.mentioned]{<mentioned>} element is not part of the content model of the \hyperref[TEI.w]{<w>} element: \par\bgroup\index{mentioned=<mentioned>|exampleindex}\index{w=<w>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{mentioned}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}>}grandiloquent{</\textbf{w}>}\mbox{}\newline 
+{</\textbf{mentioned}>}\end{shaded}\egroup\par \noindent  \par\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{mentioned}>}grandiloquent{</\textbf{mentioned}>}\mbox{}\newline 
+{</\textbf{w}>}\end{shaded}\egroup\par \par
+On the other hand, both of the following encodings \textit{are} legitimate: \par\bgroup\index{mentioned=<mentioned>|exampleindex}\index{phr=<phr>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{mentioned}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{phr}>}grandiloquent speech{</\textbf{phr}>}\mbox{}\newline 
+{</\textbf{mentioned}>}\end{shaded}\egroup\par \noindent  \par\bgroup\index{phr=<phr>|exampleindex}\index{mentioned=<mentioned>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{mentioned}>}grandiloquent speech{</\textbf{mentioned}>}\mbox{}\newline 
+{</\textbf{phr}>}\end{shaded}\egroup\par \noindent  The first encoding describes the citing of a phrase. The second describes a phrase which consists of something mentioned. \par
+The \hyperref[TEI.w]{<w>} element  carries additional attributes which may be of use in many indexing or analytic applications. The {\itshape lemma} attribute may be used to specify the \textit{lemma}, that is the head- or uninflected form of an inflected verb or noun, for example: \par\bgroup\index{s=<s>|exampleindex}\index{w=<w>|exampleindex}\index{lemma=@lemma!<w>|exampleindex}\index{w=<w>|exampleindex}\index{lemma=@lemma!<w>|exampleindex}\index{w=<w>|exampleindex}\index{lemma=@lemma!<w>|exampleindex}\index{w=<w>|exampleindex}\index{lemma=@lemma!<w>|exampleindex}\index{w=<w>|exampleindex}\index{lemma=@lemma!<w>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{s}\hspace*{1em}{xml:lang}="{la}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{lemma}="{timeo}">}timeo{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{lemma}="{danaii}">}Danaos{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{lemma}="{et}">}et{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{lemma}="{donum}">}dona{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{lemma}="{fero}">}ferentes{</\textbf{w}>}\mbox{}\newline 
+{</\textbf{s}>}\end{shaded}\egroup\par \par
+In some situations it may be more convenient to use the {\itshape lemmaRef} pointer attribute than to supply an explicit uninflected form. This attribute assumes the existence of a list of uninflected forms, for example in an online lexicon, with which individual w entries can be associated using the usual TEI pointer mechanisms. Assuming that a standardized lexicon for Latin is available at the location \texttt{http://lexicon.org/latin.xml}, we might for example revise the above example as: \par\bgroup\index{s=<s>|exampleindex}\index{w=<w>|exampleindex}\index{lemmaRef=@lemmaRef!<w>|exampleindex}\index{w=<w>|exampleindex}\index{lemmaRef=@lemmaRef!<w>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{s}\hspace*{1em}{xml:lang}="{la}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{lemmaRef}="{http://lexicon.org/latin.xml\#timeo}">}timeo{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{lemmaRef}="{http://lexicon.org/latin.xml\#danaii}">}Danaos{</\textbf{w}>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+{</\textbf{s}>}\end{shaded}\egroup\par 
+\subsubsection[{Below the Word Level}]{Below the Word Level}\label{AIPC}\par
+It is sometimes helpful to markup explicitly sub-word components such as morphemes, characters, or punctuation. 
+\begin{sansreflist}
+  
+\item [\textbf{<m>}] (morpheme) represents a grammatical morpheme.
+\item [\textbf{<c>}] (character) represents a character.
+\item [\textbf{<pc>}] (punctuation character) contains a character or string of characters regarded as constituting a single punctuation mark.
+\end{sansreflist}
+\par
+The \hyperref[TEI.m]{<m>} element is used to mark up morphologically identified segmentation below the word level. Analogous to the {\itshape lemma} attribute for \hyperref[TEI.w]{<w>}, there is a {\itshape baseForm} attribute for the \hyperref[TEI.m]{<m>} element, which may be used to indicate the ‘base form’ of an inflected morpheme; where appropriate, \hyperref[TEI.m]{<m>} elements may also be organized hierarchically: \par\bgroup\index{w=<w>|exampleindex}\index{type=@type!<w>|exampleindex}\index{m=<m>|exampleindex}\index{type=@type!<m>|exampleindex}\index{m=<m>|exampleindex}\index{type=@type!<m>|exampleindex}\index{baseForm=@baseForm!<m>|exampleindex}\index{m=<m>|exampleindex}\index{type=@type!<m>|exampleindex}\index{m=<m>|exampleindex}\index{type=@type!<m>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{w}\hspace*{1em}{type}="{adjective}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{m}\hspace*{1em}{type}="{base}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{m}\hspace*{1em}{type}="{prefix}"\hspace*{1em}{baseForm}="{con}">}com{</\textbf{m}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{m}\hspace*{1em}{type}="{root}">}fort{</\textbf{m}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{m}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{m}\hspace*{1em}{type}="{suffix}">}able{</\textbf{m}>}\mbox{}\newline 
+{</\textbf{w}>}\end{shaded}\egroup\par \par
+The distinction between \hyperref[TEI.m]{<m>} and \hyperref[TEI.w]{<w>} is provided as a convenience only; it may not be appropriate for all linguistic theories, nor is it meaningful in all languages. The intention is to provide a means for those cases where it is considered helpful to distinguish lexical from sub-lexical tokens, to complement the more general mechanism already provided by the \hyperref[TEI.seg]{<seg>} element, using which the above example could alternatively be marked up as follows: \par\bgroup\index{seg=<seg>|exampleindex}\index{type=@type!<seg>|exampleindex}\index{seg=<seg>|exampleindex}\index{type=@type!<seg>|exampleindex}\index{seg=<seg>|exampleindex}\index{type=@type!<seg>|exampleindex}\index{seg=<seg>|exampleindex}\index{type=@type!<seg>|exampleindex}\index{seg=<seg>|exampleindex}\index{type=@type!<seg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{seg}\hspace*{1em}{type}="{adjective}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}\hspace*{1em}{type}="{base}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{seg}\hspace*{1em}{type}="{prefix}">}com{</\textbf{seg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{seg}\hspace*{1em}{type}="{morph}">}fort{</\textbf{seg}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{seg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}\hspace*{1em}{type}="{suffix}">}able{</\textbf{seg}>}\mbox{}\newline 
+{</\textbf{seg}>}\end{shaded}\egroup\par \noindent  See section \textit{\hyperref[AILALW]{17.4.2.\ Lightweight Linguistic Annotation}} for an alternative to using {\itshape type} in such contexts.\par
+There is a substantial linguistic difference between characters like letters or diacritics and punctuation marks. The former are used to construct meaningful units like morphemes or words. The latter are functionally independent units acting at the level of syntactic units. A word may consist of a single letter (for example ‘I’ in English), but this does not mean that we should use \hyperref[TEI.c]{<c>} instead of \hyperref[TEI.w]{<w>} to mark it up.\par
+The \hyperref[TEI.c]{<c>} (character) element should be used to mark up any non-lexical character, whether this appears within a word, or outside it. In the following example, the encoder wishes to indicate that the letters are not to be regarded as words: \par\bgroup\index{phr=<phr>|exampleindex}\index{c=<c>|exampleindex}\index{c=<c>|exampleindex}\index{c=<c>|exampleindex}\index{c=<c>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{c}>}M{</\textbf{c}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{c}>}O{</\textbf{c}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{c}>}A{</\textbf{c}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{c}>}I{</\textbf{c}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}>}doth{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}>}sway{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}>}my{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}>}life{</\textbf{w}>}\mbox{}\newline 
+{</\textbf{phr}>}\end{shaded}\egroup\par \par
+The \hyperref[TEI.c]{<c>} element may be used for individual characters occurring within a \hyperref[TEI.w]{<w>} or \hyperref[TEI.m]{<m>} element which it is desired to distinguish for some reason, as in the following examples: \par\bgroup\index{m=<m>|exampleindex}\index{baseForm=@baseForm!<m>|exampleindex}\index{c=<c>|exampleindex}\index{c=<c>|exampleindex}\index{type=@type!<c>|exampleindex}\index{c=<c>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{m}\hspace*{1em}{baseForm}="{not}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{c}>}n{</\textbf{c}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{c}\hspace*{1em}{type}="{punct}">}'{</\textbf{c}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{c}>}t{</\textbf{c}>}\mbox{}\newline 
+{</\textbf{m}>}\end{shaded}\egroup\par \noindent  This encoding represents the constituents of a common abbreviation, but does not indicate that it is in fact an abbreviation; the \hyperref[TEI.am]{<am>} element (\textit{\hyperref[PHAB]{11.3.1.2.\ Abbreviation and Expansion}}) may be preferred for the latter purpose. Generally speaking, the use of \hyperref[TEI.c]{<c>} use to mark non-lexical punctuation marks is deprecated, since the \hyperref[TEI.pc]{<pc>} element is provided specifically to distinguish these.\par
+The \hyperref[TEI.pc]{<pc>} (punctuation character) element should be used to mark up characters which are specifically regarded as providing punctuation, rather than constituting parts of a word. It may be particularly useful when transcribing older written materials, in which an encoding of the original punctuation may be useful for interpretive or analytic purposes, in much the same way as an encoding of the original orthography may be. For example, in the following extract from a Bodleian Library musical manuscript \begin{figure}[htbp]
+\noindent\noindent\includegraphics[]{Images/punctus.png}\end{figure}
+ two different punctuation marks are used to distinguish kinds of pause in the text. The \textit{punctus elevatus} (which resembles an inverted semicolon) is not a Unicode character, but may still be encoded using the \hyperref[TEI.g]{<g>} element. As further described in chapter \textit{\hyperref[WD]{5.\ Characters, Glyphs, and Writing Modes}}, this element points to a definition for the intended character which may be stored either locally or elsewhere. \par\bgroup\index{pc=<pc>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{pc=<pc>|exampleindex}\index{pc=<pc>|exampleindex}\index{char=<char>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}deus qui regis omnia\mbox{}\newline 
+{<\textbf{pc}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{g}\hspace*{1em}{ref}="{\#pelev}">};{</\textbf{g}>}\mbox{}\newline 
+{</\textbf{pc}>} natus est in bethlehem\mbox{}\newline 
+{<\textbf{pc}>}.{</\textbf{pc}>}o {<\textbf{pc}>}.{</\textbf{pc}>} mira gratia...\mbox{}\newline 
+\mbox{}\newline 
+\textit{<!-- elsewhere -->}\mbox{}\newline 
+{<\textbf{char}\hspace*{1em}{xml:id}="{pelev}">}\mbox{}\newline 
+\textit{<!-- definition of the punctus elevatus character -->}\mbox{}\newline 
+{</\textbf{char}>}\end{shaded}\egroup\par \par
+The \hyperref[TEI.pc]{<pc>} element carries special attributes to record analyses of the functional behaviour or classification of the punctuation mark it contains. The {\itshape unit} attribute may be used, as on the \hyperref[TEI.milestone]{<milestone>} element to name the kind of unit which the punctuation mark delimits, for example a paragraph or section. The {\itshape pre} attribute may be used to indicate whether the punctuation precedes or follows the unit it delimits. The {\itshape force} attribute indicates the strength of the association between the punctuation mark and its adjacent word.\par
+In the following example, the paragraph marker (¶) has been tagged as a strong punctuation mark, preceding the unit it marks, which is named ‘para’: \par\bgroup\index{p=<p>|exampleindex}\index{pc=<pc>|exampleindex}\index{unit=@unit!<pc>|exampleindex}\index{force=@force!<pc>|exampleindex}\index{pre=@pre!<pc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{pc}\hspace*{1em}{unit}="{para}"\hspace*{1em}{force}="{strong}"\hspace*{1em}{pre}="{true}">}¶{</\textbf{pc}>}Incipit...\mbox{}\newline 
+{</\textbf{p}>}\end{shaded}\egroup\par \par
+A similar encoding can be used for hyphenation: \par\bgroup\index{pc=<pc>|exampleindex}\index{force=@force!<pc>|exampleindex}\index{pc=<pc>|exampleindex}\index{force=@force!<pc>|exampleindex}\index{lb=<lb>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}A fire{<\textbf{pc}\hspace*{1em}{force}="{strong}">}-{</\textbf{pc}>}proof vest is recom{<\textbf{pc}\hspace*{1em}{force}="{weak}">}-{</\textbf{pc}>}{<\textbf{lb}/>}\newline
+mended. \newline
+\end{shaded}\egroup\par \noindent  Refer to \textit{\hyperref[COPU-2]{3.2.2.\ Hyphenation}} for a discussion of the motivations for explicitely recording the presence of hyphens.\par
+The \hyperref[TEI.w]{<w>}, \hyperref[TEI.m]{<m>}, \hyperref[TEI.c]{<c>}, and \hyperref[TEI.pc]{<pc>} elements can be used together to give a fairly detailed low-level grammatical analysis of text. For example, consider the following segmentation of the English S-unit \textit{I didn't do it}. \par\bgroup\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{m=<m>|exampleindex}\index{baseForm=@baseForm!<m>|exampleindex}\index{m=<m>|exampleindex}\index{w=<w>|exampleindex}\index{lemma=@lemma!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pc=<pc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{w}>}I{</\textbf{w}>}\mbox{}\newline 
+{<\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{m}\hspace*{1em}{baseForm}="{do}">}did{</\textbf{m}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{m}>}n't{</\textbf{m}>}\mbox{}\newline 
+{</\textbf{w}>}\mbox{}\newline 
+{<\textbf{w}\hspace*{1em}{lemma}="{do}">}do{</\textbf{w}>}\mbox{}\newline 
+{<\textbf{w}>}it{</\textbf{w}>}\mbox{}\newline 
+{<\textbf{pc}>}.{</\textbf{pc}>}\end{shaded}\egroup\par \noindent  \par
+This segmentation, crude as it is, succeeds in representing the idea that \textit{did} occurring as a morphological component of the word \textit{didn't} has something in common with the word \texttt{<do>}. A further advantage of segmenting the text down to this level is that it becomes relatively simple to associate each such segment with a more detailed formal analysis, for example by providing a baseform, or morphological analysis at whichever level is appropriate. This matter is taken up in detail in section \textit{\hyperref[AILA]{17.4.\ Linguistic Annotation}}.
+\subsection[{Global Attributes for Simple Analyses}]{Global Attributes for Simple Analyses}\label{AIATTS}\par
+When the module described by this chapter is selected, an additional attribute is defined for all elements: 
+\begin{sansreflist}
+  
+\item [\textbf{att.global.analytic}] provides additional global attributes for associating specific analyses or interpretations with appropriate portions of a text.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape ana}]
+  (analysis) indicates one or more elements containing interpretations of the element on which the {\itshape ana} attribute appears.
+\end{sansreflist}  
+\end{sansreflist}
+ The {\itshape ana} attribute may be specified for any element. Its effect is to associate the element with one or more others representing an analysis or interpretation of it. Its target should be one of the elements described in the section \textit{\hyperref[AISP]{17.3.\ Spans and Interpretations}} below, or some other interpretative element such as \hyperref[TEI.note]{<note>}, on which see section \textit{\hyperref[CONO]{3.9.\ Notes, Annotation, and Indexing}} or \hyperref[TEI.fs]{<fs>}, on which see chapter \textit{\hyperref[FS]{18.\ Feature Structures}}. If a hierarchical form of classification is desired then it may point to \hyperref[TEI.category]{<category>} element at a suitable level in a \hyperref[TEI.taxonomy]{<taxonomy>} see \textit{\hyperref[HD55]{2.3.7.\ The Classification Declaration}}.
+\subsection[{Spans and Interpretations}]{Spans and Interpretations}\label{AISP}\par
+The simplest mechanisms for attaching analytic notes in some structured vocabulary to particular passages of text are provided by the \hyperref[TEI.span]{<span>} and \hyperref[TEI.interp]{<interp>} elements, and their associated grouping elements \hyperref[TEI.spanGrp]{<spanGrp>} and \hyperref[TEI.interpGrp]{<interpGrp>}. 
+\begin{sansreflist}
+  
+\item [\textbf{<span>}] associates an interpretative annotation directly with a span of text.
+\item [\textbf{<spanGrp>}] (span group) collects together span tags.
+\item [\textbf{<interp>}] (interpretation) summarizes a specific interpretative annotation which can be linked to a span of text.
+\item [\textbf{<interpGrp>}] (interpretation group) collects together a set of related interpretations which share responsibility or type.
+\end{sansreflist}
+\par
+These elements are all members of the class \textsf{att.interpLike}, and thus share the following attribute: 
+\begin{sansreflist}
+  
+\item [\textbf{att.interpLike}] provides attributes for elements which represent a formal analysis or interpretation.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape inst}]
+  (instances) points to instances of the analysis or interpretation represented by the current element.
+\end{sansreflist}  
+\end{sansreflist}
+ They also inherit the following attributes from \textsf{att.global.responsibility}: 
+\begin{sansreflist}
+  
+\item [\textbf{att.global.responsibility}] provides attributes indicating the agent responsible for some aspect of the text, the markup or something asserted by the markup, and the degree of certainty associated with it.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape cert}]
+  (certainty) signifies the degree of certainty associated with the intervention or interpretation.
+    \item[@{\itshape resp}]
+  (responsible party) indicates the agency responsible for the intervention or interpretation, for example an editor or transcriber.
+\end{sansreflist}  
+\end{sansreflist}
+\par
+The {\itshape type} attribute of the \hyperref[TEI.span]{<span>} and \hyperref[TEI.interp]{<interp>} elements may be used to indicate that the annotations are of specific types, for example thematic or structural. The annotation itself is supplied as the content of the \hyperref[TEI.span]{<span>} or \hyperref[TEI.interp]{<interp>} element. In the case of the \hyperref[TEI.span]{<span>} element, the span of text being annotated is indicated by values of the {\itshape from}, {\itshape to} or {\itshape target} attributes, used in combination as follows. If only the {\itshape from} attribute is supplied, then the span is coterminous with the element indicated by its value; if both {\itshape from} and {\itshape to} are supplied, the span runs from the start of the element indicated by the {\itshape from} attribute up to the end of the element indicated by the {\itshape to} attribute; if the {\itshape target} attribute is used, the span is defined by aggregating the contents of the (possibly non-contiguous) elements pointed to by its values. It is an error to supply only the {\itshape to} attribute; to supply more than one pointer value for either {\itshape to} or {\itshape from} attributes; or to supply either of these in conjunction with the {\itshape target} attribute. In the case of \hyperref[TEI.interp]{<interp>} (see below), the span is indicated by a pointer from a \hyperref[TEI.link]{<link>} element or some similar mechanism. The {\itshape resp} attribute indicates the annotator responsible for this annotation.\par
+The \hyperref[TEI.span]{<span>} element provides a simple way of indicating such features as phrasal verbs in a linguistic analysis, as in this example: \par\bgroup\index{s=<s>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{span=<span>|exampleindex}\index{from=@from!<span>|exampleindex}\index{to=@to!<span>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}>}What{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}>}did{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}>}you{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{mk01}">}make{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{up01}">}up{</\textbf{w}>}\mbox{}\newline 
+{</\textbf{s}>}\mbox{}\newline 
+{<\textbf{span}\hspace*{1em}{from}="{\#mk01}"\hspace*{1em}{to}="{\#up01}">}phrasal verb "make up"{</\textbf{span}>}\end{shaded}\egroup\par \noindent  Here the two components of the span follow each other, so the {\itshape to} and {\itshape from} attributes may be used. The same effect could however be achieved by using the {\itshape target} attribute: \par\bgroup\index{s=<s>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{span=<span>|exampleindex}\index{target=@target!<span>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}>}What{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}>}did{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}>}you{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{mk02}">}make{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{up02}">}up{</\textbf{w}>}\mbox{}\newline 
+{</\textbf{s}>}\mbox{}\newline 
+{<\textbf{span}\hspace*{1em}{target}="{\#mk02 \#up02}">}phrasal verb "make up"{</\textbf{span}>}\end{shaded}\egroup\par \noindent  This second approach might be cumbersome if the number of components to be combined is very large. It is however essential if the components do not follow each other, as in this example: \par\bgroup\index{s=<s>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{span=<span>|exampleindex}\index{target=@target!<span>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}>}Did{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}>}you{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{mk03}">}make{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}>}it{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{up03}">}up{</\textbf{w}>}\mbox{}\newline 
+{</\textbf{s}>}\mbox{}\newline 
+{<\textbf{span}\hspace*{1em}{target}="{\#mk03 \#up03}">}phrasal verb "make up"{</\textbf{span}>}\end{shaded}\egroup\par \par
+The \hyperref[TEI.span]{<span>} element can be used for any kind of annotation. In this example it is used in a narratological analysis: \par\bgroup\index{p=<p>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{emph=<emph>|exampleindex}\index{rend=@rend!<emph>|exampleindex}\index{soCalled=<soCalled>|exampleindex}\index{rend=@rend!<soCalled>|exampleindex}\index{span=<span>|exampleindex}\index{from=@from!<span>|exampleindex}\index{to=@to!<span>|exampleindex}\index{s=<s>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{p}\hspace*{1em}{xml:id}="{MaQp1s2p114}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{MaQp1s2p114s1}">}There was certainly a definite point at which the\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} thing began.{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{MaQp1s2p114s2}">}It was not; then it was suddenly inescapable,\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} and nothing could have frightened it away.{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{MaQp1s2p114s3}">}There was a slow integration, during which she,\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} and the little animals, and the moving grasses, and the sun-warmed\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} trees, and the slopes of shivering silvery mealies, and the great\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} dome of blue light overhead, and the stones of earth under her feet,\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} became one, shuddering together in a dissolution of dancing\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} atoms.{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{MaQp1s2p114s4}">}She felt the rivers under the ground forcing\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} themselves painfully along her veins, swelling them out in an\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} unbearable pressure; her flesh was the earth, and suffered growth\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} like a ferment; and her eyes stared, fixed like the eye of the\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} sun.{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{MaQp1s2p114s5}">}Not for one second longer (if the terms for time\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} apply) could she have borne it; but then, with a sudden movement\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} forwards and out, the whole process stopped; and {<\textbf{emph}\hspace*{1em}{rend}="{italic}">}that{</\textbf{emph}>} was {<\textbf{soCalled}\hspace*{1em}{rend}="{dquo}">}the\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} moment{</\textbf{soCalled}>} which it was impossible to remember\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} afterwards.{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{span}\hspace*{1em}{from}="{\#MaQp1s2p114s3}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{to}="{\#MaQp1s2p114s5}">}the moment{</\textbf{span}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{MaQp1s2p114s6}">}For during that space of time (which was\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} timeless) she understood quite finally her smallness, the\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} unimportance of humanity.{</\textbf{s}>}\mbox{}\newline 
+{</\textbf{p}>}\end{shaded}\egroup\par \par
+The \hyperref[TEI.span]{<span>} element may, as in this example, be placed in the text near the textual span it is associated with. Alternatively, it may be placed elsewhere in the same or a different document. Where several \hyperref[TEI.span]{<span>} or \hyperref[TEI.interp]{<interp>} elements share the same attributes, for example having the same responsibility or type, it may be convenient to group them within a \hyperref[TEI.spanGrp]{<spanGrp>} or \hyperref[TEI.interpGrp]{<interpGrp>} element as follows: \par\bgroup\index{spanGrp=<spanGrp>|exampleindex}\index{resp=@resp!<spanGrp>|exampleindex}\index{span=<span>|exampleindex}\index{from=@from!<span>|exampleindex}\index{to=@to!<span>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{spanGrp}\hspace*{1em}{resp}="{\#DTL}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{span}\hspace*{1em}{from}="{\#MaQp1s2p114s3}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{to}="{\#MaQp1s2p114s5}">}the moment{</\textbf{span}>}\mbox{}\newline 
+\textit{<!-- other spans identified by DTL here -->}\mbox{}\newline 
+{</\textbf{spanGrp}>}\end{shaded}\egroup\par \par
+Spans may also be used to represent structural divisions within a narrative, particularly when these do not coincide with the structure implied by the element structure. Consider the following narrative: 
+\begin{quote}\par
+Sigmund, the son of Volsung, was a king in Frankish country. Sinfiotli was the eldest of his sons, the second was Helgi, the third Hamund. Borghild, Sigmund's wife, had a brother named — But Sinfiotli, her stepson, and — both wooed the same woman and Sinfiotli killed him over it.\footnote{The rule marks spaces left for the missing name in the manuscript.} And when he came home, Borghild asked him to go away, but Sigmund offered her weregild, and she was obliged to accept it. At the funeral feast Borghild was serving beer. She took poison, a big drinking horn full, and brought it to Sinfiotli. When Sinfiotli looked into the horn, he saw that poison was in it, and said to Sigmund ‘This drink is cloudy, old man.’ Sigmund took the horn and drank it off. It is said that Sigmund was hardy and that poison did him no harm, inside or out. And all his sons could tolerate poison on their skin. Borghild brought another horn to Sinfiotli, and asked him to drink, and everything happened as before. And a third time she brought him a horn, and reproachful words as well, if he didn't drink from it. He spoke again to Sigmund as before. He said ‘Filter it through your mustache, son!’ Sinfiotli drank it off and at once fell dead. \par
+Sigmund carried him a long way in his arms and came to a long, narrow fjord, and there was a small boat there and a man in it. He offered to ferry Sigmund over the fjord. But when Sigmund carried the body out to the boat, it was fully laden. The man said Sigmund should go around the fjord inland. The man pushed the boat out and then suddenly vanished.  \par
+King Sigmund lived a long time in Denmark in the kingdom of Borghild, after he married her. Then he went south to Frankish lands, to the kingdom he had there. Then he married Hiordis, the daughter of King Eylimi. Their son was Sigurd. King Sigmund fell in a battle with the sons of Hunding. And then Hiordis married Alf, the son of King Hialprec. Sigurd grew up there as a boy.  \par
+Sigmund and all his sons were tall and outstanding in their strength, their growth, their intelligence, and their accomplishments. But Sigurd was the most outstanding of all, and everyone who knows about the old days says he was the most outstanding of men and the noblest of all the warrior kings.\end{quote}
+\par
+A structural analysis of this text, dividing it into narrative units in a pattern shared with other texts from the same literature, might look like this: \par\bgroup\index{p=<p>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{p=<p>|exampleindex}\index{p=<p>|exampleindex}\index{p=<p>|exampleindex}\index{spanGrp=<spanGrp>|exampleindex}\index{resp=@resp!<spanGrp>|exampleindex}\index{type=@type!<spanGrp>|exampleindex}\index{span=<span>|exampleindex}\index{from=@from!<span>|exampleindex}\index{to=@to!<span>|exampleindex}\index{span=<span>|exampleindex}\index{from=@from!<span>|exampleindex}\index{span=<span>|exampleindex}\index{from=@from!<span>|exampleindex}\index{span=<span>|exampleindex}\index{from=@from!<span>|exampleindex}\index{to=@to!<span>|exampleindex}\index{span=<span>|exampleindex}\index{from=@from!<span>|exampleindex}\index{span=<span>|exampleindex}\index{from=@from!<span>|exampleindex}\index{to=@to!<span>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{p}\hspace*{1em}{xml:id}="{P1}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{S1}">}Sigmund ... was a king in Frankish country.{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{S2}">}Sinfiotli was the eldest of his sons.{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{S3}">}Borghild, Sigmund's wife, had a brother ...{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{S4A}">}But Sinfiotli ... wooed the same woman{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{S4B}">}and Sinfiotli killed him over it.{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{S5}">}And when he came home, ... she was obliged to accept it.{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{S6}">}At the funeral feast Borghild was serving beer.{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{S7}">}She took poison ... and brought it to Sinfiotli.{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{S17}">}Sinfiotli drank it off and at once fell dead.{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{anchor}\hspace*{1em}{xml:id}="{EOS17}"/>}\mbox{}\newline 
+{</\textbf{p}>}\mbox{}\newline 
+{<\textbf{p}\hspace*{1em}{xml:id}="{P2}">}Sigmund carried him a long way in his arms ... {</\textbf{p}>}\mbox{}\newline 
+{<\textbf{p}\hspace*{1em}{xml:id}="{P3}">}King Sigmund lived a long time in Denmark ... {</\textbf{p}>}\mbox{}\newline 
+{<\textbf{p}\hspace*{1em}{xml:id}="{P4}">}Sigmund and all his sons were tall ... {</\textbf{p}>}\mbox{}\newline 
+{<\textbf{spanGrp}\hspace*{1em}{resp}="{\#TMA}"\mbox{}\newline 
+\hspace*{1em}{type}="{narrative-structure}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{span}\hspace*{1em}{from}="{\#S1}"\hspace*{1em}{to}="{\#S3}">}introduction{</\textbf{span}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{span}\hspace*{1em}{from}="{\#S4A}">}conflict{</\textbf{span}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{span}\hspace*{1em}{from}="{\#S4B}">}climax{</\textbf{span}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{span}\hspace*{1em}{from}="{\#S5}"\hspace*{1em}{to}="{\#S17}">}revenge{</\textbf{span}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{span}\hspace*{1em}{from}="{\#EOS17}">}reconciliation{</\textbf{span}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{span}\hspace*{1em}{from}="{\#P2}"\hspace*{1em}{to}="{\#P4}">}aftermath{</\textbf{span}>}\mbox{}\newline 
+{</\textbf{spanGrp}>}\end{shaded}\egroup\par \par
+Note the use of an empty \hyperref[TEI.anchor]{<anchor>} element to provide a target for the ‘reconciliation’ unit which is normally part of the narrative pattern but which is not realized in the text shown.\par
+The same analysis may be expressed with the \hyperref[TEI.interp]{<interp>} element instead of the \hyperref[TEI.span]{<span>} element; this element provides attributes for recording an interpretive category and its value, as well as the identity of the interpreter, but does not itself indicate which passage of text is being interpreted; the same interpretive structures can thus be associated with many passages of the text. The association between text passages and \hyperref[TEI.interp]{<interp>} elements should be made either by pointing from the text to the \hyperref[TEI.interp]{<interp>} element with the {\itshape ana} attribute defined in section \textit{\hyperref[AIATTS]{17.2.\ Global Attributes for Simple Analyses}}, or by pointing at both text and interpretation from a \hyperref[TEI.link]{<link>} element,  as described in chapter \textit{\hyperref[SA]{16.\ Linking, Segmentation, and Alignment}}.\par
+To encode the first example above using \hyperref[TEI.interp]{<interp>}, it is necessary to create a text element which contains—or corresponds to—the third, fourth, and fifth orthographic sentences (S-units) in the paragraph. This can be done either with the \hyperref[TEI.seg]{<seg>} element, described in \textit{\hyperref[SASE]{16.3.\ Blocks, Segments, and Anchors}}, or the \hyperref[TEI.join]{<join>} element, described in \textit{\hyperref[SAAG]{16.7.\ Aggregation}}. The resulting element can then be associated with the \hyperref[TEI.interp]{<interp>} element using the {\itshape ana} attribute described in section \textit{\hyperref[AIATTS]{17.2.\ Global Attributes for Simple Analyses}}. We illustrate using the \hyperref[TEI.seg]{<seg>} element. \par\bgroup\index{p=<p>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{seg=<seg>|exampleindex}\index{ana=@ana!<seg>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{interp=<interp>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{p}\hspace*{1em}{xml:id}="{MarQp1s2p114}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{MarQp1s2p114s1}">}There was certainly a definite point ... {</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{MarQp1s2p114s2}">}It was not; then it was suddenly inescapable ... {</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}\hspace*{1em}{xml:id}="{MarQp1s2p114s3-5}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{ana}="{\#moment}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{MarQp1s2p114s3}">}There was a slow integration ... {</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{MarQp1s2p114s4}">}She felt the rivers under the ground ... {</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{MarQp1s2p114s5}">}Not for one second longer ... {</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{seg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{MarQp1s2p114s6}">}For during that space of time ... {</\textbf{s}>}\mbox{}\newline 
+{</\textbf{p}>}\mbox{}\newline 
+{<\textbf{interp}\hspace*{1em}{xml:id}="{moment}">}the moment{</\textbf{interp}>}\end{shaded}\egroup\par \par
+The second example above can be recoded using \hyperref[TEI.interp]{<interp>} and \hyperref[TEI.interpGrp]{<interpGrp>} tags in a similar manner. The interpretation itself can be expressed in an \hyperref[TEI.interpGrp]{<interpGrp>} element, which would replace the \hyperref[TEI.spanGrp]{<spanGrp>} in the example shown above: \par\bgroup\index{interpGrp=<interpGrp>|exampleindex}\index{resp=@resp!<interpGrp>|exampleindex}\index{type=@type!<interpGrp>|exampleindex}\index{interp=<interp>|exampleindex}\index{interp=<interp>|exampleindex}\index{interp=<interp>|exampleindex}\index{interp=<interp>|exampleindex}\index{interp=<interp>|exampleindex}\index{interp=<interp>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{interpGrp}\hspace*{1em}{resp}="{\#TMA}"\mbox{}\newline 
+\hspace*{1em}{type}="{structuralunit}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{INTRO}">}introduction{</\textbf{interp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{CONFLICT}">}conflict{</\textbf{interp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{CLIMAX}">}climax{</\textbf{interp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{REVENGE}">}revenge{</\textbf{interp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{RECONCIL}">}reconciliation{</\textbf{interp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{AFTERM}">}aftermath{</\textbf{interp}>}\mbox{}\newline 
+{</\textbf{interpGrp}>}\end{shaded}\egroup\par \par
+Any of these \hyperref[TEI.interp]{<interp>} elements may be linked to the text either by means of the {\itshape ana} attribute, or by means of \hyperref[TEI.link]{<link>} elements. Using the {\itshape ana} attribute (on \hyperref[TEI.seg]{<seg>} elements introduced specifically for this purpose), the text would be encoded as follows: \par\bgroup\index{p=<p>|exampleindex}\index{seg=<seg>|exampleindex}\index{ana=@ana!<seg>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{ana=@ana!<s>|exampleindex}\index{s=<s>|exampleindex}\index{ana=@ana!<s>|exampleindex}\index{seg=<seg>|exampleindex}\index{ana=@ana!<seg>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{s=<s>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{ana=@ana!<anchor>|exampleindex}\index{p=<p>|exampleindex}\index{p=<p>|exampleindex}\index{p=<p>|exampleindex}\index{join=<join>|exampleindex}\index{target=@target!<join>|exampleindex}\index{ana=@ana!<join>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{p}\hspace*{1em}{xml:id}="{PP1}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}\hspace*{1em}{xml:id}="{SS1-SS3}"\hspace*{1em}{ana}="{\#INTRO}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{SS1}">}Sigmund ... was a king in Frankish country.{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{SS2}">}Sinfiotli was the eldest of his sons.{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{SS3}">}Borghild, Sigmund's wife, had a brother ... {</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{seg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{SS4A}"\hspace*{1em}{ana}="{\#CONFLICT}">}But Sinfiotli ... wooed the same woman{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{SS4B}"\hspace*{1em}{ana}="{\#CLIMAX}">}and Sinfiotli killed him over it.{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}\hspace*{1em}{xml:id}="{SS5-SS17}"\hspace*{1em}{ana}="{\#REVENGE}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{SS5}">}And when he came home, ... she was obliged to accept it.{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{SS6}">}At the funeral feast Borghild was serving beer.{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{s}\hspace*{1em}{xml:id}="{SS17}">}Sinfiotli drank it off and at once fell dead.{</\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{seg}>}\mbox{}\newline 
+{</\textbf{p}>}\mbox{}\newline 
+{<\textbf{anchor}\hspace*{1em}{xml:id}="{NIL1}"\hspace*{1em}{ana}="{\#RECONCIL}"/>}\mbox{}\newline 
+{<\textbf{p}\hspace*{1em}{xml:id}="{PP2}">}Sigmund carried him a long way in his arms ... {</\textbf{p}>}\mbox{}\newline 
+{<\textbf{p}\hspace*{1em}{xml:id}="{PP3}">}King Sigmund lived a long time in Denmark ... {</\textbf{p}>}\mbox{}\newline 
+{<\textbf{p}\hspace*{1em}{xml:id}="{PP4}">}Sigmund and all his sons were tall ... {</\textbf{p}>}\mbox{}\newline 
+{<\textbf{join}\hspace*{1em}{xml:id}="{PP2-PP4}"\mbox{}\newline 
+\hspace*{1em}{target}="{\#PP2 \#PP3 \#PP4}"\hspace*{1em}{ana}="{\#AFTERM}"/>}\end{shaded}\egroup\par \par
+The linkage may also be accomplished using a \hyperref[TEI.linkGrp]{<linkGrp>} element, whose content is a set of \hyperref[TEI.link]{<link>} elements which point to each interpretive element and its corresponding text unit. This method does not require the use of the {\itshape ana} attribute on the text units. \par\bgroup\index{linkGrp=<linkGrp>|exampleindex}\index{targFunc=@targFunc!<linkGrp>|exampleindex}\index{link=<link>|exampleindex}\index{target=@target!<link>|exampleindex}\index{link=<link>|exampleindex}\index{target=@target!<link>|exampleindex}\index{link=<link>|exampleindex}\index{target=@target!<link>|exampleindex}\index{link=<link>|exampleindex}\index{target=@target!<link>|exampleindex}\index{link=<link>|exampleindex}\index{target=@target!<link>|exampleindex}\index{link=<link>|exampleindex}\index{target=@target!<link>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{linkGrp}\hspace*{1em}{targFunc}="{interpretation text}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{link}\hspace*{1em}{target}="{\#INTRO \#SS1-SS3}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{link}\hspace*{1em}{target}="{\#CONFLICT \#SS4A}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{link}\hspace*{1em}{target}="{\#CLIMAX \#SS4B}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{link}\hspace*{1em}{target}="{\#REVENGE \#SS5-SS17}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{link}\hspace*{1em}{target}="{\#RECONCIL \#NIL1}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{link}\hspace*{1em}{target}="{\#AFTERM \#PP2-PP4}"/>}\mbox{}\newline 
+{</\textbf{linkGrp}>}\end{shaded}\egroup\par \par
+One obvious advantage of using \hyperref[TEI.interp]{<interp>} rather than \hyperref[TEI.span]{<span>} elements for the Sigmund text is that the \hyperref[TEI.interp]{<interp>} elements can be reused for marking up other texts in the same document, whereas the \hyperref[TEI.span]{<span>} elements cannot. On the other hand, the use of \hyperref[TEI.interp]{<interp>} elements may require the creation of special text elements not otherwise needed (e.g. the \hyperref[TEI.seg]{<seg>} and the \hyperref[TEI.join]{<join>} in the revised encoding of the text), whereas the use of \hyperref[TEI.span]{<span>} elements does not.
+\subsection[{Linguistic Annotation}]{Linguistic Annotation}\label{AILA}\par
+By \textit{linguistic annotation} we mean here any annotation determined by an analysis of linguistic features of the text, excluding as borderline cases both the formal structural properties of the text (e.g. its division into chapters or paragraphs) and descriptive information about its context (the circumstances of its production, its genre or medium). The structural properties of any TEI-conformant text should be represented using the structural elements discussed elsewhere in this chapter and in chapters \textit{\hyperref[CO]{3.\ Elements Available in All TEI Documents}}, \textit{\hyperref[DS]{4.\ Default Text Structure}}, and the various chapters of Part III. The contextual properties of a TEI text are fully documented in the TEI header, which is discussed in chapter \textit{\hyperref[HD]{2.\ The TEI Header}}, and in section \textit{\hyperref[CCAH]{15.2.\ Contextual Information}}.\par
+Other forms of linguistic annotation may be applied at a number of levels in a text. A code (such as a word-class or part-of-speech code) may be associated with each word or token, or with groups of such tokens, which may be continuous, discontinuous, or nested. A code may also be associated with relationships (such as cohesion) perceived as existing between distinct parts of a text. The codes themselves may stand for discrete and non-decomposable categories, or they may represent highly articulated bundles of textual features. Their function may be to place the annotated part of the text somewhere within a narrowly linguistic or discoursal domain of analysis, or within a more general semantic field, or any combination drawn from these and other domains. \par
+The manner by which such annotations are generated and attached to the text may be entirely automatic, entirely manual or a mixture. The ease and accuracy with which analysis may be automated may vary with the level at which the annotation is attached. The method employed should be documented in the \hyperref[TEI.interpretation]{<interpretation>} element within the encoding description of the TEI header, as described in section \textit{\hyperref[HD53]{2.3.3.\ The Editorial Practices Declaration}}. Where different parts of a language corpus have used different annotation methods, the {\itshape decls} attribute may be used to indicate the fact, as further discussed in section \textit{\hyperref[CCAS]{15.3.\ Associating Contextual Information with a Text}}.
+\subsubsection[{Linguistic Annotation by Means of Generic TEI Devices}]{Linguistic Annotation by Means of Generic TEI Devices}\label{AILAGD}\par
+As one example of such types of analysis, consider the following sentence, taken from the Lancaster/IBM Treebank Project (\cite{AI-BIBL-5}). 
+\begin{quote}The victim's friends told police that Kruger drove into the quarry and never surfaced.\end{quote}
+\par
+Our discussion focuses on the way that this sentence might be analysed using the CLAWS system developed at the University of Lancaster but exactly the same principles may be applied to a wide variety of other systems.\footnote{For the word-class tagging method used by CLAWS see \cite{AI-BIBL-6}; For an overview of the system see \cite{AI-BIBL-7}. The example sentence was processed using an online version of the CLAWS tagger at \url{http://ucrel.lancs.ac.uk/claws/}} Output from the system consists of a segmented and tokenized version of the text, in which word class codes have been associated with each token. CLAWS offers outputs in a variety of non-XML and XML formats: for example, the simplest format for the sample sentence would be: \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces The\textunderscore AT0 victim\textunderscore NN1 's\textunderscore POS friends\textunderscore NN2 told\textunderscore VVD police\textunderscore NN2 that\textunderscore CJT Kruger\textunderscore NP0 \newline
+drove\textunderscore VVD into\textunderscore PRP the\textunderscore AT0 quarry\textunderscore NN1 and\textunderscore CJC never\textunderscore AV0 surfaced\textunderscore VVD\end{shaded}
+\par\egroup 
+\par
+This may be easily transformed into an equivalent TEI XML representation: \par\bgroup\index{s=<s>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#AT0}">}The {</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#NN1}">}victim{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#POS}">}'s{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#NN2}">}friends {</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#VVD}">}told {</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#NN2}">}police {</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#CJT}">}that {</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#NP0}">}Kruger {</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#VVD}">}drove {</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#PRP}">}into {</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#AT0}">}the {</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#NN1}">}quarry {</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#CJC}">}and {</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#AV0}">}never {</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#VVD}">}surfaced{</\textbf{w}>}\mbox{}\newline 
+{</\textbf{s}>}\end{shaded}\egroup\par \noindent  Although the names used for the attribute values here may have some significance for the human reader (AT0 for \textit{article}, NN1 for \textit{singular noun}, NN2 for \textit{plural noun}, etc.) they are arbitrary codes, used in this case as pointers to other elements which define their significance more precisely. If the codes are considered to be \textit{atomic}, then the \hyperref[TEI.interp]{<interp>} element described in section \textit{\hyperref[AISP]{17.3.\ Spans and Interpretations}} might be used to supply brief definitions in the header: \par\bgroup\index{interpGrp=<interpGrp>|exampleindex}\index{type=@type!<interpGrp>|exampleindex}\index{interp=<interp>|exampleindex}\index{interp=<interp>|exampleindex}\index{interp=<interp>|exampleindex}\index{interp=<interp>|exampleindex}\index{interp=<interp>|exampleindex}\index{interp=<interp>|exampleindex}\index{interp=<interp>|exampleindex}\index{interp=<interp>|exampleindex}\index{interp=<interp>|exampleindex}\index{interp=<interp>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{interpGrp}\hspace*{1em}{type}="{POS}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{AT0}">}Definite article{</\textbf{interp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{AV0}">}Adverb{</\textbf{interp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{CJC}">}Conjunction{</\textbf{interp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{CJT}">}Relative that{</\textbf{interp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{NN1}">}Noun singular{</\textbf{interp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{NN2}">}Noun plural{</\textbf{interp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{NP0}">}Proper noun{</\textbf{interp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{POS}">}Genitive marker{</\textbf{interp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{PRP}">}Preposition{</\textbf{interp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{VVD}">}Verb past tense{</\textbf{interp}>}\mbox{}\newline 
+{</\textbf{interpGrp}>}\end{shaded}\egroup\par \noindent  If the codes are considered to be compositional (for example that NN1 and NN2 have something in common, namely their \textit{noun-ness}, which they do not share with, say, VVD), then this compositionality may be most clearly expressed using a mechanism based on the \hyperref[TEI.fs]{<fs>} element defined in chapter \textit{\hyperref[FS]{18.\ Feature Structures}}.\par
+This approach requires the text to be fully segmented, using the linguistic segment elements described in section \textit{\hyperref[AILC]{17.1.\ Linguistic Segment Categories}}, so that the scope of the {\itshape ana} attribute used to point to each interpretation is clearly defined. A further analysis into phrase and clause elements can be superimposed on the word and morpheme tagging in the preceding illustration. For example, CLAWS provides the following constituent analysis of the sample sentence (the word class codes have been deleted): \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces [N [G The victim's G] friends N] [V told [N police N] [Fn that \newline
+[N Krueger N] [V [V\& drove [P into [N the quarry N]P]V\&] and \newline
+[V+ never surfaced V+]V]Fn]V]\end{shaded}
+\par\egroup 
+\par
+Treating the labels on the brackets as phrase or clause interpretations, this analysis of the structure of the example sentence can be combined with the word class analysis and represented as follows (the symbol V\&"/> representing the first part of a coordinate phrase, has been replaced by V1, and V+, representing the second part, has been replaced by V2). \par\bgroup\index{s=<s>|exampleindex}\index{type=@type!<s>|exampleindex}\index{phr=<phr>|exampleindex}\index{ana=@ana!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{ana=@ana!<phr>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{m=<m>|exampleindex}\index{ana=@ana!<m>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{phr=<phr>|exampleindex}\index{ana=@ana!<phr>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{phr=<phr>|exampleindex}\index{ana=@ana!<phr>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{cl=<cl>|exampleindex}\index{ana=@ana!<cl>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{phr=<phr>|exampleindex}\index{ana=@ana!<phr>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{phr=<phr>|exampleindex}\index{ana=@ana!<phr>|exampleindex}\index{phr=<phr>|exampleindex}\index{ana=@ana!<phr>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{phr=<phr>|exampleindex}\index{ana=@ana!<phr>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{phr=<phr>|exampleindex}\index{ana=@ana!<phr>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{phr=<phr>|exampleindex}\index{ana=@ana!<phr>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{w=<w>|exampleindex}\index{ana=@ana!<w>|exampleindex}\index{c=<c>|exampleindex}\index{ana=@ana!<c>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{s}\hspace*{1em}{type}="{sentence}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{phr}\hspace*{1em}{ana}="{\#n}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{ana}="{\#gn}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#AT0}">}The{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#NN1}">}victim{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m}\hspace*{1em}{ana}="{\#POS}">}'s{</\textbf{m}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#NN2}">}friends{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{phr}\hspace*{1em}{ana}="{\#v}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#VVD}">}told{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{ana}="{\#n}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#NN2}">}police{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cl}\hspace*{1em}{ana}="{\#fn}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#CJT}">}that{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{ana}="{\#n}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#NP0}">}Krueger{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{ana}="{\#v}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{ana}="{\#v1}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#VVD}">}drove{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{ana}="{\#pr}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#PRP}">}into{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{ana}="{\#n}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#AT0}">}the{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#NN1}">}quarry{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#CJC}">}and{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{phr}\hspace*{1em}{ana}="{\#v2}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#AV0}">}never{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{w}\hspace*{1em}{ana}="{\#VVD}">}surfaced{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{cl}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{phr}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{c}\hspace*{1em}{ana}="{\#pun}">}.{</\textbf{c}>}\mbox{}\newline 
+{</\textbf{s}>}\end{shaded}\egroup\par \par
+This approach requires the definition of further \hyperref[TEI.interp]{<interp>} (or \hyperref[TEI.fs]{<fs>}) elements to provide targets for the pointers used to represent the constituent analysis: \par\bgroup\index{interpGrp=<interpGrp>|exampleindex}\index{type=@type!<interpGrp>|exampleindex}\index{interp=<interp>|exampleindex}\index{interp=<interp>|exampleindex}\index{interp=<interp>|exampleindex}\index{interp=<interp>|exampleindex}\index{interp=<interp>|exampleindex}\index{interp=<interp>|exampleindex}\index{interp=<interp>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{interpGrp}\hspace*{1em}{type}="{constituentFunction}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{v2}">}coordinate continuation{</\textbf{interp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{v}">}verbal{</\textbf{interp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{no}">}nominal{</\textbf{interp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{gn}">}genitive{</\textbf{interp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{fn}">}finite clause{</\textbf{interp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{pr}">}prepositional{</\textbf{interp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interp}\hspace*{1em}{xml:id}="{v1}">}coordinate start{</\textbf{interp}>}\mbox{}\newline 
+{</\textbf{interpGrp}>}\end{shaded}\egroup\par \par
+Alternatively, a ‘stand-off’ representation for these analyses might be created using the \hyperref[TEI.linkGrp]{<linkGrp>} element. In this case, each linguistic segment to be annotated must be supplied with its own {\itshape xml:id} attribute: \par\bgroup\index{s=<s>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\index{w=<w>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{word-1}">}The{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{word-2}">}victim{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{word-3}">}'s{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{word-4}">}friends{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{word-5}">}told{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{word-6}">}police{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{word-7}">}that{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{word-8}">}Kruger{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{word-9}">}drove{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{word10}">}into{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{word11}">}the{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{word12}">}quarry{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{word13}">}and{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{word14}">}never{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{xml:id}="{word15}">}surfaced{</\textbf{w}>}\mbox{}\newline 
+{</\textbf{s}>}\end{shaded}\egroup\par \noindent  Each segment-interpretation pair may now be represented by means of a \hyperref[TEI.link]{<link>} element inside an appropriate \hyperref[TEI.linkGrp]{<linkGrp>} element: \par\bgroup\index{linkGrp=<linkGrp>|exampleindex}\index{type=@type!<linkGrp>|exampleindex}\index{link=<link>|exampleindex}\index{target=@target!<link>|exampleindex}\index{link=<link>|exampleindex}\index{target=@target!<link>|exampleindex}\index{link=<link>|exampleindex}\index{target=@target!<link>|exampleindex}\index{link=<link>|exampleindex}\index{target=@target!<link>|exampleindex}\index{link=<link>|exampleindex}\index{target=@target!<link>|exampleindex}\index{link=<link>|exampleindex}\index{target=@target!<link>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{linkGrp}\hspace*{1em}{type}="{POS-annotation}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{link}\hspace*{1em}{target}="{\#word-1 \#AT0}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{link}\hspace*{1em}{target}="{\#word-2 \#NN1}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{link}\hspace*{1em}{target}="{\#word-3 \#POS}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{link}\hspace*{1em}{target}="{\#word-4 \#NN2}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{link}\hspace*{1em}{target}="{\#word-5 \#VVD}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{link}\hspace*{1em}{target}="{\#word-6 \#NN2}"/>}\mbox{}\newline 
+\textit{<!--... -->}\mbox{}\newline 
+{</\textbf{linkGrp}>}\end{shaded}\egroup\par \par
+Each linguistic segment so far discussed has been well-behaved with respect to the basic document hierarchy, having only a single parent. Moreover, the segmentation has been complete, in that each part of the text is accounted for by some segment at each level of analysis, without discontinuities or overlap. This state of affairs does not of course apply in all types of analysis, and these Guidelines provide a number of mechanisms to support the representation of discontinuities or multiple analyses. A brief overview of these facilities is provided in chapter \textit{\hyperref[NH]{20.\ Non-hierarchical Structures}}; also see \textit{\hyperref[SA]{16.\ Linking, Segmentation, and Alignment}}. These mechanisms all depend to a greater or lesser degree on the use of pointing elements of various kinds.
+\subsubsection[{Lightweight Linguistic Annotation}]{Lightweight Linguistic Annotation}\label{AILALW}\par
+While these Guidelines offer a variety of means to add linguistic information to textual units and much of that has been presented above, two kinds of use cases and two groups of users call for a dedicated set of specialized attributes to carry linguistic information. One relevant use case is where basic linguistic information gets added to an existing resource, in which generic attributes such as {\itshape type} or {\itshape ana} have already been used to encode other categorizations and analyses. The other group of users and use cases involves corpus linguists and resources built from scratch as lightly annotated language corpora. In the latter kind of projects, energy and person-hours are not devoted to careful literary analysis and hand-encoding of the relevant phenomena, but rather to the analysis of the completed resources, and therefore the phase of resource-building must be quick and relatively effortless, requiring minimal structural markup, well-established containers for grammatical information, and a standardized way of filling them in.\par
+The aims defined above can be realized by means of lightweight linguistic annotation using attributes that belong to the \textsf{att.linguistic} class: 
+\begin{sansreflist}
+  
+\item [\textbf{att.linguistic}] provides a set of attributes concerning linguistic features of tokens, for usage within token-level elements, specifically \hyperref[TEI.w]{<w>} and \hyperref[TEI.pc]{<pc>} in the analysis module.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape lemma}]
+  provides a lemma (base form) for the word, typically uninflected and serving both as an identifier (e.g. in dictionary contexts, as a headword), and as a basis for potential inflections.
+    \item[@{\itshape pos}]
+  (part of speech) indicates the part of speech assigned to a token (i.e. information on whether it is a noun, adjective, or verb), usually according to some official reference vocabulary (e.g. for German: STTS, for English: CLAWS, for Polish: NKJP, etc.).
+    \item[@{\itshape msd}]
+  (morphosyntactic description) supplies morphosyntactic information for a token, usually according to some official reference vocabulary (e.g. for German: \xref{http://www.ims.uni-stuttgart.de/forschung/ressourcen/lexika/TagSets/stts-1999.pdf}{STTS-large tagset}; for a feature description system designed as (pragmatically) universal, see \xref{http://universaldependencies.org/u/feat/index.html}{Universal Features}).
+    \item[@{\itshape join}]
+  when present, it provides information on whether the token in question is adjacent to another, and if so, on which side. The definition of this attribute is adapted from ISO MAF (Morpho-syntactic Annotation Framework), ISO 24611:2012.
+\end{sansreflist}  
+\end{sansreflist}
+\par
+The essence of lightweight linguistic annotation is that the basic grammatical information is encapsulated at the word level, together with the orthographic shape of the word. This has clear advantages for automatic processing but, on the other hand, this form of data encapsulation also imposes restrictions on the extent of information that can be encoded, essentially limiting it to a single tokenization and lemmatization schema, a single tagset, and a subset of the possible analyses (out from potentially many guesses at the part-of-speech or morphosyntactic descriptions, single values have to fit into the existing attributes). Another important principle that this kind of annotation is sensitive to is the need for (near) homomorphism between the assumed tokenization (division of the text stream into minimal units) and the division into minimal syntactic units (\textit{word forms}, in the terminology of ISO Morpho-Syntactic Framework, ISO 24611\footnote{All definitions contained within ISO standards can be accessed at the ISO Online Browsing Platform. For ISO MAF, see \url{https://www.iso.org/obp/ui\#iso:std:iso:24611:ed-1:v1:en}.}), because it is the former that results from the process of tokenization, but the latter that can be lemmatized and meaningfully described by means of grammatical features. Where tokens are only minimally mismatched with word forms, various repair strategies can be used (e.g., recursing \hyperref[TEI.w]{<w>} to capture multi-token compounds or using \textsf{att.fragmentable} to point at disjoint tokens). Beyond that, more robust TEI mechanisms, based on standoff principles and feature structures, should replace lightweight annotation.\par
+The basic grammatical information encoded by means of \textsf{att.linguistic} is sufficient for the purpose of enhancing queries or improving the analysis of search results by, for example, making it possible to distinguish between the noun \textit{cut} and the identically spelled verb \textit{cut} in English, and further between e.g. the present-tense form of \textit{cut} and its past-tense or past-participial forms. For the former contrast, the part-of-speech ({\itshape pos}) attribute should be used, whereas the latter may use {\itshape pos} and/or {\itshape msd} attributes, depending on the annotation vocabulary adopted for the project in question. The various grammatical realizations of a single ‘dictionary word’ can be captured by means of the attribute {\itshape lemma}, which provides a common label for them. For example, English verbs are typically lemmatized as the base form (also called \textit{bare infinitive}), so the value of {\itshape lemma} for the verbal forms \textit{write}, \textit{writes}, \textit{wrote}, \textit{written}, and \textit{writing} is typically write.\par
+Together with the span-delimiting elements mentioned in this section, such as \hyperref[TEI.s]{<s>}, \hyperref[TEI.cl]{<cl>}, or \hyperref[TEI.phr]{<phr>}, lightweight grammatical annotation may be used to build basic syntactic constituency structures, where hierarchical information is expressed through span containment rather than by relations among tree nodes. This is however the limit of this kind of annotation: for the purpose of describing true constituency or dependency syntactic structures, one needs to turn to more robust mechanisms offered by the TEI, which may involve graph description (see chapter \textit{\hyperref[GD]{19.\ Graphs, Networks, and Trees}}) or standoff techniques (see section \textit{\hyperref[SASO]{16.9.\ Stand-off Markup}}), and where grammatical labels may need to be annotated by means of feature structures (see chapter \textit{\hyperref[FS]{18.\ Feature Structures}}).\par
+Some of the above-mentioned robust methods will also prove handy in cases where more than one tagset (label inventory) is used to label the words, or where automatic morphological analysis yields multiple possibilities (for example, the form \textit{cutting} is morphologically ambiguous between verbal, adjectival, and nominal) and needs to be followed by (often also automatic) disambiguation in morphosyntactic contexts, with varying probabilities that may also need to be recorded together with their corresponding part-of-speech and morphosyntactic values.\par
+It should be borne in mind that tokenization, lemmatization, part-of-speech identification, and morphosyntactic labelling, especially when performed automatically, should in most cases be seen as involving pragmatic decisions, dictated by concrete practical goals, economy of description, or the demands of particular analytic and/or visualization tools. It comes therefore as no surprise that numerous alternative (and often conflicting) lemmatization strategies and tagsets exist, in use by various communities and various tools, and that they change with time (a case in point is the CLAWS tagset for English, with several versions that merge the part-of-speech and morphosyntactic information to various degrees). \footnote{Given that the English language has relatively poor inflectional morphology, the decision to merge part-of-speech symbols with morphosyntactic features (as in, e.g., CLAWS-7, where the value PPHO1 signals the 3rd person singular objective personal pronoun) is fully justified as the most economical approach. For languages with more robust inflection, the {\itshape pos} and {\itshape msd} attributes will either be used separately, or the part-of-speech information will be merged into the morphosyntactic description.} The nature and description of these systems is outside the scope of these Guidelines, but it has to be stressed that all the strategies adopted for linguistic annotation, even at the lightweight level of complexity, \textit{must} be documented in the header of the given electronic resource, not only for the purpose of guaranteeing successful data interpretation and exchange, but also for the sake of sustainability of the results of the given project.\par
+The last of the att.linguistic attributes, {\itshape join}, has the most text-technological flavour. It can be used to amend the loss of whitespace-related information in non-inline markup.\par
+Compare the following two listings. The first difference between them is in the tagset used (CLAWS-5 vs. CLAWS-7) and only serves to exemplify the need to document the choice of descriptive vocabulary in the header, lest the encoded information is unreadable or confusing. The second difference is the difference in the treatment of inter-token whitespace, and it is here that the {\itshape join} attribute proves indispensable.\par
+The first example listing uses CLAWS-5 and inline annotation, where whitespace serves as part of the markup: \par\bgroup\index{s=<s>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{pc=<pc>|exampleindex}\index{pos=@pos!<pc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}\newline
+{<\textbf{s}>}{<\textbf{w}\hspace*{1em}{pos}="{AT0}">}The{</\textbf{w}>} {<\textbf{w}\hspace*{1em}{pos}="{NN1}">}victim{</\textbf{w}>}{<\textbf{w}\hspace*{1em}{pos}="{POS}">}'s{</\textbf{w}>} {<\textbf{w}\hspace*{1em}{pos}="{NN2}">}friends{</\textbf{w}>} \newline
+   {<\textbf{w}\hspace*{1em}{pos}="{VVD}">}told{</\textbf{w}>} {<\textbf{w}\hspace*{1em}{pos}="{NN2}">}police{</\textbf{w}>} {<\textbf{w}\hspace*{1em}{pos}="{CJT}">}that{</\textbf{w}>} {<\textbf{w}\hspace*{1em}{pos}="{NP0}">}Kruger{</\textbf{w}>} \newline
+   {<\textbf{w}\hspace*{1em}{pos}="{VVD}">}drove{</\textbf{w}>} {<\textbf{w}\hspace*{1em}{pos}="{PRP}">}into{</\textbf{w}>} {<\textbf{w}\hspace*{1em}{pos}="{AT0}">}the{</\textbf{w}>} {<\textbf{w}\hspace*{1em}{pos}="{NN1}">}quarry{</\textbf{w}>} \newline
+   {<\textbf{w}\hspace*{1em}{pos}="{CJC}">}and{</\textbf{w}>} {<\textbf{w}\hspace*{1em}{pos}="{AV0}">}never{</\textbf{w}>} {<\textbf{w}\hspace*{1em}{pos}="{SENT}">}surfaced{</\textbf{w}>}{<\textbf{pc}\hspace*{1em}{pos}="{PUN}">}.{</\textbf{pc}>}{</\textbf{s}>}\newline
+\end{shaded}\egroup\par \par
+In the second example, the attribute {\itshape join} is the only way to encode whether two tokens are adjacent or not: \par\bgroup\index{s=<s>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{join=@join!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{pc=<pc>|exampleindex}\index{pos=@pos!<pc>|exampleindex}\index{join=@join!<pc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{pos}="{AT}">}The{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{pos}="{NN1}">}victim{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{pos}="{GE}"\hspace*{1em}{join}="{left}">}'s{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{pos}="{NN2}">}friends{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{pos}="{VVD}">}told{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{pos}="{NN2}">}police{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{pos}="{CST}">}that{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{pos}="{NP1}">}Kruger{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{pos}="{VVD}">}drove{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{pos}="{II}">}into{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{pos}="{AT}">}the{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{pos}="{NN1}">}quarry{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{pos}="{CC}">}and{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{pos}="{RR}">}never{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{pos}="{VVD}">}surfaced{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{pc}\hspace*{1em}{pos}="{.}"\hspace*{1em}{join}="{left}">}.{</\textbf{pc}>}\mbox{}\newline 
+{</\textbf{s}>}\end{shaded}\egroup\par \par
+Note that projects will need to decide whether they want to redundantly encode full information on the adjacency of each token (in which case, the above listing should also have {\itshape join} with the value right on the tokens \textit{victim} and \textit{surfaced}, or whether information on a single direction of adjacency is enough. Strategies vary, and it is important to document them in the TEI header.\par
+The following example shows a German sentence \textit{Wir fahren in den Urlaub} (‘We're going on vacation’) annotated with all the attributes discussed above.\footnote{The annotation values have been adapted from the \xref{https://weblicht.sfs.uni-tuebingen.de/weblicht/}{CLARIN Weblicht service}, where e.g. the full morphosyntactic description of the first item reads: \texttt{[cat pronoun, personal true, substituting true, person 1, case nominative, number plural]}, and has been mapped from a sequence of attribute-value pairs suitable for feature structure notation, into a compressed form that fits inside a single attribute value.} \par\bgroup\index{s=<s>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{lemma=@lemma!<w>|exampleindex}\index{msd=@msd!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{lemma=@lemma!<w>|exampleindex}\index{msd=@msd!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{lemma=@lemma!<w>|exampleindex}\index{msd=@msd!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{lemma=@lemma!<w>|exampleindex}\index{msd=@msd!<w>|exampleindex}\index{w=<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{lemma=@lemma!<w>|exampleindex}\index{msd=@msd!<w>|exampleindex}\index{pc=<pc>|exampleindex}\index{pos=@pos!<pc>|exampleindex}\index{lemma=@lemma!<pc>|exampleindex}\index{msd=@msd!<pc>|exampleindex}\index{join=@join!<pc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{s}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{pos}="{PPER}"\hspace*{1em}{lemma}="{wir}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{msd}="{pers:subst:p1:nom:pl}">}Wir{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{pos}="{VVFIN}"\hspace*{1em}{lemma}="{fahren}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{msd}="{p1:pl:pres:ind}">}fahren{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{pos}="{APPR}"\hspace*{1em}{lemma}="{in}"\hspace*{1em}{msd}="{--}">}in{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{pos}="{ART}"\hspace*{1em}{lemma}="{d}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{msd}="{def:acc:sg:masc}">}den{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{w}\hspace*{1em}{pos}="{NN}"\hspace*{1em}{lemma}="{Urlaub}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{msd}="{acc:sg:masc}">}Urlaub{</\textbf{w}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{pc}\hspace*{1em}{pos}="{\$.}"\hspace*{1em}{lemma}="{.}"\hspace*{1em}{msd}="{--}"\hspace*{1em}{join}="{left}">}.{</\textbf{pc}>}\mbox{}\newline 
+{</\textbf{s}>}\end{shaded}\egroup\par \par
+The final examples lay out a strategy for dealing with e.g. historical corpora where it is on the one hand important to maintain a steady stream of token-level elements (\hyperref[TEI.w]{<w>} and \hyperref[TEI.pc]{<pc>}) for efficient processing, but, on the other hand, it is also important to either record the original spelling (when the corpus text is normalized) or to record the normalized variants (when the element content of the corpus preserves the original spelling). The attribute class \textsf{att.lexicographic.normalized} can be used for that purpose: 
+\begin{sansreflist}
+  
+\item [\textbf{att.lexicographic.normalized}] provides the {\itshape norm} and {\itshape orig} attributes for usage within word-level elements in the analysis module and within lexicographic microstructure in the dictionaries module.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape norm}]
+  (normalized) provides the normalized/standardized form of information present in the source text in a non-normalized form
+    \item[@{\itshape orig}]
+  (original) gives the original string or is the empty string when the element does not appear in the source text.
+\end{sansreflist}  
+\end{sansreflist}
+\par
+The first fragment below comes from "Gottfried, Newe Welt Vnd Americanische Historien. Frankfurt/M., 1631" encoded in the Deutsches Textarchiv and records normalized forms in the {\itshape norm} attribute. \par\bgroup\index{w=<w>|exampleindex}\index{norm=@norm!<w>|exampleindex}\index{w=<w>|exampleindex}\index{norm=@norm!<w>|exampleindex}\index{w=<w>|exampleindex}\index{norm=@norm!<w>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{w}\hspace*{1em}{norm}="{unvermutete}">}vnuermuthete{</\textbf{w}>}\mbox{}\newline 
+{<\textbf{w}\hspace*{1em}{norm}="{Freundschaft}">}Freundſchafft{</\textbf{w}>}\mbox{}\newline 
+{<\textbf{w}\hspace*{1em}{norm}="{angeboten}">}angebotten{</\textbf{w}>}\end{shaded}\egroup\par \par
+The following example comes from the EarlyPrint project and uses the attribute {\itshape orig} to record the original spelling (note that the {\itshape xml:id} attributes have been removed for the sake of readability). \par\bgroup\index{w=<w>|exampleindex}\index{lemma=@lemma!<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{lemma=@lemma!<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{lemma=@lemma!<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{w=<w>|exampleindex}\index{lemma=@lemma!<w>|exampleindex}\index{pos=@pos!<w>|exampleindex}\index{orig=@orig!<w>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{w}\hspace*{1em}{lemma}="{he}"\hspace*{1em}{pos}="{pns}">}he{</\textbf{w}>}\mbox{}\newline 
+{<\textbf{w}\hspace*{1em}{lemma}="{have}"\hspace*{1em}{pos}="{vvz}">}hath{</\textbf{w}>}\mbox{}\newline 
+{<\textbf{w}\hspace*{1em}{lemma}="{bring}"\hspace*{1em}{pos}="{vvn}">}brought{</\textbf{w}>}\mbox{}\newline 
+{<\textbf{w}\hspace*{1em}{lemma}="{forth}"\hspace*{1em}{pos}="{av}"\hspace*{1em}{orig}="{sorth}">}forth{</\textbf{w}>}\end{shaded}\egroup\par 
+\subsubsection[{Spoken Text}]{Spoken Text}\label{AILASP}\par
+The mechanisms proposed in this chapter may also be used to encode analyses of an entirely different kind, for example discourse function. Here is an application of the span technique to record details of a sales transaction in a spoken text. \par\bgroup\index{u=<u>|exampleindex}\index{u=<u>|exampleindex}\index{u=<u>|exampleindex}\index{u=<u>|exampleindex}\index{u=<u>|exampleindex}\index{u=<u>|exampleindex}\index{spanGrp=<spanGrp>|exampleindex}\index{type=@type!<spanGrp>|exampleindex}\index{span=<span>|exampleindex}\index{from=@from!<span>|exampleindex}\index{span=<span>|exampleindex}\index{from=@from!<span>|exampleindex}\index{to=@to!<span>|exampleindex}\index{span=<span>|exampleindex}\index{from=@from!<span>|exampleindex}\index{span=<span>|exampleindex}\index{from=@from!<span>|exampleindex}\index{span=<span>|exampleindex}\index{from=@from!<span>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}\hspace*{1em}{xml:id}="{u1}">}Can I have ten oranges and a kilo of bananas please?{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{xml:id}="{u2}">}Yes, anything else?{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{xml:id}="{u3}">}No thanks.{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{xml:id}="{u4}">}That'll be dollar forty.{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{xml:id}="{u5}">}Two dollars{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{xml:id}="{u6}">}Sixty, eighty, two dollars. Thank you.{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{spanGrp}\hspace*{1em}{type}="{transactions}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{span}\hspace*{1em}{from}="{\#u1}">}sale request{</\textbf{span}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{span}\hspace*{1em}{from}="{\#u2}"\hspace*{1em}{to}="{\#u3}">}sale compliance{</\textbf{span}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{span}\hspace*{1em}{from}="{\#u4}">}sale{</\textbf{span}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{span}\hspace*{1em}{from}="{\#u5}">}purchase{</\textbf{span}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{span}\hspace*{1em}{from}="{\#u6}">}purchase closure{</\textbf{span}>}\mbox{}\newline 
+{</\textbf{spanGrp}>}\end{shaded}\egroup\par \noindent  For further discussion of the \hyperref[TEI.u]{<u>} (utterance) element and other elements recommended for transcriptions of spoken language, see chapter \textit{\hyperref[TS]{8.\ Transcriptions of Speech}}.
+\subsection[{Module for Analysis and Interpretation}]{Module for Analysis and Interpretation}\par
+The module described in this chapter makes available the following components: \begin{description}
+
+\item[{Module analysis: Simple analytic mechanisms}]\hspace{1em}\hfill\linebreak
+\mbox{}\\[-10pt] \begin{itemize}
+\item {\itshape Elements defined}: \hyperref[TEI.c]{c} \hyperref[TEI.cl]{cl} \hyperref[TEI.interp]{interp} \hyperref[TEI.interpGrp]{interpGrp} \hyperref[TEI.m]{m} \hyperref[TEI.pc]{pc} \hyperref[TEI.phr]{phr} \hyperref[TEI.s]{s} \hyperref[TEI.span]{span} \hyperref[TEI.spanGrp]{spanGrp} \hyperref[TEI.w]{w}
+\item {\itshape Classes defined}: \hyperref[TEI.att.global.analytic]{att.global.analytic} \hyperref[TEI.att.lexicographic.normalized]{att.lexicographic.normalized} \hyperref[TEI.att.linguistic]{att.linguistic}
+\end{itemize} 
+\end{description}  The selection and combination of modules to form a TEI schema is described in \textit{\hyperref[STIN]{1.2.\ Defining a TEI Schema}}.

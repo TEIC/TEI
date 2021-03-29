@@ -1,0 +1,812 @@
+
+\section[{Using the TEI}]{Using the TEI}\label{USE}\par
+This section discusses some technical topics concerning the deployment of the TEI markup schema documented elsewhere in these Guidelines.  In section \textit{\hyperref[MD]{23.3.\ Customization}} we discuss the scope and variety of the TEI customization mechanisms. In \textit{\hyperref[CF]{23.4.\ Conformance}} we define the notions of \textit{TEI Conformance} and \textit{TEI Extension}. Since the ODD markup description language defined in chapter \textit{\hyperref[TD]{22.\ Documentation Elements}} is fundamental to the way conformance and customization are handled in the TEI system, these two definitional sections are followed by a section (\textit{\hyperref[IM]{23.5.\ Implementation of an ODD System}}) which describes the intended behaviour of an ODD processor.
+\subsection[{Serving TEI files with the TEI Media Type}]{Serving TEI files with the TEI Media Type}\label{MEDIATYPE}\par
+In February 2011, the media type \texttt{application/tei+xml} was registered with IANA for ‘markup languages defined in accordance with the Text Encoding and Interchange guidelines’ (\xref{https://www.rfc-editor.org/info/rfc6129}{RFC 6129}). We recommend that any XML file whose root element is in the TEI namespace be served with the media type \texttt{application/tei+xml} to enable and encourage automated recognition and processing of TEI files by external applications.
+\subsection[{Obtaining the TEI}]{Obtaining the TEI}\label{DT}\par
+As discussed in chapter \textit{\hyperref[TD]{22.\ Documentation Elements}}, all components of the TEI schema are generated from a single set of TEI XML source files. Schemas can be generated in each of XML DTD language, W3C schema language, and RELAX NG schema language. Documentation can be generated in a variety of commonly-used document formats, including HTML, DOCX, or PDF. \par
+TEI components are freely available over the Internet and elsewhere. The canonical home for the TEI source, the schema fragments generated from it, and example modifications, is the TEI repository at \url{https://github.com/TEIC/TEI}; versions are also available in other formats, along with copies of these Guidelines and related materials, from the TEI web site at \url{http://www.tei-c.org/}.
+\subsection[{Customization}]{Customization}\label{MD}\par
+These Guidelines provide an encoding schema suitable for encoding a very wide range of texts, and capable of supporting a wide variety of applications. For this reason, the TEI schema supports a variety of different approaches to solving similar problems, and also defines a much richer set of elements than is likely to be necessary in any given project. Furthermore, the TEI schema may be extended in well-defined and documented ways for texts that cannot be conveniently or appropriately encoded using what is provided. For these reasons, it is almost impossible to use the TEI schema without customizing it in some way. \par
+This section describes how the TEI encoding schema may be customized, and should be read in conjunction with chapter \textit{\hyperref[TD]{22.\ Documentation Elements}}, which describes how a specific application of the TEI encoding schema should be documented. The documentation system described in that chapter is, like the rest of the TEI schema, independent of any particular schema or document type definition language.\par
+Formally speaking, these Guidelines provide both syntactic rules about how elements and attributes may be used in valid documents and semantic recommendations about what interpretation should be attached to a given syntactic construct. In this sense, they provide both a \textit{document type definition} and a \textit{document type declaration}. More exactly, we may distinguish between the \textit{TEI Abstract Model}, which defines a set of related concepts, and the \textit{TEI schema} which defines a set of syntactic rules and constraints. Many (though not all) of the semantic recommendations are provided solely as informal descriptive prose, though some of them are also enforced by means of such constructs as datatypes (see \textit{\hyperref[DTYPES]{1.4.2.\ Datatype Specifications}}), or by schema constraints expressed using the Schematron language. Schematron constraints provide information about special kinds of validation errors dependent on conditional relationships, such as the invalidity of an attribute name or value on one element when another is present, or when, given a pair of attributes such as {\itshape minOccurs} and {\itshape maxOccurs}, the minimum value exceeds the maximum value. Schematron constraints also provide warnings when a particular element, attribute, or combination is to be deprecated in future releases of the TEI scheme, to alert users that the feature in question is no longer to be used after a certain date. Very rarely, TEI Schematron constraints offer warnings that do not explicitly break with the TEI but suggest a more efficient or less ambiguous encoding.  Although the descriptions, validation errors, and warnings have been written with care, there will inevitably be cases where the intention of the contributors has not been conveyed with sufficient clarity to prevent users of these Guidelines from ‘extending’ them in the sense of attaching slightly variant semantics to them.\par
+Beyond this unintentional semantic extension, some of the elements described can intentionally be used in a variety of ways; for example, the element \hyperref[TEI.note]{<note>} has an attribute {\itshape type} which can take on arbitrary string values, depending on how it is used in a document. A new type of ‘note’, therefore, requires no change in the existing model. On the other hand, for many applications, it may be desirable to constrain the possible values for the {\itshape type} attribute to a small set of possibilities. A schema modified in this way would no longer necessarily regard as valid the same set of documents as the corresponding unmodified TEI schema, but would remain faithful to the same conceptual model.\par
+This section explains how the TEI schema can be customized by suppressing elements, modifying classes of elements, or adding elements. Documents which validate against an application of the TEI schema which has been customized in this way may or may not be considered ‘TEI-conformant’, as further discussed in section \textit{\hyperref[CF]{23.4.\ Conformance}}.\par
+The TEI system is designed to support modification and customization in a documented way that can be validated by an XML processor. This is achieved by writing a small TEI-conformant document, known informally as an ODD (One Document Does it all), from which an appropriate processor can generate both human-readable documentation, and a schema expressed in a language such as RELAX NG or DTD. The mechanisms used to instantiate a TEI schema differ for different schema languages, and are therefore not defined here. In XML DTDs, for example, extensive use is made of parameter entities, while in RELAX NG schemas, extensive use is made of patterns. In either case, the names of elements and, wherever possible, their attributes and content models are defined indirectly. The syntax used to implement this indirection also varies with the schema language used, but the underlying constructs in the TEI Abstract Model are given the same names.  This indirection makes it simpler to implement customization of the TEI system in an accessible and human-readable way.\par
+As further discussed in section \textit{\hyperref[ST]{1.\ The TEI Infrastructure}}, the TEI encoding schema comprises a set of class and macro declarations, and a number of \textit{modules}. Each module is made up of element and attribute declarations, and a schema is made by combining a particular set of modules together. In the absence of any other kind of customization, when modules are combined together: \begin{enumerate}
+\item all the elements defined by the module (and described in the corresponding section of these Guidelines) are included in the schema;
+\item each such element is identified by the canonical name given it in these Guidelines;
+\item the content model of each such element is as defined by these Guidelines;
+\item the names, datatypes, and permitted values declared for each attribute associated with each such element are as given in these Guidelines;
+\item the elements comprising element classes and the meaning of macro declarations expressed in terms of element classes is determined by the particular combination of modules selected.
+\end{enumerate} The TEI customization mechanisms allow the user to control this behaviour as follows: \begin{enumerate}
+\item particular elements may be suppressed, removing them from any classes in which they are members, and also from any generated schema; 
+\item new elements may be added to an existing class, thus making them available in macros or content models defined in terms of those classes;
+\item additional attributes, or attribute values, may be specified for an individual element or for classes of elements; 
+\item within certain limits, attributes, or attribute values, may also be removed either from an individual element or for classes of elements; 
+\item the characteristics inherited by one class from another class may be modified by modifying its class membership: all members of the class then inherit the changed characteristics;
+\item the set of values legal for an attribute or attribute class may be constrained or relaxed by supplying or modifying a value list, or by modifying its datatype.
+\item within certain limits, the name (generic identifier) associated with an element may be changed, without changing the semantic or syntactic properties of the element;
+\end{enumerate} The modification mechanisms presented in this section are quite general, and may be used to make all the types of changes just listed.\par
+The recommended way of implementing and documenting all such modifications is by means of the ODD system described in chapter \textit{\hyperref[TD]{22.\ Documentation Elements}}; in the remainder of this section we give specific examples to illustrate how that system may be applied. An ODD processor, such as the Roma application supported by the TEI, or any other comparable set of stylesheets will use the declarations provided by an ODD to generate appropriate sets of declarations in a specific schema language such as RELAX NG or the XML DTD language. We do not discuss in detail here how this should be done, since the details are schema language-specific; some background information about the methods used for XML DTD and RELAX NG schema generation is however provided in section \textit{\hyperref[STIN]{1.2.\ Defining a TEI Schema}}. Several example ODD files are also provided as part of the standard TEI release: see further section \textit{\hyperref[MDlite]{23.3.4.\ Examples of Modification }} below.
+\subsubsection[{Kinds of Modification}]{Kinds of Modification}\label{MDMD}\par
+For ease of discussion, we distinguish the following different kinds of modification: \begin{enumerate}
+\item deletion of elements;
+\item modification of content models;
+\item modification of attribute and attribute-value lists;
+\item modification of class membership;
+\item addition of new elements.
+\item renaming of elements;
+\end{enumerate} Each of these is described in the following sections.\par
+Each kind of modification changes the set of documents that will be considered valid according to the resulting schema. A schema derived from any combination of unmodified TEI declarations (an "unmodified schema") may be thought of as defining a certain set of documents. A schema deriving from a combination of modified TEI declarations (a "modified schema") will define a different set of documents. The set of documents valid according to the modified schema may or may not be properly contained by the set of documents considered to be valid according to the unmodified schema. The schema \textsf{TEI-All} is the special case of the unmodified schema which includes all currently available TEI modules. We use the term \textit{clean modification} cases where the set of documents defined by a modified schema is a proper subset of the set of documents defined by TEI-All. Where this is not the case, that is, where the modified schema considers valid some documents which TEI-All does not, we use the term \textit{unclean modification}. Despite this terminology, unclean modifications are not particularly deprecated, and their use may often be vital to the success of a project. The concept is introduced solely to distinguish the effects of different kinds of modification.
+\paragraph[{Deletion of Elements}]{Deletion of Elements}\label{MDMDSU}\par
+The simplest way to modify the supplied modules is to suppress one or more of the supplied elements. This is simply done by setting the {\itshape mode} attribute to delete on an \hyperref[TEI.elementSpec]{<elementSpec>} for the element concerned.\par
+For example, if the \hyperref[TEI.note]{<note>} element is not to be used in a particular application, but has been included via one of the supplied modules, then the schema specification concerned will contain a declaration like the following: \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{mode=@mode!<elementSpec>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{ident}="{note}"\hspace*{1em}{mode}="{delete}"/>}\end{shaded}\egroup\par \noindent  The {\itshape ident} attribute here supplies the canonical name of the element to be deleted and the {\itshape mode} attribute specifies what is to be done with it. There is no need to specify the module concerned, since element names are unique across all TEI modules. The full specification for a schema in which this modification is applied would thus be something like the following: \par\bgroup\index{schemaSpec=<schemaSpec>|exampleindex}\index{ident=@ident!<schemaSpec>|exampleindex}\index{moduleRef=<moduleRef>|exampleindex}\index{key=@key!<moduleRef>|exampleindex}\index{elementSpec=<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{mode=@mode!<elementSpec>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{schemaSpec}\hspace*{1em}{ident}="{mySchema}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{moduleRef}\hspace*{1em}{key}="{core}"/>}\mbox{}\newline 
+\textit{<!-- other modules used by this customization -->}\mbox{}\newline 
+\hspace*{1em}{<\textbf{elementSpec}\hspace*{1em}{ident}="{note}"\hspace*{1em}{mode}="{delete}"/>}\mbox{}\newline 
+{</\textbf{schemaSpec}>}\end{shaded}\egroup\par \par
+In most cases, deletion is a clean modification, since most elements are optional. Documents that are valid with respect to the modified schema are also valid according to TEI-All. To say this another way, the set of documents matching the new schema is contained by the set of documents matching the original schema.\par
+There are however some elements in the TEI schema which have mandatory children; for example, the element \hyperref[TEI.listPerson]{<listPerson>} must contain at least one element from the \textsf{model.personLike} class. If that class has no members because all of its member elements have been removed, then the content model cannot be satisfied. A modification which keeps \hyperref[TEI.listPerson]{<listPerson>} but removes all of its possible children would therefore be regarded as unclean. So long as at least one member of the class remains available, however, deleting other members would not have this effect, and would therefore be regarded as a clean modification.\par
+In general, whenever the element deleted by a modification is mandatory within the content model of some other (undeleted) element, the result is an unclean modification, and may also break the TEI Abstract Model (\textit{\hyperref[CFAM]{23.4.3.\ Conformance to the TEI Abstract Model}}). However, the parent of a mandatory child can be safely removed if it is itself optional.\par
+To determine whether or not an element is mandatory in a given context, the user must inspect the content model of the element concerned. In most cases, content models are expressed in terms of model classes rather than elements; hence, removing an element will generally be a clean modification, since there will generally be other members of the class available. If a class is completely depopulated by a modification, then the cleanliness of the modification will depend upon whether or not the class reference is mandatory or optional, in the same way as for an individual element.
+\paragraph[{Modification of Content Models}]{Modification of Content Models}\label{MDMDCM}\par
+The content model for an element in the TEI schema is defined by means of a \hyperref[TEI.content]{<content>} element within the \hyperref[TEI.elementSpec]{<elementSpec>} which specifies it. For example, the specification for the element \hyperref[TEI.term]{<term>} provided by these Guidelines contains a \hyperref[TEI.content]{<content>} element like the following: \par\bgroup\index{content=<content>|exampleindex}\index{macroRef=<macroRef>|exampleindex}\index{key=@key!<macroRef>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{content}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{macroRef}\hspace*{1em}{key}="{macro.phraseSeq}"/>}\mbox{}\newline 
+{</\textbf{content}>}\end{shaded}\egroup\par \noindent  This content model consists of a reference to a macro called \textsf{macro.phraseSeq}. Further examination shows that this macro in turn expands to an optional repeatable alternation of text (\hyperref[TEI.textNode]{<textNode>}) with references to three other classes (\textsf{model.gLike}, \textsf{model.phrase}, or \textsf{model.global}). For some particular application it might be preferable to insist that \hyperref[TEI.term]{<term>} elements should only contain plain text, excluding these other possibilities.\footnote{Excluding \textsf{model.gLike} is generally inadvisable however, since without it the resulting schema has no way of referencing non-Unicode characters.} This could be achieved simply by supplying a specification for \hyperref[TEI.term]{<term>} like the following: \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{module=@module!<elementSpec>|exampleindex}\index{mode=@mode!<elementSpec>|exampleindex}\index{content=<content>|exampleindex}\index{textNode=<textNode>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{ident}="{term}"\hspace*{1em}{module}="{core}"\mbox{}\newline 
+\hspace*{1em}{mode}="{change}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{content}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{textNode}/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{content}>}\mbox{}\newline 
+{</\textbf{elementSpec}>}\end{shaded}\egroup\par \par
+This is a clean modification which does not change the meaning of a TEI element; there is therefore no need to assign the element to some other namespace than that of the TEI, though it may be considered good practice; see further \textit{\hyperref[MDNS]{23.3.2.\ Modification and Namespaces}} below.\par
+A change of this kind, which simplifies the possible content of an element by reducing its model to one of its existing components, is always clean, because the set of documents matched by the resulting schema is a subset of the set of documents which would have been matched by TEI-All.\par
+Note that content models are generally defined (as far as possible) in terms of references to model classes, rather than to explicit elements. This means that the need to modify content models is greatly reduced: if an element is deleted or modified, for example, then the deletion or modification will be available for every content model which references that element via its class, as well as those which reference it explicitly. For this reason it is not (in general) good practice to replace class references by explicit element references, since this may have unintended side effects. \par
+An unqualified reference to an element class within a content model generates a content model which is equivalent to an alternation of all the members of the class referenced. Thus, a content model which refers to the model class \textsf{model.phrase} will generate a content model in which any one of the members of that class is equally acceptable. The \hyperref[TEI.classRef]{<classRef>} element used to reference a class has an {\itshape expand} attribute which may be used to vary this behaviour, for example to require ‘an optional repeatable alternation of all members of a class’, ‘a sequence containing no more than one of each member of the class’, etc. as described further in \textit{\hyperref[TDCLA]{22.6.\ Class Specifications}}.\par
+Content model changes which are not simple restrictions on an existing model should be undertaken with caution. The set of documents matching the schema which results from such changes is unlikely to be contained by the set of documents matching TEI-All, and such changes are therefore regarded as unclean. When content models are changed or extended, care should be taken to respect the existing semantics of the element concerned as stated in these Guidelines. For example, the element \hyperref[TEI.l]{<l>} is defined as containing a line of verse. It would not therefore make sense to redefine its content model so that it could also include members of the class \textsf{model.pLike} such as \hyperref[TEI.p]{<p>} or \hyperref[TEI.ab]{<ab>}. Although syntactically feasible, such a modification would not be regarded as TEI-conformant because it breaks the TEI Abstract Model.
+\paragraph[{Modification of Attribute and Attribute Value Lists}]{Modification of Attribute and Attribute Value Lists}\label{MDMDAL}\par
+The attributes applicable to a given element may be specified in two ways: they may be given explicitly, by means of an \hyperref[TEI.attList]{<attList>} element within the corresponding \hyperref[TEI.elementSpec]{<elementSpec>}, or they may be inherited from an attribute class, as specified in the \hyperref[TEI.classes]{<classes>} element. To add a new attribute to an element, the designer should therefore first check to see whether this attribute is already available from some existing attribute class. If it is, then the simplest method of adding it will be to make the element in question a member of that class, as further discussed below. If this is not possible, then a new \hyperref[TEI.attDef]{<attDef>} element must be added to the existing \hyperref[TEI.attList]{<attList>} for the element in question.\par
+Whichever method is adopted, the modification capabilities are the same as those available for elements. Attributes may be added or deleted from the list, using the {\itshape mode} attribute on \hyperref[TEI.attDef]{<attDef>} in the same way as on \hyperref[TEI.elementSpec]{<elementSpec>}. The ‘content’ of an attribute is defined by means of the \hyperref[TEI.datatype]{<datatype>}, \hyperref[TEI.valList]{<valList>}, or \hyperref[TEI.valDesc]{<valDesc>} elements within the \hyperref[TEI.attDef]{<attDef>} element. Any of these elements may be changed.\par
+Suppose, for example, that we wish to add two attributes to the \hyperref[TEI.eg]{<eg>} element (used to indicate examples in a text), {\itshape type} to characterize the example in some way, and {\itshape valid} to indicate whether the example is considered valid or not. A quick glance through the Guidelines indicates that the attribute class \textsf{att.typed} could be used to provide the {\itshape type} attribute, but there is no comparable class which will provide a {\itshape valid} attribute. The existing \hyperref[TEI.eg]{<eg>} element in fact has no local attributes defined for it at all: we will therefore need to add not only an \hyperref[TEI.attDef]{<attDef>} element to define the new attribute, but also an \hyperref[TEI.attList]{<attList>} to hold it.\par
+We begin by adding the new {\itshape valid} attribute: \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{module=@module!<elementSpec>|exampleindex}\index{mode=@mode!<elementSpec>|exampleindex}\index{attList=<attList>|exampleindex}\index{attDef=<attDef>|exampleindex}\index{ident=@ident!<attDef>|exampleindex}\index{mode=@mode!<attDef>|exampleindex}\index{ns=@ns!<attDef>|exampleindex}\index{desc=<desc>|exampleindex}\index{datatype=<datatype>|exampleindex}\index{dataRef=<dataRef>|exampleindex}\index{key=@key!<dataRef>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{ident}="{eg}"\hspace*{1em}{module}="{tagdocs}"\mbox{}\newline 
+\hspace*{1em}{mode}="{change}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{attList}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{attDef}\hspace*{1em}{ident}="{valid}"\hspace*{1em}{mode}="{add}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{ns}="{http://www.example.com/ns/nonTEI}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}indicates whether or not the example is considered to be valid{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{datatype}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{dataRef}\hspace*{1em}{key}="{teidata.truthValue}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{datatype}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{attDef}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{attList}>}\mbox{}\newline 
+{</\textbf{elementSpec}>}\end{shaded}\egroup\par \par
+The value supplied for the {\itshape mode} attribute on the \hyperref[TEI.attDef]{<attDef>} element is add; if this attribute already existed on the element we are modifying this should generate an error, since a specification cannot have more than one attribute of the same name. If the attribute is already present, we can replace the whole of the existing declaration by supplying replace as the value for {\itshape mode}; alternatively, we can change some parts of an existing declaration only by supplying just the new parts, and setting change as the value for {\itshape mode}.\par
+Because the new attribute is not defined by the TEI, it is good practice to specify a namespace for it on the \hyperref[TEI.attDef]{<attDef>}; see further \textit{\hyperref[MDNS]{23.3.2.\ Modification and Namespaces}}.\par
+As noted above, adding the new {\itshape type} attribute involves changing this element's class membership; we therefore discuss that in the next section (\textit{\hyperref[MDMDCL]{23.3.1.4.\ Class Modification}}).\par
+The canonical name for the new attribute is {\itshape valid}, and is supplied on the {\itshape ident} attribute of the \hyperref[TEI.attDef]{<attDef>} element. In this simple example, we supply only a description and datatype for the new attribute; the former is given by the \hyperref[TEI.desc]{<desc>} element, and the latter by the \hyperref[TEI.datatype]{<datatype>} element. (There are of course many other pieces of information which could be supplied, as documented in \textit{\hyperref[TD]{22.\ Documentation Elements}}). The content of the \hyperref[TEI.datatype]{<datatype>} element is a \hyperref[TEI.dataRef]{<dataRef>} element which references an existing TEI data specification.\par
+It is often desirable to constrain the possible values for an attribute to a greater extent than is possible by simply supplying a TEI datatype for it. This facility is provided by the \hyperref[TEI.valList]{<valList>} element, which can also appear as a child of the \hyperref[TEI.attDef]{<attDef>} element. Suppose for example that, rather than simply indicating whether or not the example is considered valid by means of the values true and false we wish to provide a more nuanced indication, using encoded values such as A, B, and C. A declaration like the following might be appropriate: \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{module=@module!<elementSpec>|exampleindex}\index{mode=@mode!<elementSpec>|exampleindex}\index{attList=<attList>|exampleindex}\index{attDef=<attDef>|exampleindex}\index{ident=@ident!<attDef>|exampleindex}\index{ns=@ns!<attDef>|exampleindex}\index{mode=@mode!<attDef>|exampleindex}\index{desc=<desc>|exampleindex}\index{datatype=<datatype>|exampleindex}\index{dataRef=<dataRef>|exampleindex}\index{key=@key!<dataRef>|exampleindex}\index{valList=<valList>|exampleindex}\index{type=@type!<valList>|exampleindex}\index{valItem=<valItem>|exampleindex}\index{ident=@ident!<valItem>|exampleindex}\index{desc=<desc>|exampleindex}\index{valItem=<valItem>|exampleindex}\index{ident=@ident!<valItem>|exampleindex}\index{desc=<desc>|exampleindex}\index{valItem=<valItem>|exampleindex}\index{ident=@ident!<valItem>|exampleindex}\index{desc=<desc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{ident}="{eg}"\hspace*{1em}{module}="{tagdocs}"\mbox{}\newline 
+\hspace*{1em}{mode}="{change}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{attList}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{attDef}\hspace*{1em}{ident}="{valid}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{ns}="{http://www.example.com/ns/nonTEI}"\hspace*{1em}{mode}="{add}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}indicates the validity of the example by supplying one of three predefined\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} codes for it.{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{datatype}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{dataRef}\hspace*{1em}{key}="{teidata.enumerated}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{datatype}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{valList}\hspace*{1em}{type}="{closed}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{valItem}\hspace*{1em}{ident}="{A}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}validity is of the highest class{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{valItem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{valItem}\hspace*{1em}{ident}="{B}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}validity is of the second highest class{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{valItem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{valItem}\hspace*{1em}{ident}="{C}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}validity is of the lowest class{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{valItem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{valList}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{attDef}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{attList}>}\mbox{}\newline 
+{</\textbf{elementSpec}>}\end{shaded}\egroup\par \par
+The same technique may be used to replace or extend the \hyperref[TEI.valList]{<valList>} supplied as part of any attribute in the TEI schema.
+\paragraph[{Class Modification}]{Class Modification}\label{MDMDCL}\par
+The concept of element classes was introduced in \textit{\hyperref[STECCM]{1.3.2.\ Model Classes}}; an understanding of it is fundamental to successful use of the TEI system. As noted there, we distinguish \textit{model classes}, the members of which all have structural similarity, from \textit{attribute classes}, the members of which simply share a set of attributes.\par
+The part of an element specification which determines its class membership is an element called \hyperref[TEI.classes]{<classes>}. All classes to which the element belongs must be specified within this, using a \hyperref[TEI.memberOf]{<memberOf>} element for each.\par
+To add an element to a class in which it is not already a member, all that is needed is to supply a new \hyperref[TEI.memberOf]{<memberOf>} element within the \hyperref[TEI.classes]{<classes>} element for the element concerned. For example, to add an element to the \textsf{att.typed} class, we include a declaration like the following: \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{module=@module!<elementSpec>|exampleindex}\index{mode=@mode!<elementSpec>|exampleindex}\index{ns=@ns!<elementSpec>|exampleindex}\index{classes=<classes>|exampleindex}\index{mode=@mode!<classes>|exampleindex}\index{memberOf=<memberOf>|exampleindex}\index{key=@key!<memberOf>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{ident}="{eg}"\hspace*{1em}{module}="{tagdocs}"\mbox{}\newline 
+\hspace*{1em}{mode}="{change}"\hspace*{1em}{ns}="{http://www.example.com/ns/nonTEI}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{classes}\hspace*{1em}{mode}="{change}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{memberOf}\hspace*{1em}{key}="{att.typed}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{classes}>}\mbox{}\newline 
+{</\textbf{elementSpec}>}\end{shaded}\egroup\par \noindent  Any existing class memberships for the element being changed are not affected because the {\itshape mode} attribute of the \hyperref[TEI.classes]{<classes>} element is set to change (rather than its default value of replace). Consequently, in this case, the \hyperref[TEI.eg]{<eg>} element retains its membership of the two classes (\textsf{model.common} and \textsf{model.graphicLike}) to which it already belongs.\par
+Equally, to remove the attributes which an element inherits from its membership in some class, all that is needed is to remove the relevant \hyperref[TEI.memberOf]{<memberOf>} element. For example, the element \hyperref[TEI.term]{<term>} defined in the core module is a member of two attribute classes, \textsf{att.typed} and \textsf{att.declaring}. It inherits the attributes {\itshape type} and {\itshape subtype} from the former, and the attribute {\itshape decls} from the latter. To remove the last of these attributes from this element, we need to remove it from that class: \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{module=@module!<elementSpec>|exampleindex}\index{mode=@mode!<elementSpec>|exampleindex}\index{classes=<classes>|exampleindex}\index{mode=@mode!<classes>|exampleindex}\index{memberOf=<memberOf>|exampleindex}\index{key=@key!<memberOf>|exampleindex}\index{mode=@mode!<memberOf>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{ident}="{term}"\hspace*{1em}{module}="{core}"\mbox{}\newline 
+\hspace*{1em}{mode}="{change}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{classes}\hspace*{1em}{mode}="{change}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{memberOf}\hspace*{1em}{key}="{att.declaring}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{mode}="{delete}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{classes}>}\mbox{}\newline 
+{</\textbf{elementSpec}>}\end{shaded}\egroup\par \par
+If the intention is to change the class membership of an element completely, rather than simply add or remove it to or from one or more classes, the value of the {\itshape mode} attribute of \hyperref[TEI.classes]{<classes>} can be set to replace (which is the default if no value is specified), indicating that the memberships indicated by its child \hyperref[TEI.memberOf]{<memberOf>} elements are the only ones applicable. Thus the following declaration: \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{module=@module!<elementSpec>|exampleindex}\index{mode=@mode!<elementSpec>|exampleindex}\index{ns=@ns!<elementSpec>|exampleindex}\index{classes=<classes>|exampleindex}\index{mode=@mode!<classes>|exampleindex}\index{memberOf=<memberOf>|exampleindex}\index{key=@key!<memberOf>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{ident}="{term}"\hspace*{1em}{module}="{core}"\mbox{}\newline 
+\hspace*{1em}{mode}="{change}"\hspace*{1em}{ns}="{http://www.example.com/ns/nonTEI}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{classes}\hspace*{1em}{mode}="{replace}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{memberOf}\hspace*{1em}{key}="{att.interpLike}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{classes}>}\mbox{}\newline 
+{</\textbf{elementSpec}>}\end{shaded}\egroup\par \noindent  would have the effect of removing the element \hyperref[TEI.term]{<term>} from both its existing attribute classes, and adding it to the \textsf{att.interpLike} class.\par
+If however the {\itshape mode} attribute is set to change, the implication is that the memberships indicated by its child \hyperref[TEI.memberOf]{<memberOf>} elements are to be combined with the existing memberships for the element.\par
+To change or remove attributes inherited from an attribute class for all members of the class (as opposed to specific members of that class), it is also possible to modify the class specification itself. For example, the class \textsf{att.global.rendition} defines several attributes which are available for all elements, namely {\itshape rend}, {\itshape style}, and {\itshape rendition}. If we decide that we never wish to use the {\itshape rend} attribute, the simplest way of removing it is to supply a modified class specification for \textsf{att.global.rendition} as follows: \par\bgroup\index{classSpec=<classSpec>|exampleindex}\index{ident=@ident!<classSpec>|exampleindex}\index{type=@type!<classSpec>|exampleindex}\index{mode=@mode!<classSpec>|exampleindex}\index{attList=<attList>|exampleindex}\index{attDef=<attDef>|exampleindex}\index{ident=@ident!<attDef>|exampleindex}\index{mode=@mode!<attDef>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{classSpec}\hspace*{1em}{ident}="{att.global.rendition}"\mbox{}\newline 
+\hspace*{1em}{type}="{atts}"\hspace*{1em}{mode}="{change}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{attList}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{attDef}\hspace*{1em}{ident}="{rend}"\hspace*{1em}{mode}="{delete}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{attList}>}\mbox{}\newline 
+{</\textbf{classSpec}>}\end{shaded}\egroup\par \noindent  Because the {\itshape mode} attribute on the \hyperref[TEI.classSpec]{<classSpec>} defining the attributes inherited through membership of this class has the value change, any of its existing identifiable components not specified in the modification above will remain unchanged. The only effect will therefore be to delete the {\itshape rend} attribute from the class, and hence from all elements which are members of the class.\par
+The classes used in the TEI schema are further discussed in chapter \textit{\hyperref[ST]{1.\ The TEI Infrastructure}}. Note in particular that classes are themselves classified: the attributes inherited by a member of attribute class A may come to it directly from that class, or from another class of which A is itself a member. For example, the class \textsf{att.global} is itself a member of the classes \textsf{att.global.linking} and \textsf{att.global.analytic}. By default, these two classes are predefined as empty. However, if (for example) the \textsf{linking} module is included in a schema, a number of attributes ({\itshape corresp}, {\itshape sameAs}, etc.) are defined as members of the \textsf{att.global.linking} class. All elements which are members of \textsf{att.global} will then inherit these new attributes (see further section \textit{\hyperref[STECAT]{1.3.1.\ Attribute Classes}}). A new attribute may thus be added to the global class in two ways: either by adding it to the \hyperref[TEI.attList]{<attList>} defined within the class specification for \textsf{att.global}; or by defining a new attribute class, and changing the class membership of the \textsf{att.global} class to reference it.\par
+Such global changes should be undertaken with caution: in general removing existing non-mandatory attributes from a class will always be a clean modification, in the same way as removing non-mandatory elements. Adding a new attribute to a class however can be a clean modification only if the new attribute is labelled as belonging to some namespace other than the TEI.\par
+The same mechanisms are available for modification of model classes. Care should be taken when modifying the model class membership of existing elements since model class membership is what determines the content model of most elements in the TEI schema, and a small change may have unintended consequences. 
+\paragraph[{Addition of New Elements}]{Addition of New Elements}\label{MDMDNE}\par
+To add a completely new element into a schema involves providing a complete element specification for it. It is recommended that the \hyperref[TEI.classes]{<classes>} element of this new declaration should include a reference to at least one TEI model class. Without such a reference, the new element would not otherwise be referenced by the content model of any other TEI element, and would therefore be inaccessible within a TEI document. It is also possible to modify the content models of one or more existing elements to refer to the new element explicitly, as discussed in \textit{\hyperref[MDMDCM]{23.3.1.2.\ Modification of Content Models}}  but this will generally be less convenient.\par
+For example, the three elements \hyperref[TEI.bibl]{<bibl>}, \hyperref[TEI.biblFull]{<biblFull>}, and \hyperref[TEI.biblStruct]{<biblStruct>} are all defined as members of the class \textsf{model.biblLike}. To add a fourth member (say \texttt{<myBibl>}) to this class, we need to include in the \hyperref[TEI.elementSpec]{<elementSpec>} defining our new element a \hyperref[TEI.memberOf]{<memberOf>} element which nominates the intended class: \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{mode=@mode!<elementSpec>|exampleindex}\index{ns=@ns!<elementSpec>|exampleindex}\index{classes=<classes>|exampleindex}\index{memberOf=<memberOf>|exampleindex}\index{key=@key!<memberOf>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{ident}="{myBibl}"\hspace*{1em}{mode}="{add}"\mbox{}\newline 
+\hspace*{1em}{ns}="{http://www.example.com/ns/nonTEI}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{classes}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{memberOf}\hspace*{1em}{key}="{model.biblLike}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{classes}>}\mbox{}\newline 
+\textit{<!-- other parts of the new declaration here -->}\mbox{}\newline 
+{</\textbf{elementSpec}>}\end{shaded}\egroup\par \noindent  The other parts of this declaration will typically include a description for the new element and information about its content model, its attributes, etc., as further described in \textit{\hyperref[TD]{22.\ Documentation Elements}}.
+\paragraph[{Renaming of Elements}]{Renaming of Elements}\label{MDMDNM}\par
+Every element and other named markup construct in the TEI schema has a \textit{canonical name}, usually composed of English language words or syllables: this name is supplied as the value of the {\itshape ident} attribute on the \hyperref[TEI.elementSpec]{<elementSpec>}, \hyperref[TEI.attDef]{<attDef>}, \hyperref[TEI.classSpec]{<classSpec>}, or \hyperref[TEI.macroSpec]{<macroSpec>} used to define it. In some circumstances, it may be convenient for the element or attribute declaration used within a schema generated from that specification to take a different form, for example, permitting schemas to use generic identifiers from a different language, or in an abbreviated form. There may be many alternative identifiers for the same markup construct, and an ODD processor may choose which of them to use for a given purpose. Each such alternative name is supplied by means of an \hyperref[TEI.altIdent]{<altIdent>} element within the specification element concerned.\par
+For example, the following declaration converts \hyperref[TEI.note]{<note>} to \texttt{<nt>}: \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{module=@module!<elementSpec>|exampleindex}\index{mode=@mode!<elementSpec>|exampleindex}\index{altIdent=<altIdent>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{ident}="{note}"\hspace*{1em}{module}="{core}"\mbox{}\newline 
+\hspace*{1em}{mode}="{change}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{altIdent}>}nt{</\textbf{altIdent}>}\mbox{}\newline 
+{</\textbf{elementSpec}>}\end{shaded}\egroup\par \noindent  Note that the {\itshape mode} attribute on the \hyperref[TEI.elementSpec]{<elementSpec>} now takes the value change to indicate that those parts of the element specification not supplied are to be inherited from the standard definition. The content of the \hyperref[TEI.altIdent]{<altIdent>} element is now available for use in place of the canonical {\itshape ident} value in the schema generated.\par
+Renaming in this way is  is an inherently unclean modification (because the set of documents matched by the resulting schema is not contained by the set matched by TEI-All), even though the process of converting any document in which elements have been renamed into an exactly equivalent document using canonical names is completely deterministic. Documents using such a schema should not claim to be in the TEI namespace, but either use a null namespace or some user-defined namespace, as further discussed in \textit{\hyperref[MDNS]{23.3.2.\ Modification and Namespaces}}; this is necessary to avoid the risk of name collision between the new name and all existing TEI names as well as for reasons of conformance (see further \textit{\hyperref[MD]{23.3.\ Customization}}).
+\subsubsection[{Modification and Namespaces}]{Modification and Namespaces}\label{MDNS}\par
+All the elements defined by the TEI schema are labelled as belonging to a single \textit{namespace}, maintained by the TEI and with the URI http://www.tei-c.org/ns/1.0.\footnote{This is not strictly the case, since the element \hyperref[TEI.egXML]{<egXML>} used to represent TEI examples has its own namespace, http://www.tei-c.org/ns/Examples; this is the only exception however.} Only elements which are unmodified or which have undergone a clean modification may use this namespace. Note however that TEI-defined attributes are not associated with any namespace. \par
+This implies that any other modification  must either specify a different namespace or, equivalently, specify no namespace at all. The {\itshape ns} attribute is provided on elements \hyperref[TEI.schemaSpec]{<schemaSpec>}, \hyperref[TEI.elementSpec]{<elementSpec>}, and \hyperref[TEI.attDef]{<attDef>} for this purpose.\par
+Suppose, for example, that we wish to add a new attribute {\itshape topic} to the existing TEI element \hyperref[TEI.p]{<p>}. In the absence of namespace considerations, this would be an unclean modification, since \hyperref[TEI.p]{<p>} does not currently have such an attribute. The most appropriate action is to explicitly attach the new attribute to a new namespace by a declaration such as the following: \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{mode=@mode!<elementSpec>|exampleindex}\index{attList=<attList>|exampleindex}\index{attDef=<attDef>|exampleindex}\index{ident=@ident!<attDef>|exampleindex}\index{mode=@mode!<attDef>|exampleindex}\index{ns=@ns!<attDef>|exampleindex}\index{desc=<desc>|exampleindex}\index{datatype=<datatype>|exampleindex}\index{dataRef=<dataRef>|exampleindex}\index{key=@key!<dataRef>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{ident}="{p}"\hspace*{1em}{mode}="{change}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{attList}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{attDef}\hspace*{1em}{ident}="{topic}"\hspace*{1em}{mode}="{add}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{ns}="{http://www.example.org/ns/nonTEI}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}indicates the topic of a TEI paragraph{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{datatype}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{dataRef}\hspace*{1em}{key}="{teidata.word}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{datatype}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{attDef}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{attList}>}\mbox{}\newline 
+{</\textbf{elementSpec}>}\end{shaded}\egroup\par \par
+Document instances using a schema derived from this ODD can now indicate clearly the status of this attribute: \par\bgroup\index{div=<div>|exampleindex}\index{p=<p>|exampleindex}\index{n=@n!<p>|exampleindex}\index{my:topic=@my:topic!<p>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{div}\mbox{}\newline 
+   xmlns:my="http://www.example.org/ns/nonTEI">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{<\textbf{p}\hspace*{1em}{n}="{12}"\hspace*{1em}{my:topic}="{rabbits}">}Flopsy, Mopsy, Cottontail, and Peter...{</\textbf{p}>}\mbox{}\newline 
+{</\textbf{div}>}\end{shaded}\egroup\par \par
+Since {\itshape topic} is explicitly labelled as belonging to something other than the TEI namespace, we regard the modification which introduced it as clean. A namespace-aware processor will be able to validate those elements in the TEI namespace against the unmodified schema.\footnote{Full namespace support does not exist in the DTD language, and therefore these techniques are available only to users of more modern schema languages such as RELAX NG or W3C Schema.}\par
+Similar considerations apply when modification is made to the content model or some other aspect of an element, or when a new element is declared. All such changes should be explicitly labelled as belonging to some non-TEI namespace or to no namespace at all.\par
+If the {\itshape ns} attribute is supplied on a \hyperref[TEI.schemaSpec]{<schemaSpec>} element, it identifies the namespace applicable to all components of the schema being specified. Even if such a schema includes unmodified modules from the TEI namespace, the elements contained by such modules will now be regarded as belonging to the namespace specified on the \hyperref[TEI.schemaSpec]{<schemaSpec>}. This can be useful if it is desired simply to avoid namespace processing. For example, the following schema specification results in a schema called \textsf{noName} which has no namespace, even though it comprises declarations from the TEI \textsf{header} module: \par\bgroup\index{schemaSpec=<schemaSpec>|exampleindex}\index{ns=@ns!<schemaSpec>|exampleindex}\index{ident=@ident!<schemaSpec>|exampleindex}\index{moduleRef=<moduleRef>|exampleindex}\index{key=@key!<moduleRef>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{schemaSpec}\hspace*{1em}{ns}="{}"\hspace*{1em}{ident}="{noName}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{moduleRef}\hspace*{1em}{key}="{header}"/>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+{</\textbf{schemaSpec}>}\end{shaded}\egroup\par \par
+In addition to the TEI canonical namespace mentioned above, the TEI may also define namespaces for approved translations of the TEI schema into other languages.  The namespace for such translations is the same as that for the canonical namespace, suffixed by the appropriate ISO language identifier (\textit{\hyperref[CHSH]{vi.1\ Language Identification}}). A schema specification using the Chinese translation, for example, would use the namespace \textsf{http://www.tei-c.org/ns/1.0/zh}
+\subsubsection[{Documenting the Modification}]{Documenting the Modification}\label{MDDO}\par
+The elements used to define a TEI customization (\hyperref[TEI.schemaSpec]{<schemaSpec>}, \hyperref[TEI.moduleRef]{<moduleRef>}, \hyperref[TEI.elementSpec]{<elementSpec>}, etc.) will typically be used within a TEI document which supplies further information about the intended use of the new schema, the meaning and application of any new or modified elements within it, and so on. This document will typically conform to a  schema which includes components from the module described in chapter \textit{\hyperref[TD]{22.\ Documentation Elements}}.\footnote{This module can be used to document any XML schema, and has indeed been used to document several non-TEI schemas.}\par
+Where the customization to be documented simply consists in a selection of TEI modules, perhaps with some deletion of unwanted elements or attributes, the documentation need not specify anything further. Even here however it may be considered worthwhile to replace some of the semantic information provided by the unmodified TEI specification. For example, the \hyperref[TEI.desc]{<desc>} element of an unmodified TEI \hyperref[TEI.elementSpec]{<elementSpec>} may describe an element in terms more general than appropriate to a particular project, or the \hyperref[TEI.exemplum]{<exemplum>} elements within it may not illustrate the project's actual intended usage of the element, or the \hyperref[TEI.remarks]{<remarks>} element may contain discussions of matters irrelevant to the project. These elements may therefore be replaced or deleted within an \hyperref[TEI.elementSpec]{<elementSpec>} as necessary.\par
+Radical revision is also possible. It is feasible to produce a modification in which the \hyperref[TEI.teiHeader]{<teiHeader>} or \hyperref[TEI.text]{<text>} elements are not required, or in which any other rule stated in these Guidelines is either not enforced or not enforceable. In fact, the mechanism, if used in an extreme way, permits replacement of all that the TEI has to say about every component of its schema. Such revisions would result in documents that are not TEI-conformant in even the broadest sense, and it is not intended that encoders use the mechanism in this way. We discuss exactly what is meant by the concept of \textit{TEI conformance} in the next section, \textit{\hyperref[CF]{23.4.\ Conformance}}.
+\subsubsection[{Examples of Modification }]{Examples of Modification }\label{MDlite}\par
+Several examples of customizations of the TEI are provided as part of the standard release. They include the following: \begin{description}
+
+\item[{tei\textunderscore bare}]The schema generated from this customization is the minimum needed for TEI Conformance. It provides only a handful of elements. 
+\item[{tei\textunderscore all}]The schema generated from this customization combines all available TEI modules, providing 589 elements.
+\item[{tei\textunderscore allPlus}]The schema generated from this customization combines all available TEI modules with three other non-TEI vocabularies, specifically MathML, SVG, and XInclude.
+\end{description} \par
+It is unlikely that any project would wish to use any of these extremes unchanged. However, they form a useful starting point for customization, whether by removing modules from tei\textunderscore all or tei\textunderscore allPlus, or by replacing elements deleted from tei\textunderscore bare. They also demonstrate how an ODD document may be constructed to provide a basic reference manual to accompany schemas generated from it.\par
+Shortly after publication of the first edition of these Guidelines, as a demonstration of how the TEI encoding schema might be adopted to meet 90\% of the needs of 90\% of the TEI user community, the TEI editors produced a brief tutorial defining one specific ‘clean’ modification of the TEI schema, which they called TEI Lite. This tutorial and its associated DTD became very popular and are still available from the TEI web site at \url{http://www.tei-c.org/Guidelines/Customization/Lite/}. The tutorial and associated schema specification is also included as one of the exemplars provided with TEI P5.\par
+An updated and expanded version of this schema known as \textsf{TEI simplePrint} was added to the Exemplars at release 3.1.0. The elements it defines have been modified to take advantage of the ‘processing model’ features (see further \textit{\hyperref[TDPM]{22.5.4.\ Processing Models}}) introduced to the Guidelines at release 3.0.0.\par
+The exemplars provided with TEI P5 also include a customization file from which a schema for the validation of other customization files may be generated. This ODD, called tei\textunderscore odds, combines the four basic modules with the tagdocs, dictionaries, gaiji, linking, and figures modules and also provides facilities for including RELAX NG or Schematron code within a document. 
+\subsection[{Conformance}]{Conformance}\label{CF}\par
+The notion of \textit{TEI Conformance} is intended to assist in the description of the format and contents of a particular XML document instance or set of documents. It may be found useful in such situations as: \begin{itemize}
+\item interchange or integration of documents amongst different researchers or users; 
+\item software specifications for TEI-aware processing tools; 
+\item agreements for the deposit of texts in, and distribution of texts from, archives; 
+\item specifying the form of documents to be produced by or for a given project. 
+\end{itemize}  It is not intended to provide any other evaluation, for example of scholarly merit, intellectual integrity, or value for money. A document may be of major intellectual importance and yet not be TEI-conformant; a TEI-conformant document may be of no scholarly value whatsoever.\par
+In this section we explore several aspects of conformance, and in particular attempt to define how the term \textit{TEI-conformant} should be used. The terminology defined here should be considered normative: users and implementors of the TEI Guidelines should use the phrases ‘TEI-conformant’ and ‘TEI Extension’ only in the senses given and with the usages described.\par
+A document is \textit{TEI-conformant} if it: \begin{itemize}
+\item is a well-formed XML document (\textit{\hyperref[CFWF]{23.4.1.\ Well-formedness Criterion}})
+\item can be validated against a \textit{TEI Schema}, that is, a schema derived from the TEI Guidelines (\textit{\hyperref[CFVL]{23.4.2.\ Validation Constraint}})
+\item conforms to the TEI Abstract Model (\textit{\hyperref[CFAM]{23.4.3.\ Conformance to the TEI Abstract Model}})
+\item uses the \textit{TEI namespace} (and other namespaces where relevant) correctly (\textit{\hyperref[CFNS]{23.4.4.\ Use of the TEI Namespace}})
+\item is documented by means of a TEI-conformant \textit{ODD file} (\textit{\hyperref[CFOD]{23.4.5.\ Documentation Constraint}}) which refers to the TEI Guidelines
+\end{itemize}  Each of these criteria is discussed in more detail below.\par
+A document is said to use a \textit{TEI Extension} if it is a well-formed XML document which is valid against a TEI Schema which contains additional distinctions, representing concepts not present in the TEI Abstract Model, and therefore not documented in these Guidelines. Such a document  cannot necessarily be transformed automatically to a TEI-conformant document without loss of information. However, since one of the goals of the TEI is to support extensions and modifications, it should not be assumed that no TEI document can include extensions: an extension which is expressed by means of the recommended mechanisms is also a TEI-conformant document provided that those parts of it which are not extensions are TEI-conformant.\par
+A TEI-conformant document is said to follow \textit{TEI Recommended Practice} if, wherever these Guidelines prefer one encoding practice to another, the preferred practice is used.
+\subsubsection[{Well-formedness Criterion}]{Well-formedness Criterion}\label{CFWF}\par
+These Guidelines mandate the use of well-formed XML as representation format. Documents must conform to the World Wide Web Consortium recommendation of the \textit{Extensible Markup Language (XML) 1.0 (Fourth Edition)} or successor editions found at \xref{http://www.w3.org/TR/xml/}{http://www.w3.org/TR/xml/}. Other ways of representing the concepts of the TEI Abstract Model are possible, and other representations may be considered appropriate for use in particular situations (for example, for data capture, or project-internal processing). But such alternative representations  should not be considered in any way TEI-conformant.\par
+Previous versions of these Guidelines used SGML as a representation format. With the release of P5, the only representation format supported by these Guidelines became valid XML; legacy documents in SGML format should therefore be converted using appropriate software.\par
+A TEI-conformant document must use the TEI namespace, and therefore must also include an XML-conformant namespace declaration, as defined below (\textit{\hyperref[CFNS]{23.4.4.\ Use of the TEI Namespace}}).\par
+The use of XML greatly reduces the need to consider hardware or software differences between processing environments when exchanging data. No special packing or interchange format is required for an XML document, beyond that defined by the W3C recommendations, and no special ‘interchange’ format is therefore proposed by these Guidelines. For discussion of encoding issues that may arise in the processing of special character sets or non-standard writing systems, see further chapter \textit{\hyperref[CH]{vi\ Languages and Character Sets}}.\par
+In addition to the well-formedness criterion, the W3C defines the notion of a \textit{valid} document, as being a well-formed document which matches a specific set of rules or syntactic constraints, defined by a \textit{schema}. As noted above, TEI conformance implies that the schema used to determine validity of a given document should be derived from the present Guidelines, by means of an ODD which references and documents components which these Guidelines define.
+\subsubsection[{Validation Constraint}]{Validation Constraint}\label{CFVL}\par
+All \textit{TEI-conformant} documents must validate against a schema file that has been derived from the published TEI Guidelines, combined and documented in the manner described in section \textit{\hyperref[MD]{23.3.\ Customization}}. We call the formal output of this process a \textit{TEI Schema}.\par
+The TEI does not mandate use of any particular schema language, only that this schema\footnote{Here and elsewhere we use the word \textit{schema} to refer to any formal document grammar language, irrespective of the formalism used to represent it.} should have been generated from a \textit{TEI ODD file} that references the TEI Guidelines. Currently available tools permit the expression of schemas in any or all of the XML DTD language, W3C XML Schema, and RELAX NG (both compact and XML formats). Some of what is syntactically possible using the ODD formalism cannot be represented by all schema languages; and there are some features of some schema languages which have no counterpart in ODD. No single schema language fully captures all the constraints implied by conformance to the TEI Abstract Model. A document which is valid according to a TEI schema represented using one schema language may not be valid against the same schema expressed in other languages; for example, the DTD language does not  support namespaces. \par
+As noted in section \textit{\hyperref[MD]{23.3.\ Customization}}, many varieties of TEI schema are possible and not all of them are necessarily \textit{TEI-conformant}; derivation from an ODD is a necessary but not a sufficient condition for TEI Conformance.
+\subsubsection[{Conformance to the TEI Abstract Model}]{Conformance to the TEI Abstract Model}\label{CFAM}\par
+The \textit{TEI Abstract Model} is the conceptual schema instantiated by the TEI Guidelines. These Guidelines define, both formally and informally, a set of abstract concepts such as ‘paragraph’ or ‘heading’, and their structural relationships, for example stating that ‘paragraph’s do not contain ‘heading’s. These Guidelines also define classes of elements, which have both semantic and structural properties in common. Those semantic and structural properties are also a part of the TEI Abstract Model; the class membership of an existing TEI element cannot therefore be changed without changing the model. Elements can however be removed from a class by deletion, and new non-TEI elements within their own namespaces can be added to existing TEI classes.
+\paragraph[{Semantic Constraints}]{Semantic Constraints}\label{CFAMsc}\par
+It is an important condition of TEI conformance that elements defined in the TEI Guidelines as having one specific meaning should not be used with another. For example, the element \hyperref[TEI.l]{<l>} is defined in the TEI Guidelines as containing a line of verse. A schema in which it is redefined to mean a typographic line, or an ordered queue of objects of some kind, cannot therefore be TEI-conformant, whatever its other properties.\par
+The semantics of elements defined in the TEI Guidelines are conveyed in a number of ways, ranging from formally verifiable datatypes to informal descriptive prose. In addition, a mapping between TEI elements and concepts in other conceptual models may be provided by the \hyperref[TEI.equiv]{<equiv>} element where this is available.\par
+A schema which shares equivalent concepts to those of the TEI conceptual model may be mappable to the TEI Schema by means of such a mechanism. For example, the concept of paragraph expressed in the TEI schema by the \hyperref[TEI.p]{<p>} element is probably the same concept as that expressed in the DocBook schema by the \texttt{<para>} element. Such areas of overlap facilitate interchange because elements from one namespace may be readily integrated with those from another, but do not affect the definition of conformance.\par
+A document is said to conform to the \textit{TEI Abstract Model} if features for which an encoding is proposed by the TEI Guidelines are encoded within it using the markup and other syntactic properties defined by means of a valid \textit{TEI-conformant} schema. Hence, even though the names of elements or attributes may vary, a TEI-conformant document must respect the TEI Semantic Model, and be valid with respect to a TEI-conformant Schema. Although it may be possible to transform a document which follows the \textit{TEI Abstract Model} into a \textit{TEI-conformant} document, such a document is not itself conformant.\par
+As noted above, the notion of semantic conformance cannot be completely enforced in a formal way. The TEI conceptual model is expressed by means of formal specification in a customization file, by means of descriptive prose in the body of these Guidelines, and implicitly by examples of usage. Any inconsistency between, for example, the text of these Guidelines and a part of a specification should be considered an error and reported to the TEI Council for correction. 
+\paragraph[{Mandatory Components of a TEI Document}]{Mandatory Components of a TEI Document}\label{CFAMmc}\par
+It is a long-standing requirement for any \textit{TEI-conformant} document that it should contain a \hyperref[TEI.teiHeader]{<teiHeader>} element. To be more specific a \textit{TEI-conformant} document must contain \begin{itemize}
+\item a single \hyperref[TEI.teiHeader]{<teiHeader>} element followed by one or more elements from the \textsf{model.resource} class; or
+\item in the case of a corpus or collection, a single overall \hyperref[TEI.teiHeader]{<teiHeader>} element followed by a series of \hyperref[TEI.TEI]{<TEI>} elements each with its own \hyperref[TEI.teiHeader]{<teiHeader>}
+\end{itemize}  All \hyperref[TEI.teiHeader]{<teiHeader>} elements in a \textit{TEI-conformant} document must include elements for: \begin{description}
+
+\item[{Title Statement}]This should include the title of the TEI document expressed using a \hyperref[TEI.titleStmt]{<titleStmt>} element.
+\item[{Publication Statement}]This should include the place and date of publication or distribution of the TEI document, expressed using the \hyperref[TEI.publicationStmt]{<publicationStmt>} element.
+\item[{Source Statement}]For a document derived from some previously existing document, this must include a bibliographic description of that source. For a document not so derived, this must include a brief statement that the document has no pre-existing source. In either case, this will be expressed using the \hyperref[TEI.sourceDesc]{<sourceDesc>} element.
+\end{description} 
+\subsubsection[{Use of the TEI Namespace}]{Use of the \textit{TEI Namespace}}\label{CFNS}\par
+The Namespaces Recommendation of the W3C (\cite{NAMESPACES}) provides a way for an XML document to combine markup from different vocabularies without risking name collision and consequent processing difficulties. While the scope of the TEI is large, there are many areas in which it makes no particular recommendation, or where it recommends that other defined markup schemas should be adopted, such as graphics or mathematics. It is also considered desirable that users of other markup schemas should be able to integrate documents using TEI markup with their own system. To meet these objectives without compromising the reliability of its encoding, a TEI-conformant document is required to make appropriate use of the TEI namespace.\par
+Essentially all elements in a TEI Schema which represents concepts from the TEI Abstract Model belong to the TEI namespace, \textsf{http://www.tei-c.org/ns/1.0}, maintained by the TEI. A TEI-conformant document is required to declare the namespace for all the elements it contains whether these come from the TEI namespace or from other schemas.\par
+A TEI Schema may be created which assigns TEI elements to some other namespace, or to no namespace at all. A document using such a schema cannot be considered TEI-conformant. A document which places non-TEI elements or attributes within the TEI namespace cannot be considered TEI-conformant; such practices are strongly deprecated as they may lead to serious difficulties for processing or interchange.
+\subsubsection[{Documentation Constraint}]{Documentation Constraint}\label{CFOD}\par
+As noted in \textit{\hyperref[CFVL]{23.4.2.\ Validation Constraint}} above, a TEI Schema can only be generated from a TEI ODD, which also serves to document the semantics of the elements defined by it. A TEI-conformant document should therefore always be accompanied by (or refer to) a valid \textit{TEI ODD file} specifying which modules, elements, classes, etc. are in use together with any modifications applied, and from which a TEI Schema can be generated to validate the document. The TEI supplies a number of predefined \textit{TEI Customization exemplar ODD files} and the schemas already generated from them (see \textit{\hyperref[MDlite]{23.3.4.\ Examples of Modification }}), but most projects will typically need to customize the TEI beyond what these examples provide. It is assumed, for example, that most projects will customize the TEI schema by removing those elements that are not needed for the texts they are encoding, and by providing further constraints on the attribute values and element content models the TEI provides. All such customizations must be specified by means of a valid \textit{TEI ODD} file.\par
+As different sorts of customization have different implications for the interchange and interoperability of TEI documents, it cannot be assumed that every customization will necessarily result in a schema that validates only TEI-conformant documents. The ODD language permits modifications which conflict with the TEI Abstract Model, even though observing this model is a requirement for TEI Conformance. The ODD language can in fact be used to describe many kinds of markup schema, including schemas which have nothing to do with the TEI at all. \par
+Equally, it is possible to construct a TEI Schema which is identical to that derived from a given TEI ODD file without using the ODD schema. A schema can constructed simply by combining the predefined schema language fragments corresponding with the required set of TEI modules and other statements in the relevant schema language. However, the status of such a schema with respect to the \textsf{tei\textunderscore all} schema cannot in general be easily determined; it may therefore be impractical to determine whether such a schema represents a clean modification or an extension. This is one reason for making the presence of a TEI ODD file a requirement for conformance.
+\subsubsection[{Varieties of TEI Conformance}]{Varieties of TEI Conformance}\label{CFCATSCH}\par
+The conformance status of a given document may be assessed by answering the following questions, in the order indicated: \begin{enumerate}
+\item Is it a valid XML document, for which a TEI Schema exists? If not, then the document cannot be considered TEI-conformant in any sense.
+\item Is the document accompanied by a TEI-conformant ODD specification describing its markup schema and intended semantics? If not, then the document can only be considered TEI-conformant if it validates against a predefined TEI Schema and conforms to the TEI abstract model.
+\item Does the markup in the document correctly represent the TEI abstract model? Though difficult to assess, this is essential to TEI conformance.
+\item Does the document claim that all of its elements come from some namespace other than the TEI (or no namespace)? If so, the document cannot be TEI-conformant.
+\item If the document claims to use the TEI namespace, in part or wholly, do the elements associated with that namespace in fact belong to it? If not, the document cannot be TEI-conformant; if so, and if all non-TEI elements and attributes are correctly associated with other namespaces, then the document may be TEI-conformant.
+\item Is the document valid according to a schema made by combining all TEI modules as well as valid according to the schema derived from its associated ODD specification? If so, the document is TEI-conformant. 
+\item Is the document valid according to the schema derived from its associated ODD specification, but not according to \textsf{tei\textunderscore all}? If so, the document uses a TEI extension.
+\item Is it possible automatically to transform the document into a document which is valid according to \textsf{tei\textunderscore all}, using only information supplied in the accompanying ODD and without loss of information? If so, the document is TEI-conformant.
+\end{enumerate}\par
+In the following table, we examine more closely some specific, though imaginary, cases: \label{tab-conformance} \par 
+\begin{longtable}{P{.35\textwidth}llllllll}
+\rowcolor{label}\tabcellsep A\tabcellsep B \tabcellsep C\tabcellsep D\tabcellsep E \tabcellsep F\tabcellsep G\tabcellsep H\\\hline 
+Conforms to TEI Abstract Model\tabcellsep Y\tabcellsep N\tabcellsep Y\tabcellsep Y\tabcellsep ?\tabcellsep Y\tabcellsep N\tabcellsep ?\\
+Valid ODD present\tabcellsep Y\tabcellsep Y\tabcellsep Y\tabcellsep Y\tabcellsep Y\tabcellsep Y\tabcellsep Y\tabcellsep N\\
+Uses only non-TEI namespace(s) or none\tabcellsep N\tabcellsep N\tabcellsep N\tabcellsep N\tabcellsep Y\tabcellsep N\tabcellsep Y\tabcellsep N\\
+Uses TEI and other namespaces correctly\tabcellsep Y\tabcellsep Y\tabcellsep N\tabcellsep Y\tabcellsep N\tabcellsep Y\tabcellsep N\tabcellsep Y\\
+Document is valid as a subset of \textsf{tei\textunderscore all}\tabcellsep Y\tabcellsep N\tabcellsep Y\tabcellsep N\tabcellsep N\tabcellsep Y\tabcellsep N\tabcellsep Y\\
+Document can be converted automatically to a form which is valid as a subset of \textsf{tei\textunderscore all}\tabcellsep Y\tabcellsep N\tabcellsep Y\tabcellsep N\tabcellsep N\tabcellsep Y\tabcellsep N\tabcellsep ?\end{longtable} \par
+ \par
+We assume firstly that each sample document assessed here is a well-formed XML document, and that it is valid against some schema. \par
+The document in column A is TEI-conformant. Its tagging follows the TEI Abstract Model, both as regards syntactic constraints (its \hyperref[TEI.l]{<l>} elements appear within \hyperref[TEI.div]{<div>} elements and not the reverse) and semantic constraints (its \hyperref[TEI.l]{<l>} elements appear to contain verse lines rather than typographic ones). It is accompanied by a valid ODD which documents exactly how it uses the TEI. All the TEI-defined elements and attributes in the document are placed in the TEI namespace. The schema against which it is valid is a ‘clean’ subset of the \textsf{tei\textunderscore all} schema.\par
+The document in column B is not a TEI document. Although it is accompanied by a valid TEI ODD, the resulting schema includes some ‘unclean’ modifications, and represents some concepts from the TEI Abstract Model using non-TEI elements; for example, it re-defines the content model of \hyperref[TEI.p]{<p>} to permit \hyperref[TEI.div]{<div>} within it, and it includes an element \texttt{<pageTrimming>} which appears to have the same meaning as the existing TEI \hyperref[TEI.fw]{<fw>} element, but the equivalence is not made explicit in the ODD. It uses the TEI namespace correctly to identify the TEI elements it contains, but the ODD does not contain enough information automatically to convert its non-TEI elements into TEI equivalents.\par
+The document in column C is  TEI conformant. It is almost the same as the document in column A, except that the names of the elements used are not those specified for the TEI namespace. Because the ODD accompanying it contains an exact mapping for each element name (using the \hyperref[TEI.altIdent]{<altIdent>} element) and there are no name conflicts, it is possible to make an automatic conversion of this document.\par
+The document in column D is a TEI Extension. It combines elements from its own namespace with unmodified TEI elements in the TEI namespace. Its usage of TEI elements conforms to the TEI Abstract Model. Its ODD defines a new \texttt{<blort>} element which has no exact TEI equivalent, but which is assigned to an existing TEI class; consequently its schema is not a clean subset of \textsf{tei\textunderscore all}. If the associated ODD provided a way of mapping this element to an existing TEI element, then this would be TEI-conformant.\par
+The document in column E is superficially similar to document D, but because it does not use any namespace declarations (or, equivalently, it assigns unmodified TEI elements to its own namespace), it may contain name collisions; there is no way of knowing whether a \hyperref[TEI.p]{<p>} within it is the same as the TEI's \hyperref[TEI.p]{<p>} or has some other meaning. The accompanying ODD file may be used to provide the human reader with information about equivalently named elements in the TEI namespace, and hence to determine whether the document is valid with respect to the TEI Abstract Model but this is not an automatable process. In particular, cases of apparent conflict (for example use of an element \hyperref[TEI.p]{<p>} to represent a concept not in the TEI Abstract Model but in the abstract model of some other system, whose namespace has been removed as well) cannot be reliably resolved. By our current definition therefore, this is not a TEI document.\par
+The document in column F is TEI-conformant. The difference between it and that in column D is that the new element \texttt{<blort>} which is used in this document is a specialization of an existing TEI element, and the ODD in which it is defined specifies the mapping (a \texttt{<my:blort>} may be automatically converted to a <tei:seg type="blort">, for example). For this to work, however, the \texttt{<blort>} must observe the same syntactic constraints as the \hyperref[TEI.seg]{<seg>}; if it does not, this would also be a case of TEI Extension.\par
+The document in column G is not a TEI document. Its structure is fully documented by a valid TEI ODD, but it does not claim to represent the TEI Abstract Model, does not use the TEI namespace, and is not intended to validate against any TEI schema. \par
+The document in column H is very like that in column A, but it lacks an accompanying ODD. Instead, the schema used to validate it is produced simply by combining TEI schema fragments in the same way as an ODD processor would, given the ODD. If the resulting schema is a clean subset of \textsf{tei\textunderscore all}, such a document is indistinguishable from a TEI-conformant one, but there is no way of determining (without inspection) whether this is the case if any modification or extension has been applied. Its status is therefore, like that of Text E, impossible to determine.
+\subsection[{Implementation of an ODD System}]{Implementation of an ODD System}\label{IM}\par
+This section specifies how a processing system may take advantage of the markup specification elements documented in chapter \textit{\hyperref[TD]{22.\ Documentation Elements}} of these Guidelines in order to produce project specific user documentation, schemas in one or more schema languages, and validation tools for other processors.\par
+The specifications in this section are illustrative but not normative. Its function is to further illustrate the intended scope and application of the elements documented in chapter \textit{\hyperref[TD]{22.\ Documentation Elements}}, since it is believed that these may have application beyond the areas directly addressed by the TEI.\par
+An ODD processing system has to accomplish two main tasks. A set of selections, deletions, changes, and additions supplied by an ODD customization (as described in \textit{\hyperref[MD]{23.3.\ Customization}}) must first be merged with the published TEI P5 ODD specifications. Next, the resulting unified ODD must be processed to produce the desired outputs.\par
+An ODD processor is not required to do these two stages in sequence, but that may well be the simplest approach; the ODD processing tools currently provided by the TEI Consortium, which are also used to process the source of these Guidelines, adopt this approach.
+\subsubsection[{Making a Unified ODD}]{Making a Unified ODD}\label{IM-unified}\par
+An ODD customization must contain a single \hyperref[TEI.schemaSpec]{<schemaSpec>} element, which defines the schema to be constructed. 
+\begin{sansreflist}
+  
+\item [\textbf{<schemaSpec>}] (schema specification) generates a TEI-conformant schema and documentation for it.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape start}]
+  specifies entry points to the schema, i.e. which patterns may be used as the root of documents conforming to it.
+    \item[@{\itshape prefix}]
+  specifies a default prefix which will be prepended to all patterns relating to TEI elements, unless otherwise stated.
+    \item[@{\itshape targetLang}]
+  (target language) specifies which language to use when creating the objects in a schema if names for elements or attributes are available in more than one language
+    \item[@{\itshape docLang}]
+  (documentation language) specifies which languages to use when creating documentation if the description for an element, attribute, class or macro is available in more than one language
+\end{sansreflist}  
+\end{sansreflist}
+ Amongst other attributes inherited from the \textsf{att.identified} class, this element also carries a required {\itshape ident} attribute. This provides a name for the generated schema, which other components of the processing system may use to refer to the schema being generated, e.g. in issuing error messages or as part of the generated output schema file or files. The {\itshape ns} attribute may be used to specify the default namespace within which elements valid against the resulting schema belong, as discussed in \textit{\hyperref[MDNS]{23.3.2.\ Modification and Namespaces}}.\par
+The \hyperref[TEI.schemaSpec]{<schemaSpec>} element contains an unordered series of specialized elements, each of which is of one of the following four types: \begin{description}
+
+\item[{specifications}]elements from the class \textsf{model.oddDecl} (by default \hyperref[TEI.elementSpec]{<elementSpec>}, \hyperref[TEI.classSpec]{<classSpec>}, \hyperref[TEI.moduleSpec]{<moduleSpec>}, and \hyperref[TEI.macroSpec]{<macroSpec>}); these must have a {\itshape mode} attribute which determines how they will be processed.\footnote{An ODD processor should recognize as erroneous such obvious inconsistencies as an attempt to include an \hyperref[TEI.elementSpec]{<elementSpec>} in add mode for an element which is already present in an imported module.} If the value of {\itshape mode} is add, then the object is simply copied to the output, but if it is change, delete, or replace, then it will be looked at by other parts of the process.
+\item[{references to specifications}]\hyperref[TEI.specGrpRef]{<specGrpRef>} elements refer to \hyperref[TEI.specGrp]{<specGrp>} elements that occur elsewhere in this, or another, document. A \hyperref[TEI.specGrp]{<specGrp>} element, in turn, groups together a set of ODD specifications (among other things, including further \hyperref[TEI.specGrpRef]{<specGrpRef>} elements). The use of \hyperref[TEI.specGrp]{<specGrp>} and \hyperref[TEI.specGrpRef]{<specGrpRef>} permits the ODD markup to occur at the points in documentation where they are discussed, rather than all inside \hyperref[TEI.schemaSpec]{<schemaSpec>}. The {\itshape target} attribute of any \hyperref[TEI.specGrpRef]{<specGrpRef>} should be followed, and the \hyperref[TEI.elementSpec]{<elementSpec>}, \hyperref[TEI.classSpec]{<classSpec>}, and \hyperref[TEI.macroSpec]{<macroSpec>}, elements in the corresponding \hyperref[TEI.specGrp]{<specGrp>} should be processed as described in the previous item; \hyperref[TEI.specGrpRef]{<specGrpRef>} elements should be processed as described here.
+\item[{references to TEI Modules}]\hyperref[TEI.moduleRef]{<moduleRef>} elements with {\itshape key} attributes refer to components of the TEI. The value of the {\itshape key} attribute matches the {\itshape ident} attribute of the \hyperref[TEI.moduleSpec]{<moduleSpec>} element defining a TEI module. The {\itshape key} must be dereferenced by some means, such as reading an XML file with the TEI ODD specification (either from the local hard drive or off the Web), or looking up the reference in an XML database (again, locally or remotely); whatever means is used, it should return a stream of XML containing the element, class, and macro specifications collected together in the specified module. These specification elements are then processed in the same way as if they had been supplied directly within the \hyperref[TEI.schemaSpec]{<schemaSpec>} being processed.
+\item[{references to external modules}]a \hyperref[TEI.moduleRef]{<moduleRef>} element may also refer to a compatible external module by means of its {\itshape url} attribute; the content of such modules, which must be available in the RELAX NG XML syntax, are passed directly and without modification to the output schema when that is created.
+\end{description} \par
+Each object obtained from the TEI ODD specification using \hyperref[TEI.moduleRef]{<moduleRef>} by means of the {\itshape key} attribute must be checked against objects in the customization \hyperref[TEI.schemaSpec]{<schemaSpec>} according to the following rules: \begin{enumerate}
+\item if there is an object in the ODD customization with the same value for the {\itshape ident} attribute, and a {\itshape mode} value of delete, then the object from the module is ignored;
+\item if there is an object in the ODD customization with the same value for the {\itshape ident} attribute, and a {\itshape mode} value of replace, then the object from the module is ignored, and the one from the ODD customization is used in its place;
+\item if there is an object in the ODD customization with the same value for the {\itshape ident} attribute, and a {\itshape mode} value of change, then the two objects must be merged, as described below;
+\item if there is an object in the ODD customization with the same value for the {\itshape ident} attribute, and a {\itshape mode} value of add, then an error condition should be raised;
+\item otherwise, the object from the module is copied to the result.
+\end{enumerate}\par
+To merge two objects with the same {\itshape ident}, their component attributes and child elements must be looked at recursively. Each component may fall into one of the following four categories: \begin{enumerate}
+\item Some components may occur only once within the merged object (for example attributes, and \hyperref[TEI.altIdent]{<altIdent>}, \hyperref[TEI.content]{<content>}, or \hyperref[TEI.classes]{<classes>} elements). If such a component is found in the ODD customization, it will be copied to the output; if it is not found there, but is present in the TEI ODD specification, then that will be copied to the output.
+\item Some components are grouping objects (\hyperref[TEI.attList]{<attList>}, \hyperref[TEI.valList]{<valList>}, for example); these are always copied to the output, and their children are then processed following the rules given in this list.
+\item Some components are ‘identifiable’: this means that they are members of the \textsf{att.identified} class from which they inherit the {\itshape ident} attribute; examples include \hyperref[TEI.attDef]{<attDef>} and \hyperref[TEI.valItem]{<valItem>}. A component of this type will be processed according to its {\itshape mode} attribute, following the rules given above.
+\item Some components may occur multiple times, but are neither grouped nor identifiable. Examples include the members of \textsf{model.glossLike} such as \hyperref[TEI.equiv]{<equiv>}, \hyperref[TEI.desc]{<desc>}, \hyperref[TEI.gloss]{<gloss>}, the \hyperref[TEI.exemplum]{<exemplum>}, \hyperref[TEI.remarks]{<remarks>}, \hyperref[TEI.listRef]{<listRef>}, \hyperref[TEI.datatype]{<datatype>} or \hyperref[TEI.defaultVal]{<defaultVal>} elements. These should be copied from both the TEI ODD specification and the ODD customization, and all occurrences included in the output.
+\end{enumerate}\par
+A special problem arises with elements which are members of attribute classes, as they are permitted to override attributes inherited from a class. For example, consider this simple modification: \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{classes=<classes>|exampleindex}\index{memberOf=<memberOf>|exampleindex}\index{key=@key!<memberOf>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{ident}="{p}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{classes}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{memberOf}\hspace*{1em}{key}="{att.typed}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{classes}>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+{</\textbf{elementSpec}>}\end{shaded}\egroup\par \noindent  The effect of its membership in the \textsf{att.typed} class is to provide \hyperref[TEI.p]{<p>} with a {\itshape type} attribute and a {\itshape subtype} attribute. If we wish \hyperref[TEI.p]{<p>} to \textit{not} have {\itshape subtype}, we could extend the customization in our schema as follows: \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{classes=<classes>|exampleindex}\index{memberOf=<memberOf>|exampleindex}\index{key=@key!<memberOf>|exampleindex}\index{attList=<attList>|exampleindex}\index{attDef=<attDef>|exampleindex}\index{ident=@ident!<attDef>|exampleindex}\index{mode=@mode!<attDef>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{ident}="{p}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{classes}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{memberOf}\hspace*{1em}{key}="{att.typed}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{classes}>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{<\textbf{attList}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{attDef}\hspace*{1em}{ident}="{subtype}"\hspace*{1em}{mode}="{delete}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{attList}>}\mbox{}\newline 
+{</\textbf{elementSpec}>}\end{shaded}\egroup\par \noindent  This means that when <memberOf key="att.typed"/> is processed, that class is looked up, each attribute which it defines is examined in turn, and the customization is searched for an override. If the modification is of the attribute class itself, work proceeds as usual; if, however, the modification is at the element level, the class reference is deleted and a series of \hyperref[TEI.attRef]{<attRef>} elements is added to the element, one for each attribute inherited from the class. Since attribute classes can themselves be members of other attribute classes, membership must be followed recursively.\par
+The effect of the concatenation of unidentifiable components should be considered carefully. An original may have \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{desc=<desc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{ident}="{p}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{desc}>}marks paragraphs in prose.{</\textbf{desc}>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+{</\textbf{elementSpec}>}\end{shaded}\egroup\par \noindent  which would usefully be extended with this: \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{mode=@mode!<elementSpec>|exampleindex}\index{desc=<desc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{ident}="{p}"\hspace*{1em}{mode}="{change}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{desc}\hspace*{1em}{xml:lang}="{es}">}marca párrafos en prosa.{</\textbf{desc}>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+{</\textbf{elementSpec}>}\end{shaded}\egroup\par \noindent  to provide an alternate description in another language. Nothing prevents the user from supplying \hyperref[TEI.desc]{<desc>} several times in the same language, and subsequent applications will have to decide what that may mean.\par
+Similar considerations apply to multiple example elements, though these are less likely to cause problems in documentation. Note that existing examples can only be deleted by supplying a completely new \hyperref[TEI.elementSpec]{<elementSpec>} in replace mode, since the \hyperref[TEI.exemplum]{<exemplum>} element is not identifiable.\par
+In the processing of the content models of elements and the content of macros, deleted elements may require special attention.\footnote{The carthago program behind the Pizza Chef application, written by Michael Sperberg-McQueen for TEI P3 and P4, went to very great efforts to get this right. The XSLT transformations used by the P5 Roma application are not as sophisticated, partly because the RELAX NG language is more forgiving than DTDs.} A content model like this:  \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{content=<content>|exampleindex}\index{alternate=<alternate>|exampleindex}\index{classRef=<classRef>|exampleindex}\index{key=@key!<classRef>|exampleindex}\index{minOccurs=@minOccurs!<classRef>|exampleindex}\index{maxOccurs=@maxOccurs!<classRef>|exampleindex}\index{alternate=<alternate>|exampleindex}\index{minOccurs=@minOccurs!<alternate>|exampleindex}\index{maxOccurs=@maxOccurs!<alternate>|exampleindex}\index{classRef=<classRef>|exampleindex}\index{key=@key!<classRef>|exampleindex}\index{classRef=<classRef>|exampleindex}\index{key=@key!<classRef>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{ident}="{person}">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{<\textbf{content}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{alternate}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{classRef}\hspace*{1em}{key}="{model.pLike}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{minOccurs}="{1}"\hspace*{1em}{maxOccurs}="{unbounded}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{alternate}\hspace*{1em}{minOccurs}="{0}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{maxOccurs}="{unbounded}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{classRef}\hspace*{1em}{key}="{model.personPart}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{classRef}\hspace*{1em}{key}="{model.global}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{alternate}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{alternate}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{content}>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+{</\textbf{elementSpec}>}\end{shaded}\egroup\par \noindent  requires no special treatment because everything is expressed in terms of model classes; if the class \textsf{model.personPart} is deleted explicitly, or removed because all of its members have been deleted, then \textsf{model.global} is left as the only child of the inner \hyperref[TEI.alternate]{<alternate>}. An ODD processor may or may not elect to simplify the resulting choice between nothing and \textsf{model.global} by removing the wrapper \hyperref[TEI.alternate]{<alternate>} element. However, such simplification may be considerably more complex in the general case and an ODD processor is therefore likely to be more successful in carrying out such simplification as a distinct stage during processing of ODD sources.\par
+If an element refers directly to an element child, like this: \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{content=<content>|exampleindex}\index{alternate=<alternate>|exampleindex}\index{minOccurs=@minOccurs!<alternate>|exampleindex}\index{maxOccurs=@maxOccurs!<alternate>|exampleindex}\index{classRef=<classRef>|exampleindex}\index{key=@key!<classRef>|exampleindex}\index{classRef=<classRef>|exampleindex}\index{key=@key!<classRef>|exampleindex}\index{elementRef=<elementRef>|exampleindex}\index{key=@key!<elementRef>|exampleindex}\index{elementRef=<elementRef>|exampleindex}\index{key=@key!<elementRef>|exampleindex}\index{classRef=<classRef>|exampleindex}\index{key=@key!<classRef>|exampleindex}\index{classRef=<classRef>|exampleindex}\index{key=@key!<classRef>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{ident}="{figure}">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{<\textbf{content}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{alternate}\hspace*{1em}{minOccurs}="{0}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{maxOccurs}="{unbounded}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{classRef}\hspace*{1em}{key}="{model.pLike}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{classRef}\hspace*{1em}{key}="{model.global}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{elementRef}\hspace*{1em}{key}="{figure}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{elementRef}\hspace*{1em}{key}="{figDesc}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{classRef}\hspace*{1em}{key}="{model.graphicLike}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{classRef}\hspace*{1em}{key}="{model.headLike}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{alternate}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{content}>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+{</\textbf{elementSpec}>}\end{shaded}\egroup\par \noindent  and \hyperref[TEI.figDesc]{<figDesc>} has been deleted,\footnote{Note that deletion of required elements will cause the schema specification to accept as valid documents which cannot be TEI-conformant, since they no longer conform to the TEI Abstract Model; conformance topics are addressed in more detail in \textit{\hyperref[CF]{23.4.\ Conformance}}.} it will be necessary to remove that reference, or the resulting schema will be invalid.\par
+The result of the work carried out should be a new \hyperref[TEI.schemaSpec]{<schemaSpec>} which contains a complete and internally consistent set of element, class, and macro specifications, possibly also including \hyperref[TEI.moduleRef]{<moduleRef>} elements with {\itshape url} attributes identifying external modules.
+\subsubsection[{Generating Schemas}]{Generating Schemas}\label{IMGS}\par
+Assuming that any modifications have been resolved, as outlined in the previous section, making a schema is now a four stage process: \begin{enumerate}
+\item all datatype and other macro specifications must be collected together and declared at the start of the output schema;
+\item all classes must be declared in the right order (order is significant because since some classes reference others);
+\item all elements are declared;
+\item any \hyperref[TEI.moduleRef]{<moduleRef>} elements with a {\itshape url} attribute identifying an external schema must be processed.
+\end{enumerate} Working in this order gives the best chance of successfully supporting all the schema languages. However, there are a number of obstacles to overcome along the way.\par
+An ODD processor may choose to use any desired schema language or languages for its schema output, since ODD specifications are expressed as far as possible in a form independent of any schema language.  The current TEI ODD processing system produces schema output in the three main schema languages as follows: \begin{itemize}
+\item A RELAX NG (XML) schema is generated by converting content models, datatypes, and macro specifications provided within the ODD specification; a version re-expressed in the RELAX NG compact syntax is generated using James Clark's  {\name trang} application.
+\item A DTD schema is generated by converting the RELAX NG content models to DTD language, often simplifying it to allow for the less-sophisticated output language.
+\item A W3C Schema schema is created by generating a RELAX NG schema and then using James Clark's  {\name trang} application.
+\end{itemize}  Note that the method used to generate W3C Schema means that a processor must ensure that the RELAX NG it generates follows the subset which  {\name trang} is able to translate properly (see further below)—this may involve simple trial and error.\par
+Other projects may decide to follow a different route, perhaps implementing a direct ODD to W3C Schema translator.\par
+Secondly, it is possible to create two rather different styles of schema. On the one hand, the schema can try to maintain all the flexibility of ODD by using the facilities of the schema language for parameterization; on the other, it can remove all customization features and produce a flat result which is not suitable for further manipulation. The TEI project currently generates both styles of schema; the first as a set of schema fragments in DTD and RELAX NG languages, which can be included as modules in other schemas, and customized further; the second as the output from a processor such as Roma, in which many of the parameterization features have been removed.\par
+The difference between the schema styles may be illustrated by considering this ODD specification: \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{module=@module!<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{classes=<classes>|exampleindex}\index{memberOf=<memberOf>|exampleindex}\index{key=@key!<memberOf>|exampleindex}\index{content=<content>|exampleindex}\index{sequence=<sequence>|exampleindex}\index{alternate=<alternate>|exampleindex}\index{minOccurs=@minOccurs!<alternate>|exampleindex}\index{maxOccurs=@maxOccurs!<alternate>|exampleindex}\index{classRef=<classRef>|exampleindex}\index{key=@key!<classRef>|exampleindex}\index{classRef=<classRef>|exampleindex}\index{key=@key!<classRef>|exampleindex}\index{sequence=<sequence>|exampleindex}\index{minOccurs=@minOccurs!<sequence>|exampleindex}\index{maxOccurs=@maxOccurs!<sequence>|exampleindex}\index{classRef=<classRef>|exampleindex}\index{key=@key!<classRef>|exampleindex}\index{classRef=<classRef>|exampleindex}\index{key=@key!<classRef>|exampleindex}\index{minOccurs=@minOccurs!<classRef>|exampleindex}\index{maxOccurs=@maxOccurs!<classRef>|exampleindex}\index{sequence=<sequence>|exampleindex}\index{minOccurs=@minOccurs!<sequence>|exampleindex}\index{maxOccurs=@maxOccurs!<sequence>|exampleindex}\index{classRef=<classRef>|exampleindex}\index{key=@key!<classRef>|exampleindex}\index{classRef=<classRef>|exampleindex}\index{key=@key!<classRef>|exampleindex}\index{minOccurs=@minOccurs!<classRef>|exampleindex}\index{maxOccurs=@maxOccurs!<classRef>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{module}="{drama}"\mbox{}\newline 
+\hspace*{1em}{ident}="{performance}">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{<\textbf{classes}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{memberOf}\hspace*{1em}{key}="{model.frontPart.drama}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{classes}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{content}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{sequence}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{alternate}\hspace*{1em}{minOccurs}="{0}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{maxOccurs}="{unbounded}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{classRef}\hspace*{1em}{key}="{model.divTop}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{classRef}\hspace*{1em}{key}="{model.global}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{alternate}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{sequence}\hspace*{1em}{minOccurs}="{1}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{maxOccurs}="{unbounded}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{classRef}\hspace*{1em}{key}="{model.common}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{classRef}\hspace*{1em}{key}="{model.global}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{minOccurs}="{0}"\hspace*{1em}{maxOccurs}="{unbounded}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{sequence}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{sequence}\hspace*{1em}{minOccurs}="{0}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{maxOccurs}="{unbounded}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{classRef}\hspace*{1em}{key}="{model.divBottom}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{classRef}\hspace*{1em}{key}="{model.global}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{minOccurs}="{0}"\hspace*{1em}{maxOccurs}="{unbounded}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{sequence}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{sequence}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{content}>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+{</\textbf{elementSpec}>}\end{shaded}\egroup\par \noindent  A simple rendering to RELAX NG produces this: \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces performance =\newline
+ element performance ❴ \newline
+  (model.divTop | model.global)*,\newline
+  (model.common, model.global*)+,\newline
+  (model.divBottom, model.global*)*\newline
+  att.global.attribute.xmlspace,\newline
+  att.global.attribute.xmlid,\newline
+  att.global.attribute.n,\newline
+  att.global.attribute.xmllang,\newline
+  att.global.attribute.rend,\newline
+  att.global.attribute.xmlbase,\newline
+  att.global.linking.attribute.corresp,\newline
+  att.global.linking.attribute.synch,\newline
+  att.global.linking.attribute.sameAs,\newline
+  att.global.linking.attribute.copyOf,\newline
+  att.global.linking.attribute.next,\newline
+  att.global.linking.attribute.prev,\newline
+  att.global.linking.attribute.exclude,\newline
+  att.global.linking.attribute.select\newline
+❵\end{shaded}
+\par\egroup 
+ In the above, a subsequent redefinition of the attribute class (such as \textsf{att.global}) would have no effect, since references to such classes have been expanded to reference their constituent attributes.\par
+The equivalent parameterized version might look like this: \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces performance =\newline
+  element performance ❴ performance.content, performance.attributes ❵\newline
+performance.content =\newline
+  (model.divTop | model.global)*,\newline
+  (model.common, model.global*)+,\newline
+  (model.divBottom, model.global*)*\newline
+performance.attributes = att.global.attributes, empty\end{shaded}
+\par\egroup 
+ Here, the attribute class \textsf{att.global} is provided via an explicit reference (\texttt{att.global.attributes}), and can therefore be redefined. Moreover, the attributes are separated from the content model, allowing either to be overridden.\par
+In the remainder of these section, the terms \textit{simple schema} and \textit{parameterized schema} are used to distinguish the two schema types. An ODD processor is not required to support both, though the simple schema output is generally preferable for most applications.\par
+Thirdly, the problem of missing components must be resolved. For example, consider this (fictitious) model for \hyperref[TEI.sp]{<sp>}: \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{content=<content>|exampleindex}\index{classRef=<classRef>|exampleindex}\index{key=@key!<classRef>|exampleindex}\index{minOccurs=@minOccurs!<classRef>|exampleindex}\index{maxOccurs=@maxOccurs!<classRef>|exampleindex}\index{sequence=<sequence>|exampleindex}\index{minOccurs=@minOccurs!<sequence>|exampleindex}\index{maxOccurs=@maxOccurs!<sequence>|exampleindex}\index{elementRef=<elementRef>|exampleindex}\index{key=@key!<elementRef>|exampleindex}\index{classRef=<classRef>|exampleindex}\index{key=@key!<classRef>|exampleindex}\index{minOccurs=@minOccurs!<classRef>|exampleindex}\index{maxOccurs=@maxOccurs!<classRef>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{ident}="{sp}">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{<\textbf{content}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{classRef}\hspace*{1em}{key}="{model.global}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{minOccurs}="{0}"\hspace*{1em}{maxOccurs}="{unbounded}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{sequence}\hspace*{1em}{minOccurs}="{0}"\hspace*{1em}{maxOccurs}="{1}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{elementRef}\hspace*{1em}{key}="{speaker}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{classRef}\hspace*{1em}{key}="{model.global}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{minOccurs}="{0}"\hspace*{1em}{maxOccurs}="{unbounded}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{sequence}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{content}>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+{</\textbf{elementSpec}>}\end{shaded}\egroup\par \noindent  This proposes anything from the class \textsf{model.global}, followed optionally by a \hyperref[TEI.speaker]{<speaker>} element followed by anything from the \textsf{model.global} class. What happens if \hyperref[TEI.speaker]{<speaker>} is removed from the schema? The following would result: \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{content=<content>|exampleindex}\index{classRef=<classRef>|exampleindex}\index{key=@key!<classRef>|exampleindex}\index{minOccurs=@minOccurs!<classRef>|exampleindex}\index{maxOccurs=@maxOccurs!<classRef>|exampleindex}\index{classRef=<classRef>|exampleindex}\index{key=@key!<classRef>|exampleindex}\index{minOccurs=@minOccurs!<classRef>|exampleindex}\index{maxOccurs=@maxOccurs!<classRef>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{ident}="{sp}">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{<\textbf{content}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{classRef}\hspace*{1em}{key}="{model.global}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{minOccurs}="{0}"\hspace*{1em}{maxOccurs}="{unbounded}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{classRef}\hspace*{1em}{key}="{model.global}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{minOccurs}="{0}"\hspace*{1em}{maxOccurs}="{unbounded}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{content}>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+{</\textbf{elementSpec}>}\end{shaded}\egroup\par \noindent  which is illegal in DTD and W3C schema languages, since for a given member of \textsf{model.global} it is impossible to be sure which rule is being used. This situation is not detected when RELAX NG is used, since the language is able to cope with non-deterministic content models of this kind and does not require that only a single rule be used.\par
+Finally, an application will need to have some method of associating the schema with document instances that use it. The TEI does not mandate any particular method of doing this, since different schema languages and processors vary considerably in their requirements. ODD processors may wish to build in support for some of the methods for associating a document instance with a schema. The TEI does not mandate any particular method, but does suggest that those which are already part of XML (the DOCTYPE declaration for DTDs) and W3C Schema (the {\itshape xsi:schemaLocation} attribute) be supported where possible.\par
+In order for the {\itshape xsi:schemaLocation} attribute to be valid when a document is validated against either a DTD or a RELAX NG schema, ODD processors may wish to add declarations for this attribute and its namespace to the root element, even though these are not part of the TEI \textit{per se}. For DTDs this means adding \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces xsi:schemaLocation CDATA \#IMPLIED xmlns:xsi CDATA \#FIXED 'http://www.w3.org/2001/XMLSchema-instance'\end{shaded}
+\par\egroup 
+ to the list of attributes on the root element, which permits the non-namespace-aware DTD language to recognize the \texttt{xsi:schemaLocation} notation. For RELAX NG, the namespace and attribute would be declared in the usual way: \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces namespace xsi = "http://www.w3.org/2001/XMLSchema-instance"\end{shaded}
+\par\egroup 
+ and \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces attribute xsi:schemaLocation ❴ list ❴ teidata.namespace, teidata.pointer ❵+ ❵\end{shaded}
+\par\egroup 
+ inside the root element declaration.\par
+Note that declaration of the {\itshape xsi:schemaLocation} attribute in a W3C Schema schema is not permitted. Therefore, if W3C Schemas are being generated by converting the RELAX NG schema (for example, with  {\name trang}), it may be necessary to perform that conversion prior to adding the {\itshape xsi:schemaLocation} declaration to the RELAX NG.\par
+It is recognized that this is an unsatisfactory solution, but it permits users to take advantage of the W3C Schema facility for indicating a schema, while still permitting documents to be validated using DTD and RELAX NG processors without any conflict.
+\subsubsection[{Names and Documentation in Generated Schemas}]{Names and Documentation in Generated Schemas}\label{IM-naming}\par
+When processing class, element, or macro specifications, there are three general rules: \begin{enumerate}
+\item If a RELAX NG pattern or DTD parameter entity is being created, its name is the value of the corresponding {\itshape ident} attribute, prefixed by the value of any {\itshape prefix} attribute on \hyperref[TEI.schemaSpec]{<schemaSpec>}. This allows for elements from an external schema to be mixed in without risk of name clashes, since all TEI elements can be given a distinctive prefix such as tei\textunderscore . Thus \par\bgroup\index{schemaSpec=<schemaSpec>|exampleindex}\index{ident=@ident!<schemaSpec>|exampleindex}\index{prefix=@prefix!<schemaSpec>|exampleindex}\index{elementSpec=<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{schemaSpec}\hspace*{1em}{ident}="{test}"\hspace*{1em}{prefix}="{tei\textunderscore }">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{elementSpec}\hspace*{1em}{ident}="{sp}">}\mbox{}\newline 
+\textit{<!--...-->}\mbox{}\newline 
+\hspace*{1em}{</\textbf{elementSpec}>}\mbox{}\newline 
+{</\textbf{schemaSpec}>}\end{shaded}\egroup\par  may generate a RELAX NG (compact syntax) pattern like this: \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces tei\textunderscore sp = element sp ❴ ... ❵\end{shaded}
+\par\egroup 
+ References to these patterns (or, in DTDs, parameter entities) also need to be prefixed with the same value.
+\item If an element or attribute is being created, its default name is the value of the {\itshape ident} attribute, but if there is an \hyperref[TEI.altIdent]{<altIdent>} child, its content is used instead.
+\item Where appropriate, the documentation strings in \hyperref[TEI.gloss]{<gloss>} and \hyperref[TEI.desc]{<desc>} should be copied into the generated schema. If there is only one occurrence of either of these elements, it should be used regardless, but if there are several, local processing rules will need to be applied. For example, if there are several with different values of {\itshape xml:lang}, a locale indication in the processing environment might be used to decide which to use. For example, \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{module=@module!<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{equiv=<equiv>|exampleindex}\index{gloss=<gloss>|exampleindex}\index{gloss=<gloss>|exampleindex}\index{gloss=<gloss>|exampleindex}\index{gloss=<gloss>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{module}="{core}"\hspace*{1em}{ident}="{head}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{equiv}/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{gloss}>}heading{</\textbf{gloss}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{gloss}\hspace*{1em}{xml:lang}="{fr}">}en-tête{</\textbf{gloss}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{gloss}\hspace*{1em}{xml:lang}="{es}">}encabezamiento{</\textbf{gloss}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{gloss}\hspace*{1em}{xml:lang}="{it}">}titolo{</\textbf{gloss}>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+{</\textbf{elementSpec}>}\end{shaded}\egroup\par  might generate a RELAX NG schema fragment like the following, if the locale is determined to be French: \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces head =\newline
+  \#\# en-tête\newline
+  element head ❴ head.content, head.attributes ❵\end{shaded}
+\par\egroup 
+
+\end{enumerate} Alternatively, a selection might be made on the basis of the value of the {\itshape version} attribute which these elements carry as members of the \textsf{att.translatable} class.\par
+In addition, there are three conventions about naming patterns relating to classes; ODD processors need not follow them, but those reading the schemas generated by the TEI project will find it necessary to understand them: \begin{enumerate}
+\item when a pattern for an attribute class is created, it is named after the attribute class identifier (as above) suffixed by \texttt{.attributes} (e.g. \texttt{att.editLike.attributes});
+\item when a pattern for an attribute is created, it is named after the attribute class identifier (as above) suffixed by \texttt{.attribute.} and then the identifier of the attribute (e.g. \texttt{att.editLike.attribute.resp});
+\item when a parameterized schema is created, each element generates patterns for its attributes and its contents separately, suffixing respectively \texttt{.attributes} and \texttt{.contents} to the element name.
+\end{enumerate}
+\subsubsection[{Making a RELAX NG Schema}]{Making a RELAX NG Schema}\label{IMRN}\par
+To create a RELAX NG schema, the processor processes every \hyperref[TEI.macroSpec]{<macroSpec>}, \hyperref[TEI.classSpec]{<classSpec>}, and \hyperref[TEI.elementSpec]{<elementSpec>} in turn, creating a RELAX NG pattern for each, using the naming conventions listed above. The order of declaration is not important, and a processor may well sort them into alphabetical order of identifier.\par
+A complete RELAX NG schema must have an \texttt{<rng:start>} element defining which elements can occur as the root of a document. The ODD \hyperref[TEI.schemaSpec]{<schemaSpec>} has an optional {\itshape start} attribute, containing one or more patterns, which can be used to construct the \texttt{<rng:start>}. A pattern normally corresponds to an element name, but if a prefix (see above, \textit{\hyperref[IM-naming]{23.5.3.\ Names and Documentation in Generated Schemas}}) is supplied for an element, the pattern consists of the prefix name with the element name.
+\paragraph[{Macros}]{Macros}\label{IMMA}\par
+An ODD macro generates a corresponding RELAX NG pattern by processing the body of the \hyperref[TEI.content]{<content>} element in the same way as elsewhere. Thus \par\bgroup\index{macroSpec=<macroSpec>|exampleindex}\index{module=@module!<macroSpec>|exampleindex}\index{ident=@ident!<macroSpec>|exampleindex}\index{content=<content>|exampleindex}\index{alternate=<alternate>|exampleindex}\index{minOccurs=@minOccurs!<alternate>|exampleindex}\index{maxOccurs=@maxOccurs!<alternate>|exampleindex}\index{textNode=<textNode>|exampleindex}\index{classRef=<classRef>|exampleindex}\index{key=@key!<classRef>|exampleindex}\index{classRef=<classRef>|exampleindex}\index{key=@key!<classRef>|exampleindex}\index{classRef=<classRef>|exampleindex}\index{key=@key!<classRef>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{macroSpec}\hspace*{1em}{module}="{tei}"\mbox{}\newline 
+\hspace*{1em}{ident}="{macro.phraseSeq}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{content}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{alternate}\hspace*{1em}{minOccurs}="{0}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{maxOccurs}="{unbounded}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{textNode}/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{classRef}\hspace*{1em}{key}="{model.gLike}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{classRef}\hspace*{1em}{key}="{model.phrase}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{classRef}\hspace*{1em}{key}="{model.global}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{alternate}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{content}>}\mbox{}\newline 
+{</\textbf{macroSpec}>}\end{shaded}\egroup\par \noindent  produces the following \par\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{rng:define}\hspace*{1em}{name}="{macro.phraseSeq}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rng:zeroOrMore}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rng:choice}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rng:text}/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rng:ref}\hspace*{1em}{name}="{model.gLike}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rng:ref}\hspace*{1em}{name}="{model.phrase}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rng:ref}\hspace*{1em}{name}="{model.global}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{rng:choice}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rng:zeroOrMore}>}\mbox{}\newline 
+{</\textbf{rng:define}>}\end{shaded}\egroup\par \noindent  
+\paragraph[{Classes}]{Classes}\label{IMCL}\par
+An ODD model class always generates a RELAX NG pattern definition listing all the members of the class in alternation. For example \par\bgroup\index{classSpec=<classSpec>|exampleindex}\index{module=@module!<classSpec>|exampleindex}\index{type=@type!<classSpec>|exampleindex}\index{ident=@ident!<classSpec>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{classSpec}\hspace*{1em}{module}="{tei}"\hspace*{1em}{type}="{model}"\mbox{}\newline 
+\hspace*{1em}{ident}="{model.measureLike}">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+{</\textbf{classSpec}>}\end{shaded}\egroup\par \noindent  will produce something like the following: \par\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{rng:define}\hspace*{1em}{name}="{model.measureLike}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rng:choice}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rng:ref}\hspace*{1em}{name}="{num}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rng:ref}\hspace*{1em}{name}="{measure}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rng:ref}\hspace*{1em}{name}="{measureGrp}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rng:choice}>}\mbox{}\newline 
+{</\textbf{rng:define}>}\end{shaded}\egroup\par \noindent  assuming that the elements \hyperref[TEI.num]{<num>}, \hyperref[TEI.measure]{<measure>}, and \hyperref[TEI.measureGrp]{<measureGrp>} are all defined in the schema concerned as members of that class. A model declaration may also generate a number of other patterns corresponding with sequences or alternations of the class members:  \par\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{rng:define}\hspace*{1em}{name}="{model.measureLike\textunderscore sequence}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rng:ref}\hspace*{1em}{name}="{num}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rng:ref}\hspace*{1em}{name}="{measure}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rng:ref}\hspace*{1em}{name}="{measureGrp}"/>}\mbox{}\newline 
+{</\textbf{rng:define}>}\mbox{}\newline 
+{<\textbf{rng:define}\hspace*{1em}{name}="{model.measureLike\textunderscore sequenceOptional}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rng:optional}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rng:ref}\hspace*{1em}{name}="{num}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rng:optional}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rng:optional}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rng:ref}\hspace*{1em}{name}="{measure}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rng:optional}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rng:optional}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rng:ref}\hspace*{1em}{name}="{measureGrp}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rng:optional}>}\mbox{}\newline 
+{</\textbf{rng:define}>}\mbox{}\newline 
+{<\textbf{rng:define}\hspace*{1em}{name}="{model.measureLike\textunderscore sequenceOptionalRepeatable}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rng:zeroOrMore}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rng:ref}\hspace*{1em}{name}="{num}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rng:zeroOrMore}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rng:zeroOrMore}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rng:ref}\hspace*{1em}{name}="{measure}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rng:zeroOrMore}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rng:zeroOrMore}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rng:ref}\hspace*{1em}{name}="{measureGrp}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rng:zeroOrMore}>}\mbox{}\newline 
+{</\textbf{rng:define}>}\mbox{}\newline 
+{<\textbf{rng:define}\hspace*{1em}{name}="{model.measureLike\textunderscore sequenceRepeatable}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rng:oneOrMore}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rng:ref}\hspace*{1em}{name}="{num}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rng:oneOrMore}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rng:oneOrMore}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rng:ref}\hspace*{1em}{name}="{measure}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rng:oneOrMore}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rng:oneOrMore}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rng:ref}\hspace*{1em}{name}="{measureGrp}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rng:oneOrMore}>}\mbox{}\newline 
+{</\textbf{rng:define}>}\end{shaded}\egroup\par \noindent  where the pattern name is created by appending an underscore and the name of the generation type to the class name.\par
+When classes are referenced using the \hyperref[TEI.classRef]{<classRef>} element, it is possible to indicate which of the available patterns is required by means of the {\itshape expand} attribute.\par
+Attribute classes work by producing a pattern containing definitions of the appropriate attributes. So \par\bgroup\index{classSpec=<classSpec>|exampleindex}\index{module=@module!<classSpec>|exampleindex}\index{type=@type!<classSpec>|exampleindex}\index{ident=@ident!<classSpec>|exampleindex}\index{attList=<attList>|exampleindex}\index{attDef=<attDef>|exampleindex}\index{ident=@ident!<attDef>|exampleindex}\index{usage=@usage!<attDef>|exampleindex}\index{equiv=<equiv>|exampleindex}\index{desc=<desc>|exampleindex}\index{datatype=<datatype>|exampleindex}\index{dataRef=<dataRef>|exampleindex}\index{key=@key!<dataRef>|exampleindex}\index{valList=<valList>|exampleindex}\index{type=@type!<valList>|exampleindex}\index{valItem=<valItem>|exampleindex}\index{ident=@ident!<valItem>|exampleindex}\index{equiv=<equiv>|exampleindex}\index{desc=<desc>|exampleindex}\index{valItem=<valItem>|exampleindex}\index{ident=@ident!<valItem>|exampleindex}\index{equiv=<equiv>|exampleindex}\index{desc=<desc>|exampleindex}\index{valItem=<valItem>|exampleindex}\index{ident=@ident!<valItem>|exampleindex}\index{equiv=<equiv>|exampleindex}\index{desc=<desc>|exampleindex}\index{valItem=<valItem>|exampleindex}\index{ident=@ident!<valItem>|exampleindex}\index{equiv=<equiv>|exampleindex}\index{desc=<desc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{classSpec}\hspace*{1em}{module}="{verse}"\hspace*{1em}{type}="{atts}"\mbox{}\newline 
+\hspace*{1em}{ident}="{att.enjamb}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{attList}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{attDef}\hspace*{1em}{ident}="{enjamb}"\hspace*{1em}{usage}="{opt}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{equiv}/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}indicates whether the end of a verse line is marked by enjambement.{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{datatype}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{dataRef}\hspace*{1em}{key}="{teidata.enumerated}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{datatype}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{valList}\hspace*{1em}{type}="{open}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{valItem}\hspace*{1em}{ident}="{no}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{equiv}/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}the line is end-stopped {</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{valItem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{valItem}\hspace*{1em}{ident}="{yes}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{equiv}/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}the line in question runs on into the next {</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{valItem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{valItem}\hspace*{1em}{ident}="{weak}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{equiv}/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}the line is weakly enjambed {</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{valItem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{valItem}\hspace*{1em}{ident}="{strong}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{equiv}/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}the line is strongly enjambed{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{valItem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{valList}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{attDef}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{attList}>}\mbox{}\newline 
+{</\textbf{classSpec}>}\end{shaded}\egroup\par \noindent  produces \par\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{rng:define}\hspace*{1em}{name}="{att.enjamb.attributes}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rng:ref}\hspace*{1em}{name}="{att.enjamb.attribute.enjamb}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rng:empty}/>}\mbox{}\newline 
+{</\textbf{rng:define}>}\mbox{}\newline 
+{<\textbf{rng:define}\hspace*{1em}{name}="{att.enjamb.attribute.enjamb}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rng:optional}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rng:attribute}\hspace*{1em}{name}="{enjamb}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{a:documentation}>}(enjambement) indicates whether the end of a verse line is marked by\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} enjambement. Sample values include: 1] no; 2] yes; 3] weak; 4]\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} strong{</\textbf{a:documentation}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rng:ref}\hspace*{1em}{name}="{teidata.enumerated}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{rng:attribute}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rng:optional}>}\mbox{}\newline 
+{</\textbf{rng:define}>}\end{shaded}\egroup\par \noindent  Since the processor may have expanded the attribute classes already, separate patterns are generated for each attribute in the class as well as one for the class itself. This allows an element to refer directly to a member of a class. Notice that the \hyperref[TEI.desc]{<desc>} element is used to add an \texttt{<a:documentation>} element to the schema, which some editors use to provide help during composition. The \hyperref[TEI.desc]{<desc>} elements in the \hyperref[TEI.valList]{<valList>} are used to create the human-readable sentence ‘Sample values include: 1] no; 2] yes; 3] weak; 4] strong’ Naturally, this behaviour is not mandatory; and other ODD processors may create documentation in other ways, or ignore those parts of the ODD specifications when creating schemas.\par
+An individual attribute consists of an \texttt{<rng:attribute>} with a {\itshape name} attribute derived according to the naming rules described above (\textit{\hyperref[IM-naming]{23.5.3.\ Names and Documentation in Generated Schemas}}). In addition, the ODD model supports a \hyperref[TEI.defaultVal]{<defaultVal>}, which is transformed to a {\itshape defaultValue} attribute in the namespace \textsf{http://relaxng.org/ns/compatibility/annotations/1.0} on the \texttt{<rng:attribute>}. The body of the attribute is taken from the \hyperref[TEI.datatype]{<datatype>} child, unless there is a supporting \hyperref[TEI.valList]{<valList>} with a {\itshape type} value of closed. In that case an \texttt{<rng:choice>} is created, listing the allowed values. Thus the following attribute definition \par\bgroup\index{attDef=<attDef>|exampleindex}\index{ident=@ident!<attDef>|exampleindex}\index{usage=@usage!<attDef>|exampleindex}\index{defaultVal=<defaultVal>|exampleindex}\index{valList=<valList>|exampleindex}\index{type=@type!<valList>|exampleindex}\index{valItem=<valItem>|exampleindex}\index{ident=@ident!<valItem>|exampleindex}\index{desc=<desc>|exampleindex}\index{valItem=<valItem>|exampleindex}\index{ident=@ident!<valItem>|exampleindex}\index{gloss=<gloss>|exampleindex}\index{desc=<desc>|exampleindex}\index{valItem=<valItem>|exampleindex}\index{ident=@ident!<valItem>|exampleindex}\index{gloss=<gloss>|exampleindex}\index{desc=<desc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{attDef}\hspace*{1em}{ident}="{full}"\hspace*{1em}{usage}="{opt}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{defaultVal}>}yes{</\textbf{defaultVal}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{valList}\hspace*{1em}{type}="{closed}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{valItem}\hspace*{1em}{ident}="{yes}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}the name component is spelled out in full.{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{valItem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{valItem}\hspace*{1em}{ident}="{abb}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{gloss}>}abbreviated{</\textbf{gloss}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}the name component is given in an abbreviated form.{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{valItem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{valItem}\hspace*{1em}{ident}="{init}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{gloss}>}initial letter{</\textbf{gloss}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}the name component is indicated only by one initial.{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{valItem}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{valList}>}\mbox{}\newline 
+{</\textbf{attDef}>}\end{shaded}\egroup\par \noindent  may generate this RELAX NG code: \par\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{rng:define}\hspace*{1em}{name}="{att.full}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rng:optional}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rng:attribute}\hspace*{1em}{name}="{full}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{a:defaultValue}="{yes}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rng:choice}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rng:value}>}yes{</\textbf{rng:value}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{a:documentation}>} the name component is spelled out in full. {</\textbf{a:documentation}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rng:value}>}abb{</\textbf{rng:value}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{a:documentation}>} the name component is given in an abbreviated form. {</\textbf{a:documentation}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rng:value}>}init{</\textbf{rng:value}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{a:documentation}>} the name component is indicated only by one initial.\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{a:documentation}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{rng:choice}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{rng:attribute}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rng:optional}>}\mbox{}\newline 
+{</\textbf{rng:define}>}\end{shaded}\egroup\par \noindent  Note the use of the \textsf{http://relaxng.org/ns/compatibility/annotations/1.0} namespace to provide default values and documentation.
+\paragraph[{Elements}]{Elements}\label{IMEL}\par
+An \hyperref[TEI.elementSpec]{<elementSpec>} produces a RELAX NG specification in two parts; firstly, it must generate an \texttt{<rng:define>} pattern by which other elements can refer to it, and then it must generate an \texttt{<rng:element>} with the content model and attributes. It may be convenient to make two separate patterns, one for the element's attributes and one for its content model.\par
+The content model is created by processing the TEI declarations found within the \hyperref[TEI.content]{<content>} element; ; the attributes are processed in the same way as those from attribute classes, described above.
+\subsubsection[{Making a DTD}]{Making a DTD}\label{IM-makeDTD}\par
+Generation of DTDs largely follows the same pattern as RELAX NG generation, with one important exception—{\itshape the order of declaration matters}. A DTD may not refer to an entity which has not yet been declared. Since both macros and classes generate DTD parameter entities, the TEI Guidelines are constructed so that they can be declared in the right order. A processor must therefore work in the following order: \begin{enumerate}
+\item declare all model classes which have a {\itshape predeclare} value of true
+\item declare all macros which have a {\itshape predeclare} value of true
+\item declare all other classes
+\item declare the modules (if DTD fragments are being constructed)
+\item declare any remaining macros
+\item declare the elements and their attributes
+\end{enumerate} \par
+Let us consider a complete example, a simple element with no attributes of its own: \par\bgroup\index{elementSpec=<elementSpec>|exampleindex}\index{module=@module!<elementSpec>|exampleindex}\index{ident=@ident!<elementSpec>|exampleindex}\index{desc=<desc>|exampleindex}\index{classes=<classes>|exampleindex}\index{memberOf=<memberOf>|exampleindex}\index{key=@key!<memberOf>|exampleindex}\index{memberOf=<memberOf>|exampleindex}\index{key=@key!<memberOf>|exampleindex}\index{memberOf=<memberOf>|exampleindex}\index{key=@key!<memberOf>|exampleindex}\index{content=<content>|exampleindex}\index{macroRef=<macroRef>|exampleindex}\index{key=@key!<macroRef>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{elementSpec}\hspace*{1em}{module}="{namesdates}"\mbox{}\newline 
+\hspace*{1em}{ident}="{faith}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{desc}>}specifies the faith, religion, or belief set of a person.{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{classes}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{memberOf}\hspace*{1em}{key}="{model.persStateLike}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{memberOf}\hspace*{1em}{key}="{att.editLike}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{memberOf}\hspace*{1em}{key}="{att.datable}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{classes}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{content}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{macroRef}\hspace*{1em}{key}="{macro.phraseSeq}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{content}>}\mbox{}\newline 
+{</\textbf{elementSpec}>}\end{shaded}\egroup\par \noindent  If DTD fragments are being generated (for use as described in \textit{\hyperref[STPE]{23.5.7.\ Using TEI Parameterized Schema Fragments}}), this will result in the following: \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces <!ENTITY \% faith 'INCLUDE' >\newline
+<![ \%faith; [\newline
+\newline
+<!--doc:specifies the faith,  religion, or belief set of a person. -->\newline
+<!ELEMENT \%n.faith; \%om.RR; \%macro.phraseSeq;>\newline
+<!ATTLIST \%n.faith; xmlns CDATA "http://www.tei-c.org/ns/1.0">\newline
+<!ATTLIST \%n.faith;\newline
+ \%att.global.attributes;\newline
+ \%att.editLike.attributes;\newline
+ \%att.datable.attributes; >\newline
+]]>\end{shaded}
+\par\egroup 
+ Here the whole stanza is contained in a marked section (for use as described in \textit{\hyperref[STPEEX]{23.5.7.2.\ Inclusion and Exclusion of Elements}}), the element name is parameterized (see \textit{\hyperref[STPEGI]{23.5.7.3.\ Changing the Names of Generic Identifiers}}), and the class attributes are entity references derived from the \hyperref[TEI.memberOf]{<memberOf>} records in \hyperref[TEI.classes]{<classes>}. Note the additional attribute which provides a default {\itshape xmlns} declaration for the element; the effect of this is that if the document is processed by a DTD-aware XML processor, the namespace declaration will be present automatically without the document author even being aware of it.\par
+A simpler rendition for a flattened DTD generated from a customization will result in the following, with no containing marked section, and no parameterized name: \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces <!ELEMENT faith \%macro.phraseSeq;>\newline
+<!ATTLIST faith xmlns CDATA "http://www.tei-c.org/ns/1.0">\newline
+<!ATTLIST faith\newline
+ \%att.global.attribute.xmlspace;\newline
+ \%att.global.attribute.xmlid;\newline
+ \%att.global.attribute.n;\newline
+ \%att.global.attribute.xmllang;\newline
+ \%att.global.attribute.rend;\newline
+ \%att.global.attribute.xmlbase;\newline
+ \%att.global.linking.attribute.corresp;\newline
+ \%att.global.linking.attribute.synch;\newline
+ \%att.global.linking.attribute.sameAs;\newline
+ \%att.global.linking.attribute.copyOf;\newline
+ \%att.global.linking.attribute.next;\newline
+ \%att.global.linking.attribute.prev;\newline
+ \%att.global.linking.attribute.exclude;\newline
+ \%att.global.linking.attribute.select;\newline
+ \%att.editLike.attribute.cert;\newline
+ \%att.editLike.attribute.resp;\newline
+ \%att.editLike.attribute.evidence;\newline
+ \%att.datable.w3c.attribute.period;\newline
+ \%att.datable.w3c.attribute.when;\newline
+ \%att.datable.w3c.attribute.notBefore;\newline
+ \%att.datable.w3c.attribute.notAfter;\newline
+ \%att.datable.w3c.attribute.from;\newline
+ \%att.datable.w3c.attribute.to;>\end{shaded}
+\par\egroup 
+ Here the attributes from classes have been expanded into individual entity references.
+\subsubsection[{Generating Documentation}]{Generating Documentation}\label{IMGD}\par
+In Donald Knuth's literate programming terminology (\cite{KNUTH}), the previous sections have dealt with the \textit{tangle} process; to generate documentation, we now turn to the \textit{weave} process.\par
+An ODD customization may consist largely of general documentation and examples, requiring no ODD-specific processing. It will normally however also contain a \hyperref[TEI.schemaSpec]{<schemaSpec>} element and possibly some \hyperref[TEI.specGrp]{<specGrp>} fragments.\par
+The generated documentation may be of two forms. On the one hand, we may document the customization itself, that is, only those elements (etc.) which differ in their specification from that provided by the TEI reference documentation. Alternatively, we may generate reference documentation for the complete subset of the TEI which results from applying the customization. The TEI Roma tools take the latter approach, and operate on the result of the first stage processing described in \textit{\hyperref[IM-unified]{23.5.1.\ Making a Unified ODD}}.\par
+Generating reference documentation for \hyperref[TEI.elementSpec]{<elementSpec>}, \hyperref[TEI.classSpec]{<classSpec>}, and \hyperref[TEI.macroSpec]{<macroSpec>} elements is largely dependent on the design of the preferred output. Some applications may, for example, want to turn all names of objects into hyperlinks, show lists of class members, or present lists of attributes as tables, lists, or inline prose. Another technique implemented in these Guidelines is to show lists of potential ‘parents’ for each element, by tracing which other elements have them as possible members of their content models.\par
+One model of display on a web page is shown in \ref{ref-faith}, corresponding to the \hyperref[TEI.faith]{<faith>} element shown in section \textit{\hyperref[IM-makeDTD]{23.5.5.\ Making a DTD}}.\begin{figure}[htbp]
+\noindent\noindent\includegraphics[width=450pt,]{Images/ref-faith.png}
+\caption{\label{ref-faith}Example reference documentation for \texttt{<faith>}}\end{figure}
+
+\subsubsection[{Using TEI Parameterized Schema Fragments}]{Using TEI Parameterized Schema Fragments}\label{STPE}\par
+The TEI parameterized DTD and RELAX NG fragments make use of parameter entities and patterns for several purposes. In this section we describe their interface for the user. In general we recommend use of ODD instead of this technique, which has been retained only for compatability reasons.
+\paragraph[{Selection of Modules}]{Selection of Modules}\label{STPED}\par
+Special-purpose parameter entities are used to specify which modules are to be combined into a TEI DTD. They take the form TEI.xxxxx where \texttt{xxxx} is the name of the module as given in table \hyperref[tab-mods]{the table on p. \pageref{tab-mods}} in \textit{\hyperref[STMA]{1.1.\ TEI Modules}}. For example, the parameter entity \textsf{TEI.linking} is used to define whether or not to include the module \textsf{linking}. All such parameter entities are declared by default with the value IGNORE: to select a module, therefore, the encoder declares the appropriate parameter entities with the value INCLUDE.\par
+For XML DTD fragments, note that some modules generate two DTD fragments: for example the \textsf{analysis} module generates fragments called \textsf{analysis-decl} and \textsf{analysis}. This is because the declarations they contain are needed at different points in the creation of an XML DTD.\par
+The parameter entity named for the module is used as the keyword controlling a conditional marked section in the DTD fragment generated by the \textsf{tei} module. The declarations for each DTD fragment constituting the module are contained within such marked sections. For example, the parameter entity \textsf{TEI.linking} appears twice in \textsf{tei.dtd}, once for the \textsf{linking-decl} schema fragment: \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces <!ENTITY \% TEI.linking 'IGNORE' >\newline
+<![\%TEI.linking;[\newline
+<!ENTITY \% file.linking-decl PUBLIC '-//TEI P5//ENTITIES Linking, Segmentation, and Alignment//EN' 'linking-decl.dtd' >\newline
+\%file.linking-decl;\newline
+]] >\end{shaded}
+\par\egroup 
+ and once for the \textsf{linking} schema fragment: \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces <![\%TEI.linking;[\newline
+<!ENTITY \% file.linking PUBLIC '-//TEI P5//ELEMENTS Linking, Segmentation, and Alignment//EN' 'linking.dtd' >\newline
+\%file.linking;]] >\end{shaded}
+\par\egroup 
+ If TEI.linking has its default value of IGNORE, neither declaration has any effect. If however it has the value INCLUDE, then the content of each marked section is acted upon: the parameter entities \textsf{file.linking} and \textsf{file.linking-decl} are referenced, which has the effect of embedding the content of the files they represent at the appropriate point in the DTD.\par
+The RELAX NG schema fragments can be combined in a wrapper schema using the standard mechanism of \texttt{<rng:include>} in that language.
+\paragraph[{Inclusion and Exclusion of Elements}]{Inclusion and Exclusion of Elements}\label{STPEEX}\par
+The TEI DTD fragments also use marked sections and parameter entity references to allow users to exclude the definitions of individual elements, in order either to make the elements illegal in a document or to allow the element to be redefined. The parameter entities used for this purpose have exactly the same name as the generic identifier of the element concerned. The default definition for these parameter entities is INCLUDE but they may be changed to IGNORE in order to exclude the standard element and attribute definition list declarations from the DTD.\par
+The declarations for the element \hyperref[TEI.p]{<p>}, for example, are preceded by a definition for a parameter entity with the name \textsf{p} and contained within a marked section whose keyword is given as \texttt{\%p;}: \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces <!ENTITY \% p 'INCLUDE' >\newline
+<![ \%p; [\newline
+       <!-- element and attribute list declaration for p here -->\newline
+]]\end{shaded}
+\par\egroup 
+\par
+These parameter entities are defined immediately preceding the element whose declarations they control; because their names are completely regular, they are not documented further. \par
+To define a DTD in which the element \hyperref[TEI.p]{<p>} is excluded therefore, the entity \textsf{p} needs to be redefined as IGNORE by ensuring that a declaration such as \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces <!ENTITY \% p 'IGNORE' >\end{shaded}
+\par\egroup 
+ is added earlier in the DTD than the default (see further \textit{\hyperref[STOVLO]{23.5.7.4.\ Embedding Local Modifications (DTD only)}}).\par
+Similarly, in the parameterized RELAX NG schemas, every element is defined by a pattern named after the element. To undefine an element therefore all that is necessary is to add a declaration like the following: \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces  p = notAllowed \end{shaded}
+\par\egroup 
+
+\paragraph[{Changing the Names of Generic Identifiers}]{Changing the Names of Generic Identifiers}\label{STPEGI}\par
+In the TEI DTD fragments, elements are not referred to directly by their generic identifiers; instead, the DTD fragments refer to parameter entities which expand to the standard generic identifiers. This allows users to rename elements by redefining the appropriate parameter entity. Parameter entities used for this purpose are formed by taking the standard generic identifier of the element and attaching the string n. as a prefix. Thus the standard generic identifiers for paragraphs, notes, and quotations, \hyperref[TEI.p]{<p>}, \hyperref[TEI.note]{<note>}, and \hyperref[TEI.persName]{<persName>} are defined by declarations of the following form: \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces <!ENTITY \% n.p "p">\newline
+<!ENTITY \% n.note "note"> \newline
+<!ENTITY \% n.persName "persName">\end{shaded}
+\par\egroup 
+ Note that since all names are case-sensitive, the specific mix of uppercase and lowercase letters in the standard generic identifier must be preserved in the entity name.\par
+These declarations are generated by an ODD processor when TEI DTD fragments are created. \par
+In the RELAX NG schemas, all elements are normally defined using a pattern with the same name as the element (as described in \textit{\hyperref[IM-naming]{23.5.3.\ Names and Documentation in Generated Schemas}}): for example \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces abbr = element abbr ❴ abbr.content, abbr.attributes ❵\end{shaded}
+\par\egroup 
+ The easiest way of renaming the element is thus simply to rewrite the pattern with a different element name; any references use the pattern, not the element, name. \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces abbr = element abbrev ❴ abbr.content, abbr.attributes ❵\end{shaded}
+\par\egroup 
+ More complex revisions, such as redefining the content of the element (defined by the pattern \textsf{abbr.content}) or its attributes (defined by the pattern \textsf{abbr.attributes}) can be accomplished in a similar way, using the features of the RELAX NG language. The recommended method of carrying out such modifications is however to use the ODD language as further described in section \textit{\hyperref[TD]{22.\ Documentation Elements}}.
+\paragraph[{Embedding Local Modifications (DTD only)}]{Embedding Local Modifications (DTD only)}\label{STOVLO}\par
+Any local modifications to a DTD (i.e. changes to a schema other than simple inclusion or exclusion of modules) are made by declarations stored in one of two local extension files, one containing modifications to the TEI parameter entities, and the other new or changed declarations of elements and their attributes. Entity declarations must be made which associate the names of these two files with the appropriate parameter entity so that the declarations they contain can be embedded within the TEI DTD at an appropriate point.\par
+The following entities are referred to by the main \textsf{tei.dtd} file to embed portions of the TEI DTD fragments or locally developed extensions. \begin{description}
+
+\item[{\textsf{TEI.extensions.ent}}]identifies a local file containing extensions to the TEI parameter entities
+\item[{\textsf{TEI.extensions.dtd}}]identifies a local file containing extensions to the TEI module
+\end{description} \par
+For example, if the relevant files are called \textsf{project.ent} and \textsf{project.dtd}, then declarations like the following would be appropriate: \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces <!ENTITY \% TEI.extensions.ent SYSTEM 'project.ent' >\newline
+<!ENTITY \% TEI.extensions.dtd SYSTEM 'project.dtd' >\end{shaded}
+\par\egroup 
+\par
+When an entity is declared more than once, the first declaration is binding and the others are ignored. The local modifications to parameter entities should therefore be handled before the standard parameter entities themselves are declared in \textsf{tei.dtd}. The entity \textsf{TEI.extensions.ent} is referred to before any TEI declarations are handled, to allow the user's declarations to take priority. If the user does not provide a \textsf{TEI.extensions.ent} entity, the entity will be expanded to the empty string.\par
+For example the encoder might wish to add two phrase-level elements \texttt{<it>} and \texttt{<bd>}, perhaps as synonyms for <hi rend='italics'> and <hi rend='bold'>. As described in chapter \textit{\hyperref[MD]{23.3.\ Customization}}, this involves two distinct steps: one to define the new elements, and the other to ensure that they are placed into the TEI document structure at the right place.\par
+Creating the new declarations is done in the same way for user-defined elements as for any other; the same parameter entities need to be defined so that they may be referenced by other elements. The content models of these new elements may also reference other parameter entities, which is why they need to be declared after other declarations. \par
+The second step involves modifying the element class to which the new elements should be attached. This requires that the parameter entity \textsf{macro.phraseSeq} should be modified to include the generic identifiers for the new elements we wish to create. The declaration for each modifiable parameter entity in the DTD includes a reference to an additional parameter entity with the same name prefixed by an \texttt{x.}; these entities are declared by default as the null string. However, in the file containing local declarations they may be redeclared to include references to the new class members: \par\hfill\bgroup\exampleFont\vskip 10pt\begin{shaded}
+\obeyspaces <!ENTITY \% x.macro.phraseSeq 'it | bd |'>\end{shaded}
+\par\egroup 
+ and this declaration will take precedence over the default when the declaration for macro.phraseSeq is evaluated.

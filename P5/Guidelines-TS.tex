@@ -1,0 +1,729 @@
+
+\section[{Transcriptions of Speech}]{Transcriptions of Speech}\label{TS}\par
+The module described in this chapter is intended for use with a wide variety of transcribed spoken material. It should be stressed, however, that the present proposals are not intended to support unmodified every variety of research undertaken upon spoken material now or in the future; some discourse analysts, some phonologists, and doubtless others may wish to extend the scheme presented here to express more precisely the set of distinctions they wish to draw in their transcriptions. Speech regarded as a purely acoustic phenomenon may well require different methods from those outlined here, as may speech regarded solely as a process of social interaction. \par
+This chapter begins with a discussion of some of the problems commonly encountered in transcribing spoken language (section \textit{\hyperref[TSOV]{8.1.\ General Considerations and Overview}}). Section \textit{\hyperref[HD32]{8.2.\ Documenting the Source of Transcribed Speech}} documents some additional TEI header elements which may be used to document the recording or other source from which transcribed text is taken. Section \textit{\hyperref[TSBA]{8.3.\ Elements Unique to Spoken Texts}} describes the basic structural elements provided by this module. Finally, section \textit{\hyperref[TSSA]{8.4.\ Elements Defined Elsewhere}} of this chapter reviews further problems specific to the encoding of spoken language, demonstrating how mechanisms and elements discussed elsewhere in these Guidelines may be applied to them.
+\subsection[{General Considerations and Overview}]{General Considerations and Overview}\label{TSOV}\par
+There is great variation in the ways different researchers have chosen to represent speech using the written medium.\footnote{For a discussion of several of these see \cite{TS-BIBL-1}; \cite{TS-BIBL-2}; and \cite{TS-BIBL-3}.} This reflects the special difficulties which apply to the encoding or \textit{transcription} of speech. Speech varies according to a large number of dimensions, many of which have no counterpart in writing (for example, tempo, loudness, pitch, etc.). The audibility of speech recorded in natural communication situations is often less than perfect, affecting the accuracy of the transcription. Spoken material may be transcribed in the course of linguistic, acoustic, anthropological, psychological, ethnographic, journalistic, or many other types of research. Even in the same field, the interests and theoretical perspectives of different transcribers may lead them to prefer different levels of detail in the transcript and different styles of visual display. The production and comprehension of speech are intimately bound up with the situation in which speech occurs, far more so than is the case for written texts. A speech transcript must therefore include some contextual features; determining which are relevant is not always simple. Moreover, the ethical problems in recording and making public what was produced in a private setting and intended for a limited audience are more frequently encountered in dealing with spoken texts than with written ones.\par
+Speech also poses difficult structural problems. Unlike a written text, a speech event takes place in time. Its beginning and end may be hard to determine and its internal composition difficult to define. Most researchers agree that the utterances or \textit{turns} of individual speakers form an important structural component in most kinds of speech, but these are rarely as well-behaved (in the structural sense) as paragraphs or other analogous units in written texts: speakers frequently interrupt each other, use gestures as well as words, leave remarks unfinished and so on. Speech itself, though it may be represented as words, frequently contains items such as vocalized pauses which, although only semi-lexical, have immense importance in the analysis of spoken text. Even non-vocal elements such as gestures may be regarded as forming a component of spoken text for some analytic purposes. Below the level of the individual utterance, speech may be segmented into units defined by phonological, prosodic, or syntactic phenomena; no clear agreement exists, however, even as to appropriate names for such segments.\par
+Spoken texts transcribed according to the guidelines presented here are organized as follows. The overall structure of a TEI spoken text is identical to that of any other TEI text: the \hyperref[TEI.TEI]{<TEI>} element for a spoken text contains a \hyperref[TEI.teiHeader]{<teiHeader>} element, followed by a \hyperref[TEI.text]{<text>} element. Even texts primarily composed of transcribed speech may also include conventional front and back matter, and may even be organized into divisions like printed texts.\par
+We may say, therefore, that these Guidelines regard transcribed speech as being composed of arbitrary high-level units called \textit{texts}. A spoken \hyperref[TEI.text]{<text>} might typically be a conversation between a small number of people, a lecture, a broadcast TV item, or a similar event. Each such unit has associated with it a \hyperref[TEI.teiHeader]{<teiHeader>} providing detailed contextual information such as the source of the transcript, the identity of the participants, whether the speech is scripted or spontaneous, the physical and social setting in which the discourse takes place and a range of other aspects. Details of the header in general are provided in chapter \textit{\hyperref[HD]{2.\ The TEI Header}}; the particular elements it provides for use with spoken texts are described below (\textit{\hyperref[HD32]{8.2.\ Documenting the Source of Transcribed Speech}}). Details concerning additional elements which may be used for the documentation of participant and contextual information are given in \textit{\hyperref[CCAH]{15.2.\ Contextual Information}}.\par
+Defining the bounds of a spoken text is frequently a matter of arbitrary convention or convenience. In public or semi-public contexts, a text may be regarded as synonymous with, for example, a \textit{lecture}, a \textit{broadcast item}, a \textit{meeting}, etc. In informal or private contexts, a text may be simply a conversation involving a specific group of participants. Alternatively, researchers may elect to define spoken texts solely in terms of their duration in time or length in words. By default, these Guidelines assume of a text only that: \begin{itemize}
+\item it is internally cohesive,
+\item it is describable by a single header, and
+\item it represents a single stretch of time with no significant discontinuities.
+\end{itemize} \par
+Within a \hyperref[TEI.text]{<text>} it may be necessary to identify subdivisions of various kinds, if only for convenience of handling. The neutral \hyperref[TEI.div]{<div>} element discussed in section \textit{\hyperref[DSDIV]{4.1.\ Divisions of the Body}} is recommended for this purpose. It may be found useful also for representing subdivisions relating to discourse structure, speech act theory, transactional analysis, etc., provided only that these divisions are hierarchically well-behaved. Where they are not, as is often the case, the mechanisms discussed in chapters \textit{\hyperref[SA]{16.\ Linking, Segmentation, and Alignment}} and \textit{\hyperref[NH]{20.\ Non-hierarchical Structures}} may be used.\par
+A spoken text may contain any of the following components: \begin{itemize}
+\item utterances
+\item pauses
+\item vocalized but non-lexical phenomena such as coughs
+\item kinesic (non-verbal, non-lexical) phenomena such as gestures
+\item entirely non-linguistic incidents occurring during and possibly influencing the course of speech
+\item writing, regarded as a special class of incident in that it can be transcribed, for example captions or overheads displayed during a lecture
+\item shifts or changes in vocal quality
+\end{itemize} \par
+Elements to represent all of these features of spoken language are discussed in section \textit{\hyperref[TSBA]{8.3.\ Elements Unique to Spoken Texts}} below.\par
+An utterance (tagged \hyperref[TEI.u]{<u>}) may contain lexical items interspersed with pauses and non-lexical vocal sounds; during an utterance, non-linguistic incidents may occur and written materials may be presented. The \hyperref[TEI.u]{<u>} element can thus contain any of the other elements listed, interspersed with a transcription of the lexical items of the utterance; the other elements may all appear between utterances or next to each other, but except for \hyperref[TEI.writing]{<writing>} they do not contain any other elements nor any data.\par
+A spoken text itself may be without substructure, that is, it may consist simply of units such as utterances or pauses, not grouped together in any way, or it may be subdivided. If the notion of what constitutes a ‘text’ in spoken discourse is inevitably rather an arbitrary one, the notion of formal subdivisions within such a ‘text’ may appear even more debatable. Nevertheless, such divisions may be useful for such types of discourse as debates, broadcasts, etc., where structural subdivisions can easily be identified, or more generally wherever it is desired to aggregate utterances or other parts of a transcript into units smaller than a complete ‘text’. Examples might include ‘conversations’ or ‘discourse fragments’, or more narrowly, ‘that part of the conversation where topic x was discussed’, provided only that the set of all such divisions is coextensive with the text.\par
+Each such division of a spoken text should be represented by the numbered or unnumbered \hyperref[TEI.div]{<div>} elements defined in chapter \textit{\hyperref[DS]{4.\ Default Text Structure}}. For some detailed kinds of analysis a hierarchy of such divisions may be found useful; nested \hyperref[TEI.div]{<div>} elements may be used for this purpose, as in the following example showing how a collection made up of transcribed ‘sound bites’ taken from speeches given by a politician on different occasions might be encoded. Each extract is regarded as a distinct \hyperref[TEI.div]{<div>}, nested within a single composite \hyperref[TEI.div]{<div>} as follows: \par\bgroup\index{div=<div>|exampleindex}\index{type=@type!<div>|exampleindex}\index{subtype=@subtype!<div>|exampleindex}\index{org=@org!<div>|exampleindex}\index{div=<div>|exampleindex}\index{sample=@sample!<div>|exampleindex}\index{div=<div>|exampleindex}\index{sample=@sample!<div>|exampleindex}\index{div=<div>|exampleindex}\index{sample=@sample!<div>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{div}\hspace*{1em}{type}="{soundbites}"\mbox{}\newline 
+\hspace*{1em}{subtype}="{conservative}"\hspace*{1em}{org}="{composite}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{div}\hspace*{1em}{sample}="{medial}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{div}\hspace*{1em}{sample}="{medial}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{div}\hspace*{1em}{sample}="{initial}"/>}\mbox{}\newline 
+{</\textbf{div}>}\end{shaded}\egroup\par \par
+As a member of the class \textsf{att.declaring}, the \hyperref[TEI.div]{<div>} element may also carry a {\itshape decls} attribute, for use where the divisions of a text do not all share the same set of the contextual declarations specified in the TEI header. (See further section \textit{\hyperref[CCAS]{15.3.\ Associating Contextual Information with a Text}}).
+\subsection[{Documenting the Source of Transcribed Speech}]{Documenting the Source of Transcribed Speech}\label{HD32}\par
+Where a computer file is derived from a spoken text rather than a written one, it will usually be desirable to record additional information about the recording or broadcast which constitutes its source. Several additional elements are provided for this purpose within the source description component of the TEI header: 
+\begin{sansreflist}
+  
+\item [\textbf{<scriptStmt>}] (script statement) contains a citation giving details of the script used for a spoken text.
+\item [\textbf{<recordingStmt>}] (recording statement) describes a set of recordings used as the basis for transcription of a spoken text.
+\item [\textbf{<recording>}] (recording event) provides details of an audio or video recording event used as the source of a spoken text, either directly or from a public broadcast.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape type}]
+  the kind of recording.
+\end{sansreflist}  
+\item [\textbf{<transcriptionDesc>}] describes the set of transcription conventions used, particularly for spoken material.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape ident}]
+  supplies an identifier for the encoding convention, independent of any version number.
+    \item[@{\itshape version}]
+  supplies a version number for the encoding conventions used, if any.
+\end{sansreflist}  
+\end{sansreflist}
+ As a member of the \textsf{att.duration} class, the \hyperref[TEI.recording]{<recording>} element inherits the following attribute: 
+\begin{sansreflist}
+  
+\item [\textbf{att.duration.w3c}] provides attributes for recording normalized temporal durations.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape dur}]
+  (duration) indicates the length of this element in time.
+\end{sansreflist}  
+\end{sansreflist}
+\par
+Note that detailed information about the participants or setting of an interview or other transcript of spoken language should be recorded in the appropriate division of the profile description, discussed in chapter \textit{\hyperref[CC]{15.\ Language Corpora}}, rather than as part of the source description. The source description is used to hold information only about the source from which the transcribed speech was taken, for example, any script being read and any technical details of how the recording was produced. If the source was a previously-created transcript, it should be treated in the same way as any other source text.\par
+The \hyperref[TEI.scriptStmt]{<scriptStmt>} element should be used where it is known that one or more of the participants in a spoken text is speaking from a previously prepared script. The script itself should be documented in the same way as any other written text, using one of the three citation tags mentioned above. Utterances or groups of utterances may be linked to the script concerned by means of the {\itshape decls} attribute, described in section \textit{\hyperref[CCAS]{15.3.\ Associating Contextual Information with a Text}}. \par\bgroup\index{sourceDesc=<sourceDesc>|exampleindex}\index{scriptStmt=<scriptStmt>|exampleindex}\index{bibl=<bibl>|exampleindex}\index{author=<author>|exampleindex}\index{title=<title>|exampleindex}\index{date=<date>|exampleindex}\index{when=@when!<date>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{sourceDesc}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{scriptStmt}\hspace*{1em}{xml:id}="{CNN12}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{bibl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{author}>}CNN Network News{</\textbf{author}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{title}>}News headlines{</\textbf{title}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{date}\hspace*{1em}{when}="{1991-06-12}">}12 Jun 91{</\textbf{date}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{bibl}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{scriptStmt}>}\mbox{}\newline 
+{</\textbf{sourceDesc}>}\end{shaded}\egroup\par \par
+The \hyperref[TEI.recordingStmt]{<recordingStmt>} is used to group together information relating to the recordings from which the spoken text was transcribed. The element may contain either a prose description or, more helpfully, one or more \hyperref[TEI.recording]{<recording>} elements, each corresponding with a particular recording. The linkage between utterances or groups of utterances and the relevant recording statement is made by means of the {\itshape decls} attribute, described in section \textit{\hyperref[CCAS]{15.3.\ Associating Contextual Information with a Text}}.\par
+The \hyperref[TEI.recording]{<recording>} element should be used to provide a description of how and by whom a recording was made. This information may be provided in the form of a prose description, within which such items as statements of responsibility, names, places, and dates may be identified using the appropriate phrase-level tags. Alternatively, a selection of elements from the \textsf{model.recordingPart} class may be provided. This element class makes available the following elements: 
+\begin{sansreflist}
+  
+\item [\textbf{<date>}] (date) contains a date in any format.
+\item [\textbf{<time>}] (time) contains a phrase defining a time of day in any format.
+\item [\textbf{<respStmt>}] (statement of responsibility) supplies a statement of responsibility for the intellectual content of a text, edition, recording, or series, where the specialized elements for authors, editors, etc. do not suffice or do not apply. May also be used to encode information about individuals or organizations which have played a role in the production or distribution of a bibliographic work.
+\item [\textbf{<equipment>}] (equipment) provides technical details of the equipment and media used for an audio or video recording used as the source for a spoken text.
+\item [\textbf{<broadcast>}] (broadcast) describes a broadcast used as the source of a spoken text.
+\end{sansreflist}
+\par
+Specialized collections may wish to add further sub-elements to these major components. These elements should be used only for information relating to the recording process itself; information about the setting or participants (for example) is recorded elsewhere: see sections \textit{\hyperref[CCAHSE]{15.2.3.\ The Setting Description}} and \textit{\hyperref[CCAHPA]{15.2.2.\ The Participant Description}}. \par\bgroup\index{recordingStmt=<recordingStmt>|exampleindex}\index{recording=<recording>|exampleindex}\index{type=@type!<recording>|exampleindex}\index{p=<p>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{recordingStmt}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{recording}\hspace*{1em}{type}="{video}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{p}>}U-matic recording made by college audio-visual department staff,\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} available as PAL-standard VHS transfer or sound-only cassette{</\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{recording}>}\mbox{}\newline 
+{</\textbf{recordingStmt}>}\end{shaded}\egroup\par \noindent  \par\bgroup\index{recordingStmt=<recordingStmt>|exampleindex}\index{recording=<recording>|exampleindex}\index{type=@type!<recording>|exampleindex}\index{dur=@dur!<recording>|exampleindex}\index{respStmt=<respStmt>|exampleindex}\index{resp=<resp>|exampleindex}\index{name=<name>|exampleindex}\index{equipment=<equipment>|exampleindex}\index{p=<p>|exampleindex}\index{date=<date>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{recordingStmt}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{recording}\hspace*{1em}{type}="{audio}"\hspace*{1em}{dur}="{P30M}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{respStmt}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{resp}>}Location recording by{</\textbf{resp}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{name}>}Sound Services Ltd.{</\textbf{name}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{respStmt}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{equipment}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{p}>}Multiple close microphones mixed down to stereo Digital\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} Audio Tape, standard play, 44.1 KHz sampling frequency{</\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{equipment}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{date}>}12 Jan 1987{</\textbf{date}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{recording}>}\mbox{}\newline 
+{</\textbf{recordingStmt}>}\end{shaded}\egroup\par \noindent  \par\bgroup\index{recordingStmt=<recordingStmt>|exampleindex}\index{recording=<recording>|exampleindex}\index{type=@type!<recording>|exampleindex}\index{dur=@dur!<recording>|exampleindex}\index{date=<date>|exampleindex}\index{recording=<recording>|exampleindex}\index{type=@type!<recording>|exampleindex}\index{dur=@dur!<recording>|exampleindex}\index{date=<date>|exampleindex}\index{recording=<recording>|exampleindex}\index{type=@type!<recording>|exampleindex}\index{dur=@dur!<recording>|exampleindex}\index{date=<date>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{recordingStmt}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{recording}\hspace*{1em}{type}="{audio}"\hspace*{1em}{dur}="{P15M}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{xml:id}="{rec-3001}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{date}>}14 Feb 2001{</\textbf{date}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{recording}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{recording}\hspace*{1em}{type}="{audio}"\hspace*{1em}{dur}="{P15M}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{xml:id}="{rec-3002}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{date}>}17 Feb 2001{</\textbf{date}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{recording}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{recording}\hspace*{1em}{type}="{audio}"\hspace*{1em}{dur}="{P15M}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{xml:id}="{rec-3003}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{date}>}22 Feb 2001{</\textbf{date}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{recording}>}\mbox{}\newline 
+{</\textbf{recordingStmt}>}\end{shaded}\egroup\par \par
+When a recording has been made from a public broadcast, details of the broadcast itself should be supplied within the \hyperref[TEI.recording]{<recording>} element, as a nested \hyperref[TEI.broadcast]{<broadcast>} element. A broadcast is closely analogous to a publication and the \hyperref[TEI.broadcast]{<broadcast>} element should therefore contain one or the other of the bibliographic citation elements \hyperref[TEI.bibl]{<bibl>}, \hyperref[TEI.biblStruct]{<biblStruct>}, or \hyperref[TEI.biblFull]{<biblFull>}. The broadcasting agency responsible for a broadcast is regarded as its author, while other participants (for example interviewers, interviewees, script writers, directors, producers, etc.) should be specified using the \hyperref[TEI.respStmt]{<respStmt>} or \hyperref[TEI.editor]{<editor>} element with an appropriate \hyperref[TEI.resp]{<resp>} (see further section \textit{\hyperref[COBI]{3.12.\ Bibliographic Citations and References}}). \par\bgroup\index{recording=<recording>|exampleindex}\index{type=@type!<recording>|exampleindex}\index{dur=@dur!<recording>|exampleindex}\index{equipment=<equipment>|exampleindex}\index{p=<p>|exampleindex}\index{broadcast=<broadcast>|exampleindex}\index{bibl=<bibl>|exampleindex}\index{title=<title>|exampleindex}\index{author=<author>|exampleindex}\index{respStmt=<respStmt>|exampleindex}\index{resp=<resp>|exampleindex}\index{name=<name>|exampleindex}\index{respStmt=<respStmt>|exampleindex}\index{resp=<resp>|exampleindex}\index{name=<name>|exampleindex}\index{series=<series>|exampleindex}\index{title=<title>|exampleindex}\index{note=<note>|exampleindex}\index{date=<date>|exampleindex}\index{when=@when!<date>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{recording}\hspace*{1em}{type}="{audio}"\hspace*{1em}{dur}="{P10M}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{equipment}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{p}>}Recorded from FM Radio to digital tape{</\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{equipment}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{broadcast}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{bibl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{title}>}Interview on foreign policy{</\textbf{title}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{author}>}BBC Radio 5{</\textbf{author}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{respStmt}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{resp}>}interviewer{</\textbf{resp}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{name}>}Robin Day{</\textbf{name}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{respStmt}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{respStmt}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{resp}>}interviewee{</\textbf{resp}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{name}>}Margaret Thatcher{</\textbf{name}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{respStmt}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{series}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{title}>}The World Tonight{</\textbf{title}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{series}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{note}>}First broadcast on {<\textbf{date}\hspace*{1em}{when}="{1989-11-27}">}27 Nov 1989{</\textbf{date}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{note}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{bibl}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{broadcast}>}\mbox{}\newline 
+{</\textbf{recording}>}\end{shaded}\egroup\par \par
+When a broadcast contains several distinct recordings (for example a compilation), additional \hyperref[TEI.recording]{<recording>} elements may be further nested within the \hyperref[TEI.broadcast]{<broadcast>} element. \par\bgroup\index{recording=<recording>|exampleindex}\index{dur=@dur!<recording>|exampleindex}\index{broadcast=<broadcast>|exampleindex}\index{recording=<recording>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{recording}\hspace*{1em}{dur}="{P100M}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{broadcast}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{recording}/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{broadcast}>}\mbox{}\newline 
+{</\textbf{recording}>}\end{shaded}\egroup\par \noindent   \par
+The \hyperref[TEI.transcriptionDesc]{<transcriptionDesc>} element can be used to document the particular transcription conventions (use of space, punctuation, special characters etc.) used in making the transcription. A number of sets of such conventions have been defined within particular research communities, or by users of particular transcription tools. The attributes {\itshape ident} and {\itshape version} may be used to refer to such conventions in a machine tractable way, where this is appropriate. \par\bgroup\index{transcriptionDesc=<transcriptionDesc>|exampleindex}\index{ident=@ident!<transcriptionDesc>|exampleindex}\index{version=@version!<transcriptionDesc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{transcriptionDesc}\hspace*{1em}{ident}="{HIAT}"\mbox{}\newline 
+\hspace*{1em}{version}="{2004}"/>}\end{shaded}\egroup\par 
+\subsection[{Elements Unique to Spoken Texts}]{Elements Unique to Spoken Texts}\label{TSBA}\par
+The following elements characterize spoken texts, transcribed according to these Guidelines: 
+\begin{sansreflist}
+  
+\item [\textbf{<u>}] (utterance) contains a stretch of speech usually preceded and followed by silence or by a change of speaker.
+\item [\textbf{<pause>}] (pause) marks a pause either between or within utterances.
+\item [\textbf{<vocal>}] (vocal) marks any vocalized but not necessarily lexical phenomenon, for example voiced pauses, non-lexical backchannels, etc.
+\item [\textbf{<kinesic>}] (kinesic) marks any communicative phenomenon, not necessarily vocalized, for example a gesture, frown, etc.
+\item [\textbf{<incident>}] (incident) marks any phenomenon or occurrence, not necessarily vocalized or communicative, for example incidental noises or other events affecting communication.
+\item [\textbf{<writing>}] (writing) contains a passage of written text revealed to participants in the course of a spoken text.
+\item [\textbf{<shift>}] (shift) marks the point at which some paralinguistic feature of a series of utterances by any one speaker changes.
+\end{sansreflist}
+\par
+The \hyperref[TEI.u]{<u>} element may appear directly within a spoken text, and may contain any of the others; the others may also appear directly (for example, a \hyperref[TEI.vocal]{<vocal>} may appear between two utterances) but cannot contain a \hyperref[TEI.u]{<u>} element. In terms of the basic TEI model, therefore, we regard the \hyperref[TEI.u]{<u>} element as analogous to a paragraph, and the others as analogous to ‘phrase’ elements, but with the important difference that they can exist either as siblings or as children of utterances. The class \textsf{model.divPart.spoken} provides the \hyperref[TEI.u]{<u>} element; the class \textsf{model.global.spoken} provides the six other elements listed above.\par
+As members of the \textsf{att.ascribed} class, all of these elements share the following attributes: 
+\begin{sansreflist}
+  
+\item [\textbf{att.ascribed}] provides attributes for elements representing speech or action that can be ascribed to a specific individual.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape who}]
+  indicates the person, or group of people, to whom the element content is ascribed.
+\end{sansreflist}  
+\item [\textbf{att.ascribed.directed}] provides attributes for elements representing speech or action that can be directed at a group or individual.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape toWhom}]
+  indicates the person, or group of people, to whom a speech act or action is directed.
+\end{sansreflist}  
+\end{sansreflist}
+ As members of the \textsf{att.typed}, \textsf{att.timed} and \textsf{att.duration} classes, all of these elements except \hyperref[TEI.shift]{<shift>} share the following attribute: 
+\begin{sansreflist}
+  
+\item [\textbf{att.typed}] provides attributes which can be used to classify or subclassify elements in any way.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape type}]
+  characterizes the element in some sense, using any convenient classification scheme or typology.
+    \item[@{\itshape subtype}]
+  (subtype) provides a sub-categorization of the element, if needed
+\end{sansreflist}  
+\item [\textbf{att.timed}] provides attributes common to those elements which have a duration in time, expressed either absolutely or by reference to an alignment map.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape start}]
+  indicates the location within a temporal alignment at which this element begins.
+    \item[@{\itshape end}]
+  indicates the location within a temporal alignment at which this element ends.
+\end{sansreflist}  
+\item [\textbf{att.duration.w3c}] provides attributes for recording normalized temporal durations.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape dur}]
+  (duration) indicates the length of this element in time.
+\end{sansreflist}  
+\end{sansreflist}
+\par
+Each of these elements is further discussed and specified in sections \textit{\hyperref[TSBAUT]{8.3.1.\ Utterances}} to \textit{\hyperref[TSBAWR]{8.3.4.\ Writing}}.\par
+We can show the relationship between four of these constituents of speech using the features \textit{eventive}, \textit{communicative}, \textit{anthropophonic} (for sounds produced by the human vocal apparatus), and \textit{lexical}:  \par 
+\begin{longtable}{P{0.28977272727272724\textwidth}P{0.11590909090909089\textwidth}P{0.16420454545454544\textwidth}P{0.17386363636363636\textwidth}P{0.10625\textwidth}}
+\rowcolor{label} \tabcellsep eventive\tabcellsep communicative\tabcellsep anthropophonic\tabcellsep lexical\\\hline 
+incident\tabcellsep +\tabcellsep -\tabcellsep -\tabcellsep -\\
+kinesic\tabcellsep +\tabcellsep +\tabcellsep -\tabcellsep -\\
+vocal\tabcellsep +\tabcellsep +\tabcellsep +\tabcellsep -\\
+utterance\tabcellsep +\tabcellsep +\tabcellsep +\tabcellsep +\end{longtable} \par
+  The differences are not always clear-cut. Among \textit{incidents} might be included actions like slamming the door, which can certainly be communicative. \textit{Vocals} include coughing and sneezing, which are usually involuntary noises. Equally, the distinction between utterances and vocals is not always clear, although for many analytic purposes it will be convenient to regard them as distinct. Individual scholars may differ in the way borderlines are drawn and should declare their definitions in the \hyperref[TEI.editorialDecl]{<editorialDecl>} element of the header (see \textit{\hyperref[HD53]{2.3.3.\ The Editorial Practices Declaration}}).\par
+The following short extract exemplifies several of these elements. It is recoded from a text originally transcribed in the CHILDES format.\footnote{The original is a conversation between two children and their parents, recorded in 1987, and discussed in \cite{TS-BIBL-4}} Each utterance is encoded using a \hyperref[TEI.u]{<u>} element (see section \textit{\hyperref[TSBAUT]{8.3.1.\ Utterances}}). The speakers are defined using the \hyperref[TEI.listPerson]{<listPerson>} element discussed in \textit{\hyperref[NDPERSE]{13.3.2.\ The Person Element}} and each is given a unique identifier also used to identify their speech. Pauses marked by the transcriber are indicated using the \hyperref[TEI.pause]{<pause>} element (see section \textit{\hyperref[TSBAPA]{8.3.2.\ Pausing}}). Non-verbal vocal effects such as the child's meowing are indicated either with orthographic transcriptions or with the \hyperref[TEI.vocal]{<vocal>} element, and entirely non-linguistic but significant incidents such as the sound of the toy cat are represented by the \hyperref[TEI.incident]{<incident>} elements (see section \textit{\hyperref[TSBAVO]{8.3.3.\ Vocal, Kinesic, Incident}}). \par\bgroup\index{listPerson=<listPerson>|exampleindex}\index{person=<person>|exampleindex}\index{person=<person>|exampleindex}\index{person=<person>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{pause=<pause>|exampleindex}\index{pause=<pause>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{incident=<incident>|exampleindex}\index{desc=<desc>|exampleindex}\index{vocal=<vocal>|exampleindex}\index{who=@who!<vocal>|exampleindex}\index{desc=<desc>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{choice=<choice>|exampleindex}\index{orig=<orig>|exampleindex}\index{reg=<reg>|exampleindex}\index{emph=<emph>|exampleindex}\index{pause=<pause>|exampleindex}\index{emph=<emph>|exampleindex}\index{kinesic=<kinesic>|exampleindex}\index{desc=<desc>|exampleindex}\index{u=<u>|exampleindex}\index{trans=@trans!<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{pause=<pause>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{seg=<seg>|exampleindex}\index{emph=<emph>|exampleindex}\index{seg=<seg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}\mbox{}\newline 
+\textit{<!-- ... in the <particDesc>: -->}{<\textbf{listPerson}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{person}\hspace*{1em}{xml:id}="{mar}">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{</\textbf{person}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{person}\hspace*{1em}{xml:id}="{ros}">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{</\textbf{person}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{person}\hspace*{1em}{xml:id}="{fat}">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{</\textbf{person}>}\mbox{}\newline 
+{</\textbf{listPerson}>}\mbox{}\newline 
+\textit{<!-- ... in the <text>: -->}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{who}="{\#mar}">}you\mbox{}\newline 
+ never {<\textbf{pause}/>} take this cat for show and tell\mbox{}\newline 
+{<\textbf{pause}/>} meow meow{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{who}="{\#ros}">}yeah well I dont want to{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{incident}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{desc}>}toy cat has bell in tail which continues to make a tinkling sound{</\textbf{desc}>}\mbox{}\newline 
+{</\textbf{incident}>}\mbox{}\newline 
+{<\textbf{vocal}\hspace*{1em}{who}="{\#mar}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{desc}>}meows{</\textbf{desc}>}\mbox{}\newline 
+{</\textbf{vocal}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{who}="{\#ros}">}because it is so old{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{who}="{\#mar}">}how {<\textbf{choice}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{orig}>}bout{</\textbf{orig}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{reg}>}about{</\textbf{reg}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{choice}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{emph}>}your{</\textbf{emph}>} cat {<\textbf{pause}/>}yours is {<\textbf{emph}>}new{</\textbf{emph}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{kinesic}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}shows Father the cat{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{kinesic}>}\mbox{}\newline 
+{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{trans}="{pause}"\hspace*{1em}{who}="{\#fat}">}thats {<\textbf{pause}/>} darling{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{who}="{\#mar}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}>}no {<\textbf{emph}>}mine{</\textbf{emph}>} isnt old{</\textbf{seg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}>}mine is just um a little dirty{</\textbf{seg}>}\mbox{}\newline 
+{</\textbf{u}>}\end{shaded}\egroup\par \noindent  \par
+This example also uses some elements common to all TEI texts, notably the \hyperref[TEI.reg]{<reg>} tag for editorial regularization. Unusually stressed syllables have been encoded with the \hyperref[TEI.emph]{<emph>} element. The \hyperref[TEI.seg]{<seg>} element has also been used to segment the last utterance. Further discussion of all of such options is provided in section \textit{\hyperref[TSSA]{8.4.\ Elements Defined Elsewhere}}.\par
+Contextual information is of particular importance in spoken texts, and should be provided by the TEI header of a text. In general, all of the information in a header is understood to be relevant to the whole of the associated text. The element \hyperref[TEI.u]{<u>} as a member of the \textsf{att.declaring} class, may however specify a different context by means of the {\itshape decls} attribute (see further section \textit{\hyperref[CCAS]{15.3.\ Associating Contextual Information with a Text}}).
+\subsubsection[{Utterances}]{Utterances}\label{TSBAUT}\par
+Each distinct \textit{utterance} in a spoken text is represented by a \hyperref[TEI.u]{<u>} element, described as follows: 
+\begin{sansreflist}
+  
+\item [\textbf{<u>}] (utterance) contains a stretch of speech usually preceded and followed by silence or by a change of speaker.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape trans}]
+  (transition) indicates the nature of the transition between this utterance and the previous one.
+\end{sansreflist}  
+\end{sansreflist}
+\par
+Use of the {\itshape who} attribute to associate the utterance with a particular speaker is recommended but not required. Its use implies as a further requirement that all speakers be identified by a \hyperref[TEI.person]{<person>} or \hyperref[TEI.personGrp]{<personGrp>} element, typically in the TEI header (see section \textit{\hyperref[CCAHPA]{15.2.2.\ The Participant Description}}), but it may also point to another external source of information about the speaker. Where utterances or other parts of the transcription cannot be attributed with confidence to any particular participant or group of participants, the encoder may choose to create \hyperref[TEI.personGrp]{<personGrp>} elements with {\itshape xml:id} attributes such as various or unknown, and perhaps give the root \hyperref[TEI.listPerson]{<listPerson>} element an {\itshape xml:id} value of all, then point to those as appropriate using {\itshape who}.\par
+The {\itshape trans} attribute is provided as a means of characterizing the transition from one utterance to the next at a simpler level of detail than that provided by the temporal alignment mechanism discussed in section \textit{\hyperref[SASY]{16.4.\ Synchronization}}. The value specified applies to the transition from the preceding utterance into the utterance bearing the attribute. For example:\footnote{For the most part, the examples in this chapter use no sentence punctuation except to mark the rising intonation often found in interrogative statements; for further discussion, see section \textit{\hyperref[TSREG]{8.4.3.\ Regularization of Word Forms}}.} \par\bgroup\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{u=<u>|exampleindex}\index{trans=@trans!<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{u=<u>|exampleindex}\index{trans=@trans!<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{u=<u>|exampleindex}\index{trans=@trans!<u>|exampleindex}\index{who=@who!<u>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}\hspace*{1em}{xml:id}="{ts\textunderscore a1}"\hspace*{1em}{who}="{\#a}">}Have you heard the{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{xml:id}="{ts\textunderscore b1}"\hspace*{1em}{trans}="{latching}"\hspace*{1em}{who}="{\#b}">}the election results? yes{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{xml:id}="{ts\textunderscore a2}"\hspace*{1em}{trans}="{pause}"\hspace*{1em}{who}="{\#a}">}it's a disaster{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{xml:id}="{ts\textunderscore b2}"\hspace*{1em}{trans}="{overlap}"\hspace*{1em}{who}="{\#b}">}it's a miracle{</\textbf{u}>}\end{shaded}\egroup\par \noindent  In this example, utterance ts\textunderscore b1 latches on to utterance ts\textunderscore a1, while there is a marked pause between ts\textunderscore b1 and ts\textunderscore a2. ts\textunderscore b2 and ts\textunderscore a2 overlap, but by an unspecified amount. For ways of providing a more precise indication of the degree of overlap, see section \textit{\hyperref[TSSAPA]{8.4.2.\ Synchronization and Overlap}}.\par
+An utterance may contain either running text, or text within which other basic structural elements are nested. Where such nesting occurs, the {\itshape who} attribute is considered to be inherited for the elements \hyperref[TEI.pause]{<pause>}, \hyperref[TEI.vocal]{<vocal>}, \hyperref[TEI.shift]{<shift>} and \hyperref[TEI.kinesic]{<kinesic>}; that is, a pause or shift (etc.) within an utterance is regarded as being produced by that speaker only, while a pause between utterances applies to all speakers.\par
+Occasionally, an utterance may seem to contain other utterances, for example where one speaker interrupts himself, or when another speaker produces a ‘back-channel’ while they are still speaking. The present version of these Guidelines does not support nesting of one \hyperref[TEI.u]{<u>} element within another. The transcriber must therefore decide whether such interruptions constitute a change of utterance, or whether other elements may be used. In the case of self-interruption, the \hyperref[TEI.shift]{<shift>} element may be used to show that the speaker has changed the quality of their speech: \par\bgroup\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{shift=<shift>|exampleindex}\index{new=@new!<shift>|exampleindex}\index{shift=<shift>|exampleindex}\index{new=@new!<shift>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}\hspace*{1em}{who}="{\#a}">}Listen to this {<\textbf{shift}\hspace*{1em}{new}="{reading}"/>}The government is\mbox{}\newline 
+ confident, he said, that the current economic problems will be\mbox{}\newline 
+ completely overcome by June{<\textbf{shift}\hspace*{1em}{new}="{normal}"/>} what nonsense{</\textbf{u}>}\end{shaded}\egroup\par \noindent  Alternatively the \hyperref[TEI.incident]{<incident>} element described in section \textit{\hyperref[TSBAVO]{8.3.3.\ Vocal, Kinesic, Incident}} might be used, without transcribing the read material: \par\bgroup\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{incident=<incident>|exampleindex}\index{desc=<desc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}\hspace*{1em}{who}="{\#a}">}Listen to this\mbox{}\newline 
+{<\textbf{incident}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}reads aloud from newspaper{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{incident}>} what\mbox{}\newline 
+ nonsense{</\textbf{u}>}\end{shaded}\egroup\par \par
+Often, back-channelling is only semi-lexicalized and may therefore be represented using the \hyperref[TEI.vocal]{<vocal>} element: \par\bgroup\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{vocal=<vocal>|exampleindex}\index{who=@who!<vocal>|exampleindex}\index{desc=<desc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}\hspace*{1em}{who}="{\#a}">}So what could I have done {<\textbf{vocal}\hspace*{1em}{who}="{\#b}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}tut-tutting{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{vocal}>} about it anyway?{</\textbf{u}>}\end{shaded}\egroup\par \noindent  Where this is not possible, it is simplest to regard the back-channel as a distinct utterance.
+\subsubsection[{Pausing}]{Pausing}\label{TSBAPA}\par
+Speakers differ very much in their rhythm and in particular in the amount of time they leave between words. The following element is provided to mark occasions where the transcriber judges that speech has been paused, irrespective of the actual amount of silence: 
+\begin{sansreflist}
+  
+\item [\textbf{<pause>}] (pause) marks a pause either between or within utterances.
+\end{sansreflist}
+ A pause contained by an utterance applies to the speaker of that utterance. A pause between utterances applies to all speakers. The {\itshape type} attribute may be used to categorize the pause, for example as short, medium, or long; alternatively the attribute {\itshape dur} may be used to indicate its length more exactly, as in the following example: \par\bgroup\index{u=<u>|exampleindex}\index{pause=<pause>|exampleindex}\index{dur=@dur!<pause>|exampleindex}\index{pause=<pause>|exampleindex}\index{dur=@dur!<pause>|exampleindex}\index{pause=<pause>|exampleindex}\index{dur=@dur!<pause>|exampleindex}\index{pause=<pause>|exampleindex}\index{dur=@dur!<pause>|exampleindex}\index{pause=<pause>|exampleindex}\index{dur=@dur!<pause>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}>}Okay {<\textbf{pause}\hspace*{1em}{dur}="{PT2M}"/>}U-m{<\textbf{pause}\hspace*{1em}{dur}="{PT75S}"/>}the scene opens up\mbox{}\newline 
+{<\textbf{pause}\hspace*{1em}{dur}="{PT50S}"/>} with {<\textbf{pause}\hspace*{1em}{dur}="{PT20S}"/>} um {<\textbf{pause}\hspace*{1em}{dur}="{PT145S}"/>} you see\mbox{}\newline 
+ a tree okay?{</\textbf{u}>}\end{shaded}\egroup\par \noindent   If detailed synchronization of pausing with other vocal phenomena is required, the alignment mechanism defined at section \textit{\hyperref[SASY]{16.4.\ Synchronization}} and discussed informally below should be used. Note that the {\itshape trans} attribute mentioned in the previous section may also be used to characterize the degree of pausing between (but not within) utterances.
+\subsubsection[{Vocal, Kinesic, Incident}]{Vocal, Kinesic, Incident}\label{TSBAVO}\par
+The presence of non-transcribed semi-lexical or non-lexical phenomena either between or within utterances may be indicated with the following three elements. 
+\begin{sansreflist}
+  
+\item [\textbf{<vocal>}] (vocal) marks any vocalized but not necessarily lexical phenomenon, for example voiced pauses, non-lexical backchannels, etc.
+\item [\textbf{<kinesic>}] (kinesic) marks any communicative phenomenon, not necessarily vocalized, for example a gesture, frown, etc.
+\item [\textbf{<incident>}] (incident) marks any phenomenon or occurrence, not necessarily vocalized or communicative, for example incidental noises or other events affecting communication.
+\end{sansreflist}
+\par
+The {\itshape who} attribute should be used to specify the person or group responsible for a \hyperref[TEI.vocal]{<vocal>}, \hyperref[TEI.kinesic]{<kinesic>}, or \hyperref[TEI.incident]{<incident>} which is contained within an utterance, if this differs from that of the enclosing utterance. The attribute must be supplied for a \hyperref[TEI.vocal]{<vocal>}, \hyperref[TEI.kinesic]{<kinesic>}, or \hyperref[TEI.incident]{<incident>} which is not contained within an utterance.\par
+The {\itshape iterated} attribute may be used to indicate that the vocal, kinesic, or incident is repeated, for example laughter as opposed to laugh. These should both be distinguished from laughing, where what is being encoded is a shift in voice quality. For this last case, the \hyperref[TEI.shift]{<shift>} element discussed in section \textit{\hyperref[TSSASH]{8.3.6.\ Shifts}} should be used.\par
+A child \hyperref[TEI.desc]{<desc>} element may be used to supply a conventional representation for the phenomenon, for example: \begin{description}
+
+\item[{non-lexical }]burp, click, cough, exhale, giggle, gulp, inhale, laugh, sneeze, sniff, snort, sob, swallow, throat, yawn 
+\item[{semi-lexical }]ah, aha, aw, eh, ehm, er, erm, hmm, huh, mm, mmhm, oh, ooh, oops, phew, tsk, uh, uh-huh, uh-uh, um, urgh, yup
+\end{description}  Researchers may prefer to regard some semi-lexical phenomena as ‘words’ within the bounds of the \hyperref[TEI.u]{<u>} element. See further the discussion at section \textit{\hyperref[TSREG]{8.4.3.\ Regularization of Word Forms}} below. As for all basic categories, the definition should be made clear in the \hyperref[TEI.encodingDesc]{<encodingDesc>} element of the TEI header.\par
+Some typical examples follow: \par\bgroup\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{incident=<incident>|exampleindex}\index{desc=<desc>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{vocal=<vocal>|exampleindex}\index{desc=<desc>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{vocal=<vocal>|exampleindex}\index{desc=<desc>|exampleindex}\index{vocal=<vocal>|exampleindex}\index{who=@who!<vocal>|exampleindex}\index{desc=<desc>|exampleindex}\index{listPerson=<listPerson>|exampleindex}\index{person=<person>|exampleindex}\index{person=<person>|exampleindex}\index{person=<person>|exampleindex}\index{person=<person>|exampleindex}\index{person=<person>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}\hspace*{1em}{who}="{\#jan}">}This is just delicious{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{incident}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{desc}>}telephone rings{</\textbf{desc}>}\mbox{}\newline 
+{</\textbf{incident}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{who}="{\#ann}">}I'll get it{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{who}="{\#tom}">}I used to {<\textbf{vocal}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}cough{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{vocal}>} smoke a lot{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{who}="{\#bob}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{vocal}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}sniffs{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{vocal}>}He thinks he's tough\mbox{}\newline 
+{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{vocal}\hspace*{1em}{who}="{\#ann}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{desc}>}snorts{</\textbf{desc}>}\mbox{}\newline 
+{</\textbf{vocal}>}\mbox{}\newline 
+\textit{<!-- ... elsewhere, e.g., in the <particDesc>: -->}\mbox{}\newline 
+{<\textbf{listPerson}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{person}\hspace*{1em}{xml:id}="{ann}">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{</\textbf{person}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{person}\hspace*{1em}{xml:id}="{bob}">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{</\textbf{person}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{person}\hspace*{1em}{xml:id}="{jan}">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{</\textbf{person}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{person}\hspace*{1em}{xml:id}="{kim}">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{</\textbf{person}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{person}\hspace*{1em}{xml:id}="{tom}">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{</\textbf{person}>}\mbox{}\newline 
+{</\textbf{listPerson}>}\end{shaded}\egroup\par \noindent  Note that Ann's snorting could equally well be encoded as follows: \par\bgroup\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{vocal=<vocal>|exampleindex}\index{desc=<desc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}\hspace*{1em}{who}="{\#ann}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{vocal}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}snorts{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{vocal}>}\mbox{}\newline 
+{</\textbf{u}>}\end{shaded}\egroup\par \par
+The extent to which encoding of incidents or kinesics is included in a transcription will depend entirely on the purpose for which the transcription was made. As elsewhere, this will depend on the particular research agenda and the extent to which their presence is felt to be significant for the interpretation of spoken interactions. 
+\subsubsection[{Writing}]{Writing}\label{TSBAWR}\par
+Written text may also be encountered when speech is transcribed, for example in a television broadcast or cinema performance, or where one participant shows written text to another. The \hyperref[TEI.writing]{<writing>} element may be used to distinguish such written elements from the spoken text in which they are embedded. 
+\begin{sansreflist}
+  
+\item [\textbf{<writing>}] (writing) contains a passage of written text revealed to participants in the course of a spoken text.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape gradual}]
+  indicates whether the writing is revealed all at once or gradually.
+\end{sansreflist}  
+\item [\textbf{att.global.source}] provides an attribute used by elements to point to an external source.
+\end{sansreflist}
+  For example, if speaker A in the breakfast table conversation in section \textit{\hyperref[TSBAUT]{8.3.1.\ Utterances}} above had simply shown the newspaper passage to her interlocutor instead of reading it, the interaction might have been encoded as follows: \par\bgroup\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{writing=<writing>|exampleindex}\index{who=@who!<writing>|exampleindex}\index{type=@type!<writing>|exampleindex}\index{gradual=@gradual!<writing>|exampleindex}\index{soCalled=<soCalled>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}\hspace*{1em}{who}="{\#a}">}look at this{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{writing}\hspace*{1em}{who}="{\#a}"\hspace*{1em}{type}="{newspaper}"\mbox{}\newline 
+\hspace*{1em}{gradual}="{false}">}Government claims economic problems\mbox{}\newline 
+{<\textbf{soCalled}>}over by June{</\textbf{soCalled}>}\mbox{}\newline 
+{</\textbf{writing}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{who}="{\#a}">}what nonsense!{</\textbf{u}>}\end{shaded}\egroup\par \par
+If the source of the writing being displayed is known, bibliographic information about it may be stored in a \hyperref[TEI.listBibl]{<listBibl>} within the \hyperref[TEI.sourceDesc]{<sourceDesc>} element of the TEI header, and then pointed to using the {\itshape source} attribute. For example, in the following imaginary example, a lecturer displays two different versions of the same passage of text: \par\bgroup\index{sourceDesc=<sourceDesc>|exampleindex}\index{bibl=<bibl>|exampleindex}\index{bibl=<bibl>|exampleindex}\index{u=<u>|exampleindex}\index{writing=<writing>|exampleindex}\index{source=@source!<writing>|exampleindex}\index{writing=<writing>|exampleindex}\index{source=@source!<writing>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{sourceDesc}>}\mbox{}\newline 
+\textit{<!-- ...-->}\mbox{}\newline 
+\hspace*{1em}{<\textbf{bibl}\hspace*{1em}{xml:id}="{FOL1}">}Shakespeare First Folio text{</\textbf{bibl}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{bibl}\hspace*{1em}{xml:id}="{FOL2}">}Shakespeare Second Folio text{</\textbf{bibl}>}\mbox{}\newline 
+\textit{<!-- ...-->}\mbox{}\newline 
+{</\textbf{sourceDesc}>}\mbox{}\newline 
+\textit{<!-- ...-->}\mbox{}\newline 
+{<\textbf{u}>}[...] now compare the punctuation of lines 12 and 14 in these two\mbox{}\newline 
+ versions of page 42...\mbox{}\newline 
+{<\textbf{writing}\hspace*{1em}{source}="{\#FOL1}">}[...]{</\textbf{writing}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{writing}\hspace*{1em}{source}="{\#FOL2}">}[...]{</\textbf{writing}>}\mbox{}\newline 
+{</\textbf{u}>}\end{shaded}\egroup\par 
+\subsubsection[{Temporal Information}]{Temporal Information}\label{TSBATI}\par
+As noted above, utterances, vocals, pauses, kinesics, incidents, and writing elements all inherit attributes providing information about their position in time from the classes \textsf{att.timed} and \textsf{att.duration}. These attributes can be used to link parts of the transcription very exactly with points on a timeline, or simply to indicate their duration. Note that if {\itshape start} and {\itshape end} point to \hyperref[TEI.when]{<when>} elements whose temporal distance from each other is specified in a timeline, then {\itshape dur} is ignored.\par
+The \hyperref[TEI.anchor]{<anchor>} element (see \textit{\hyperref[SACS]{16.5.\ Correspondence and Alignment}}) may be used as an alternative means of aligning the start and end of timed elements, and is required when the temporal alignment involves points within an element.\par
+For further discussion of temporal alignment and synchronization see \textit{\hyperref[TSSAPA]{8.4.2.\ Synchronization and Overlap}} below.
+\subsubsection[{Shifts}]{Shifts}\label{TSSASH}\par
+A common requirement in transcribing spoken language is to mark positions at which a variety of prosodic features change. Many paralinguistic features (pitch, prominence, loudness, etc.) characterize stretches of speech which are not co-extensive with utterances or any of the other units discussed so far. One simple method of encoding such units is simply to mark their boundaries. An empty element called \hyperref[TEI.shift]{<shift>} is provided for this purpose. 
+\begin{sansreflist}
+  
+\item [\textbf{<shift>}] (shift) marks the point at which some paralinguistic feature of a series of utterances by any one speaker changes.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape feature}]
+  a paralinguistic feature.
+    \item[@{\itshape new}]
+  specifies the new state of the paralinguistic feature specified.
+\end{sansreflist}  
+\end{sansreflist}
+ A \hyperref[TEI.shift]{<shift>} element may appear within an utterance or a segment to mark a significant change in the particular feature defined by its attributes, which is then understood to apply to all subsequent utterances for the same speaker, unless changed by a new shift for the same feature in the same speaker. Intervening utterances by other speakers do not normally carry the same feature. For example: \par\bgroup\index{u=<u>|exampleindex}\index{shift=<shift>|exampleindex}\index{feature=@feature!<shift>|exampleindex}\index{new=@new!<shift>|exampleindex}\index{u=<u>|exampleindex}\index{u=<u>|exampleindex}\index{shift=<shift>|exampleindex}\index{feature=@feature!<shift>|exampleindex}\index{new=@new!<shift>|exampleindex}\index{pause=<pause>|exampleindex}\index{shift=<shift>|exampleindex}\index{feature=@feature!<shift>|exampleindex}\index{new=@new!<shift>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{shift}\hspace*{1em}{feature}="{loud}"\hspace*{1em}{new}="{f}"/>}Elizabeth\mbox{}\newline 
+{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}>}Yes{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{shift}\hspace*{1em}{feature}="{loud}"\hspace*{1em}{new}="{normal}"/>}Come and try this {<\textbf{pause}/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{shift}\hspace*{1em}{feature}="{loud}"\hspace*{1em}{new}="{ff}"/>}come on\mbox{}\newline 
+{</\textbf{u}>}\end{shaded}\egroup\par \noindent  In this example, the word \textit{Elizabeth} is spoken loudly, the words \textit{Yes} and \textit{Come and try this} with normal volume, and the words \textit{come on} very loudly.\par
+The values proposed here for the {\itshape feature} attribute are based on those used by the Survey of English Usage (see further  {\ref Boase 1990}); this list may be revised or supplemented using the methods outlined in section \textit{\hyperref[MD]{23.3.\ Customization}}.\par
+The {\itshape new} attribute specifies the new state of the feature following the shift. If this attribute has the special value normal, the implication is that the feature concerned ceases to be remarkable at this point.\par
+A list of suggested values for each of the features proposed follows: \begin{itemize}
+\item tempo \mbox{}\\[-10pt] \begin{description}
+
+\item[{a }]allegro (fast)
+\item[{aa }]very fast
+\item[{acc }]accelerando (getting faster)
+\item[{l }]lento (slow)
+\item[{ll }]very slow
+\item[{rall }]rallentando (getting slower)
+\end{description} 
+\item loud (for loudness): \mbox{}\\[-10pt] \begin{description}
+
+\item[{f }]forte (loud)
+\item[{ff }]very loud
+\item[{cresc }]crescendo (getting louder)
+\item[{p }]piano (soft)
+\item[{pp }]very soft
+\item[{dimin }]diminuendo (getting softer)
+\end{description} 
+\item pitch (for pitch range): \mbox{}\\[-10pt] \begin{description}
+
+\item[{high }]high pitch-range
+\item[{low }]low pitch-range
+\item[{wide }]wide pitch-range
+\item[{narrow}]narrow pitch-range
+\item[{asc }]ascending
+\item[{desc }]descending
+\item[{monot }]monotonous
+\item[{scand }]scandent, each succeeding syllable higher than the last, generally ending in a falling tone
+\end{description} 
+\item tension: \mbox{}\\[-10pt] \begin{description}
+
+\item[{sl }]slurred
+\item[{lax }]lax, a little slurred
+\item[{ten }]tense
+\item[{pr }]very precise
+\item[{st }]staccato, every stressed syllable being doubly stressed
+\item[{leg }]legato, every syllable receiving more or less equal stress
+\end{description} 
+\item rhythm: \mbox{}\\[-10pt] \begin{description}
+
+\item[{rh }]beatable rhythm
+\item[{arrh }]arrhythmic, particularly halting
+\item[{spr }]spiky rising, with markedly higher unstressed syllables
+\item[{spf }]spiky falling, with markedly lower unstressed syllables
+\item[{glr }]glissando rising, like spiky rising but the unstressed syllables, usually several, also rise in pitch relative to each other
+\item[{glf }]glissando falling, like spiky falling but with the unstressed syllables also falling in pitch relative to each other
+\end{description} 
+\item voice (for voice quality): \mbox{}\\[-10pt] \begin{description}
+
+\item[{whisp }]whisper
+\item[{breath }]breathy
+\item[{husk }]husky
+\item[{creak }]creaky
+\item[{fals }]falsetto
+\item[{reson }]resonant
+\item[{giggle }]unvoiced laugh or giggle
+\item[{laugh }]voiced laugh
+\item[{trem }]tremulous
+\item[{sob }]sobbing
+\item[{yawn }]yawning
+\item[{sigh }]sighing
+\end{description} 
+\end{itemize} \par
+A full definition of the sense of the values provided for each feature may be provided either in the encoding description section of the text header (see section \textit{\hyperref[HD5]{2.3.\ The Encoding Description}}) or as part of a TEI customization, as described in section \textit{\hyperref[MD]{23.3.\ Customization}}.
+\subsection[{Elements Defined Elsewhere}]{Elements Defined Elsewhere}\label{TSSA}\par
+This section describes the following features characteristic of spoken texts for which elements are defined elsewhere in these Guidelines: \begin{itemize}
+\item segmentation below the utterance level
+\item synchronization and overlap
+\item regularization of orthography
+\end{itemize}  The elements discussed here are not provided by the module for spoken texts. Some of them are included in the core module and others are contained in the modules for linking and for analysis respectively. The selection of modules and their combination to define a TEI schema is discussed in section \textit{\hyperref[STIN]{1.2.\ Defining a TEI Schema}}. 
+\subsubsection[{Segmentation}]{Segmentation}\label{TSSASE}\par
+For some analytic purposes it may be desirable to subdivide the divisions of a spoken text into units smaller than the individual utterance or turn. Segmentation may be performed for a number of different purposes and in terms of a variety of speech phenomena. Common examples include units defined both prosodically (by intonation, pausing, etc.) and syntactically (clauses, phrases, etc.) The term \textit{macrosyntagm} has been used by a number of researchers to define units peculiar to speech transcripts.\footnote{The term was apparently first proposed by \cite{TS-BIBL-7}, where it is defined as follows: ‘A text can be analysed as a sequence of segments which are internally connected by a network of syntactic relations and externally delimited by the absence of such relations with respect to neighbouring segments. Such a segment is a syntactic unit called a macrosyntagm’ (trans. S. Johansson).}\par
+These Guidelines propose that such analyses be performed in terms of neutrally-named \textit{segments}, represented by the \hyperref[TEI.seg]{<seg>} element, which is discussed more fully in section \textit{\hyperref[SASE]{16.3.\ Blocks, Segments, and Anchors}}. This element may take a {\itshape type} attribute to specify the kind of segmentation applicable to a particular segment, if more than one is possible in a text. A full definition of the segmentation scheme or schemes used should be provided in the \hyperref[TEI.segmentation]{<segmentation>} element of the \hyperref[TEI.editorialDecl]{<editorialDecl>} element in the TEI header (see \textit{\hyperref[HD53]{2.3.3.\ The Editorial Practices Declaration}}).\par
+In the first example below, an utterance has been segmented according to a notion of syntactic completeness not necessarily marked by the speech, although in this case a pause has been recorded between the two sentence-like units. In the second, the segments are defined prosodically (an acute accent has been used to mark the position immediately following the syllable bearing the primary accent or stress), and may be thought of as ‘tone units’. \par\bgroup\index{u=<u>|exampleindex}\index{seg=<seg>|exampleindex}\index{pause=<pause>|exampleindex}\index{seg=<seg>|exampleindex}\index{u=<u>|exampleindex}\index{seg=<seg>|exampleindex}\index{seg=<seg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}>}we went to the pub yesterday{</\textbf{seg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{pause}/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}>}there was no one there{</\textbf{seg}>}\mbox{}\newline 
+{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}>}although its an old ide´a{</\textbf{seg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}>}it hasnt been on the mar´ket very long{</\textbf{seg}>}\mbox{}\newline 
+{</\textbf{u}>}\end{shaded}\egroup\par \noindent   In either case, the \hyperref[TEI.segmentation]{<segmentation>} element in the header of the text should specify the principles adopted to define the segments marked in this way.\par
+When utterances are segmented end-to-end in the same way as the s-units in written texts, the \hyperref[TEI.s]{<s>} element discussed in chapter \textit{\hyperref[AI]{17.\ Simple Analytic Mechanisms}} may be used, either as an alternative or in addition to the more general purpose \hyperref[TEI.seg]{<seg>} element. The \hyperref[TEI.s]{<s>} element is available without formality in all texts, but does not allow segments to nest within each other.\par
+Where segments of different kinds are to be distinguished within the same stretch of speech, the {\itshape type} attribute may be used, as in the following example: \par\bgroup\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{seg=<seg>|exampleindex}\index{type=@type!<seg>|exampleindex}\index{seg=<seg>|exampleindex}\index{type=@type!<seg>|exampleindex}\index{seg=<seg>|exampleindex}\index{type=@type!<seg>|exampleindex}\index{del=<del>|exampleindex}\index{type=@type!<del>|exampleindex}\index{seg=<seg>|exampleindex}\index{type=@type!<seg>|exampleindex}\index{seg=<seg>|exampleindex}\index{type=@type!<seg>|exampleindex}\index{seg=<seg>|exampleindex}\index{type=@type!<seg>|exampleindex}\index{seg=<seg>|exampleindex}\index{type=@type!<seg>|exampleindex}\index{seg=<seg>|exampleindex}\index{type=@type!<seg>|exampleindex}\index{seg=<seg>|exampleindex}\index{type=@type!<seg>|exampleindex}\index{seg=<seg>|exampleindex}\index{type=@type!<seg>|exampleindex}\index{gap=<gap>|exampleindex}\index{extent=@extent!<gap>|exampleindex}\index{seg=<seg>|exampleindex}\index{type=@type!<seg>|exampleindex}\index{gap=<gap>|exampleindex}\index{extent=@extent!<gap>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}\hspace*{1em}{who}="{\#T1}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}\hspace*{1em}{type}="{C}">}I think {</\textbf{seg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}\hspace*{1em}{type}="{C}">}this chap was writing {</\textbf{seg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}\hspace*{1em}{type}="{C}">}and he {<\textbf{del}\hspace*{1em}{type}="{repeated}">}said hello{</\textbf{del}>} said {</\textbf{seg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}\hspace*{1em}{type}="{M}">}hello {</\textbf{seg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}\hspace*{1em}{type}="{C}">}and he said {</\textbf{seg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}\hspace*{1em}{type}="{C}">}I'm going to a gate\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} at twenty past seven {</\textbf{seg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}\hspace*{1em}{type}="{C}">}he said {</\textbf{seg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}\hspace*{1em}{type}="{M}">}ok {</\textbf{seg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}\hspace*{1em}{type}="{M}">}right away {</\textbf{seg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}\hspace*{1em}{type}="{C}">}and so {<\textbf{gap}\hspace*{1em}{extent}="{1 syll}"/>} on they went {</\textbf{seg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}\hspace*{1em}{type}="{C}">}and they were {<\textbf{gap}\hspace*{1em}{extent}="{3 sylls}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} writing there {</\textbf{seg}>}\mbox{}\newline 
+{</\textbf{u}>}\end{shaded}\egroup\par \noindent   In this example, recoded from a corpus of language-impaired speech prepared by Fletcher and Garman, the speaker's utterance has been fully segmented into clausal (\texttt{type="C"}) or minor (\texttt{type="M"}) units.\par
+For some features, it may be more appropriate or convenient to introduce a new element in a custom namespace: \par\bgroup\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{seg=<seg>|exampleindex}\index{type=@type!<seg>|exampleindex}\index{seg=<seg>|exampleindex}\index{type=@type!<seg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}\hspace*{1em}{who}="{\#T1}"\mbox{}\newline 
+   xmlns:ext="http://www.example.org/ns/nonTEI">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}\hspace*{1em}{type}="{C}">}and he said {</\textbf{seg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}\hspace*{1em}{type}="{C}">}I'm going to a\mbox{}\newline 
+\hspace*{1em}{<\textbf{ext:paraphasia}>}gate{</\textbf{ext:paraphasia}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} at twenty past seven {</\textbf{seg}>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+{</\textbf{u}>}\end{shaded}\egroup\par \noindent  Here, \texttt{<ext:paraphasia>} has been used to define a particular characteristic of this corpus for which no element exists in the TEI scheme. See further chapter \textit{\hyperref[MD]{23.3.\ Customization}} for a discussion of the way in which this kind of user-defined extension of the TEI scheme may be performed and chapter \textit{\hyperref[ST]{1.\ The TEI Infrastructure}} for the mechanisms on which it depends.\par
+This example also uses the core elements \hyperref[TEI.gap]{<gap>} and \hyperref[TEI.del]{<del>} to mark editorial decisions concerning matter completely omitted from the transcript (because of inaudibility), and words which have been transcribed but which the transcriber wishes to exclude from the segment because they are repeated, respectively. See section \textit{\hyperref[COED]{3.5.\ Simple Editorial Changes}} for a discussion of these and related elements.\par
+It is often the case that the desired segmentation does not respect utterance boundaries; for example, syntactic units may cross utterance boundaries. For a detailed discussion of this problem, and the various methods proposed by these Guidelines for handling it, see chapter \textit{\hyperref[NH]{20.\ Non-hierarchical Structures}}. Methods discussed there include these: \begin{itemize}
+\item ‘milestone’ tags may be used; the special-purpose \hyperref[TEI.shift]{<shift>} tag discussed in section \textit{\hyperref[TSSASH]{8.3.6.\ Shifts}} is an extension of this method
+\item where several discontinuous segments are to be grouped together to form a syntactic unit (e.g. a phrasal verb with interposed complement), the \hyperref[TEI.join]{<join>} element may be used
+\end{itemize} 
+\subsubsection[{Synchronization and Overlap}]{Synchronization and Overlap}\label{TSSAPA}\par
+A major difference between spoken and written texts is the importance of the temporal dimension to the former. As a very simple example, consider the following, first as it might be represented in a playscript: \par\bgroup\exampleFont \begin{shaded}\noindent\mbox{} Jane: Have you read Vanity Fair?\newline
+Stig: Yes\newline
+Lou: (nods vigorously)\end{shaded}\egroup\par \noindent  To encode this, we first define the participants: \par\bgroup\index{listPerson=<listPerson>|exampleindex}\index{person=<person>|exampleindex}\index{person=<person>|exampleindex}\index{person=<person>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{listPerson}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{person}\hspace*{1em}{xml:id}="{stig}">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{</\textbf{person}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{person}\hspace*{1em}{xml:id}="{lou}">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{</\textbf{person}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{person}\hspace*{1em}{xml:id}="{jane}">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{</\textbf{person}>}\mbox{}\newline 
+{</\textbf{listPerson}>}\end{shaded}\egroup\par \noindent  Let us assume that Stig and Lou respond to Jane's question before she has finished asking it—a fairly normal situation in spontaneous speech. The simplest way of representing this \textit{overlap} would be to use the {\itshape trans} attribute previously discussed: \par\bgroup\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{u=<u>|exampleindex}\index{trans=@trans!<u>|exampleindex}\index{who=@who!<u>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}\hspace*{1em}{who}="{\#jane}">}have you read Vanity Fair{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{trans}="{overlap}"\hspace*{1em}{who}="{\#stig}">}yes{</\textbf{u}>}\end{shaded}\egroup\par \noindent  However, this does not allow us to indicate either the extent to which Stig's utterance is overlapped, nor does it show that there are in fact three things which are synchronous: the end of Jane's utterance, Stig's whole utterance, and Lou's kinesic. To overcome these problems, more sophisticated techniques, employing the mechanisms for pointing and alignment discussed in detail in section \textit{\hyperref[SASY]{16.4.\ Synchronization}}, are needed. If the module for linking has been enabled (as described in section \textit{\hyperref[TSSASE]{8.4.1.\ Segmentation}} above), one way to represent the simple example above would be as follows: \par\bgroup\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{synch=@synch!<anchor>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{kinesic=<kinesic>|exampleindex}\index{who=@who!<kinesic>|exampleindex}\index{iterated=@iterated!<kinesic>|exampleindex}\index{desc=<desc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}\hspace*{1em}{xml:id}="{utt1}"\hspace*{1em}{who}="{\#jane}">}have you read Vanity {<\textbf{anchor}\hspace*{1em}{synch}="{\#utt2 \#k1}"\hspace*{1em}{xml:id}="{a1}"/>} Fair{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{xml:id}="{utt2}"\hspace*{1em}{who}="{\#stig}">}yes{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{kinesic}\hspace*{1em}{xml:id}="{k1}"\hspace*{1em}{who}="{\#lou}"\mbox{}\newline 
+\hspace*{1em}{iterated}="{true}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{desc}>}nods head vertically{</\textbf{desc}>}\mbox{}\newline 
+{</\textbf{kinesic}>}\end{shaded}\egroup\par \par
+For a full discussion of this and related mechanisms, section \textit{\hyperref[SASYMP]{16.4.2.\ Placing Synchronous Events in Time}} should be consulted. The rest of the present section, which should be read in conjunction with that more detailed discussion, presents a number of ways in which these mechanisms may be applied to the specific problem of representing temporal alignment, synchrony, or overlap in transcribing spoken texts.\par
+In the simple example above, the first utterance (that with identifier utt1) contains an \hyperref[TEI.anchor]{<anchor>} element, the function of which is simply to mark a point within it. The {\itshape synch} attribute associated with this anchor point specifies the identifiers of the other two elements which are to be synchronized with it: specifically, the second utterance (utt2) and the kinesic (k1). Note that one of these elements has content and the other is empty.\par
+This example demonstrates only a way of indicating a point within one utterance at which it can be synchronized with another utterance and a kinesic. For more complex kinds of alignment, involving possibly multiple synchronization points, an additional element is provided, known as a \hyperref[TEI.timeline]{<timeline>}. This consists of a series of \hyperref[TEI.when]{<when>} elements, each representing a point in time, and bearing attributes which indicate its exact temporal position relative to other elements in the same timeline, in addition to the sequencing implied by its position within it.\par
+For example: \par\bgroup\index{timeline=<timeline>|exampleindex}\index{unit=@unit!<timeline>|exampleindex}\index{origin=@origin!<timeline>|exampleindex}\index{when=<when>|exampleindex}\index{absolute=@absolute!<when>|exampleindex}\index{when=<when>|exampleindex}\index{interval=@interval!<when>|exampleindex}\index{since=@since!<when>|exampleindex}\index{when=<when>|exampleindex}\index{when=<when>|exampleindex}\index{interval=@interval!<when>|exampleindex}\index{since=@since!<when>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{timeline}\hspace*{1em}{unit}="{s}"\hspace*{1em}{origin}="{\#TS-P1}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{when}\hspace*{1em}{xml:id}="{TS-P1}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{absolute}="{12:20:01+01:00}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{when}\hspace*{1em}{xml:id}="{TS-P2}"\hspace*{1em}{interval}="{4.5}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{since}="{\#TS-P1}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{when}\hspace*{1em}{xml:id}="{TS-P6}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{when}\hspace*{1em}{xml:id}="{TS-P3}"\hspace*{1em}{interval}="{1.5}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{since}="{\#TS-P6}"/>}\mbox{}\newline 
+{</\textbf{timeline}>}\end{shaded}\egroup\par \noindent  This timeline represents four points in time, named TS-P1, TS-P2, TS-P6, and TS-P3 (as with all attributes named {\itshape xml:id} in the TEI scheme, the names must be unique within the document but have no other significance). TS-P1 is located absolutely, at 12:20:01:01 BST. TS-P2 is 4.5 seconds later than TS-P2 (i.e. at 12:20:46). TS-P6 is at some unspecified time later than TS-P2 and previous to TS-P3 (this is implied by its position within the timeline, as no attribute values have been specified for it). The fourth point, TS-P3, is 1.5 seconds later than TS-P6.\par
+One or more such timelines may be specified within a spoken text, to suit the encoder's convenience. If more than one is supplied, the {\itshape origin} attribute may be used on each to specify which other \hyperref[TEI.timeline]{<timeline>} element it follows. The {\itshape unit} attribute indicates the units used for timings given on \hyperref[TEI.when]{<when>} elements contained by the alignment map. Alternatively, to avoid the need to specify times explicitly, the {\itshape interval} attribute may be used to indicate that all the \hyperref[TEI.when]{<when>} elements in a time line are a fixed distance apart.\par
+Three methods are available for aligning points or elements within a spoken text with the points in time defined by the \hyperref[TEI.timeline]{<timeline>}: \begin{itemize}
+\item The elements to be synchronized may specify the identifier of a \hyperref[TEI.when]{<when>} element as the value of one of the {\itshape start}, {\itshape end}, or {\itshape synch} attributes
+\item The \hyperref[TEI.when]{<when>} element may specify the identifiers of all the elements to be synchronized with it using the {\itshape synch} attribute
+\item A free-standing \hyperref[TEI.link]{<link>} element may be used to associate the \hyperref[TEI.when]{<when>} element and the elements synchronized with it by specifying their identifiers as values for its {\itshape target} attribute.
+\end{itemize} \par
+For example, using the timeline given above: \par\bgroup\index{u=<u>|exampleindex}\index{start=@start!<u>|exampleindex}\index{end=@end!<u>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{synch=@synch!<anchor>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}\hspace*{1em}{xml:id}="{TS-U1}"\hspace*{1em}{start}="{\#TS-P2}"\mbox{}\newline 
+\hspace*{1em}{end}="{\#TS-P3}">}This is my {<\textbf{anchor}\hspace*{1em}{synch}="{\#TS-P6}"\hspace*{1em}{xml:id}="{TS-P6A}"/>} turn{</\textbf{u}>}\end{shaded}\egroup\par \noindent  The start of utterance TS-U1 is aligned with TS-P2 and its end with TS-P3. The transition between the words \textit{my} and \textit{turn} occurs at point TS-P6A, which is synchronous with point TS-P6 on the timeline.\par
+The synchronization represented by the preceding examples could equally well be represented as follows: \par\bgroup\index{timeline=<timeline>|exampleindex}\index{origin=@origin!<timeline>|exampleindex}\index{unit=@unit!<timeline>|exampleindex}\index{when=<when>|exampleindex}\index{absolute=@absolute!<when>|exampleindex}\index{when=<when>|exampleindex}\index{synch=@synch!<when>|exampleindex}\index{interval=@interval!<when>|exampleindex}\index{since=@since!<when>|exampleindex}\index{when=<when>|exampleindex}\index{synch=@synch!<when>|exampleindex}\index{when=<when>|exampleindex}\index{synch=@synch!<when>|exampleindex}\index{interval=@interval!<when>|exampleindex}\index{since=@since!<when>|exampleindex}\index{u=<u>|exampleindex}\index{anchor=<anchor>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{timeline}\hspace*{1em}{origin}="{\#ts-p1}"\hspace*{1em}{unit}="{s}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{when}\hspace*{1em}{xml:id}="{ts-p1}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{absolute}="{12:20:01+01:00}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{when}\hspace*{1em}{synch}="{\#ts-u1}"\hspace*{1em}{xml:id}="{ts-p2}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{interval}="{4.5}"\hspace*{1em}{since}="{\#ts-p1}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{when}\hspace*{1em}{synch}="{\#ts-x1}"\hspace*{1em}{xml:id}="{ts-p6}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{when}\hspace*{1em}{synch}="{\#ts-u1}"\hspace*{1em}{xml:id}="{ts-p3}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{interval}="{1.5}"\hspace*{1em}{since}="{\#ts-p6}"/>}\mbox{}\newline 
+{</\textbf{timeline}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{xml:id}="{ts-u1}">}This is my {<\textbf{anchor}\hspace*{1em}{xml:id}="{ts-x1}"/>} turn{</\textbf{u}>}\end{shaded}\egroup\par \noindent  Here, the whole of the object with identifier ts-u1 (the utterance) has been aligned with two different points, ts-p2 and ts-p3. This is interpreted to mean that the utterance spans at least those two points.\par
+Finally, a \hyperref[TEI.linkGrp]{<linkGrp>} may be used as an alternative to the {\itshape synch} attribute: \par\bgroup\index{timeline=<timeline>|exampleindex}\index{origin=@origin!<timeline>|exampleindex}\index{unit=@unit!<timeline>|exampleindex}\index{when=<when>|exampleindex}\index{absolute=@absolute!<when>|exampleindex}\index{when=<when>|exampleindex}\index{interval=@interval!<when>|exampleindex}\index{since=@since!<when>|exampleindex}\index{when=<when>|exampleindex}\index{when=<when>|exampleindex}\index{interval=@interval!<when>|exampleindex}\index{since=@since!<when>|exampleindex}\index{u=<u>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{linkGrp=<linkGrp>|exampleindex}\index{type=@type!<linkGrp>|exampleindex}\index{link=<link>|exampleindex}\index{target=@target!<link>|exampleindex}\index{link=<link>|exampleindex}\index{target=@target!<link>|exampleindex}\index{link=<link>|exampleindex}\index{target=@target!<link>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{timeline}\hspace*{1em}{origin}="{\#TS-p1}"\hspace*{1em}{unit}="{s}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{when}\hspace*{1em}{xml:id}="{TS-p1}"\hspace*{1em}{absolute}="{12:20:01}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{when}\hspace*{1em}{xml:id}="{TS-p2}"\hspace*{1em}{interval}="{4.5}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{since}="{\#TS-p1}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{when}\hspace*{1em}{xml:id}="{TS-p6}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{when}\hspace*{1em}{xml:id}="{TS-p3}"\hspace*{1em}{interval}="{1.5}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{since}="{\#TS-p6}"/>}\mbox{}\newline 
+{</\textbf{timeline}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{xml:id}="{TS-u1}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{anchor}\hspace*{1em}{xml:id}="{TS-u1start}"/>}\mbox{}\newline 
+ This is my {<\textbf{anchor}\hspace*{1em}{xml:id}="{TS-x1}"/>} turn\mbox{}\newline 
+{<\textbf{anchor}\hspace*{1em}{xml:id}="{TS-u1end}"/>}\mbox{}\newline 
+{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{linkGrp}\hspace*{1em}{type}="{synchronous}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{link}\hspace*{1em}{target}="{\#TS-u1start \#TS-p1}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{link}\hspace*{1em}{target}="{\#TS-u1end \#TS-p2}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{link}\hspace*{1em}{target}="{\#TS-x1 \#TS-p6}"/>}\mbox{}\newline 
+{</\textbf{linkGrp}>}\end{shaded}\egroup\par \par
+As a further example of the three possibilities, consider the following dialogue, represented first as it might appear in a conventional playscript: \par\bgroup\exampleFont \begin{shaded}\noindent\mbox{}Tom: I used to smoke - -\newline
+Bob: (interrupting) You used to smoke?\newline
+Tom: (at the same time) a lot more than this.  But I never\newline
+     inhaled the smoke\end{shaded}\egroup\par \noindent   A commonly used convention might be to transcribe such a passage as follows: \par\bgroup\exampleFont \begin{shaded}\noindent\mbox{} (1) I used to smoke [ a lot more than this ]\newline
+(2)                 [ you used to smoke ]\newline
+(1) but I never inhaled the smoke\end{shaded}\egroup\par \noindent  Such conventions have the drawback that they are hard to generalize or to extend beyond the very simple case presented here. Their reliance on the accidentals of physical layout may also make them difficult to transport and to process computationally. These Guidelines recommend the following mechanisms to encode this.\par
+Where the whole of one or another utterance is to be synchronized, the {\itshape start} and {\itshape end} attributes may be used: \par\bgroup\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{u=<u>|exampleindex}\index{start=@start!<u>|exampleindex}\index{end=@end!<u>|exampleindex}\index{who=@who!<u>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}\hspace*{1em}{who}="{\#tom}">}I used to smoke {<\textbf{anchor}\hspace*{1em}{xml:id}="{TS-p10}"/>} a lot more than this\mbox{}\newline 
+{<\textbf{anchor}\hspace*{1em}{xml:id}="{TS-p20}"/>}but I never inhaled the smoke{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{start}="{\#TS-p10}"\hspace*{1em}{end}="{\#TS-p20}"\hspace*{1em}{who}="{\#bob}">}You used to smoke{</\textbf{u}>}\end{shaded}\egroup\par \noindent  Note that the second utterance above could equally well be encoded as follows with exactly the same effect: \par\bgroup\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{synch=@synch!<anchor>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{synch=@synch!<anchor>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}\hspace*{1em}{who}="{\#bob}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{anchor}\hspace*{1em}{synch}="{\#TS-p10}"/>}You used to smoke{<\textbf{anchor}\hspace*{1em}{synch}="{\#TS-p20}"/>}\mbox{}\newline 
+{</\textbf{u}>}\end{shaded}\egroup\par \par
+If synchronization with specific timing information is required, a \hyperref[TEI.timeline]{<timeline>} must be included: \par\bgroup\index{timeline=<timeline>|exampleindex}\index{origin=@origin!<timeline>|exampleindex}\index{unit=@unit!<timeline>|exampleindex}\index{when=<when>|exampleindex}\index{absolute=@absolute!<when>|exampleindex}\index{when=<when>|exampleindex}\index{interval=@interval!<when>|exampleindex}\index{since=@since!<when>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{synch=@synch!<anchor>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{synch=@synch!<anchor>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{synch=@synch!<anchor>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{synch=@synch!<anchor>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{timeline}\hspace*{1em}{origin}="{\#TS-t01}"\hspace*{1em}{unit}="{s}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{when}\hspace*{1em}{xml:id}="{TS-t01}"\hspace*{1em}{absolute}="{15:33:01Z}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{when}\hspace*{1em}{xml:id}="{TS-t02}"\hspace*{1em}{interval}="{2.5}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{since}="{\#TS-t01}"/>}\mbox{}\newline 
+{</\textbf{timeline}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{who}="{\#tom}">}I used to smoke\mbox{}\newline 
+{<\textbf{anchor}\hspace*{1em}{synch}="{\#TS-t01}"/>}a lot more than this\mbox{}\newline 
+{<\textbf{anchor}\hspace*{1em}{synch}="{\#TS-t02}"/>}but I never inhaled the smoke{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{who}="{\#bob}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{anchor}\hspace*{1em}{synch}="{\#TS-t01}"/>}You used to smoke{<\textbf{anchor}\hspace*{1em}{synch}="{\#TS-t02}"/>}\mbox{}\newline 
+{</\textbf{u}>}\end{shaded}\egroup\par \noindent  (Note that If only the ordering or sequencing of utterances is needed, then specific timing information shown here in {\itshape unit}, {\itshape absolute} and {\itshape interval} does not need to be provided.)\par
+As above, since the whole of Bob's utterance is to be aligned, the {\itshape start} and {\itshape end} attributes may be used as an alternative to the second pair of \hyperref[TEI.anchor]{<anchor>} elements: \par\bgroup\index{u=<u>|exampleindex}\index{start=@start!<u>|exampleindex}\index{end=@end!<u>|exampleindex}\index{who=@who!<u>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}\hspace*{1em}{start}="{\#TS-t01}"\hspace*{1em}{end}="{\#TS-t02}"\hspace*{1em}{who}="{\#bob}">}You used to smoke{</\textbf{u}>}\end{shaded}\egroup\par \par
+An alternative approach is to mark the synchronization by pointing from the \hyperref[TEI.timeline]{<timeline>} to the text: \par\bgroup\index{timeline=<timeline>|exampleindex}\index{origin=@origin!<timeline>|exampleindex}\index{when=<when>|exampleindex}\index{synch=@synch!<when>|exampleindex}\index{when=<when>|exampleindex}\index{synch=@synch!<when>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{timeline}\hspace*{1em}{origin}="{\#TS-T01}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{when}\hspace*{1em}{synch}="{\#TS-nm1 \#bob-u2}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{xml:id}="{TS-T01}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{when}\hspace*{1em}{synch}="{\#TS-nm2 \#bob-u2}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{xml:id}="{TS-T02}"/>}\mbox{}\newline 
+{</\textbf{timeline}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{who}="{\#tom}">}I used to smoke\mbox{}\newline 
+{<\textbf{anchor}\hspace*{1em}{xml:id}="{TS-nm1}"/>}a lot more than this\mbox{}\newline 
+{<\textbf{anchor}\hspace*{1em}{xml:id}="{TS-nm2}"/>}but I never inhaled the smoke{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{xml:id}="{bob-u2}"\hspace*{1em}{who}="{\#bob}">}You used to smoke{</\textbf{u}>}\end{shaded}\egroup\par \noindent  To avoid deciding whether to point from the timeline to the text or vice versa, a \hyperref[TEI.linkGrp]{<linkGrp>} may be used: \par\bgroup\index{body=<body>|exampleindex}\index{timeline=<timeline>|exampleindex}\index{origin=@origin!<timeline>|exampleindex}\index{when=<when>|exampleindex}\index{when=<when>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{linkGrp=<linkGrp>|exampleindex}\index{type=@type!<linkGrp>|exampleindex}\index{link=<link>|exampleindex}\index{target=@target!<link>|exampleindex}\index{link=<link>|exampleindex}\index{target=@target!<link>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{body}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{timeline}\hspace*{1em}{origin}="{\#T001}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{when}\hspace*{1em}{xml:id}="{T001}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{when}\hspace*{1em}{xml:id}="{T002}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{timeline}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{u}\hspace*{1em}{who}="{\#tom}">}I used to smoke\mbox{}\newline 
+\hspace*{1em}{<\textbf{anchor}\hspace*{1em}{xml:id}="{NM01}"/>}a lot more than this\mbox{}\newline 
+\hspace*{1em}{<\textbf{anchor}\hspace*{1em}{xml:id}="{NM02}"/>}but I never inhaled the smoke{</\textbf{u}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{u}\hspace*{1em}{xml:id}="{bob-U2}"\hspace*{1em}{who}="{\#bob}">}You used to smoke{</\textbf{u}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{linkGrp}\hspace*{1em}{type}="{synchronize}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{link}\hspace*{1em}{target}="{\#T001 \#NM01 \#bob-U2}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{link}\hspace*{1em}{target}="{\#T002 \#NM02 \#bob-U2}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{linkGrp}>}\mbox{}\newline 
+{</\textbf{body}>}\end{shaded}\egroup\par \par
+Note that in each case, although Bob's utterance follows Tom's sequentially in the text, it is aligned temporally with its middle, without any need to disrupt the normal syntax of the text.\par
+As a final example, consider the following exchange, first as it might be represented using a musical-score-like notation, in which points of synchronization are represented by vertical alignment of the text: \par\bgroup\exampleFont \begin{shaded}\noindent\mbox{} Stig: This is |my  |turn\newline
+Jane:         |Balderdash\newline
+Lou :         |No, |it's mine\end{shaded}\egroup\par \noindent  All three speakers are simultaneous at the words \textit{my}, \textit{Balderdash}, and \textit{No}; speakers Stig and Lou are simultaneous at the words \textit{turn} and \textit{it's}. This could be encoded as follows, using pointers from the alignment map into the text: \par\bgroup\index{timeline=<timeline>|exampleindex}\index{origin=@origin!<timeline>|exampleindex}\index{when=<when>|exampleindex}\index{synch=@synch!<when>|exampleindex}\index{when=<when>|exampleindex}\index{synch=@synch!<when>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{anchor=<anchor>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{timeline}\hspace*{1em}{origin}="{\#TSp1}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{when}\hspace*{1em}{synch}="{\#TSa1 \#TSb1 \#TSc1}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{xml:id}="{TSp1}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{when}\hspace*{1em}{synch}="{\#TSa2 \#TSc2}"\hspace*{1em}{xml:id}="{TSp2}"/>}\mbox{}\newline 
+{</\textbf{timeline}>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{who}="{\#stig}">}this is {<\textbf{anchor}\hspace*{1em}{xml:id}="{TSa1}"/>} my {<\textbf{anchor}\hspace*{1em}{xml:id}="{TSa2}"/>} turn{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{who}="{\#jane}"\hspace*{1em}{xml:id}="{TSb1}">}balderdash{</\textbf{u}>}\mbox{}\newline 
+{<\textbf{u}\hspace*{1em}{who}="{\#lou}"\hspace*{1em}{xml:id}="{TSc1}">} no {<\textbf{anchor}\hspace*{1em}{xml:id}="{TSc2}"/>} it's mine{</\textbf{u}>}\end{shaded}\egroup\par 
+\subsubsection[{Regularization of Word Forms}]{Regularization of Word Forms}\label{TSREG}\par
+When speech is transcribed using ordinary orthographic notation, as is customary, some compromise must be made between the sounds produced and conventional orthography. Particularly when dealing with informal, dialectal, or other varieties of language, the transcriber will frequently have to decide whether a particular sound is to be treated as a distinct vocabulary item or not. For example, while in a given project \textit{kinda} may not be worth distinguishing as a vocabulary item from \textit{kind of}, \textit{isn't} may clearly be worth distinguishing from \textit{is not}; for some purposes, the regional variant \textit{isnae} might also be worth distinguishing in the same way.\par
+One rule of thumb might be to allow such variation only where a generally accepted orthographic form exists, for example, in published dictionaries of the language register being encoded; this has the disadvantage that such dictionaries may not exist. Another is to maintain a controlled (but extensible) set of normalized forms for all such words; this has the advantage of enforcing some degree of consistency among different transcribers. Occasionally, as for example when transcribing abbreviations or acronyms, it may be felt necessary to depart from conventional spelling to distinguish between cases where the abbreviation is spelled out letter by letter (e.g. \textit{B B C} or \textit{V A T}) and where it is pronounced as a single word (\textit{VAT} or \textit{RADA}). Similar considerations might apply to pronunciation of foreign words (e.g. \textit{Monsewer} vs. \textit{Monsieur}).\par
+In general, use of punctuation, capitalization, etc., in spoken transcripts should be carefully controlled. It is important to distinguish the transcriber's intuition as to what the punctuation should be from the marking of prosodic features such as pausing, intonation, etc.\par
+Whatever practice is adopted, it is essential that it be clearly and fully documented in the editorial declarations section of the header. It may also be found helpful to include normalized forms of non-conventional spellings within the text, using the elements for simple editorial changes described in section \textit{\hyperref[COED]{3.5.\ Simple Editorial Changes}} (see further section \textit{\hyperref[TSTPSM]{8.4.5.\ Speech Management}}).
+\subsubsection[{Prosody}]{Prosody}\label{TSTPPR}\par
+In the absence of conventional punctuation, the marking of prosodic features assumes paramount importance, since these structure and organize the spoken message. Indeed, such prosodic features as points of primary or secondary stress may be represented by specialized punctuation marks, or other characters such as those provided by the Unicode Spacing Modifier Letters block. Pauses have already been dealt with in section \textit{\hyperref[TSBAPA]{8.3.2.\ Pausing}}; while tone units (or intonational phrases) can be indicated by the segmentation tag discussed in section \textit{\hyperref[TSSASE]{8.4.1.\ Segmentation}}. The \hyperref[TEI.shift]{<shift>} element discussed in section \textit{\hyperref[TSSASH]{8.3.6.\ Shifts}} may also be used to encode some prosodic features, for example where all that is required is the ability to record shifts in voice quality.\par
+In a more detailed phonological transcript, it is common practice to include a number of conventional signs to mark prosodic features of the surrounding or (more usually) preceding speech. Such signs may be used to record, for example, particular intonation patterns, truncation, vowel quality (long or short) etc. These signs may be preserved in a transcript either by using conventional punctuation or by marking their presence by \hyperref[TEI.g]{<g>} elements. Where a transcript includes many phonetic or phonemic aspects, it will generally be more convenient to use the appropriate Unicode characters (see further chapters \textit{\hyperref[CH]{vi\ Languages and Character Sets}} and \textit{\hyperref[WD]{5.\ Characters, Glyphs, and Writing Modes}}). For representation of phonemic information, the use of the International Phonetic Alphabet, which can be represented in Unicode characters, is recommended.\par
+In the following example, special characters have been defined as follows within the \hyperref[TEI.encodingDesc]{<encodingDesc>} of the TEI header \par\bgroup\index{charDecl=<charDecl>|exampleindex}\index{char=<char>|exampleindex}\index{desc=<desc>|exampleindex}\index{char=<char>|exampleindex}\index{desc=<desc>|exampleindex}\index{char=<char>|exampleindex}\index{desc=<desc>|exampleindex}\index{char=<char>|exampleindex}\index{desc=<desc>|exampleindex}\index{char=<char>|exampleindex}\index{desc=<desc>|exampleindex}\index{char=<char>|exampleindex}\index{desc=<desc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{charDecl}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{char}\hspace*{1em}{xml:id}="{lf}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}low fall intonation{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{char}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{char}\hspace*{1em}{xml:id}="{lr}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}low rise intonation{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{char}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{char}\hspace*{1em}{xml:id}="{fr}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}fall rise intonation{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{char}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{char}\hspace*{1em}{xml:id}="{rf}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}rise fall intonation{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{char}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{char}\hspace*{1em}{xml:id}="{long}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}lengthened syllable{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{char}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{char}\hspace*{1em}{xml:id}="{short}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{desc}>}shortened syllable{</\textbf{desc}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{char}>}\mbox{}\newline 
+{</\textbf{charDecl}>}\end{shaded}\egroup\par \noindent  These declarations might additionally provide information about how the characters concerned should be rendered, their equivalent IPA form, etc. In the transcript itself references to them can then be included as follows: \par\bgroup\index{listPerson=<listPerson>|exampleindex}\index{person=<person>|exampleindex}\index{p=<p>|exampleindex}\index{person=<person>|exampleindex}\index{p=<p>|exampleindex}\index{div=<div>|exampleindex}\index{n=@n!<div>|exampleindex}\index{type=@type!<div>|exampleindex}\index{note=<note>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{unclear=<unclear>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{pause=<pause>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{pause=<pause>|exampleindex}\index{unclear=<unclear>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{pause=<pause>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{gap=<gap>|exampleindex}\index{extent=@extent!<gap>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{u=<u>|exampleindex}\index{trans=@trans!<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{unclear=<unclear>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{pause=<pause>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{unclear=<unclear>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{pause=<pause>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{u=<u>|exampleindex}\index{trans=@trans!<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{gap=<gap>|exampleindex}\index{extent=@extent!<gap>|exampleindex}\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{unclear=<unclear>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}\mbox{}\newline 
+\textit{<!-- ... in the <particDesc>: -->}{<\textbf{listPerson}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{person}\hspace*{1em}{xml:id}="{cwn}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{p}>}Customer WN{</\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{person}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{person}\hspace*{1em}{xml:id}="{aj}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{p}>}Assistant K{</\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{person}>}\mbox{}\newline 
+{</\textbf{listPerson}>}\mbox{}\newline 
+\textit{<!-- ... within the <text>: -->}\mbox{}\newline 
+{<\textbf{div}\hspace*{1em}{n}="{Lod E-03}"\hspace*{1em}{type}="{exchange}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{note}>}C is with a friend{</\textbf{note}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{u}\hspace*{1em}{who}="{\#cwn}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{unclear}>}Excuse me{<\textbf{g}\hspace*{1em}{ref}="{\#lf}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{unclear}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{pause}/>} You dont have some\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} aesthetic{<\textbf{g}\hspace*{1em}{ref}="{\#short}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{pause}/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{unclear}>}specially on early{</\textbf{unclear}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} aesthetics terminology {<\textbf{g}\hspace*{1em}{ref}="{\#lr}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{u}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{u}\hspace*{1em}{who}="{\#aj}">} No{<\textbf{g}\hspace*{1em}{ref}="{\#lf}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{pause}/>}No{<\textbf{g}\hspace*{1em}{ref}="{\#lf}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{gap}\hspace*{1em}{extent}="{2 beats}"/>} I'm\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} afraid{<\textbf{g}\hspace*{1em}{ref}="{\#lf}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{u}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{u}\hspace*{1em}{trans}="{latching}"\hspace*{1em}{who}="{\#cwn}">} No{<\textbf{g}\hspace*{1em}{ref}="{\#lr}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{unclear}>}Well{</\textbf{unclear}>} thanks{<\textbf{g}\hspace*{1em}{ref}="{\#lr}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{pause}/>} Oh{<\textbf{g}\hspace*{1em}{ref}="{\#short}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{unclear}>}you couldnt{<\textbf{g}\hspace*{1em}{ref}="{\#short}"/>} can we{</\textbf{unclear}>} kind of{<\textbf{g}\hspace*{1em}{ref}="{\#long}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{pause}/>}I mean ask you to order it for us{<\textbf{g}\hspace*{1em}{ref}="{\#long}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{g}\hspace*{1em}{ref}="{\#fr}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{u}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{u}\hspace*{1em}{trans}="{latching}"\hspace*{1em}{who}="{\#aj}">} Yes{<\textbf{g}\hspace*{1em}{ref}="{\#fr}"/>} if you know the title{<\textbf{g}\hspace*{1em}{ref}="{\#lf}"/>} Yeah{<\textbf{g}\hspace*{1em}{ref}="{\#lf}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{u}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{u}\hspace*{1em}{who}="{\#cwn}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{gap}\hspace*{1em}{extent}="{4 beats}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{u}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{u}\hspace*{1em}{who}="{\#aj}">} Yes thats fine. {<\textbf{unclear}>}just as soon as it comes in we'll send\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} you a postcard{<\textbf{g}\hspace*{1em}{ref}="{\#lf}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{unclear}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{u}>}\mbox{}\newline 
+{</\textbf{div}>}\end{shaded}\egroup\par \noindent  \par
+This example, which is taken from a corpus of bookshop service encounters,  also demonstrates the use of the \hyperref[TEI.unclear]{<unclear>} and \hyperref[TEI.gap]{<gap>} elements discussed in section \textit{\hyperref[COED]{3.5.\ Simple Editorial Changes}}. Where words are so unclear that only their extent can be recorded, the empty \hyperref[TEI.gap]{<gap>} element may be used; where the encoder can identify the words but wishes to record a degree of uncertainty about their accuracy, the \hyperref[TEI.unclear]{<unclear>} element may be used. More flexible and detailed methods of indicating uncertainty are discussed in chapter \textit{\hyperref[CE]{21.\ Certainty, Precision, and Responsibility}}.\par
+For more detailed work, involving a detailed phonological transcript including representation of stress and pitch patterns, it is probably best to maintain the prosodic description in parallel with the conventional written transcript, rather than attempt to embed detailed prosodic information within it. The two parallel streams may be aligned with each other and with other streams, for example an acoustic encoding, using the general alignment mechanisms discussed in section \textit{\hyperref[TSSASH]{8.3.6.\ Shifts}}.
+\subsubsection[{Speech Management}]{Speech Management}\label{TSTPSM}\par
+Phenomena of \textit{speech management} include disfluencies such as filled and unfilled pauses, interrupted or repeated words, corrections, and reformulations as well as interactional devices asking for or providing feedback. Depending on the importance attached to such features, transcribers may choose to adopt conventionalized representations for them (as discussed in section \textit{\hyperref[TSREG]{8.4.3.\ Regularization of Word Forms}} above), or to transcribe them using IPA or some other transcription system. To simplify analysis of the lexical features of a speech transcript, it may be felt useful to ‘tidy away’ many of these disfluencies. Where this policy has been adopted, these Guidelines recommend the use of the tags for simple editorial intervention discussed in section \textit{\hyperref[COED]{3.5.\ Simple Editorial Changes}}, to make explicit the extent of regularization or normalization performed by the transcriber.\par
+For example, false starts, repetition, and truncated words might all be included within a transcript, but marked as editorially deleted, in the following way: \par\bgroup\index{u=<u>|exampleindex}\index{del=<del>|exampleindex}\index{type=@type!<del>|exampleindex}\index{del=<del>|exampleindex}\index{type=@type!<del>|exampleindex}\index{del=<del>|exampleindex}\index{type=@type!<del>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{del}\hspace*{1em}{type}="{truncation}">}s{</\textbf{del}>}see\mbox{}\newline 
+{<\textbf{del}\hspace*{1em}{type}="{repetition}">}you you{</\textbf{del}>} you know\mbox{}\newline 
+{<\textbf{del}\hspace*{1em}{type}="{falseStart}">}it's{</\textbf{del}>} he's crazy\mbox{}\newline 
+{</\textbf{u}>}\end{shaded}\egroup\par \par
+As previously noted, the \hyperref[TEI.gap]{<gap>} element may be used to mark points within a transcript where words have been omitted, for example because they are inaudible, as in the following example in which 5 seconds of speech is drowned out by an external event: \par\bgroup\index{gap=<gap>|exampleindex}\index{reason=@reason!<gap>|exampleindex}\index{quantity=@quantity!<gap>|exampleindex}\index{unit=@unit!<gap>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{gap}\hspace*{1em}{reason}="{passing-truck}"\hspace*{1em}{quantity}="{5}"\mbox{}\newline 
+\hspace*{1em}{unit}="{s}"/>}\end{shaded}\egroup\par \par
+The \hyperref[TEI.unclear]{<unclear>} element may be used to mark words which have been included although the transcriber is unsure of their accuracy: \par\bgroup\index{u=<u>|exampleindex}\index{unclear=<unclear>|exampleindex}\index{reason=@reason!<unclear>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}>}...and then {<\textbf{unclear}\hspace*{1em}{reason}="{passing-truck}">}marbled queen{</\textbf{unclear}>}\mbox{}\newline 
+{</\textbf{u}>}\end{shaded}\egroup\par \par
+Where a transcriber is believed to have incorrectly identified a word, the elements \hyperref[TEI.corr]{<corr>} or \hyperref[TEI.sic]{<sic>} embedded within a \hyperref[TEI.choice]{<choice>} element may be used to indicate both the original and a corrected form of it: \par\bgroup\index{choice=<choice>|exampleindex}\index{corr=<corr>|exampleindex}\index{sic=<sic>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{choice}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{corr}>}SCSI{</\textbf{corr}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{sic}>}skuzzy{</\textbf{sic}>}\mbox{}\newline 
+{</\textbf{choice}>}\end{shaded}\egroup\par \noindent  These elements are further discussed in section \textit{\hyperref[COEDCOR]{3.5.1.\ Apparent Errors}}.\par
+Finally phenomena such as \textit{code-switching}, where a speaker switches from one language to another, may easily be represented in a transcript by using the \hyperref[TEI.foreign]{<foreign>} element provided by the core tagset: \par\bgroup\index{u=<u>|exampleindex}\index{who=@who!<u>|exampleindex}\index{foreign=<foreign>|exampleindex}\index{pause=<pause>|exampleindex}\index{dur=@dur!<pause>|exampleindex}\index{emph=<emph>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{u}\hspace*{1em}{who}="{\#P1}">}I proposed that {<\textbf{foreign}\hspace*{1em}{xml:lang}="{de}">} wir können\mbox{}\newline 
+\hspace*{1em}{<\textbf{pause}\hspace*{1em}{dur}="{PT1S}"/>} vielleicht {</\textbf{foreign}>} go to warsaw\mbox{}\newline 
+ and {<\textbf{emph}>}vienna{</\textbf{emph}>}\mbox{}\newline 
+{</\textbf{u}>}\end{shaded}\egroup\par \noindent  
+\subsubsection[{Analytic Coding}]{Analytic Coding}\label{TSTPAC}\par
+The recommendations made here only concern the establishment of a basic text. Where a more sophisticated analysis is needed, more sophisticated methods of markup will also be appropriate, for example, using stand-off markup to indicate multiple segmentation of the stream of discourse, or complex alignment of several segments within it. Where additional annotations (sometimes called ‘codes’ or ‘tags’) are used to represent such features as linguistic word class (noun, verb, etc.), type of speech act (imperative, concessive, etc.), or information status (theme/rheme, given/new, active/semi-active/new), etc., a selection from the general purpose analytic tools discussed in chapters \textit{\hyperref[SA]{16.\ Linking, Segmentation, and Alignment}}, \textit{\hyperref[AI]{17.\ Simple Analytic Mechanisms}}, and \textit{\hyperref[FS]{18.\ Feature Structures}} may be used to advantage.\par
+The general-purpose \hyperref[TEI.annotationBlock]{<annotationBlock>} element may be used to group together a transcription and multiple layers of annotation. It also serves to divide a transcribed text up into meaningful analytic sections. 
+\begin{sansreflist}
+  
+\item [\textbf{<annotationBlock>}] groups together various annotations, e.g. for parallel interpretations of a spoken segment.
+\end{sansreflist}
+
+\subsection[{Module for Transcribed Speech}]{Module for Transcribed Speech}\par
+The module described in this chapter makes available the following components: \begin{description}
+
+\item[{Module spoken: Transcribed Speech}]\hspace{1em}\hfill\linebreak
+\mbox{}\\[-10pt] \begin{itemize}
+\item {\itshape Elements defined}: \hyperref[TEI.annotationBlock]{annotationBlock} \hyperref[TEI.broadcast]{broadcast} \hyperref[TEI.equipment]{equipment} \hyperref[TEI.incident]{incident} \hyperref[TEI.kinesic]{kinesic} \hyperref[TEI.pause]{pause} \hyperref[TEI.recording]{recording} \hyperref[TEI.recordingStmt]{recordingStmt} \hyperref[TEI.scriptStmt]{scriptStmt} \hyperref[TEI.shift]{shift} \hyperref[TEI.transcriptionDesc]{transcriptionDesc} \hyperref[TEI.u]{u} \hyperref[TEI.vocal]{vocal} \hyperref[TEI.writing]{writing}
+\item {\itshape Classes defined}: \hyperref[TEI.att.duration]{att.duration} \hyperref[TEI.model.divPart.spoken]{model.divPart.spoken} \hyperref[TEI.model.global.spoken]{model.global.spoken} \hyperref[TEI.model.recordingPart]{model.recordingPart}
+\end{itemize} 
+\end{description}  The selection and combination of modules to form a TEI schema is described in \textit{\hyperref[STIN]{1.2.\ Defining a TEI Schema}}.
