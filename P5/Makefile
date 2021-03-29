@@ -17,7 +17,7 @@ XSL=/usr/share/xml/tei/stylesheet
 #XSL=http://www.tei-c.org/stylesheet/release/xml/tei
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
-SAXONJAR=saxon9he.jar
+SAXONJAR=saxon10he.jar
 # Saxon-HE-9.4.0.6.jar is needed by the epubcheck program and is in Utilities/lib
 ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -q
 
