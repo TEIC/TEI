@@ -1,0 +1,424 @@
+
+\section[{Language Corpora}]{Language Corpora}\label{CC}\par
+The term \textit{language corpus} is used to mean a number of rather different things. It may refer simply to any collection of linguistic data (for example, written, spoken, signed, or multimodal), although many practitioners prefer to reserve it for collections which have been organized or collected with a particular end in view, generally to characterize a particular state or variety of one or more languages. Because opinions as to the best method of achieving this goal differ, various subcategories of corpora have also been identified. For our purposes however, the distinguishing characteristic of a corpus is that its components have been selected or structured according to some conscious set of design criteria.\par
+These design criteria may be very simple and undemanding, or very sophisticated. A corpus may be intended to represent (in the statistical sense) a particular linguistic variety or sublanguage, or it may be intended to represent all aspects of some assumed ‘core’ language. A corpus may be made up of whole texts or of fragments or text samples. It may be a ‘closed’ corpus, or an ‘open’ or ‘monitor’ corpus, the composition of which may change over time. However, since an open corpus is of necessity finite at any particular point in time, the only likely effect of its expansibility from the encoding point of view may be some increased difficulty in maintaining consistent encoding practices (see further section \textit{\hyperref[CCREC]{15.5.\ Recommendations for the Encoding of Large Corpora}}). For simplicity, therefore, our discussion largely concerns ways of encoding closed corpora, regarded as single but composite texts.\par
+Language corpora are regarded by these Guidelines as \textit{composite texts} rather than \textit{unitary texts} (on this distinction, see chapter \textit{\hyperref[DS]{4.\ Default Text Structure}}). This is because although each discrete sample of language in a corpus clearly has a claim to be considered as a text in its own right, it is also regarded as a subdivision of some larger object, if only for convenience of analysis. Corpora share a number of characteristics with other types of composite texts, including anthologies and collections. Most notably, different components of composite texts may exhibit different structural properties (for example, some may be composed of verse, and others of prose), thus potentially requiring elements from different TEI modules.\par
+Aside from these high-level structural differences, and possibly differences of scale, the encoding of language corpora and the encoding of individual texts present identical sets of problems. Any of the encoding techniques and elements presented in other chapters of these Guidelines may therefore prove relevant to some aspect of corpus encoding and may be used in corpora. Therefore, we do not repeat here the discussion of such fundamental matters as the representation of multiple character sets (see chapter \textit{\hyperref[CH]{vi\ Languages and Character Sets}}); nor do we attempt to summarize the variety of elements provided for encoding basic structural features such as quoted or highlighted phrases, cross-references, lists, notes, editorial changes and reference systems (see chapter \textit{\hyperref[CO]{3.\ Elements Available in All TEI Documents}}). In addition to these general purpose elements, these Guidelines offer a range of more specialized sets of tags which may be of use in certain specialized corpora, for example those consisting primarily of verse (chapter \textit{\hyperref[VE]{6.\ Verse}}), drama (chapter \textit{\hyperref[DR]{7.\ Performance Texts}}), transcriptions of spoken text (chapter \textit{\hyperref[TS]{8.\ Transcriptions of Speech}}), etc. Chapter \textit{\hyperref[ST]{1.\ The TEI Infrastructure}} should be reviewed for details of how these and other components of these Guidelines should be tailored to create a TEI customization appropriate to a given application. In sum, it should not be assumed that only the matters specifically addressed in this chapter are of importance for corpus creators.\par
+This chapter does however include some other material relevant to corpora and corpus-building, for which no other location appeared suitable. It begins with a review of the distinction between unitary and composite texts, and of the different methods provided by these Guidelines for representing composite texts of different kinds (section \textit{\hyperref[CCDEF]{15.1.\ Varieties of Composite Text}}). Section \textit{\hyperref[CCAH]{15.2.\ Contextual Information}} describes a set of additional header elements provided for the documentation of contextual information, of importance largely though not exclusively to language corpora. This is the additional module for language corpora proper. Section \textit{\hyperref[CCAS]{15.3.\ Associating Contextual Information with a Text}} discusses a mechanism by which individual parts of the TEI header may be associated with different parts of a TEI-conformant text. Section \textit{\hyperref[CCAN]{15.4.\ Linguistic Annotation of Corpora}} reviews various methods of providing linguistic annotation in corpora, with some specific examples of relevance to current practice in corpus linguistics. Finally, section \textit{\hyperref[CCREC]{15.5.\ Recommendations for the Encoding of Large Corpora}} provides some general recommendations about the use of these Guidelines in the building of large corpora.
+\subsection[{Varieties of Composite Text}]{Varieties of Composite Text}\label{CCDEF}\par
+Both unitary and composite texts may be encoded using these Guidelines; composite texts, including corpora, will typically make use of the following tags for their top-level organization. 
+\begin{sansreflist}
+  
+\item [\textbf{<teiCorpus>}] (TEI corpus) contains the whole of a TEI encoded corpus, comprising a single corpus header and one or more \hyperref[TEI.TEI]{<TEI>} elements, each containing a single text header and a text.
+\item [\textbf{<TEI>}] (TEI document) contains a single TEI-conformant document, combining a single TEI header with one or more members of the \textsf{model.resource} class. Multiple \hyperref[TEI.TEI]{<TEI>} elements may be combined within a \hyperref[TEI.TEI]{<TEI>} (or \hyperref[TEI.teiCorpus]{<teiCorpus>}) element.
+\item [\textbf{<teiHeader>}] (TEI header) supplies descriptive and declarative metadata associated with a digital resource or set of resources.
+\item [\textbf{<text>}] (text) contains a single text of any kind, whether unitary or composite, for example a poem or drama, a collection of essays, a novel, a dictionary, or a corpus sample.
+\item [\textbf{<group>}] (group) contains the body of a composite text, grouping together a sequence of distinct texts (or groups of such texts) which are regarded as a unit for some purpose, for example the collected works of an author, a sequence of prose essays, etc.
+\end{sansreflist}
+ Full descriptions of these may be found in chapter \textit{\hyperref[HD]{2.\ The TEI Header}} (for \hyperref[TEI.teiHeader]{<teiHeader>}), and chapter \textit{\hyperref[DS]{4.\ Default Text Structure}} (for \hyperref[TEI.teiCorpus]{<teiCorpus>}, \hyperref[TEI.TEI]{<TEI>}, \hyperref[TEI.text]{<text>}, and \hyperref[TEI.group]{<group>}); this section discusses their application to composite texts in particular.\par
+In these Guidelines, the word \textit{text} refers to any stretch of discourse, whether complete or incomplete, unitary or composite, which the encoder chooses (perhaps merely for purposes of analytic convenience) to regard as a unit. The term \textit{composite text} refers to texts within which other texts appear; the following common cases may be distinguished: \begin{itemize}
+\item language corpora
+\item collections or anthologies
+\item poem cycles and epistolary works (novels or essays written in the form of collections or series of letters)
+\item otherwise unitary texts, within which one or more subordinate texts are embedded
+\end{itemize}  The elements listed above may be combined to encode each of these varieties of composite text in different ways.\par
+In corpora, the component samples are clearly distinct texts, but the systematic collection, standardized preparation, and common markup of the corpus often make it useful to treat the entire corpus as a unit, too. Some corpora may become so well established as to be regarded as texts in their own right; the Brown and LOB corpora are now close to achieving this status. \par
+The \hyperref[TEI.teiCorpus]{<teiCorpus>} element is intended for the encoding of language corpora, though it may also be useful in encoding newspapers, electronic anthologies, and other disparate collections of material. The \hyperref[TEI.TEI]{<TEI>} element may be used in the same manner itself; the \hyperref[TEI.teiCorpus]{<teiCorpus>} element, however, makes explicit the multiplicity of the collection, whatever it may be. The individual samples in the corpus are encoded as separate \hyperref[TEI.TEI]{<TEI>} elements, and the entire corpus is enclosed in a \hyperref[TEI.TEI]{<TEI>} or \hyperref[TEI.teiCorpus]{<teiCorpus>} element. Each sample has the usual structure for a \hyperref[TEI.TEI]{<TEI>} document, comprising a \hyperref[TEI.teiHeader]{<teiHeader>} followed by one or more members of the \textsf{model.resource} class. The corpus, too, has a corpus-level \hyperref[TEI.teiHeader]{<teiHeader>} element, in which the corpus as a whole, and encoding practices common to multiple samples may be described. The overall structure of a TEI-conformant corpus is thus: \par\bgroup\index{teiCorpus=<teiCorpus>|exampleindex}\index{teiHeader=<teiHeader>|exampleindex}\index{TEI=<TEI>|exampleindex}\index{teiHeader=<teiHeader>|exampleindex}\index{text=<text>|exampleindex}\index{TEI=<TEI>|exampleindex}\index{teiHeader=<teiHeader>|exampleindex}\index{text=<text>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{teiCorpus} xmlns="http://www.tei-c.org/ns/1.0">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{teiHeader}/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{TEI}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{teiHeader}/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{text}/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{TEI}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{TEI}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{teiHeader}/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{text}/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{TEI}>}\mbox{}\newline 
+{</\textbf{teiCorpus}>}\end{shaded}\egroup\par \noindent  Or, alternatively: \par\bgroup\index{TEI=<TEI>|exampleindex}\index{teiHeader=<teiHeader>|exampleindex}\index{TEI=<TEI>|exampleindex}\index{teiHeader=<teiHeader>|exampleindex}\index{text=<text>|exampleindex}\index{TEI=<TEI>|exampleindex}\index{teiHeader=<teiHeader>|exampleindex}\index{text=<text>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{TEI} xmlns="http://www.tei-c.org/ns/1.0">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{teiHeader}/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{TEI} xmlns="http://www.tei-c.org/ns/1.0">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{teiHeader}/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{text}/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{TEI}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{TEI} xmlns="http://www.tei-c.org/ns/1.0">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{teiHeader}/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{text}/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{TEI}>}\mbox{}\newline 
+{</\textbf{TEI}>}\end{shaded}\egroup\par \par
+Header information which relates to the whole corpus rather than to individual components of it should be factored out and included in the \hyperref[TEI.teiHeader]{<teiHeader>} element prefixed to the whole. This two-level structure allows for contextual information to be specified at the corpus level, at the individual text level, or at both. Discussion of the kinds of information which may thus be specified is provided below, in section \textit{\hyperref[CCAH]{15.2.\ Contextual Information}}, as well as in chapter \textit{\hyperref[HD]{2.\ The TEI Header}}. Information of this type should in general be specified only once: a variety of methods are provided for associating it with individual components of a corpus, as further described in section \textit{\hyperref[CCAS]{15.3.\ Associating Contextual Information with a Text}}.\par
+In some cases, the design of a corpus is reflected in its internal structure. For example, a corpus of newspaper extracts might be arranged to combine all stories of one type (reportage, editorial, reviews, etc.) into some higher-level grouping, possibly with sub-groups for date, region, etc. The \hyperref[TEI.teiCorpus]{<teiCorpus>} element provides no direct support for reflecting such internal corpus structure in the markup: it treats the corpus as an undifferentiated series of components, each tagged \hyperref[TEI.TEI]{<TEI>}.\par
+If it is essential to reflect a single permanent organization of a corpus into sub- and sub-sub-corpora, then the corpus or the high-level subcorpora may be encoded as composite texts, using the \hyperref[TEI.group]{<group>} element described below and in section \textit{\hyperref[DSGRP]{4.3.1.\ Grouped Texts}}. The mechanisms for corpus characterization described in this chapter, however, are designed to reduce the need to do this. Useful groupings of components may easily be expressed using the text classification and identification elements described in section \textit{\hyperref[CCAHTD]{15.2.1.\ The Text Description}}, and those for associating declarations with corpus components described in section \textit{\hyperref[CCAS]{15.3.\ Associating Contextual Information with a Text}}. These methods also allow several different methods of text grouping to co-exist, each to be used as needed at different times. This helps minimize the danger of cross-classification and misclassification of samples, and helps improve the flexibility with which parts of a corpus may be characterized for different applications.\par
+Anthologies and collections are often treated as texts in their own right, if only for historical reasons. In conventional publishing, at least, anthologies are published as units, with single editorial responsibility and common front and back matter which may need to be included in their electronic encodings. The texts collected in the anthology, of course, may also need to be identifiable as distinct individual objects for study. \par
+Poem cycles, epistolary novels, and epistolary essays differ from anthologies in that they are often written as single works, by single authors, for single occasions; nevertheless, it can be useful to treat their constituent parts as individual texts, as well as the cycle itself. Structurally, therefore, they may be treated in the same way as anthologies: in both cases, the body of the text is composed largely of other texts. \par
+The \hyperref[TEI.group]{<group>} element is provided to simplify the encoding of collections, anthologies, and cyclic works; as noted above, the \hyperref[TEI.group]{<group>} element can also be used to record the potentially complex internal structure of language corpora. For a full description, see chapter \textit{\hyperref[DS]{4.\ Default Text Structure}}.\par
+Some composite texts, finally, are neither corpora, nor anthologies, nor cyclic works: they are otherwise unitary texts within which other texts are embedded. In general, they may be treated in the same way as unitary texts, using the normal \hyperref[TEI.TEI]{<TEI>} and \hyperref[TEI.body]{<body>} elements. The embedded text itself may be encoded using the \hyperref[TEI.text]{<text>} element. For further discussion, see chapter \textit{\hyperref[DS]{4.\ Default Text Structure}}.\par
+All composite texts share the characteristic that their different component texts may be of structurally similar or dissimilar types. If all component texts may all be encoded using the same module, then no problem arises. If however they require different modules, then these must be included in the TEI customization. This process is described in more detail in section \textit{\hyperref[STMA]{1.1.\ TEI Modules}}.
+\subsection[{Contextual Information}]{Contextual Information}\label{CCAH}\par
+Contextual information is of particular importance for collections or corpora composed of samples from a variety of different kinds of text. Examples of such contextual information include: the age, sex, and geographical origins of participants in a language interaction, or their socio-economic status; the cost and publication data of a newspaper; the topic, register or factuality of an extract from a textbook. Such information may be of the first importance, whether as an organizing principle in creating a corpus (for example, to ensure that the range of values in such a parameter is evenly represented throughout the corpus, or represented proportionately to the population being sampled), or as a selection criterion in analysing the corpus (for example, to investigate the language usage of some particular vector of social characteristics).\par
+Such contextual information is potentially of equal importance for unitary texts, and these Guidelines accordingly make no particular distinction between the kinds of information which should be gathered for unitary and for composite texts. In either case, the information should be recorded in the appropriate section of a TEI header, as described in chapter \textit{\hyperref[HD]{2.\ The TEI Header}}. In the case of language corpora, such information may be gathered together in the overall corpus header, or split across all the component texts of a corpus, in their individual headers, or divided between the two. The association between an individual corpus text and the contextual information applicable to it may be made in a number of ways, as further discussed in section \textit{\hyperref[CCAS]{15.3.\ Associating Contextual Information with a Text}} below.\par
+Chapter \textit{\hyperref[HD]{2.\ The TEI Header}}, which should be read in conjunction with the present section, describes in full the range of elements available for the encoding of information relating to the electronic file itself, for example its bibliographic description and those of the source or sources from which it was derived (see section \textit{\hyperref[HD2]{2.2.\ The File Description}}); information about the encoding practices followed with the corpus, for example its design principles, editorial practices, reference system, etc. (see section \textit{\hyperref[HD5]{2.3.\ The Encoding Description}}); more detailed descriptive information about the creation and content of the corpus, such as the languages used within it and any descriptive classification system used (see section \textit{\hyperref[HD4]{2.4.\ The Profile Description}}); and version information documenting any changes made in the electronic text (see section \textit{\hyperref[HD6]{2.6.\ The Revision Description}}).\par
+In addition to the elements defined by chapter \textit{\hyperref[HD]{2.\ The TEI Header}}, several other elements can be used in the TEI header if the additional module defined by this chapter is invoked. These additional tags make it possible to characterize the social or other situation within which a language interaction takes place or is experienced, the physical setting of a language interaction, and the participants in it. Though this information may be relevant to, and provided for, unitary texts as well as for collections or corpora, it is more often recorded for the components of systematically developed corpora than for isolated texts, and thus this module is referred to as being ‘for language corpora’.\par
+When the module defined in this chapter is included in a schema, a number of additional elements become available within the \hyperref[TEI.profileDesc]{<profileDesc>} element of the TEI header (discussed in section \textit{\hyperref[HD4]{2.4.\ The Profile Description}}). 
+\begin{sansreflist}
+  
+\item [\textbf{<textDesc>}] (text description) provides a description of a text in terms of its situational parameters.
+\item [\textbf{<particDesc>}] (participation description) describes the identifiable speakers, voices, or other participants in any kind of text or other persons named or otherwise referred to in a text, edition, or metadata.
+\item [\textbf{<settingDesc>}] (setting description) describes the setting or settings within which a language interaction takes place, or other places otherwise referred to in a text, edition, or metadata.
+\end{sansreflist}
+ These elements, members of the \textsf{model.profileDescPart}, are discussed in the remainder of the chapter.
+\subsubsection[{The Text Description}]{The Text Description}\label{CCAHTD}\par
+The \hyperref[TEI.textDesc]{<textDesc>} element provides a full description of the situation within which a text was produced or experienced, and thus characterizes it in a way relatively independent of any \textit{a priori} theory of text-types. It is provided as an alternative or a supplement to the common use of descriptive taxonomies used to categorize texts, which is fully described in section \textit{\hyperref[HD43]{2.4.3.\ The Text Classification}}, and section \textit{\hyperref[HD55]{2.3.7.\ The Classification Declaration}}. The description is organized as a set of values and optional prose descriptions for the following eight \textit{situational parameters}, each represented by one of the following eight elements: 
+\begin{sansreflist}
+  
+\item [\textbf{<channel>}] (primary channel) describes the medium or channel by which a text is delivered or experienced. For a written text, this might be print, manuscript, email, etc.; for a spoken one, radio, telephone, face-to-face, etc.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape mode}]
+  specifies the mode of this channel with respect to speech and writing.
+\end{sansreflist}  
+\item [\textbf{<constitution>}] (constitution) describes the internal composition of a text or text sample, for example as fragmentary, complete, etc.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape type}]
+  specifies how the text was constituted.
+\end{sansreflist}  
+\item [\textbf{<derivation>}] (derivation) describes the nature and extent of originality of this text.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape type}]
+  categorizes the derivation of the text.
+\end{sansreflist}  
+\item [\textbf{<domain>}] (domain of use) describes the most important social context in which the text was realized or for which it is intended, for example private vs. public, education, religion, etc.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape type}]
+  categorizes the domain of use.
+\end{sansreflist}  
+\item [\textbf{<factuality>}] (factuality) describes the extent to which the text may be regarded as imaginative or non-imaginative, that is, as describing a fictional or a non-fictional world.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape type}]
+  categorizes the factuality of the text.
+\end{sansreflist}  
+\item [\textbf{<interaction>}] (interaction) describes the extent, cardinality and nature of any interaction among those producing and experiencing the text, for example in the form of response or interjection, commentary, etc.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape type}]
+  specifies the degree of interaction between active and passive participants in the text.
+    \item[@{\itshape active}]
+  specifies the number of active participants (or \textit{addressors}) producing parts of the text.
+    \item[@{\itshape passive}]
+  specifies the number of passive participants (or \textit{addressees}) to whom a text is directed or in whose presence it is created or performed.
+\end{sansreflist}  
+\item [\textbf{<preparedness>}] (preparedness) describes the extent to which a text may be regarded as prepared or spontaneous.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape type}]
+  a keyword characterizing the type of preparedness.
+\end{sansreflist}  
+\item [\textbf{<purpose>}] characterizes a single purpose or communicative function of the text.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape type}]
+  specifies a particular kind of purpose.
+    \item[@{\itshape degree}]
+  specifies the extent to which this purpose predominates.
+\end{sansreflist}  
+\end{sansreflist}
+\par
+These elements constitute a model class called \textsf{model.textDescPart}; new parameters may be defined by defining new elements and adding them to that class, as further described in \textit{\hyperref[MD]{23.3.\ Customization}}.\par
+By default, a text description will contain each of the above elements, supplied in the order specified. Except for the \hyperref[TEI.purpose]{<purpose>} element, which may be repeated to indicate multiple purposes, no element should appear more than once within a single text description. Each element may be empty, or may contain a brief qualification or more detailed description of the value expressed by its attributes. It should be noted that some texts, in particular literary ones, may resist unambiguous classification in some of these dimensions; in such cases, the situational parameter in question should be given the content ‘not applicable’ or an equivalent phrase.\par
+Texts may be described along many dimensions, according to many different taxonomies. No generally accepted consensus as to how such taxonomies should be defined has yet emerged, despite the best efforts of many corpus linguists, text linguists, sociolinguists, rhetoricians, and literary theorists over the years. Rather than attempting the task of proposing a single taxonomy of \textit{text-types} (or the equally impossible one of enumerating all those which have been proposed previously), the closed set of \textit{situational parameters} described above can be used in combination to supply useful distinguishing descriptive features of individual texts, without insisting on a system of discrete high-level text-types. Such text-types may however be used in combination with the parameters proposed here, with the advantage that the internal structure of each such text-type can be specified in terms of the parameters proposed. This approach has the following analytical advantages:\footnote{Schemes similar to that proposed here were developed in the 1960s and 1970s by researchers such as Hymes, Halliday, and Crystal and Davy, but have rarely been implemented; one notable exception being the pioneering work on the Helsinki Diachronic Corpus of English, on which see \cite{CC-BIBL-1}} \begin{itemize}
+\item it enables a relatively continuous characterization of texts (in contrast to discrete categories based on type or topic)
+\item it enables meaningful comparisons across corpora
+\item it allows analysts to build and compare their own text-types based on the particular parameters of interest to them
+\item it is equally applicable to spoken, written, or signed texts
+\end{itemize} \par
+Two alternative approaches to the use of these parameters are supported by these Guidelines. One is to use pre-existing taxonomies such as those used in subject classification or other types of text categorization. Such taxonomies may also be appropriate for the description of the topics addressed by particular texts. Elements for this purpose are described in section \textit{\hyperref[HD43]{2.4.3.\ The Text Classification}}, and elements for defining or declaring such classification schemes in section \textit{\hyperref[HD55]{2.3.7.\ The Classification Declaration}}. A second approach is to develop an application-specific set of \textit{feature structures} and an associated \textit{feature system declaration,} as described in chapters \textit{\hyperref[FS]{18.\ Feature Structures}} and \textit{\hyperref[FD]{18.11.\ Feature System Declaration}}.\par
+Where the organizing principles of a corpus or collection so permit, it may be convenient to regard a particular set of values for the situational parameters listed in this section as forming a \textit{text-type} in its own right; this may also be useful where the same set of values applies to several texts within a corpus. In such a case, the set of text-types so defined should be regarded as a \textit{taxonomy}. The mechanisms described in section \textit{\hyperref[HD55]{2.3.7.\ The Classification Declaration}} may be used to define hierarchic taxonomies of such text-types, provided that the \hyperref[TEI.catDesc]{<catDesc>} component of the \hyperref[TEI.category]{<category>} element contains a \hyperref[TEI.textDesc]{<textDesc>} element rather than a prose description. Particular texts may then be associated with such definitions using the mechanisms described in sections \textit{\hyperref[HD43]{2.4.3.\ The Text Classification}}.\par
+Using these situational parameters, an informal domestic conversation might be characterized as follows: \par\bgroup\index{textDesc=<textDesc>|exampleindex}\index{n=@n!<textDesc>|exampleindex}\index{channel=<channel>|exampleindex}\index{mode=@mode!<channel>|exampleindex}\index{constitution=<constitution>|exampleindex}\index{type=@type!<constitution>|exampleindex}\index{derivation=<derivation>|exampleindex}\index{type=@type!<derivation>|exampleindex}\index{domain=<domain>|exampleindex}\index{type=@type!<domain>|exampleindex}\index{factuality=<factuality>|exampleindex}\index{type=@type!<factuality>|exampleindex}\index{interaction=<interaction>|exampleindex}\index{type=@type!<interaction>|exampleindex}\index{active=@active!<interaction>|exampleindex}\index{passive=@passive!<interaction>|exampleindex}\index{preparedness=<preparedness>|exampleindex}\index{type=@type!<preparedness>|exampleindex}\index{purpose=<purpose>|exampleindex}\index{type=@type!<purpose>|exampleindex}\index{degree=@degree!<purpose>|exampleindex}\index{purpose=<purpose>|exampleindex}\index{type=@type!<purpose>|exampleindex}\index{degree=@degree!<purpose>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{textDesc}\hspace*{1em}{n}="{Informal domestic conversation}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{channel}\hspace*{1em}{mode}="{s}">}informal face-to-face conversation{</\textbf{channel}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{constitution}\hspace*{1em}{type}="{single}">}each text represents a continuously\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} recorded interaction among the specified participants\mbox{}\newline 
+\hspace*{1em}{</\textbf{constitution}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{derivation}\hspace*{1em}{type}="{original}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{domain}\hspace*{1em}{type}="{domestic}">}plans for coming week, local affairs{</\textbf{domain}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{factuality}\hspace*{1em}{type}="{mixed}">}mostly factual, some jokes{</\textbf{factuality}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interaction}\hspace*{1em}{type}="{complete}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{active}="{plural}"\hspace*{1em}{passive}="{many}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{preparedness}\hspace*{1em}{type}="{spontaneous}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{purpose}\hspace*{1em}{type}="{entertain}"\hspace*{1em}{degree}="{high}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{purpose}\hspace*{1em}{type}="{inform}"\hspace*{1em}{degree}="{medium}"/>}\mbox{}\newline 
+{</\textbf{textDesc}>}\end{shaded}\egroup\par \par
+The following example demonstrates how the same situational parameters might be used to characterize a novel: \par\bgroup\index{textDesc=<textDesc>|exampleindex}\index{n=@n!<textDesc>|exampleindex}\index{channel=<channel>|exampleindex}\index{mode=@mode!<channel>|exampleindex}\index{constitution=<constitution>|exampleindex}\index{type=@type!<constitution>|exampleindex}\index{derivation=<derivation>|exampleindex}\index{type=@type!<derivation>|exampleindex}\index{domain=<domain>|exampleindex}\index{type=@type!<domain>|exampleindex}\index{factuality=<factuality>|exampleindex}\index{type=@type!<factuality>|exampleindex}\index{interaction=<interaction>|exampleindex}\index{type=@type!<interaction>|exampleindex}\index{preparedness=<preparedness>|exampleindex}\index{type=@type!<preparedness>|exampleindex}\index{purpose=<purpose>|exampleindex}\index{type=@type!<purpose>|exampleindex}\index{degree=@degree!<purpose>|exampleindex}\index{purpose=<purpose>|exampleindex}\index{type=@type!<purpose>|exampleindex}\index{degree=@degree!<purpose>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{textDesc}\hspace*{1em}{n}="{novel}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{channel}\hspace*{1em}{mode}="{w}">}print; part issues{</\textbf{channel}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{constitution}\hspace*{1em}{type}="{single}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{derivation}\hspace*{1em}{type}="{original}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{domain}\hspace*{1em}{type}="{art}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{factuality}\hspace*{1em}{type}="{fiction}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{interaction}\hspace*{1em}{type}="{none}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{preparedness}\hspace*{1em}{type}="{prepared}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{purpose}\hspace*{1em}{type}="{entertain}"\hspace*{1em}{degree}="{high}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{purpose}\hspace*{1em}{type}="{inform}"\hspace*{1em}{degree}="{medium}"/>}\mbox{}\newline 
+{</\textbf{textDesc}>}\end{shaded}\egroup\par \noindent  
+\subsubsection[{The Participant Description}]{The Participant Description}\label{CCAHPA}\par
+The \hyperref[TEI.particDesc]{<particDesc>} element in the \hyperref[TEI.profileDesc]{<profileDesc>} element provides additional information about the participants in a spoken text or, where this is judged appropriate, the persons named or depicted in a written text. When the detailed elements provided by the \textsf{namesdates} module described in \textit{\hyperref[ND]{13.\ Names, Dates, People, and Places}} are included in a schema, this element can contain detailed demographic or descriptive information about individual speakers or groups of speakers, such as their names or other personal characteristics. Individually identified persons may also identified by a code which can then be used elsewhere within the encoded text, for example as the value of a {\itshape who} attribute.\par
+It should be noted that although the terms \textit{speaker} or \textit{participant} are used throughout this section, it is intended that the same mechanisms may be used to characterize fictional personæ or ‘voices’ within a written text, except where otherwise stated. For the purposes of analysis of language usage, the information specified here should be equally applicable to written, spoken, or signed texts.\par
+The element \hyperref[TEI.particDesc]{<particDesc>} contains a description of the participants in an interaction, which may be supplied as straightforward prose, possibly containing a list of names, encoded using the usual \hyperref[TEI.list]{<list>} and \hyperref[TEI.name]{<name>} elements, or alternatively using the more specific and detailed \hyperref[TEI.listPerson]{<listPerson>} element provided by the \textsf{namesdates} module described in \textit{\hyperref[ND]{13.\ Names, Dates, People, and Places}}.\par
+For example, a participant in a recorded conversation might be described informally as follows: \par\bgroup\index{particDesc=<particDesc>|exampleindex}\index{p=<p>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{particDesc}\hspace*{1em}{xml:id}="{p2}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{p}>}Female informant, well-educated, born in Shropshire UK, 12 Jan\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} 1950, of unknown occupation. Speaks French fluently.\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} Socio-Economic status B2 in the PEP classification scheme.{</\textbf{p}>}\mbox{}\newline 
+{</\textbf{particDesc}>}\end{shaded}\egroup\par \par
+Alternatively, when the \textsf{namesdates} module is included in a schema, information about the same participant described above might be provided in a more structured way as follows: \par\bgroup\index{person=<person>|exampleindex}\index{sex=@sex!<person>|exampleindex}\index{age=@age!<person>|exampleindex}\index{birth=<birth>|exampleindex}\index{when=@when!<birth>|exampleindex}\index{date=<date>|exampleindex}\index{name=<name>|exampleindex}\index{type=@type!<name>|exampleindex}\index{langKnowledge=<langKnowledge>|exampleindex}\index{tags=@tags!<langKnowledge>|exampleindex}\index{langKnown=<langKnown>|exampleindex}\index{level=@level!<langKnown>|exampleindex}\index{tag=@tag!<langKnown>|exampleindex}\index{langKnown=<langKnown>|exampleindex}\index{tag=@tag!<langKnown>|exampleindex}\index{residence=<residence>|exampleindex}\index{education=<education>|exampleindex}\index{occupation=<occupation>|exampleindex}\index{socecStatus=<socecStatus>|exampleindex}\index{scheme=@scheme!<socecStatus>|exampleindex}\index{code=@code!<socecStatus>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{person}\hspace*{1em}{sex}="{2}"\hspace*{1em}{age}="{mid}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{birth}\hspace*{1em}{when}="{1950-01-12}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{date}>}12 Jan 1950{</\textbf{date}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{name}\hspace*{1em}{type}="{place}">}Shropshire, UK{</\textbf{name}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{birth}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{langKnowledge}\hspace*{1em}{tags}="{en fr}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{langKnown}\hspace*{1em}{level}="{first}"\hspace*{1em}{tag}="{en}">}English{</\textbf{langKnown}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{langKnown}\hspace*{1em}{tag}="{fr}">}French{</\textbf{langKnown}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{langKnowledge}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{residence}>}Long term resident of Hull{</\textbf{residence}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{education}>}University postgraduate{</\textbf{education}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{occupation}>}Unknown{</\textbf{occupation}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{socecStatus}\hspace*{1em}{scheme}="{\#pep}"\hspace*{1em}{code}="{\#b2}"/>}\mbox{}\newline 
+{</\textbf{person}>}\end{shaded}\egroup\par \par
+An identified character in a drama or a novel may also be regarded as a participant in this sense, and encoded using the same techniques:\footnote{It is particularly useful to define participants in a dramatic text in this way, since it enables the {\itshape who} attribute to be used to link \hyperref[TEI.sp]{<sp>} elements to definitions for their speakers; see further section \textit{\hyperref[DRSP]{7.2.2.\ Speeches and Speakers}}.} \par\bgroup\index{particDesc=<particDesc>|exampleindex}\index{p=<p>|exampleindex}\index{list=<list>|exampleindex}\index{item=<item>|exampleindex}\index{name=<name>|exampleindex}\index{item=<item>|exampleindex}\index{name=<name>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{particDesc}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{p}>}The chief speaking characters in this novel are\mbox{}\newline 
+\hspace*{1em}{<\textbf{list}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{item}\hspace*{1em}{xml:id}="{EMWOO}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{name}>}Emma Woodhouse{</\textbf{name}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{item}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{item}\hspace*{1em}{xml:id}="{DARCY}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{name}>}Mr Darcy{</\textbf{name}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{item}>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{list}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{p}>}\mbox{}\newline 
+{</\textbf{particDesc}>}\end{shaded}\egroup\par \noindent  Here, the characters are simply listed without the detailed structure which use of the \hyperref[TEI.listPerson]{<listPerson>} element permits.
+\subsubsection[{The Setting Description}]{The Setting Description}\label{CCAHSE}\par
+The \hyperref[TEI.settingDesc]{<settingDesc>} element is used to describe the setting or settings in which language interaction takes place. It may contain a prose description, analogous to a stage description at the start of a play, stating in broad terms the locale, or a more detailed description of a series of such settings.\par
+Each distinct setting is described by means of a \hyperref[TEI.setting]{<setting>} element. 
+\begin{sansreflist}
+  
+\item [\textbf{<setting>}] describes one particular setting in which a language interaction takes place.
+\end{sansreflist}
+ Individual settings may be associated with particular participants by means of the optional {\itshape who} attribute which this element inherits as a member of the \textsf{att.ascribed} if, for example, participants are in different places. This attribute identifies one or more individual participants or participant groups, as discussed earlier in section \textit{\hyperref[CCAHPA]{15.2.2.\ The Participant Description}}. If this attribute is not specified, the setting details provided are assumed to apply to all participants represented in the language interaction. Note however that it is not possible to encode different settings for the same participant: a participant is deemed to be a person within a specific setting.\par
+The \hyperref[TEI.setting]{<setting>} element may contain either a prose description or a selection of elements from the classes \textsf{model.nameLike.agent}, \textsf{model.dateLike}, or \textsf{model.settingPart}. By default, when the module defined by this chapter is included in a schema, these classes thus provide the following elements: 
+\begin{sansreflist}
+  
+\item [\textbf{<name>}] (name, proper noun) contains a proper noun or noun phrase.
+\item [\textbf{<date>}] (date) contains a date in any format.
+\item [\textbf{<time>}] (time) contains a phrase defining a time of day in any format.
+\item [\textbf{<locale>}] contains a brief informal description of the kind of place concerned, for example: a room, a restaurant, a park bench, etc.
+\item [\textbf{<activity>}] (activity) contains a brief informal description of what a participant in a language interaction is doing other than speaking, if anything.
+\end{sansreflist}
+ Additional more specific naming elements such as \hyperref[TEI.orgName]{<orgName>} or \hyperref[TEI.persName]{<persName>} may also be available if the \textsf{namesdates} module is also included in the schema.\par
+The following example demonstrates the kind of background information often required to support transcriptions of language interactions, first encoded as a simple prose narrative: \par\bgroup\index{settingDesc=<settingDesc>|exampleindex}\index{p=<p>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{settingDesc}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{p}>}The time is early spring, 1989. P1 and P2 are playing on the rug\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} of a suburban home in Bedford. P3 is doing the washing up at the\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} sink. P4 (a radio announcer) is in a broadcasting studio in\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} London.{</\textbf{p}>}\mbox{}\newline 
+{</\textbf{settingDesc}>}\end{shaded}\egroup\par \noindent  The same information might be represented more formally in the following way: \par\bgroup\index{settingDesc=<settingDesc>|exampleindex}\index{setting=<setting>|exampleindex}\index{who=@who!<setting>|exampleindex}\index{name=<name>|exampleindex}\index{type=@type!<name>|exampleindex}\index{name=<name>|exampleindex}\index{type=@type!<name>|exampleindex}\index{date=<date>|exampleindex}\index{locale=<locale>|exampleindex}\index{activity=<activity>|exampleindex}\index{setting=<setting>|exampleindex}\index{who=@who!<setting>|exampleindex}\index{name=<name>|exampleindex}\index{type=@type!<name>|exampleindex}\index{name=<name>|exampleindex}\index{type=@type!<name>|exampleindex}\index{date=<date>|exampleindex}\index{locale=<locale>|exampleindex}\index{activity=<activity>|exampleindex}\index{setting=<setting>|exampleindex}\index{who=@who!<setting>|exampleindex}\index{name=<name>|exampleindex}\index{type=@type!<name>|exampleindex}\index{time=<time>|exampleindex}\index{locale=<locale>|exampleindex}\index{activity=<activity>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{settingDesc}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{setting}\hspace*{1em}{who}="{\#p1 \#p2}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{name}\hspace*{1em}{type}="{city}">}Bedford{</\textbf{name}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{name}\hspace*{1em}{type}="{region}">}UK: South East{</\textbf{name}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{date}>}early spring, 1989{</\textbf{date}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{locale}>}rug of a suburban home{</\textbf{locale}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{activity}>}playing{</\textbf{activity}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{setting}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{setting}\hspace*{1em}{who}="{\#p3}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{name}\hspace*{1em}{type}="{city}">}Bedford{</\textbf{name}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{name}\hspace*{1em}{type}="{region}">}UK: South East{</\textbf{name}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{date}>}early spring, 1989{</\textbf{date}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{locale}>}at the sink{</\textbf{locale}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{activity}>}washing-up{</\textbf{activity}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{setting}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{setting}\hspace*{1em}{who}="{\#p4}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{name}\hspace*{1em}{type}="{place}">}London, UK{</\textbf{name}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{time}>}unknown{</\textbf{time}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{locale}>}broadcasting studio{</\textbf{locale}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{activity}>}radio performance{</\textbf{activity}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{setting}>}\mbox{}\newline 
+{</\textbf{settingDesc}>}\end{shaded}\egroup\par \par
+Again, a more detailed encoding for places is feasible if the \textsf{namesdates} module is included in the schema. The above examples assume that only the general purpose \hyperref[TEI.name]{<name>} element supplied in the core module is available.
+\subsection[{Associating Contextual Information with a Text}]{Associating Contextual Information with a Text}\label{CCAS}\par
+This section discusses the association of the contextual information held in the header with the individual elements making up a TEI text or corpus. Contextual information is held in elements of various kinds within the TEI header, as discussed elsewhere in this section and in chapter \textit{\hyperref[HD]{2.\ The TEI Header}}. Here we consider what happens when different parts of a document need to be associated with different contextual information of the same type, for example when one part of a document uses a different encoding practice from another, or where one part relates to a different setting from another. In such situations, there will be more than one instance of a header element of the relevant type.\par
+The TEI scheme allow for the following possibilities: \begin{itemize}
+\item A given element may appear in the corpus header only, in the header of one or more texts only, or in both places
+\item There may be multiple occurrences of certain elements in either corpus or text header.
+\end{itemize} \par
+To simplify the exposition, we deal with these two possibilities separately in what follows; however, they may be combined as desired. 
+\subsubsection[{Combining Corpus and Text Headers}]{Combining Corpus and Text Headers}\label{CCAS1}\par
+A TEI-conformant document may have more than one header only in the case of a TEI corpus, which must have a header in its own right, as well as the obligatory header for each text. Every element specified in a corpus-header is understood as if it appeared within every text header in the corpus. An element specified in a text header but not in the corpus header supplements the specification for that text alone. If any element is specified in both corpus and text headers, the corpus header element is over-ridden for that text alone. \par
+The \hyperref[TEI.titleStmt]{<titleStmt>} for a corpus text is understood to be prefixed by the \hyperref[TEI.titleStmt]{<titleStmt>} given in the corpus header. All other optional elements of the \hyperref[TEI.fileDesc]{<fileDesc>} should be omitted from an individual corpus text header unless they differ from those specified in the corpus header. All other header elements behave identically, in the manner documented below. This facility makes it possible to state once for all in the corpus header each piece of contextual information which is common to the whole of the corpus, while still allowing for individual texts to vary from this common denominator.\par
+For example, the following schematic shows the structure of a corpus comprising three texts, the first and last of which share the same encoding description. The second one has its own encoding description. \par\bgroup\index{TEI=<TEI>|exampleindex}\index{teiHeader=<teiHeader>|exampleindex}\index{fileDesc=<fileDesc>|exampleindex}\index{encodingDesc=<encodingDesc>|exampleindex}\index{revisionDesc=<revisionDesc>|exampleindex}\index{TEI=<TEI>|exampleindex}\index{teiHeader=<teiHeader>|exampleindex}\index{fileDesc=<fileDesc>|exampleindex}\index{text=<text>|exampleindex}\index{TEI=<TEI>|exampleindex}\index{teiHeader=<teiHeader>|exampleindex}\index{fileDesc=<fileDesc>|exampleindex}\index{encodingDesc=<encodingDesc>|exampleindex}\index{text=<text>|exampleindex}\index{TEI=<TEI>|exampleindex}\index{teiHeader=<teiHeader>|exampleindex}\index{fileDesc=<fileDesc>|exampleindex}\index{text=<text>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{TEI} xmlns="http://www.tei-c.org/ns/1.0">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{teiHeader}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{fileDesc}>}\mbox{}\newline 
+\textit{<!-- corpus file description-->}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{fileDesc}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{encodingDesc}>}\mbox{}\newline 
+\textit{<!-- default encoding description -->}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{encodingDesc}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{revisionDesc}>}\mbox{}\newline 
+\textit{<!-- corpus revision description -->}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{revisionDesc}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{teiHeader}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{TEI} xmlns="http://www.tei-c.org/ns/1.0">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{teiHeader}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{fileDesc}>}\mbox{}\newline 
+\textit{<!-- file description for this corpus text -->}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{fileDesc}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{teiHeader}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{text}>}\mbox{}\newline 
+\textit{<!-- first corpus text -->}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{text}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{TEI}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{TEI} xmlns="http://www.tei-c.org/ns/1.0">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{teiHeader}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{fileDesc}>}\mbox{}\newline 
+\textit{<!-- file description for this corpus text -->}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{fileDesc}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{encodingDesc}>}\mbox{}\newline 
+\textit{<!-- encoding description for this corpus \newline
+             text, over-riding the default  -->}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{encodingDesc}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{teiHeader}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{text}>}\mbox{}\newline 
+\textit{<!-- second corpus text -->}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{text}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{TEI}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{TEI} xmlns="http://www.tei-c.org/ns/1.0">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{teiHeader}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{fileDesc}>}\mbox{}\newline 
+\textit{<!-- file description for third corpus text -->}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{fileDesc}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{teiHeader}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{text}>}\mbox{}\newline 
+\textit{<!-- third corpus text -->}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{text}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{TEI}>}\mbox{}\newline 
+{</\textbf{TEI}>}\end{shaded}\egroup\par 
+\subsubsection[{Declarable Elements}]{Declarable Elements}\label{CCAS2}\par
+Certain of the elements which can appear within a TEI header are known as \textit{declarable elements}. These elements have in common the fact that they may be linked explicitly with a particular part of a text or corpus by means of a {\itshape decls} attribute on that element. This linkage is used to over-ride the default association between declarations in the header and a corpus or corpus text. The only header elements which may be associated in this way are those which would not otherwise be meaningfully repeatable.\par
+Declarable elements are all members of the class \textsf{att.declarable}; the corresponding declaring elements are all members of the class \textsf{att.declaring}. 
+\begin{sansreflist}
+  
+\item [\textbf{att.declarable}] provides attributes for those elements in the TEI header which may be independently selected by means of the special purpose {\itshape decls} attribute.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape default}]
+  indicates whether or not this element is selected by default when its parent is selected.
+\end{sansreflist}  
+\item [\textbf{att.declaring}] provides attributes for elements which may be independently associated with a particular declarable element within the header, thus overriding the inherited default for that element.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape decls}]
+  identifies one or more \textit{declarable elements} within the header, which are understood to apply to the element bearing this attribute and its content.
+\end{sansreflist}  
+\end{sansreflist}
+\par
+An alphabetically ordered list of declarable elements follows: 
+\begin{sansreflist}
+  
+\item [\textbf{<availability>}] (availability) supplies information about the availability of a text, for example any restrictions on its use or distribution, its copyright status, any licence applying to it, etc.
+\item [\textbf{<bibl>}] (bibliographic citation) contains a loosely-structured bibliographic citation of which the sub-components may or may not be explicitly tagged.
+\item [\textbf{<biblFull>}] (fully-structured bibliographic citation) contains a fully-structured bibliographic citation, in which all components of the TEI file description are present.
+\item [\textbf{<biblStruct>}] (structured bibliographic citation) contains a structured bibliographic citation, in which only bibliographic sub-elements appear and in a specified order.
+\item [\textbf{<broadcast>}] (broadcast) describes a broadcast used as the source of a spoken text.
+\item [\textbf{<correction>}] (correction principles) states how and under what circumstances corrections have been made in the text.
+\item [\textbf{<editorialDecl>}] (editorial practice declaration) provides details of editorial principles and practices applied during the encoding of a text.
+\item [\textbf{<equipment>}] (equipment) provides technical details of the equipment and media used for an audio or video recording used as the source for a spoken text.
+\item [\textbf{<hyphenation>}] (hyphenation) summarizes the way in which hyphenation in a source text has been treated in an encoded version of it.
+\item [\textbf{<interpretation>}] (interpretation) describes the scope of any analytic or interpretive information added to the text in addition to the transcription.
+\item [\textbf{<langUsage>}] (language usage) describes the languages, sublanguages, registers, dialects, etc. represented within a text.
+\item [\textbf{<listBibl>}] (citation list) contains a list of bibliographic citations of any kind.
+\item [\textbf{<normalization>}] (normalization) indicates the extent of normalization or regularization of the original source carried out in converting it to electronic form.
+\item [\textbf{<particDesc>}] (participation description) describes the identifiable speakers, voices, or other participants in any kind of text or other persons named or otherwise referred to in a text, edition, or metadata.
+\item [\textbf{<projectDesc>}] (project description) describes in detail the aim or purpose for which an electronic file was encoded, together with any other relevant information concerning the process by which it was assembled or collected.
+\item [\textbf{<quotation>}] (quotation) specifies editorial practice adopted with respect to quotation marks in the original.
+\item [\textbf{<recording>}] (recording event) provides details of an audio or video recording event used as the source of a spoken text, either directly or from a public broadcast.
+\item [\textbf{<samplingDecl>}] (sampling declaration) contains a prose description of the rationale and methods used in sampling texts in the creation of a corpus or collection.
+\item [\textbf{<scriptStmt>}] (script statement) contains a citation giving details of the script used for a spoken text.
+\item [\textbf{<segmentation>}] (segmentation) describes the principles according to which the text has been segmented, for example into sentences, tone-units, graphemic strata, etc.
+\item [\textbf{<sourceDesc>}] (source description) describes the source(s) from which an electronic text was derived or generated, typically a bibliographic description in the case of a digitized text, or a phrase such as "born digital" for a text which has no previous existence.
+\item [\textbf{<stdVals>}] (standard values) specifies the format used when standardized date or number values are supplied.
+\item [\textbf{<textClass>}] (text classification) groups information which describes the nature or topic of a text in terms of a standard classification scheme, thesaurus, etc.
+\item [\textbf{<textDesc>}] (text description) provides a description of a text in terms of its situational parameters.
+\item [\textbf{<xenoData>}] (non-TEI metadata) provides a container element into which metadata in non-TEI formats may be placed.
+\end{sansreflist}
+ All of the above elements may be multiply defined within a single header, that is, there may be more than one instance of any declarable element type at a given level. When this occurs, the following rules apply: \begin{itemize}
+\item every declarable element must bear a unique identifier
+\item for each different type of declarable element which occurs more than once within the same parent element, exactly one element must be specified as the default, by means of the {\itshape default} attribute
+\end{itemize} \par
+In the following example, an editorial declaration contains two possible \hyperref[TEI.correction]{<correction>} policies, one identified as CorPol1 and the other as CorPol2. Since there are two, one of them (in this case CorPol1) should be specified as the default: \par\bgroup\index{editorialDecl=<editorialDecl>|exampleindex}\index{correction=<correction>|exampleindex}\index{default=@default!<correction>|exampleindex}\index{p=<p>|exampleindex}\index{correction=<correction>|exampleindex}\index{p=<p>|exampleindex}\index{normalization=<normalization>|exampleindex}\index{p=<p>|exampleindex}\index{p=<p>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{editorialDecl}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{correction}\hspace*{1em}{xml:id}="{CorPol1}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{default}="{true}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{p}>} ... {</\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{correction}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{correction}\hspace*{1em}{xml:id}="{CorPol2}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{p}>} ... {</\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{correction}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{normalization}\hspace*{1em}{xml:id}="{n1}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{p}>} ... {</\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{p}>} ... {</\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{normalization}>}\mbox{}\newline 
+{</\textbf{editorialDecl}>}\end{shaded}\egroup\par \noindent  For texts associated with the header in which this declaration appears, correction method CorPol1 will be assumed, unless they explicitly state otherwise. Here is the structure for a text which does state otherwise: \par\bgroup\index{text=<text>|exampleindex}\index{body=<body>|exampleindex}\index{div1=<div1>|exampleindex}\index{n=@n!<div1>|exampleindex}\index{div1=<div1>|exampleindex}\index{n=@n!<div1>|exampleindex}\index{decls=@decls!<div1>|exampleindex}\index{div1=<div1>|exampleindex}\index{n=@n!<div1>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{text}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{body}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{div1}\hspace*{1em}{n}="{d1}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{div1}\hspace*{1em}{n}="{d2}"\hspace*{1em}{decls}="{\#CorPol2}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{div1}\hspace*{1em}{n}="{d3}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{body}>}\mbox{}\newline 
+{</\textbf{text}>}\end{shaded}\egroup\par \noindent  In this case, the contents of the divisions D1 and D3 will both use correction policy CorPol1, and those of division D2 will use correction policy CorPol2.\par
+The {\itshape decls} attribute is defined for any element which is a member of the class \textit{declaring}. This includes the major structural elements \hyperref[TEI.text]{<text>}, \hyperref[TEI.group]{<group>}, and \hyperref[TEI.div]{<div>}, as well as smaller structural units, down to the level of paragraphs in prose, individual utterances in spoken texts, and entries in dictionaries. However, TEI recommended practice is to limit the number of multiple declarable elements used by a document as far as possible, for simplicity and ease of processing.\par
+The identifier or identifiers specified by the {\itshape decls} attribute are subject to two further restrictions: \begin{itemize}
+\item An identifier specifying an element which contains multiple instances of one or more other elements should be interpreted as if it explicitly identified the elements identified as the default in each such set of repeated elements
+\item Each element specified, explicitly or implicitly, by the list of identifiers must be of a different kind.
+\end{itemize} \par
+To demonstrate how these rules operate, we now expand our earlier example slightly: \par\bgroup\index{encodingDesc=<encodingDesc>|exampleindex}\index{editorialDecl=<editorialDecl>|exampleindex}\index{default=@default!<editorialDecl>|exampleindex}\index{correction=<correction>|exampleindex}\index{default=@default!<correction>|exampleindex}\index{p=<p>|exampleindex}\index{correction=<correction>|exampleindex}\index{p=<p>|exampleindex}\index{normalization=<normalization>|exampleindex}\index{p=<p>|exampleindex}\index{p=<p>|exampleindex}\index{editorialDecl=<editorialDecl>|exampleindex}\index{correction=<correction>|exampleindex}\index{default=@default!<correction>|exampleindex}\index{p=<p>|exampleindex}\index{correction=<correction>|exampleindex}\index{p=<p>|exampleindex}\index{normalization=<normalization>|exampleindex}\index{p=<p>|exampleindex}\index{normalization=<normalization>|exampleindex}\index{default=@default!<normalization>|exampleindex}\index{p=<p>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{encodingDesc}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{editorialDecl}\hspace*{1em}{xml:id}="{ED1}"\hspace*{1em}{default}="{true}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{correction}\hspace*{1em}{xml:id}="{C1A}"\hspace*{1em}{default}="{true}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{p}>} ... {</\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{correction}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{correction}\hspace*{1em}{xml:id}="{C1B}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{p}>} ... {</\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{correction}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{normalization}\hspace*{1em}{xml:id}="{N1}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{p}>} ... {</\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{p}>} ... {</\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{normalization}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{editorialDecl}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{editorialDecl}\hspace*{1em}{xml:id}="{ED2}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{correction}\hspace*{1em}{xml:id}="{C2A}"\hspace*{1em}{default}="{true}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{p}>} ... {</\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{correction}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{correction}\hspace*{1em}{xml:id}="{C2B}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{p}>} ... {</\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{correction}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{normalization}\hspace*{1em}{xml:id}="{N2A}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{p}>} ... {</\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{normalization}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{normalization}\hspace*{1em}{xml:id}="{N2B}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{default}="{true}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{p}>} ... {</\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{normalization}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{editorialDecl}>}\mbox{}\newline 
+{</\textbf{encodingDesc}>}\end{shaded}\egroup\par \par
+This encoding description now has two editorial declarations, identified as ED1 (the default) and ED2. For texts not specifying otherwise, ED1 will apply. If ED1 applies, correction method C1A and normalization method N1 apply, since these are the specified defaults within ED1. In the same way, for a text specifying {\itshape decls} as ‘ED2’, correction C2A, and normalization N2B will apply.\par
+A finer grained approach is also possible. A text might specify <text decls='C2B N2A'>, to ‘mix and match’ declarations as required. A tag such as <text decls='ED1 ED2'> would (obviously) be illegal, since it includes two elements of the same type; a tag such as <text decls='ED2 C1A'> is also illegal, since in this context ED2 is synonymous with the defaults for that editorial declaration, namely C2A N2B, resulting in a list that identifies two correction elements (C1A and C2A).
+\subsubsection[{Summary}]{Summary}\label{CCAS3}\par
+The rules determining which of the declarable elements are applicable at any point may be summarized as follows: \begin{enumerate}
+\item If there is a single occurrence of a given declarable element in a corpus header, then it applies by default to all elements within the corpus.
+\item If there is a single occurrence of a given declarable element in the text header, then it applies by default to all elements of that text irrespective of the contents of the corpus header.
+\item Where there are multiple occurrences of declarable elements within either corpus or text header, \mbox{}\\[-10pt] \begin{itemize}
+\item each must have a unique value specified as the value of its {\itshape xml:id} attribute;
+\item one only must bear a {\itshape default} attribute with the value YES.
+\end{itemize} 
+\item It is a semantic error for an element to be associated with more than one occurrence of any declarable element.
+\item Selecting an element which contains multiple occurrences of a given declarable element is semantically equivalent to selecting only those contained elements which are specified as defaults.
+\item An association made by one element applies by default to all of its descendants. 
+\end{enumerate}
+\subsection[{Linguistic Annotation of Corpora}]{Linguistic Annotation of Corpora}\label{CCAN}\par
+Language corpora often include analytic encodings or annotations, designed to support a variety of different views of language. The present Guidelines do not advocate any particular approach to linguistic annotation (or ‘tagging’); instead a number of general analytic facilities are provided which support the representation of most forms of annotation in a standard and self-documenting manner. Analytic annotation is of importance in many fields, not only in corpus linguistics, and is therefore discussed in general terms elsewhere in the Guidelines.\footnote{See in particular chapters \textit{\hyperref[SA]{16.\ Linking, Segmentation, and Alignment}}, \textit{\hyperref[AI]{17.\ Simple Analytic Mechanisms}}, and \textit{\hyperref[FS]{18.\ Feature Structures}}.} The present section presents informally some particular applications of these general mechanisms to the specific practice of corpus linguistics.
+\subsubsection[{Levels of Analysis}]{Levels of Analysis}\label{CCAN1}\par
+By \textit{linguistic annotation} we mean here any annotation determined by an analysis of linguistic features of the text, excluding as borderline cases both the formal structural properties of the text (e.g. its division into chapters or paragraphs) and descriptive information about its context (the circumstances of its production, its genre, or medium). The structural properties of any TEI-conformant text should be represented using the structural elements discussed elsewhere in these Guidelines, for example in chapters \textit{\hyperref[CO]{3.\ Elements Available in All TEI Documents}} and \textit{\hyperref[DS]{4.\ Default Text Structure}}. The contextual properties of a TEI text are fully documented in the TEI header, which is discussed in chapter \textit{\hyperref[HD]{2.\ The TEI Header}}, and in section \textit{\hyperref[CCAH]{15.2.\ Contextual Information}} of the present chapter.\par
+Other forms of linguistic annotation may be applied at a number of levels in a text. A code (such as a word-class or part-of-speech code) may be associated with each word or token, or with groups of such tokens, which may be continuous, discontinuous, or nested. A code may also be associated with relationships (such as cohesion) perceived as existing between distinct parts of a text. The codes themselves may stand for discrete non-decomposable categories, or they may represent highly articulated bundles of textual features. Their function may be to place the annotated part of the text somewhere within a narrowly linguistic or discoursal domain of analysis, or within a more general semantic field, or any combination drawn from these and other domains. \par
+The manner by which such annotations are generated and attached to the text may be entirely automatic, entirely manual, or a mixture. The ease and accuracy with which analysis may be automated may vary with the level at which the annotation is attached. The method employed should be documented in the \hyperref[TEI.interpretation]{<interpretation>} element within the encoding description of the TEI header, as described in section \textit{\hyperref[HD53]{2.3.3.\ The Editorial Practices Declaration}}. Where different parts of a corpus have used different annotation methods, the {\itshape decls} attribute should be used to indicate the fact, as further discussed in section \textit{\hyperref[CCAS]{15.3.\ Associating Contextual Information with a Text}}.\par
+An extended example of one form of linguistic analysis commonly practised in corpus linguistics is given in section \textit{\hyperref[AILA]{17.4.\ Linguistic Annotation}}.
+\subsection[{Recommendations for the Encoding of Large Corpora}]{Recommendations for the Encoding of Large Corpora}\label{CCREC}\par
+These Guidelines include proposals for the identification and encoding of a far greater variety of textual features and characteristics than is likely to be either feasible or desirable in any one language corpus, however large and ambitious. The reasoning behind this catholic approach is further discussed in chapter \textit{\hyperref[AB]{iv\ About These Guidelines}}. For most large-scale corpus projects, it will therefore be necessary to determine a subset of TEI recommended elements appropriate to the anticipated needs of the project, as further discussed in chapter \textit{\hyperref[MD]{23.3.\ Customization}}; these mechanisms include the ability to exclude selected element types, add new element types, and change the names of existing elements. A discussion of the implications of such changes for TEI conformance is provided in chapter \textit{\hyperref[CF]{23.4.\ Conformance}}.\par
+Because of the high cost of identifying and encoding many textual features, and the difficulty in ensuring consistent practice across very large corpora, encoders may find it convenient to divide the set of elements to be encoded into the following four categories: \begin{description}
+
+\item[{required}]texts included within the corpus will always encode textual features in this category, should they exist in the text
+\item[{recommended}]textual features in this category will be encoded wherever economically and practically feasible; where present but not encoded, a note in the header should be made.
+\item[{optional}]textual features in this category may or may not be encoded; no conclusion about the absence of such features can be inferred from the absence of the corresponding element in a given text.
+\item[{proscribed}]textual features in this category are deliberately not encoded; they may be transcribed as unmarked up text, or represented as \hyperref[TEI.gap]{<gap>} elements, or silently omitted, as appropriate.
+\end{description} 
+\subsection[{Module for Language Corpora}]{Module for Language Corpora}\par
+The module described in this chapter makes available the following components: \begin{description}
+
+\item[{Module corpus: Corpus texts}]\hspace{1em}\hfill\linebreak
+\mbox{}\\[-10pt] \begin{itemize}
+\item {\itshape Elements defined}: \hyperref[TEI.activity]{activity} \hyperref[TEI.channel]{channel} \hyperref[TEI.constitution]{constitution} \hyperref[TEI.derivation]{derivation} \hyperref[TEI.domain]{domain} \hyperref[TEI.factuality]{factuality} \hyperref[TEI.interaction]{interaction} \hyperref[TEI.locale]{locale} \hyperref[TEI.particDesc]{particDesc} \hyperref[TEI.preparedness]{preparedness} \hyperref[TEI.purpose]{purpose} \hyperref[TEI.setting]{setting} \hyperref[TEI.settingDesc]{settingDesc} \hyperref[TEI.textDesc]{textDesc}
+\end{itemize} 
+\end{description}   The selection and combination of modules to form a TEI schema is described in \textit{\hyperref[STIN]{1.2.\ Defining a TEI Schema}}.

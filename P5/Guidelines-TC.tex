@@ -1,0 +1,735 @@
+
+\section[{Critical Apparatus}]{Critical Apparatus}\label{TC}\par
+Scholarly editions of texts, especially texts of great antiquity or importance, often record some or all of the known variations among different \textit{witnesses} to the text. Witnesses to a text may include authorial or other manuscripts, printed editions of the work, early translations, or quotations of a work in other texts. Information concerning variant readings of a text may be accumulated in highly structured form in a critical apparatus of variants. This chapter defines a module for use in encoding such an apparatus of variants, which may be used in conjunction with any of the modules defined in these Guidelines. It also defines an element class which provides extra attributes for some elements of the core tag set when this module is selected. In printed critical editions, the apparatus takes the form of highly-compressed notes at the bottom of each page. TEI’s critical apparatus module allows variation to be encoded so that such notes may be generated, but it also models the variation so that, for example, interactive editions in which readers can choose which witness readings to display are possible.\par
+Information about variant readings (whether or not represented by a critical apparatus in the source text) may be recorded in a series of \textit{apparatus entries}, each entry documenting one \textit{variation}, or set of readings, in the text. Elements for the apparatus entry and readings, and for the documentation of the witnesses whose readings are included in the apparatus, are described in section \textit{\hyperref[TCAPLL]{12.1.\ The Apparatus Entry, Readings, and Witnesses}}. Special tags for fragmentary witnesses are described in section \textit{\hyperref[TCAPMI]{12.1.5.\ Fragmentary Witnesses}}. The available methods for embedding the apparatus in the rest of the text, or for linking an external apparatus to the text of the edition, are described in section \textit{\hyperref[TCAPLK]{12.2.\ Linking the Apparatus to the Text}}. Finally, several extra attributes for some tags of the core tag set, made available when the additional tag set for text criticism is selected, are documented in section \textit{\hyperref[PHCO]{11.3.1.1.\ Core Elements for Transcriptional Work}}.\par
+Scholarly practice in representing critical editions differs widely across disciplines, time periods, and languages. The TEI does not make any recommendations as to which text-critical methods are best suited to any given text. Editors will wish to consider questions such as: \begin{itemize}
+\item What source documents will be used? Are there many witnesses, few, or one? Are the sources relatively close copies or not?
+\item Will there be a single ‘base’ text? Or will witnesses be separately transcribed?
+\item If a single base text will be used, will it be that of a particular witness, or will the editor attempt to reconstruct an ideal or original text?
+\item Will each reading in an apparatus entry record every attestation (a ‘positive’ apparatus), or merely witnesses that deviate from the base text (a ‘negative’ apparatus)?
+\item Will the readings of most or all witnesses be represented in the apparatus, or only a selection the editor deems relevant?
+\item What level of variation will require distinguishing one witness reading from another? For example, will the editor consider an abbreviated word in a witness as agreeing with the base text, or not?
+\item Will conjectures (variant readings suggested by an editor) be treated differently than readings found in witnesses?
+\item Will there be a need to distinguish different types of variation, for example orthographic vs. morphological or lexical variants?
+\end{itemize} \par
+Different editorial methodologies will produce different answers to these questions, and those answers may influence choices of markup used in the edition. For example, if there will be multiple witness transcriptions and a single apparatus, then the \hyperref[TCAPDE]{double end-point attachment} method may be the best choice of apparatus linking style. The \hyperref[TCAPPS]{parallel segmentation} method may present several advantages to editors producing an edition with a single base text. Editors of single-source editions may care to note material aspects of the text (such as \hyperref[TEI.damage]{<damage>} or \hyperref[TEI.unclear]{<unclear>} text). On the other hand, editors attempting to synthesize an ideal or original text from many witnesses may feel little need to represent the material aspects of individual witnesses. Editors wishing to distinguish witness readings from conjectures by modern editors may wish to use {\itshape wit} to indicate the former and {\itshape source} for the latter. Differences in types of variation might be marked using {\itshape type} or {\itshape ana} on the \hyperref[TEI.rdg]{<rdg>} element.\par
+Many examples given in this chapter refer to the following texts of the opening (usually just line 1) of Chaucer's \textit{Wife of Bath's Prologue}, as it appears in each of the four different manuscripts \begin{itemize}
+\item Ellesmere, Huntingdon Library 26.C.9 (\textbf{El}) 
+\item Hengwrt, National Library of Wales, Aberystwyth, Peniarth 392D (\textbf{Hg}) 
+\item British Library Lansdowne 851 (\textbf{La}) 
+\item Bodleian Library Rawlinson Poetic 149 (\textbf{Ra2}) 
+\end{itemize} 
+\subsection[{The Apparatus Entry, Readings, and Witnesses}]{The Apparatus Entry, Readings, and Witnesses}\label{TCAPLL}\par
+This section introduces the fundamental markup methods used to encode textual variations: \begin{itemize}
+\item the \hyperref[TEI.app]{<app>} element for entries in the critical apparatus: see section \textit{\hyperref[TCAPEN]{12.1.1.\ The Apparatus Entry}}.
+\item elements for identifying individual readings: see section \textit{\hyperref[TCAPLR]{12.1.2.\ Readings}}.
+\item ways of grouping readings together: see section \textit{\hyperref[TCAPSU]{12.1.3.\ Indicating Subvariation in Apparatus Entries}}.
+\item methods of identifying which witnesses support a particular reading, and for describing the witnesses included in the apparatus: see section \textit{\hyperref[TCAPLW]{12.1.4.\ Witness Information}}.
+\item elements for indicating which portions of a text are covered by fragmentary witnesses: see section \textit{\hyperref[TCAPMI]{12.1.5.\ Fragmentary Witnesses}}.
+\end{itemize} \par
+The \hyperref[TEI.app]{<app>} element is in one sense a more sophisticated and complex version of the \hyperref[TEI.choice]{<choice>} element introduced in \textit{\hyperref[COEDCOR]{3.5.1.\ Apparent Errors}} as a way of marking points where the encoding of a passage in a single source may be carried out in more than one way. Unlike \hyperref[TEI.choice]{<choice>}, however, the \hyperref[TEI.app]{<app>} element allows for the representation of many different versions of the same passage taken from different sources.
+\subsubsection[{The Apparatus Entry}]{The Apparatus Entry}\label{TCAPEN}\par
+Individual textual variations are encoded using the \hyperref[TEI.app]{<app>} element, which groups together all the readings constituting the variation. The identification of discrete textual variations or apparatus entries is not a purely mechanical process; different editors will group readings differently. No rules are given here as to how to collect readings into apparatus entries.\par
+The individual apparatus entry is encoded with the \hyperref[TEI.app]{<app>} element: 
+\begin{sansreflist}
+  
+\item [\textbf{<app>}] (apparatus entry) contains one entry in a critical apparatus, with an optional lemma and usually one or more readings or notes on the relevant passage.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape type}]
+  classifies the variation contained in this element according to some convenient typology.
+    \item[@{\itshape from}]
+  identifies the beginning of the lemma in the base text.
+    \item[@{\itshape to}]
+  identifies the endpoint of the lemma in the base text.
+    \item[@{\itshape loc}]
+  (location) indicates the location of the variation, when the location-referenced method of apparatus markup is used.
+\end{sansreflist}  
+\end{sansreflist}
+\par
+The attributes {\itshape loc}, {\itshape from}, and {\itshape to}, are used to link the apparatus entry to the base text, if present. In such cases, several methods may be used for such linkage, each involving a slightly different usage for these attributes. Linkage between text and apparatus is described below in section \textit{\hyperref[TCAPLK]{12.2.\ Linking the Apparatus to the Text}}. For the use of the \hyperref[TEI.app]{<app>} element without a base text, see \textit{\hyperref[TCAPPS]{12.2.3.\ The Parallel Segmentation Method}}.\par
+Each \hyperref[TEI.app]{<app>} element usually comprises one or more readings, which in turn are encoded using the \hyperref[TEI.rdg]{<rdg>} or other elements, as described in the next section. A very simple partial apparatus for the first line of the \textit{Wife of Bath's Prologue} might take a form something like this: \par\bgroup\index{app=<app>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#El}">}Experience though noon Auctoritee{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}">}Experiment thouh noon Auctoritee{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ra2}">}Eryment though none auctorite{</\textbf{rdg}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \noindent  Of course, in practice the apparatus will be somewhat more complex. Specifically, it may be desired to record more obviously that manuscripts El and La agree on the words ‘noon Auctoritee’, to indicate a preference for one reading, etc. The following sections on readings, subvariation, and witness information describe some of the more important complications which can arise.
+\subsubsection[{Readings}]{Readings}\label{TCAPLR}\par
+Individual readings are the crucial elements in any critical apparatus of variants. The following elements should be used to tag individual readings within an apparatus entry: 
+\begin{sansreflist}
+  
+\item [\textbf{<lem>}] (lemma) contains the lemma, or base text, of a textual variation.
+\item [\textbf{<rdg>}] (reading) contains a single reading within a textual variation.
+\end{sansreflist}
+ N.B. the term \textit{lemma} is used here in the text-critical sense of ‘the reading accepted as that of the original or of the base text’. This sense differs from that in which the word is used elsewhere in the Guidelines, for example as in the attribute {\itshape lemma} where the intended sense is ‘the root form of an inflected word’, or ‘the heading of an entry in a reference book, especially a dictionary’. \par
+In recording readings within an apparatus entry, the \hyperref[TEI.rdg]{<rdg>} element should always be used; each \hyperref[TEI.app]{<app>} usually contains at least one \hyperref[TEI.rdg]{<rdg>}, though it may contain only \hyperref[TEI.note]{<note>}s.\par
+The \hyperref[TEI.lem]{<lem>} element may also be used to record the base text of the source edition, to mark the readings of a base witness, to indicate the preference of an editor or encoder for a particular reading, or (e.g. in the case of an external apparatus) to indicate precisely to which portion of the main text the variation applies. Those who prefer to work without the notion of a base text or who are not using the parallel segmentation method may prefer not to use it at all. How it is used depends in part on the method chosen for linking the apparatus to the text; for more information, see section \textit{\hyperref[TCAPLK]{12.2.\ Linking the Apparatus to the Text}}.\par
+Readings may be encoded individually, or grouped for clarity using the \hyperref[TEI.rdgGrp]{<rdgGrp>} element described in section \textit{\hyperref[TCAPSU]{12.1.3.\ Indicating Subvariation in Apparatus Entries}}.\par
+As members of the attribute class \textsf{att.textCritical}, both of these elements inherit the following attributes: 
+\begin{sansreflist}
+  
+\item [\textbf{att.textCritical}] defines a set of attributes common to all elements representing variant readings in text critical work.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape type}]
+  classifies the reading according to some useful typology.
+    \item[@{\itshape cause}]
+  classifies the cause for the variant reading, according to any appropriate typology of possible origins.
+    \item[@{\itshape varSeq}]
+  (variant sequence) provides a number indicating the position of this reading in a sequence, when there is reason to presume a sequence to the variants. 
+    \item[@{\itshape hand [att.written]}]
+  points to a \hyperref[TEI.handNote]{<handNote>} element describing the hand considered responsible for the content of the element concerned.
+\end{sansreflist}  
+\end{sansreflist}
+. \hyperref[TEI.rdg]{<rdg>} (but not \hyperref[TEI.rdgGrp]{<rdgGrp>}) is also a member of \textsf{att.witnessed}: 
+\begin{sansreflist}
+  
+\item [\textbf{att.witnessed}] supplies the attribute used to identify the witnesses supporting a particular reading in a critical apparatus.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape wit}]
+  (witness or witnesses) contains a space-delimited list of one or more pointers indicating the witnesses which attest to a given reading.
+\end{sansreflist}  
+\end{sansreflist}
+ These elements also inherit the following attributes from the \textsf{att.global.responsibility} class: 
+\begin{sansreflist}
+  
+\item [\textbf{att.global.responsibility}] provides attributes indicating the agent responsible for some aspect of the text, the markup or something asserted by the markup, and the degree of certainty associated with it.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape resp}]
+  (responsible party) indicates the agency responsible for the intervention or interpretation, for example an editor or transcriber.
+    \item[@{\itshape cert}]
+  (certainty) signifies the degree of certainty associated with the intervention or interpretation.
+\end{sansreflist}  
+\end{sansreflist}
+ As elsewhere, these attributes may be used to indicate the person responsible for the editorial decision being recorded, and also the degree of certainty associated with that decision by the person carrying out the encoding.\par
+The {\itshape wit} attribute identifies the witnesses which have the reading in question. It is required if the apparatus gathers together readings from different witnesses, but may be omitted in an apparatus recording the readings of only one witness, e.g. substitutions, divergent opinions on what is in the witness or on how to expand abbreviations, etc. Even in such a one-witness apparatus, however, the {\itshape wit} attribute may still be useful when it is desired to record the occurrence of a particular reading in some other witness. For other methods of identifying the witnesses to a reading, see section \textit{\hyperref[TCAPLW]{12.1.4.\ Witness Information}}.\par
+The {\itshape type} attribute allows the encoder to classify readings in any convenient way, for example as substantive variants of the lemma: \par\bgroup\index{app=<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{wit=@wit!<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{type=@type!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{type=@type!<rdg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{lem}\hspace*{1em}{wit}="{\#El \#Hg}">}Experience{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}"\hspace*{1em}{type}="{substantive}">}Experiment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ra2}"\hspace*{1em}{type}="{substantive}">}Eryment{</\textbf{rdg}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \noindent  or as orthographic variants: \par\bgroup\index{app=<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{wit=@wit!<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{type=@type!<rdg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{lem}\hspace*{1em}{wit}="{\#El \#Ra2}">}though{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}"\hspace*{1em}{type}="{orthographic}">}thouh{</\textbf{rdg}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \par
+The {\itshape varSeq} and {\itshape cause} attributes may be used to convey information on the sequence and cause of variation. In the following apparatus fragment, the reading \textit{Eryment} is tagged as sequential to (derived from) the reading \textit{Experiment}, and the cause is given as loss of the abbreviation for \textit{per}. \par\bgroup\index{app=<app>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{varSeq=@varSeq!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{cause=@cause!<rdg>|exampleindex}\index{varSeq=@varSeq!<rdg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}"\hspace*{1em}{varSeq}="{1}">}Experiment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ra2}"\hspace*{1em}{cause}="{abbreviation\textunderscore loss}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{varSeq}="{2}">}Eryment{</\textbf{rdg}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \par
+If a manuscript is written in several hands, and it is desired to report which hand wrote a particular reading, the {\itshape hand} attribute should be used. For example, in the Munich manuscript containing the \textit{Carmina Burana}, the word \textit{alle} has been changed to \textit{allen}: \par\bgroup\index{l=<l>|exampleindex}\index{l=<l>|exampleindex}\index{l=<l>|exampleindex}\index{l=<l>|exampleindex}\index{app=<app>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{varSeq=@varSeq!<rdg>|exampleindex}\index{hand=@hand!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{cause=@cause!<rdg>|exampleindex}\index{varSeq=@varSeq!<rdg>|exampleindex}\index{hand=@hand!<rdg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{l}>}Swaz hi gât umbe{</\textbf{l}>}\mbox{}\newline 
+{<\textbf{l}>}daz sint alle megede,{</\textbf{l}>}\mbox{}\newline 
+{<\textbf{l}>}die wellent ân man{</\textbf{l}>}\mbox{}\newline 
+{<\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Mu}"\hspace*{1em}{varSeq}="{1}"\hspace*{1em}{hand}="{\#m1}">}alle{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Mu}"\hspace*{1em}{cause}="{nachgetragen}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{varSeq}="{2}"\hspace*{1em}{hand}="{\#m2}">}allen{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{app}>}\mbox{}\newline 
+ disen sumer gân.\mbox{}\newline 
+{</\textbf{l}>}\end{shaded}\egroup\par \noindent    \par
+Similarly, if a witness is hard to decipher, it may be desired to indicate responsibility for the claim that a particular reading is supported by a particular witness. In line 2212a of \textit{Beowulf}, for example, the manuscript is read in different ways by different scholars; the editor Klaeber prints one text, using parentheses to indicate his expansion, and records in the apparatus two different accounts of the manuscript reading, by Zupitza and Chambers:\footnote{For the sake of legibility in the example, long marks over vowels are omitted.} \par\bgroup\index{l=<l>|exampleindex}\index{app=<app>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{source=@source!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{source=@source!<rdg>|exampleindex}\index{l=<l>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{l}>}se ðe on\mbox{}\newline 
+{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Kl}">}hea(um) h(æþ)e{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#ms}"\hspace*{1em}{source}="{\#Z}">}heaðo hlæwe{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#ms}"\hspace*{1em}{source}="{\#Cha}">}heaum hope{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{app}>}\mbox{}\newline 
+{</\textbf{l}>}\mbox{}\newline 
+{<\textbf{l}>}hord beweotode,{</\textbf{l}>}\end{shaded}\egroup\par \par
+Because the {\itshape hand} attribute indicates a particular manuscript hand, it is intelligible only on a reading from a single witness. If an encoder wishes to indicate that a particular reading from a list in {\itshape wit} is in a particular hand, the \hyperref[TEI.witDetail]{<witDetail>} element should be used; see section \textit{\hyperref[TCAPLW]{12.1.4.\ Witness Information}}.\par
+Where there is a greater weight of editorial discussion and interpretation than can conveniently be expressed through the attributes provided on these elements (for example where the editor wishes to discuss how a section of text might be punctuated) this information can be attached to the apparatus in a note.\par
+The \hyperref[TEI.note]{<note>} element may also be used to record the specific wording of notes in the apparatus of the source edition, as here in a transcription of Friedrich Klaeber's note on \textit{Beowulf} 2207a: \par\bgroup\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\index{app=<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{note=<note>|exampleindex}\index{source=@source!<note>|exampleindex}\index{mentioned=<mentioned>|exampleindex}\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{l}\hspace*{1em}{n}="{2207a}">}syððan {<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{lem}>}Beowulfe{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{note}\hspace*{1em}{source}="{\#Kl}">}Fol. 179a {<\textbf{mentioned}>}beowulfe{</\textbf{mentioned}>}.\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} Folio 179, with the last page (Fol. 198b), is the worst part of the\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} entire MS. It has been freshened up by a later hand, but not always\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} correctly. Information on doubtful readings is in the notes of\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} Zupitza and Chambers.{</\textbf{note}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{app}>}\mbox{}\newline 
+{</\textbf{l}>}\mbox{}\newline 
+{<\textbf{l}\hspace*{1em}{n}="{2207b}">}brade rice{</\textbf{l}>}\end{shaded}\egroup\par \noindent   Notes providing details of the reading of one particular witness should be encoded using the specialized \hyperref[TEI.witDetail]{<witDetail>} element described in section \textit{\hyperref[TCAPLW]{12.1.4.\ Witness Information}}.\par
+Encoders should be aware of the distinct fields of use of the attribute values {\itshape wit}, {\itshape hand}, and {\itshape source}. Broadly, {\itshape wit} identifies the physical entity in which the reading is found (manuscript, clay tablet, papyrus, printed edition); {\itshape hand} refers to the agent responsible for inscribing that reading in that physical entity (scribe, author, inscriber, hand 1, hand 2); {\itshape source} indicates the scholar responsible for asserting the existence of that reading in that physical entity. In some cases, the categories may blur: a scholar may produce an edition introducing readings for which he or she is responsible; that edition may itself become a witness in a later critical apparatus. Thus, readings introduced as corrections in the earlier edition will be seen in the later apparatus as witnessed by the earlier edition. As observed in the discussion concerning the discrimination of {\itshape hand} and {\itshape resp} in transcription of primary sources in section \textit{\hyperref[PHHR]{11.3.2.2.\ Hand, Responsibility, and Certainty Attributes}}, the division of layers of responsibility through various scholars for particular aspects of a particular reading may require the more complex mechanisms for assigning responsibility described in chapter \textit{\hyperref[CE]{21.\ Certainty, Precision, and Responsibility}}.
+\subsubsection[{Indicating Subvariation in Apparatus Entries}]{Indicating Subvariation in Apparatus Entries}\label{TCAPSU}\par
+The \hyperref[TEI.rdgGrp]{<rdgGrp>} element may be used to group readings, either because they have identical values on one or more attributes, or because they are seen as forming a self-contained variant sequence, or for some other reason. This grouping of readings is entirely optional: no such grouping of readings is required. 
+\begin{sansreflist}
+  
+\item [\textbf{<rdgGrp>}] (reading group) within a textual variation, groups two or more readings perceived to have a genetic relationship or other affinity.
+\end{sansreflist}
+\par
+The \hyperref[TEI.rdgGrp]{<rdgGrp>} element is a member of class \textsf{att.textCritical} and therefore can carry the {\itshape type}, {\itshape cause}, {\itshape varSeq}, {\itshape hand}, and {\itshape resp} attributes described in the preceding section. When values for any of these attributes are given on a \hyperref[TEI.rdgGrp]{<rdgGrp>} element, the values given are inherited by the \hyperref[TEI.rdg]{<rdg>} or \hyperref[TEI.lem]{<lem>} elements nested within the reading group, unless overridden by a new specification on the individual reading element.\par
+To indicate that both Hg and La vary only orthographically from the lemma, one might tag both readings <rdg type='orthographic'>, as shown in the preceding section. This fact can be expressed more perspicuously, however, by grouping their readings into a \hyperref[TEI.rdgGrp]{<rdgGrp>}, thus: \par\bgroup\index{app=<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{wit=@wit!<lem>|exampleindex}\index{rdgGrp=<rdgGrp>|exampleindex}\index{type=@type!<rdgGrp>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{lem}\hspace*{1em}{wit}="{\#El \#Ra2}">}though{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdgGrp}\hspace*{1em}{type}="{orthographic}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}">}thogh{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Hg}">}thouh{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rdgGrp}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \par
+Similarly, \hyperref[TEI.rdgGrp]{<rdgGrp>} may be used to organize the substantive variants of an apparatus entry. Editors may need to indicate that each of a group of witnesses may be taken as all supporting a particular reading, even though there may be variation concerning the exact form of that reading in, or the degree of support offered by, those witnesses. For example: one may identify three substantive variants on the first word of Chaucer's \textit{Wife of Bath's Prologue} in the manuscripts: these might be expressed in regularized spelling as \textit{Experience}, \textit{Experiment}, and \textit{Eriment}. In fact, the manuscripts display many different spellings of these words, and a scholar may wish both to show that the manuscripts have all these variant spellings and that these variant spellings actually support only the three regularized spelling forms. One may term these variant spellings as ‘subvariants’ of the regularized spelling forms.\par
+This subvariation can be expressed within an \hyperref[TEI.app]{<app>} element by gathering the readings into three groups according to the normalized form of their reading. All the readings within each group may be accounted subvariants of the main reading for the group, which may be indicated by tagging it as a \hyperref[TEI.lem]{<lem>} element or as <rdg type='groupBase'>.\par
+In this example, the different subvariants on \textit{Experience}, \textit{Experiment}, and \textit{Eriment} are held within three \hyperref[TEI.rdgGrp]{<rdgGrp>} elements nested within the enclosing \hyperref[TEI.app]{<app>} element: \par\bgroup\index{app=<app>|exampleindex}\index{type=@type!<app>|exampleindex}\index{rdgGrp=<rdgGrp>|exampleindex}\index{type=@type!<rdgGrp>|exampleindex}\index{lem=<lem>|exampleindex}\index{wit=@wit!<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdgGrp=<rdgGrp>|exampleindex}\index{type=@type!<rdgGrp>|exampleindex}\index{lem=<lem>|exampleindex}\index{wit=@wit!<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{rdgGrp=<rdgGrp>|exampleindex}\index{type=@type!<rdgGrp>|exampleindex}\index{lem=<lem>|exampleindex}\index{resp=@resp!<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}\hspace*{1em}{type}="{substantive}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdgGrp}\hspace*{1em}{type}="{subvariants}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{lem}\hspace*{1em}{wit}="{\#El \#Hg}">}Experience{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ha4}">}Experiens{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rdgGrp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdgGrp}\hspace*{1em}{type}="{subvariants}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{lem}\hspace*{1em}{wit}="{\#Cp \#Ld1}">}Experiment{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}">}Ex{<\textbf{g}\hspace*{1em}{ref}="{\#per}"/>}iment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rdgGrp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdgGrp}\hspace*{1em}{type}="{subvariants}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{lem}\hspace*{1em}{resp}="{\#ed2013}">}Eriment{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ra2}">}Eryment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rdgGrp}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \noindent  From this, one may deduce that the regularized reading \textit{Experience} is supported by all three manuscripts El Hg Ha4, although the spelling differs in Ha4, and that the regularized reading \textit{Eriment} is supported by Ra2, even though the form differs in that manuscript. Accordingly, an application which recognizes that these apparatus entries show subvariation may then assign all the witnesses instanced as attesting the sub-variants on that lemma as actually supporting the reading of the lemma itself at a higher level of classification. Thus, Ha4 here supports the reading \textit{Experience} found in El and Hg, even though it is spelt slightly differently in Ha4.\par
+Reading groups may nest recursively, so that variants can be classified to any desired depth. Because apparatus entries may also nest, the \hyperref[TEI.app]{<app>} element might also be used to group readings in the same way. The example above is substantially identical to the following, which uses \hyperref[TEI.app]{<app>} instead of \hyperref[TEI.rdgGrp]{<rdgGrp>}: \par\bgroup\index{app=<app>|exampleindex}\index{n=@n!<app>|exampleindex}\index{type=@type!<app>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{app=<app>|exampleindex}\index{n=@n!<app>|exampleindex}\index{type=@type!<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{wit=@wit!<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{app=<app>|exampleindex}\index{n=@n!<app>|exampleindex}\index{type=@type!<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{wit=@wit!<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{app=<app>|exampleindex}\index{n=@n!<app>|exampleindex}\index{type=@type!<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{resp=@resp!<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}\hspace*{1em}{n}="{a1}"\hspace*{1em}{type}="{substantive}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#El \#Hg \#Ha4}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{app}\hspace*{1em}{n}="{a2}"\hspace*{1em}{type}="{orthographic}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{lem}\hspace*{1em}{wit}="{\#El \#Hg}">}Experience{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ha4}">}Experiens{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Cp \#Ld1 \#La}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{app}\hspace*{1em}{n}="{a3}"\hspace*{1em}{type}="{orthographic}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{lem}\hspace*{1em}{wit}="{\#Cp \#Ld1}">}Experiment{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}">}Ex{<\textbf{g}\hspace*{1em}{ref}="{\#per}"/>}iment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ra2}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{app}\hspace*{1em}{n}="{a4}"\hspace*{1em}{type}="{orthographic}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{lem}\hspace*{1em}{resp}="{\#ed2013}">}Eriment{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ra2}">}Eryment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rdg}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \noindent  This expresses even more clearly than the previous encoding of this material that at the highest level of classification (apparatus entry A1), this variation has three normalized readings, and that the first of these is supported by manuscripts El, Hg, and Ha4; the second by Cp, Ld1, and La; and the third by Ra2. Some encoders may find the use of nested apparatus entries less intuitive than the use of reading groups, however, so both methods of classifying the readings of a variation are allowed.\par
+Reading groups may also be used to bring together variants which form an apparent developmental sequence, and to make clear that other readings are not part of that sequence, as in the following example, which makes clear that the variant sequence \textit{experiment} to \textit{eriment} says nothing about the relative priority of \textit{experiment} and \textit{experience}: \par\bgroup\index{app=<app>|exampleindex}\index{type=@type!<app>|exampleindex}\index{rdgGrp=<rdgGrp>|exampleindex}\index{type=@type!<rdgGrp>|exampleindex}\index{lem=<lem>|exampleindex}\index{wit=@wit!<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdgGrp=<rdgGrp>|exampleindex}\index{type=@type!<rdgGrp>|exampleindex}\index{rdgGrp=<rdgGrp>|exampleindex}\index{varSeq=@varSeq!<rdgGrp>|exampleindex}\index{type=@type!<rdgGrp>|exampleindex}\index{lem=<lem>|exampleindex}\index{wit=@wit!<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{rdgGrp=<rdgGrp>|exampleindex}\index{varSeq=@varSeq!<rdgGrp>|exampleindex}\index{cause=@cause!<rdgGrp>|exampleindex}\index{lem=<lem>|exampleindex}\index{resp=@resp!<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}\hspace*{1em}{type}="{substantive}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdgGrp}\hspace*{1em}{type}="{subvariants}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{lem}\hspace*{1em}{wit}="{\#El \#Hg}">}Experience{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ha4}">}Experiens{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rdgGrp}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdgGrp}\hspace*{1em}{type}="{sequence}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdgGrp}\hspace*{1em}{varSeq}="{1}"\hspace*{1em}{type}="{subvariants}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{lem}\hspace*{1em}{wit}="{\#Cp \#Ld1}">}Experiment{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}">}Ex{<\textbf{g}\hspace*{1em}{ref}="{\#per}"/>}iment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{rdgGrp}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdgGrp}\hspace*{1em}{varSeq}="{2}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{cause}="{abbreviation\textunderscore loss}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{lem}\hspace*{1em}{resp}="{\#ed2013}">}Eriment{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ra2}">}Eryment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{rdgGrp}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rdgGrp}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par 
+\subsubsection[{Witness Information}]{Witness Information}\label{TCAPLW}\par
+A given reading is associated with the set of witnesses attesting it by listing the witnesses in the {\itshape wit} attribute on the \hyperref[TEI.rdg]{<rdg>} or \hyperref[TEI.lem]{<lem>} element. Special mechanisms, described in the following sections, are needed to associate annotation on a reading with one specific witness among several (section \textit{\hyperref[TCAPWD]{12.1.4.1.\ Witness Detail Information}}), to transcribe witness information verbatim from a source edition (section \textit{\hyperref[TCSCWL]{12.1.4.2.\ Witness Information in the Source}}), and to identify the formal lists of witnesses typically provided in the front matter of critical editions (section \textit{\hyperref[TCAPWL]{12.1.4.3.\ The Witness List}}).
+\paragraph[{Witness Detail Information}]{Witness Detail Information}\label{TCAPWD}\par
+When it is desired to give additional information about the reading of a particular witness or witnesses, such as noting that it appears in the margin or was corrected for the reading, that information may be given in a \hyperref[TEI.witDetail]{<witDetail>} element. This is a specialized note, which can be linked to both a reading and to one or more of the witnesses for that reading. The link to the reading may be inferred from \hyperref[TEI.witDetail]{<witDetail>}'s position or made explicit by the {\itshape target} attribute which \hyperref[TEI.witDetail]{<witDetail>} inherits from the attribute class \textsf{att.pointing}; the link to the witness, by the {\itshape wit} attribute. 
+\begin{sansreflist}
+  
+\item [\textbf{att.pointing}] provides a set of attributes used by all elements which point to other elements by means of one or more URI references.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape target}]
+  specifies the destination of the reference by supplying one or more URI References
+\end{sansreflist}  
+\item [\textbf{<witDetail>}] (witness detail) gives further information about a particular witness, or witnesses, to a particular reading.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape wit}]
+  (witnesses) indicates the sigil or sigla identifying the witness or witnesses to which the detail refers.
+\end{sansreflist}  
+\end{sansreflist}
+\par
+Because it annotates an attribute value, \hyperref[TEI.witDetail]{<witDetail>} cannot be included in the text at the point of attachment; without a {\itshape target} attribute, it refers to the closest preceding \hyperref[TEI.lem]{<lem>} or \hyperref[TEI.rdg]{<rdg>}. But if there is any ambiguity or if the \hyperref[TEI.witDetail]{<witDetail>} refers to multiple readings, {\itshape target} must be used to point to the reading(s) being annotated. To indicate that the Ellesmere manuscript has an ornamental capital in the word \textit{Experience}, for example, one might write: \par\bgroup\index{app=<app>|exampleindex}\index{type=@type!<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{wit=@wit!<lem>|exampleindex}\index{witDetail=<witDetail>|exampleindex}\index{wit=@wit!<witDetail>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}\hspace*{1em}{type}="{substantive}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{lem}\hspace*{1em}{wit}="{\#El \#Hg}">}Experience{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witDetail}\hspace*{1em}{wit}="{\#El}">}Ornamental capital.{</\textbf{witDetail}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ha4}">}Experiens{</\textbf{rdg}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \noindent  This encoding makes clear that the ornamental capital mentioned is in the Ellesmere manuscript, and not in Hengwrt or Ha4.\par
+Like \hyperref[TEI.note]{<note>}, \hyperref[TEI.witDetail]{<witDetail>} may be used to record the specific wording of information in the source text, even when the information itself is captured in some more formal way elsewhere. The example from the \textit{Carmina Burana} above (section \textit{\hyperref[TCAPLR]{12.1.2.\ Readings}}), for example, might be extended thus, to record the wording of the note explaining that the variant reading adds \textit{n} to the original in a second hand: \par\bgroup\index{l=<l>|exampleindex}\index{l=<l>|exampleindex}\index{l=<l>|exampleindex}\index{l=<l>|exampleindex}\index{app=<app>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{hand=@hand!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{hand=@hand!<rdg>|exampleindex}\index{witDetail=<witDetail>|exampleindex}\index{wit=@wit!<witDetail>|exampleindex}\index{mentioned=<mentioned>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{l}>}Swaz hi gât umbe{</\textbf{l}>}\mbox{}\newline 
+{<\textbf{l}>}daz sint alle megede,{</\textbf{l}>}\mbox{}\newline 
+{<\textbf{l}>}die wellent ân man{</\textbf{l}>}\mbox{}\newline 
+{<\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Mu}"\hspace*{1em}{hand}="{\#m1}">}alle{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Mu}"\hspace*{1em}{hand}="{\#m2}">}allen{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{witDetail}\hspace*{1em}{wit}="{\#Mu}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{mentioned}>}n{</\textbf{mentioned}>} nachgetragen.\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{witDetail}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{app}>}\mbox{}\newline 
+ disen sumer gân.\mbox{}\newline 
+{</\textbf{l}>}\end{shaded}\egroup\par \noindent    \par
+Feature structures containing information about the text in a witness (whether retroversion, regularization, or other) can also be linked to specific \hyperref[TEI.lem]{<lem>} and \hyperref[TEI.rdg]{<rdg>} instances. See chapter \textit{\hyperref[FS]{18.\ Feature Structures}}.
+\paragraph[{Witness Information in the Source}]{Witness Information in the Source}\label{TCSCWL}\par
+Although \hyperref[TEI.witDetail]{<witDetail>} provides a good way to annotate witness references in {\itshape wit}, lists of sigla \footnote{The Latin word \textit{siglum} ( \textit{sign}), pl. \textit{sigla} denotes the abbreviation used in a critical apparatus to indicate a particular witness.} may be complex enough that it is impractical to use the combination of {\itshape wit} and \hyperref[TEI.witDetail]{<witDetail>}. Moreover, in the transcription of printed critical editions, it may be desirable to retain for future reference the exact form in which the source edition records the witnesses to a particular reading; this is particularly important in cases of ambiguity in the information, or uncertainty as to the correct interpretation. The \hyperref[TEI.wit]{<wit>} element may be used to transcribe such lists of witnesses to a particular reading. 
+\begin{sansreflist}
+  
+\item [\textbf{<wit>}] (wit) contains a list of one or more sigla of witnesses attesting a given reading, in a textual variation.
+\end{sansreflist}
+ The \hyperref[TEI.wit]{<wit>} list may appear following a \hyperref[TEI.rdg]{<rdg>}, \hyperref[TEI.rdgGrp]{<rdgGrp>}, or \hyperref[TEI.lem]{<lem>} element in any apparatus entry. \hyperref[TEI.wit]{<wit>} may be used in a way functionally equivalent to {\itshape wit} if the sigla therein are wrapped in \hyperref[TEI.ref]{<ref>}s with {\itshape target} attributes pointing to a predefined witness. For example \par\bgroup\index{app=<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{ana=@ana!<rdg>|exampleindex}\index{witDetail=<witDetail>|exampleindex}\index{wit=@wit!<witDetail>|exampleindex}\index{target=@target!<witDetail>|exampleindex}\index{ref=<ref>|exampleindex}\index{target=@target!<ref>|exampleindex}\index{hi=<hi>|exampleindex}\index{rend=@rend!<hi>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{lem}>}Nondum{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#G \#P}"\hspace*{1em}{xml:id}="{rdg1.1nundum}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{ana}="{\#orthographical}">}nundum{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witDetail}\hspace*{1em}{wit}="{\#G}"\hspace*{1em}{target}="{\#rdg1.1nundum}">}corr. {<\textbf{ref}\hspace*{1em}{target}="{\#G1}">}G{<\textbf{hi}\hspace*{1em}{rend}="{super}">}1{</\textbf{hi}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{ref}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{witDetail}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \noindent  which indicates that the reading ‘nundum’ for ‘nondum’ is to be found in MSS G (although it is corrected to \textit{nondum} in the primary hand) and P, might be written: \par\bgroup\index{app=<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{ana=@ana!<rdg>|exampleindex}\index{wit=<wit>|exampleindex}\index{ref=<ref>|exampleindex}\index{target=@target!<ref>|exampleindex}\index{ref=<ref>|exampleindex}\index{target=@target!<ref>|exampleindex}\index{hi=<hi>|exampleindex}\index{rend=@rend!<hi>|exampleindex}\index{ref=<ref>|exampleindex}\index{target=@target!<ref>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{lem}>}Nondum{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#G \#P}"\hspace*{1em}{ana}="{\#orthographical}">}nundum{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{wit}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{ref}\hspace*{1em}{target}="{\#G}">}G{</\textbf{ref}>}(corr. {<\textbf{ref}\hspace*{1em}{target}="{\#G1}">}G{<\textbf{hi}\hspace*{1em}{rend}="{super}">}1{</\textbf{hi}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{ref}>}){<\textbf{ref}\hspace*{1em}{target}="{\#P}">}P{</\textbf{ref}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{wit}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \noindent  This is somewhat more verbose, but accomplishes the same goal. Because {\itshape wit} is more succinct, and because it makes the automated verification of correct witness references easier, using {\itshape wit} (with \hyperref[TEI.witDetail]{<witDetail>} when needed) is almost always to be preferred.
+\paragraph[{The Witness List}]{The Witness List}\label{TCAPWL}\par
+A list of all identified witnesses should normally be supplied in the front matter of the edition, or in the \hyperref[TEI.sourceDesc]{<sourceDesc>} element of its header. This may be given either as a simple bibliographic list, using the \hyperref[TEI.listBibl]{<listBibl>} element described in \textit{\hyperref[COBI]{3.12.\ Bibliographic Citations and References}}, or as a \hyperref[TEI.listWit]{<listWit>} element, which contains a series of \hyperref[TEI.witness]{<witness>} elements. Each \hyperref[TEI.witness]{<witness>} element may contain a brief characterization of the witness, given as one or more prose paragraphs. If more detailed information about a manuscript witness is available, it should be represented using the \hyperref[TEI.msDesc]{<msDesc>} element provided by the \textsf{msdescription} module; an \hyperref[TEI.msDesc]{<msDesc>} may appear within a \hyperref[TEI.listBibl]{<listBibl>}.\par
+Whether information about a particular witness is supplied by means of a \hyperref[TEI.bibl]{<bibl>}, \hyperref[TEI.msDesc]{<msDesc>}, or \hyperref[TEI.witness]{<witness>} element, a unique siglum for this source should always be supplied, using the global {\itshape xml:id} attribute. This identifier can then be used elsewhere to refer to this particular witness. 
+\begin{sansreflist}
+  
+\item [\textbf{<listWit>}] (witness list) lists definitions for all the witnesses referred to by a critical apparatus, optionally grouped hierarchically.
+\item [\textbf{<witness>}] (witness) contains either a description of a single witness referred to within the critical apparatus, or a list of witnesses which is to be referred to by a single sigil.
+\item [\textbf{<msDesc>}] (manuscript description) contains a description of a single identifiable manuscript or other text-bearing object such as early printed books.
+\item [\textbf{<bibl>}] (bibliographic citation) contains a loosely-structured bibliographic citation of which the sub-components may or may not be explicitly tagged.
+\item [\textbf{<listBibl>}] (citation list) contains a list of bibliographic citations of any kind.
+\end{sansreflist}
+\par
+The minimal information provided by a witness list is thus the set of sigla for all the witnesses named in the apparatus. For example, the witnesses referenced by the examples of this chapter might simply be listed thus: \par\bgroup\index{listWit=<listWit>|exampleindex}\index{witness=<witness>|exampleindex}\index{witness=<witness>|exampleindex}\index{witness=<witness>|exampleindex}\index{witness=<witness>|exampleindex}\index{witness=<witness>|exampleindex}\index{witness=<witness>|exampleindex}\index{witness=<witness>|exampleindex}\index{witness=<witness>|exampleindex}\index{witness=<witness>|exampleindex}\index{witness=<witness>|exampleindex}\index{witness=<witness>|exampleindex}\index{witness=<witness>|exampleindex}\index{witness=<witness>|exampleindex}\index{witness=<witness>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{listWit}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Chi3}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Ha4}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Ju}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{K}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Kb}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Kl}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Kv}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Ld}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Ld1}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Ln}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Mu}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Ry2}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Wa}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{X}"/>}\mbox{}\newline 
+{</\textbf{listWit}>}\end{shaded}\egroup\par \par
+It is more helpful, however, for witness lists to be somewhat more informative: each \hyperref[TEI.witness]{<witness>} element should contain at least a brief prose description of the witness, perhaps including a bibliographic citation, as in the following examples: \par\bgroup\index{listWit=<listWit>|exampleindex}\index{witness=<witness>|exampleindex}\index{witness=<witness>|exampleindex}\index{witness=<witness>|exampleindex}\index{ptr=<ptr>|exampleindex}\index{target=@target!<ptr>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{listWit}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{El}">}Ellesmere, Huntingdon Library 26.C.9{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Hg}">}Hengwrt, National Library of Wales,\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} Aberystwyth, Peniarth 392D{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Ra2}">}Bodleian Library Rawlinson Poetic 149\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} (see further {<\textbf{ptr}\hspace*{1em}{target}="{http://example.com/msDescs\#MSRP149}"/>}){</\textbf{witness}>}\mbox{}\newline 
+{</\textbf{listWit}>}\end{shaded}\egroup\par \noindent  As the last example shows, the witness description here may be complemented by a reference to a full description of the manuscript supplied elsewhere, typically as the content of an \hyperref[TEI.msDesc]{<msDesc>} or \hyperref[TEI.bibl]{<bibl>} element. Alternatively, it may contain a whole paragraph of commentary for each witness: \par\bgroup\index{listWit=<listWit>|exampleindex}\index{witness=<witness>|exampleindex}\index{soCalled=<soCalled>|exampleindex}\index{bibl=<bibl>|exampleindex}\index{quote=<quote>|exampleindex}\index{bibl=<bibl>|exampleindex}\index{author=<author>|exampleindex}\index{ref=<ref>|exampleindex}\index{quote=<quote>|exampleindex}\index{bibl=<bibl>|exampleindex}\index{author=<author>|exampleindex}\index{witness=<witness>|exampleindex}\index{bibl=<bibl>|exampleindex}\index{author=<author>|exampleindex}\index{witness=<witness>|exampleindex}\index{soCalled=<soCalled>|exampleindex}\index{bibl=<bibl>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{listWit}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{A}">}die sog. {<\textbf{soCalled}>}Kleine (oder alte)\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} Heidelberger Liederhandschrift{</\textbf{soCalled}>}.\mbox{}\newline 
+\hspace*{1em}{<\textbf{bibl}>}Universitätsbibliothek Heidelberg col. pal.\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} germ. 357. Pergament, 45 Fll. 18,5 × 13,5 cm.{</\textbf{bibl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} Wahrscheinlich die älteste der drei großen Hss. Sie\mbox{}\newline 
+\hspace*{1em}{<\textbf{quote}>}datiert aus dem 13. Jahrhundert, etwa um 1275. Ihre Sprache\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} weist ins Elsaß, evtl. nach Straßburg. Man geht wohl nicht\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} fehl, in ihr eine Sammlung aus dem Stadtpatriziat zu sehen{</\textbf{quote}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} ({<\textbf{bibl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{author}>}Blank{</\textbf{author}>}, [vgl. {<\textbf{ref}>}Lit. z. Hss. Bd. 2,\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} S. 39{</\textbf{ref}>}] S. 14{</\textbf{bibl}>}). Sie enthält 34 namentlich\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} genannte Dichter. {<\textbf{quote}>}Zu den Vorzügen von A gehört, daß\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} sie kaum je bewußt geändert hat, so daß sie für\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} manche Dichter ... oft den besten Text liefert{</\textbf{quote}>} (so wohl mit\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} Recht {<\textbf{bibl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{author}>}v. Kraus{</\textbf{author}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{bibl}>}).{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{a}">}Bezeichnung {<\textbf{bibl}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{author}>}Lachmann{</\textbf{author}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{bibl}>}s für die von einer 2. Hand auf bl. 40–43\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} geschriebenen Strophen der Hs. A.{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{B}">}die {<\textbf{soCalled}>}Weingartner (Stuttgarter)\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} Liederhandschrift{</\textbf{soCalled}>}. {<\textbf{bibl}>}Württembergische\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} Landesbibliothek Stuttgart, HB XIII poetae germanici 1.\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} Pergament, 156 Bll. 15 × 11,5 cm; 25 teils ganzseitig,\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} teils halbseitige Miniaturen.{</\textbf{bibl}>} Kaum vor 1306 in Konstanz\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} geschrieben. Sie enthält Lieder von 25 namentlich genannten\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} Dichtern. (Dazu kommen Gedichte von einigen ungenannten\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} bzw. unbekannten Dichtern, ein Marienlobpreis und eine\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} Minnelehre.){</\textbf{witness}>}\mbox{}\newline 
+{</\textbf{listWit}>}\end{shaded}\egroup\par \noindent  \par
+It would however generally be preferable to represent such detailed information using an appropriately structured \hyperref[TEI.msDesc]{<msDesc>} element, as discussed in chapter \textit{\hyperref[MS]{10.\ Manuscript Description}}. Note also that if the witnesses being recorded are not manuscripts but printed works, it may be preferable to document them using the standard \hyperref[TEI.bibl]{<bibl>} or \hyperref[TEI.biblStruct]{<biblStruct>} elements described in \textit{\hyperref[COBI]{3.12.\ Bibliographic Citations and References}}, as in this example: \par\bgroup\index{listBibl=<listBibl>|exampleindex}\index{bibl=<bibl>|exampleindex}\index{bibl=<bibl>|exampleindex}\index{bibl=<bibl>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{listBibl}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{bibl}\hspace*{1em}{xml:id}="{bcn\textunderscore 1482}">}T. Kempis, De la imitació de Jesuchrist e del\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} menyspreu del món (trad. Miquel Peres); Barcelona, 1482, Pere\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} Posa. Editio princeps.{</\textbf{bibl}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{bibl}\hspace*{1em}{xml:id}="{val\textunderscore 1491}">}T. Kempis, Del menyspreu del món (trad. Miquel\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} Peres); València, 1491.{</\textbf{bibl}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{bibl}\hspace*{1em}{xml:id}="{bcn\textunderscore 1518}">}T. Kempis, Libre del menysprey del món e de la\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} imitació de nostre senyor Déu Jesucrist, (trad. Miquel Peres);\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} Barcelona, 1518, Carles Amorós. {</\textbf{bibl}>}\mbox{}\newline 
+{</\textbf{listBibl}>}\end{shaded}\egroup\par \par
+In text-critical work it is customary to refer to frequently occurring groups of witnesses by means of a single common siglum. Such sigla may be documented as pseudo-witnesses in their own right by including a nested witness list within the witness list, which uses the siglum for the group as its identifier, and supplies a fuller name for the group in its optional child \hyperref[TEI.head]{<head>} element, before listing the other witnesses contained by the group. For example, the Constant Group C of manuscripts comprising witnesses Cp, La, and S12, might be represented as follows: \par\bgroup\index{listWit=<listWit>|exampleindex}\index{witness=<witness>|exampleindex}\index{listWit=<listWit>|exampleindex}\index{head=<head>|exampleindex}\index{witness=<witness>|exampleindex}\index{witness=<witness>|exampleindex}\index{witness=<witness>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{listWit}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Ellesmere}">}Ellesmere, Huntingdon Library 26.C.9{</\textbf{witness}>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{<\textbf{listWit}\hspace*{1em}{xml:id}="{Con}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{head}>}Constant Group C{</\textbf{head}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Cp}">}Corpus Christi Oxford MS 198{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{La}">}British Library Lansdowne 851{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Sl2}">}British Library Sloane MS 1686{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{listWit}>}\mbox{}\newline 
+{</\textbf{listWit}>}\end{shaded}\egroup\par \noindent  That the reading \textit{Experiment} occurs in all three manuscripts can now be indicated simply as follows: \par\bgroup\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Con}">}Experiment{</\textbf{rdg}>}\end{shaded}\egroup\par \par
+The more elaborate example below shows both multiple levels of nesting and a strategy for mapping the the {\itshape xml:id} of the witness to the siglum which will be displayed to the reader of a derived visualisation: \par\bgroup\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{listWit=<listWit>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{listWit=<listWit>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{listWit=<listWit>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{listWit=<listWit>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{listWit=<listWit>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{hi=<hi>|exampleindex}\index{rend=@rend!<hi>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{listWit=<listWit>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{ref=<ref>|exampleindex}\index{target=@target!<ref>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{listWit=<listWit>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{hi=<hi>|exampleindex}\index{rend=@rend!<hi>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{hi=<hi>|exampleindex}\index{rend=@rend!<hi>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{listWit=<listWit>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{hi=<hi>|exampleindex}\index{rend=@rend!<hi>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{hi=<hi>|exampleindex}\index{rend=@rend!<hi>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\index{witness=<witness>|exampleindex}\index{abbr=<abbr>|exampleindex}\index{type=@type!<abbr>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{witness}\hspace*{1em}{xml:id}="{Σ}">}Servius ({<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}Σ{</\textbf{abbr}>}) = ΔΓ\mbox{}\newline 
+{<\textbf{listWit}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Δ}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}Δ{</\textbf{abbr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{listWit}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{J}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}J{</\textbf{abbr}>} = Metens. Bibl. mun. 292, s. IX {</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{L}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}L{</\textbf{abbr}>} = Leid. Bibl. der Rijksuniv. B.P.L. 52, s. VIII / IX{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{listWit}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Γ}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}Γ{</\textbf{abbr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{listWit}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{θ}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}θ{</\textbf{abbr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{listWit}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Α}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}A{</\textbf{abbr}>} = Caroliruh. Bad. Landesbibl. Aug. CXVI, s. IX2 (Reichenau); de codice A derivati:\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{listWit}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{S}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}S{</\textbf{abbr}>} = Sangall. Stiftsbibl. 861 + 862, s. IX / X{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Guelf}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}Guelf.{</\textbf{abbr}>} = Guelf. HAB 2546 (44.23 Aug. fol.), s. XV{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{listWit}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{O}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}O{</\textbf{abbr}>} = Oxon. Bodl. Laud lat. 117, s. XI{<\textbf{hi}\hspace*{1em}{rend}="{superscript}">}2{</\textbf{hi}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{listWit}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{τ}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}τ{</\textbf{abbr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{listWit}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Pa}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}Pa{</\textbf{abbr}>} = Paris. BnF lat. 7959, s. IX (Tours){</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Pc}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}Pc{</\textbf{abbr}>} = Paris. BnF lat. 7961, s. X / XI{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Q}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}Q{</\textbf{abbr}>}Flor. BML Plut. 45.14, s. IX{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Lb}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}Lb{</\textbf{abbr}>} = corrector cod. {<\textbf{ref}\hspace*{1em}{target}="{\#L}">}L{</\textbf{ref}>} (sup.){</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{listWit}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{γ}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}γ{</\textbf{abbr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{listWit}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{E}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}E{</\textbf{abbr}>} = Escorial. Bibl. S. Lorenzo T.II.17, s. IX{<\textbf{hi}\hspace*{1em}{rend}="{superscript}">}2{</\textbf{hi}>} (Ital. septentrion.) {</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Pb}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}Pb{</\textbf{abbr}>}Paris. BnF lat. 16236, s. X / XI{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Y}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}Y{</\textbf{abbr}>} = Trident. Bib. com. 3388 (olim Vind. 72), s.\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} IX{<\textbf{hi}\hspace*{1em}{rend}="{superscript}">}2{</\textbf{hi}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{M}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}M{</\textbf{abbr}>} = Monac. Bay. Staatsbibl. Clm 6394, s. XI\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{listWit}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{σ}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}σ{</\textbf{abbr}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{listWit}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{W}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}W{</\textbf{abbr}>} = Guelf. HAB 2091, s. XIII{<\textbf{hi}\hspace*{1em}{rend}="{superscript}">}ex.{</\textbf{hi}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{Ν}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}N{</\textbf{abbr}>} = Neap. Bibl. naz. lat. 5 (olim Vind. 27), s.\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} X{<\textbf{hi}\hspace*{1em}{rend}="{superscript}">}1{</\textbf{hi}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{U}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}U{</\textbf{abbr}>} = Berolin. Staatsbibl. lat. quart. 219, s. XII{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{listWit}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{witness}\hspace*{1em}{xml:id}="{ο}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{abbr}\hspace*{1em}{type}="{siglum}">}º{</\textbf{abbr}>} classis codicum de Γ defluentium quibus lectiones faciliores in contextum contaminatione inferre valde placuit (= PaPcγσ in A. 9.1-10.190, 10.397-12.162; PaPcγU in A. 12.162-320; PaPcγ in A. 12.320-522); cf. praef. n. 30.{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{listWit}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{witness}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{listWit}>}\mbox{}\newline 
+{</\textbf{witness}>}\end{shaded}\egroup\par \noindent  Here we have a summary of the witnesses, with their sigla, used in an edition, as is generally found in the \textit{conspectus siglorum} in the front matter of a critical edition. Families are indicated with Greek letters and manuscript witnesses with Latin letters. The siglum for display is always contained in the \hyperref[TEI.abbr]{<abbr>} with {\itshape type} ‘siglum’ child of each witness, so it is always easy to retrieve the display siglum for a given identifier reference.\par
+Situations commonly arise where there are many more or less fragmentary witnesses, such that there may be quite distinct groups of witnesses for different parts of a text or collection of texts. One may treat this with distinct \hyperref[TEI.listWit]{<listWit>} elements for each different part. Alternatively, one may have a single \hyperref[TEI.listWit]{<listWit>} element at the beginning of the file or in its header listing all the witnesses, partial and complete, for the text, with the attestation of fragmentary witnesses indicated within the apparatus by use of the \hyperref[TEI.witStart]{<witStart>} and \hyperref[TEI.witEnd]{<witEnd>} elements described in section \textit{\hyperref[TCAPMI]{12.1.5.\ Fragmentary Witnesses}}.\par
+If a witness list is provided, it may be unnecessary to give, in each apparatus entry, an exhaustive list of the witnesses which agree with the base text. An application program can—in principle—compare the witnesses given for each variant found with those given in the full list of witnesses, subtracting from this list all the witnesses not active at this point (perhaps because of lacuna, or because they contain a variation on a different, overlapping lemma) and thence calculate all the manuscripts agreeing with the base text. In practice, encoders may find it less error-prone to list all witnesses explicitly in each apparatus entry.
+\subsubsection[{Fragmentary Witnesses}]{Fragmentary Witnesses}\label{TCAPMI}\par
+If a witness is incomplete (whether a single fragment, a series of fragments, or a relatively complete text with one or more lacunae), it is usually desirable to record explicitly where its preserved portions begin and end. The following empty tags, which may occur within any \hyperref[TEI.lem]{<lem>} or \hyperref[TEI.rdg]{<rdg>} element, indicate the beginning or end of a fragmentary witness or of a lacuna within a witness: 
+\begin{sansreflist}
+  
+\item [\textbf{<witStart>}] (fragmented witness start) indicates the beginning, or resumption, of the text of a fragmentary witness.
+\item [\textbf{<witEnd>}] (fragmented witness end) indicates the end, or suspension, of the text of a fragmentary witness.
+\item [\textbf{<lacunaStart>}] (lacuna start) indicates the beginning of a lacuna in the text of a mostly complete textual witness.
+\item [\textbf{<lacunaEnd>}] (lacuna end) indicates the end of a lacuna in a mostly complete textual witness.
+\end{sansreflist}
+ These elements constitute the class \textsf{model.rdgPart}, members of which are permitted within the elements \hyperref[TEI.lem]{<lem>} and \hyperref[TEI.rdg]{<rdg>} when the module defined by this chapter is included in a schema.\par
+Suppose a fragment of a manuscript X of the \textit{Wife of Bath's Prologue} has a physical lacuna, and the text of the manuscript begins with \textit{auctorite}. In an apparatus this might appear thus, distinguished from the reading of other manuscripts by the presence of the \hyperref[TEI.lacunaEnd]{<lacunaEnd>} element: \par\bgroup\index{app=<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{wit=@wit!<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{lacunaEnd=<lacunaEnd>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{lem}\hspace*{1em}{wit}="{\#El \#Hg}">}Auctoritee{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La \#Ra2}">}auctorite{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#X}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{lacunaEnd}/>}auctorite{</\textbf{rdg}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \noindent  Alternatively, it may be clearer to record this as \par\bgroup\index{app=<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{wit=@wit!<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{lacunaEnd=<lacunaEnd>|exampleindex}\index{wit=@wit!<lacunaEnd>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{lem}\hspace*{1em}{wit}="{\#El \#Hg}">}Auctoritee{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La \#Ra2 \#X}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{lacunaEnd}\hspace*{1em}{wit}="{\#X}"/>}auctorite{</\textbf{rdg}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \noindent  since this shows more clearly that the lacuna and the reading of ‘auctorite’ both appear in witness X. In some cases, the apparatus in the source may commence recording the readings for a particular witness without its being clear whether the previous absence of readings for this witness is due to a lacuna, or to some other reason. The \hyperref[TEI.witStart]{<witStart>} element may be used in this circumstance: \par\bgroup\index{app=<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{wit=@wit!<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{witStart=<witStart>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{lem}\hspace*{1em}{wit}="{\#El \#Hg}">}Auctoritee{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La \#Ra2}">}auctorite{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#X}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{witStart}/>}auctorite{</\textbf{rdg}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par 
+\subsection[{Linking the Apparatus to the Text}]{Linking the Apparatus to the Text}\label{TCAPLK}\par
+Three different methods may be used to link a critical apparatus to the text: \begin{enumerate}
+\item the location-referenced method,
+\item the double-end-point-attached method, and
+\item the parallel segmentation method.
+\end{enumerate}\par
+Both the location-referenced and the double end-point methods may be used with either \textit{in-line} or \textit{external} apparatus, the former dispersed within the base text, the latter held in some separate location, within or outside the document containing the base text. The parallel segmentation method may only be used for in-line apparatus.\par
+Where an \textit{external} apparatus is used, the \hyperref[TEI.listApp]{<listApp>} element provides a useful means of grouping together a series of \hyperref[TEI.app]{<app>} elements of a specific type, or from a particular source: 
+\begin{sansreflist}
+  
+\item [\textbf{<listApp>}] (list of apparatus entries) contains a list of apparatus entries.
+\item [\textbf{att.typed}] provides attributes which can be used to classify or subclassify elements in any way.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape type}]
+  characterizes the element in some sense, using any convenient classification scheme or typology.
+    \item[@{\itshape subtype}]
+  (subtype) provides a sub-categorization of the element, if needed
+\end{sansreflist}  
+\end{sansreflist}
+ \hyperref[TEI.listApp]{<listApp>} elements would normally appear in the \hyperref[TEI.back]{<back>} of a document, but they may also be placed in any other convenient location.\par
+Any document containing \hyperref[TEI.app]{<app>} elements requires a \hyperref[TEI.variantEncoding]{<variantEncoding>} declaration in the \hyperref[TEI.encodingDesc]{<encodingDesc>} element of its TEI header, thus: 
+\begin{sansreflist}
+  
+\item [\textbf{<variantEncoding>}] (variant encoding) declares the method used to encode text-critical variants.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape method}]
+  indicates which method is used to encode the apparatus of variants.
+    \item[@{\itshape location}]
+  indicates whether the apparatus appears within the running text or external to it.
+\end{sansreflist}  
+\end{sansreflist}
+
+\subsubsection[{The Location-referenced Method}]{The Location-referenced Method}\label{TCAPLO}\par
+The location-referenced method of encoding apparatus provides a convenient method for encoding printed apparatus; in this method as in most printed editions, the apparatus is linked to the base text by indicating explicitly only the block of text on which there is a variant (noted usually by a canonical reference scheme, or by line number in the edition, such as A 137 or \textit{Page 15 line 1}).\par
+If the location-referenced method is used for an apparatus stored externally to the base text, the TEI header must have the declaration: \par\bgroup\index{variantEncoding=<variantEncoding>|exampleindex}\index{method=@method!<variantEncoding>|exampleindex}\index{location=@location!<variantEncoding>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{variantEncoding}\hspace*{1em}{method}="{location-referenced}"\mbox{}\newline 
+\hspace*{1em}{location}="{external}"/>}\end{shaded}\egroup\par \par
+In the \hyperref[TEI.body]{<body>} of the document, the base text (here El) will appear: \par\bgroup\index{text=<text>|exampleindex}\index{body=<body>|exampleindex}\index{div=<div>|exampleindex}\index{n=@n!<div>|exampleindex}\index{type=@type!<div>|exampleindex}\index{head=<head>|exampleindex}\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\index{l=<l>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{text}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{body}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{div}\hspace*{1em}{n}="{WBP}"\hspace*{1em}{type}="{prologue}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{head}>}The Prologe of the Wyves Tale of Bathe{</\textbf{head}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{l}\hspace*{1em}{n}="{1}">}Experience though noon Auctoritee{</\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{l}>}Were in this world ...{</\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{div}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{body}>}\mbox{}\newline 
+{</\textbf{text}>}\end{shaded}\egroup\par \par
+Elsewhere in the document, or in a separate file, the apparatus will appear. On each \hyperref[TEI.app]{<app>} element, the {\itshape loc} attribute should be specified to indicate where the variant occurs in the base text. \par\bgroup\index{app=<app>|exampleindex}\index{loc=@loc!<app>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}\hspace*{1em}{loc}="{WBP 1}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}">}Experiment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ra2}">}Eryment{</\textbf{rdg}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \par
+If the same text is encoded using in-line storage, the apparatus is dispersed through the base text block to which it refers. In this case, the location of the variant can be read from the line in which it occurs. \par\bgroup\index{variantEncoding=<variantEncoding>|exampleindex}\index{method=@method!<variantEncoding>|exampleindex}\index{location=@location!<variantEncoding>|exampleindex}\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\index{app=<app>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{l=<l>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{variantEncoding}\hspace*{1em}{method}="{location-referenced}"\mbox{}\newline 
+\hspace*{1em}{location}="{internal}"/>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+{<\textbf{l}\hspace*{1em}{n}="{1}">}Experience\mbox{}\newline 
+{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}">}Experiment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ra2}">}Eryment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{app}>}\mbox{}\newline 
+ though noon Auctoritee{</\textbf{l}>}\mbox{}\newline 
+{<\textbf{l}>}Were in this world ...{</\textbf{l}>}\end{shaded}\egroup\par \par
+Since the location is not required to be exact, the apparatus for a line might also appear at the end of the line: \par\bgroup\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\index{app=<app>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{l=<l>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{l}\hspace*{1em}{n}="{1}">}Experience though noon Auctoritee\mbox{}\newline 
+{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}">} Experiment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ra2}">} Eryment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{app}>}\mbox{}\newline 
+{</\textbf{l}>}\mbox{}\newline 
+{<\textbf{l}>}Were in this world ...{</\textbf{l}>}\end{shaded}\egroup\par \par
+When the apparatus is linked to the text by means of location references, as shown here, it is not possible to find automatically the precise portion of text varied by the readings. In order to show explicitly what portion of the base text is replaced by the variant readings, the \hyperref[TEI.lem]{<lem>} element may be used: \par\bgroup\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\index{app=<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{wit=@wit!<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{l=<l>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{l}\hspace*{1em}{n}="{1}">}Experience though noon Auctoritee\mbox{}\newline 
+{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{lem}\hspace*{1em}{wit}="{\#El}">}Experience{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}">}Experiment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ra2}">}Eryment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{app}>}\mbox{}\newline 
+{</\textbf{l}>}\mbox{}\newline 
+{<\textbf{l}>}Were in this world ...{</\textbf{l}>}\end{shaded}\egroup\par \noindent  Often the lemma will have no attributes, being simply the ‘base text reading’ and requiring no qualification, but it may optionally carry the normal attributes, as shown here. Some text critics prefer to abbreviate or elide the lemma, in order to save space or trouble; such practice is not forbidden by these Guidelines, but no recommendations are made for conventions of abbreviating the lemma, whether abbreviation of each word, or suppression of all but the first and last word, etc.\par
+Where it is intended that the apparatus be complete enough to allow the reconstruction of the witnesses (or at least of their non-orthographic variations), simple location-reference methods are unlikely to be as successful as the other two methods, which allow the unambiguous reconstruction of the lemma from the encoding.
+\subsubsection[{The Double End-Point Attachment Method}]{The Double End-Point Attachment Method}\label{TCAPDE}\par
+In the double end-point attachment method, the beginning and end of the lemma in the base text are both explicitly indicated. It thus differs from the location-referenced method, in which only the larger span of text containing the lemma is indicated. Double end-point attachment permits unambiguous matching of each variant reading against its lemma. It or the parallel-segmentation method should be used in all cases where this is desired, for example where the apparatus is intended to enable full reconstruction of the text, or of the substantives, of every witness.\par
+When the double end-point attachment method is used, the {\itshape from} and {\itshape to} attributes of the \hyperref[TEI.app]{<app>} element are used to indicate the beginning and ending points of the reading in the base text: their values are identifiers which occur at the locations in question. If no other markup is present there, the beginning and ending points should be marked using the \hyperref[TEI.anchor]{<anchor>} element defined in chapter \textit{\hyperref[SA]{16.\ Linking, Segmentation, and Alignment}}. In cases where it is not possible to insert anchors within the base text (e.g. where the text is on a read-only medium) the beginning and end of the lemma may be indicated by using the ‘indirect pointing’ mechanisms discussed in chapter \textit{\hyperref[SA]{16.\ Linking, Segmentation, and Alignment}}. Explicit anchors are more likely to be reliable, and are therefore to be preferred.\par
+The double end-point attachment method may be used with in-line or external apparatus. In the latter case, the base text (here El) will appear with \hyperref[TEI.anchor]{<anchor>} elements inserted at every place where a variant begins or ends (unless some element with an identifier already begins or ends at that point): \par\bgroup\index{variantEncoding=<variantEncoding>|exampleindex}\index{method=@method!<variantEncoding>|exampleindex}\index{location=@location!<variantEncoding>|exampleindex}\index{div=<div>|exampleindex}\index{n=@n!<div>|exampleindex}\index{type=@type!<div>|exampleindex}\index{head=<head>|exampleindex}\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{l=<l>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{variantEncoding}\hspace*{1em}{method}="{double-end-point}"\mbox{}\newline 
+\hspace*{1em}{location}="{external}"/>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+{<\textbf{div}\hspace*{1em}{n}="{WBP}"\hspace*{1em}{type}="{prologue}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{head}>}The Prologe ... {</\textbf{head}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{l}\hspace*{1em}{n}="{1}"\hspace*{1em}{xml:id}="{WBP.1}">}Experience{<\textbf{anchor}\hspace*{1em}{xml:id}="{WBP-A2}"/>} though noon Auctoritee{</\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{l}>}Were in this world ...{</\textbf{l}>}\mbox{}\newline 
+{</\textbf{div}>}\end{shaded}\egroup\par \noindent  The apparatus will be separately encoded: \par\bgroup\index{app=<app>|exampleindex}\index{from=@from!<app>|exampleindex}\index{to=@to!<app>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}\hspace*{1em}{from}="{\#WBP.1}"\hspace*{1em}{to}="{\#WBP-A2}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}">}Experiment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ra2}">}Eryment{</\textbf{rdg}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \noindent  No \hyperref[TEI.anchor]{<anchor>} element is needed at the beginning of the line, since the {\itshape from} attribute can use the identifier for the line as a whole; the lemma is assumed to run from the beginning of the element indicated by the {\itshape from} attribute, to the end of that indicated by the {\itshape to} attribute. If no value is given for {\itshape to}, the lemma runs from the beginning to the end of the element indicated by the {\itshape from} attribute.\par
+When the apparatus is encoded in-line, it is dispersed through the base text. Only the beginning of the lemma need be marked with an \hyperref[TEI.anchor]{<anchor>}, since the \hyperref[TEI.app]{<app>} is inserted at the end of the lemma, and itself therefore marks the end of the lemma. \par\bgroup\index{variantEncoding=<variantEncoding>|exampleindex}\index{method=@method!<variantEncoding>|exampleindex}\index{location=@location!<variantEncoding>|exampleindex}\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\index{app=<app>|exampleindex}\index{from=@from!<app>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{l=<l>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{variantEncoding}\hspace*{1em}{method}="{double-end-point}"\mbox{}\newline 
+\hspace*{1em}{location}="{internal}"/>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+{<\textbf{l}\hspace*{1em}{n}="{1}"\hspace*{1em}{xml:id}="{wbp.1}">}Experience\mbox{}\newline 
+{<\textbf{app}\hspace*{1em}{from}="{\#wbp.1}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}">}Experiment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ra2}">}Eryment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{app}>}\mbox{}\newline 
+ though noon Auctoritee{</\textbf{l}>}\mbox{}\newline 
+{<\textbf{l}>}Were in this world ...{</\textbf{l}>}\end{shaded}\egroup\par \par
+The lemma need not be repeated within the \hyperref[TEI.app]{<app>} element in this method, as it may be extracted reliably from the base text. If an exhaustive list of witnesses is available, it will also not be necessary to specify just which manuscripts agree with the base text to enable reconstruction of witnesses. An application will be able to determine the manuscripts that witness the base reading, by noting which witnesses are attested as having a variant reading, and inferring the base text reading for all others after adjusting for fragmentary witnesses and for witnesses carrying overlapping variant readings.\par
+Alternatively, if it is desired to make an explicit record of the attestation of the base text, the \hyperref[TEI.lem]{<lem>} element may be embedded within \hyperref[TEI.app]{<app>}, carrying the witnesses to the base. Thus \par\bgroup\index{app=<app>|exampleindex}\index{from=@from!<app>|exampleindex}\index{to=@to!<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{wit=@wit!<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}\hspace*{1em}{from}="{\#WBP.1}"\hspace*{1em}{to}="{\#WBP-A2}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{lem}\hspace*{1em}{wit}="{\#El \#Hg}">}Experience{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}">}Experiment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ra2}">}Eryment{</\textbf{rdg}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \par
+This method is designed to cope with ‘overlapping lemmata’. For example, at line 117 of the Wife of Bath's Prologue, the manuscripts Hg (Hengwrt), El (Ellesmere), and Ha4 (British Library Harleian 7334) read: \begin{description}
+
+\item[{Hg}]And of so parfit wys a wight ywroght
+\item[{El}]And for what profit was a wight ywroght
+\item[{Ha4}]And in what wise was a wight ywroght
+\end{description} \par
+In this case, one might wish to record \textit{in what wise was} in Ha4 as a single variant for \textit{of so parfit wys} in Hg, and \textit{was a wight} in El and Ha4 as a variant on \textit{wys a wight} in Hg. This method can readily cope with such difficult situations, typically found in large and complex traditions: \par\bgroup\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{app=<app>|exampleindex}\index{from=@from!<app>|exampleindex}\index{to=@to!<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{wit=@wit!<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{app=<app>|exampleindex}\index{from=@from!<app>|exampleindex}\index{to=@to!<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{wit=@wit!<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{l}\hspace*{1em}{xml:id}="{WBP.117}"\hspace*{1em}{n}="{117}">} And\mbox{}\newline 
+{<\textbf{anchor}\hspace*{1em}{xml:id}="{WBP-A117.1}"/>} of so parfit\mbox{}\newline 
+{<\textbf{anchor}\hspace*{1em}{xml:id}="{WBP-A117.2}"/>} wys\mbox{}\newline 
+{<\textbf{anchor}\hspace*{1em}{xml:id}="{WBP-A117.3}"/>} a wight\mbox{}\newline 
+{<\textbf{anchor}\hspace*{1em}{xml:id}="{WBP-A117.4}"/>} ywroght\mbox{}\newline 
+{<\textbf{app}\hspace*{1em}{from}="{\#WBP-A117.1}"\hspace*{1em}{to}="{\#WBP-A117.3}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{lem}\hspace*{1em}{wit}="{\#Hg}">}of so parfit wys{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ha4}">}in what wise was{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{app}\hspace*{1em}{from}="{\#WBP-A117.2}"\hspace*{1em}{to}="{\#WBP-A117.4}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{lem}\hspace*{1em}{wit}="{\#Hg}">}wys a wight{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#El \#Ha4}">}was a wight{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{app}>}\mbox{}\newline 
+{</\textbf{l}>}\end{shaded}\egroup\par \noindent  The parallel segmentation method, to be discussed next, cannot handle overlaps among variants, and would require the individual variants to be split into pieces.\par
+Because creation and interpretation of double end-point attachment apparatus will be lengthy and difficult it is likely that they will usually be created and examined by scholars only with mechanical assistance.
+\subsubsection[{The Parallel Segmentation Method}]{The Parallel Segmentation Method}\label{TCAPPS}\par
+This method differs from the double end-point attachment method in that all variants at any point of the text are expressed as variants on one another. In this method, no two variations can overlap, although they may nest. The texts compared are divided into matching segments all synchronized with one another. This permits direct comparison of any span of text in any witness with that in any other witness. With a positive apparatus, it is straightforward for an application to extract the full text of any one witness from the apparatus.\footnote{Some care must be taken with this approach, as a derived view of a witness may not be a complete and accurate transcription of that witness. It is more likely to be the base text with all readings from that witness applied.}\par
+This method will (by definition) always be satisfactory when there are just two texts for comparison (assuming they are in the same language and script). It will however be less convenient for textual traditions where establishing a base text with variations from it is not a satisfactory goal for the edition, or in some cases where every detail of variation needs to be modeled.\par
+In the parallel segmentation method, each segment of text on which there is variation is marked by an \hyperref[TEI.app]{<app>} element. If there is a preferred (or base) reading it is tagged with \hyperref[TEI.lem]{<lem>}; each reading is given in a \hyperref[TEI.rdg]{<rdg>} element: \par\bgroup\index{variantEncoding=<variantEncoding>|exampleindex}\index{method=@method!<variantEncoding>|exampleindex}\index{location=@location!<variantEncoding>|exampleindex}\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\index{app=<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{wit=@wit!<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{l=<l>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{variantEncoding}\hspace*{1em}{method}="{parallel-segmentation}"\mbox{}\newline 
+\hspace*{1em}{location}="{internal}"/>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+{<\textbf{l}\hspace*{1em}{n}="{1}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{lem}\hspace*{1em}{wit}="{\#El \#Hg}">}Experience{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}">}Experiment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ra2}">}Eryment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{app}>} though noon Auctoritee\mbox{}\newline 
+{</\textbf{l}>}\mbox{}\newline 
+{<\textbf{l}>}Were in this world ...{</\textbf{l}>}\end{shaded}\egroup\par \par
+This method cannot be used with external apparatus: it must be used in-line. Note that apparatus encoded with this method may be translated into the double end-point attachment method and back without loss of information. Where double-end-point-attachment encodings have no overlapping lemmata, translation of these to the parallel segmentation encoding and back will also be possible without loss of information.\par
+As noted, apparatus entries may nest in this method: if an imaginary fifth manuscript of the text read \textit{Auctoritee, though none experience}, the variation on the individual words of the line would nest within that for the line as a whole: \par\bgroup\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\index{app=<app>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{app=<app>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{app=<app>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{app=<app>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{l}\hspace*{1em}{n}="{1}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Chi3}">}Auctoritee, though none experience{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#El \#Hg}">}Experience{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}">}Experiment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ra2}">}Eryment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#El \#Ra2}">}though{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Hg}">}thogh{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}">}thouh{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#El \#Hg}">}noon Auctorite{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La \#Ra2}">}none auctorite{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{app}>}\mbox{}\newline 
+{</\textbf{l}>}\end{shaded}\egroup\par \par
+Parallel segmentation cannot, however, deal very gracefully with variants which overlap without nesting: such variants must be broken up into pieces in order to keep all witnesses synchronized. 
+\subsubsection[{Other Linking Methods}]{Other Linking Methods}\label{TCAPLN}\par
+When an apparatus is provided it does not need to be given at the location in the transcription where the variation, emendation, attribution, or other apparatus observation occurs. Instead it may be stored in a separate place in the same file, or indeed in another file, and point to the location at which it is meant to be used. Storing apparatus entries separately can be beneficial when encoding multiple competing, potentially overlapping, interpretations of the same point in the source texts. \par
+The location-referenced method can be used to point a position in a text using the {\itshape loc} attribute and a canonical reference that is understood and documented in the context of the file where it is used. Where possible it is recommended that other methods use the {\itshape from} attribute to point to an {\itshape xml:id} attribute on an \hyperref[TEI.anchor]{<anchor>} or other element at the location where the apparatus observation takes place. The contents of an element pointed to are understood to be equivalent to a \hyperref[TEI.lem]{<lem>} if none exists in the \hyperref[TEI.app]{<app>}, and if a \hyperref[TEI.lem]{<lem>} does exist this should replace any content.\par
+The {\itshape from} attribute is a \textsf{teidata.pointer} datatype and thus contains a URI as a value. This means that it can point directly to an {\itshape xml:id}, an {\itshape xml:id} in another local file, or indeed a file identified by any URL or URN. \par\bgroup\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\index{seg=<seg>|exampleindex}\index{app=<app>|exampleindex}\index{from=@from!<app>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{l}\hspace*{1em}{n}="{1}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{seg}\hspace*{1em}{xml:id}="{WBP-so.1.1}">}Experience{</\textbf{seg}>} though noon Auctoritee\mbox{}\newline 
+{</\textbf{l}>}\mbox{}\newline 
+\textit{<!-- In another file -->}\mbox{}\newline 
+{<\textbf{app}\hspace*{1em}{from}="{example.xml\#WBP-so.1.1}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}">}Experiment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ra2}">}Eryment{</\textbf{rdg}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \noindent  This could also be encoded as: \par\bgroup\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\index{anchor=<anchor>|exampleindex}\index{app=<app>|exampleindex}\index{from=@from!<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{l}\hspace*{1em}{n}="{1}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{anchor}\hspace*{1em}{xml:id}="{WBP-so.1.1a}"/>} though noon Auctoritee\mbox{}\newline 
+{</\textbf{l}>}\mbox{}\newline 
+\textit{<!-- In another file -->}\mbox{}\newline 
+{<\textbf{app}\hspace*{1em}{from}="{http://www.example.com/example.xml\#WBP-so.1.1a}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{lem}>}Experience{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}">}Experiment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ra2}">}Eryment{</\textbf{rdg}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \noindent  However, this should be considered more fragile since a full reading of the \hyperref[TEI.lem]{<lem>} is not provided in the source file.\par
+In addition, URLs can contain XPointer schemes including xpath(), range(), and string-range() which can be used in providing the location of an \hyperref[TEI.app]{<app>} that is stored separately from the text to which it applies. Both {\itshape from} and {\itshape to} can be used, as in the double end-point attachment method, to identify the starting and ending location for an apparatus using XPointer schemes described in \textit{\hyperref[SATS]{16.2.4.\ TEI XPointer Schemes}} section to more precisely identify this location where beneficial. \par\bgroup\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\index{app=<app>|exampleindex}\index{from=@from!<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{l}\hspace*{1em}{n}="{1}"\hspace*{1em}{xml:id}="{WP.1a}">}Experience though noon Auctoritee{</\textbf{l}>}\mbox{}\newline 
+\textit{<!-- In another file -->}\mbox{}\newline 
+{<\textbf{app}\hspace*{1em}{from}="{example.xml\#string-range(WP.1a, 0, 10)}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{lem}>}Experience{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#La}">}Experiment{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{wit}="{\#Ra2}">}Eryment{</\textbf{rdg}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \par
+If only the {\itshape from} attribute is provided then it should be understood that this supplies the location of the textual variance that the apparatus documents. If the {\itshape from} attribute contains an XPointer scheme that identifies a range of text (or elements) then this is understood to record the starting and ending of the range as in the double end-point attachment method. In such a case a @to attribute is unnecessary.
+\subsection[{Using Apparatus Elements in Transcriptions}]{Using Apparatus Elements in Transcriptions}\label{TCTR}\par
+It is often desirable to record different transcriptions of one stretch of text. These variant transcriptions may be grouped within a single \hyperref[TEI.app]{<app>} element. An application may then construct different ‘views’ of the transcription by extraction of the appropriate variant readings from the apparatus elements embedded in the transcription.\par
+For example, alternative expansions can be recorded in several different \hyperref[TEI.expan]{<expan>} elements, all grouped within an \hyperref[TEI.app]{<app>} element. Consider, for example, the three different transcriptions given below of line 105 of the Hengwrt manuscript of Chaucer's \textit{The Wife of Bath's Prologue}. The last word of the line \textit{Virginite is grete perfection} is written \textit{perfectio} followed by two minims over which a bar has been drawn, which has been read in different ways by different scholars. The first transcription, by Elizabeth Solopova, represents the two minims with bar above as a special composite character using the \hyperref[TEI.g]{<g>} element. This transcription notes this as a mark of abbreviation but gives no expansion for it. A second transcriber, F. J. Furnivall, regards the bar as an abbreviation of \textit{u}, and therefore reads the two minims as an \textit{n}. A third transcriber, P. G. Ruggiers, regards the bar as an abbreviation of \textit{n}, reading the minims as \textit{u}. This information may be held within an \hyperref[TEI.app]{<app>} structure, as follows: \par\bgroup\index{app=<app>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{source=@source!<rdg>|exampleindex}\index{am=<am>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{source=@source!<rdg>|exampleindex}\index{ex=<ex>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{source=@source!<rdg>|exampleindex}\index{ex=<ex>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}Virginite is grete\mbox{}\newline 
+{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{source}="{\#ES}">}perfectio{<\textbf{am}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{g}\hspace*{1em}{ref}="{\#ii}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{am}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{source}="{\#FJF}">}perfectio{<\textbf{ex}>}u{</\textbf{ex}>}n{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{source}="{\#PGR}">}perfectiou{<\textbf{ex}>}n{</\textbf{ex}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rdg}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \noindent  This example uses special purpose elements \hyperref[TEI.am]{<am>} and \hyperref[TEI.ex]{<ex>} used to represent abbreviation marks and editorial expansion respectively; these elements are provided by the \textsf{transcr} module documented in chapter \textit{\hyperref[PH]{11.\ Representation of Primary Sources}}, which should be consulted for further discussion of methods of representing multiple readings of a source. \par
+Editorial notes may also be attached to \hyperref[TEI.app]{<app>} structures within transcriptions. Here, editorial preference for Ruggiers' expansion and an explanation of that preference is given: \par\bgroup\index{app=<app>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{source=@source!<rdg>|exampleindex}\index{am=<am>|exampleindex}\index{g=<g>|exampleindex}\index{ref=@ref!<g>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{source=@source!<rdg>|exampleindex}\index{ex=<ex>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{source=@source!<rdg>|exampleindex}\index{ex=<ex>|exampleindex}\index{note=<note>|exampleindex}\index{target=@target!<note>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}Virginite is grete\mbox{}\newline 
+{<\textbf{app}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{source}="{\#ES}">}perfecti{<\textbf{am}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{g}\hspace*{1em}{ref}="{\#ii}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{am}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{xml:id}="{f105}"\hspace*{1em}{source}="{\#FJF}">}perfectio{<\textbf{ex}>}u{</\textbf{ex}>}n{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{xml:id}="{r105}"\hspace*{1em}{source}="{\#PGR}">}perfectiou{<\textbf{ex}>}n{</\textbf{ex}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rdg}>}\mbox{}\newline 
+{</\textbf{app}>}\mbox{}\newline 
+\textit{<!-- ... <note> appearing elsewhere in the document ... -->}\mbox{}\newline 
+{<\textbf{note}\hspace*{1em}{target}="{\#r105 \#f105}">}Furnivall's expansion implies that the bar\mbox{}\newline 
+ is an abbreviation for 'u'. There are no certain instances of\mbox{}\newline 
+ this mark as an abbreviation for 'u' in these manuscripts and it is\mbox{}\newline 
+ widely used as an abbreviation for 'n'. Ruggiers' expansion is to\mbox{}\newline 
+ be accepted.{</\textbf{note}>}\end{shaded}\egroup\par \par
+In most cases, elements used to indicate features of a primary textual source may be represented within an \hyperref[TEI.app]{<app>} structure simply by nesting them within its readings, just as the \hyperref[TEI.am]{<am>} and \hyperref[TEI.ex]{<ex>} elements are nested within the \hyperref[TEI.rdg]{<rdg>} elements in the example just given. However, in cases where the tagged feature extends across a span of text which might itself contain variant readings which it is desired to represent by \hyperref[TEI.app]{<app>} structures, some adaptation of the tagging may be necessary. For example, a span of text may be marked in the transcription of the primary source as a single deletion but it may be desirable to represent just a few words from this source as individual deletions within the context of a critical apparatus drawing together readings from this and several other witnesses. In this case, the tagging of the span of words as one deletion may need to be decomposed into a series of one-word deletions for encoding within the apparatus. If it is important to record the fact that all were deleted by the same act, the markup may use the \hyperref[TEI.join]{<join>} element or the {\itshape next} and {\itshape prev} attributes defined by chapter \textit{\hyperref[SA]{16.\ Linking, Segmentation, and Alignment}}.
+\subsection[{Strategies for Encoding Variation}]{Strategies for Encoding Variation}\par
+Textual variation may manifest itself in many ways. Variation most frequently occurs at the phrase level, but is also common at higher structural levels, such as the verse line, paragraph, or chapter. When these structures are involved, some care must be taken in their encoding to ensure that TEI's Abstract Model is not being broken. It would be an error, for example, to have a \hyperref[TEI.div]{<div>} in the \hyperref[TEI.lem]{<lem>}, but a \hyperref[TEI.p]{<p>} in a \hyperref[TEI.rdg]{<rdg>} inside the same apparatus entry, because these structures cannot occur at the same level. Similarly, it is an error if the contents of an apparatus entry place a \hyperref[TEI.p]{<p>} inside another \hyperref[TEI.p]{<p>} or an \hyperref[TEI.l]{<l>} inside an \hyperref[TEI.l]{<l>}.\par
+Phenomena such as omissions and transpositions in witnesses will require some encoding strategies that differ from those in the examples above. An editor wishing to signal an omission in one witness should encode the omission using an empty \hyperref[TEI.rdg]{<rdg>}, thus: \par\bgroup\index{app=<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{source=@source!<lem>|exampleindex}\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{cause=@cause!<rdg>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}\hspace*{1em}{xml:id}="{d1e372}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{lem}\hspace*{1em}{xml:id}="{d1e373}"\hspace*{1em}{source}="{\#Heyworth}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{l}\hspace*{1em}{n}="{18}">}Hypsipyle uacuo constitit in thalamo:{</\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{xml:id}="{d1e376}"\hspace*{1em}{wit}="{\#J}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{cause}="{homeoarchon}"/>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \noindent  Notice that in this example, the variation occurs at the unit of the verse line. The scribe of MS J has skipped line 18 (probably by mistake) because, like line 19, it begins with the name "Hypsipyle." If a witness contains an interpolation that the editor does not wish to show in the base text, an empty \hyperref[TEI.lem]{<lem>} should be used, in the same fashion.\par
+Transpositions are harder to encode, because they involve variation that occurs in different locations. A single \hyperref[TEI.app]{<app>} will therefore not be sufficient, and the variants must be linked. For example, in his edition of Propertius 1.16, Housman printed lines 25-6 after line 32, Heyworth prints them in place. We might encode Heyworth's edition, which records Housman's conjecture despite disagreeing with it, as follows: \par\bgroup\index{app=<app>|exampleindex}\index{exclude=@exclude!<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{source=@source!<lem>|exampleindex}\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}\hspace*{1em}{xml:id}="{app-lem-l25-l26}"\mbox{}\newline 
+\hspace*{1em}{exclude}="{\#app-rdg-Housman-l25-26}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{lem}\hspace*{1em}{xml:id}="{d1e462}"\hspace*{1em}{source}="{\#Heyworth}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{l}\hspace*{1em}{n}="{25}"\hspace*{1em}{xml:id}="{l25}">}desine iam reuocare tuis periuria verbis,{</\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{l}\hspace*{1em}{n}="{26}"\hspace*{1em}{xml:id}="{l26}">}Cynthia, et oblitos parce movere deos;{</\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{lem}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \noindent  and then, after line 32: \par\bgroup\index{app=<app>|exampleindex}\index{exclude=@exclude!<app>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{source=@source!<rdg>|exampleindex}\index{l=<l>|exampleindex}\index{copyOf=@copyOf!<l>|exampleindex}\index{l=<l>|exampleindex}\index{copyOf=@copyOf!<l>|exampleindex}\index{note=<note>|exampleindex}\index{target=@target!<note>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}\hspace*{1em}{xml:id}="{app-rdg-Housman-l25-26}"\mbox{}\newline 
+\hspace*{1em}{exclude}="{\#app-lem-l25-l26}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{xml:id}="{d1e603}"\hspace*{1em}{source}="{\#Housman}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{l}\hspace*{1em}{copyOf}="{\#l25}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{l}\hspace*{1em}{copyOf}="{\#l26}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{note}\hspace*{1em}{target}="{\#d1e603}">}Housman put these lines after 32.{</\textbf{note}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \noindent  Note that both \hyperref[TEI.app]{<app>}s are linked via the {\itshape exclude} attribute, because they are mutually exclusive: if one reading is chosen for display in a reading interface, for example, the other must disappear and vice versa. To avoid repetition, the second pair of lines can make use of the {\itshape copyOf} attribute. If they were both transposed and somewhat different, then both sets should be written in full.\par
+Apparatus entries may nest when there is variation at both higher and lower structural levels, e.g.: \par\bgroup\index{app=<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{source=@source!<lem>|exampleindex}\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\index{app=<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{wit=@wit!<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{source=@source!<rdg>|exampleindex}\index{note=<note>|exampleindex}\index{target=@target!<note>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{source=@source!<rdg>|exampleindex}\index{cert=@cert!<rdg>|exampleindex}\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\index{app=<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{app=<app>|exampleindex}\index{lem=<lem>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{source=@source!<rdg>|exampleindex}\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\index{l=<l>|exampleindex}\index{n=@n!<l>|exampleindex}\index{rdg=<rdg>|exampleindex}\index{wit=@wit!<rdg>|exampleindex}\index{cause=@cause!<rdg>|exampleindex}\index{note=<note>|exampleindex}\index{target=@target!<note>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{app}\hspace*{1em}{xml:id}="{d1e275}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{lem}\hspace*{1em}{xml:id}="{d1e277}"\hspace*{1em}{source}="{\#Heyworth}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{l}\hspace*{1em}{n}="{8}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{app}\hspace*{1em}{xml:id}="{d1e280}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{lem}\hspace*{1em}{xml:id}="{d1e281}"\hspace*{1em}{wit}="{\#N \#Λ}">}ut{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{xml:id}="{d1e283}"\hspace*{1em}{wit}="{\#A}">}et{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{xml:id}="{d1e285}"\hspace*{1em}{source}="{\#Nodell}">}ac{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{note}\hspace*{1em}{target}="{\#d1e287}">}perhaps{</\textbf{note}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{xml:id}="{d1e287}"\hspace*{1em}{source}="{\#Heyworth}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{cert}="{low}">}quam{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{app}>} formosa nouo quae parat ire uiro.{</\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{l}\hspace*{1em}{n}="{9}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{app}\hspace*{1em}{xml:id}="{d1e294}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{lem}\hspace*{1em}{xml:id}="{d1e295}">}at{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{xml:id}="{d1e297}"\hspace*{1em}{wit}="{\#A}">}et{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{app}>} non sic, Ithaci digressu {<\textbf{app}\hspace*{1em}{xml:id}="{d1e300}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{lem}\hspace*{1em}{xml:id}="{d1e301}">}mota{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{xml:id}="{d1e303}"\hspace*{1em}{source}="{\#Graevius}">}immota{</\textbf{rdg}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{app}>}, Calypso{</\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{l}\hspace*{1em}{n}="{10}">}desertis olim fleuerat aequoribus:{</\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{l}\hspace*{1em}{n}="{11}">}multos illa dies incomptis maesta capillis{</\textbf{l}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{lem}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{rdg}\hspace*{1em}{xml:id}="{d1e314}"\hspace*{1em}{wit}="{\#C}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{cause}="{homoeoteleuton}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{note}\hspace*{1em}{target}="{\#d1e314}">}omits lines 8-11 because of homoeoteleuton.{</\textbf{note}>}\mbox{}\newline 
+{</\textbf{app}>}\end{shaded}\egroup\par \noindent  Here, MS C omits lines 8-11, but there are variations the editor wishes to record in the other witnesses which do have these lines. Therefore, an outer \hyperref[TEI.app]{<app>} gives the lines in the \hyperref[TEI.lem]{<lem>} and the omission in a \hyperref[TEI.rdg]{<rdg>}. Further variation is encoded for lines 8 and 9 using nested \hyperref[TEI.app]{<app>}s.
+\subsection[{Module for Critical Apparatus}]{Module for Critical Apparatus}\par
+The module described in this chapter makes available the following components: \begin{description}
+
+\item[{Module textcrit: Critical Apparatus}]\hspace{1em}\hfill\linebreak
+\mbox{}\\[-10pt] \begin{itemize}
+\item {\itshape Elements defined}: \hyperref[TEI.app]{app} \hyperref[TEI.lacunaEnd]{lacunaEnd} \hyperref[TEI.lacunaStart]{lacunaStart} \hyperref[TEI.lem]{lem} \hyperref[TEI.listApp]{listApp} \hyperref[TEI.listWit]{listWit} \hyperref[TEI.rdg]{rdg} \hyperref[TEI.rdgGrp]{rdgGrp} \hyperref[TEI.variantEncoding]{variantEncoding} \hyperref[TEI.wit]{wit} \hyperref[TEI.witDetail]{witDetail} \hyperref[TEI.witEnd]{witEnd} \hyperref[TEI.witStart]{witStart} \hyperref[TEI.witness]{witness}
+\item {\itshape Classes defined}: \hyperref[TEI.att.rdgPart]{att.rdgPart} \hyperref[TEI.att.textCritical]{att.textCritical} \hyperref[TEI.att.witnessed]{att.witnessed} \hyperref[TEI.model.rdgLike]{model.rdgLike} \hyperref[TEI.model.rdgPart]{model.rdgPart}
+\end{itemize} 
+\end{description}  The selection and combination of modules to form a TEI schema is described in \textit{\hyperref[STIN]{1.2.\ Defining a TEI Schema}}.

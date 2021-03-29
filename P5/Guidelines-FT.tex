@@ -1,0 +1,484 @@
+
+\section[{Tables, Formulæ, Graphics and Notated Music}]{Tables, Formulæ, Graphics and Notated Music}\label{FT}\par
+Many documents, both historical and contemporary, include not only text, but also graphics, artwork, and other images. Although some types of images can be represented directly with markup, it is more common practice to include such information by using a reference to an external entity (typically a URL) encoded in a suitable graphical notation.\par
+In addition to graphic images, documents often contain material presented in graphical or tabular format. In such materials, details of layout and presentation may also be of comparatively greater significance or complexity than they are for running text. Indeed, it may often be difficult to make a clear distinction between details relating purely to the rendition of information and those relating to the information itself.\par
+Documents may also contain mathematical formulæ or expressions in other formulaic notations, for which no notation is defined in these Guidelines.\par
+Finally, documents may contain musical notation, embedded in a manner similar to tables, graphs and formulæ.\par
+These areas (graphics, tabular material, and mathematical or other formulæ, and music) have in common that they have received considerable attention from many other standards bodies or similar professional groups. In part because of this, they may frequently be most conveniently encoded and processed using some notation not defined by these Guidelines. For these reasons, and others, we consider tables, formulæ, graphics and notated music together in this chapter.\par
+As with text markup in general, many incompatible formats have been proposed for the representation of graphics, formulæ, and tables in electronic form. Unfortunately, no single format as effective as XML in the domain of text has yet emerged for their interchange, to some extent because of the difficulty of representing the information these data formats convey independently of the way it is rendered.\par
+The module defined by this chapter defines special purpose ‘container’ elements that can be used to encapsulate occurrences of such data within a TEI-conformant document in a portable way. Specific recommendations for the encoding of tables are provided in section \textit{\hyperref[FTTAB]{14.1.\ Tables}}, recommendations for mathematical or other formulæ in section \textit{\hyperref[FTFOR]{14.2.\ Formulæ and Mathematical Expressions}}, and for the encoding of musical notation in section \textit{\hyperref[FTNM]{14.3.\ Notated Music in Written Text}}. Specific recommendations for the encoding of graphic figures may be found in section \textit{\hyperref[FTGRA]{14.4.\ Specific Elements for Graphic Images}}. The rest of the chapter is devoted to general problems of encoding graphic information.\par
+There is at the time of writing no consensus on formats for graphical images, and such formats vary in many ways. We therefore provide (in section \textit{\hyperref[FTGROV]{14.5.\ Overview of Basic Graphics Concepts}}) a brief discussion of the ways in which images may be represented, and (in section \textit{\hyperref[FTGRNO]{14.6.\ Graphic Image Formats}}) a list of formal names for those representations most popular at this time. Each one includes a very brief description. These Guidelines recommend a few particular representations as being the most widely supported and understood.
+\subsection[{Tables}]{Tables}\label{FTTAB}\par
+A table is the least ‘graphic’ of the elements discussed in this chapter. Almost any text structure can be presented as a series of rows and columns: one might, for example, choose to show a glossary or other form of list in tabular form, without necessarily regarding it as a table. In such cases, the global {\itshape rend} attribute is an appropriate way of indicating that some element is being presented in tabular format; similarly, the global {\itshape style} attribute coud be used to provide an appropriate display property in CSS. When tabular presentation is regarded as of less intrinsic importance, it is correspondingly simpler to encode descriptive or functional information about the contents of the table, for example to identify one cell as containing a name and another as containing a date, though the two methods may be combined.\par
+When, however, particular elements are required to encode the tabular arrangement itself, then one or other of the various ‘table schemas’ now available may be preferable. The schemas in common use generally view a table as a special text element, made up of row elements, themselves composed of cells. Table cells generally appear in row-major order, with the first row from left to right, then the second row, and so on. Details of appearance such as column widths, border lines, and alignment are generally encoded by numerous attributes. Beyond this, however, such schemas differ greatly. This section begins by describing a table schema of this kind; a brief summary of some other widely available table schemas is also provided in section \textit{\hyperref[FTTAB2]{14.1.2.\ Other Table Schemas}}.
+\subsubsection[{TEI Tables}]{TEI Tables}\label{FTTAB1}\par
+For encoding tables of low to moderate complexity, these Guidelines provide the following special purpose elements: 
+\begin{sansreflist}
+  
+\item [\textbf{<table>}] (table) contains text displayed in tabular form, in rows and columns.\hfil\\[-10pt]\begin{sansreflist}
+    \item[@{\itshape rows}]
+  (rows) indicates the number of rows in the table.
+    \item[@{\itshape cols}]
+  (columns) indicates the number of columns in each row of the table.
+\end{sansreflist}  
+\item [\textbf{<row>}] (row) contains one row of a table.
+\item [\textbf{<cell>}] (cell) contains one cell of a table.
+\end{sansreflist}
+\par
+The \hyperref[TEI.table]{<table>} element is defined as a member of the class \textsf{model.inter}; it may therefore appear both within other components (such as paragraphs), or between them, provided that the module defined in this chapter has been enabled, as described at the beginning of this chapter.\par
+It is to a large extent arbitrary whether a table should be regarded as a series of rows or as a series of columns. For compatibility with currently available systems, however, these Guidelines require a row-by-row description of a table. It is also possible to describe a table simply as a series of cells; this may be useful for tabular material which is not presented as a simple matrix. \par
+The attributes {\itshape rows} and {\itshape cols} may be used to indicate the size of a table, or to indicate that a particular cell or row of a table spans more than one row or column. For both tables and cells, rows and columns are always given in top-to-bottom, left-to-right order, although formatting properties such as those provided by CSS may be used to specify that they should be displayed differently. These Guidelines do not require that the size of a table be specified; for most formatting and many other applications, it will be necessary to process the whole table in two passes in any case.\par
+Where cells span more than one column or row, the encoder must determine whether this is a purely presentational effect (in which case the {\itshape rend} attribute may be more appropriate), whether the part of the table affected would be better treated as a nested table, or whether to use the spanning attributes listed above.\par
+The {\itshape role} attribute may be used to categorize a single cell, or set a default for all the cells in a given row. The present Guidelines distinguish the roles of \textit{label} and \textit{data} only, but the encoder may define other roles, such as ‘derived’, ‘numeric’, etc., as appropriate.\par
+These three attributes are provided by the attribute class \textsf{att.tableDecoration} of which both \hyperref[TEI.cell]{<cell>} and \hyperref[TEI.row]{<row>} are members; see further \textit{\hyperref[STECAT]{1.3.1.\ Attribute Classes}}.\par
+The following simple example demonstrates how the data presented as a labelled list in section \textit{\hyperref[COLI]{3.8.\ Lists}} might be represented by an encoder wishing to preserve its original appearance as a table: \par\bgroup\index{table=<table>|exampleindex}\index{rend=@rend!<table>|exampleindex}\index{rows=@rows!<table>|exampleindex}\index{cols=@cols!<table>|exampleindex}\index{head=<head>|exampleindex}\index{rend=@rend!<head>|exampleindex}\index{row=<row>|exampleindex}\index{cell=<cell>|exampleindex}\index{role=@role!<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{row=<row>|exampleindex}\index{cell=<cell>|exampleindex}\index{role=@role!<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{row=<row>|exampleindex}\index{cell=<cell>|exampleindex}\index{role=@role!<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{row=<row>|exampleindex}\index{cell=<cell>|exampleindex}\index{role=@role!<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{row=<row>|exampleindex}\index{cell=<cell>|exampleindex}\index{role=@role!<cell>|exampleindex}\index{cell=<cell>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{table}\hspace*{1em}{rend}="{boxed}"\hspace*{1em}{rows}="{2}"\hspace*{1em}{cols}="{2}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{head}\hspace*{1em}{rend}="{it}">}Report of the conduct and progress of Ernest\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} Pontifex. Upper Vth form — half term ending Midsummer 1851{</\textbf{head}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}\hspace*{1em}{role}="{label}">}Classics{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}Idle listless and unimproving{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}\hspace*{1em}{role}="{label}">}Mathematics{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}ditto{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}\hspace*{1em}{role}="{label}">}Divinity{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}ditto{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}\hspace*{1em}{role}="{label}">}Conduct in house{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}Orderly{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}\hspace*{1em}{role}="{label}">}General conduct{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}Not satisfactory, on account of his great unpunctuality and\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em} inattention to duties{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{row}>}\mbox{}\newline 
+{</\textbf{table}>}\end{shaded}\egroup\par \noindent  \par
+Note that this encoding makes no attempt to represent the full significance of the ‘ditto’ cells above; these might be regarded as simple links between the cells containing them and that to which they refer, or as virtual copies of it. For ways of representing either interpretation, see chapter \textit{\hyperref[SA]{16.\ Linking, Segmentation, and Alignment}}.\par
+The following example demonstrates how a simple statistical table may be represented using this scheme: \par\bgroup\index{table=<table>|exampleindex}\index{rows=@rows!<table>|exampleindex}\index{cols=@cols!<table>|exampleindex}\index{head=<head>|exampleindex}\index{row=<row>|exampleindex}\index{role=@role!<row>|exampleindex}\index{cell=<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{row=<row>|exampleindex}\index{cell=<cell>|exampleindex}\index{role=@role!<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{row=<row>|exampleindex}\index{cell=<cell>|exampleindex}\index{role=@role!<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{row=<row>|exampleindex}\index{cell=<cell>|exampleindex}\index{role=@role!<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{row=<row>|exampleindex}\index{cell=<cell>|exampleindex}\index{role=@role!<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{cell=<cell>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{table}\hspace*{1em}{rows}="{4}"\hspace*{1em}{cols}="{4}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{head}>}Poor Man's Lodgings in Norfolk (Mayhew, 1843){</\textbf{head}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{row}\hspace*{1em}{role}="{label}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}Dossing Cribs or Lodging Houses{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}Beds{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}Needys or Nightly Lodgers{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}\hspace*{1em}{role}="{label}">}Bury St Edmund's{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}5{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}8{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}128{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}\hspace*{1em}{role}="{label}">}Thetford{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}3{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}6{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}36{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}\hspace*{1em}{role}="{label}">}Attleboro'{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}3{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}5{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}20{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}\hspace*{1em}{role}="{label}">}Wymondham{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}1{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}11{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}22{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{row}>}\mbox{}\newline 
+{</\textbf{table}>}\end{shaded}\egroup\par \par
+Note the use of a blank cell in the first row to ensure that the column labels are correctly aligned with the data. Again, this encoding does not explicitly represent the alignment between column and row labels and the data to which they apply. Where the primary emphasis of an encoding is on the semantic content of a table, a more explicit mechanism for the representation of structured information such as that provided by the feature structure mechanism described in chapter \textit{\hyperref[FS]{18.\ Feature Structures}} may be preferred. Alternatively, the general purpose linkage and alignment mechanisms described in chapter \textit{\hyperref[SA]{16.\ Linking, Segmentation, and Alignment}} may also be applied to individual cells of a table.\par
+The content of a table cell need not be simply character data. It may also contain any sequence of the phrase-level elements described in chapter \textit{\hyperref[CO]{3.\ Elements Available in All TEI Documents}}, thus allowing for the encoding of potentially more useful semantic information, as in the following example, where the fact that one cell contains a number and the other contains a place name has been explicitly recorded: \par\bgroup\index{table=<table>|exampleindex}\index{head=<head>|exampleindex}\index{row=<row>|exampleindex}\index{cell=<cell>|exampleindex}\index{name=<name>|exampleindex}\index{cell=<cell>|exampleindex}\index{num=<num>|exampleindex}\index{row=<row>|exampleindex}\index{cell=<cell>|exampleindex}\index{name=<name>|exampleindex}\index{cell=<cell>|exampleindex}\index{num=<num>|exampleindex}\index{row=<row>|exampleindex}\index{cell=<cell>|exampleindex}\index{name=<name>|exampleindex}\index{cell=<cell>|exampleindex}\index{num=<num>|exampleindex}\index{row=<row>|exampleindex}\index{cell=<cell>|exampleindex}\index{name=<name>|exampleindex}\index{cell=<cell>|exampleindex}\index{num=<num>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{table}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{head}>}US State populations, 1990{</\textbf{head}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{name}>}Wyoming{</\textbf{name}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{num}>}453,588{</\textbf{num}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{name}>}Alaska{</\textbf{name}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{num}>}550,043{</\textbf{num}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{name}>}Montana{</\textbf{name}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{num}>}799,065{</\textbf{num}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{name}>}Rhode Island{</\textbf{name}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{num}>}1,003,464{</\textbf{num}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{row}>}\mbox{}\newline 
+{</\textbf{table}>}\end{shaded}\egroup\par \par
+The use of semantically marked elements within a \hyperref[TEI.cell]{<cell>} enables the encoder to convey something about the nature and significance of the information, rather than merely suggesting how to display it in rows and columns.\par
+Alternatively, the {\itshape role} attribute might be used to convey such information: \par\bgroup\index{table=<table>|exampleindex}\index{head=<head>|exampleindex}\index{row=<row>|exampleindex}\index{cell=<cell>|exampleindex}\index{role=@role!<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{role=@role!<cell>|exampleindex}\index{row=<row>|exampleindex}\index{cell=<cell>|exampleindex}\index{role=@role!<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{role=@role!<cell>|exampleindex}\index{row=<row>|exampleindex}\index{cell=<cell>|exampleindex}\index{role=@role!<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{role=@role!<cell>|exampleindex}\index{row=<row>|exampleindex}\index{cell=<cell>|exampleindex}\index{role=@role!<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{role=@role!<cell>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{table}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{head}>}US State populations, 1990{</\textbf{head}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}\hspace*{1em}{role}="{statename}">}Wyoming {</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}\hspace*{1em}{role}="{pop}">}453,588 {</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}\hspace*{1em}{role}="{statename}">}Alaska {</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}\hspace*{1em}{role}="{pop}">}550,043 {</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}\hspace*{1em}{role}="{statename}">}Montana {</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}\hspace*{1em}{role}="{pop}">}799,065 {</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}\hspace*{1em}{role}="{statename}">}Rhode Island{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}\hspace*{1em}{role}="{pop}">}1,003,464{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{row}>}\mbox{}\newline 
+{</\textbf{table}>}\end{shaded}\egroup\par \par
+The content of table elements is not limited to \hyperref[TEI.head]{<head>} and \hyperref[TEI.row]{<row>}. Milestone elements such as \hyperref[TEI.cb]{<cb>} and \hyperref[TEI.lb]{<lb>} allow breaks to be signalled inside tables; \hyperref[TEI.figure]{<figure>} provides an option for including data which is not amenable to normal row/cell analysis; and other elements such as \hyperref[TEI.epigraph]{<epigraph>} and \hyperref[TEI.trailer]{<trailer>} provide options for including text which is clearly part of the table, but outside the actual tabular layout. This example shows the use of \hyperref[TEI.trailer]{<trailer>}: \par\bgroup\index{table=<table>|exampleindex}\index{head=<head>|exampleindex}\index{row=<row>|exampleindex}\index{cell=<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{row=<row>|exampleindex}\index{cell=<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{cell=<cell>|exampleindex}\index{trailer=<trailer>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{table}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{head}>}The Table of Battallions, reduced out of the grand square of\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} men.{</\textbf{head}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}1{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}2{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}3{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}4{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{row}>}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+\hspace*{1em}{<\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}841{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}3{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}289 289 256{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{cell}>}7{</\textbf{cell}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{row}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{trailer}>}The end of the Table of Battallions reduced out of the\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} battels of g. and squares of men: vpon the right side of euery\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} leafe.{</\textbf{trailer}>}\mbox{}\newline 
+{</\textbf{table}>}\end{shaded}\egroup\par 
+\subsubsection[{Other Table Schemas}]{Other Table Schemas}\label{FTTAB2}\par
+Many authoring systems include built-in support for their own or for public table schemas. These provide an enhanced user interface and good formatting capabilities, but are often product-specific, despite their use of a XML markup language. \par
+The DTD developed by the Association of American Publishers (AAP) and standardized in ANSI Z39.59 provided a very simple encoding for correspondingly simple tables. This has been further developed, together with the table DTD documented in ISO Technical Report 9537, and now forms part of ISO 12083. The TEI table model described above has functionality very similar to that defined by ISO 12083. \par
+For more complex tables, the most effective publicly-available DTD is probably that developed by the US Department of Defense CALS project. This supports vertical and horizontal spanning and various kinds of text rotation and justification within cells and is also directly supported by a number of existing XML software systems. \par
+The CALS table model is much too complex to describe fully here; for historical background see \url{http://archive.is/gGzsZ}; for more recent simplifications of it and current implementations see \url{https://www.oasis-open.org/specs/tablemodels.php}. As with any other XML vocabulary, the XML version of the CALS model may readily be included in a TEI schema, using the techniques described in \textit{\hyperref[MD]{23.3.\ Customization}}.\par
+The XHTML table model (\cite{XHTML}) is based on the HTML table model (\cite{HTML4}). Both models support arrangement of arbitrary data into rows and columns of cells. Table rows and columns may be grouped to convey additional structural information and may be rendered by user agents in ways that emphasize this structure. Support for incremental rendering of tables and for rendering on ‘non-visual’ user agents  is also available. Special elements and attributes are provided to associate metadata with tables. They indicate the table's purpose, or are for the benefit of people using speech or Braille-based user agents. Tables are not recommended for use purely as a means to lay out document content, as this leads to many accessibility problems (see further \url{http://www.w3.org/TR/WCAG10-HTML-TECHS/\#tables}). Stylesheets provide a far more effective means of controlling layout and other visual characteristics in both HTML and XML documents.
+\subsection[{Formulæ and Mathematical Expressions}]{Formulæ and Mathematical Expressions}\label{FTFOR}\par
+Mathematical and chemical formulæ pose problems similar to those posed by tables in that rendition may be of great significance and hard to disentangle from content. They also require access to a wide range of special characters, for most of which standard entity names already exist in the documented ISO entity sets (see further chapters \textit{\hyperref[CH]{vi\ Languages and Character Sets}} and \textit{\hyperref[WD]{5.\ Characters, Glyphs, and Writing Modes}}).\par
+Formulæ and tables are also similar in that well-researched and detailed DTD fragments have already been developed for them independently of the TEI. They differ in that (for mathematics at least) there also exists a richly detailed text-based but non-XML notation which is very widely used: this is the TeX system, and the sets of descriptive macros developed for it such as LaTeX, AMS-TeX, and AMS-LaTeX. \par
+The AAP and ISO standards mentioned in section \textit{\hyperref[FTTAB]{14.1.\ Tables}} above both provide DTDs for equations as well as for tables, which now form part of ISO 12083. The European Mathematical Trust, an organization set up specifically to enhance research support for European mathematicians, has also defined a general purpose mathematical DTD known as EuroMath (\url{http://xml.coverpages.org/emt-ukc-index.html}), for which it provides both software and services.\par
+Most if not all of the functionality provided by these DTDs can now be found in the OpenMath and MathML XML-based systems briefly described below. \par
+As with tables, in all the XML solutions a tension exists between the need to encode the way a formula is written (its appearance) and the need to represent its semantics. If the object of the encoding is purely to act as an interchange format among different formatting programs, then there is no need to represent the mathematical meaning of an expression. If however the object is to use the encoding as input to an algebraic manipulation system (such as Mathematica or Maple) or a database system, clearly simply representing superscripts and subscripts will be inadequate. \par
+The \hyperref[TEI.formula]{<formula>} element provided by these Guidelines makes no attempt to represent the internal structure of formulæ. 
+\begin{sansreflist}
+  
+\item [\textbf{<formula>}] (formula) contains a mathematical or other formula.
+\end{sansreflist}
+\par
+By default, a \hyperref[TEI.formula]{<formula>} is assumed to contain character data which is not validated in any way. The notation used may however be named, using the {\itshape notation} attribute provided by the \textsf{att.notated} class. \par\bgroup\index{formula=<formula>|exampleindex}\index{notation=@notation!<formula>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{formula}\hspace*{1em}{notation}="{TeX}">}\$e=mc\textasciicircum 2\${</\textbf{formula}>}\end{shaded}\egroup\par \noindent  The character data must still be well-formed, of course, which means that \textit{<} and \textit{\&} must be escaped with entity references or numeric character references, e.g. \par\bgroup\index{formula=<formula>|exampleindex}\index{notation=@notation!<formula>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{formula}\hspace*{1em}{notation}="{TeX}">}\$⃥matrix❴0 \&amp;\mbox{}\newline 
+ 1⃥cr\&lt;0\&amp;>1❵\${</\textbf{formula}>}\end{shaded}\egroup\par \par
+Alternatively, if more detailed markup is desired, the content of the \hyperref[TEI.formula]{<formula>} element may be redefined to include elements defined by some other XML vocabulary, such as that of ISO 12083, or to use elements from the OpenMath or MathML schemas.\par
+When the content of a \hyperref[TEI.formula]{<formula>} element is not expressed in XML the notation used should always be specified using the {\itshape notation} attribute as above, and in the following longer example: \par\bgroup\index{p=<p>|exampleindex}\index{formula=<formula>|exampleindex}\index{notation=@notation!<formula>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{p}>}Achilles runs ten times faster than the tortoise and gives the\mbox{}\newline 
+ animal a headstart of ten meters. Achilles runs those ten meters, the\mbox{}\newline 
+ tortoise one; Achilles runs that meter, the tortoise runs a decimeter;\mbox{}\newline 
+ Achilles runs that decimeter, the tortoise runs a centimeter; Achilles\mbox{}\newline 
+ runs that centimeter, the tortoise, a millimeter; Fleet-footed\mbox{}\newline 
+ Achilles, the millimeter, the tortoise, a tenth of a millimeter, and\mbox{}\newline 
+ so on to infinity, without the tortoise ever being overtaken. . . Such\mbox{}\newline 
+ is the customary version. \mbox{}\newline 
+\textit{<!-- ... -->} The problem does not change, as\mbox{}\newline 
+ you can see; but I would like to know the name of the poet who\mbox{}\newline 
+ provided it with a hero and a tortoise. To those magical competitors\mbox{}\newline 
+ and to the series {<\textbf{formula}\hspace*{1em}{notation}="{TeX}">}\$\$ ❴1 ⃥over 10❵ + ❴1 ⃥over\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} 100❵ + ❴1 ⃥over 1000❵ + ❴1 ⃥over 10,⃥!000❵ + ⃥dots \$\${</\textbf{formula}>} the\mbox{}\newline 
+ argument owes its fame.{</\textbf{p}>}\end{shaded}\egroup\par \noindent  The {\itshape notation} attribute supplies the name of a notation (‘TeX’), which is expected to be identified somewhere in document metadata.\par
+Mathematical Markup Language (MathML) (\cite{MATHML}) is a vocabulary for describing mathematical notation, capturing both its structure and content.  It provides two types of markup: Presentation Markup, which captures the {\itshape notational} structure of an expression and could be seen as the ‘TeX for the Web’ and Content Markup, which captures the {\itshape mathematical} structure of an expression. Most of its content elements correspond with the range of operators, relations, and named functions typically found at the high-school level of mathematics. The tortoise example given above in TeX can be re-expressed in MathML as \par\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{m:math}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{m:mfrac}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:mn}>}1{</\textbf{m:mn}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:mn}>}10{</\textbf{m:mn}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{m:mfrac}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{m:mo}>}+{</\textbf{m:mo}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{m:mfrac}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:mn}>}1{</\textbf{m:mn}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:mn}>}100{</\textbf{m:mn}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{m:mfrac}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{m:mo}>}+{</\textbf{m:mo}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{m:mfrac}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:mn}>}1{</\textbf{m:mn}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:mn}>}1000{</\textbf{m:mn}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{m:mfrac}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{m:mo}>}+{</\textbf{m:mo}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{m:mfrac}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:mn}>}1{</\textbf{m:mn}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:mn}>}10000{</\textbf{m:mn}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{m:mfrac}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{m:mo}>}+{</\textbf{m:mo}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{m:mo}>}…{</\textbf{m:mo}>}\mbox{}\newline 
+{</\textbf{m:math}>}\end{shaded}\egroup\par \par
+MathML 2.0 provides support for a ‘Semantic Math-Web’, XML namespaces, and other current XML standards, such as XML DOM, OMG IDL, ECMAScript, and Java. It also provides a modularized version of the MathML DTD so that MathML fragments ‘embedded’ in XHTML 1.1 documents  can be correctly validated.\par
+The OpenMath (\url{https://www.openmath.org/standard/}) project is coordinated by the OpenMath Society (\url{https://www.openmath.org/}) and funded by the European Commission under the Esprit Multimedia Standards Initiative that commenced in September 1997. It is likely to become a key standard for communicating semantically rich representations of mathematical objects both on and off the Web in a platform-independent manner.\par
+The OpenMath Standard (\url{https://www.openmath.org/standard/om20-2004-06-30/}) consists of specifications for \begin{enumerate}
+\item OpenMath objects, representing the structure of formulæ (\url{https://www.openmath.org/standard/om20-2004-06-30/omstd20html-2.xml\#cha\textunderscore obj});
+\item Content Dictionaries, providing semantic context (\url{https://www.openmath.org/standard/om20-2004-06-30/omstd20html-4.xml\#cha\textunderscore cd});
+\item Encodings, both binary (\url{https://www.openmath.org/standard/om20-2004-06-30/omstd20html-3.xml\#sec\textunderscore binary}) and XML (\url{https://www.openmath.org/standard/om20-2004-06-30/omstd20html-3.xml\#sec\textunderscore xml}).
+\end{enumerate}\par
+OpenMath and MathML have certain common aspects. They both use prefix operators, both are XML-based and they both construct their objects by applying certain rules recursively. Such similarities facilitate mapping between the two standards. There are also some key differences between MathML and OpenMath. OpenMath does not provide support for presentation of mathematical objects and its scope of semantically-oriented elements is much broader that of MathML, with the expressive power to cover virtually all areas of computational mathematics. In fact, a particular set of Content Dictionaries, the ‘MathML CD Group’, covers the same areas of mathematics as the Content Markup elements of MathML 2.0.\par
+Finally, OMDoc (\url{http://omdoc.org/}) is an extension of the OpenMath standard that supplies markup for structures such as axioms, theorems, proofs, definitions, texts (mixing formal content with mathematical text).\par
+In-line versus block placement for an equation can be distinguished if desired, via the global {\itshape rend} attribute. The global {\itshape n} and {\itshape xml:id} attributes may also be used to label or identify the formula, as in the following example: \par\bgroup\index{p=<p>|exampleindex}\index{formula=<formula>|exampleindex}\index{n=@n!<formula>|exampleindex}\index{rend=@rend!<formula>|exampleindex}\index{p=<p>|exampleindex}\index{ptr=<ptr>|exampleindex}\index{target=@target!<ptr>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{p}>}The volume of a sphere\mbox{}\newline 
+ is given by the formula: {<\textbf{formula}\hspace*{1em}{xml:id}="{f12}"\hspace*{1em}{n}="{12}"\hspace*{1em}{rend}="{inline}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{m:math}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:mi}>}V{</\textbf{m:mi}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:mo}>}={</\textbf{m:mo}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:mfrac}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:mn}>}4{</\textbf{m:mn}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:mn}>}3{</\textbf{m:mn}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{m:mfrac}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:mi}>}π{</\textbf{m:mi}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:msup}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:mi}>}r{</\textbf{m:mi}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{m:mn}>}3{</\textbf{m:mn}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{m:mrow}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{</\textbf{m:msup}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{m:math}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{formula}>} which is readily calculated.{</\textbf{p}>}\mbox{}\newline 
+{<\textbf{p}>}As we have seen in equation {<\textbf{ptr}\hspace*{1em}{target}="{\#f12}"/>}, ... {</\textbf{p}>}\end{shaded}\egroup\par 
+\subsection[{Notated Music in Written Text}]{Notated Music in Written Text}\label{FTNM}\par
+Music, like many other art forms, is often mentioned, discussed and described in writings of various kinds. This applies to both historical and contemporary documents, even though methods of notating music have changed considerably in western history. In most cases, music notation enters the text flow in a way similar to figures, images or graphs. On other occasions, elements of music notation are treated as inline characters in running text.\par
+\hyperref[TEI.notatedMusic]{<notatedMusic>} provides a way to signal the presence of music notation in text, but defer to other representations, which are not covered by the TEI guidelines, to describe the music notation itself. In fact, several commercial, academic and standard bodies have developed digital representations of music notation, and given the topic's complexity, these representations often focus on different aspects and adopt different methodologies. Therefore, \hyperref[TEI.notatedMusic]{<notatedMusic>} only defines a container element to encode the occurrence of music notation and allows linking to the data format preferred by the encoder. (Note: \hyperref[TEI.notatedMusic]{<notatedMusic>} is not the same as \hyperref[TEI.musicNotation]{<musicNotation>}, a metadata element, which is used to describe musical notation that appears in a manuscript. See \textit{\hyperref[MS]{10.\ Manuscript Description}}.)\par
+The following elements can be used for encoding music notation in text: 
+\begin{sansreflist}
+  
+\item [\textbf{<notatedMusic>}] encodes the presence of music notation in a text
+\item [\textbf{<ptr>}] (pointer) defines a pointer to another location.
+\item [\textbf{<desc>}] (description) contains a short description of the purpose, function, or use of its parent element, or when the parent is a documentation element, describes or defines the object being documented. 
+\item [\textbf{<graphic>}] (graphic) indicates the location of a graphic or illustration, either forming part of a text, or providing an image of it.
+\item [\textbf{<binaryObject>}] provides encoded binary data representing an inline graphic, audio, video or other object.
+\end{sansreflist}
+
+\begin{sansreflist}
+  
+\item \textbf{\hyperlink{TEI.notatedMusic}{}} groups elements representing or containing music notation.
+\item \textbf{\hyperlink{TEI.ptr}{}} can be used to indicate the location of a representation of the music notation. \mbox{}\\[-10pt] \begin{itemize}
+\item {\itshape mimeType} supplies the MIME type of the data format, when available.
+\end{itemize} 
+\item \textbf{\hyperlink{TEI.desc}{}} can be used to give a prose description of the notated music.
+\item \textbf{\hyperlink{TEI.graphic}{}} can be used to indicate the location of a graphical representation of the music notation.
+\item \textbf{\hyperlink{TEI.binaryObject}{}} provides encoded binary data which constitutes another representation of the music notation (e.g. audio).
+\end{sansreflist}
+\par
+The \hyperref[TEI.notatedMusic]{<notatedMusic>} element may contain a textual description and pointers to various representations of the music notation in different media. An external representation of the notated music is specified using the \hyperref[TEI.ptr]{<ptr>} element, whose {\itshape target} attribute provides its electronically-accessible location. The attribute {\itshape mimeType} supplies the MIME type of the data format when available. For example:\par\bgroup\index{notatedMusic=<notatedMusic>|exampleindex}\index{ptr=<ptr>|exampleindex}\index{target=@target!<ptr>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{notatedMusic}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{ptr}\hspace*{1em}{target}="{bar1.xml}"/>}\mbox{}\newline 
+{</\textbf{notatedMusic}>}\end{shaded}\egroup\par \par
+A textual description of the notation can be provided within the \hyperref[TEI.desc]{<desc>} element; alternatively, a \hyperref[TEI.label]{<label>} may be supplied. For example:\par\bgroup\index{notatedMusic=<notatedMusic>|exampleindex}\index{ptr=<ptr>|exampleindex}\index{target=@target!<ptr>|exampleindex}\index{desc=<desc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{notatedMusic}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{ptr}\hspace*{1em}{target}="{bar1.xml}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{desc}>}First bar of Chopin's Scherzo No.3 Op.39{</\textbf{desc}>}\mbox{}\newline 
+{</\textbf{notatedMusic}>}\end{shaded}\egroup\par \par
+It is possible to link to any kind of music notation data format. However, when a MIME type is not available, it is recommended that the format be specified in the description. See the following examples.\par
+MIME type available:\par\bgroup\index{notatedMusic=<notatedMusic>|exampleindex}\index{ptr=<ptr>|exampleindex}\index{target=@target!<ptr>|exampleindex}\index{mimeType=@mimeType!<ptr>|exampleindex}\index{desc=<desc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{notatedMusic}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{ptr}\hspace*{1em}{target}="{bar1.xml}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{mimeType}="{application/vnd.recordare.musicxml}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{desc}>}First bar of Chopin's Scherzo No.3 Op.39. Encoded in\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} MusicXML.{</\textbf{desc}>}\mbox{}\newline 
+{</\textbf{notatedMusic}>}\end{shaded}\egroup\par \par
+MIME type not available:\par\bgroup\index{notatedMusic=<notatedMusic>|exampleindex}\index{ptr=<ptr>|exampleindex}\index{target=@target!<ptr>|exampleindex}\index{desc=<desc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{notatedMusic}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{ptr}\hspace*{1em}{target}="{bar1.ly}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{desc}>}First bar of Chopin's Scherzo No.3 Op.39. Encoded in\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} Lilypond.{</\textbf{desc}>}\mbox{}\newline 
+{</\textbf{notatedMusic}>}\end{shaded}\egroup\par \par
+Application format:\par\bgroup\index{notatedMusic=<notatedMusic>|exampleindex}\index{ptr=<ptr>|exampleindex}\index{target=@target!<ptr>|exampleindex}\index{mimeType=@mimeType!<ptr>|exampleindex}\index{desc=<desc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{notatedMusic}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{ptr}\hspace*{1em}{target}="{bar1.mscz}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{mimeType}="{application/x-musescore}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{desc}>}First bar of Chopin's Scherzo No.3 Op.39. MuseScore Notation\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} Software format.{</\textbf{desc}>}\mbox{}\newline 
+{</\textbf{notatedMusic}>}\end{shaded}\egroup\par \par
+It is possible to specify the location of digital objects representing the notated music in other media such as images or audio-visual files. The interpretation of the correspondence between the notated music and these digital objects is not encoded explicitly. We recommend the use of \hyperref[TEI.graphic]{<graphic>} and \hyperref[TEI.binaryObject]{<binaryObject>} mainly as a fallback mechanism when the notated music format is not displayable by the application using the encoding. The alignment of encoded notated music, images carrying the notation, and audio files is a complex matter for which we refer the reader to other formats and specifications such as \xref{http://www.interactivemusicnetwork.org/mpeg-ahg/}{MPEG-SMR}.\par\bgroup\index{notatedMusic=<notatedMusic>|exampleindex}\index{ptr=<ptr>|exampleindex}\index{target=@target!<ptr>|exampleindex}\index{graphic=<graphic>|exampleindex}\index{url=@url!<graphic>|exampleindex}\index{desc=<desc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{notatedMusic}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{ptr}\hspace*{1em}{target}="{bar1.xml}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{graphic}\hspace*{1em}{url}="{bar1.jpg}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{desc}>}First bar of Chopin's Scherzo No.3 Op.39{</\textbf{desc}>}\mbox{}\newline 
+{</\textbf{notatedMusic}>}\end{shaded}\egroup\par \par
+It is also recommended, when useful, to embed XML-based music notation formats, such as the \xref{http://music-encoding.org}{Music Encoding Initiative} format as content of \hyperref[TEI.notatedMusic]{<notatedMusic>}. This must be done by means of customization.\par
+In modern printing, music notation positioned between blocks of text for illustrative purposes is usually referred to as a ‘figure’ or ‘example’. In this cases, we recommend the inclusion of \hyperref[TEI.notatedMusic]{<notatedMusic>} in \hyperref[TEI.figure]{<figure>} in order to encode possible captions and headers. For example:\begin{figure}[htbp]
+\noindent\includegraphics[]{Images/prout-ex1.jpg}\end{figure}
+\par\bgroup\index{div=<div>|exampleindex}\index{n=@n!<div>|exampleindex}\index{p=<p>|exampleindex}\index{figure=<figure>|exampleindex}\index{n=@n!<figure>|exampleindex}\index{head=<head>|exampleindex}\index{notatedMusic=<notatedMusic>|exampleindex}\index{ptr=<ptr>|exampleindex}\index{target=@target!<ptr>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{div}\hspace*{1em}{n}="{67}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{p}>} We now give some examples, from the works of the great masters, of\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} some of the most frequently used bowings. {</\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{figure}\hspace*{1em}{n}="{Ex. 3}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{head}>}SCHUBERT: Symphony in B minor.{</\textbf{head}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{notatedMusic}>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{<\textbf{ptr}\hspace*{1em}{target}="{example\textunderscore schubert.xml}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{</\textbf{notatedMusic}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{figure}>}\mbox{}\newline 
+{</\textbf{div}>}\end{shaded}\egroup\par 
+\subsection[{Specific Elements for Graphic Images}]{Specific Elements for Graphic Images}\label{FTGRA}\par
+The following special purpose elements are used to indicate the presence of graphic images within a document: 
+\begin{sansreflist}
+  
+\item [\textbf{<figure>}] (figure) groups elements representing or containing graphic information such as an illustration, formula, or figure.
+\item [\textbf{<graphic>}] (graphic) indicates the location of a graphic or illustration, either forming part of a text, or providing an image of it.
+\item [\textbf{<binaryObject>}] provides encoded binary data representing an inline graphic, audio, video or other object.
+\item [\textbf{<figDesc>}] (description of figure) contains a brief prose description of the appearance or content of a graphic figure, for use when documenting an image without displaying it.
+\end{sansreflist}
+\par
+The \hyperref[TEI.graphic]{<graphic>} and \hyperref[TEI.binaryObject]{<binaryObject>} elements form part of the common core module, and are discussed in section \textit{\hyperref[COGR]{3.10.\ Graphics and Other Non-textual Components}}.\par
+The \hyperref[TEI.figure]{<figure>} element is used to contain images, captions, and textual descriptions of the pictures. The images themselves are specified using the \hyperref[TEI.graphic]{<graphic>} element, whose {\itshape url} attribute provides the location of an image. For example: \par\bgroup\index{figure=<figure>|exampleindex}\index{graphic=<graphic>|exampleindex}\index{url=@url!<graphic>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{figure}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{graphic}\hspace*{1em}{url}="{Fig1.pdf}"/>}\mbox{}\newline 
+{</\textbf{figure}>}\end{shaded}\egroup\par \par
+Three kinds of content may be supplied inside a \hyperref[TEI.figure]{<figure>} element: the element \hyperref[TEI.head]{<head>} may be used to transcribe (or supply) a descriptive heading or title for the graphic itself as in this example: \par\bgroup\index{figure=<figure>|exampleindex}\index{graphic=<graphic>|exampleindex}\index{url=@url!<graphic>|exampleindex}\index{head=<head>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{figure}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{graphic}\hspace*{1em}{url}="{Fig1.pdf}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{head}>}The View from the Bridge{</\textbf{head}>}\mbox{}\newline 
+{</\textbf{figure}>}\end{shaded}\egroup\par \par
+Figures are often accompanied not only by a title or heading (a caption), but by a paragraph or so of commentary (a legend) following the caption. One or more \hyperref[TEI.p]{<p>} or \hyperref[TEI.ab]{<ab>} elements  may be used to transcribe any commentary on the figure in the source: \par\bgroup\index{figure=<figure>|exampleindex}\index{graphic=<graphic>|exampleindex}\index{url=@url!<graphic>|exampleindex}\index{head=<head>|exampleindex}\index{p=<p>|exampleindex}\index{figDesc=<figDesc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{figure}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{graphic}\hspace*{1em}{url}="{pullman.png}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{head}>}Above:{</\textbf{head}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{p}>}The drawing room of the Pullman house, the white and gold saloon\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} where the magnate delighted in giving receptions for several hundred\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} people.{</\textbf{p}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{figDesc}>}The figure shows an elaborately decorated room, at least\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} twenty-five feet side to side and fifty feet long, with ornate\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} mouldings and Corinthian columns on the walls, overstuffed armchairs\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} and loveseats arranged in several conversational groupings, and two\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} large chandeliers.{</\textbf{figDesc}>}\mbox{}\newline 
+{</\textbf{figure}>}\end{shaded}\egroup\par \noindent    Here, the figure contains a heading ‘Above’ which is complemented by a paragraph of description ‘The drawing room ... several hundred people’. Both of these are transcribed from the source, while the description is provided by the encoder, for use by applications which cannot display the graphic directly. In documents created in electronic form with the needs of print-handicapped readers in mind, the \hyperref[TEI.figDesc]{<figDesc>} element may be provided by the author rather than a subsequent encoder. \par\bgroup\index{figure=<figure>|exampleindex}\index{graphic=<graphic>|exampleindex}\index{url=@url!<graphic>|exampleindex}\index{head=<head>|exampleindex}\index{figDesc=<figDesc>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{figure}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{graphic}\hspace*{1em}{url}="{Fig1.jpg}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{head}>}Figure One: The View from the Bridge{</\textbf{head}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{figDesc}>}A Whistleresque view showing four or five sailing boats in\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} the foreground, and a series of buoys strung out between\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} them.{</\textbf{figDesc}>}\mbox{}\newline 
+{</\textbf{figure}>}\end{shaded}\egroup\par \par
+Where the graphic itself contains large amounts of text, perhaps with a complex structure, and perhaps difficult to distinguish from the graphic, the encoder should choose whether to regard the graphic as containing the text (in which case, a nested \hyperref[TEI.floatingText]{<floatingText>} element may be included within the \hyperref[TEI.figure]{<figure>} element) or to regard the enclosed text as being a separate division of the \hyperref[TEI.text]{<text>} element in which the graphic appears. In this latter case, an appropriate \hyperref[TEI.div]{<div>} or \hyperref[TEI.div1]{<div1>} (etc.) element may be used for the text represented within the graphic, and the \hyperref[TEI.figure]{<figure>} element embedded within it. The choice will depend to a large degree on the encoder's understanding of the relationship between the graphic and the surrounding text.\par
+A figure which is internally divided, or contains sub-figures, may be encoded with nested \hyperref[TEI.figure]{<figure>} elements, as in the following example. \par\bgroup\index{figure=<figure>|exampleindex}\index{n=@n!<figure>|exampleindex}\index{figure=<figure>|exampleindex}\index{n=@n!<figure>|exampleindex}\index{graphic=<graphic>|exampleindex}\index{url=@url!<graphic>|exampleindex}\index{ab=<ab>|exampleindex}\index{type=@type!<ab>|exampleindex}\index{figure=<figure>|exampleindex}\index{n=@n!<figure>|exampleindex}\index{graphic=<graphic>|exampleindex}\index{url=@url!<graphic>|exampleindex}\index{ab=<ab>|exampleindex}\index{type=@type!<ab>|exampleindex}\index{ab=<ab>|exampleindex}\index{type=@type!<ab>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{figure}\hspace*{1em}{n}="{6.45}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{figure}\hspace*{1em}{n}="{a}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{graphic}\hspace*{1em}{url}="{./figs/6.45a.png}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{ab}\hspace*{1em}{type}="{caption}">}Parallel{</\textbf{ab}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{figure}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{figure}\hspace*{1em}{n}="{b}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{graphic}\hspace*{1em}{url}="{./figs/6.45b.png}"/>}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{ab}\hspace*{1em}{type}="{caption}">}Perspective{</\textbf{ab}>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{figure}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{ab}\hspace*{1em}{type}="{caption}">}The two canonical view volumes, for the (a)\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} parallel and (b) perspective projections. Note that -z is to the\mbox{}\newline 
+\hspace*{1em}\hspace*{1em} right.{</\textbf{ab}>}\mbox{}\newline 
+{</\textbf{figure}>}\end{shaded}\egroup\par \noindent  \par
+Like any other element in the TEI scheme, figures may be given identifiers so that they can be aligned with other elements, and linked to or from them, as described in chapter \textit{\hyperref[SA]{16.\ Linking, Segmentation, and Alignment}}. Some common examples are discussed briefly here; full information is provided in that chapter.\par
+It is often desirable to maintain two versions of an image in an electronic file: one a low resolution or ‘thumbnail’ version which, when selected by the user, causes the other, high resolution, version to be accessed. In TEI terms, the thumbnail image acts as a \textit{reference} to the other. Supposing that a thumbnail version of the figure discussed above is available as \textsf{fig1th.png}, we might embed a reference to the image using the simple \hyperref[TEI.ref]{<ref>} element discussed in section \textit{\hyperref[COXR]{3.7.\ Simple Links and Cross-References}}: \par\bgroup\index{ref=<ref>|exampleindex}\index{target=@target!<ref>|exampleindex}\index{graphic=<graphic>|exampleindex}\index{url=@url!<graphic>|exampleindex}\index{figure=<figure>|exampleindex}\index{graphic=<graphic>|exampleindex}\index{url=@url!<graphic>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{ref}\hspace*{1em}{target}="{\#IM1}">}Click\mbox{}\newline 
+ here {<\textbf{graphic}\hspace*{1em}{url}="{fig1th.png}"/>} for enlightenment {</\textbf{ref}>}\mbox{}\newline 
+{<\textbf{figure}\hspace*{1em}{xml:id}="{IM1}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{graphic}\hspace*{1em}{url}="{fig1.jpg}"/>}\mbox{}\newline 
+{</\textbf{figure}>}\end{shaded}\egroup\par \par
+Another common requirement is to associate part or the whole of an image with a textual element not necessarily contiguous to it in the text; this is sometimes known as a \textit{callout}. When the module for transcription is included in a schema, specific attributes for parts of a text and parts (or all) of a digital image are available; these are discussed in \textit{\hyperref[PHFAX]{11.1.\ Digital Facsimiles}}. In addition, chapter \textit{\hyperref[SA]{16.\ Linking, Segmentation, and Alignment}} may be consulted for other mechanisms available for this purpose.\par
+The following example assumes that we wish to associate one portion of the image held as ‘fig1’ with chapter two of some text, and another portion of it with chapter three. The application may be thought of as a hypertext browser in which the user selects from a graphic image which part of a text to read next, but the mechanism is independent of this particular application.\par
+The first requirement is some way of identifying and hence pointing to sub-parts of a graphic image. This may be done by pointing into an XML graphic representation, for example an SVG file. Thus \par\bgroup\index{ptr=<ptr>|exampleindex}\index{target=@target!<ptr>|exampleindex}\index{ptr=<ptr>|exampleindex}\index{target=@target!<ptr>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{ptr}\hspace*{1em}{xml:id}="{PD1}"\hspace*{1em}{target}="{Fig1.svg\#object1}"/>}\mbox{}\newline 
+{<\textbf{ptr}\hspace*{1em}{xml:id}="{PD2}"\hspace*{1em}{target}="{Fig1.svg\#object2}"/>}\end{shaded}\egroup\par \par
+These \hyperref[TEI.ptr]{<ptr>} elements identify two areas within the image ‘Fig1’ by pointing at elements inside the XML file \textsf{Fig1.svg}, which contains the following. \par\bgroup\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{svg} xmlns="http://www.w3.org/2000/svg"\hspace*{1em}{width}="{8cm}"\hspace*{1em}{height}="{3cm}"\mbox{}\newline 
+\hspace*{1em}{viewBox}="{2 1 8 3}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{g}\hspace*{1em}{id}="{object1}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{ellipse}\hspace*{1em}{style}="{fill: \#ffffff}"\hspace*{1em}{cx}="{3.875}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{cy}="{3.025}"\hspace*{1em}{rx}="{1.175}"\hspace*{1em}{ry}="{1.175}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{g}>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{g}\hspace*{1em}{id}="{object2}">}\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}{<\textbf{rect}\hspace*{1em}{style}="{fill: \#a81616}"\hspace*{1em}{x}="{7.8}"\mbox{}\newline 
+\hspace*{1em}\hspace*{1em}\hspace*{1em}{y}="{1.9}"\hspace*{1em}{width}="{2.17581}"\hspace*{1em}{height}="{2.24833}"/>}\mbox{}\newline 
+\hspace*{1em}{</\textbf{g}>}\mbox{}\newline 
+{</\textbf{svg}>}\end{shaded}\egroup\par \par
+The next requirement is some way of identifying the parts of the document to which a link is to be made. The most obvious way of doing this is to use the global {\itshape xml:id} attribute: \par\bgroup\index{div1=<div1>|exampleindex}\index{type=@type!<div1>|exampleindex}\index{div1=<div1>|exampleindex}\index{type=@type!<div1>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{div1}\hspace*{1em}{type}="{chapter}"\hspace*{1em}{xml:id}="{CHAP1}">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+{</\textbf{div1}>}\mbox{}\newline 
+{<\textbf{div1}\hspace*{1em}{type}="{chapter}"\hspace*{1em}{xml:id}="{CHAP2}">}\mbox{}\newline 
+\textit{<!-- ... -->}\mbox{}\newline 
+{</\textbf{div1}>}\end{shaded}\egroup\par \par
+Now, all that is needed to linking these areas to the relevant chapters is a \hyperref[TEI.linkGrp]{<linkGrp>} element, as described in section \textit{\hyperref[SAPT]{16.1.\ Links}}: \par\bgroup\index{linkGrp=<linkGrp>|exampleindex}\index{type=@type!<linkGrp>|exampleindex}\index{link=<link>|exampleindex}\index{target=@target!<link>|exampleindex}\index{link=<link>|exampleindex}\index{target=@target!<link>|exampleindex}\exampleFont \begin{shaded}\noindent\mbox{}{<\textbf{linkGrp}\hspace*{1em}{type}="{callout}">}\mbox{}\newline 
+\hspace*{1em}{<\textbf{link}\hspace*{1em}{target}="{\#CHAP1 \#PD1}"/>}\mbox{}\newline 
+\hspace*{1em}{<\textbf{link}\hspace*{1em}{target}="{\#CHAP2 \#PD2}"/>}\mbox{}\newline 
+{</\textbf{linkGrp}>}\end{shaded}\egroup\par \par
+In this example, the SVG representation of the graphic is stored externally to the TEI document and linked by means of a pointer. It is also possible to embed the SVG representation directly within the TEI by extending the content model of the \hyperref[TEI.figure]{<figure>} element to permit an element \texttt{<svg>} from the SVG namespace. Like other customizations of the TEI scheme, this is carried out using the techniques documented in section \textit{\hyperref[STIN]{1.2.\ Defining a TEI Schema}}; further examples are provided in chapter \textit{\hyperref[SA]{16.\ Linking, Segmentation, and Alignment}}.
+\subsection[{Overview of Basic Graphics Concepts}]{Overview of Basic Graphics Concepts}\label{FTGROV}\par
+The first major distinction in graphic representation is that between raster graphics and vector graphics. A \textit{raster image} is a list of points, or dots. Scanners, fax machines and other simple devices easily produce digital raster images, and such images are therefore quite common. A \textit{vector image}, in contrast, is a list of geometrical objects, such as lines, circles, arcs, or even cubes. These are much more difficult to produce, and so are mainly encountered as the output of sophisticated systems such as architectural and engineering CAD programs.\par
+Raster images are difficult to modify because by definition they only encode single points: a line, for example, cannot grow or shrink as such, since it is not identified as such. Only its component parts are identified, and only they can be manipulated. Therefore the resolution or dot-size of a raster image is important, which is not the case with vector images. It is also far more difficult to convert raster images to vector images than to perform the opposite conversion. Raster images generally require more storage space than vector images, and a wide variety of methods exists for compressing them; the variation in these methods leads to corresponding variations in representations for storage and transmission of raster images.\par
+Motion video usually consists of a long series of raster images. Data compression is even more effective on video than on single raster images (mainly owing to redundancy which arises from the usual similarity of adjacent frames). Notations for representing full-motion video are hotly debated at this time, and any user of these Guidelines would do well to obtain up-to-date expert advice before undertaking a project using them.\par
+The compression methods used with any of these image types may be ‘lossy’ or ‘lossless’. Methods for \textit{lossy compression} save space by discarding a small portion of the image's detail, such as fine distinctions of shading. When decompressed, therefore, such an image will be only a close approximation of the original. In contrast, \textit{lossless compression} guarantees that the exact uncompressed image will be reproducible from the compressed form: only truly redundant information is removed. In general, therefore, lossless compression does not save quite so much space as lossy compression, though it does guarantee fidelity to the original uncompressed image.\par
+Raster images may be characterized by their \textit{resolution}, which is the number of dots per inch used to represent the image. Doubling the resolution will give a more precise image, but also quadruple the storage requirement (before compression), and affect processing time for any operations to be performed, such as displaying an image for a reader. Motion video also has resolution in time: the number of frames to be shown per second. Encoders should consider carefully what resolution(s) and frame rate(s) to use for particular applications; these Guidelines express no recommendation in this matter, save the universal ones of consistency and documentation.\par
+Within any image, it is typical to refer to locations via Cartesian coordinate axes: values for x, y, and sometimes z and/or time. However, graphic notations vary in whether coordinates count from left-to-right and top-to-bottom, or another way. They also vary in whether coordinates are considered real (inches, millimeters, and so on), or virtual (dots). These Guidelines do not recommend any of these methods over another, but all decisions made should be applied consistently, and documented in the \hyperref[TEI.encodingDesc]{<encodingDesc>} section of the TEI header.\footnote{Since no special purpose element is provided for this purpose by the current version of these Guidelines, such information should be provided as one or more distinct paragraphs at the end of the \hyperref[TEI.encodingDesc]{<encodingDesc>} element described in section \textit{\hyperref[HD5]{2.3.\ The Encoding Description}}.}\par
+Methods of aligning images and text are discussed in \textit{\hyperref[PHFAX]{11.1.\ Digital Facsimiles}}.\par
+The chromatic values of an image may be rendered in many different ways. In monochrome images every displayed point is either black or white. In \textit{grayscale} images, each point is rendered in some shade of gray, the number of shades varying from system to system. In true polychrome images, points are rendered in different hues, again with varying limitations affecting the number of distinct shades and the means by which they are displayed.
+\subsection[{Graphic Image Formats}]{Graphic Image Formats}\label{FTGRNO}\par
+As noted above, there exists a wide variety of different graphics formats, and the following list is in no way exhaustive. Moreover, inclusion of any format in this list should not be taken as indicating endorsement by the TEI of this format or any products associated with it. Some of the formats listed here are proprietary to a greater or lesser extent and cannot therefore be regarded as standards in any meaningful sense. They are however widely used by many different vendors.\par
+The following formats are widely used at the present time, and likely to remain supported by more than one vendor's software: \begin{itemize}
+\item BMP: Microsoft bitmap format
+\item CGM: Computer Graphics Metafile
+\item GIF: Graphics Interchange Format
+\item JPEG: Joint Photographic Expert Group
+\item PBM: Portable Bit Map
+\item PCX: IBM PC raster format
+\item PICT: Macintosh drawing format
+\item PNG: Portable Network Graphics format
+\item Photo-CD: Kodak Photo Compact Disk format
+\item QuickTime: Apple real-time image system
+\item SMIL: Synchronized Multimedia Integration Language format
+\item SVG: Scalable Vector Graphics format
+\item TIFF: Tagged Image File Format
+\end{itemize} \par
+Brief descriptions of all the above are given below. Where possible, current addresses or other contact information are shown for the originator of each format. Many formal standards, especially those promulgated by ISO and many related national organizations (ANSI, DIN, BSI, and many more), are available from those national organizations. Addresses may be found in any standard organizational directory for the country in question. 
+\subsubsection[{Vector Graphic Formats}]{Vector Graphic Formats}\label{FTGRAVGF}\begin{description}
+
+\item[{CGM: Computer Graphics Metafile}]This vector graphics format is specified by an ISO standard, ISO 8632:1987, amended in 1990. It defines binary, character, and plain-text encodings; the non-binary forms are safer for blind interchange, especially over networks. Documentation on CGM is available from ISO and from its member national bodies such as AFNOR, ANSI, BSI, DIN, JIS, etc. 
+\item[{SVG: Scalable Vector Graphics format}]SVG is a language for describing two-dimensional vector and mixed vector or raster graphics in XML. It is defined by the Scalable Vector Graphics (SVG) 1.0 Specification, W3C Recommendation, 04 September 2001, and is available at \url{http://www.w3.org/TR/2001/REC-SVG-20010904/}.
+\item[{PICT: Macintosh drawing format}]This format is universally supported on Macintosh (tm) systems, and readable by a limited range of software for other systems. Documentation is available from Apple Computer Company, Cupertino, California USA. 
+\end{description} 
+\subsubsection[{Raster Graphic Formats}]{Raster Graphic Formats}\label{FTGRARGF}\begin{description}
+
+\item[{PNG: Portable Network Graphics format}]PNG is a non-proprietary raster format currently widely available. It provides an extensible file format for the lossless, portable, well-compressed storage of raster images. Indexed-color, grayscale, and truecolor images are supported, plus an optional alpha channel. Sample depths range from 1 to 16 bits. It is defined by IETF RFC 2083, March 1997. 
+\item[{TIFF: Tagged Image File Format}]Currently the most widely supported raster image format, especially for black and white images, TIFF is also one of the few formats commonly supported on more than one operating system. The drawback to TIFF is that it actually is a wrapper for several formats, and some TIFF-supporting software does not support all variants. TIFF files may use LZW, CCITT Group 4, or PackBits compression methods, or may use no compression at all. Also, TIFF files may be monochrome, grayscale, or polychromatic. All such options should be specified in prose at the end of the \hyperref[TEI.encodingDesc]{<encodingDesc>} section of the TEI header for any document including TIFF images. TIFF is owned by Aldus Corporation. Documentation on TIFF is available from them at Craigcook Castle, Craigcook Road, Edinburgh EH4 3UH, Scotland, or 411 First Avenue South, Seattle, Washington 98104 USA.
+\item[{GIF: Graphics Interchange Format}]Raster images are widely available in this form, which was created by CompuServe Information Services, but has by now been implemented for many other systems as well. Documentation on GIF is copyright by, and is available from, CompuServe Incorporated, Graphics Technology Department, 5000 Arlington Center Boulevard, Columbus, Ohio 43220 USA. 
+\item[{PBM: Portable Bit Map}]PBM files are easy to process, eschewing all compression in favor of transparency of file format. PBM files can, of course, be compressed by generic file-compression tools for storage and transfer. Public domain software exists which will convert many other formats to and from PBM. Documentation on PBM is copyright by Jeff Poskanzer, and is available widely on the Internet. 
+\item[{PCX: IBM PC raster format}]This format is used by most IBM PC paint programs, and supports both monochrome and polychromatic images. Documentation is available from ZSoft Corporation, Technical Support Department, ATTN: Technical Reference Manual, 450 Franklin Rd. Suite 100, Marietta, GA 30067 USA. 
+\item[{BMP: Microsoft bitmap format}]This format is the standard raster format for computer using Microsoft Windows (tm) or Presentation Manager (tm). Documentation is available from Microsoft Corporation. 
+\end{description} 
+\subsubsection[{Photographic and Motion Video Formats}]{Photographic and Motion Video Formats}\label{FTGRAMPEG}\begin{description}
+
+\item[{JPEG: Joint Photographic Experts Group}]This standard is sponsored by CCITT and by ISO. It is ISO/IEC Draft International Standard 10918-1, and CCITT T.81. It handles monochrome and polychromatic images with a variety of compression techniques. JPEG per se, like CCITT Group IV, must be encapsulated before transmission; this can be done via TIFF, or via the JPEG File Interchange Format (JFIF), as commonly done for Internet delivery. 
+\item[{QuickTime: Apple real-time image system}]QuickTime is a proprietary method introduced by Apple Computer Company to synchronize the display of various data. The data can include frames of video, sound, lighting control mechanisms, and other things. Viewers for QuickTime productions are available for Apple and other computers. Further information is available from Apple Computer Incorporated, 10201 North de Anza Boulevard MS 23AQ, Cupertino, California 95014 USA. 
+\item[{Photo-CD: Kodak Photo Compact Disk format}]This format was introduced by Kodak for rasterizing photographs and storing them on CD-ROMs (about one hundred 35mm file images fit on one disk), for display on televisions or CD-I systems. Information on Photo-CD is available from Kodak Limited, Research and Development, Headstone Drive, Harrow, Middlesex HA1 4TY, UK. 
+\item[{SMIL: Synchronized Multimedia Integration Language format}]SMIL is a W3C Recommendation which supports the integration of independent multimedia objects into a synchronized multimedia presentation. It provides multimedia authors with easily-defined basic timing relationships, fine-tuned synchronization, spatial layout, direct inclusion of non-text and non-image media objects, hyperlink support for time-based media, and adaptiveness to varying user and system characteristics. SMIL 1.0 (\url{http://www.w3.org/TR/REC-smil/}) became a W3C Recommendation on June 15, 1998, and was further developed in SMIL 2.0. SMIL 2.0 adds native support for transitions, animation, event-based interaction, extended layout facilities, and more sophisticated timing and synchronization primitives to the SMIL 1.0 language. It also allows reuse of SMIL syntax and semantics in other XML-based languages, in particular those who need to represent timing and synchronization. For example, SMIL 2.0 components are used for integrating timing into XHTML Document Types and into SVG. SMIL 2.0 also provides recommendations for Document Types based on SMIL 2.0 Modules (\url{http://www.w3.org/TR/2005/REC-SMIL2-20050107/smil-modules.html}). One such Document Type is the SMIL 2.0 Language Profile (\url{http://www.w3.org/TR/2005/REC-SMIL2-20050107/smil20-profile.html}). It contains support for all of the major SMIL 2.0 features including animation, content control, layout, linking, media object, meta-information, structure, timing, and transition effects and is designed for Web clients that support direct playback from SMIL 2.0 markup. SMIL 2.0 (\url{http://www.w3.org/TR/2001/REC-smil20-20010807/}) became a W3C Recommendation on August 7, 2001, becoming the first vocabulary to provide XML Schema support and to have reached such status.
+\end{description} \par
+As noted above, the reader will encounter many, many other graphics formats. 
+\subsection[{Module for Tables, Formulæ, Notated Music, and Graphics}]{Module for Tables, Formulæ, Notated Music, and Graphics}\par
+The module described in this chapter provides the following features: \begin{description}
+
+\item[{Module figures: Tables, formulæ, notated music, and figures}]\hspace{1em}\hfill\linebreak
+\mbox{}\\[-10pt] \begin{itemize}
+\item {\itshape Elements defined}: \hyperref[TEI.cell]{cell} \hyperref[TEI.figDesc]{figDesc} \hyperref[TEI.figure]{figure} \hyperref[TEI.formula]{formula} \hyperref[TEI.notatedMusic]{notatedMusic} \hyperref[TEI.row]{row} \hyperref[TEI.table]{table}
+\item {\itshape Classes defined}: \hyperref[TEI.att.tableDecoration]{att.tableDecoration}
+\end{itemize} 
+\end{description}  The selection and combination of modules to form a TEI schema is described in \textit{\hyperref[STIN]{1.2.\ Defining a TEI Schema}}.
