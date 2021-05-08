@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -1606,8 +1606,8 @@ that practice. -->
             </content>
             <!-- ... -->
           </elementSpec>
-        </egXML> A simple rendering to RELAX NG produces this: <eg xml:space="preserve"><![CDATA[
-performance =
+        </egXML> A simple rendering to RELAX NG produces this:
+        <eg xml:space="preserve"><![CDATA[performance =
  element performance { 
   (model.divTop | model.global)*,
   (model.common, model.global*)+,
@@ -1626,19 +1626,17 @@ performance =
   att.global.linking.attribute.prev,
   att.global.linking.attribute.exclude,
   att.global.linking.attribute.select
-}
-]]></eg> In the above, a subsequent redefinition of the attribute class (such as <ident type="class"
+}]]></eg> In the above, a subsequent redefinition of the attribute class (such as <ident type="class"
           >att.global</ident>) would have no effect, since references to such classes have been
         expanded to reference their constituent attributes.</p>
-      <p> The equivalent parameterized version might look like this: <eg xml:space="preserve"><![CDATA[
-performance =
+      <p> The equivalent parameterized version might look like this:
+        <eg xml:space="preserve"><![CDATA[performance =
   element performance { performance.content, performance.attributes }
 performance.content =
   (model.divTop | model.global)*,
   (model.common, model.global*)+,
   (model.divBottom, model.global*)*
-performance.attributes = att.global.attributes, empty
-]]></eg> Here, the attribute class <ident type="class">att.global</ident> is provided via an
+performance.attributes = att.global.attributes, empty]]></eg> Here, the attribute class <ident type="class">att.global</ident> is provided via an
         explicit reference (<code>att.global.attributes</code>), and can therefore be redefined.
         Moreover, the attributes are separated from the content model, allowing either to be
         overridden.</p>
@@ -1729,9 +1727,8 @@ xsi:schemaLocation { list { teidata.namespace, teidata.pointer }+ }]]></eg> insi
                   <!--...-->
                 </elementSpec>
               </schemaSpec>
-            </egXML> may generate a RELAX NG (compact syntax) pattern like this: <eg><![CDATA[
- tei_sp = element sp { ... }
-]]></eg> References to these patterns (or, in DTDs, parameter entities) also need to be prefixed
+            </egXML> may generate a RELAX NG (compact syntax) pattern like this:
+            <eg><![CDATA[ tei_sp = element sp { ... }]]></eg> References to these patterns (or, in DTDs, parameter entities) also need to be prefixed
             with the same value. </item>
 
           <item>If an element or attribute is being created, its default name is the value of the
@@ -1754,11 +1751,9 @@ xsi:schemaLocation { list { teidata.namespace, teidata.pointer }+ }]]></eg> insi
                 <!-- ... -->
               </elementSpec>
             </egXML> might generate a RELAX NG schema fragment like the following, if the locale is
-            determined to be French: <eg xml:space="preserve"><![CDATA[
-head =
+            determined to be French: <eg xml:space="preserve"><![CDATA[head =
   ## en-tête
-  element head { head.content, head.attributes }
-]]></eg>
+  element head { head.content, head.attributes }]]></eg>
           </item>
         </list> Alternatively, a selection might be made on the basis of the value of the
           <att>version</att> attribute which these elements carry as members of the <ident
@@ -1793,7 +1788,7 @@ head =
         can occur as the root of a document. The ODD <gi>schemaSpec</gi> has an optional
           <att>start</att> attribute, containing one or more patterns, which can be used to
         construct the <gi>rng:start</gi>. A pattern normally corresponds to an element name, but if
-        a prefix (see above, <ptr target="#IM-naming "/>) is supplied for an element, the pattern
+        a prefix (see above, <ptr target="#IM-naming"/>) is supplied for an element, the pattern
         consists of the prefix name with the element name.</p>
 
       <div xml:id="IMMA">
@@ -2056,7 +2051,8 @@ will come to grief.--></p>
             </content>
           </elementSpec>
         </egXML> If DTD fragments are being generated (for use as described in <ptr target="#STPE"
-        />), this will result in the following: <eg xml:space="preserve"><![CDATA[<!ENTITY % faith 'INCLUDE' >
+        />), this will result in the following:
+        <eg xml:space="preserve"><![CDATA[<!ENTITY % faith 'INCLUDE' >
 <![ %faith; [
 
 <!--doc:specifies the faith,  religion, or belief set of a person. -->
@@ -2066,8 +2062,7 @@ will come to grief.--></p>
  %att.global.attributes;
  %att.editLike.attributes;
  %att.datable.attributes; >
-]]]]><![CDATA[>
-]]></eg> Here the whole stanza is contained in a marked section (for use as described in <ptr
+]]]]><![CDATA[>]]></eg> Here the whole stanza is contained in a marked section (for use as described in <ptr
           target="#STPEEX"/>), the element name is parameterized (see <ptr target="#STPEGI"/>), and
         the class attributes are entity references derived from the <gi>memberOf</gi> records in
           <gi>classes</gi>. Note the additional attribute which provides a default <att scheme="XML"
@@ -2076,8 +2071,8 @@ will come to grief.--></p>
         automatically without the document author even being aware of it.</p>
 
       <p>A simpler rendition for a flattened DTD generated from a customization will result in the
-        following, with no containing marked section, and no parameterized name: <eg xml:space="preserve"><![CDATA[
-<!ELEMENT faith %macro.phraseSeq;>
+        following, with no containing marked section, and no parameterized name:
+        <eg xml:space="preserve"><![CDATA[<!ELEMENT faith %macro.phraseSeq;>
 <!ATTLIST faith xmlns CDATA "http://www.tei-c.org/ns/1.0">
 <!ATTLIST faith
  %att.global.attribute.xmlspace;
@@ -2102,8 +2097,7 @@ will come to grief.--></p>
  %att.datable.w3c.attribute.notBefore;
  %att.datable.w3c.attribute.notAfter;
  %att.datable.w3c.attribute.from;
- %att.datable.w3c.attribute.to;>
-]]></eg> Here the attributes from classes have been expanded into individual entity references.</p>
+ %att.datable.w3c.attribute.to;>]]></eg> Here the attributes from classes have been expanded into individual entity references.</p>
 
 
 
@@ -2181,16 +2175,15 @@ will come to grief.--></p>
             >tei</ident> module. The declarations for each DTD fragment constituting the module are
           contained within such marked sections. For example, the parameter entity <ident type="pe"
             >TEI.linking</ident> appears twice in <ident type="file">tei.dtd</ident>, once for the
-            <ident type="frag">linking-decl</ident> schema fragment: <eg xml:space="preserve"><![CDATA[
-<!ENTITY % TEI.linking 'IGNORE' >
+            <ident type="frag">linking-decl</ident> schema fragment:
+          <eg xml:space="preserve"><![CDATA[<!ENTITY % TEI.linking 'IGNORE' >
 <![%TEI.linking;[
 <!ENTITY % file.linking-decl PUBLIC '-//TEI P5//ENTITIES Linking, Segmentation, and Alignment//EN' 'linking-decl.dtd' >
 %file.linking-decl;
-]] >]]></eg> and once for the <ident type="frag">linking</ident> schema fragment: <eg xml:space="preserve"><![CDATA[
-<![%TEI.linking;[
+]] >]]></eg> and once for the <ident type="frag">linking</ident> schema fragment:
+          <eg xml:space="preserve"><![CDATA[<![%TEI.linking;[
 <!ENTITY % file.linking PUBLIC '-//TEI P5//ELEMENTS Linking, Segmentation, and Alignment//EN' 'linking.dtd' >
-%file.linking;
-]] >]]></eg> If TEI.linking has its default value of IGNORE, neither declaration has any effect. If
+%file.linking;]] >]]></eg> If TEI.linking has its default value of IGNORE, neither declaration has any effect. If
           however it has the value INCLUDE, then the content of each marked section is acted upon:
           the parameter entities <ident type="pe">file.linking</ident> and <ident type="pe"
             >file.linking-decl</ident> are referenced, which has the effect of embedding the content
@@ -2253,12 +2246,10 @@ will come to grief.--></p>
         <p>These declarations are generated by an ODD processor when TEI DTD fragments are created. </p>
 
         <p> In the RELAX NG schemas, all elements are normally defined using a pattern with the same
-          name as the element (as described in <ptr target="#IM-naming"/>): for example <eg xml:space="preserve"><![CDATA[
-abbr = element abbr { abbr.content, abbr.attributes }
-]]></eg> The easiest way of renaming the element is thus simply to rewrite the pattern with a
-          different element name; any references use the pattern, not the element, name. <eg xml:space="preserve"><![CDATA[
-abbr = element abbrev { abbr.content, abbr.attributes }
-]]></eg> More complex revisions, such as redefining the content of the element (defined by the
+          name as the element (as described in <ptr target="#IM-naming"/>): for example
+          <eg xml:space="preserve"><![CDATA[abbr = element abbr { abbr.content, abbr.attributes }]]></eg> The easiest way of renaming the element is thus simply to rewrite the pattern with a
+          different element name; any references use the pattern, not the element, name.
+          <eg xml:space="preserve"><![CDATA[abbr = element abbrev { abbr.content, abbr.attributes }]]></eg> More complex revisions, such as redefining the content of the element (defined by the
           pattern <ident type="rng">abbr.content</ident>) or its attributes (defined by the pattern
             <ident type="rng">abbr.attributes</ident>) can be accomplished in a similar way, using
           the features of the RELAX NG language. The recommended method of carrying out such

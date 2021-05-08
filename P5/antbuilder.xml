@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="all" name="makeschemas">
   <!--
 	This library is free software; you can redistribute it and/or
@@ -119,28 +119,42 @@
     </xslt>
     <replace file="p5examples.isosch.xsl" token="tei-c.org/ns/1.0" value="tei-c.org/ns/Examples"/>
     <sequential>
-      <echo>Do ODD processing for p5odds.odd</echo>
+      <echo>Do ODD processing for p5odds.odd ...</echo>
+      <echo>... step 1</echo>
       <xslt force="yes" style="${XSL}/odds/odd2odd.xsl" in="p5odds.odd" out="p5odds.compiled.xml">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <param name="lang" expression="${lang}" if="lang"/>
         <param name="defaultSource" expression="${inputDir}/p5subset.xml"/>
         <param name="verbose" expression="${verbose}" if="verbose"/>
       </xslt>
+      <echo>... step 2</echo>
       <xslt force="yes" style="${XSL}/odds/odd2relax.xsl" in="p5odds.compiled.xml" out="p5odds.rng">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <param name="lang" expression="${lang}" if="lang"/>
         <param name="verbose" expression="${verbose}" if="verbose"/>
       </xslt>
+      <echo>... step 3</echo>
       <xslt processor="trax" force="yes" style="${XSL}/odds/extract-isosch.xsl" in="p5odds.compiled.xml" out="p5odds.isosch">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       </xslt>
-      <xslt processor="trax" force="yes" style="Utilities/iso_svrl_for_xslt2.xsl" in="p5odds.isosch" out="p5odds.isosch.xsl">
+      <echo>... step 4</echo>
+
+      <xslt force="yes" style="Utilities/iso_dsdl_include.xsl" in="p5odds.isosch" out="p5odds.included.isosch">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       </xslt>
-      <xslt processor="trax" force="yes" style="Utilities/iso_schematron_message_xslt2.xsl" in="p5odds.isosch" out="p5odds.message.isosch.xsl">
+      <echo>... step 5</echo>
+      <xslt force="yes" style="Utilities/iso_abstract_expand.xsl" in="p5odds.included.isosch" out="p5odds.abstracted.isosch">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       </xslt>
-      <delete file="p5odds.compiled.xml"/>
+      <echo>... step 6</echo>
+      <xslt processor="trax" force="yes" style="Utilities/iso_svrl_for_xslt2.xsl" in="p5odds.abstracted.isosch" out="p5odds.isosch.xsl">
+        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      </xslt>
+      <echo>... step 7</echo>
+      <xslt processor="trax" force="yes" style="Utilities/iso_schematron_message_xslt2.xsl" in="p5odds.abstracted.isosch" out="p5odds.message.isosch.xsl">
+        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      </xslt>
+      <!-- delete file="p5odds.compiled.xml"/ -->
     </sequential>
     <sequential>
       <echo>Do ODD processing for p5odds-examples.odd</echo>

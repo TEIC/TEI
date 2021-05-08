@@ -3170,10 +3170,11 @@
           
           <constraintSpec ident="jtei.sch-straightApos" scheme="schematron">
             <constraint>
-              <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag)]">
+              <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag|ancestor::tei:mentioned)]">
                 <sch:report test="matches(., $apos.straight)" 
-                  see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#faq"
-                  sqf:fix="apostrophe.replace">
+                            sqf:fix="apostrophe.replace"
+                            see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#faq"
+                            >
                   "Straight apostrophe" characters are not permitted. Please use the
                   Right Single Quotation Mark (U+2019 or ’) character instead. On the other hand, if the straight 
                   apostrophe characters function as quotation marks, please replace them with appropriate mark-up 
@@ -3190,11 +3191,12 @@
           </constraintSpec>
           <constraintSpec ident="jtei.sch-LRquotes" scheme="schematron">
             <constraint>
-              <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag)][matches(., $apos.typographic)]">
-                <sch:report
-                  test="matches(., '\W[’]\D') or matches(., '[‘](\W|$)') or matches(., '\w[‘]\w')"
+              <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag)][matches(., $apos.typographic)]" role="warning">
+                <sch:report test="matches(., '\W[’]\D') or matches(., '[‘](\W|$)') or matches(., '\w[‘]\w')"
+                            
                   see="https://tei-c.org/release/doc/tei-p5-exemplars/html/tei_jtei.doc.html#faq">
-                  Left and Right Single Quotation Marks should be used in the right place.
+                  Left and Right Single Quotation Marks should be used in the right place. Please check their placement in this text node.
+
                 </sch:report>
               </sch:rule>
             </constraint>
