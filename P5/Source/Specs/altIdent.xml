@@ -7,7 +7,8 @@ $Date$
 $Id$
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="ALTIDENT" ident="altIdent">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+             module="tagdocs" xml:id="ALTIDENT" ident="altIdent">
   <gloss versionDate="2007-07-04" xml:lang="en">alternate identifier</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">교체 확인소</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">identificador alterno</gloss>
@@ -37,6 +38,28 @@ $Id$
     <textNode/>
     <!--ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.xtext"/-->
   </content>
+  <constraintSpec scheme="schematron" ident="deprecate_altIdent_in_non-ODD_places">
+    <desc>
+      The <gi>altIdent</gi> element should only be a child of
+      <gi>attDef</gi>, <gi>classSpec</gi>, <gi>constraintSpec</gi>,
+      <gi>dataSpec</gi>, <gi>elementSpec</gi>, <gi>macroSpec</gi>, or
+      <gi>valItem</gi>. Thus its use in other places is being
+      deprecated.
+    </desc>
+    <constraint>
+      <sch:report test="  parent::tei:model
+                        | parent::tei:modelGrp
+                        | parent::tei:modelSequence
+                        | parent::tei:paramSpec">
+        Use of &lt;altIdent> as a child of &lt;<sch:value-of select="name(..)"/> is deprecated,
+        and will no longer be valid after 2022-07-14.
+      </sch:report>
+      <sch:report test="parent::tei:moduleSpec">
+        Use of &lt;altIdent> to declare the FPI of a module is
+        deprecated; please use &lt;idno type="FPI"> instead.
+      </sch:report>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
       <altIdent xml:lang="fr">balisageDoc</altIdent>
