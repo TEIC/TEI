@@ -19,18 +19,42 @@ $Id$
       <datatype maxOccurs="unbounded">
         <dataRef key="teidata.pointer"/>
       </datatype>
+      <constraintSpec scheme="schematron" ident="only_1_ODD_source">
+        <sch:let name="srcs" value="tokenize( normalize-space(.),'&#x20;')"/>
+        <sch:report test="( parent::tei:classRef
+                          | parent::tei:dataRef
+                          | parent::tei:elementRef
+                          | parent::tei:macroRef
+                          | parent::tei:moduleRef
+                          | parent::tei:schemaSpec )
+                          and
+                          $srcs[2]">
+          When used on a schema description element (like <sch:value-of select="name(..)"/>),
+          the @source attribute should have only 1 value. (This one has <sch:value-of select="count($srcs)"/>.)
+        </sch:report>
+      </constraintSpec>
       <remarks xml:lang="en" versionDate="2017-06-06">
-        <p>The <att>source</att> attribute points to an external source. When used on elements
-          describing schema components such as <gi>schemaSpec</gi> or <gi>moduleRef</gi> it
-          identifies the source from which declarations for the components of the object being
-          defined may be obtained. </p>
-        <p> On other elements it provides a pointer to the bibliographical source from which a
-          quotation or citation is drawn. </p>
-        <p>In either case, the location may be provided using any form of URI, for example an
-          absolute URI, a relative URI, or private scheme URI that is expanded to an absolute URI as
-          documented in a <gi>prefixDef</gi>.</p>
-        <p>If more than one location is specified, the default assumption is that the required
-          source should be obtained by combining the resources indicated. </p>
+        <p>The <att>source</att> attribute points to an external
+        source. When used on an element describing a schema component
+        (<gi>classRef</gi>, <gi>dataRef</gi>, <gi>elementRef</gi>,
+        <gi>macroRef</gi>, <gi>moduleRef</gi>, or
+        <!-- these elements were the members of tei:3.0.0_att.readFrom -->
+        <gi>schemaSpec</gi>), it identifies the source from which
+        declarations for the components of the object being defined
+        may be obtained.</p>
+        <p>On other elements it provides a pointer to the bibliographical source from which a
+          quotation or citation is drawn.</p>
+        <p>In either case, the location may be provided using any form
+        of URI, for example an absolute URI, a relative URI, a private
+        scheme URI of the form <code>tei:x.y.z</code>, where
+        <code>x.y.z</code> indicates the version number, e.g.
+        <code>tei:4.3.2</code> for TEI P5 release 4.3.2 or (as a
+        special case) <code>tei:current</code> for whatever is the
+        latest release, or a private scheme URI that is expanded to an
+        absolute URI as documented in a <gi>prefixDef</gi>.</p>
+        <p>When used on elements describing schema components,
+        <att>source</att> should have only one value; when used on
+        other elements multiple values are permitted.</p>
       </remarks>
     </attDef>
   </attList>
