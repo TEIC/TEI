@@ -5,6 +5,7 @@ JING=java -jar ../Utilities/lib/jing.jar
 BIN=${PREFIX}/bin
 NORMALODDS= \
 	tei_bare.dtd \
+	tei_basic.dtd \
 	tei_corpus.dtd \
 	tei_drama.dtd \
 	tei_minimal.dtd \
