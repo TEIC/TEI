@@ -19,6 +19,7 @@
       href="http://www.tei-c.org/release/xml/tei/stylesheet/odds/odd2html.xsl"/>
   <xsl:import
       href="http://www.tei-c.org/release/xml/tei/stylesheet/odds/guidelines.xsl"/>
+	<xsl:output method="html" doctype-system="about:legacy-compat"/>
 
  <xsl:strip-space elements="tei:additional tei:address tei:adminInfo
 			    tei:altGrp tei:altIdentifier tei:analytic
@@ -648,35 +649,21 @@
 	  });
         })
     </script>
-    <xsl:if test="not($googleAnalytics='')">
-      <script type="text/javascript" src="udm-all.js"/>
-      <link rel="stylesheet" href="udm.css" />
-    </xsl:if>
+		<xsl:if test="not($googleAnalytics='')">
+			<script src="menus.js"></script>
+		</xsl:if>
 
     <xsl:call-template name="jsForOdds"/>
 
   </xsl:template>
   
-
-
 <xsl:template name="bodyHook">
-  <xsl:if test="not($googleAnalytics='')">
-    <script type="text/javascript" src="udm-dom.js"/>
-    <script type="text/javascript" src="udm-mod-keyboard.js"/>
-  </xsl:if>
   <div id="container">
-    <div id="banner">
+    <header id="banner">
       <a href="https://tei-c.org"><img src="Images/banner.jpg"
 	   alt="Text Encoding Initiative logo and banner"/></a>
-    </div>
-    <xsl:choose>
-      <xsl:when test="$googleAnalytics=''">    
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:apply-templates xpath-default-namespace=""
-	    select="document('teic-index.xml')//ul[@id='udm']" mode="copyhtml"/>
-      </xsl:otherwise>
-    </xsl:choose>
+		 <nav role="navigation"></nav>
+    </header>
   </div>
   
   <xsl:if test="not($googleAnalytics='')">    
