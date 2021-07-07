@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright TEI Consortium. 
+  Dual-licensed under CC-by and BSD2 licences 
+  See the file COPYING.txt for details
+  $Date$
+  $Id$
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" 
+  type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="ellipsis">
+  <gloss xml:lang="en" versionDate="2021-07-07">deliberately marked omission</gloss>
+
+  <desc versionDate="2021-07-07" xml:lang="en">indicates a purposeful marking in the source document
+    that a passage has been omitted and supplies the omitted passage if available.</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="model.global.edit"/>
+  </classes>
+  <content>
+    <elementRef key="metamark" minOccurs="0" maxOccurs="unbounded"/>
+    <alternate minOccurs="0" maxOccurs="1">
+      <classRef key="model.annotationPart.body"/><!--members: note, ptr, ref -->
+      <elementRef key="supplied"/>
+    </alternate>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+      <lg>
+        <l>What projects men make—what queer turns they take,</l>
+        <l>Since <emph>steam</emph> has improved our condition;</l>
+        <l>They never are still, but must cure or must kill</l>
+        <l>With steam physic or steam ammunition.</l>
+        <l>But a short time ago, to a quack you would go,</l>
+        <l>To steam a fat man to a thinner;</l>
+        <l>Now changed from all that, if you wish to get <emph>fat</emph>,</l>
+        <l>Come to Barton’s and eat a <emph>steam dinner!</emph></l>
+        <l>Oh dear! think of a scheme, odd though it seem—</l>
+        <l>I’m sure ’twill succeed if you make it by steam.</l>
+      </lg>
+      <lg>
+        <l>You may sleep, you may dream, you may travel by steam,</l>
+        <l>For the outrcry is still to go faster;</l>
+        <l>And what does it reck, should you e’en break your neck,</l>
+        <l>If ’tis <emph>steam</emph> that brings on the disaster?</l>
+        <ellipsis resp="#ChambersEdnbrghJrnl1880">
+        <metamark function="multilineEllipsis"> * * * * </metamark>
+        <note resp="#teiProjectEditor2021">The printer omits four lines here,  
+         skipping the second half of the second octave, before the refrain.</note>
+        </ellipsis>
+        <l>Oh dear! think of a scheme, odd though it seem—</l>
+        <l>I’m sure ’twill succeed if you make it by steam.</l>
+      </lg>
+    </egXML>
+  </exemplum>
+  <remarks versionDate="2021-07-07" xml:lang="en">
+    <p>Unlike <gi>gap</gi>, which indicates a passage the encoder cannot represent, <gi>ellipsis</gi>
+      indicates a passage explicitly signalled in the source document as absent.</p>
+  </remarks>
+  <listRef>
+   <!-- example: <ptr target="#COEDADD" type="div1"/>-->
+  </listRef>
+</elementSpec>
