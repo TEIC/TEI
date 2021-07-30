@@ -1799,10 +1799,11 @@ more than one language, as in the following example:
       <specList>
         <specDesc key="unitDef"/>
         <specDesc key="unit"/>
-        <specDesc key="conversion" atts="formula fromUnit toUnit from to notBefore notAfter when"/> 
+        <specDesc key="conversion" atts="formula fromUnit toUnit from to notBefore notAfter when where"/> 
         <specDesc key="att.formula" atts="formula"/>
+        <specDesc key="att.locatable" atts="where"/>
       </specList>
-Within the <gi>unitDef</gi>, a <gi>conversion</gi> element may be used to store information relating to conversion between units. The <gi>conversion</gi> element holds a special pair of attributes, <att>fromUnit</att> and <att>toUnit</att>, which serve to indicate the direction of a calculation from one unit of measure (stored in <att>fromUnit</att>) to another (stored in <att>toUnit</att>). A mathematical calculation to define the relation between these units may be stored in <att>formula</att>, as shown in the following examples. The <att>formula</att> attribute takes a value expressed as an XPath expression, which means that division must be expressed with <q>div</q> so as not to be confused with the forward slash used in path navigation. 
+Within the <gi>unitDef</gi>, a <gi>conversion</gi> element may be used to store information relating to conversion between units. The <gi>conversion</gi> element holds a special pair of attributes, <att>fromUnit</att> and <att>toUnit</att>, which serve to indicate the direction of a calculation from one unit of measure (stored in <att>fromUnit</att>) to another (stored in <att>toUnit</att>). A mathematical calculation to define the relation between these units may be stored in <att>formula</att>, as shown in the following examples. The <att>formula</att> attribute takes a value expressed as an XPath expression, which means that division must be expressed with <q>div</q> so as not to be confused with the forward slash used in path navigation. The <gi>conversion</gi> element may also hold attributes to store dates and date ranges as well as location(s) that specify when and where a conversion formula was used.
     </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#ZUPKO">
       <encodingDesc>
@@ -1840,11 +1841,25 @@ Within the <gi>unitDef</gi>, a <gi>conversion</gi> element may be used to store 
        </unitDecl>
      </encodingDesc>
     </egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+        <unitDef type="volume" xml:id="shunbul">
+          <label xml:lang="ar-Latn-x-ijmes">shunbul</label>
+          <label xml:lang="ar">شنبل</label>
+          <conversion formula="$fromUnit * 2.5" fromUnit="#shunbul" toUnit="#kile" when="1873" where="#acre #tripoli"/>
+          <conversion formula="$fromUnit * 2.25" fromUnit="#shunbul" toUnit="#kile" when="1878"  where="#acre #tripoli"/>
+          <conversion formula="$fromUnit * 3" from="1891" fromUnit="#shunbul" to="1910" toUnit="#kile" where="#aleppo"/>
+          <conversion formula="$fromUnit * 2.5" fromUnit="#shunbul" toUnit="#kile_istanbul" when="1860" where="#aleppo"/>
+          <conversion formula="$fromUnit * 72" fromUnit="#shunbul" toUnit="#madd" when="1893" where="#damascus"/>
+          <desc xml:lang="en">The <foreign xml:lang="ar-Latn-x-ijmes">shunbul</foreign> was the main unit to measure grain in the Northern parts of Greater Syria.</desc>
+        </unitDef>
+      </egXML>
+    
     <specGrp xml:id="D2256" n="The unit declaration">
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unitDecl.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unitDef.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/conversion.xml"/> 
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.formula.xml"/>
+      <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.locatable.xml"/>
     </specGrp>
   </div>
   <div type="div3" xml:id="HDSCHSPEC"><head>The Schema Specification</head>
