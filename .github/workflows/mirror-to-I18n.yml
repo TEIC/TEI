@@ -1,0 +1,16 @@
+name: "Mirror TEI dev branch to I18n-TEI main"
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v2
+    - name: Mirror to I18n-TEI
+      env: 
+        API_TOKEN: ${{ secrets.TEIBOT_ACCESS_TOKEN }}
+        ACTION_USER_EMAIL: ${{ secrets.I18N_USER_EMAIL }}
+        ACTION_USER_NAME: ${{ secrets.I18N_USER_NAME }}
+        uses: ./.github/actions/mirror-to-i18n
