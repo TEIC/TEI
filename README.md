@@ -4,6 +4,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3413524.svg)](https://doi.org/10.5281/zenodo.3413524)
 [![Build Status](https://travis-ci.com/TEIC/TEI.svg?branch=dev)](https://travis-ci.com/TEIC/TEI)
 
+
 The [TEI](https://www.tei-c.org) is an international and interdisciplinary standard used by libraries, museums, publishers, and academics to represent all kinds of literary and linguistic texts, using an encoding scheme that is maximally expressive and minimally obsolescent.
 
 This repository contains the sources for building the [TEI P5 Guidelines](https://www.tei-c.org/release/doc/tei-p5-doc/en/html/index.html) and
