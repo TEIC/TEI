@@ -20,7 +20,18 @@ EXTENDEDFILES = \
 	testplace-kml.special
 #testi18n.xsd \
 
+
 default: normal special testmeta2010 test-frag detest
+
+# Note on construction of this file:
+#   For every target that does stuff the target starts by echoing a
+#   blank line and a notification line about which target is being
+#   run. The “$@” variable is used, which writes out the file name of
+#   the target. If the target name contains a ‘%’ (and thus gets run
+#   over multiple matching files) the message says “target file”
+#   instead of just “target”. Thus the user sees the actual file being
+#   worked on, and can figure out the target from that name.
+# —Syd, 2021-08-20
 
 normal: $(NORMALFILES)
 special: $(EXTENDEDFILES)
@@ -29,6 +40,8 @@ checkrnv:
 	@command -v rnv || echo WARNING: rnv is not installed. Some targets may fail.
 
 testall.examples: testall.xsd
+	@echo " "
+	@echo "--------- work on target $@ ---------"
 	$(SAXON) -o:testall-ex.odd -s:testall.odd -xsl:../Utilities/odd2exodd.xsl
 	$(ANT) -f antruntest.xml -Doutputname=testall-examples -DoddFile=testall-ex.odd compileodd rng cleanup
 	@echo check egXML in testall.odd
@@ -36,11 +49,15 @@ testall.examples: testall.xsd
 	../run-onvdl testall.nvdl testall.odd
 
 %.dtd: %.odd
+	@echo " "
+	@echo "--------- work on target file $@ ---------"
 	$(ANT) -f antruntest.xml -Doutputname=$* -Dtestfile=$*.xml -DoddFile=$*.odd validateodd compileodd dtd rng validaterng cleanup
 	@echo Check file using DOCTYPE in instance
 	xmllint --noout --valid $*.xml
 
 %.xsd: %.odd
+	@echo " "
+	@echo "--------- work on target file $@ ---------"
 	$(ANT) -f antruntest.xml -Doutputname=$* -Dtestfile=$*.xml -DoddFile=$*.odd validateodd compileodd rng validaterng  isoschematron validateschematron cleanup
 	${TRANG}   -o disable-abstract-elements $*.rng $*.xsd
 	-test -f xml.xsd && cp xml.xsd $*_xml.xsd    && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+;s+teix.xsd+$*_teix.xsd+" $*.xsd
@@ -52,6 +69,8 @@ testall.examples: testall.xsd
 	${JING} $*.xsd $*.xml
 
 %.special: %.odd checkrnv
+	@echo " "
+	@echo "--------- work on target file $@ ---------"
 	@echo "BUILD:  Test schema from (special) $<"
 	xmllint --xinclude $< > xi_$<
 	$(ANT) -f antruntest.xml -Dtestfile=$*.xml -DoddFile=xi_$*.odd -Doutputname=$* validateodd compileodd rng validaterng cleanup
@@ -60,9 +79,12 @@ testall.examples: testall.xsd
 	rm xi_$*.odd
 
 testmeta2010:
-	echo check that TEI web site is up and responding
+	@echo " "
+	@echo "--------- work on target $@ ---------"
+	@echo check that TEI web site is up and responding ...
 	-TEISITE=`curl -s --head http://www.tei-c.org/Vault/P5/1.5.0/xml/tei/odd/p5subset.xml`
 ifdef TEISITE
+	@echo ... it is, so run tests
 	$(ANT) -f antruntest.xml -DoddFile=testmeta2010.odd -Dtestfile=testmeta2010.xml validateodd
 	for j in `grep "<schemaSpec" testmeta2010.odd | sed 's/.*ident=.//' | sed 's/\".*//' | grep _old `; do \
 		echo found schemaSpec $$j in testmeta2010; \
@@ -75,11 +97,15 @@ ifdef TEISITE
 endif
 
 test-frag: checkrnv
+	@echo " "
+	@echo "--------- work on target $@ ---------"
 	@echo BUILD: Testing files which exercise inclusion of fragments
 	${JING} -t -c frag.rnc testfrag.xml
 	rnv frag.rnc testfrag.xml
 
 detest: checkrnv
+	@echo " "
+	@echo "--------- work on target $@ ---------"
 	@echo BUILD: Test file with deliberate mistakes
 	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd compileodd rng isoschematron cleanup
 	${TRANG} detest.rng detest.rnc
@@ -96,6 +122,8 @@ detest: checkrnv
 	rm -f detest1.log detest2.log detest3.log
 
 clean:
+	@echo " "
+	@echo "--------- clean up time! ---------"
 	rm -f test*.doc.xml test*.rnc test*.dtd test*.compiled.* test*.xsd test*.rnc test*.rng test*.xsl test*.isosch
 	rm -rf LOG *~ *.xsd Schema RomaResults DTD
 	rm -rf *.doc.*
