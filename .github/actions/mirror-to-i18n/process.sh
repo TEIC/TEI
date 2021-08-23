@@ -7,10 +7,10 @@ mkdir -p /root/.ssh
 echo "$SSH_PRIVATE_KEY" > /root/.ssh/id_rsa
 chmod 600 /root/.ssh/id_rsa
 
-SOURCE=`pwd`
+GIT_SSH_COMMAND="ssh -v"
 
 mkdir /opt/I18n-TEI
-git clone https://github.com/TEIC/I18n-TEI.git /opt/I18n-TEI
+git clone git@github.com:TEIC/I18n-TEI.git /opt/I18n-TEI
 cd /opt/I18n-TEI
 git remote add upstream https://github.com/TEIC/TEI.git
 git pull --rebase upstream dev
