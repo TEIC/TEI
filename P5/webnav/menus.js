@@ -1,3 +1,4 @@
+// Pull menus live from TEI WordPress API
 let ti = 0;
 function list(data, top) {
   let result = '<ul';
