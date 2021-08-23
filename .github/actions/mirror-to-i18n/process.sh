@@ -9,6 +9,7 @@ chmod 600 /root/.ssh/id_rsa
 
 SOURCE=`pwd`
 
+mkdir /opt/I18n-TEI
 git clone git@github.com:TEIC/I18n-TEI.git /opt/I18n-TEI
 cd /opt/I18n-TEI
 git rebase $SOURCE dev
