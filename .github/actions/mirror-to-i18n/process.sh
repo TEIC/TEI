@@ -7,6 +7,8 @@ mkdir -p /root/.ssh
 echo "$SSH_PRIVATE_KEY" > /root/.ssh/id_rsa
 chmod 600 /root/.ssh/id_rsa
 
+echo `head /root/.ssh/id_rsa`
+
 SOURCE=`pwd`
 
 mkdir /opt/I18n-TEI
