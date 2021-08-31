@@ -17,7 +17,7 @@ XSL=/usr/share/xml/tei/stylesheet
 #XSL=http://www.tei-c.org/stylesheet/release/xml/tei
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
-SAXONJAR=saxon9he.jar
+SAXONJAR=saxon10he.jar
 # Saxon-HE-9.4.0.6.jar is needed by the epubcheck program and is in Utilities/lib
 ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -q
 
@@ -82,7 +82,6 @@ html-web.stamp:  check.stamp p5.xml  Utilities/guidelines.xsl.model
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
 		Utilities/guidelines.xsl.model > Utilities/guidelines.xsl
-	-if [ -n ${GOOGLEANALYTICS} ] ; then curl -sL https://tei-c.org/ | sed 's/content="text\/html"/content="text\/html; charset=utf-8"/' | xmllint --html --noent --dropdtd --xmlout - > Utilities/teic-index.xml 2>/dev/null;fi
 	@# for each language, create a subdirectory and pre-populate it with CSS, source, and web navigation stuff
 	for i in $(ALLLANGUAGES) ;do \
 		mkdir -p Guidelines-web/$$i/html; \
