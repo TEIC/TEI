@@ -11,7 +11,7 @@
   >
 
   <xsl:variable name="myName" select="'TEI-to-tei_customization.xslt'"/>
-  <xsl:variable name="version" select="'0.6.1b'"/>
+  <xsl:variable name="version" select="'0.6.2b'"/>
   <xsl:param name="versionDate" select="format-date(current-date(),'[Y]-[M01]-[D01]')"/>
 
   <!--
@@ -730,10 +730,14 @@
                   </constraint>
                 </constraintSpec>
                 <constraintSpec scheme="schematron" ident="only-one-schemaSpec">
-                  <desc>TEI permits <gi>schemaSpec</gi> as a repeatable child of <gi>div</gi> (or
-                      <gi>body</gi>) or of <gi>encodingDesc</gi>. But <name type="cmd">roma</name>
-                    only processes the first <gi>schemaSpec</gi> found (in document order). So we
-                    just limit ourselves to 1 and only 1.</desc>
+                  <desc>TEI permits <gi>schemaSpec</gi> as a
+                  repeatable child of a variety of elements (including
+                  <gi>front</gi>, <gi>body</gi>, <gi>back</gi>,
+                  <gi>encodingDesc</gi>, <gi>div</gi>, or any numbered
+                  division element). But <name type="cmd">roma</name>
+                  only processes the first <gi>schemaSpec</gi> found
+                  (in document order). So we just limit ourselves to 1
+                  and only 1.</desc>
                   <constraint>
                     <sch:rule context="/">
                       <sch:report test="count( //tei:schemaSpec ) eq 0">There's no ＜schemaSpec＞, so
@@ -1476,13 +1480,13 @@
                 <desc>Constrains the <att>source</att> attribute of
                 various tagset documentation elements to those values
                 recommended by TEI</desc>
-		<!--
-		    WARNING: this rule/@context is not auto-generated,
-		    and may need to be updated to match the TEI
-		    Guidelines. Sadly, TEI P5 no longer has a separate
-		    class for this (it used to be att.readFrom),
-		    @source is now global.
-		-->
+                <!--
+                    WARNING: this rule/@context is not auto-generated,
+                    and may need to be updated to match the TEI
+                    Guidelines. Sadly, TEI P5 no longer has a separate
+                    class for this (it used to be att.readFrom),
+                    @source is now global.
+                -->
                 <constraint>
                   <sch:rule context=" tei:classRef[@source]
                                      |tei:dataRef[@source]

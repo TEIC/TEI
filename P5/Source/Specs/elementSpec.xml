@@ -7,7 +7,7 @@ $Date$
 $Id$
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="elementSpec">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="elementSpec" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
   <gloss versionDate="2007-07-04" xml:lang="en">element specification</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">요소 명시</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -52,6 +52,16 @@ $Id$
       <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
+  <constraintSpec scheme="schematron" ident="child-constraint-based-on-mode">
+    <constraint>
+      <sch:rule context="tei:elementSpec[ @mode eq 'delete' ]">
+        <sch:report test="child::*">This elementSpec element has a mode= of "delete" even though it has child elements. Change the mode= to "add", "change", or "replace", or remove the child elements.</sch:report>
+      </sch:rule>
+      <sch:rule context="tei:elementSpec[ @mode = ('add','change','replace') ]">
+        <sch:assert test="child::* | (@* except (@mode, @ident))">This elementSpec element has a mode= of "<sch:value-of select="@mode"/>", but does not have any child elements or schema-changing attributes. Specify child elements, use validUntil=, predeclare=, ns=, or prefix=, or change the mode= to "delete".</sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="prefix" usage="opt">
       <desc versionDate="2010-06-23" xml:lang="en">specifies a default prefix which will be
