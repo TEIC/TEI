@@ -14,7 +14,7 @@ See the file COPYING.txt for details
       </titleStmt>
       <editionStmt>
         <edition>
-          <date when="2021-08-12">Thursday, 12th August</date>
+          <date when="2021-08-31">Tuesday, 31 August 21</date>
         </edition>
       </editionStmt>
       <publicationStmt>
@@ -40,30 +40,42 @@ See the file COPYING.txt for details
       <p>The following changes are particularly worth highlighting in this release: <list>
           <head>New encoding features</head>
 
-          <item> The new element <gi>ellipsis</gi> has been introduced indicating a purposeful
-            marking in the source document that a passage has been omitted and supplies the omitted
-            passage if available (<ref target="https://github.com/TEIC/TEI/issues/1877"
-            >#1877</ref>). </item>
+          <item>The new element <gi>ellipsis</gi> has been introduced
+          for encoding a purposeful marking in the source document
+          that indicates a passage has been omitted, and optionally
+          supplying the omitted passage if available (<ref
+          target="https://github.com/TEIC/TEI/issues/1877"
+          >#1877</ref>). </item>
 
-          <item>The new attribute class <ident type="class">att.locatable</ident> has been
-            introduced providing attributes for referencing locations by pointing to entries in a
-            canonical list of places. The elements <gi>conversion</gi> and <gi>event</gi> are
-            members of the attribute class (<ref target="https://github.com/TEIC/TEI/issues/1910"
-              >#1910</ref>). </item>
+	  <item>The <att>where</att> attribute of <gi>event</gi> —
+	  used to reference a location by pointing to entries in a
+	  canonical list of places — has been moved to a new attribute
+	  class, <ident type="class">att.locatable</ident>, and
+	  <gi>event</gi> is a member of the new class (<ref
+	  target="https://github.com/TEIC/TEI/issues/1910"
+	  >#1910</ref>). </item>
 
+	  <item>The <gi>conversion</gi> element has been made a member
+	  of the new <ident type="class">att.locatable</ident> class,
+	  allowing encoders to specify where a particular conversion
+	  calculation is or was applicable.</item>
 
         </list>
-        <list>
+
+	<list>
           <head>Changes to content models</head>
-          <item> The invalid content model for <gi>editorialDecl</gi> in the <title>TEI Lite</title>
+          <item>The invalid content model for <gi>editorialDecl</gi> in the <title>TEI Lite</title>
             ODD has been corrected (<ref target="https://github.com/TEIC/TEI/issues/2162"
               >#2162</ref>). </item>
-          <item> The <gi>object</gi> element allows multiple nested object siblings now (<ref
+          <item>The <gi>object</gi> element allows multiple nested object siblings now (<ref
               target="https://github.com/TEIC/TEI/issues/2152">#2152</ref>) </item>
-          <item>The <gi>schemaSpec</gi> element is now a member of the element class <ident
-              type="class">model.frontPart</ident> (<ref
-              target="https://github.com/TEIC/TEI/issues/2149">#2149</ref>, <ref
-              target="https://github.com/TEIC/TEI/issues/2147">#2147</ref>).</item>
+          <item>The <gi>schemaSpec</gi> element is now a member of the
+          element class <ident type="class">model.frontPart</ident>,
+          allowing it to be a direct child of <gi>front</gi> or
+          <gi>back</gi> (<ref
+          target="https://github.com/TEIC/TEI/issues/2149">#2149</ref>,
+          <ref
+          target="https://github.com/TEIC/TEI/issues/2147">#2147</ref>).</item>
 
           <item>The attributes <att>calendar</att> and <att>period</att> allow multiple <ident
               type="datatype">teidata.pointer</ident> values now (<ref
@@ -96,13 +108,6 @@ See the file COPYING.txt for details
               target="https://github.com/TEIC/TEI/issues/1586">#1586</ref>, <ref
               target="https://github.com/TEIC/TEI/issues/2100">#2100</ref>).</item>
 
-          <item>The <gi>ref</gi> element has been replaced with the <gi>ptr</gi> element where it is
-            more appropriate (<ref target="https://github.com/TEIC/TEI/issues/2175"
-            >#2175</ref>).</item>
-          
-          <item>Inconsistent wording of descriptions of attribute classes has been addressed (<ref target="https://github.com/TEIC/TEI/issues/2142"
-              >#2142</ref>).</item>
-
         </list>
         <list>
           <head>Housekeeping</head>
@@ -120,7 +125,6 @@ See the file COPYING.txt for details
           <item>The Schematron contraint for <gi>ab</gi> has been refined (<ref
               target="https://github.com/TEIC/TEI/issues/1988">#1988</ref>).</item>
 
-
         </list>
       </p>
 
@@ -134,34 +138,42 @@ See the file COPYING.txt for details
           target="https://github.com/TEIC/Stylesheets/issues?q=is%3Aissue+milestone%3A%22Release+7.52.0%22+is%3Aclosed"
           >7.52.0 milestone</ref>.</p>
 
-      <p>Highlights of this release include: <list>
-          <item> References to the old Schematron namespace http://www.ascc.net/xml/schematron as
-            well as to the prefix s: have been removed (<ref
-              target="https://github.com/TEIC/Stylesheets/issues/178">#178</ref>). </item>
+      <p>Highlights of this release include:
+      <list>
 
-          <item> xml:id values are passed through to HTML5 <code>id</code> attributes to the HTML
-            output <code>div</code> with class "tei_front", "tei_body", or "tei_back" that is
-            generated from the TEI input <gi>front</gi>, <gi>body</gi>, or <gi>back</gi> with an
-            xml:id (<ref target="https://github.com/TEIC/Stylesheets/issues/326">#326</ref>). </item>
+	<item>References to the Schematron 1.x namespace
+	(<code>http://www.ascc.net/xml/schematron</code>) have been
+	removed (<ref
+	target="https://github.com/TEIC/Stylesheets/issues/178">#178</ref>).
+	</item>
 
-          <item>The error message for reading source files has been improved in the odd2odd.xsl file
-              (<ref target="https://github.com/TEIC/Stylesheets/issues/379">#379</ref>).</item>
+	<item><att>xml:id</att> values are passed through to HTML5
+	<att>id</att> attributes on the HTML output <gi>div</gi> with
+	<att>class</att> <val>tei_front</val>, <val>tei_body</val>, or
+	<val>tei_back</val> that is generated from a TEI input
+	<gi>front</gi>, <gi>body</gi>, or <gi>back</gi> with an
+	<att>xml:id</att> (<ref
+	target="https://github.com/TEIC/Stylesheets/issues/326">#326</ref>).
+	</item>
 
-          <item>The URL wrapping in the JTEI Open Edition output has been enabled (<ref
-              target="https://github.com/TEIC/Stylesheets/issues/436">#436</ref>).</item>
+	<item>The error message for reading source files has been
+	improved in the <name type="file">odd2odd.xsl</name> file
+	(<ref
+	target="https://github.com/TEIC/Stylesheets/issues/379">#379</ref>).</item>
 
-          <item>The previously dropped <gi>desc</gi> child of <gi>graphic</gi> in odd2lite has been
-            fixed (<ref target="https://github.com/TEIC/Stylesheets/issues/444">#444</ref>).</item>
+	<item>The URL wrapping in the JTEI Open Edition output has been enabled (<ref
+	target="https://github.com/TEIC/Stylesheets/issues/436">#436</ref>).</item>
 
-          <item>The repetition of <code>id</code> attributes when processing
-              <code>listBibl/bibl</code> elements into HTML has been fixed (<ref
-              target="https://github.com/TEIC/Stylesheets/issues/516">#516</ref>).</item>
-        
-        <item>The <att>source</att> links from <code>egXML</code> elements to the bibliography have been repaired (<ref
-            target="https://github.com/TEIC/Stylesheets/issues/520">#520</ref>).</item>
+	<item>The error that caused <gi>desc</gi> children of
+	<gi>graphic</gi> to be dropped has been fixed in <name
+	type="file">odd2lite.xsl</name> (<ref
+	target="https://github.com/TEIC/Stylesheets/issues/444">#444</ref>).</item>
 
+	<item>The repetition of <att>id</att> attributes when processing
+	<code>listBibl/bibl</code> elements into HTML has been fixed (<ref
+	target="https://github.com/TEIC/Stylesheets/issues/516">#516</ref>).</item>
 
-        </list>
+      </list>
       </p>
 
     </body>
