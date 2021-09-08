@@ -5,10 +5,9 @@ Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details.
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<div xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" type="div1"
-    xml:id="CMC">
+<div xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" type="div1" xml:id="CMC">
     <head>Computer-mediated Communication</head>
-    <div type="div2" xml:id="CMC1">
+    <div type="div2" xml:id="CMCoverview">
         <head>General Considerations and Overview</head>
         <p>This chapter describes the TEI encoding mechanisms available for genres of
             computer-mediated communication (CMC) and thus social media. It is intended to provide
@@ -39,25 +38,25 @@ See the file COPYING.txt for details.
             pages, and in the comments section of a weblog.</p>
 
     </div>
-    <div>
+    <div xml:id="CMCmeta">
         <head>Documenting CMC (and providing general meta data)</head>
-        <!-- 
+        <?tei winita 
         Still an open issue. How to document the source (e.g. database dump, web scraping, query parameters) of the current CMC encodings
         * Source: made tag abuse for documenting the source: <biblStruct> or <recordingStmt>
         * Timeline: in textDesc/interaction/
         * Participant description (in profile description)
-        -->
+        ?>
     </div>
     
     
-    <div>
+    <div xml:id="CMCcmc">
         <head>Encoding Unique to CMC</head>
-        <!--
+        <?tei winita
             * Some introductory sentence
             * specList (will automatically insert post including its attributes)
             * Cf. https://tei-c.org/release/doc/tei-p5-doc/en/html/ref-specList.html 
-        -->
-        <div xml:id="CMCPOST">
+        ?>
+        <div xml:id="CMCcmcpost">
             <head>CMC Posts</head>
             <p>The element <gi>post</gi> characterizes computer-mediated communication (CMC). A post
                 is defined as a written (sometimes spoken) contribution to an ongoing CMC
@@ -75,7 +74,7 @@ See the file COPYING.txt for details.
                     <att>subtype</att>, <att>rend</att>, and <att>xml:id</att>. </p>
         </div>
         
-        <div>
+        <div xml:id="CMCcmcpostatts">
             <head>Attributes specific to CMC <gi>post</gi></head>
             <p>Three attributes pertain specifically to <gi>post</gi>:
             <specList>
@@ -90,8 +89,7 @@ See the file COPYING.txt for details.
                         </post>
                     </egXML>
             </p>
-            <p>The <att>replyTo</att> attribute is used to capture information drawn from the original metadata associated with a post that asserts to which previous post the current post is a response, or to which previous post it refers. This metadata is included by many, but not all, CMC environments, when the user executes a formal reply action (e.g., by clicking or tapping a reply button). This attribute should not be used to encode interpreted or inferred reply relations based on linguistic cues or discourse markers.
-            </p>
+            <p>The <att>replyTo</att> attribute is used to capture information drawn from the original metadata associated with a post that asserts to which previous post the current post is a response, or to which previous post it refers. This metadata is included by many, but not all, CMC environments, when the user executes a formal reply action (e.g., by clicking or tapping a reply button). This attribute should not be used to encode interpreted or inferred reply relations based on linguistic cues or discourse markers.</p>
             <p>The <att>replyTo</att> attribute indicates the replied-to or referred-to posts by providing one or more pointers to them. For example:
                 <egXML xmlns="http://www.tei-c.org/ns/Examples">
                     <post type="comment" modality="written" generatedBy="human" xml:id="p28" who="#u7" replyTo="#p1" when-iso="2015-07-29T21:44">
@@ -112,10 +110,10 @@ See the file COPYING.txt for details.
                     </post>
                 </egXML>
                 Example: Three blog comments where, by the reply references in the source, the first is a reply to the initial blog post (not part of the example), the second is a reply to the first, and the third is a reply to the second. 
-                <!-- 
+                <?tei winitia
                     BIBL: should refer to the TEI encoding of a section of the blog page 
                     https://scilogs.spektrum.de/wild-dueck-blog/scheinzwerge-oder-viele-probleme-werden-groesser-wenn-man-sie-anpackt-griechenland/
-                -->
+                ?>
             </p>
             <p>In the CMC genre of Wiki talk, users insert their contribution to a discussion by modifying the wiki page of the discussion — the talk page. Since there is no technical reply action available in wiki software, users apply textual indentation in the wiki code to indicate a reply to a previous message, and a threaded structure is formed by a series of such indentations. The attribute <att>indentLevel</att> records the level of indentation, that is the nesting depth of the current post in such a thread-like structure (as defined by its author and in relation to the standard level of non-indentation which is to be encoded as <code>indentLevel="0"</code>). It is used in wiki talk corpora but may also be used for other threaded genres e.g. when HTML was used as a source. 
                 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -139,26 +137,26 @@ See the file COPYING.txt for details.
             </p>
         </div>
         
-        <div>
+        <div xml:id="CMCcmcatts">
             <head>Attributes for general CMC encoding</head>
-            <!-- discussion of @generatedBy -->
+            <?tei winita discussion of @generatedBy ?>
         </div>
     </div>
     
     
-    <div>
+    <div xml:id="CMCrecs">
         <head>Recommendations for encoding CMC</head>
-        <!-- 
+        <?tei winita
             Discussion of phenomena — short discussions, maybe with some code snippets, and references to the other chapters where the TEI encoding is introduced;
-        -->
-        <div>
+        ?>
+        <div xml:id="CMCemos">
             <head>Emojis and Emoticons</head>
-            <!-- add source for example in TEI <example> with ref to bibl element -->
+            <?tei winita add source for example in TEI <example> with ref to bibl element ?>
             <p>Emojis and emoticons are interaction signs represented by pictograms or icons such as
                 smileys used abundantly in CMC.</p>
 
             <p>Emoticons predate emojis and are typed on a keyboard using a combination of ASCII
-                punctuation and other characters such as “;-)”, and occurred in newsgroup and chat
+                punctuation and other characters such as <q>;-)</q>, and occurred in newsgroup and chat
                 communication as early as the mid-1980s.</p>
 
             <p><emph>Emojis</emph> are more recent interaction signs that are encoded as Unicode
@@ -170,8 +168,9 @@ See the file COPYING.txt for details.
 
             <p>Either emoticons or emojis may be simply transcribed as a sequence of characters. As
                 with any other characters, they may be entered as numeric character entities if this
-                is more convenient. (E.g., “&#x01F637;” might be transcribed as “&amp;#x01F637;” in
-                any XML document, including a TEI document<!--; see <ptr target="#D4-44"/>-->.)</p>
+                is more convenient. (E.g., <mentioned>&#x01F637;</mentioned> might be transcribed as
+		<code>&amp;#x01F637;</code> in any XML document, including a TEI document;
+		see <ptr target="#D4-44"/>.)</p>
 
             <p> When the text of a post is being tokenized, e.g. for linguistic analysis, it may be
                 useful to encode the emoticon or emoji as a separate token. In such cases elements
@@ -221,7 +220,7 @@ See the file COPYING.txt for details.
             </egXML>
         </div>
         
-        <div>
+        <div xml:id="CMCgraphic">
             <head>Post with graphics</head>
             <p>A post in a CMC interaction may contain a graphic in addition to some text or even
                 contain only a graphic (without any text). As explained in [REF section on
@@ -257,18 +256,18 @@ See the file COPYING.txt for details.
     </div>
     
     
-    <div>
+    <div xml:id="CMChow">
         <head>“Putting it all together” – genre specific examples</head>
-        <!--
+        <?tei winita
             * Twitter
             * WhatsApp
             * Wikipedia talk
             * NB: not necessarily add complete examples (whole TEI file) but rather snippets
-        -->
+        ?>
     </div>
     
     
-    <div>
+    <div xml:id="CMCmodule">
         <head>The TEI CMC Module</head>
         <p>The module described in this chapter makes available the following components:
             <moduleSpec ident="cmc">
