@@ -233,7 +233,6 @@ dist-source.stamp: check.stamp p5.xml  schemas.stamp
 	relax.rng \
 	schematron.rng \
 	iso-schematron.rng \
-	p5sch.xsl \
 	schematron1-5.rnc \
 	run-onvdl \
 	*.css \
