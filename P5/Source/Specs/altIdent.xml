@@ -51,14 +51,31 @@ $Id$
                         | parent::tei:modelGrp
                         | parent::tei:modelSequence
                         | parent::tei:paramSpec
-                        | parent::tei:schemaSpec">
+                        | parent::tei:schemaSpec" role="nonfatal">
         Use of &lt;altIdent> as a child of &lt;<sch:value-of select="name(..)"/>> is
         deprecated, and will no longer be valid after 2022-07-14.
       </sch:report>
-      <sch:report test="parent::tei:moduleSpec">
+      <sch:report test="parent::tei:moduleSpec" role="nonfatal">
         Use of &lt;altIdent> to declare the FPI of a module is
-        deprecated; please use &lt;idno type="FPI"> instead.
+        deprecated, and will no longer be valid after 2022-07-14;
+        please use &lt;idno type="FPI"> instead.
       </sch:report>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec scheme="schematron" ident="altIdent_usually_an_NCName">
+    <desc>
+      The <gi>altIdent</gi> element should contain a single <ident
+      type="datatype">teidata.xmlName</ident> except when it is
+      used to indicate the FPI (of a module), in which case the
+      <gi>idno</gi> element should be used instead.
+    </desc>
+    <constraint>
+      <sch:rule context="tei:altIdent[ not( parent::tei:moduleSpec or @type eq 'FPI' ) ]">
+        <sch:assert test=". castable as xs:NCName">
+          The content of this 'altIdent' element (<sch:value-of select="normalize-space(.)"/>)
+          should conform to teidata.xmlName.
+        </sch:assert>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="und">
