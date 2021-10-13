@@ -52,14 +52,11 @@ $Id$
       <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
-  <constraintSpec scheme="schematron" ident="child-constraint-based-on-mode">
+  <constraintSpec scheme="schematron" ident="elementSpec-children-based-on-mode">
     <constraint>
-      <sch:rule context="tei:elementSpec[ @mode eq 'delete' ]">
-        <sch:report test="child::*">This elementSpec element has a mode= of "delete" even though it has child elements. Change the mode= to "add", "change", or "replace", or remove the child elements.</sch:report>
-      </sch:rule>
-      <sch:rule context="tei:elementSpec[ @mode = ('add','change','replace') ]">
-        <sch:assert test="child::* | (@* except (@mode, @ident))">This elementSpec element has a mode= of "<sch:value-of select="@mode"/>", but does not have any child elements or schema-changing attributes. Specify child elements, use validUntil=, predeclare=, ns=, or prefix=, or change the mode= to "delete".</sch:assert>
-      </sch:rule>
+      <sch:pattern is-a="spec-children-based-on-mode">
+        <sch:param name="tse" value="tei:elementSpec"/>
+      </sch:pattern>
     </constraint>
   </constraintSpec>
   <attList>
