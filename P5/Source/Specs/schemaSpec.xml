@@ -46,41 +46,6 @@ $Id$
       </alternate>      
     </sequence>
   </content>
-  <constraintSpec validUntil="2021-10-23" scheme="schematron" ident="deprecate_schemaSpec_in_bizarre_places">
-    <!-- This <constraintSpec> should be removed when the class
-         memberships and content models are altered so that this
-         restriction is enforced by closed schema, which is expected
-         to occur in October 2021. -->
-    <desc xml:lang="en" versionDate="2021-02-02">enforces the
-    deprecation of <gi>schemaSpec</gi> as a child of anything other
-    than <gi>front</gi>, <gi>body</gi>, <gi>back</gi>,
-    <gi>encodingDesc</gi>, <gi>div</gi>, or any of the numbered
-    division elements. </desc>
-    <desc type="deprecationInfo" xml:lang="en" versionDate="2021-02-02">
-      The use of <gi>schemaSpec</gi> as a child of any element other
-      than <gi>front</gi>, <gi>body</gi>, <gi>back</gi>,
-      <gi>encodingDesc</gi>, <gi>div</gi>, or one of the numbered
-      division elements is being withdrawn.</desc>
-    <constraint>
-      <sch:rule context="tei:schemaSpec|teix:schemaSpec">
-	<sch:assert test="             parent::teix:egXML
-			  | parent::tei:encodingDesc  | parent::teix:encodingDesc
-			  | parent::tei:front         | parent::teix:front
-			  | parent::tei:back          | parent::teix:back
-			  | parent::tei:body          | parent::teix:body
-			  | parent::tei:div           | parent::teix:div
-			  | parent::tei:div1          | parent::teix:div1
-			  | parent::tei:div2          | parent::teix:div2
-			  | parent::tei:div3          | parent::teix:div3
-			  | parent::tei:div4          | parent::teix:div4
-			  | parent::tei:div5          | parent::teix:div5
-			  | parent::tei:div6          | parent::teix:div6
-			  | parent::tei:div7          | parent::teix:div7"
-		    role="nonfatal">WARNING: use of deprecated construct — the “schemaSpec” element will no longer be a valid child of “<sch:value-of
-                        select="name(..)"/>” as of 2021-10-23; instead, it should be a child of “front”, “body”, “back”, “encodingDesc”, or a division element.</sch:assert>
-      </sch:rule>
-    </constraint>
-  </constraintSpec>
   <attList>
     <attDef ident="start" usage="opt">
       <desc versionDate="2010-05-14" xml:lang="en">specifies entry points to the schema, i.e. which patterns
@@ -208,12 +173,12 @@ from an existing RELAX NG schema available from the URL indicated.</p>
   </exemplum>
   <remarks versionDate="2021-02-02" xml:lang="en">
     <!--
-	oddRef:
-	classRef, dataRef, elementRef, macroRef, and moduleRef
+        oddRef:
+        classRef, dataRef, elementRef, macroRef, and moduleRef
 
-	oddDecl:
-	classSpec, constraintSpec, dataSpec, elementSpec, listRef,
-	macroSpec, moduleSpec, outputRendition, specGrp, and specGrpRef
+        oddDecl:
+        classSpec, constraintSpec, dataSpec, elementSpec, listRef,
+        macroSpec, moduleSpec, outputRendition, specGrp, and specGrpRef
     -->
     <p>A <gi>schemaSpec</gi> combines references to elements that
     document a schema with individual specification elements that
