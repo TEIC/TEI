@@ -1,0 +1,31 @@
+name: TEI Guidelines Tests
+
+on:
+  push:
+  pull_request:
+    branches: [ dev ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  test1:
+    name: "Run the Guidelines tests against the Stylesheets' dev version"
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/teic/jenkins:dev
+      options: "--user root"
+
+    steps:
+      - name: Checkout Guidelines repo
+        uses: actions/checkout@v2
+      
+      - name: Checkout Stylesheets repo
+        uses: actions/checkout@v2
+        with:
+          repository: TEIC/Stylesheets
+          ref: dev
+          path: Stylesheets
+
+      - name: Run tests from the Test directory
+        run: |
+          cd P5
+          make clean validate test XSL=../Stylesheets
