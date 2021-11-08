@@ -1,10 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
-    Copyright TEI Consortium. 
-    Dual-licensed under CC-by and BSD2 licences 
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright TEI Consortium.
+    Dual-licensed under CC-by and BSD2 licences
     See the file COPYING.txt for details
     $Date$
     $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" ident="listOrg">
+    -->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" ident="listOrg">
   <gloss versionDate="2007-07-04" xml:lang="en">list of organizations</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">조직 목록</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">lista de organizaciones</gloss>
@@ -30,21 +33,22 @@
   </classes>
   <content>
     <sequence>
-      
-        <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
-        <elementRef key="desc" minOccurs="0" maxOccurs="unbounded"/>
-      
+      <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      <elementRef key="desc" minOccurs="0" maxOccurs="unbounded"/>
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <elementRef key="relation" minOccurs="1" maxOccurs="1"/>
+        <elementRef key="listRelation" minOccurs="1" maxOccurs="1"/>
+      </alternate>
+      <sequence minOccurs="1" maxOccurs="unbounded">
         <alternate minOccurs="1" maxOccurs="unbounded">
-          <elementRef key="org"/>
-          <elementRef key="listOrg"/>
+          <elementRef key="org" minOccurs="1" maxOccurs="1"/>
+          <elementRef key="listOrg" minOccurs="1" maxOccurs="1"/>
         </alternate>
-      
-      
         <alternate minOccurs="0" maxOccurs="unbounded">
-          <elementRef key="relation"/>
-          <elementRef key="listRelation"/>
+          <elementRef key="relation" minOccurs="1" maxOccurs="1"/>
+          <elementRef key="listRelation" minOccurs="1" maxOccurs="1"/>
         </alternate>
-      
+      </sequence>
     </sequence>
   </content>
   <exemplum xml:lang="en">

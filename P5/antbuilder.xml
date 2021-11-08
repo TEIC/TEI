@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="all" name="makeschemas">
   <!--
 	This library is free software; you can redistribute it and/or
@@ -17,10 +17,10 @@
 	
         Id: $Id$
         Copyright: 2011, TEI Consortium<
--->
+  -->
   <!--
       make TEI schemas in various forms
- -->
+  -->
   <property name="trang" value="Utilities/lib/trang.jar"/>
   <property name="XSL" value="/usr/share/xml/tei/stylesheet"/>
   <property name="XELATEXFLAGS" value=""/>
@@ -36,131 +36,171 @@
   <target name="all" depends="base,subset,outputs"/>
 
   <target name="base">
+    <echo>step -1: generate p5.xml</echo>
     <xslt processor="trax" force="yes" style="Utilities/expand.xsl" in="${DRIVER}" out="p5.xml">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
   </target>
 
   <target name="subset">
+    <echo>step 0: generate p5subset.xml</echo>
     <xslt processor="trax" force="yes" style="Utilities/subset.xsl" in="${inputDir}/p5.xml" out="p5subset.xml">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
   </target>
 
   <target name="outputs">
-    <echo>make modular DTDs, RELAXNG schemas, json, odd schemas,  schematron files</echo>
-    <echo>Using ${XSL} for XSL stylesheets</echo>
+    <echo>make modular DTDs, RELAXNG schemas, json, odd schemas, schematron files</echo>
+    <echo>(using ${XSL} for XSL stylesheets)</echo>
     <delete dir="DTD"/>
     <mkdir dir="DTD"/>
     <delete dir="Schema"/>
     <mkdir dir="Schema"/>
-    
+
+    <echo>step 1: p5subset XML → JSON</echo>
     <xslt processor="trax" force="yes" style="${XSL}/odds/odd2json.xsl" in="p5subset.xml" out="p5subset.json">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
+    <echo>step 2a: p5subset XML → JSON, en</echo>
     <xslt processor="trax" force="yes" style="${XSL}/odds/odd2json.xsl" in="p5subset.xml" out="p5subset_en.json">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="doclang" expression="en"/>
     </xslt>
+    <echo>step 2b: p5subset XML → JSON, de</echo>
     <xslt processor="trax" force="yes" style="${XSL}/odds/odd2json.xsl" in="p5subset.xml" out="p5subset_de.json">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="doclang" expression="de"/>
     </xslt>
+    <echo>step 2c: p5subset XML → JSON, es</echo>
     <xslt processor="trax" force="yes" style="${XSL}/odds/odd2json.xsl" in="p5subset.xml" out="p5subset_es.json">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="doclang" expression="es"/>
     </xslt>
+    <echo>step 2d: p5subset XML → JSON, fr</echo>
     <xslt processor="trax" force="yes" style="${XSL}/odds/odd2json.xsl" in="p5subset.xml" out="p5subset_fr.json">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="doclang" expression="fr"/>
     </xslt>
+    <echo>step 2e: p5subset XML → JSON, it</echo>
     <xslt processor="trax" force="yes" style="${XSL}/odds/odd2json.xsl" in="p5subset.xml" out="p5subset_it.json">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="doclang" expression="it"/>
     </xslt>
+    <echo>step 2f: p5subset XML → JSON, ja</echo>
     <xslt processor="trax" force="yes" style="${XSL}/odds/odd2json.xsl" in="p5subset.xml" out="p5subset_ja.json">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="doclang" expression="ja"/>
     </xslt>
+    <echo>step 2g: p5subset XML → JSON, ko</echo>
     <xslt processor="trax" force="yes" style="${XSL}/odds/odd2json.xsl" in="p5subset.xml" out="p5subset_ko.json">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="doclang" expression="ko"/>
     </xslt>
+    <echo>step 2h: p5subset XML → JSON, zh-TW</echo>
     <xslt processor="trax" force="yes" style="${XSL}/odds/odd2json.xsl" in="p5subset.xml" out="p5subset_zh-TW.json">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="doclang" expression="zh-TW"/>
     </xslt>
+    <echo>step 3: p5subset.xml → stripspace.xsl.model</echo>
     <xslt processor="trax" force="yes" style="${XSL}/odds/odd2xslstripspace.xsl" in="p5subset.xml" out="stripspace.xsl.model">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
+    <echo>step 4: p5.xml → p5attlist.txt</echo>
     <xslt processor="trax" force="yes" style="Utilities/listofattributes.xsl" in="${inputDir}/p5.xml" out="p5attlist.txt">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
+    <echo>step 5: p5subset.xml → ${inputDir}/DTD/</echo>
     <xslt processor="trax" force="yes" style="${XSL}/odds/odd2dtd.xsl" in="p5subset.xml" out="/dev/stdout">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="outputDir" expression="${inputDir}/DTD"/>
       <param name="lang" expression="${lang}"/>
       <param name="documentationLanguage" expression="${docLang}"/>
     </xslt>
+    <echo>step 6: p5subset.xml → ${inputDir}/Schema/</echo>
     <xslt processor="trax" force="yes" style="${XSL}/odds/odd2relax.xsl" in="p5subset.xml" out="/dev/stdout">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="outputDir" expression="${inputDir}/Schema"/>
       <param name="lang" expression="${lang}"/>
       <param name="documentationLanguage" expression="${docLang}"/>
     </xslt>
+    <echo>step 7: p5.xml → p5.isosch</echo>    
     <xslt processor="trax" force="yes" style="${XSL}/odds/extract-isosch.xsl" in="${inputDir}/p5.xml" out="p5.isosch">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
+    <echo>step 8: p5.isosch → p5.isosch.xsl</echo>
     <xslt processor="trax" force="yes" style="Utilities/iso_svrl_for_xslt2.xsl" in="p5.isosch" out="p5.isosch.xsl">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
+    <echo>step 9a: p5.isosch → p5examples.isosch.xsl</echo>
     <xslt processor="trax" force="yes" style="Utilities/iso_svrl_for_xslt2.xsl" in="p5.isosch" out="p5examples.isosch.xsl">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
+    <echo>step 9b: change TEI NS to Examples NS in p5examples.isosch.xsl</echo>
     <replace file="p5examples.isosch.xsl" token="tei-c.org/ns/1.0" value="tei-c.org/ns/Examples"/>
     <sequential>
-      <echo>Do ODD processing for p5odds.odd</echo>
+      <echo>step 10: Do ODD processing for p5odds.odd ...</echo>
+      <echo>... step 10a</echo>
       <xslt force="yes" style="${XSL}/odds/odd2odd.xsl" in="p5odds.odd" out="p5odds.compiled.xml">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <param name="lang" expression="${lang}" if="lang"/>
         <param name="defaultSource" expression="${inputDir}/p5subset.xml"/>
         <param name="verbose" expression="${verbose}" if="verbose"/>
       </xslt>
+      <echo>... step 10b</echo>
       <xslt force="yes" style="${XSL}/odds/odd2relax.xsl" in="p5odds.compiled.xml" out="p5odds.rng">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <param name="lang" expression="${lang}" if="lang"/>
         <param name="verbose" expression="${verbose}" if="verbose"/>
       </xslt>
+      <echo>... step 10c</echo>
       <xslt processor="trax" force="yes" style="${XSL}/odds/extract-isosch.xsl" in="p5odds.compiled.xml" out="p5odds.isosch">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       </xslt>
-      <xslt processor="trax" force="yes" style="Utilities/iso_svrl_for_xslt2.xsl" in="p5odds.isosch" out="p5odds.isosch.xsl">
+      <echo>... step 10d</echo>
+
+      <xslt force="yes" style="Utilities/iso_dsdl_include.xsl" in="p5odds.isosch" out="p5odds.included.isosch">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       </xslt>
-      <xslt processor="trax" force="yes" style="Utilities/iso_schematron_message_xslt2.xsl" in="p5odds.isosch" out="p5odds.message.isosch.xsl">
+      <echo>... step 10e</echo>
+      <xslt force="yes" style="Utilities/iso_abstract_expand.xsl" in="p5odds.included.isosch" out="p5odds.abstracted.isosch">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       </xslt>
+      <echo>... step 10f</echo>
+      <xslt processor="trax" force="yes" style="Utilities/iso_svrl_for_xslt2.xsl" in="p5odds.abstracted.isosch" out="p5odds.isosch.xsl">
+        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      </xslt>
+      <echo>... step 10g</echo>
+      <xslt processor="trax" force="yes" style="Utilities/iso_schematron_message_xslt2.xsl" in="p5odds.abstracted.isosch" out="p5odds.message.isosch.xsl">
+        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      </xslt>
+      <!--
+      <echo>... step 10h</echo>
       <delete file="p5odds.compiled.xml"/>
+      -->
     </sequential>
     <sequential>
-      <echo>Do ODD processing for p5odds-examples.odd</echo>
+      <echo>step 11: Do ODD processing for p5odds-examples.odd ...</echo>
+      <echo>... step 11a</echo>
       <xslt force="yes" style="${XSL}/odds/odd2odd.xsl" in="p5odds-examples.odd" out="p5odds-examples.compiled.xml">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <param name="lang" expression="${lang}" if="lang"/>
         <param name="defaultSource" expression="${inputDir}/p5subset.xml"/>
         <param name="verbose" expression="${verbose}" if="verbose"/>
       </xslt>
+      <echo>... step 11b</echo>
       <xslt force="yes" style="${XSL}/odds/odd2relax.xsl" in="p5odds-examples.compiled.xml" out="p5odds-examples.rng">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <param name="lang" expression="${lang}" if="lang"/>
         <param name="verbose" expression="${verbose}" if="verbose"/>
       </xslt>
+      <echo>... step 11c</echo>
       <delete file="p5odds-examples.compiled.xml"/>
-      
+      <echo>... step 11d</echo>      
       <java jar="${trang}" failonerror="true" fork="true">
         <arg value="p5odds.rng"/>
         <arg value="p5odds.rnc"/>
       </java>
+      <echo>... step 11e</echo>
       <java jar="${trang}" failonerror="true" fork="true">
         <arg value="p5odds-examples.rng"/>
         <arg value="p5odds-examples.rnc"/>
