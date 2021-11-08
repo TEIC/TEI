@@ -1,10 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="LOCUS" ident="locus">
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="LOCUS" ident="locus">
+  <gloss xml:lang="en" versionDate="2007-06-12">locus</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">locus</gloss>
   <desc versionDate="2019-01-17" xml:lang="en" xml:id="locus.desc">defines a location within a manuscript, manuscript part, or other object typically 
     as a (possibly discontinuous) sequence of folio references.</desc>
@@ -30,12 +34,13 @@ $Id$
    <alternate minOccurs="0" maxOccurs="unbounded">
     <textNode/>
     <classRef key="model.gLike"/>
-    <elementRef key="hi" />
-    <elementRef key="locus" />
+    <elementRef key="hi"/>
+    <elementRef key="locus"/>
    </alternate>
   </content>
   <attList>
     <attDef ident="scheme">
+      <gloss xml:lang="en" versionDate="2007-06-12">scheme</gloss>
       <gloss versionDate="2007-06-12" xml:lang="fr">système</gloss>
       <desc versionDate="2013-12-21" xml:lang="en">identifies the foliation scheme in terms of which the location is being
         specified by pointing to some <gi>foliation</gi> element
@@ -52,6 +57,7 @@ $Id$
       <datatype><dataRef key="teidata.pointer"/></datatype>
     </attDef>
     <attDef ident="from">
+      <gloss xml:lang="en" versionDate="2007-06-12">from</gloss>
       <gloss versionDate="2007-06-12" xml:lang="fr">depuis</gloss>
       <desc versionDate="2013-12-21" xml:lang="en">specifies the
       starting point of the location in a normalized form, typically a
@@ -68,6 +74,7 @@ $Id$
       <datatype><dataRef key="teidata.word"/></datatype>
     </attDef>
     <attDef ident="to">
+      <gloss xml:lang="en" versionDate="2007-06-12">to</gloss>
       <gloss versionDate="2007-06-12" xml:lang="fr">jusqu'à</gloss>
       <desc versionDate="2013-12-21" xml:lang="en">specifies the
       end-point of the location in a normalized form, typically as a
@@ -160,20 +167,24 @@ $Id$
       </msItem>
     </egXML>
   </exemplum>
-  <remarks versionDate="2017-03-29" xml:lang="en">
-    <p>The <att>target</att> attribute should only be used to point to elements that contain or
-      indicate a transcription of the locus being described, as in the first example above. To
-      associate a <gi>locus</gi> element with a page image or other comparable representation, the
-      global <att>facs</att> attribute should be used instead, as shown in the second example. Use
-      of the <att>target</att> attribute to indicate an image is strongly deprecated. The
-        <att>facs</att> attribute may be used to indicate one or more image files, as above, or
-      alternatively it may point to one or more appropriate XML elements, such as the
-        <gi>surface</gi>, <gi>zone</gi> element, <gi>graphic</gi>, or <gi>binaryObject</gi>
-      elements.</p>
-    <p>When a single page is being cited, use the <att>from</att> and <att>to</att> attributes with
-      an identical value. When no clear endpoint is provided, the <att>from</att> attribute may be
-      used without <att>to</att>; for example a citation such as <q>p. 3ff</q> might be encoded
-      <code>&lt;biblScope from="3">p. 3ff&lt;biblScope></code>.</p>
+  <remarks versionDate="2021-03-24" xml:lang="en">
+    <p>The <att>target</att> attribute should only be used to point to
+    elements that contain or indicate a transcription of the locus
+    being described, as in the <q>Ben Jonson</q> example.</p>
+    <p>To associate a <gi>locus</gi> element with a page image or
+    other comparable representation, the global <att>facs</att>
+    attribute should be used, as shown in the <q>Birds Praise of
+    Love</q> example. The <att>facs</att> attribute may be used to
+    indicate one or more image files, as in that example, or
+    alternatively it may point to one or more appropriate XML
+    elements, such as the <gi>surface</gi>, <gi>zone</gi>,
+    <gi>graphic</gi>, or <gi>binaryObject</gi> elements.</p>
+    <p>When a single page is being cited, use the <att>from</att> and
+    <att>to</att> attributes with an identical value. When no clear
+    endpoint is provided, the <att>from</att> attribute may be used
+    without <att>to</att>; for example a citation such as <q>p.
+    3ff</q> might be encoded <code>&lt;locus from="3"&gt;p.
+    3ff&lt;/locus&gt;</code>.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2009-04-17">
     <p>L'attribut <att>target</att> doit être utilisé uniquement pour pointer vers des éléments contenant ou référençant une transcription de la partie du manuscrit ainsi localisée, comme dans le premier exemple ci-dessus. Pour associer un élément <gi>locus</gi> avec l'image d'une page ou avec une autre représentation similaire, on doit utiliser l'attribut global <att>facs</att>, comme le montre le deuxième exemple. L'attribut <att>target</att> est déprécié pour établir un lien vers une image. On utilise l'attribut <att>facs</att>, soit pour établir un lien vers un ou plusieurs fichiers image, comme ci-dessus, soit pour pointer vers un ou plusieurs éléments dédiés, tels que

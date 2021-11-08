@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -6,10 +6,11 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" 
-     schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="TD" n="27"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<div xmlns="http://www.tei-c.org/ns/1.0"
+     type="div1" xml:id="TD" n="27"
+     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+     xmlns:xi="http://www.w3.org/2001/XInclude" >
   <head>Documentation Elements</head>
   <p>This chapter describes a module which may be used for the documentation of the XML elements and element
     classes which make up any markup scheme, in particular that described by the TEI Guidelines, and also for
@@ -325,7 +326,7 @@ element -->
   <div type="div3" xml:id="TDcrystalsCE">
     <head>Common Elements</head>
     <p>This section discusses the child elements common to all of the specification elements; some of these
-      are defined in the core module (<ptr target="#COHQU"/>). These child elements are used to specify the
+      are defined in the core module (<ptr target="#COHTG"/>). These child elements are used to specify the
       naming, description, exemplification, and classification of the specification elements.</p>
     <div type="div4" xml:id="TDcrystalsCEdc">
       <head>Description of Components</head>
@@ -333,7 +334,7 @@ element -->
         <specList>
           <specDesc key="gloss"/>
           <specDesc key="desc"/>
-          <specDesc key="equiv" atts="uri filter name"/>
+          <specDesc key="equiv" atts="uri filter name predicate"/>
           <specDesc key="altIdent"/>
           <specDesc key="listRef"/>
           <specDesc key="remarks"/>
@@ -378,11 +379,18 @@ element -->
           </elementSpec></egXML>
          By convention, a <gi>desc</gi> element begins with a verb such as <mentioned>contains</mentioned>,
           <mentioned>indicates</mentioned>, <mentioned>specifies</mentioned>, etc. and contains a single
-        clause. </p>
-      <p>Where specifications are supplied in multiple languages, the elements <gi>gloss</gi> and
-          <gi>desc</gi> may be repeated as often as needed. Each such description or gloss should carry both
-        an <att>xml:lang</att> and a <att>versionDate</att> attribute to indicate the language used and the
-        date on which the translated text was last checked against its source. </p>
+        clause.</p>
+	<p>Both the <gi>gloss</gi> and <gi>desc</gi> elements (in
+	addition to <gi>exemplum</gi>, <gi>remarks</gi>, and
+	<gi>valDesc</gi>) are members of <ident
+	type="class">att.translatable</ident>, and thus carry the
+	<att>versionDate</att> attributre. Where specifications are
+	supplied in multiple languages, these elements may be repeated
+	as often as needed. Each such element should carry both an
+	<att>xml:lang</att> and a <att>versionDate</att> attribute to
+	indicate the language used and the date on which the
+	translated text was last checked against its source.</p>
+	<xi:include href="../../Specs/att.translatable.xml"/>
       <p>The <gi>equiv</gi> element is used to document equivalencies between the concept represented by this
         object and the same concept as described in other schemes or ontologies. The <att>uri</att> attribute
         is used to supply a pointer to some location where such external concepts are defined. For example, to
@@ -489,13 +497,12 @@ element -->
       <p>When, as here, an example contains valid XML markup, the <gi>egXML</gi> element should be used. In
         such a case, it will clearly be necessary to distinguish the markup within the example from the markup
         of the document itself. In an XML environment, this is easily done by using a different name space for
-        the content of the <gi>egXML</gi> element. For example: <eg xml:space="preserve"><![CDATA[<p>The <gi>term</gi> element may be used 
+        the content of the <gi>egXML</gi> element. For example:
+        <eg xml:space="preserve"><![CDATA[<p>The <gi>term</gi> element may be used 
 to mark any technical term, thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
   This <term>recursion</term> is 
-  giving me a headache.</egXML></p>
-]]></eg>
-      </p>
+  giving me a headache.</egXML></p>]]></eg></p>
       <!-- Removed following erroneous example per ticket https://sourceforge.net/p/tei/bugs/631/-->
       <!--<p>When this approach is taken, but it is also desired to use markup within
 the example for example to indicate some aspect of its formatting, the
@@ -533,13 +540,13 @@ used for recording how parts of the example was rendered.</item>
 to mark any technical term, thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
   This &lt;term&gt;recursion&lt;/term&gt; is 
-  giving me a headache.</egXML></p>
-]]></eg> or, equivalently: <eg xml:space="preserve"><![CDATA[<p>The <gi>term</gi> element may be used 
+  giving me a headache.</egXML></p>]]></eg> or, equivalently:
+        <eg xml:space="preserve"><![CDATA[<p>The <gi>term</gi> element may be used 
 to mark any technical term, thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
   This <term>recursion</term> is 
-  giving me a headache.]]]]><![CDATA[></egXML></p>
-]]></eg> However, escaping the markup in this way will make it impossible to validate, and should therefore
+  giving me a headache.]]]]><![CDATA[></egXML></p>]]></eg>
+        However, escaping the markup in this way will make it impossible to validate, and should therefore
         generally be avoided. </p>
       <p>If the XML contained in an example is not well-formed then it must either be enclosed in a CDATA
         marked section, or <soCalled>escaped</soCalled> as above: this applies whether the <gi>eg</gi> or
@@ -1691,6 +1698,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
           <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/paramList.xml"/>
           <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/paramSpec.xml"/>
           <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/param.xml"/>
+          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.predicate.xml"/>
         </specGrp>
       </div>
     </div>
@@ -1743,24 +1751,27 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
       <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><content>
           <classRef key="model.hiLike"/>
         </content></egXML>
-       would be equivalent to the explicit content model:
+      would be equivalent to the explicit content model:
       <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><content>
-          <alternate>
-            <elementRef key="hi"/>
-            <elementRef key="it"/>
-            <elementRef key="bo"/>
-          </alternate>
-        </content></egXML>
-       (or, to use RELAX NG compact syntax, <code>(hi|it|bo)*</code>). However, a content model of
-        <code>&lt;classRef expand="sequence"/></code> would be equivalent to the following explicit content
-      model:
+	<alternate>
+	  <elementRef key="hi"/>
+	  <elementRef key="it"/>
+	  <elementRef key="bo"/>
+	</alternate>
+      </content></egXML>
+      (or, to use RELAX NG compact syntax,
+      <code>(&#xA0;hi&#xA0;|&#xA0;it&#xA0;|&#xA0;bo&#xA0;)</code>).
+      However, a content model of <code>&lt;classRef
+      expand="sequence"/></code> would be equivalent to the
+      following explicit content model:
       <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><content>
-          <sequence>
-            <elementRef key="hi"/>
-            <elementRef key="it"/>
-            <elementRef key="bo"/>
-          </sequence></content></egXML>
-       (or, in RELAX NG compact syntax, <code>(hi,it,bo)*</code>). </p>
+	<sequence>
+	  <elementRef key="hi"/>
+	  <elementRef key="it"/>
+	  <elementRef key="bo"/>
+      </sequence></content></egXML>
+      (or, in RELAX NG compact syntax,
+    <code>(&#xA0;hi,&#xA0;it,&#xA0;bo&#xA0;)</code>). </p>
     <!-- <p>The following suffixes, appended with an underscore, can be given to a class name when it is referenced in a
         content model: <list type="gloss">
           <label>alternation</label>
@@ -1881,9 +1892,9 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
         <specDesc key="att.deprecated" atts="validUntil"/>
       </specList> The <att>validUntil</att> attribute may be used to signal an intent to remove a construct
       from future versions of the schema being specified.</p>
-    <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.combinable.xml"/>
-    <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.identified.xml"/>
-    <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.deprecated.xml"/>
+    <xi:include href="../../Specs/att.combinable.xml"/>
+    <xi:include href="../../Specs/att.identified.xml"/>
+    <xi:include href="../../Specs/att.deprecated.xml"/>
     <p>The <gi>elementSpec</gi>, <gi>attDef</gi> and <gi>schemaSpec</gi> specification elements also have an
       attribute which determines which namespace to which the object being created will belong. In the case of
         <gi>schemaSpec</gi>, this namespace is inherited by all the elements created in the schema, unless
@@ -1891,7 +1902,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
         <specDesc key="att.namespaceable"/>
       </specList>
     </p>
-    <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.namespaceable.xml"/>
+    <xi:include href="../../Specs/att.namespaceable.xml"/>
     <p>These attributes are used by an ODD processor to determine how declarations are to be combined to form
       a schema or DTD, as further discussed in this section.</p>
     <!-- end of this lot -->

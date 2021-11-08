@@ -2,10 +2,8 @@
 # $Id$
 VCS := git
 ALLLANGUAGES=en
-LANGUAGE=en
 INJENKINS=false
 INPUTLANGUAGE=en
-DOCUMENTATIONLANGUAGE=en
 LATEX=pdflatex
 XELATEX=xelatex
 VERBOSE=
@@ -19,7 +17,7 @@ XSL=/usr/share/xml/tei/stylesheet
 #XSL=http://www.tei-c.org/stylesheet/release/xml/tei
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
-SAXONJAR=saxon9he.jar
+SAXONJAR=saxon10he.jar
 # Saxon-HE-9.4.0.6.jar is needed by the epubcheck program and is in Utilities/lib
 ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -q
 
@@ -76,7 +74,7 @@ schemas.stamp: p5.xml
 html-web: check.stamp p5.xml  html-web.stamp
 
 html-web.stamp:  check.stamp p5.xml  Utilities/guidelines.xsl.model
-	@echo BUILD: Making HTML Guidelines for language ${LANGUAGE}
+	@echo BUILD: Making HTML Guidelines for language ${INPUTLANGUAGE}
 	@# remove vestiges of previous run
 	rm -rf Guidelines-web
 	@# generate XSL stylesheet by modifying paths in our model stylesheet
@@ -84,7 +82,6 @@ html-web.stamp:  check.stamp p5.xml  Utilities/guidelines.xsl.model
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
 		Utilities/guidelines.xsl.model > Utilities/guidelines.xsl
-	-if [ -n ${GOOGLEANALYTICS} ] ; then curl -sL https://tei-c.org/ | sed 's/content="text\/html"/content="text\/html; charset=utf-8"/' | xmllint --html --noent --dropdtd --xmlout - > Utilities/teic-index.xml 2>/dev/null;fi
 	@# for each language, create a subdirectory and pre-populate it with CSS, source, and web navigation stuff
 	for i in $(ALLLANGUAGES) ;do \
 		mkdir -p Guidelines-web/$$i/html; \
@@ -236,7 +233,6 @@ dist-source.stamp: check.stamp p5.xml  schemas.stamp
 	relax.rng \
 	schematron.rng \
 	iso-schematron.rng \
-	p5sch.xsl \
 	schematron1-5.rnc \
 	run-onvdl \
 	*.css \

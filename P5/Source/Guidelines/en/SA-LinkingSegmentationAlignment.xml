@@ -166,7 +166,7 @@ of notes, one headed <q>Remarks</q> and the other
 <q>Imitations</q>.</note>
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul" source="#SAPTEG-eg-3"><l>(Diff'rent our parties, but with equal grace</l>
 <l>The Goddess smiles on Whig and Tory race,</l>
-<l><note type="imitation" place="bottom" anchored="false">    
+<l><note type="imitation" place="bottom">    
     <bibl>Virg. &#xC6;n. 10.</bibl>
     <quote>
 <l>Tros Rutulusve fuat; nullo discrimine habebo.</l>
@@ -195,7 +195,7 @@ annotation:
    <ptr rend="unmarked" target="#note3.284"/></l>
 <l>'Tis the same rope at sev'ral ends they twist,</l>
 <l>To Dulness, Ridpath is as dear as Mist)</l>
-<note xml:id="note3.284" type="imitation" place="bottom" anchored="false">    
+<note xml:id="note3.284" type="imitation" place="bottom">    
    <bibl>Virg. &#xC6;n. 10.</bibl>
    <quote>
 <l>Tros Rutulusve fuat; nullo discrimine habebo.</l>
@@ -225,7 +225,7 @@ annotating; this could be encoded using a <gi>ref</gi>
 element, which bears a <att>target</att> attribute of its own
 and contains a (slightly misquoted) extract from the text marked
 as a <gi>quote</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul" source="#SAPTEG-eg-3"><note type="imitation" place="bottom" anchored="false" target="#L3.284">    
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul" source="#SAPTEG-eg-3"><note type="imitation" place="bottom" target="#L3.284">    
    <ref rend="sc" target="#L3.284">Verse 283&#x2013;84.
  <quote>
    <l>&#x2014;&#x2014;. With equal grace</l>
@@ -255,7 +255,7 @@ associate the two. Note that the <gi>ptr</gi> element and the
 <att>target</att> attribute on the <gi>note</gi> may now be dispensed
 with:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul" source="#SAPTEG-eg-3">
-<note xml:id="n3.284" type="imitation" place="bottom" anchored="false">    
+<note xml:id="n3.284" type="imitation" place="bottom">    
    <ref rend="sc" target="#L3.284">Verse 283&#x2013;84.
 <quote>
    <l>&#x2014;&#x2014;. With equal grace</l>
@@ -274,7 +274,7 @@ here bears the identifier of the note followed by that of the
 verse line.  We could also allocate an
 identifier to the reference within the note and encode the
 association between it and the verse line in the same way:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SAPTEG-eg-3"><note type="imitation" place="bottom" anchored="false">    
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SAPTEG-eg-3"><note type="imitation" place="bottom">    
    <ref rend="sc" xml:id="r3.284" target="#L3.284">Verse 283&#x2013;84.
 <quote>
    <l>&#x2014;&#x2014;. With equal grace</l>
@@ -687,7 +687,7 @@ chapter and elsewhere in these Guidelines. </p>
         
         Any number of <gi>prefixDef</gi> elements may be provided for the same prefix. A processor may decide to process one or all of them; if it processes only one, it should choose the first one with the correct <att>ident</att> value, so the primary or most important <gi>prefixDef</gi> for any given prefix should appear first in its parent <gi>listPrefixDef</gi>.</p>
       
-      <p>When creating private URI schemes, it is recommended that you avoid using any existing registered prefix. A list of registered prefixes is maintained by IANA at <ref target="http://www.iana.org/assignments/uri-schemes.html">http://www.iana.org/assignments/uri-schemes.html</ref>.</p>
+      <p>When creating private URI schemes, it is recommended that you avoid using any existing registered prefix. A list of registered prefixes is maintained by IANA at <ptr target="http://www.iana.org/assignments/uri-schemes.html"/>.</p>
       
       <p>Note that this mechanism can also be used to dereference other abbreviated pointing systems which are based on prefixes, such as Tag URIs.</p>
       
@@ -736,8 +736,8 @@ Nodes are entities available only in the tree, while points are available
 only in the stream. For this reason, the schemes below that rely upon 
 character positions (<code>string-index()</code>, 
 <code>string-range()</code>, and <code>match()</code>) cannot take nodes 
-into account. Similarly, XPath, being a method for locating nodes in the 
-tree, treats those nodes as atomic, and is unable to address parts of nodes 
+into account. Conversely, XPath (disregarding functions that return atomic values) is a method for locating nodes in the 
+tree and treats those nodes as indivisible units, meaning it is unable to address parts of nodes 
 in their document context.</p>
 
 <p>The TEI pointer scheme thus distinguishes the following
@@ -750,7 +750,7 @@ the <ref target="http://www.w3.org/TR/xpath-datamodel/">XQuery
 1.0 and XPath 2.0 Data Model (Second Edition)</ref>. It represents 
 a single item in the XML information 	set for a document. For pointing
 purposes, the only nodes that are of interest are Text Nodes,
-Element Nodes, and Attribute nodes.</item> 
+Element Nodes, and Attribute Nodes.</item> 
 <label>Sequence</label>
 <item>A Sequence follows the definition in the XPath 2.0 Data 
 Model, with one alteration. A Sequence is an ordered collection
@@ -784,10 +784,10 @@ they cannot be said to have a fixed position.
 <p>The TEI recommends the following seven pointer schemes:
 <list type="gloss">
 <label><name type="xpscheme">xpath()</name></label>
-<item>Addresses a node or nodeset using the XPath syntax. (<ptr target="#SATSXP"/>)</item>
+<item>Addresses a node or node sequence using the XPath syntax. (<ptr target="#SATSXP"/>)</item>
 <label><name type="xpscheme">left()</name> and <name type="xpscheme">right()</name></label>
 <item>addresses the point before (left) or after (right) a node or node 
-set (<ptr target="#SATSL"/> and <ptr target="#SATSR"/>)</item>
+sequence (<ptr target="#SATSL"/> and <ptr target="#SATSR"/>)</item>
 <label><name type="xpscheme">string-index()</name></label>
 <item>addresses a point inside a text node (<ptr target="#SATSSI"/></item>
 <label><name type="xpscheme">range()</name></label>
@@ -828,18 +828,16 @@ scheme.</p>
 <div type="div4" xml:id="SATSXP">
 <head>xpath()</head>
 <p><code>Sequence xpath(XPATH)</code></p>
-<p>The <name type="xpscheme">xpath()</name> scheme locates a node
-within an XML Information Set. The single argument
-<rs>XPATH</rs> is an XPath path expression, following the latest 
-scheme adopted by the W3C (currently 
-<ref target="http://www.w3.org/TR/xpath20/">XPath 2.0</ref>), that 
-returns a sequence. XPaths returning atomic values (e.g. 
-<name>substring()</name>) are illegal in the 
-<name type="xpscheme">xpath()</name> scheme because they 
-represent extracted values rather than locations in the source 
-document. XPath expressions that address attribute nodes are only 
-advisable in the <name type="xpscheme">xpath()</name> scheme.
-</p>
+<p>The <name type="xpscheme">xpath()</name> scheme locates zero or more nodes within an XML
+  Information Set. The single argument <rs>XPATH</rs> is an XPath selection pattern, as
+  defined in <ref target="https://www.w3.org/TR/xslt-30/#dt-selection-pattern">XSLT
+    3.0</ref>, that returns a node or sequence of nodes. XPaths returning atomic values
+  (e.g. <name>substring()</name>) are illegal in the <name type="xpscheme">xpath()</name>
+  scheme because they represent extracted values rather than locations in the source
+  document. Because the schemes below involve starting at a node and navigating from there,
+  and because attribute nodes have no intrinsic order, XPath expressions that address
+  attribute nodes should be avoided in schemes other than <name type="xpscheme"
+    >xpath()</name>. </p>
 <p>The example below, and all subsequent examples in this section refer 
 to the following TEI fragment<anchor xml:id="SATSXP-ex"/>:
 <!-- Ostrakon from Trimithis (O.Trim 1, 1)  http://papyri.info/ddbdp/o.trim;1;1 -->
@@ -854,10 +852,14 @@ to the following TEI fragment<anchor xml:id="SATSXP-ex"/>:
 <lb n="5"/>auge et opto u<unclear>t</unclear> bene valeas</ab></div>
 </egXML>
 </p>
-<p>A TEI Pointer that referenced the "normalized" form in the 
+<p>A TEI Pointer that referenced the <gi>reg</gi> element in the 
 <code>choice</code> in line 1 of the example might look like:
-<lb/><code>#xpath(//lb[@n='1']/following-sibling::choice/reg)</code>. 
-</p>
+<lb/><code>#xpath(//lb[@n='1']/following-sibling::choice[1]/reg)</code>. 
+  Note that XPath values must be assumed to start from the document root. They cannot be relative 
+  to the element bearing the attribute that uses the pointer because TEI Pointers are URIs. Care
+  should be taken to ensure that XPaths used in TEI Pointers match only a single node, unless
+  multiple matches are desired. The examples that follow are relatively simple because the
+  document they refer to is short and does not contain many elements.</p>
 <p>When an XPath is interpreted by a TEI processor, the
 information set of the referenced document is interpreted
 without any additional information supplied by any schema
@@ -887,9 +889,11 @@ which is either an <rs>XPATH</rs> as defined above or an
 <rs>IDREF</rs>, the value of an <att>xml:id</att>
 occurring in the document addressed by the base URI in effect
 for the pointer.</p>
-<p>Example: the pointer <code>#left(//gap[1])</code> 
+<p>Example: the pointer <code>#left(//supplied[1])</code>
 indicates the point between the first <code>lb</code> and the first
-  <code>gap</code> in the <ref target="#SATSXP-ex">example</ref> above.</p>
+<code>supplied</code> in the <ref target="#SATSXP-ex">example</ref> above.</p>
+<p>Example: <code>#left(//gap[1])</code> indicates the point immediately before
+the first <code>gap</code> element in line two and the string <code>si</code>.</p>
 <p>Example: <code>#left(line1)</code> indicates the point immediately before
 the <code><![CDATA[<lb n="1"/>]]></code> element.</p></div>
 
@@ -956,7 +960,7 @@ non-contiguous nodes. For example, a range() might select text beginning
 before an <gi>app</gi>, encompassing the content of a single <gi>rdg</gi> 
 and continuing after the <gi>app</gi>.</p>
 <p>Example: <code>#range(left(//lb[@n='3']),left(//lb[@n='4']))</code> indicates 
-the whole of <ref target="#SATSXP-ex">line 4</ref> from the 
+the whole of <ref target="#SATSXP-ex">line 3</ref> from the 
 <code><![CDATA[<lb n="3"/>]]></code> to the point right before the 
 following <code><![CDATA[<lb n="4"/>]]></code>.</p>
 <p>Example: <code>#range(right(//lb[@n='3']),string-index(//lb[@n='3'],15))</code>
@@ -978,8 +982,8 @@ The <rs>LENGTH</rs> parameter is a positive integer that denotes
 the length of the text stream captured by the sequence. As with 
 <name type="xpscheme">range()</name>, the addressed sequence may 
 contain text nodes and/or elements. The 
-<name type="xpscheme">string-range()</name> scheme, can accept multiple 
-OFFSET, LENGTH pairs to address a non-contiguous sequence in mauch the
+<name type="xpscheme">string-range()</name> scheme can accept multiple 
+OFFSET, LENGTH pairs to address a non-contiguous sequence in much the
 same way that range() can accept multiple pairs of pointers.</p> 
 <p>Because string-range() addresses points in the text stream, tags are
 invisible to it. For example, if an empty tag like <gi>lb</gi> is
@@ -1011,7 +1015,7 @@ modifications:
     occurring inside the expression must be escaped using the URI 
     percent-encoding scheme <code>%27</code>. </item>
   <item>Regular expressions in <code>match()</code> are assumed to
-    operate in multi-line mode. The end of the string to be matched
+    operate in single-line mode. The end of the string to be matched
     against is either the end of the text contained by the element in the
     first parameter or the end of the document, if that parameter
     indicates an empty element. The meta-character <code>^</code>
@@ -1024,7 +1028,7 @@ The optional INDEX parameter is an integer greater than 0 which specifies which
 match should be chosen when there is more than one possibility. If omitted, the 
 first match in the text stream will be used.</p>
 <p>Like <code>string-range()</code>, <code>match()</code> may capture elements 
-in the returned sequence, even though they are ignored for purposes of evaluating 
+in the indicated sequence, even though they are ignored for purposes of evaluating 
 the match.</p>
 <p>Example: <code>#match(//lb[@n='5'],'opto.*valeas')</code> indicates the sequence
 <code><![CDATA[opto u<unclear>t</unclear> bene valeas]]></code> in 
@@ -1068,7 +1072,7 @@ corresponds with it. This is provided by the  <gi>refsDecl</gi> element <!--(whi
 which contains an algorithm for translating a canonical reference string
 (like <val>Matt 5:7</val>) into a URI such as <code>#xpath(//div[@n='Matt']/div[5]/div[7])</code>. The
 <gi>refsDecl</gi> element is described in section <ptr target="#HD54"/>; the following example is discussed in more
-detail below in section <ptr target="#SACRWE"/>.
+  detail below in section <ptr target="#SACRWE"/>. An alternative and less verbose method is described in section <ptr target="#SACRCS"/>.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl xml:id="biblical">
    <cRefPattern matchPattern="(.+) (.+):(.+)" replacementPattern="#xpath(//div[@n='$1']/div[@n='$2']/div[@n='$3]')">
     <p>This pointer pattern extracts and references the <q>book,</q>
@@ -1213,7 +1217,65 @@ to <code>$</code> during processing.</p>
     references in non-TEI documents (such as plain text
     documents), possibly as part of their conversion to TEI.</p>
 </div>
-      
+      <div type="div4" xml:id="SACRCS">
+        <head>Citation Structures</head>
+        <p>Citation structures provide a more thorough and concise mechanism for describing canonical references
+           and the ways those references map on to parts of a TEI document. A <gi>citeStructure</gi> element
+           describes a single step in a reference, such as <q>Matt</q>, and may nest to handle multi-part references.
+        </p>
+        <p>The equivalent structure to the set of <gi>cRefPattern</gi>s in <ptr target="#SACRWE"/> would be:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <refsDecl xml:id="biblical2">
+            <citeStructure unit="book" match="//body/div" use="@n">
+              <citeStructure unit="chapter" match="div" use="@n" delim=" ">
+                <citeStructure unit="verse" match="div" use="@n" delim=":"/>
+              </citeStructure>
+            </citeStructure>
+          </refsDecl>
+        </egXML>
+        </p>
+        <p>An application wishing to resolve a canonical reference such as <val>Matt 5:7</val> might follow this procedure:
+          <list rend="numbered">
+            <item>Ascertain the correct <gi>refsDecl</gi>
+              following the rules summarized in section <ptr target="#CCAS3"/>.</item>
+            <item>Begin with the outer <tag>citeStructure</tag>. If it has a <att>delim</att> attribute 
+              and the reference begins with the value of <att>delim</att> then take the portion of 
+              the reference after the value of <att>delim</att> as input for the next child <tag>citeStructure</tag>.</item>
+            <item>For each nested <tag>citeStructure</tag>, if the input reference string contains the value 
+              of the <att>delim</att>, then split the string on the value of the <att>delim</att> attribute. 
+              If the input string does not contain <att>delim</att>, then stop. Take the portion of the input 
+              string after the value of <att>delim</att> and use it as the input string for the child <tag>citeStructure</tag>. 
+              After processing the outer <tag>citeStructure</tag>, the output will be <code>('Matt 5:7')</code>, after 
+              the second, <code>('Matt', '5:7')</code>. The end result will be a 
+              sequence like <code>('Matt','5','7')</code>.</item>
+            <item>For each item in the resulting sequence, resolve the matching node by evaluating 
+              the XPath in <att>match</att> with the predicate found in <att>use</att>, using the 
+              context of the previously matched node, if any. Start with the outer <gi>citeStructure</gi> 
+              and move to the next child <tag>citeStructure</tag> for each step in the sequence. For 
+              example, for the first <tag>citeStructure</tag>, we could construct an XPath 
+              <code>//div[@n='Matt']</code>. The full XPath after the reference <val>Matt 5:7</val> is resolved will be 
+              <code>//div[@n='Matt']/div[@n='5']/div[@n='7']</code>.</item>
+          </list>
+          One advantage <gi>citeStructure</gi> has is that it can be used to <emph>generate</emph> canonical 
+          references, using the declared citation structure to query the text structure. This means it is 
+          possible to automatically produce a list of resolvable citations for a TEI document. It also 
+          enables the automatic breaking of documents into smaller chunks for presentation and automated 
+          generation of tables of contents.</p>
+        <p>Citation structures may in addition specify how informational properties are to be extracted from the
+          document sections they identify, using the <gi>citeData</gi> element. For example, if a TEI document 
+          is divided into chapters with a <gi>div</gi> per chapter and those chapters have titles, contained in
+          <gi>head</gi> elements, then we might declare a citation structure for the document thus:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <citeStructure unit="chapter" match="/TEI/text/body/div" use="position()" delim="ch. ">
+              <citeData property="http://purl.org/dc/terms/title" use="head"/>
+            </citeStructure>
+          </egXML>
+        </p>
+        <p>This specifies that chapter references are given in the form <q>ch. n</q>, where <q>n</q>
+          is the position of the <gi>div</gi> in the <gi>body</gi> of the document, and that we may obtain
+          the title of the chapter (identified by the Dublin Core property <code>title</code>) from the chapter
+          heading. This would, for example, enable the automated generation of a chapter listing for the document.</p>
+      </div>
     </div>
   </div>
   <div type="div2" xml:id="SASE">
@@ -1627,7 +1689,7 @@ example,
 <u xml:id="u-b2" who="#b"> not </u></egXML>
 Note in this encoding how synchronization has been effected between an
 empty <gi>unclear</gi> element and the content of a <gi>seg</gi> element, and between the
-content of an
+content of a
 <gi>u</gi> element and that of another <gi>seg</gi>, using the <att>synch</att>
 attribute. Alternatively, a <gi>linkGrp</gi> could be used in the same
 way as above.</p></div>
@@ -2066,7 +2128,7 @@ alignment, as shown next (for further discussion of the handling of
 <p>The first kind of alignment might be represented by using the
 <att>corresp</att> attribute on the <gi>seg</gi> element. The second
 kind might be represented by using the <gi>gloss</gi> and <gi>term</gi>
-mechanism described in section <ptr target="#COHQU"/>. The third kind of
+mechanism described in section <ptr target="#COHTG"/>. The third kind of
 alignment might be represented using pointers embedded within the
 texts, for example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
@@ -2449,13 +2511,13 @@ The <att>xml:id</att> attributes of
     <p><q>And after that,</q> he continued, <q>do not be deceived by others.</q></p>
     <p><q>Yes, sir; yes, sir,</q> he replied.</p>
     <ab type="aggregation">
-<ptr xml:id="rzuiq1" target="./#xpath(//div1[6]/p[1]/q[1])"/>
-<ptr xml:id="rzuiq2" target="./#xpath(//div1[6]/p[2]/q[1])"/>
-<ptr xml:id="rzuiq3" target="./#xpath(//div1[6]/p[3]/q[1])"/>
-<ptr xml:id="rzuiq4" target="./#xpath(//div1[6]/p[4]/q[1])"/>
-<ptr xml:id="rzuiq5" target="./#xpath(//div1[6]/p[5]/q[1])"/>
-<ptr xml:id="rzuiq6" target="./#xpath(//div1[6]/p[5]/q[2])"/>
-<ptr xml:id="rzuiq7" target="./#xpath(//div1[6]/p[6]/q[1])"/>
+<ptr xml:id="rzuiq1" target="#xpath(//div1[6]/p[1]/q[1])"/>
+<ptr xml:id="rzuiq2" target="#xpath(//div1[6]/p[2]/q[1])"/>
+<ptr xml:id="rzuiq3" target="#xpath(//div1[6]/p[3]/q[1])"/>
+<ptr xml:id="rzuiq4" target="#xpath(//div1[6]/p[4]/q[1])"/>
+<ptr xml:id="rzuiq5" target="#xpath(//div1[6]/p[5]/q[1])"/>
+<ptr xml:id="rzuiq6" target="#xpath(//div1[6]/p[5]/q[2])"/>
+<ptr xml:id="rzuiq7" target="#xpath(//div1[6]/p[6]/q[1])"/>
 <joinGrp evaluate="one" result="q">
   <join target="#rzuiq1 #rzuiq2 #rzuiq4 #rzuiq7">
    <desc>what Zui-Gan said</desc></join>
@@ -2989,23 +3051,19 @@ range. For example, given the following source document:
   </body>
 </egXML>
   and the following external document:
-<eg xml:space="preserve"><![CDATA[
-  <body>
+<eg xml:space="preserve"><![CDATA[  <body>
      <div><include href="example1.xml" xmlns="http://www.w3.org/2001/XInclude"
 xpointer="range(xpath(id('par1')//emph),xpath(id('par2')//emph))"/>
      </div>
- </body>   
-]]></eg>
+ </body>   ]]></eg>
   the resulting document after XInclude processing of this external document
   would be:
-<eg xml:space="preserve"><![CDATA[
-   <body>
+<eg xml:space="preserve"><![CDATA[   <body>
    <div>
      <p xml:id="par1">home, <emph>home</emph> on Brokeback Mountain.</p>
      <p xml:id="par2">That was the <emph>song</emph> that I sang</p>
    </div>
-   </body>
-]]></eg>
+   </body>]]></eg>
   The result of the inclusion is two paragraph elements, while
   the original range designated in the source document
   overlapped two paragraph fragments. 
@@ -3401,6 +3459,9 @@ either with the pointing attributes <att>ana</att> (for
 <mentioned>instance</mentioned>), or by means of <gi>link</gi> and
 <gi>linkGrp</gi> elements. Numerous examples are given in these
 chapters<!-- , particularly in sections <ptr target="#AILA"/>, <ptr target="#FSFL"/> and <ptr target="#FSIL"/>-->.</p>
+  <p>Another more specific form of annotation is available through the TEI <gi>ruby</gi> element and its
+    children, described in detail in <ptr target="#COHTGRB"/>.</p>
+  
 </div>
 <div type="div2" xml:id="SAref">
   <head>Module for Linking, Segmentation, and Alignment</head>
@@ -3410,7 +3471,7 @@ chapters<!-- , particularly in sections <ptr target="#AILA"/>, <ptr target="#FSF
     <altIdent type="FPI">Linking, Segmentation, and Alignment</altIdent>
     <desc xml:lang="en" versionDate="2019-07-07">Linking, segmentation, and alignment</desc>
     <desc xml:lang="fr" versionDate="2018-07-12">Liens, segmentation et alignement</desc>
-    <desc xml:lang="zh-TW" versionDate="2018-07-12">Linking, segmentation and alignment&#x9023;&#x7D50;&#x3001;&#x5206;&#x5272;&#x8207;&#x968A;&#x5217;</desc>
+    <desc xml:lang="zh-TW" versionDate="2020-12-20">連結、分割與隊列</desc>
     <desc xml:lang="it" versionDate="2018-07-12">Collegamento, segmentazione e allineamento</desc>
     <desc xml:lang="pt" versionDate="2018-07-12">Liga&#xE7;&#xE3;o, segmenta&#xE7;&#xE3;o e alinhamento</desc>
     <desc xml:lang="ja" versionDate="2018-07-12">&#x30EA;&#x30F3;&#x30AF;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;</desc>

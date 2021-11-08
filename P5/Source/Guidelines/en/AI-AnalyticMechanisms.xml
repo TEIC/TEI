@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -520,8 +520,17 @@ is desired then it may point to <gi>category</gi> element at a suitable level in
 structured vocabulary to particular passages of text are provided by the
 <gi>span</gi> and <gi>interp</gi> elements, and their associated
 grouping elements <gi>spanGrp</gi> and <gi>interpGrp</gi>.
-<specList><specDesc key="span"/><specDesc key="spanGrp"/><specDesc key="interp"/><specDesc key="interpGrp"/></specList>
- </p>
+<specList><specDesc key="span"/><specDesc key="spanGrp"/><specDesc key="interp"/><specDesc key="interpGrp"/></specList></p>
+<!--
+    When Stylesheets bug #370 is fixed we plan to move @type from
+    <interp>, <interpGrp>, <span>, and <spanGrp> into att.interpLike.
+    When that happens, the next bit should be changed to:
+
+<p>These elements are all members of the class <ident type="class">att.interpLike</ident>, and thus share the following attributes:
+<specList><specDesc key="att.interpLike" atts="inst type"/></specList>
+
+    —Syd, 2020-10-30
+-->
 <p>These elements are all members of the class <ident type="class">att.interpLike</ident>, and thus share the following attribute:
 <specList><specDesc key="att.interpLike" atts="inst"/></specList>
   They also inherit the following attributes from <ident type="class">att.global.responsibility</ident>:
@@ -804,8 +813,9 @@ as borderline cases both the formal structural properties of the text
 information about its context (the circumstances of its production, its
 genre or medium).  The structural properties of any TEI-conformant text
 should be represented using the structural elements discussed elsewhere
-in this chapter and in chapters <ptr target="#CO"/>, <ptr target="#DS"/>, and
-the various chapters of Part III.  The contextual
+in this chapter and in chapters <ptr target="#CO"/>, <ptr target="#DS"/>, 
+<ptr target="#VE"/>, <ptr target="#DR"/>, <ptr target="#TS"/>, <ptr target="#DI"/>, 
+and <ptr target="#CC"/>. The contextual
 properties of a TEI text are fully documented in the TEI header, which
 is discussed in chapter <ptr target="#HD"/>, and in section <ptr target="#CCAH"/>.
  </p>
@@ -848,11 +858,8 @@ Output from the system consists of a segmented and tokenized version
 of the text, in which word class codes have been associated with each
 token. CLAWS offers outputs in a variety of non-XML and XML formats:
 for example, the simplest format for the sample sentence would be:
-<eg xml:space="preserve"><![CDATA[
-The_AT0 victim_NN1 's_POS friends_NN2 told_VVD police_NN2 that_CJT Kruger_NP0 
-drove_VVD into_PRP the_AT0 quarry_NN1 and_CJC never_AV0 surfaced_VVD
-]]></eg>
-</p>
+<eg xml:space="preserve"><![CDATA[The_AT0 victim_NN1 's_POS friends_NN2 told_VVD police_NN2 that_CJT Kruger_NP0 
+drove_VVD into_PRP the_AT0 quarry_NN1 and_CJC never_AV0 surfaced_VVD]]></eg></p>
 <p>This may be easily transformed into an equivalent TEI XML representation:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><s><w ana="#AT0">The </w> 
@@ -901,11 +908,10 @@ used to point to each interpretation is clearly defined. A further
 analysis into phrase and clause elements can be superimposed on the
 word and morpheme tagging in the preceding illustration. For example,
 CLAWS provides the following constituent analysis of the sample
-sentence (the word class codes have been deleted): <eg xml:space="preserve"><![CDATA[
-[N [G The victim's G] friends N] [V told [N police N] [Fn that 
+sentence (the word class codes have been deleted):
+<eg xml:space="preserve"><![CDATA[[N [G The victim's G] friends N] [V told [N police N] [Fn that 
 [N Krueger N] [V [V& drove [P into [N the quarry N]P]V&] and 
-[V+ never surfaced V+]V]Fn]V]]]></eg>
- </p>
+[V+ never surfaced V+]V]Fn]V]]]></eg></p>
 <p>Treating the labels on the brackets as phrase or clause
 interpretations, this analysis of the structure of the example sentence
 can be combined with the word class analysis and represented as follows

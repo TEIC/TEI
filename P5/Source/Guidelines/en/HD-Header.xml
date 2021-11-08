@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 Copyright TEI Consortium.
 Dual-licensed under CC-by and BSD2 licences
@@ -1479,11 +1479,13 @@ the encoding works.
 <specList>
 <specDesc key="refsDecl"/>
 </specList>
- It may contain either  a series of prose paragraphs or the following specialized elements:
+ It may contain either a series of prose paragraphs or the following specialized elements:
 <specList>
+<specDesc key="citeStructure"/>
 <specDesc key="cRefPattern"/>
 <specDesc key="refState"/>
 <specDesc key="att.patternReplacement" atts="matchPattern replacementPattern"/>
+<specDesc key="att.citeStructurePart" atts="use"/>
 </specList>
 Note that not all possible referencing schemes are equally easily
 supported by current software systems.  A choice must be made between
@@ -1492,10 +1494,11 @@ particular software applications envisaged, in this context as in many
 others. For a more detailed discussion of referencing
 systems supported by these Guidelines, see section <ptr target="#CORS"/> below.
 	</p>
-<p>A referencing scheme may be described in one of three ways using this
+<p>A referencing scheme may be described in one of four ways using this
 element:
 <list rend="bulleted">
 <item>as a prose description</item>
+<item>as nested set of citation structure declarations</item>
 <item>as a series of pairs of regular expressions and XPaths</item>
 <item>as a concatenation of sequentially organized
 <term>milestone</term>s</item></list>
@@ -1611,17 +1614,19 @@ see section <ptr target="#CORS5"/>.<!-- was:  target='P2.232ms'> -->
 supported by a generic XML parser.  Its use places a
 correspondingly greater burden of verification and accuracy on the
 encoder.</p>
- <specGrp xml:id="D2254" n="The reference scheme declaration">
-
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/refsDecl.xml"/>
-
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/cRefPattern.xml"/>
-   <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.patternReplacement.xml"/>
-
-   <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/prefixDef.xml"/>
-   <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/listPrefixDef.xml"/>
-
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/refState.xml"/>
+<specGrp xml:id="D2254" n="The reference scheme declaration">
+  
+  <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/refsDecl.xml"/>
+  <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/citeStructure.xml"/>
+  <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/citeData.xml"/>
+  <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.citeStructurePart.xml"/>
+  <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/cRefPattern.xml"/>
+  <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.patternReplacement.xml"/>
+  
+  <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/prefixDef.xml"/>
+  <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/listPrefixDef.xml"/>
+  
+  <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/refState.xml"/>
 </specGrp>
 <p>A reference system declaration which applies to more than one text or
 division of a text need not be repeated in the header of each such text.
@@ -1794,10 +1799,16 @@ more than one language, as in the following example:
       <specList>
         <specDesc key="unitDef"/>
         <specDesc key="unit"/>
-        <specDesc key="conversion" atts="formula fromUnit toUnit from to notBefore notAfter when"/> 
+        <specDesc key="conversion" atts="fromUnit toUnit from to notBefore notAfter when"/> 
         <specDesc key="att.formula" atts="formula"/>
+        <specDesc key="att.locatable" atts="where"/>
       </specList>
-Within the <gi>unitDef</gi>, a <gi>conversion</gi> element may be used to store information relating to conversion between units. The <gi>conversion</gi> element holds a special pair of attributes, <att>fromUnit</att> and <att>toUnit</att>, which serve to indicate the direction of a calculation from one unit of measure (stored in <att>fromUnit</att>) to another (stored in <att>toUnit</att>). A mathematical calculation to define the relation between these units may be stored in <att>formula</att>, as shown in the following examples. The <att>formula</att> attribute takes a value expressed as an XPath expression, which means that division must be expressed with <q>div</q> so as not to be confused with the forward slash used in path navigation. 
+Within the <gi>unitDef</gi>, a <gi>conversion</gi> element may be used to store information relating to conversion between units. 
+      The <gi>conversion</gi> element holds a special pair of attributes, <att>fromUnit</att> and <att>toUnit</att>, which serve to indicate the direction of a calculation from one unit of measure (stored in <att>fromUnit</att>) to another (stored in <att>toUnit</att>). 
+      A mathematical calculation to define the relation between these units may be stored in <att>formula</att>, as shown in the following examples.  
+      The <att>formula</att> attribute takes a value expressed as an XPath expression, for which see <ptr target="#XPATH31"/>. 
+      Among other things, this means that division must be expressed with <q>div</q> as opposed to the more common forward slash (<q>/</q>, U+002F), so as not to be confused with path navigation.
+      The <gi>conversion</gi> element may also use attributes to store dates and date ranges as well as location(s) that specify when and where a conversion formula was applied.
     </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#ZUPKO">
       <encodingDesc>
@@ -1835,11 +1846,25 @@ Within the <gi>unitDef</gi>, a <gi>conversion</gi> element may be used to store 
        </unitDecl>
      </encodingDesc>
     </egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#HDUDECL-TG">
+        <unitDef type="volume" xml:id="shunbul">
+          <label xml:lang="ar-Latn-x-ijmes">shunbul</label>
+          <label xml:lang="ar">شنبل</label>
+          <conversion formula="$fromUnit * 2.5" fromUnit="#shunbul" toUnit="#kile" when="1873" where="#acre #tripoli"/>
+          <conversion formula="$fromUnit * 2.25" fromUnit="#shunbul" toUnit="#kile" when="1878"  where="#acre #tripoli"/>
+          <conversion formula="$fromUnit * 3" from="1891" fromUnit="#shunbul" to="1910" toUnit="#kile" where="#aleppo"/>
+          <conversion formula="$fromUnit * 2.5" fromUnit="#shunbul" toUnit="#kile_istanbul" when="1860" where="#aleppo"/>
+          <conversion formula="$fromUnit * 72" fromUnit="#shunbul" toUnit="#madd" when="1893" where="#damascus"/>
+          <desc xml:lang="en">The <foreign xml:lang="ar-Latn-x-ijmes">shunbul</foreign> was the main unit to measure grain in the Northern parts of Greater Syria.</desc>
+        </unitDef>
+      </egXML>
+    
     <specGrp xml:id="D2256" n="The unit declaration">
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unitDecl.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unitDef.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/conversion.xml"/> 
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.formula.xml"/>
+      <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.locatable.xml"/>
     </specGrp>
   </div>
   <div type="div3" xml:id="HDSCHSPEC"><head>The Schema Specification</head>

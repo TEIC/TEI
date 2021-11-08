@@ -23,7 +23,7 @@ $Id$
         <classRef key="model.glossLike"/>
         <classRef key="model.descLike"/>
       </alternate>
-      <elementRef key="constraint" minOccurs="0"/>
+      <elementRef key="constraint" minOccurs="1" maxOccurs="1"/>
     </sequence>
   </content>    
   <constraintSpec ident="sch_no_more" scheme="schematron">
@@ -64,8 +64,8 @@ $Id$
           <gloss versionDate="2016-09-27" xml:lang="en">ISO Schematron</gloss>
         </valItem>
       </valList>
-      <remarks versionDate="2016-09-27" xml:lang="en">
-        <p>These Guidelines no longer recommend, and the available TEI
+      <remarks versionDate="2021-09-27" xml:lang="en">
+        <p>These Guidelines no longer recommend, and the current TEI
         stylesheets no longer support, the use of Schematron 1.x
         within <gi>constraintSpec</gi>. Thus the value
         <val>schematron</val> is used to indicate that ISO Schematron
@@ -78,12 +78,12 @@ $Id$
       when a <gi>constraintSpec</gi> warns about a deprecated
       construct.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="semi">
-	<valItem ident="deprecationWarning">
-	  <desc xml:lang="en" versionDate="2018-09-17">Indicates that
-	  this constraint specification warns that some other
-	  construct in the schema is deprecated.</desc>
-	</valItem>
+      <valList type="semi" mode="add">
+        <valItem ident="deprecationWarning">
+          <desc xml:lang="en" versionDate="2018-09-17">Indicates that
+          this constraint specification warns that some other
+          construct in the schema is deprecated.</desc>
+        </valItem>
       </valList>
     </attDef>
   </attList>
@@ -104,8 +104,8 @@ $Id$
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <constraintSpec ident="demo-c2" scheme="schematron">
-        <desc>Implement an accessibility rule which says that pictures should
-    have textual explanations</desc>
+        <desc>Implement an accessibility rule which says that pictures
+        should have textual explanations</desc>
         <constraint>
           <sch:report test="not(tei:figDesc or tei:head)"> You should
           provide information in a figure from which
