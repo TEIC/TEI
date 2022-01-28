@@ -71,6 +71,16 @@ $Id$
       </sch:rule>
     </constraint>
   </constraintSpec>
+  <constraintSpec ident="unique-constraintSpec-ident" scheme="schematron">
+    <constraint>
+      <sch:rule context="tei:constraintSpec[ @mode eq 'add'  or  not( @mode ) ]">
+        <sch:let name="myIdent" value="normalize-space(@ident)"/>
+        <sch:report test="preceding::tei:constraintSpec[ normalize-space(@ident) eq $myIdent ]">
+        The @ident of 'constraintSpec' should be unique; this one (<sch:value-of select="$myIdent"/>) is the same as that of a previous 'constraintSpec'.
+        </sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="scheme" usage="req">
       <desc versionDate="2009-06-10" xml:lang="en">supplies the name of the language in which the constraints
