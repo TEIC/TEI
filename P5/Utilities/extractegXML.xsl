@@ -10,10 +10,11 @@
     ago by the amazing Sebastian Rahtz.
     
     Read in TEI P5, write out
-    a) a directory (./valid/) full of one-file-per-example each of which has a
+    a) a directory (./valid/) full of files, one for each example in
+       P5, each of which contains nothing but a copy of that single
        single example
-    b) a driver file (normal output of this stylesheet) that refers to each of
-       those files.
+    b) a driver file (normal output of this stylesheet) that refers to
+       each of those files.
 
     (Above is part of original program; feature described below added 2021-09-17
     by Syd Bauman and Martin Holmes in attempt to fix Stylesheets issue 417.)
@@ -107,7 +108,29 @@
       <xsl:text>-</xsl:text>
     </xsl:for-each>
   </xsl:template>
-  
+
+  <!-- ********* mode "copy_egXML_checking_validUntil" ********* -->
+  <!-- 
+       Everything is just copied over (see <xsl:mode> above), except
+       any @validUntil attribute is
+       1) checked to see that its value is, in fact, a valid W3C date;
+       2) converted to a date 1 year in the future from today.
+
+       The point of (2) is to guarentee that the next validation step
+       does not complain about the value of a particular @validUntil
+       being in the past or too soon or whatever. But that means said
+       next validation step will not be testing the actual value of
+       @validUntil, but rather our made-up value which will always be
+       valid. So we do (1) to test the format of the provided value,
+       so the user is told if it is not a valid value.
+       
+       NOTE: This means that if the datatype of @validUntil is ever
+       changed in the TEI _Guidelines_ the test here would have to
+       change accordingly. (I.e. we are testing @validUntil against
+       xsd:date here not because we happen to love xsd:dates, but
+       rather because @validUntil is defined as an xsd:date in
+       P5/Source/Specs/att.deprecated.xml)
+  -->
   <xsl:template match="@validUntil" mode="copy_egXML_checking_validUntil">
     <!--
       First, knock off leading & trailing spaces, which are allowed in the
