@@ -27,7 +27,7 @@ $Id$
   <desc versionDate="2007-01-21" xml:lang="it">genera uno schema TEI-conforme e la relativa documentazione</desc>
   <classes>
     <memberOf key="att.global"/>
-    <memberOf key="model.divPart"/>
+    <memberOf key="model.frontPart"/>
     <memberOf key="model.encodingDescPart"/>
     <memberOf key="model.frontPart"/>
     <memberOf key="att.identified"/>
@@ -46,41 +46,6 @@ $Id$
       </alternate>      
     </sequence>
   </content>
-  <constraintSpec validUntil="2021-10-23" scheme="schematron" ident="deprecate_schemaSpec_in_bizarre_places">
-    <!-- This <constraintSpec> should be removed when the class
-         memberships and content models are altered so that this
-         restriction is enforced by closed schema, which is expected
-         to occur in October 2021. -->
-    <desc xml:lang="en" versionDate="2021-02-02">enforces the
-    deprecation of <gi>schemaSpec</gi> as a child of anything other
-    than <gi>front</gi>, <gi>body</gi>, <gi>back</gi>,
-    <gi>encodingDesc</gi>, <gi>div</gi>, or any of the numbered
-    division elements. </desc>
-    <desc type="deprecationInfo" xml:lang="en" versionDate="2021-02-02">
-      The use of <gi>schemaSpec</gi> as a child of any element other
-      than <gi>front</gi>, <gi>body</gi>, <gi>back</gi>,
-      <gi>encodingDesc</gi>, <gi>div</gi>, or one of the numbered
-      division elements is being withdrawn.</desc>
-    <constraint>
-      <sch:rule context="tei:schemaSpec|teix:schemaSpec">
-	<sch:assert test="             parent::teix:egXML
-			  | parent::tei:encodingDesc  | parent::teix:encodingDesc
-			  | parent::tei:front         | parent::teix:front
-			  | parent::tei:back          | parent::teix:back
-			  | parent::tei:body          | parent::teix:body
-			  | parent::tei:div           | parent::teix:div
-			  | parent::tei:div1          | parent::teix:div1
-			  | parent::tei:div2          | parent::teix:div2
-			  | parent::tei:div3          | parent::teix:div3
-			  | parent::tei:div4          | parent::teix:div4
-			  | parent::tei:div5          | parent::teix:div5
-			  | parent::tei:div6          | parent::teix:div6
-			  | parent::tei:div7          | parent::teix:div7"
-		    role="nonfatal">WARNING: use of deprecated construct — the “schemaSpec” element will no longer be a valid child of “<sch:value-of
-                        select="name(..)"/>” as of 2021-10-23; instead, it should be a child of “front”, “body”, “back”, “encodingDesc”, or a division element.</sch:assert>
-      </sch:rule>
-    </constraint>
-  </constraintSpec>
   <attList>
     <attDef ident="start" usage="opt">
       <desc versionDate="2010-05-14" xml:lang="en">specifies entry points to the schema, i.e. which patterns
@@ -119,12 +84,13 @@ $Id$
            be mixed in.</p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
-        <p>Les deux-points, bien qu'ils soient permis à l'intérieur de la valeur, provoqueront la
-                        génération d'un schéma invalide. </p>
+        <p>Les deux-points, bien qu'ils soient permis à l'intérieur de
+        la valeur, provoqueront la génération d'un schéma invalide.
+        </p>
       </remarks>
       <remarks xml:lang="ja" versionDate="2008-04-05">
         <p>
-        コロンは，値としては認められるが，スキーマ中では使用できない．
+          コロンは，値としては認められるが，スキーマ中では使用できない．
         </p>
       </remarks>
     </attDef>
@@ -154,9 +120,10 @@ $Id$
       <gloss versionDate="2008-04-06" xml:lang="es">lengua de la documentación</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">langue de documentation</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">lingua della documentazione</gloss>
-      <desc versionDate="2012-04-25" xml:lang="en">specifies which languages to
-      use when creating documentation if  the description for an element, attribute, class or macro
-      is available in more than one language</desc>
+      <desc versionDate="2012-04-25" xml:lang="en">specifies which
+      languages to use when creating documentation if the description
+      for an element, attribute, class or macro is available in more
+      than one language</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">요소, 속성, 부류 또는 매크로에 대한 기술이 여러 언어에서 사용 가능한 경우, 문서를 만들 때 사용하는 언어를 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">若元素、屬性、元素集或巨集指令描述所使用的語言有一種以上，說明建立文件時要使用那一種語言。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">要素，属性，クラス，マクロの解説が複数言語で可能な場合，解説の言
@@ -169,7 +136,8 @@ $Id$
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.language"/></datatype>
     </attDef>
     <attDef ident="defaultExceptions" usage="rec">
-      <gloss versionDate="2016-11-20" xml:lang="en">default namespace exclusions</gloss>
+      <gloss versionDate="2016-11-20" xml:lang="en">default namespace
+      exclusions</gloss>
       <desc versionDate="2016-11-20" xml:lang="en">provides a list of namespaces and/or prefixed element names to be excluded by default from anyName in RELAX NG schemas</desc>
       <datatype minOccurs="1" maxOccurs="unbounded">
         <dataRef key="teidata.namespaceOrName"/>
@@ -190,8 +158,8 @@ $Id$
       </schemaSpec>
     </egXML>
     <p>This schema combines elements from the current versions of the drama and core
-modules,  the current release version of the header module, and elements
-from an existing RELAX NG schema available from the URL indicated.</p>
+    modules,  the current release version of the header module, and elements
+    from an existing RELAX NG schema available from the URL indicated.</p>
   </exemplum>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
@@ -202,26 +170,24 @@ from an existing RELAX NG schema available from the URL indicated.</p>
         <moduleRef key="textstructure"/>
       </schemaSpec>
     </egXML>
-    <p>This schema starts with a pre-existing customization of the TEI called TEI Bare (a customization with a minimal selection of elements). 
-      The <gi>q</gi> element is not available in TEI Bare, but it can be brought back. In this case, we will get
-      the version defined in TEI P5 release 3.0.0 </p>
+    <p>This schema starts with a pre-existing customization of the TEI
+    called TEI Bare (a customization with a minimal selection of
+    elements). The <gi>q</gi> element is not available in TEI Bare,
+    but it can be brought back. In this case, we will get the version
+    defined in TEI P5 release 3.0.0 </p>
   </exemplum>
   <remarks versionDate="2021-02-02" xml:lang="en">
     <!--
-	oddRef:
-	classRef, dataRef, elementRef, macroRef, and moduleRef
+        oddRef:
+        classRef, dataRef, elementRef, macroRef, and moduleRef
 
-	oddDecl:
-	classSpec, constraintSpec, dataSpec, elementSpec, listRef,
-	macroSpec, moduleSpec, outputRendition, specGrp, and specGrpRef
+        oddDecl:
+        classSpec, constraintSpec, dataSpec, elementSpec, listRef,
+        macroSpec, moduleSpec, outputRendition, specGrp, and specGrpRef
     -->
-    <p>A <gi>schemaSpec</gi> combines references to elements that
-    document a schema with individual specification elements that
-    document a schema to form a unified schema. It should be a child
-    of <gi>front</gi>, <gi>body</gi>, <gi>back</gi>,
-    <gi>encodingDesc</gi>, <gi>div</gi>, <gi>div1</gi>, <gi>div2</gi>,
-    <gi>div3</gi>, <gi>div4</gi>, <gi>div5</gi>, <gi>div6</gi>, or
-    <gi>div7</gi>.</p>
+    <p>A <gi>schemaSpec</gi> combines references to modules,
+    individual element or macro declarations, and specification groups
+    together to form a unified schema.</p>
     <p>The processing of the <gi>schemaSpec</gi> element must resolve
     any conflicts amongst the declarations it either contains or
     refers to. Different ODD processors may generate schemas and
@@ -239,19 +205,20 @@ from an existing RELAX NG schema available from the URL indicated.</p>
     TEI Guidelines.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
-    <p>Un schéma combine des références aux modules ou aux groupes de spécifications avec
-                d'autres déclarations atomiques. Le traitement d'un élément de schéma doit résoudre
-                tous les conflits entre les déclarations qu'il contient ou les références. Des
-                processeurs ODD différents peuvent générer des schémas et une documentation en
-                utilisant différentes syntaxes concrètes.</p>
+    <p>Un schéma combine des références aux modules ou aux groupes de
+    spécifications avec d'autres déclarations atomiques. Le traitement
+    d'un élément de schéma doit résoudre tous les conflits entre les
+    déclarations qu'il contient ou les références. Des processeurs ODD
+    différents peuvent générer des schémas et une documentation en
+    utilisant différentes syntaxes concrètes.</p>
   </remarks>
   <remarks xml:lang="ja" versionDate="2008-04-05">
     <p>
-    スキーマは，モジュールまたは規定集への参照と，他の原子的宣言とを関
-    連づける．スキーマ要素は，関連する宣言間の齟齬を調整しなければなら
-    ない．ODDソフトウェアは，その種類によって，異なるスキーマや文書を
-    生成するかもしれない．
- </p>
+      スキーマは，モジュールまたは規定集への参照と，他の原子的宣言とを関
+      連づける．スキーマ要素は，関連する宣言間の齟齬を調整しなければなら
+      ない．ODDソフトウェアは，その種類によって，異なるスキーマや文書を
+      生成するかもしれない．
+    </p>
   </remarks>
   <listRef>
     <ptr target="#HD5"/>
