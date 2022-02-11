@@ -64,11 +64,11 @@ $Id$
   </constraintSpec>
   <constraintSpec scheme="schematron" ident="altIdent_usually_an_NCName">
     <desc>
-      The <gi>altIdent</gi> element should contain a single <ident
-      type="datatype">teidata.xmlName</ident> except when it is
-      used to indicate the FPI (of a module), in which case the
-      <gi>idno</gi> element should be used instead.
-    </desc>
+      Other than when used to indicate the formal public identifier of
+      a module (which is a deprecated usage), the content of
+      <gi>altIdent</gi> should be a single <ident
+      type="datatype">teidata.xmlName</ident>.
+      </desc>
     <constraint>
       <sch:rule context="tei:altIdent[ not( parent::tei:moduleSpec or @type eq 'FPI' ) ]">
         <sch:assert test=". castable as xs:NCName">
