@@ -7,7 +7,7 @@ $Date$
 $Id$
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="div">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="textstructure" ident="div">
   <gloss versionDate="2005-01-14" xml:lang="en">text division</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">텍스트 구역</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">文本區段</gloss>
@@ -74,18 +74,18 @@ $Id$
       </sequence>
     </sequence>
   </content>
-  <constraintSpec ident="abstractModel-structure-l" scheme="schematron">
+  <constraintSpec ident="abstractModel-structure-div-in-l-or-lg" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)">
+      <sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)">
         Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
-      </report>
+      </sch:report>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="abstractModel-structure-p" scheme="schematron">
+  <constraintSpec ident="abstractModel-structure-div-in-ab-or-p" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)">
+      <sch:report test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)">
         Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
-      </report>
+      </sch:report>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
