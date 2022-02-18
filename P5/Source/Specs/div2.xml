@@ -1,10 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="div2">
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="div2">
   <gloss versionDate="2005-01-14" xml:lang="en">level-2 text division</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">2 층위 텍스트 구역</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">區段層次二</gloss>
@@ -13,12 +16,12 @@ $Id$
   <gloss versionDate="2007-05-04" xml:lang="es">división textual de segundo nivel</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">partizione testuale di livello 2</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains a second-level subdivision of the front, body, or back of a
- text.</desc>
+  text.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">텍스트의 전면부, 본문 또는 후면부의 두 번째 층위 하위 구역을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">文本的正文前資訊、正文及正文後資訊的第二層分段。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">前付，本文，後付中の第2位のテキスト部分を示す．</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">contient une subdivision de deuxième niveau dans
-   le texte prélimaire, dans le corps d’un texte ou dans le texte postliminaire.</desc>
+  le texte prélimaire, dans le corps d’un texte ou dans le texte postliminaire.</desc>
   <desc versionDate="2006-10-18" xml:lang="de"> enthält die zweite Gliederungsebene von Vorspann (front), Kerntext oder Nachspann (back) eines Textes.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene una subdivisión del segundo nivel en el paratexto inicial, en el cuerpo del texto o en el paratexto final.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una sezione di secondo livello del peritesto iniziale, del corpo del testo, o del peritesto finale</desc>
@@ -31,12 +34,10 @@ $Id$
   </classes>
   <content>
     <sequence>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.divTop"/>
-          <classRef key="model.global"/>
-        </alternate>
-      
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.divTop"/>
+        <classRef key="model.global"/>
+      </alternate>
       <sequence minOccurs="0">
         <alternate>
           <sequence minOccurs="1" maxOccurs="unbounded">
@@ -44,37 +45,28 @@ $Id$
               <classRef key="model.div3Like"/>
               <classRef key="model.divGenLike"/>
             </alternate>
-            
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-            
+            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
           </sequence>
           <sequence>
             <sequence minOccurs="1" maxOccurs="unbounded">
-              
+              <alternate minOccurs="1" maxOccurs="1">
+                <elementRef key="schemaSpec"/>
                 <classRef key="model.common"/>
-              
-              
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              
+              </alternate>
+              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
             </sequence>
             <sequence minOccurs="0" maxOccurs="unbounded">
               <alternate>
                 <classRef key="model.div3Like"/>
                 <classRef key="model.divGenLike"/>
               </alternate>
-              
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              
+              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
             </sequence>
           </sequence>
         </alternate>
         <sequence minOccurs="0" maxOccurs="unbounded">
-          
-            <classRef key="model.divBottom"/>
-          
-          
-            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          
+          <classRef key="model.divBottom"/>
+          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
       </sequence>
     </sequence>
@@ -83,17 +75,17 @@ $Id$
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COXR-eg-164">
       <div1 n="2" type="part">
         <head>The Second Partition:
-           The Cure of Melancholy</head>
+        The Cure of Melancholy</head>
         <div2 n="2.1" type="section">
           <div3 n="2.1.1" type="member">
             <div4 n="2.1.1.1" type="subsection">
               <head>Unlawful Cures rejected.</head>
               <p>Inveterate melancholy, howsoever it may seem to
-      be a continuate, inexorable disease, hard to be
-      cured, accompanying them to their graves most part
-      (as <ref target="#a">Montanus</ref> observes), yet many
-      times it may be helped...	
-   </p>
+              be a continuate, inexorable disease, hard to be
+              cured, accompanying them to their graves most part
+              (as <ref target="#a">Montanus</ref> observes), yet many
+              times it may be helped... 
+              </p>
             </div4>
           </div3>
         </div2>
@@ -119,13 +111,13 @@ $Id$
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <div1 n="II" type="chapitre">
         <head>Chapitre II. Traitement électronique des données en histoire de la littérature
-            française : bilan provisoire</head>
+        française : bilan provisoire</head>
         <div2 n="2.1" type="section">
           <div3 n="2.1.1" type="subsection">
             <div4 n="2.1.1.1" type="article">
               <head>Les objectifs</head>
               <p>Chaque étudiant est convié à parcourir la banque à partir des différentes entrées
-                  liées au cours magistral qu'il suit en amphithéâtre...</p>
+              liées au cours magistral qu'il suit en amphithéâtre...</p>
             </div4>
           </div3>
         </div2>
@@ -133,14 +125,14 @@ $Id$
           <div3 n="2.2.1" type="subsection">
             <head>Sect. II. Subsection I. Exploitation pédagogique de la BDHL</head>
             <p>Pour la plupart des étudiants en Lettres des générations précédentes, un
-                enseignement de l'histoire de la littérature allait de soi... </p>
+            enseignement de l'histoire de la littérature allait de soi... </p>
           </div3>
         </div2>
         <div2 n="2.3" type="section">
           <div3 n="2.3.1" type="subsection">
             <head>Sect. III. Subsection I. Etudes permises par la BDHL</head>
             <p>L'existence d'une banque de données, quelle qu'elle soit, permet d'envisager des
-                traitements statistiques. </p>
+            traitements statistiques. </p>
           </div3>
         </div2>
       </div1>
@@ -175,15 +167,15 @@ $Id$
   </exemplum>
   <remarks versionDate="2005-01-14" xml:lang="en">
     <p rend="dataDesc">any sequence of low-level structural elements, possibly grouped
-into lower subdivisions.</p>
+    into lower subdivisions.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p rend="dateDesc">Cet élément contient une séquence d'éléments structurels de bas
-                niveau, éventuellement groupés en subdivisions.</p>
+    niveau, éventuellement groupés en subdivisions.</p>
   </remarks>
   <remarks xml:lang="ja" versionDate="2008-04-05">
     <p rend="dataDesc">
-    下位区分と成りうる一連の構造単位．
+      下位区分と成りうる一連の構造単位．
     </p>
   </remarks>
   <listRef>

@@ -132,8 +132,7 @@ operating on the same text, but using a different stylesheet, might
 print names of persons and places in a distinctive typeface.</p>
 </div>
 
-<div type="div3" xml:id="SG112">
-<head>Types of Document</head> 
+<div type="div3" xml:id="SG112"><head>Types of Document</head> 
 
 <p>A second key aspect of XML is its notion of a <term>document
 type</term>: documents are regarded as having types, just as other
@@ -684,7 +683,7 @@ lines and refrains.</p>
   other things?
 -->
 <!--2019-12-29 ebb: It's probably not necessary to give a complete introduction to Relax NG here, but we should now point in the main text (not in a footnote) to complete tutorial resources, and give the reader a glimpse of how the TEI schema is made, and how the TEI community customizes it. -->
-  <p>It is beyond the scope of this "Gentle Introduction to XML" to provide a complete orientation to schema writing with Relax NG, but interested readers may wish to consult more thorough tutorials on the subject.<note place="bottom">For a complete tutorial introduction to RELAX NG, see <ptr target="#SG-BIBL-1"/>.</note> The examples and explanation provided here may be helpful to consult when reading the schema declarations posted for groupings of TEI elements that share the same content model, such as <ref target="ref-macro.phraseSeq.html">macro.phraseSeq</ref>, whose declaration features an example of mixed text and element content. Due to the complexity of the TEI schema as expressed in Relax NG, it is best to customize its content model in TEI itself by writing an ODD, as discussed in <ptr target="#IM"/>.</p>
+  <p>It is beyond the scope of this "Gentle Introduction to XML" to provide a complete orientation to schema writing with Relax NG, but interested readers may wish to consult more thorough tutorials on the subject.<note place="bottom">For a complete tutorial introduction to RELAX NG, see <ptr target="#SG-BIBL-1"/>.</note> The examples and explanation provided here may be helpful to consult when reading the schema declarations posted for groupings of TEI elements that share the same content model, such as <ident type="macro">macro.phraseSeq</ident>, whose declaration features an example of mixed text and element content. Due to the complexity of the TEI schema as expressed in Relax NG, it is best to customize its content model in TEI itself by writing an ODD, as discussed in <ptr target="#IM"/>.</p>
 </div>
 </div>
 </div>
@@ -804,7 +803,7 @@ predefined character entities <code>&amp;apos;</code> or <code>&amp;quot;</code>
 Here attribute values are being specified for two attributes
 previously declared for the <gi scheme="imaginary">poem</gi> element: <att>xml:id</att>
 and <att scheme="imaginary">status</att>. For the instance of a <gi scheme="imaginary">poem</gi> in this
-example, represented here by an ellipsis, the <att>xml:id</att>
+example, represented here by ellipsis points, the <att>xml:id</att>
 attribute has the value <val>P1</val> and the <att scheme="imaginary">status</att>
 attribute has the value <val>draft</val>. An XML processor can use the
 values of the attributes in any way it chooses; for example, a
@@ -907,7 +906,7 @@ are commonly known as <code>ID</code>—for identifier—and
 <code>URI</code>—for Universal Resource Indicator, or pointer for
 short. These are discussed in the next section.</p>
 </div>
-<div xml:id="SG-id"><head>Identifiers and Indicators</head>
+<div type="div3" xml:id="SG-id"><head>Identifiers and Indicators</head>
 <p>It is often necessary to refer to an occurrence of one textual
 element from within another, an obvious example being phrases such as
 <q>see note 6</q> or <q>as discussed in chapter 5</q>. When a text is
@@ -1027,28 +1026,29 @@ be useful as a means of providing <soCalled>boilerplate</soCalled> text or
 representing character data which cannot easily be keyboarded. As
 noted earlier, an XML document may also contain instances of elements
 taken from some other <term>namespace</term>. And an XML
- document may also contain arbitrary signals or flags for use when the
- document is processed in a particular way by some class of processor
- (a common example in document production is the need to force a
- formatter to start a new page at some specific point in a document);
- such flags are called <term>processing instructions</term>. We discuss each of these
- three cases in the rest of this section.
- </p>
-<p>A construct which looks like a processing instruction (but is not)
-is the <term>XML declaration</term> which should be supplied at the
-beginning of every XML document, for example: <eg><![CDATA[<?xml
-version="1.0" encoding="UTF-8"?>]]></eg> The XML declaration
-specifies the version number of the XML Recommendation applicable to
-the document it introduces (in this case, version 1.0), and optionally
+document may also contain arbitrary signals or flags for use when the
+document is processed in a particular way by some class of processor
+(a common example in document production is the need to force a
+formatter to start a new page at some specific point in a document);
+such flags are called <term>processing instructions</term>. We discuss each of these
+three cases in the rest of this section.</p>
+
+<p>The <term>XML declaration</term> should be supplied at the very
+beginning of every XML file; while it looks like a processing
+instruction, it is not, and may not occur anywhere other than at the
+very beginning of an XML file. For example: <eg><![CDATA[<?xml
+version="1.0" encoding="UTF-8"?>]]></eg> The XML declaration specifies
+the version number of the XML Recommendation applicable to the
+document it introduces (in this case, version 1.0), and optionally
 also the character encoding used to represent the Unicode characters
 within it. By default an XML document uses the character encoding
-UTF-8 or UTF-16; other commonly-encountered encodings include ISO 8859-1. If any
-character present in the document is not available in the specified 
-character encoding, it must be represented as a character
-reference (<ptr target="#SG-er"/>). The XML declaration is 
-documentary, but should normally be supplied at the start of any XML file. 
-If it is missing many XML-aware processors will be
-unable to process the associated text correctly.</p>
+UTF-8 or UTF-16; other commonly-encountered encodings include ISO
+8859-1. If any character present in the document is not available in
+the specified character encoding, it must be represented as a
+character reference (<ptr target="#SG-er"/>). The XML declaration is
+documentary, but should normally be supplied at the start of any XML
+file. If it is missing many XML-aware processors will be unable to
+process the associated text correctly.</p>
 
 <div type="div3" xml:id="SG-er"><head>Character References</head>
 
@@ -1267,20 +1267,17 @@ always be occasions when it may be necessary to override these. An XML
 processing instruction inserted into the document is one very simple
 and effective way of doing this without interfering with other aspects
 of the markup.</p>
-<p>Here is an example XML processing instruction: 
-<eg><![CDATA[<?tex \newpage ?>]]></eg> It begins with
-<code>&lt;?</code> and ends with
-<code>?&gt;</code>. In between are two space-separated strings: by
-convention, the first is the name of some processor (<code>tex</code>
-in the above example) and the second is some data intended for the use
-of that processor (in this case, the instruction to start a new
-page). The only constraint placed by XML on the strings is that the
-first one must be a valid XML name; the other can be any arbitrary
-sequence of characters, not including the closing character-sequence
-<code>?&gt;</code>.
-</p>
-
-
+<p>Here is an example XML processing instruction: <eg><![CDATA[<?tex
+\newpage ?>]]></eg> It begins with <code>&lt;?</code> and ends with
+<code>?&gt;</code>. In between are two strings separated by a space:
+the first is the name of some processor (<code>tex</code> in the above
+example) and the second is some data intended for the use of that
+processor (in this case, the instruction to start a new page). The
+only constraint placed by XML on the strings is that the first one
+must be a valid XML name other than <code>XML</code>,
+<code>Xml</code>, or <code>xml</code>, etc. The second string can be
+any arbitrary sequence of characters, not including the closing
+character-sequence <code>?&gt;</code>.</p>
 </div>
 </div>
 

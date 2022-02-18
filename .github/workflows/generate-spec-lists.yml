@@ -1,0 +1,20 @@
+name: "Generate and update JSON Spec lists for translation"
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - 'P5/Source/Specs/*.xml'
+
+jobs:
+  build:
+    if: github.repository == 'TEIC/TEI'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate Spec Lists
+        env: 
+          GITHUB_ACCESS_TOKEN: ${{ secrets.TEIBOT_ACCESS_TOKEN }}
+          ACTION_USER_EMAIL: ${{ secrets.I18N_USER_EMAIL }}
+          ACTION_USER_NAME: ${{ secrets.I18N_USER_NAME }}
+        uses: ./.github/actions/generate-spec-lists

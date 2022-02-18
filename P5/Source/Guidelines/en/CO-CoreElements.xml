@@ -1292,9 +1292,9 @@ overshadows the historical content</quote>.</egXML>
           and <q>dakyū</q>, a phonation guide for the first two characters.
           
           <figure>
+            <graphic url="Images/billiardhall.jpg" width="149px" height="276px"/>
             <head><mentioned>Billiard hall</mentioned> with two ruby glosses. 
               <ref target="http://school.nijl.ac.jp/kindai/NIJL/NIJL-01116.html#37"><seg xml:lang="ja">国文学研究資料館所蔵：：英国／龍動新繁昌記</seg></ref>.</head>
-            <graphic url="Images/billiardhall.jpg" width="149px" height="276px"/>
           </figure>
           
           This example is intriguing in that the right-side ruby 
@@ -1365,10 +1365,40 @@ overshadows the historical content</quote>.</egXML>
           </egXML>
           
         </p>
+      
+      <p>The <gi>rt</gi> element is a member of <ident type="class">att.written</ident>:
+        <specList>
+          <specDesc key="att.written" atts="hand"/>
+        </specList>
+        
+        so the <att>hand</att> attribute can be used where the ruby 
+        text constitutes an annotation in a 
+      different hand from the ruby base: 
+      
+        <figure>
+          <graphic url="Images/rbHand.png" width="166px" height="406px"/>
+          <head>Base text with a ruby gloss in a different hand. 
+            <ref target="https://iiif.dl.itc.u-tokyo.ac.jp/repo/s/ogai/document/49d0907b-d949-4d14-8aeb-bc1dea9a3ad1?fbclid=IwAR1UgB9NnSfO9AqkLbq-Ym4fsGj8fEIm9gZGt7AwHE65eE-Nq6Bcb78jcxQ#?c=0&amp;m=0&amp;s=0&amp;cv=14&amp;xywh=3462%2C639%2C1315%2C784"><seg xml:lang="ja">リクシ ソウモク チョウジュウ チュウギョ ソ ズカイ。 東京大学総合図書館</seg></ref>  (General Library in the University of Tokyo, JAPAN).</head>
+        </figure>
+      
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <p style="writing-mode: vertical-rl" xml:lang="ja"> 
+            <!--...-->
+            <ruby>
+              <rb>蘝蔓</rb>
+              <rt hand="#MoriOhgai" style="color: red;">ヤブカラシ</rt>
+            </ruby>
+            于野
+            <!--...-->
+          </p>
+        </egXML>
+      
+      </p>
         
         <p>The current support for ruby is rudimentary, and in future releases of the
           Guidelines we expect to see more development of these features and 
-          recommendations.</p>
+          recommendations. While ruby is included for use with East Asian lanuages, 
+          encoders may find other contexts in which these elements are useful.</p>
         
       <specGrp xml:id="DCOHTGRB">
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/ruby.xml"/>
@@ -1623,20 +1653,24 @@ Like the other editorial elements, they allow for a wide range of
 editorial practices: 
 <specList>
   <specDesc key="gap" atts="reason"/>
+  <specDesc key="ellipsis"/>
   <specDesc key="unclear" atts="reason"/>
   <specDesc key="add"/>
   <specDesc key="del"/>
 </specList></p>
 <p>Encoders may choose to omit parts of the copy text for reasons
-ranging from illegibility of the source or impossibility of transcribing
-it, to editorial policy, e.g. a systematic exclusion of poetry or prose
-from an encoding. The full details of the policy decisions concerned
-should be documented in the TEI header (see section <ptr target="#HD5"/>).
-Each place in the text at which omission has taken place should be
-marked with a <gi>gap</gi> element, with optionally further information
-about the reason for the omission, its extent, and the person or agency
-responsible for it, as in the following examples:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><gap reason="illegible" unit="word" quantity="2"/></egXML><egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><gap reason="overwriting illegible" extent="several characters"/></egXML>
+ranging from illegibility of the source or impossibility of
+transcribing it, to editorial policy, e.g. a systematic exclusion of
+poetry or prose from an encoding. The full details of the policy
+decisions concerned should be documented in the TEI header (see
+section <ptr target="#HD5"/>). In these situations — where copy text
+is not transcribed due to editorial policy or because it is impossible
+to do so — the <gi>gap</gi> element may be used to indicate the
+omission. Attributes on the <gi>gap</gi> element optionally provide
+further information about the reason for the omission, its extent, and
+the person or agency responsible for it, as in the following examples:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><gap reason="illegible" unit="word" quantity="2" resp="#editor04"/></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><gap reason="overwriting illegible" extent="several characters"/></egXML>
 Note that the extent of the gap may be marked precisely using
 attributes <att>unit</att> and <att>quantity</att>, or more
 descriptively using the <att>extent</att> attribute. Other, more
@@ -1653,7 +1687,98 @@ west; …</egXML>
 	<!--                                                          -->
 	<!-- East         *        *  O      *                   West -->
 	<!--                                                          -->
-</p> 
+</p>
+
+  <p>The <gi>ellipsis</gi> element provides a means to encode the
+  deliberate, marked omission of content in a source document. Within
+  <gi>ellipsis</gi>, a required <gi>metamark</gi> is used to represent
+  the characters or markings in the source that indicate the presence
+  of omitted material. Encoders may optionally provide a <gi>desc</gi>
+  element to describe the omission, as well as a <gi>supplied</gi>
+  element to record the content omitted from the source at this point.
+  The <gi>ellipsis</gi> element could be applied to <q>ditto</q> marks
+  when they indicate repetition of the same content, as in this
+  example:
+
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NONE">
+    <table rows="3" cols="2">
+      <head>Tent supplies</head>
+      <row>
+        <cell>
+          <name>nylon tent</name>
+        </cell>
+        <cell>
+          <num>1</num>
+        </cell>
+      </row>
+      <row>
+        <cell>
+          <name>steel stakes</name>
+        </cell>
+        <cell>
+          <num>6</num>
+        </cell>
+      </row>
+      <row>
+        <cell>
+          <name>fiberglass poles</name>
+        </cell>
+        <cell>
+          <ellipsis>
+            <metamark function="ellipsis">"</metamark>
+            <supplied><num>6</num></supplied>
+          </ellipsis>
+        </cell>
+      </row>
+    </table>
+  </egXML>
+  </p> 
+
+  <p>The <gi>ellipsis</gi> element may also apply to literary passages
+  that omit the full names of places or people, leaving their
+  identities to the imagination of the reader, as in the next example.
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#COEDADD-eg-90">
+    <p>I leave Dublin to-morrow for M<ellipsis><metamark>——</metamark></ellipsis> house. It is situated in the county of <ellipsis><metamark>——</metamark></ellipsis>, on the north-west coast of <placeName>Connaught</placeName>, which I am told is the classic ground of <placeName>Ireland</placeName>.</p>
+  </egXML>
+  </p>
+<p>A manuscript of song lyrics provides a more complex example of <gi>ellipsis</gi> to encode a marked omission that begins in the middle of a verse line.
+    <figure>
+      <graphic url="Images/cod-10991.jpg" mimeType="image/jpeg"/>
+      <head>A manuscript from Cancioneiro da Biblioteca Nacional
+      [1525-1526] in Biblioteca Nacional de Portugal, representing
+      song lyrics and the beginning of a chorus. On the last line
+      visible in this image, a marking of three dots and a line,
+      <q>·:—</q>, indicates that the rest of the chorus should follow
+      after this point.</head>
+    </figure>
+    Our encoding of the passage shows the use of <gi>ellipsis</gi> with <gi>supplied</gi> to contain the omitted content.
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="gl" source="#COEDADD-eg-93">
+      <lg>
+        <l>Amıgas sey eu be<ex>n</ex> dunha molher</l>
+        <l>Que se trabalha de uosco buscar</l>
+        <l>Mal a uossamigo polo matar</l>
+        <l>Mays todaquestamiga ela q<ex>ue</ex>r</l>
+        <metamark function="signalChorus">꜒</metamark>
+        <l>Por q<ex>ue</ex> nu<ex>n</ex>ca co<ex>n</ex> el pode poer</l>
+        <l>Queo podesse por amigauer</l>
+      </lg>
+      <lg>
+        <l>E buscalhi co<ex>n</ex> uosco q<ex>ua</ex>nto mal</l>
+        <l>Ela mays pode aq<ex>ue</ex>sto sei eu</l>
+        <l>E todaq<ex>ue</ex>stela faz polo seu</l>
+        <l>E p<ex>or</ex>este p<unclear>ẏ</unclear>te non por al</l>
+        <lb/><metamark function="signalChorus">꜒</metamark>
+        <l rend="nobreak" part="I">Por q<ex>ue</ex> nu<ex>n</ex>ca</l>
+        <ellipsis>
+          <metamark rend="nobreak" function="ellipsis">·:—</metamark>
+          <supplied>
+            <l rend="nobreak" part="F">co<ex>n</ex> el pode poer</l>
+            <l>Queo podesse por amigauer</l>
+          </supplied>
+        </ellipsis>
+      </lg>
+    </egXML>
+  </p>
 <p>The <gi>add</gi> and <gi>del</gi> elements may be used to record
 where words or phrases have been added or deleted in the copy text.
 They are not appropriate where longer passages have been added or
@@ -1729,12 +1854,15 @@ be marked with the <gi>supplied</gi> and <gi>surplus</gi> elements
 <gi>del</gi>. These two sets of elements allow the encoder to
 distinguish editorial changes from those visible in the source text.
 </p>
+
 <specGrp xml:id="DCOEDA" n="Other editorial tags">
 
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/gap.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/ellipsis.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/add.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/del.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unclear.xml"/></specGrp>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unclear.xml"/>
+</specGrp>
 </div></div>
 <div type="div2" xml:id="CONA"><head>Names, Numbers, Dates, Abbreviations, and Addresses</head>
 
@@ -4033,7 +4161,7 @@ later examples are explained later in the current section.
           <surname>Tufte</surname>
         </persName>
         <idno type="scopus">6506403994</idno>
-        <idno type="lcaf">http://id.loc.gov/authorites/names/n50012763.html</idno>
+        <idno type="lcaf">https://id.loc.gov/authorities/names/n50012763.html</idno>
       </author>
       <title level="m">Envisioning Information</title>
       <imprint>
@@ -4375,7 +4503,7 @@ represented by means of an <gi>idno</gi> element placed within the
 <title level="a">Markup Systems and The Future of Scholarly Text
 Processing</title>
 <idno type="DOI">10.1145/32206.32209</idno>
-<ref type="url">http://xml.coverpages.org/coombs.html</ref>
+<ref target="http://xml.coverpages.org/coombs.html">http://xml.coverpages.org/coombs.html</ref>
 </analytic>
 <monogr>
 <title level="j">Communications of the ACM</title>
@@ -5312,7 +5440,7 @@ following example:
 </author>
 <title level="a">Beyond the Scriptorium: The Role of the Library in Text
 Encoding</title>
-<ref type="url">http://www.dlib.org/dlib/january02/sukovic/01sukovic.html</ref>  
+<ref target="https://www.dlib.org/dlib/january02/sukovic/01sukovic.html">https://www.dlib.org/dlib/january02/sukovic/01sukovic.html</ref>  
 </analytic>
 <monogr>
 <title level="j">D-Lib</title>
