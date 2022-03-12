@@ -14,8 +14,7 @@ $Id$
   <gloss versionDate="2007-06-12" xml:lang="fr">liste de références</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">lista de referencias</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">lista di riferimenti</gloss>
-  <desc versionDate="2005-01-14" xml:lang="en">supplies a list of significant references to places where this element is discussed, in the
-    current document or elsewhere.</desc>
+  <desc versionDate="2005-01-14" xml:lang="en">supplies a list of significant references in the current document or elsewhere.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">현 문서 또는 그 밖의 어디든지 이 요소는 논의된 위치에 대한 중요한 참조 목록을 제공한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供一個重要參照的列表，這些參照連結到詳述此元素的位置，在此文件裡或是其他地方。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">場所への参照のリストを示す．当該文書中でも外部文書でもよい．</desc>
@@ -29,6 +28,7 @@ $Id$
     <memberOf key="att.global"/>
     <memberOf key="att.typed"/>
     <memberOf key="model.oddDecl"/>
+    <memberOf key="model.ptrLike"/>
   </classes>
   <content>
     <sequence>
@@ -36,6 +36,15 @@ $Id$
     <classRef key="model.ptrLike" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </content>
+ <constraintSpec ident="constrainTagDocslistRef" scheme="schematron">
+    <constraint>
+      <sch:rule context="(tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp)/tei:listRef">
+        <sch:report test="tei:listRef">In the context of ODD customization, the listRef element must not self-nest.</sch:report>
+        <sch:assert test="(tei:ptr | tei:ref)[matches(@target, '^\S+$')]">In the context of ODD customization, the ptr or ref elements inside listRef must contain a target attribute, 
+          and that target attribute must not contain spaces.</sch:assert>        
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <listRef>
@@ -50,4 +59,9 @@ $Id$
       </listRef>
     </egXML>
   </exemplum>
+  <remarks versionDate="2022-03-11" xml:lang="en">
+    <p>When <gi>listRef</gi> is used in elements from the <ident type="module">tagdocs</ident> module for ODD customizations, 
+      it may only contain one or more <gi>ptr</gi> or <gi>ref</gi> elements. Within <ident type="module">tagdocs</ident>, 
+      the children of <gi>listRef</gi> must contain a <att>target</att> attribute, and the value of that <att>target</att> attribute may not include spaces.</p>
+  </remarks>
 </elementSpec>
