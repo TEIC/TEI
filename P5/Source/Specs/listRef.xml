@@ -31,14 +31,14 @@ $Id$
   <content>
     <sequence>
       <elementRef key="desc" minOccurs="0" maxOccurs="unbounded"/>
-    <classRef key="model.ptrLike" minOccurs="1" maxOccurs="unbounded"/>
+      <classRef key="model.ptrLike" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </content>
  <constraintSpec ident="constrainTagDocslistRef" scheme="schematron">
     <constraint>
       <sch:rule context="tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp">
         <sch:report test="tei:listRef/tei:listRef">In the context of ODD customization, the listRef element must not self-nest.</sch:report>
-        <sch:report test="tei:listRef/*[matches(@target, '\s+')]">In the context of ODD customization, the ptr or ref elements inside listRef must contain a target attribute, and that target attribute value must not contain spaces.</sch:report>
+        <sch:report test="tei:listRef/*[matches(@target, '\s')]">In the context of ODD customization, the ptr or ref elements inside listRef must contain a target attribute, and that target attribute value must not contain spaces.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -57,8 +57,11 @@ $Id$
     </egXML>
   </exemplum>
   <remarks versionDate="2022-03-11" xml:lang="en">
-    <p>When <gi>listRef</gi> is used in elements from the <ident type="module">tagdocs</ident> module for ODD customizations, 
-      it may only contain one or more <gi>ptr</gi> or <gi>ref</gi> elements. Within <ident type="module">tagdocs</ident>, 
-      the children of <gi>listRef</gi> must contain a <att>target</att> attribute, and the value of that <att>target</att> attribute may not include spaces.</p>
+    <p>When <gi>listRef</gi> is used in elements from the <ident
+    type="module">tagdocs</ident> module for ODD customizations, it
+    may only contain one or more <gi>ptr</gi> or <gi>ref</gi>
+    elements. Each of the <gi>ptr</gi> or <gi>ref</gi> children of
+    such a <gi>listRef</gi> should bear a <att>target</att> attribute,
+    the value of which does not include any spaces.</p>
   </remarks>
 </elementSpec>
