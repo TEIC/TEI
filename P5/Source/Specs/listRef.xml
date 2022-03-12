@@ -37,9 +37,9 @@ $Id$
   </content>
  <constraintSpec ident="constrainTagDocslistRef" scheme="schematron">
     <constraint>
-      <sch:rule context="(tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp)/tei:listRef">
-        <sch:report test="tei:listRef">In the context of ODD customization, the listRef element must not self-nest.</sch:report>
-        <sch:assert test="(tei:ptr | tei:ref)[matches(@target, '^\S+$')]">In the context of ODD customization, the ptr or ref elements inside listRef must contain a target attribute, 
+      <sch:rule context="tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp">
+        <sch:report test="tei:listRef/tei:listRef">In the context of ODD customization, the listRef element must not self-nest.</sch:report>
+        <sch:assert test="tei:ptr[matches(@target, '^\S+$')] or tei:ref[matches(@target, '^\S+$')]">In the context of ODD customization, the ptr or ref elements inside listRef must contain a target attribute, 
           and that target attribute must not contain spaces.</sch:assert>        
       </sch:rule>
     </constraint>
