@@ -34,11 +34,17 @@ $Id$
       <classRef key="model.ptrLike" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </content>
- <constraintSpec ident="constrainTagDocslistRef" scheme="schematron">
+ <constraintSpec ident="TagDocsNestinglistRef" scheme="schematron">
     <constraint>
-      <sch:rule context="tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp">
-        <sch:report test="tei:listRef/tei:listRef">In the context of ODD customization, the listRef element must not self-nest.</sch:report>
-        <sch:report test="tei:listRef/*[matches(@target, '\s')]">In the context of ODD customization, the ptr or ref elements inside listRef must contain a target attribute, and that target attribute value must not contain spaces.</sch:report>
+      <sch:rule context="(tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp)/tei:listRef">
+        <sch:report test="tei:listRef">In the context of ODD customization, the listRef element must not self-nest.</sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="TagDocslistRefChildren">
+    <constraint>
+      <sch:rule context="tei:listRef/tei:ptr | tei:listRef/tei:ref">
+        <sch:report test="matches(@target, '\s')">In the context of ODD customization, the ptr or ref elements inside listRef must contain a target attribute, and that target attribute value must not contain spaces.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
