@@ -36,15 +36,16 @@ $Id$
   </content>
  <constraintSpec ident="TagDocsNestinglistRef" scheme="schematron">
     <constraint>
-      <sch:rule context="(tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp)/tei:listRef">
-        <sch:report test="tei:listRef">In the context of ODD customization, the listRef element must not self-nest.</sch:report>
+      <sch:rule context="( tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp )/tei:listRef">
+        <sch:report test="tei:listRef">In the context of tagset documentation, the listRef element must not self-nest.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="TagDocslistRefChildren" scheme="schematron">
     <constraint>
-      <sch:rule context="tei:listRef/tei:ptr | tei:listRef/tei:ref">
-        <sch:report test="matches(@target, '\s')">In the context of ODD customization, the ptr or ref elements inside listRef must contain a target attribute, and that target attribute value must not contain spaces.</sch:report>
+      <sch:rule context="( tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp )/tei:listRef/tei:ptr
+                       | ( tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp )/tei:listRef/tei:ref">
+        <sch:assert test="@target and not( matches( @target,'\s') )">In the context of tagset documentation, each ptr or ref element inside a listRef must have a target attribute with only 1 pointer as its value.</sch:assert>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -68,8 +69,9 @@ $Id$
     <list>
       <item>It may only contain <gi>ptr</gi> or <gi>ref</gi>
         elements.</item>
-      <item>Each <gi>ptr</gi> or <gi>ref</gi> child should bear a <att>target</att> attribute,
-        the value of which does not include any spaces.</item>
+      <item>Each <gi>ptr</gi> or <gi>ref</gi> child should bear a
+        <att>target</att> attribute, the value of which does not include
+        any spaces.</item>
     </list>
     </p>
   </remarks>
