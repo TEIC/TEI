@@ -12,9 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Generate Spec Lists
-        env: 
-          GITHUB_ACCESS_TOKEN: ${{ secrets.TEIBOT_ACCESS_TOKEN }}
-          ACTION_USER_EMAIL: ${{ secrets.I18N_USER_EMAIL }}
-          ACTION_USER_NAME: ${{ secrets.I18N_USER_NAME }}
-        uses: ./.github/actions/generate-spec-lists
+      - uses: ./.github/actions/generate-spec-lists
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Re-generated spec lists.
+      
