@@ -1364,7 +1364,8 @@ overshadows the historical content</quote>.</egXML>
             </p>
           </egXML>
           
-          Multiple ruby annotations can appear in the same alignment relative to the main text. For example, there might be two annotations on the right. 
+          Multiple ruby annotations can appear in the same alignment relative to the main text. For example, there might be two annotations on the right. We use this 
+          instance to exemplify two ways of encoding this phenomenon, dependent on the interpretation of the text.  
           We could use a parallel approach where a sequence of two <gi>rt</gi> elements, both with the same value for the <att>place</att> attribute, are 
           assumed to appear in their document sequence. The first of the two <gi>rt</gi> elements would appear to the right of the ruby base (<gi>rb</gi>), while the second would appear to the right of the first <gi>rt</gi> element 
           <note place="foot">Taken from <ref target="https://en.wikipedia.org/wiki/Bopomofo#/media/File:Bopomofo.gif">Wikipedia</ref>.</note>:
@@ -1373,15 +1374,35 @@ overshadows the historical content</quote>.</egXML>
             <p style="writing-mode: vertical-rl" xml:lang="ja"> 
               <!--...-->
               <ruby>
-                <rb><anchor xml:id="ancB"/>ㄅ<anchor  xml:id="owari1"/></rb>
-                <rt place="right" from="#ancB" to="#owari1">B</rt>
-                <rt place="right" from="#ancB" to="#owari1">博</rt>
+                <rb>ㄅ</rb>
+                <rt place="right">B</rt>
+                <rt place="right">博</rt>
+              </ruby>
+              <!--...-->
+            </p>
+          </egXML>
+          
+          Alternatively, a nested approach can be used. With nested <gi>ruby</gi> elements, the structure suggests that the second <gi>rt</gi> element is glossing both the <gi>rb</gi> and the <gi>rt</gi> element:
+          
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <p style="writing-mode: vertical-rl" xml:lang="ja"> 
+              <!--...-->
+              <ruby>
+                <rb>
+                  <ruby>
+                    <rb>ㄅ</rb>
+                    <rt place="right">B</rt>
+                  </ruby>
+                </rb>
+                <rt place="right">博</rt>
               </ruby>
               <!--...-->
             </p>
           </egXML>
           
         </p>
+      
+      
       
       <p>The <gi>rt</gi> element is a member of <ident type="class">att.written</ident>:
         <specList>
