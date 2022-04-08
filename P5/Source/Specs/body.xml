@@ -1,10 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="body">
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="body">
   <gloss versionDate="2005-01-14" xml:lang="en">text body</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">텍스트 본문</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">正文</gloss>
@@ -17,147 +20,97 @@ $Id$
   <desc versionDate="2007-05-02" xml:lang="zh-TW">單篇文章的整體部分，不包含正文前及正文後資訊。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">前付，後付を除いた，単一の作品の本文全体を示す．</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">contient la totalité du corps d’un seul texte simple, à
-    l’exclusion de toute partie pré- ou post-liminaire.</desc>
+  l’exclusion de toute partie pré- ou post-liminaire.</desc>
   <desc versionDate="2017-06-13" xml:lang="de">enthält den gesamten Textkörper eines eigenständigen Textes, außer den Vorspann (front) und Nachspann (back).</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene el cuerpo completo de un texto unitario,
-    excluyendo los eventuales añadidos paratextuales (prólogos, dedicatorias, apéndices, etc.) al
-    inicio o fin de un texto.</desc>
+  excluyendo los eventuales añadidos paratextuales (prólogos, dedicatorias, apéndices, etc.) al
+  inicio o fin de un texto.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene l'intero corpo di un testo unitario, esclusi
-    eventuale peritesto iniziale e finale</desc>
+  eventuale peritesto iniziale e finale</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.declaring"/>
   </classes>
   <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
     <sequence>
-      <!-- globals as usual -->
-      
-        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-      
-      <!--possibly some divTops, interspersed with globals -->
-      
-        <sequence minOccurs="0">
-          
-            <classRef key="model.divTop"/>
-          
-          
-            <alternate minOccurs="0" maxOccurs="unbounded">
-              <classRef key="model.global"/>
-              <classRef key="model.divTop"/>
-            </alternate>
-          
-        </sequence>
-      
-      <!-- possibly some generated divs, interspersed with globals -->
-      
-        <sequence minOccurs="0">
-          
-            <classRef key="model.divGenLike"/>
-          
-          
-            <alternate minOccurs="0" maxOccurs="unbounded">
-              <classRef key="model.global"/>
-              <classRef key="model.divGenLike"/>
-            </alternate>
-          
-        </sequence>
-      
-      
-        <!-- 
-	   now a choice between
-	   
-	   a) some divLike things, with globals and generated divs
-	     after them if needed 
-	   b) some div1Like things, with globals
-	     and generated divs after them if needed 
-	   c) same again, preceded by model.common
+      <!-- globals as usual -->      
+      <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+      <!--possibly some divTops, interspersed with globals -->      
+      <sequence minOccurs="0">
+        <classRef key="model.divTop"/>
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.global"/>
+          <classRef key="model.divTop"/>
+        </alternate>          
+      </sequence>
+      <!-- possibly some generated divs, interspersed with globals -->      
+      <sequence minOccurs="0">
+        <classRef key="model.divGenLike"/>
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.global"/>
+          <classRef key="model.divGenLike"/>
+        </alternate>          
+      </sequence>
+      <!-- 
+           now a choice between:           
+           a) some divLike things, with globals and generated
+              divisions after them if needed 
+           b) some div1Like things, with globals
+              and generated divisionss after them if needed 
+           c) same again, preceded by model.common (or <schemaSpec>)
       -->
-        <alternate>
-          <!-- a -->
-          
-            <sequence minOccurs="1" maxOccurs="unbounded">
-              
-                <classRef key="model.divLike"/>
-              
-              
-                <alternate minOccurs="0" maxOccurs="unbounded">
-                  <classRef key="model.global"/>
-                  <classRef key="model.divGenLike"/>
-                </alternate>
-              
-            </sequence>
-          
-          <!-- b -->
-          
-            <sequence minOccurs="1" maxOccurs="unbounded">
-              
-                <classRef key="model.div1Like"/>
-              
-              
-                <alternate minOccurs="0" maxOccurs="unbounded">
-                  <classRef key="model.global"/>
-                  <classRef key="model.divGenLike"/>
-                </alternate>
-              
-            </sequence>
-          
-          <!-- c -->
-          <sequence>
-            <sequence minOccurs="1" maxOccurs="unbounded">
-              
-                <classRef key="model.common"/>
-              
-              
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              
-            </sequence>
-            
-              <alternate minOccurs="0">
-                <!-- a -->
-                
-                  <sequence minOccurs="1" maxOccurs="unbounded">
-                    
-                      <classRef key="model.divLike"/>
-                    
-                    
-                      <alternate minOccurs="0" maxOccurs="unbounded">
-                        <classRef key="model.global"/>
-                        <classRef key="model.divGenLike"/>
-                      </alternate>
-                    
-                  </sequence>
-                
-                <!-- b -->
-                
-                  <sequence minOccurs="1" maxOccurs="unbounded">
-                    
-                      <classRef key="model.div1Like"/>
-                    
-                    
-                      <alternate minOccurs="0" maxOccurs="unbounded">
-                        <classRef key="model.global"/>
-                        <classRef key="model.divGenLike"/>
-                      </alternate>
-                    
-                  </sequence>
-                
-              </alternate>
-            
-          </sequence>
-        </alternate>
-        <!-- end of choice -->
-      
-      <!-- finally, some divBottoms interspersed with globals  -->
-      
-        <sequence minOccurs="0" maxOccurs="unbounded">
-          
-            <classRef key="model.divBottom"/>
-          
-          
-            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          
+      <alternate>
+        <!-- a -->          
+        <sequence minOccurs="1" maxOccurs="unbounded">
+          <classRef key="model.divLike"/>
+          <alternate minOccurs="0" maxOccurs="unbounded">
+            <classRef key="model.global"/>
+            <classRef key="model.divGenLike"/>
+          </alternate>
         </sequence>
-      
+        <!-- b -->
+        <sequence minOccurs="1" maxOccurs="unbounded">
+          <classRef key="model.div1Like"/>
+          <alternate minOccurs="0" maxOccurs="unbounded">
+            <classRef key="model.global"/>
+            <classRef key="model.divGenLike"/>
+          </alternate>
+        </sequence>
+        <!-- c -->
+        <sequence>
+          <sequence minOccurs="1" maxOccurs="unbounded">
+            <alternate minOccurs="1" maxOccurs="1">
+              <elementRef key="schemaSpec"/>
+              <classRef key="model.common"/>
+            </alternate>
+            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+          </sequence>
+          <alternate minOccurs="0">
+            <!-- a -->
+            <sequence minOccurs="1" maxOccurs="unbounded">
+              <classRef key="model.divLike"/>
+              <alternate minOccurs="0" maxOccurs="unbounded">
+                <classRef key="model.global"/>
+                <classRef key="model.divGenLike"/>
+              </alternate>
+            </sequence>
+            <!-- b -->
+            <sequence minOccurs="1" maxOccurs="unbounded">
+              <classRef key="model.div1Like"/>
+              <alternate minOccurs="0" maxOccurs="unbounded">
+                <classRef key="model.global"/>
+                <classRef key="model.divGenLike"/>
+              </alternate>
+            </sequence>
+          </alternate>
+        </sequence>
+      </alternate>
+      <!-- end of choice -->
+      <!-- finally, some divBottoms interspersed with globals  -->
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.divBottom"/>
+        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+      </sequence>
     </sequence>
   </content>
   <exemplum xml:lang="mul">

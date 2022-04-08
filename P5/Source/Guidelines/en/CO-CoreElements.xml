@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -34,7 +34,7 @@ of phrase-level elements commonly marked by typographic features (and
 thus well-represented in conventional markup languages). These include
 features commonly marked by font shifts (section <ptr target="#COHQH"/>) and features commonly marked by quotation marks
 (section <ptr target="#COHQQ"/>) as well as such features as terms,
-cited words, and glosses (section <ptr target="#COHQU"/>).</p>
+cited words, and glosses (section <ptr target="#COHTGEDR"/>).</p>
 
 <p>Section <ptr target="#COED"/> introduces some phrase-level elements
 which may be used to record simple editorial interventions, such as
@@ -550,7 +550,7 @@ the rest of the text by virtue of its function (for example, because
 it is a name, a technical term, a quotation, a mentioned word, etc.)
 then the global <att>xml:lang</att> attribute should be used to
 specify additionally that its language distinguishes it from the
-surrounding text. Any element in the TEI scheme may take a
+surrounding text. Any element in the TEI scheme may take an
 <att>xml:lang</att> attribute, which specifies both the writing system
 and the language used by its content (see sections <ptr target="#STGAla"/> and <ptr target="#CHSH"/> for discussion of this
 attribute and its values respectively). Where there is no other
@@ -563,7 +563,7 @@ weak bees let them in.</q></egXML>
 
 <p>The <gi>foreign</gi> element should not be used to represent foreign words
 which are mentioned or glossed within the text: for these use the
-appropriate element from section <ptr target="#COHQU"/> below. Compare the
+appropriate element from section <ptr target="#COHTG"/> below. Compare the
 following example sentences:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">John eats a <foreign xml:lang="fr">croissant</foreign> every morning.</egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><mentioned xml:lang="fr">Croissant</mentioned> is difficult to
@@ -581,7 +581,7 @@ as further discussed in section <ptr target="#STGAla"/></p>
 
 <specGrp xml:id="DCOHQ" n="Highlighted phrases">
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/foreign.xml"/>
-<specGrpRef target="#DCOHQ1"/><specGrpRef target="#DCOHQ3"/><specGrpRef target="#DCOHQQ"/><specGrpRef target="#DCOHQU"/></specGrp>
+<specGrpRef target="#DCOHQ1"/><specGrpRef target="#DCOHQ3"/><specGrpRef target="#DCOHQQ"/><specGrpRef target="#DCOHTG"/></specGrp>
  </div>
 <div type="div4" xml:id="COHQHE"><head>Emphatic Words and Phrases</head>
 <p>The <gi>emph</gi> element is provided to mark words or phrases
@@ -750,9 +750,10 @@ element <gi>note</gi> described in section <ptr target="#CONO"/>, or the
    <specDesc key="soCalled"/>
  </specList>
 The elements <gi>mentioned</gi> and <gi>soCalled</gi> are members of
-the class <ident type="class">model.emphLike</ident>; the <gi>q</gi>
-and <gi>said</gi> are members of the class <ident type="class">model.qLike</ident> in their own right, while
-<gi>cit</gi> and <gi>quote</gi> are members of <ident type="class">model.quoteLike</ident>, a subclass of <ident type="class">model.qLike</ident>. This class is a subclass of <ident type="class">model.inter</ident>; hence all of these elements are
+the class <ident type="class">model.emphLike</ident> while <gi>q</gi> 
+stems from <ident type="class">model.hiLike</ident>; the element
+<gi>said</gi> is a member of the class <ident type="class">model.attributable</ident> in its own right, while
+<gi>cit</gi> and <gi>quote</gi> are members of <ident type="class">model.quoteLike</ident>, a subclass of <ident type="class">model.attributable</ident>. This class is a subclass of <ident type="class">model.inter</ident>; hence all of these elements are
 permitted both within and between paragraph-level elements.</p>
 
  <p>The most common and important use of quotation marks is, of
@@ -1022,164 +1023,408 @@ overshadows the historical content</quote>.</egXML>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/mentioned.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/soCalled.xml"/> </specGrp>
 </div>
-<div type="div3" xml:id="COHQU"><head>Terms, Glosses, Equivalents, and Descriptions</head>
-<p>This section describes a set of textual elements which are
-used to provide a gloss, alternate identification, or description of
-something.</p>
-<p>Technical terms are often italicized or emboldened upon first mention
-in printed texts; an explanation or gloss is sometimes given in
-quotation marks.  Linguistic analyses conventionally cite words in
-languages under discussion in italics, providing a gloss immediately
-following marked with single quotation marks.  Other texts in which
-individual words or phrases are <term rend="noindex">mentioned</term> (for<index><term>mention</term><index><term>vs. use</term></index></index><index><term>use</term><index><term>vs. mention</term></index></index>
-example, as examples) rather than <term rend="noindex">used</term> may
-mark them either with italics or with quotation marks, and will gloss
-them less regularly.<specList>
-        <specDesc key="term"/>
-	<specDesc key="gloss"/>
-</specList>
-These elements are also members of
-the class <ident type="class">model.emphLike</ident>.
-</p>
-<p>A <gi>term</gi> may appear with or without a gloss, as may a
-<gi>mentioned</gi> element.  Where the <gi>gloss</gi> is present, it may
-be linked to the term it is glossing by means of its <att>target</att>
-attribute. To establish such a link, the encoder should give an
-<att>xml:id</att> value to the <gi>term</gi> or <gi>mentioned</gi> element
-and provide that value, prefixed by a sharp sign, as the value of  the <att>target</att> attribute on
-the <gi>gloss</gi> element.  For example: 
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COHQU-eg-42">We may define <term xml:id="TDPv" rend="sc">discoursal point of view</term>
-as <gloss target="#TDPv">the relationship, expressed through discourse
-structure, between the implied author or some other addresser,
-and the fiction.</gloss></egXML>  
-
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COHQU-eg-43"><gloss rend="unmarked" target="#PRSR">A computational device that infers
-structure from grammatical strings of words</gloss> is known as a
-<term xml:id="PRSR">parser</term>, and much of the history of NLP over the
-last 20 years has been occupied with the design of parsers.</egXML>
-</p>
-  <p>In the absence of a <gi>gloss</gi> in the source text, 
-    a <gi>term</gi> can also be associated with a gloss or definition by means of its <att>ref</att> attribute, as in this imaginary example:
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">We discuss Leech's concept of <term ref="#TDPV2" rend="sc">discoursal point of view</term> below. </egXML>
- Here, the value <ident>#TDPV2</ident> references some other XML element in the same document. This might be, for example, an entry in a list of technical
-  vocabulary given in the document header, or in an appendix. This attribute could also reference an entry in some centrally maintained
-  terminological database, perhaps using one of the pointing mechanisms discussed in section <ptr target="#SAXP"/>. </p>
-<p>Note that the element <gi>term</gi> is intended for use with words
-or phrases identified as terminological in nature; where words or
-phrases are simply being cited, discussed, or glossed in a text, it
-will often be more appropriate to use the <gi>mentioned</gi> element,
-as in the following example:
-
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COHQU-eg-44">There is thus a striking accentual difference between a verbal
-form like <mentioned xml:id="cw234" xml:lang="grc">eluthemen</mentioned>
-<gloss target="#cw234">we were released,</gloss> accented on the
-second syllable of the word, and its participial derivative
-<mentioned xml:id="cw235" xml:lang="grc">lutheis</mentioned> <gloss target="#cw235">released,</gloss> accented on the last.</egXML>
- </p>
-
-<p>For technical terminology in particular, and generally in
-terminological studies, it may be useful to associate an instance of a
-term within a text with a canonical definition for it, which is stored
-either elsewhere in the same text (for example in a glossary of terms)
-or externally, for example in a database, authority file, or published
-standard. The attributes <att>key</att> and <att>ref</att> discussed
-in section <ptr target="#CONARS"/> below are available on the
-<gi>term</gi> element for this purpose.
-</p>
-<p>Another group of elements is used to supply different kinds of names
-for objects described by the TEI. Examples of this are documentation
-of elements, attributes, classes (and also attribute values where
-appropriate), and description of glyphs.
-<specList>
-<specDesc key="altIdent"/>
-<specDesc key="desc"/>
-<specDesc key="equiv" atts="uri filter name"/>
-</specList>
-Along with the <gi>gloss</gi> element mentioned above, these elements
-constitute the <ident type="class">model.glossLike</ident> class. They
-are described in more detail in <ptr target="#TDcrystalsCEdc"/>.</p>
-
-<specGrp xml:id="DCOHQU">
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/desc.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/gloss.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/term.xml"/></specGrp>
 </div>
-<div type="div3" xml:id="COHQHEG"><head>Some Further Examples</head>
-<p>As a simple example of the elements discussed here, consider the
-following sentence:
-<q rend="display">On the one hand the <title>Nibelungenlied</title> 
-is associated with the new rise of romance of twelfth-century
-France, the <foreign>romans d'antiquité</foreign>,
-the romances of Chrétien de Troyes, and the German
-adaptations of these works by Heinrich van Veldeke,
-Hartmann von Aue, and Wolfram von Eschenbach.</q>
-A first approximation to the encoding of this sentence might be simply
-to record the fact that the phrases printed above in italics are
-highlighted, as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#CONADA-eg-144">On the one hand the <hi rend="italic">Nibelungenlied</hi> is
-associated with the new rise of romance of twelfth-century France,
-the <hi xml:lang="fr" rend="italic">romans d'antiquité</hi>,
-the romances of Chrétien de Troyes, ...</egXML>
-This encoding would, however, lose the important distinction between
-an italicized title and an italicized foreign phrase.  Many other
-phrases might also be italicized in the text, and a retrieval
-program seeking to identify foreign terms (for example) would not
-be able to produce reliable results by simply looking for italicized
-words.  Where economic and intellectual constraints permit, therefore,
-it would be preferable to encode both the function of the
-highlighted phrases and their appearance, as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#CONADA-eg-144">On the one hand the <title rend="italic">Nibelungenlied</title>
-is associated with the new rise of romance of twelfth-century France,
-the <foreign rend="italic">romans d'antiquité</foreign>, the
-romances of Chrétien de Troyes, ...</egXML></p>
-<p>In this example, the decision as to which textual features
-are distinguished by the highlighting is relatively
-uncontroversial.  As a less straightforward example, consider the
-use of italic font in the following passage:
-<q rend="display">A pretty common case, I believe; in all
-<hi rend="italic">vehement</hi> debatings.  She says I am
-<hi rend="italic">too witty</hi>; Anglicé,
-<hi rend="italic">too pert</hi>; I, that she is
-<hi rend="italic">too wise</hi>; that is to say, being
-likewise put into English, <hi rend="italic">not so young as
-she has been</hi>:  in short, she is grown so much into
-a <hi rend="italic">mother</hi>, that she had forgotten
-she ever was a <hi rend="italic">daughter</hi>. ...</q>
- </p>
-<p>Clearly, the word <mentioned>vehement</mentioned> is not italicized for the
-same reason as the phrase <mentioned>not so young as she has been</mentioned>;
-the former is emphasized, while the latter is proverbial.  It also
-provides an ironic gloss for the words <mentioned>too wise</mentioned>, in the
-same way as <mentioned>too pert</mentioned> glosses <mentioned>too witty</mentioned>.
-The glossed phrases are not, however, technical terms or cited words, but
-quoted phrases, as if the writer were putting words into her own and her
-mother's mouths.  Finally, the words <mentioned>mother</mentioned> and
-<mentioned>daughter</mentioned> are apparently italicized simply to oppose them
-in the sentence; certainly they do not fit into any of the categories so
-far proposed as reasons for italicizing.  Note also that the word
-<mentioned>Anglicé</mentioned> is not italicized although it is not
-generally considered an English word.
- </p>
-<p>The following sample encoding for the above passage attempts to take
-into account all the above points:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COHQHEG-eg-02">A pretty common case, I believe; in all <emph>vehement</emph>
-debatings. She says I am <q rend="italic">too witty</q>;
-<foreign xml:lang="la" rend="roman">Anglicé</foreign>,
-<gloss rend="italic">too pert</gloss>; I, that she is
-<q rend="italic"> too wise</q>; that is to say, being likewise
-put into English, <gloss rend="italic">not so young as she has
-been</gloss>: in short, she is grown so much into a
-<hi rend="italic">mother</hi>, that she had forgotten she ever
-was a <hi rend="italic">daughter</hi>.</egXML>
-<!-- WWP proofer points out inconsistency between tagging     -->
-	<!-- and commentary.  "too witty" and "too wise" retagged     -->
-	<!-- from TERM (which the prose says they are *not*) to Q     -->
-	<!-- (which the prose says they *are*).  WWP proofer also     -->
-	<!-- suggests EMPH for 'mother' and 'daughter', but our       -->
-	<!-- imaginary interpretation says we don't understand the    -->
-	<!-- italics there, so we leave it undisambiguated.  (msm)    -->
-</p></div></div>
+  <div type="div2" xml:id="COHTGEDR"><head>Terms and Glosses, Ruby Annotations, and Equivalents and Descriptions</head>
+    <p>This section describes a set of textual elements which are
+      used to provide a gloss, alternate identification, or description of
+      something.</p>
+    
+    <div type="div3" xml:id="COHTG"><head>Terms and Glosses</head>
+    
+    <p>Technical terms are often italicized or emboldened upon first mention
+      in printed texts; an explanation or gloss is sometimes given in
+      quotation marks.  Linguistic analyses conventionally cite words in
+      languages under discussion in italics, providing a gloss immediately
+      following marked with single quotation marks.  Other texts in which
+      individual words or phrases are <term rend="noindex">mentioned</term> (for<index><term>mention</term><index><term>vs. use</term></index></index><index><term>use</term><index><term>vs. mention</term></index></index>
+      example, as examples) rather than <term rend="noindex">used</term> may
+      mark them either with italics or with quotation marks, and will gloss
+      them less regularly.<specList>
+        <specDesc key="term"/>
+        <specDesc key="gloss"/>
+      </specList>
+      These elements are also members of
+      the class <ident type="class">model.emphLike</ident>.
+    </p>
+    <p>A <gi>term</gi> may appear with or without a gloss, as may a
+      <gi>mentioned</gi> element.  Where the <gi>gloss</gi> is present, it may
+      be linked to the term it is glossing by means of its <att>target</att>
+      attribute. To establish such a link, the encoder should give an
+      <att>xml:id</att> value to the <gi>term</gi> or <gi>mentioned</gi> element
+      and provide that value, prefixed by a sharp sign, as the value of  the <att>target</att> attribute on
+      the <gi>gloss</gi> element.  For example: 
+      
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COHTG-eg-42">We may define <term xml:id="TDPv" rend="sc">discoursal point of view</term>
+        as <gloss target="#TDPv">the relationship, expressed through discourse
+          structure, between the implied author or some other addresser,
+          and the fiction.</gloss></egXML>  
+      
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COHTG-eg-43"><gloss rend="unmarked" target="#PRSR">A computational device that infers
+        structure from grammatical strings of words</gloss> is known as a
+        <term xml:id="PRSR">parser</term>, and much of the history of NLP over the
+        last 20 years has been occupied with the design of parsers.</egXML>
+    </p>
+    <p>In the absence of a <gi>gloss</gi> in the source text, 
+      a <gi>term</gi> can also be associated with a gloss or definition by means of its <att>ref</att> attribute, as in this imaginary example:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">We discuss Leech's concept of <term ref="#TDPV2" rend="sc">discoursal point of view</term> below. </egXML>
+      Here, the value <ident>#TDPV2</ident> references some other XML element in the same document. This might be, for example, an entry in a list of technical
+      vocabulary given in the document header, or in an appendix. This attribute could also reference an entry in some centrally maintained
+      terminological database, perhaps using one of the pointing mechanisms discussed in section <ptr target="#SAXP"/>. </p>
+    <p>Note that the element <gi>term</gi> is intended for use with words
+      or phrases identified as terminological in nature; where words or
+      phrases are simply being cited, discussed, or glossed in a text, it
+      will often be more appropriate to use the <gi>mentioned</gi> element,
+      as in the following example:
+      
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COHTG-eg-44">There is thus a striking accentual difference between a verbal
+        form like <mentioned xml:id="cw234" xml:lang="grc">eluthemen</mentioned>
+        <gloss target="#cw234">we were released,</gloss> accented on the
+        second syllable of the word, and its participial derivative
+        <mentioned xml:id="cw235" xml:lang="grc">lutheis</mentioned> <gloss target="#cw235">released,</gloss> accented on the last.</egXML>
+    </p>
+    
+    <p>For technical terminology in particular, and generally in
+      terminological studies, it may be useful to associate an instance of a
+      term within a text with a canonical definition for it, which is stored
+      either elsewhere in the same text (for example in a glossary of terms)
+      or externally, for example in a database, authority file, or published
+      standard. The attributes <att>key</att> and <att>ref</att> discussed
+      in section <ptr target="#CONARS"/> below are available on the
+      <gi>term</gi> element for this purpose.
+    </p>
+    
+    <specGrp xml:id="DCOHTG">
+      <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/desc.xml"/>
+      <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/gloss.xml"/>
+      <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/term.xml"/></specGrp>
+      
+      <div type="div4" xml:id="COHTGEG"><head>Some Further Examples</head>
+        <p>As a simple example of the elements discussed here and in 
+          <ptr target="#COHQ"/>, consider the
+          following sentence:
+          <q rend="display">On the one hand the <title>Nibelungenlied</title> 
+            is associated with the new rise of romance of twelfth-century
+            France, the <foreign>romans d'antiquité</foreign>,
+            the romances of Chrétien de Troyes, and the German
+            adaptations of these works by Heinrich van Veldeke,
+            Hartmann von Aue, and Wolfram von Eschenbach.</q>
+          A first approximation to the encoding of this sentence might be simply
+          to record the fact that the phrases printed above in italics are
+          highlighted, as follows:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#CONADA-eg-144">On the one hand the <hi rend="italic">Nibelungenlied</hi> is
+            associated with the new rise of romance of twelfth-century France,
+            the <hi xml:lang="fr" rend="italic">romans d'antiquité</hi>,
+            the romances of Chrétien de Troyes, ...</egXML>
+          This encoding would, however, lose the important distinction between
+          an italicized title and an italicized foreign phrase.  Many other
+          phrases might also be italicized in the text, and a retrieval
+          program seeking to identify foreign terms (for example) would not
+          be able to produce reliable results by simply looking for italicized
+          words.  Where economic and intellectual constraints permit, therefore,
+          it would be preferable to encode both the function of the
+          highlighted phrases and their appearance, as follows:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#CONADA-eg-144">On the one hand the <title rend="italic">Nibelungenlied</title>
+            is associated with the new rise of romance of twelfth-century France,
+            the <foreign rend="italic">romans d'antiquité</foreign>, the
+            romances of Chrétien de Troyes, ...</egXML></p>
+        <p>In this example, the decision as to which textual features
+          are distinguished by the highlighting is relatively
+          uncontroversial.  As a less straightforward example, consider the
+          use of italic font in the following passage:
+          <q rend="display">A pretty common case, I believe; in all
+            <hi rend="italic">vehement</hi> debatings.  She says I am
+            <hi rend="italic">too witty</hi>; Anglicé,
+            <hi rend="italic">too pert</hi>; I, that she is
+            <hi rend="italic">too wise</hi>; that is to say, being
+            likewise put into English, <hi rend="italic">not so young as
+              she has been</hi>:  in short, she is grown so much into
+            a <hi rend="italic">mother</hi>, that she had forgotten
+            she ever was a <hi rend="italic">daughter</hi>. ...</q>
+        </p>
+        <p>Clearly, the word <mentioned>vehement</mentioned> is not italicized for the
+          same reason as the phrase <mentioned>not so young as she has been</mentioned>;
+          the former is emphasized, while the latter is proverbial.  It also
+          provides an ironic gloss for the words <mentioned>too wise</mentioned>, in the
+          same way as <mentioned>too pert</mentioned> glosses <mentioned>too witty</mentioned>.
+          The glossed phrases are not, however, technical terms or cited words, but
+          quoted phrases, as if the writer were putting words into her own and her
+          mother's mouths.  Finally, the words <mentioned>mother</mentioned> and
+          <mentioned>daughter</mentioned> are apparently italicized simply to oppose them
+          in the sentence; certainly they do not fit into any of the categories so
+          far proposed as reasons for italicizing.  Note also that the word
+          <mentioned>Anglicé</mentioned> is not italicized although it is not
+          generally considered an English word.
+        </p>
+        <p>The following sample encoding for the above passage attempts to take
+          into account all the above points:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COHTGEG-eg-02">A pretty common case, I believe; in all <emph>vehement</emph>
+            debatings. She says I am <q rend="italic">too witty</q>;
+            <foreign xml:lang="la" rend="roman">Anglicé</foreign>,
+            <gloss rend="italic">too pert</gloss>; I, that she is
+            <q rend="italic"> too wise</q>; that is to say, being likewise
+            put into English, <gloss rend="italic">not so young as she has
+              been</gloss>: in short, she is grown so much into a
+            <hi rend="italic">mother</hi>, that she had forgotten she ever
+            was a <hi rend="italic">daughter</hi>.</egXML>
+          <!-- WWP proofer points out inconsistency between tagging     -->
+          <!-- and commentary.  "too witty" and "too wise" retagged     -->
+          <!-- from TERM (which the prose says they are *not*) to Q     -->
+          <!-- (which the prose says they *are*).  WWP proofer also     -->
+          <!-- suggests EMPH for 'mother' and 'daughter', but our       -->
+          <!-- imaginary interpretation says we don't understand the    -->
+          <!-- italics there, so we leave it undisambiguated.  (msm)    -->
+        </p></div>
+    </div>
+    
+    
+    <div type="div3" xml:id="COHTGRB">
+        <head>Ruby Annotations</head>
+        
+        <p>The word <mentioned>ruby</mentioned> (or <mentioned>rubi</mentioned>) refers
+          to a particular method of glossing runs of text which is common in East Asian scripts.
+          In horizontally-oriented text, ruby annotations typically appear above the text being 
+          glossed, while in vertical runs of text they may appear to the left or right, or both, 
+          also oriented vertically.  An English example of a ruby annotation might look like this:
+          
+        </p>
+        <figure><graphic width="10em" style="width: 10em;" url="Images/rbTEI.png" mimeType="image/png"/></figure>
+        
+      <p>In Japanese, furigana (<seg xml:lang="ja">振り仮名</seg>) ruby annotations are often used to provide pronunciation 
+          guidance for readers; characters from the largely phonetic hiragana or katakana syllabaries
+          accompany Chinese characters, like this:
+        </p>
+        
+        <figure><graphic width="35em" style="width: 35em;" url="Images/rbNhkEasy.png" mimeType="image/png"/>
+          <head>The first line of a news story from NHK News Web Easy intended for Japanese
+            learners, in which every word composed of Chinese characters has a ruby gloss.</head>
+        </figure>
+        
+        <p>Pinyin ruby annotations are also used in Chinese to provide pronunciation guidance,
+          and Zhuyin (<seg xml:lang="zh-TW">注音</seg>) phonetic symbols (commonly known as <mentioned>bopomofo</mentioned>) are 
+          used in Taiwan for the same purpose.</p>
+        
+        <p>The TEI schema provides many different ways of encoding glosses and annotations, from the
+          simple and flexible <gi>note</gi> element to a native implementation of the  Web Annotation
+          Data Model (<ptr target="#SASOann"/>). However, ruby is a particular, distinct, and widely-used 
+          form of annotation that appears in script, print, calligraphy, and web pages, and the TEI therefore 
+          provides specific  elements for it:
+          <specList>
+            <specDesc key="ruby"/>
+            <specDesc key="rb"/>
+            <specDesc key="rt"/>
+          </specList>
+          The <gi>rt</gi> element is a member of <ident
+          type="class">att.placement</ident>, and thus the
+          <att>place</att> attribute may be used to indicate where the
+          ruby gloss is with respect to the base text:
+          <specList>
+            <specDesc key="att.placement" atts="place"/>
+          </specList>
+	  The most relevant suggested values of <att>place</att> for
+	  ruby text are <val>above</val>, <val>below</val>,
+	  <val>left</val>, and <val>right</val>.</p>
+        
+        <p>In its simplest representation, a glossed form consists of an <gi>rb</gi> (ruby base) element containing the
+          base form, an <gi>rt</gi> (ruby text) element containing the gloss, and a <gi>ruby</gi> element which
+          wraps them together:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <p xml:lang="ja">
+              <!--...-->
+              <ruby>
+                <rb>大学</rb>
+                <rt place="above">だいがく</rt>
+              </ruby>
+              <!--...-->
+            </p>
+            
+          </egXML>          
+          In the example above, the word <seg xml:lang="ja">大学</seg>
+          (<mentioned>daigaku</mentioned> = university) is provided
+          with a phonation gloss in hiragana. The full gloss is
+          applied to the complete word. However, it might instead be
+          broken down by character:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <p xml:lang="ja">
+              <!--...-->
+              <ruby>
+                <rb>大</rb>
+                <rt place="above">だい</rt>
+              </ruby>
+              <ruby>
+                <rb>学</rb>
+                <rt place="above">がく</rt>
+              </ruby>
+              <!--...-->
+            </p>
+           
+          </egXML>
+          Here is a similar example from Taiwan using bopomofo (pinyin
+          <mentioned>píngzi</mentioned> = bottle)<note
+          place="foot">Taken from <ref
+          target="https://en.wikipedia.org/wiki/Bopomofo#Example">Wikipedia</ref>.</note>:          
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="zh-TW">
+            <p xml:lang="zh-TW"> 
+              <!--...-->
+             <ruby>
+               <rb>瓶</rb>
+               <rt place="right">ㄆㄧㄥˊ</rt>
+             </ruby>
+             <ruby>
+               <rb>子</rb>
+               <rt place="right">˙ㄗ</rt>
+             </ruby>
+              <!--...-->
+            </p>
+          </egXML>
+         
+          
+          Where <att>place</att> is not provided, the default assumption is that the 
+          ruby gloss is <emph>above</emph> where the text is horizontal, and to the
+          <emph>right</emph> of the text where it is vertical. See <ptr target="#WDWM"/> for 
+          a detailed guide to writing modes and text directionality.
+          
+        </p>
+        
+        <p>The same ruby base may be accompanied by more than one gloss. 
+          Here, the Japanese word <seg xml:lang="ja">打球場</seg> (dakyūba, or <gloss>billiard hall</gloss>)
+          is glossed with  two different pronunciations: <q>biriādo</q> (its English equivalent)
+          and <q>dakyū</q>, a phonation guide for the first two characters.
+          
+          <figure>
+            <graphic url="Images/billiardhall.jpg" width="149px" height="276px"/>
+            <head><mentioned>Billiard hall</mentioned> with two ruby glosses. 
+              <ref target="http://school.nijl.ac.jp/kindai/NIJL/NIJL-01116.html#37"><seg xml:lang="ja">国文学研究資料館所蔵：：英国／龍動新繁昌記</seg></ref>.</head>
+          </figure>
+          
+          This example is intriguing in that the right-side ruby 
+          glosses apply to the first and second characters respectively, but
+          the left-side gloss applies to the whole word as a unit. We use this 
+          instance to exemplify multiple approaches to encoding the same
+          phenomena, which may be appropriate for different projects or 
+          editorial preferences. First, using the same segmentation approach 
+          as demonstrated for <seg xml:lang="ja">大学</seg> above, but 
+          with nesting:
+          
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <p style="writing-mode: vertical-rl" xml:lang="ja">
+              <!--...-->
+              <ruby>
+                <rb>
+                  <ruby>
+                    <rb>打</rb>
+                    <rt place="right">ダ</rt>
+                  </ruby> 
+                  <ruby>
+                    <rb>球</rb>
+                    <rt place="right">キウ</rt>
+                  </ruby>
+                  場
+                </rb>
+                <rt place="left">ビリヤード</rt>
+              </ruby>
+              <!--...-->
+            </p>
+          </egXML>
+          
+          We could also use a standoff approach with <gi>anchor</gi> elements and 
+          pointers:
+          
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <p style="writing-mode: vertical-rl" xml:lang="ja"> 
+              <!--...-->
+              <ruby>
+                <rb>
+                  <anchor xml:id="da"/>打
+                  <anchor xml:id="kyuu"/>球
+                  <anchor xml:id="ba"/>場
+                  <anchor  xml:id="owari"/>
+                </rb>
+                <rt place="left" from="#da" to="#owari">ビリヤード</rt>
+                <rt place="right" from="#da" to="#kyuu">ダ</rt>
+                <rt place="right" from="#kyuu" to="#ba">キウ</rt>
+              </ruby> 
+              <!--...-->
+            </p>
+          </egXML>
+          
+          Alternatively, if the encoding itself already includes segmentation below
+          the word level, we can use the existing elements instead of adding <gi>anchor</gi>s:
+          
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <p style="writing-mode: vertical-rl" xml:lang="ja"> 
+              <!--...-->
+              <ruby>
+                <rb xml:id="dakyuuba"><c xml:id="chr1">打</c><c xml:id="chr2">球</c><c>場</c></rb>
+                <rt place="left" target="#dakyuuba">ビリヤード</rt>
+                <rt place="right" target="#chr1">ダ</rt>
+                <rt place="right" target="#chr2">キウ</rt>
+              </ruby> 
+              <!--...-->
+            </p>
+          </egXML>
+          
+        </p>
+      
+      <p>The <gi>rt</gi> element is a member of <ident type="class">att.written</ident>:
+        <specList>
+          <specDesc key="att.written" atts="hand"/>
+        </specList>
+        
+        so the <att>hand</att> attribute can be used where the ruby 
+        text constitutes an annotation in a 
+      different hand from the ruby base: 
+      
+        <figure>
+          <graphic url="Images/rbHand.png" width="166px" height="406px"/>
+          <head>Base text with a ruby gloss in a different hand. 
+            <ref target="https://iiif.dl.itc.u-tokyo.ac.jp/repo/s/ogai/document/49d0907b-d949-4d14-8aeb-bc1dea9a3ad1?fbclid=IwAR1UgB9NnSfO9AqkLbq-Ym4fsGj8fEIm9gZGt7AwHE65eE-Nq6Bcb78jcxQ#?c=0&amp;m=0&amp;s=0&amp;cv=14&amp;xywh=3462%2C639%2C1315%2C784"><seg xml:lang="ja">リクシ ソウモク チョウジュウ チュウギョ ソ ズカイ。 東京大学総合図書館</seg></ref>  (General Library in the University of Tokyo, JAPAN).</head>
+        </figure>
+      
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <p style="writing-mode: vertical-rl" xml:lang="ja"> 
+            <!--...-->
+            <ruby>
+              <rb>蘝蔓</rb>
+              <rt hand="#MoriOhgai" style="color: red;">ヤブカラシ</rt>
+            </ruby>
+            于野
+            <!--...-->
+          </p>
+        </egXML>
+      
+      </p>
+        
+        <p>The current support for ruby is rudimentary, and in future releases of the
+          Guidelines we expect to see more development of these features and 
+          recommendations. While ruby is included for use with East Asian languages, 
+          encoders may find other contexts in which these elements are useful.</p>
+        
+      <specGrp xml:id="DCOHTGRB">
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/ruby.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/rb.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/rt.xml"/></specGrp>
+      
+    </div>
+    
+    <div type="div3" xml:id="COHTGED">
+      <head>Equivalents and Descriptions</head>
+      <p>Another group of elements is used to supply different kinds of names
+        for objects described by the TEI. Examples of this are documentation
+        of elements, attributes, classes (and also attribute values where
+        appropriate), and description of glyphs.
+        <specList>
+          <specDesc key="altIdent"/>
+          <specDesc key="desc"/>
+          <specDesc key="equiv" atts="uri filter name predicate"/>
+        </specList>
+        Along with the <gi>gloss</gi> element mentioned above, these elements
+        constitute the <ident type="class">model.glossLike</ident> class. They
+        are described in more detail in <ptr target="#TDcrystalsCEdc"/>.</p>
+    </div>
+    
+  </div>
+  
 <div type="div2" xml:id="COED"><head>Simple Editorial Changes</head>
 <p>As in editing a printed text, so in encoding a text in electronic
 form, it may be necessary to accommodate editorial comment on the text
@@ -1408,20 +1653,24 @@ Like the other editorial elements, they allow for a wide range of
 editorial practices: 
 <specList>
   <specDesc key="gap" atts="reason"/>
+  <specDesc key="ellipsis"/>
   <specDesc key="unclear" atts="reason"/>
   <specDesc key="add"/>
   <specDesc key="del"/>
 </specList></p>
 <p>Encoders may choose to omit parts of the copy text for reasons
-ranging from illegibility of the source or impossibility of transcribing
-it, to editorial policy, e.g. a systematic exclusion of poetry or prose
-from an encoding. The full details of the policy decisions concerned
-should be documented in the TEI header (see section <ptr target="#HD5"/>).
-Each place in the text at which omission has taken place should be
-marked with a <gi>gap</gi> element, with optionally further information
-about the reason for the omission, its extent, and the person or agency
-responsible for it, as in the following examples:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><gap reason="illegible" unit="word" quantity="2"/></egXML><egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><gap reason="overwriting illegible" extent="several characters"/></egXML>
+ranging from illegibility of the source or impossibility of
+transcribing it, to editorial policy, e.g. a systematic exclusion of
+poetry or prose from an encoding. The full details of the policy
+decisions concerned should be documented in the TEI header (see
+section <ptr target="#HD5"/>). In these situations — where copy text
+is not transcribed due to editorial policy or because it is impossible
+to do so — the <gi>gap</gi> element may be used to indicate the
+omission. Attributes on the <gi>gap</gi> element optionally provide
+further information about the reason for the omission, its extent, and
+the person or agency responsible for it, as in the following examples:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><gap reason="illegible" unit="word" quantity="2" resp="#editor04"/></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><gap reason="overwriting illegible" extent="several characters"/></egXML>
 Note that the extent of the gap may be marked precisely using
 attributes <att>unit</att> and <att>quantity</att>, or more
 descriptively using the <att>extent</att> attribute. Other, more
@@ -1438,7 +1687,98 @@ west; …</egXML>
 	<!--                                                          -->
 	<!-- East         *        *  O      *                   West -->
 	<!--                                                          -->
-</p> 
+</p>
+
+  <p>The <gi>ellipsis</gi> element provides a means to encode the
+  deliberate, marked omission of content in a source document. Within
+  <gi>ellipsis</gi>, a required <gi>metamark</gi> is used to represent
+  the characters or markings in the source that indicate the presence
+  of omitted material. Encoders may optionally provide a <gi>desc</gi>
+  element to describe the omission, as well as a <gi>supplied</gi>
+  element to record the content omitted from the source at this point.
+  The <gi>ellipsis</gi> element could be applied to <q>ditto</q> marks
+  when they indicate repetition of the same content, as in this
+  example:
+
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NONE">
+    <table rows="3" cols="2">
+      <head>Tent supplies</head>
+      <row>
+        <cell>
+          <name>nylon tent</name>
+        </cell>
+        <cell>
+          <num>1</num>
+        </cell>
+      </row>
+      <row>
+        <cell>
+          <name>steel stakes</name>
+        </cell>
+        <cell>
+          <num>6</num>
+        </cell>
+      </row>
+      <row>
+        <cell>
+          <name>fiberglass poles</name>
+        </cell>
+        <cell>
+          <ellipsis>
+            <metamark function="ellipsis">"</metamark>
+            <supplied><num>6</num></supplied>
+          </ellipsis>
+        </cell>
+      </row>
+    </table>
+  </egXML>
+  </p> 
+
+  <p>The <gi>ellipsis</gi> element may also apply to literary passages
+  that omit the full names of places or people, leaving their
+  identities to the imagination of the reader, as in the next example.
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#COEDADD-eg-90">
+    <p>I leave Dublin to-morrow for M<ellipsis><metamark>——</metamark></ellipsis> house. It is situated in the county of <ellipsis><metamark>——</metamark></ellipsis>, on the north-west coast of <placeName>Connaught</placeName>, which I am told is the classic ground of <placeName>Ireland</placeName>.</p>
+  </egXML>
+  </p>
+<p>A manuscript of song lyrics provides a more complex example of <gi>ellipsis</gi> to encode a marked omission that begins in the middle of a verse line.
+    <figure>
+      <graphic url="Images/cod-10991.jpg" mimeType="image/jpeg"/>
+      <head>A manuscript from Cancioneiro da Biblioteca Nacional
+      [1525-1526] in Biblioteca Nacional de Portugal, representing
+      song lyrics and the beginning of a chorus. On the last line
+      visible in this image, a marking of three dots and a line,
+      <q>·:—</q>, indicates that the rest of the chorus should follow
+      after this point.</head>
+    </figure>
+    Our encoding of the passage shows the use of <gi>ellipsis</gi> with <gi>supplied</gi> to contain the omitted content.
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="gl" source="#COEDADD-eg-93">
+      <lg>
+        <l>Amıgas sey eu be<ex>n</ex> dunha molher</l>
+        <l>Que se trabalha de uosco buscar</l>
+        <l>Mal a uossamigo polo matar</l>
+        <l>Mays todaquestamiga ela q<ex>ue</ex>r</l>
+        <metamark function="signalChorus">꜒</metamark>
+        <l>Por q<ex>ue</ex> nu<ex>n</ex>ca co<ex>n</ex> el pode poer</l>
+        <l>Queo podesse por amigauer</l>
+      </lg>
+      <lg>
+        <l>E buscalhi co<ex>n</ex> uosco q<ex>ua</ex>nto mal</l>
+        <l>Ela mays pode aq<ex>ue</ex>sto sei eu</l>
+        <l>E todaq<ex>ue</ex>stela faz polo seu</l>
+        <l>E p<ex>or</ex>este p<unclear>ẏ</unclear>te non por al</l>
+        <lb/><metamark function="signalChorus">꜒</metamark>
+        <l rend="nobreak" part="I">Por q<ex>ue</ex> nu<ex>n</ex>ca</l>
+        <ellipsis>
+          <metamark rend="nobreak" function="ellipsis">·:—</metamark>
+          <supplied>
+            <l rend="nobreak" part="F">co<ex>n</ex> el pode poer</l>
+            <l>Queo podesse por amigauer</l>
+          </supplied>
+        </ellipsis>
+      </lg>
+    </egXML>
+  </p>
 <p>The <gi>add</gi> and <gi>del</gi> elements may be used to record
 where words or phrases have been added or deleted in the copy text.
 They are not appropriate where longer passages have been added or
@@ -1514,12 +1854,15 @@ be marked with the <gi>supplied</gi> and <gi>surplus</gi> elements
 <gi>del</gi>. These two sets of elements allow the encoder to
 distinguish editorial changes from those visible in the source text.
 </p>
+
 <specGrp xml:id="DCOEDA" n="Other editorial tags">
 
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/gap.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/ellipsis.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/add.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/del.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unclear.xml"/></specGrp>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/unclear.xml"/>
+</specGrp>
 </div></div>
 <div type="div2" xml:id="CONA"><head>Names, Numbers, Dates, Abbreviations, and Addresses</head>
 
@@ -1774,9 +2117,11 @@ and is therefore unconstrained:
 </address></egXML>
  </p>
   
-  <p>A telephone number (normally outside of the <gi>address</gi> element) might be tagged with an
-    <gi>addrLine</gi> and <gi>ref</gi>, with the number itself appearing in the <code>tel:</code> namespace:
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+ <p>A telephone number (normally outside of the <gi>address</gi>
+ element) might be tagged with an <gi>addrLine</gi> and <gi>ref</gi>
+ that points to the phone number using the <code>tel</code> URI
+ scheme:
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
     <addrLine><ref target="tel:+1-201-555-0123">(201) 555 0123</ref></addrLine>
   </egXML></p>
   
@@ -2010,14 +2355,14 @@ representation of the date given as content of the <gi>date</gi>
 element. The format used should be a valid W3C schema datatype.<note place="bottom">The datatypes are taken from the W3C Recommendation <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>. 
 The permitted datatypes are:
 <list rend="bulleted">
-<item><ref target="http://www.w3.org/TR/xmlschema-2/#date">date</ref></item>
-<item><ref target="http://www.w3.org/TR/xmlschema-2/#gYear">gYear</ref></item>
-<item><ref target="http://www.w3.org/TR/xmlschema-2/#gMonth">gMonth</ref></item>
-<item><ref target="http://www.w3.org/TR/xmlschema-2/#gDay">gDay</ref></item>
-<item><ref target="http://www.w3.org/TR/xmlschema-2/#gYearMonth">gYearMonth</ref></item>
-<item><ref target="http://www.w3.org/TR/xmlschema-2/#gMonthDay">gMonthDay</ref></item>
-<item><ref target="http://www.w3.org/TR/xmlschema-2/#time">time</ref></item>
-<item><ref target="http://www.w3.org/TR/xmlschema-2/#dateTime">dateTime</ref></item>
+<item><ref target="https://www.w3.org/TR/xmlschema-2/#date">date</ref></item>
+<item><ref target="https://www.w3.org/TR/xmlschema-2/#gYear">gYear</ref></item>
+<item><ref target="https://www.w3.org/TR/xmlschema-2/#gMonth">gMonth</ref></item>
+<item><ref target="https://www.w3.org/TR/xmlschema-2/#gDay">gDay</ref></item>
+<item><ref target="https://www.w3.org/TR/xmlschema-2/#gYearMonth">gYearMonth</ref></item>
+<item><ref target="https://www.w3.org/TR/xmlschema-2/#gMonthDay">gMonthDay</ref></item>
+<item><ref target="https://www.w3.org/TR/xmlschema-2/#time">time</ref></item>
+<item><ref target="https://www.w3.org/TR/xmlschema-2/#dateTime">dateTime</ref></item>
 </list>
 There 
 is one exception: these Guidelines permit a time to be expressed as only a number of hours, or as a number of hours and minutes,
@@ -2139,10 +2484,10 @@ attribute) to the more complex usage of a full URI with
 embedded XPointers. For example, the source of the following paragraph
 looks something like this: 
   <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p>...
-The complete XPointer specification is managed by the W3C<note place="foot"><ptr target="http://www.w3.org/TR/xptr-framework/"/>, 
-<ptr target="http://www.w3.org/TR/xptr-element/"/>, 
-<ptr target="http://www.w3.org/TR/xptr-xmlns/"/>, and 
-<ptr target="http://www.w3.org/TR/xptr-xpointer/"/></note>;
+The complete XPointer specification is managed by the W3C<note place="foot"><ptr target="https://www.w3.org/TR/xptr-framework/"/>, 
+<ptr target="https://www.w3.org/TR/xptr-element/"/>, 
+<ptr target="https://www.w3.org/TR/xptr-xmlns/"/>, and 
+<ptr target="https://www.w3.org/TR/xptr-xpointer/"/></note>;
 for a discussion of TEI schemes for XPointer, see 
 <ptr target="#eSATS"/>.</p>
 <!--... -->
@@ -2154,7 +2499,7 @@ Alternatively, if no explicit link is to
 be encoded, but it is simply required to mark the phrase as a
 cross-reference, the <gi>ref</gi> element may be used without a
 <att>target</att> attribute.</p>
-<p>For an introduction to the use of links in general, see <ptr target="#SA"/>. The complete XPointer specification is managed by the W3C<note place="foot"><ptr target="http://www.w3.org/TR/xptr-framework/"/>, <ptr target="http://www.w3.org/TR/xptr-element/"/>, <ptr target="http://www.w3.org/TR/xptr-xmlns/"/>, and <ptr target="http://www.w3.org/TR/xptr-xpointer/"/></note>; for a discussion of
+<p>For an introduction to the use of links in general, see <ptr target="#SA"/>. The complete XPointer specification is managed by the W3C<note place="foot"><ptr target="https://www.w3.org/TR/xptr-framework/"/>, <ptr target="https://www.w3.org/TR/xptr-element/"/>, <ptr target="https://www.w3.org/TR/xptr-xmlns/"/>, and <ptr target="https://www.w3.org/TR/xptr-xpointer/"/></note>; for a discussion of
 TEI schemes for XPointer, see <ptr target="#SATS"/>.</p>
 <p>
 <specList><specDesc key="ptr"/><specDesc key="ref"/></specList>
@@ -2199,8 +2544,8 @@ cross-reference, the <gi>ptr</gi> element would be used as follows:
 <p>The <att>cRef</att> attribute may be used to express the target of
 a cross reference using some canonical referencing scheme, such as
 those typically used for ancient texts.  In this case, the referencing
-scheme must be defined using the <gi>cRefPattern</gi> element
-discussed below (<ptr target="#CORS6"/>); the definition it provides is used
+scheme must be defined using the <gi>cRefPattern</gi> or <gi>citeStructure</gi> elements
+discussed below (<ptr target="#CORS6"/>); the definition these provide may be used
 to translate the value of the <att>cRef</att> attribute into a
 conventional pointer value, such as one that might be supplied by the
 <att>target</att> attribute. It is an error to supply both
@@ -2305,7 +2650,7 @@ appropriate value for the <att>rend</att> attribute. Suggested values
   Some of these values may of course be combined; a list may be inline, but also be rendered with 
   numbers. An example appears below. For more sophisticated and detailed description of list rendering, consider using the <att>style</att>
   attribute with Cascading Stylesheet properties and values, as described in the W3C's
-  <ref target="http://www.w3.org/TR/css-lists-3/">CSS Lists and Counters Module Level 3</ref>.</p>
+  <ref target="https://www.w3.org/TR/css-lists-3/">CSS Lists and Counters Module Level 3</ref>.</p>
 
 <p>Each distinct item in the list should be encoded as a distinct
 <gi>item</gi> element.  If the numbering or other identification for the
@@ -2394,8 +2739,8 @@ it is a semantic error for a list tagged with <code>type="gloss"</code> not to h
   <label xml:lang="la">bellum, -ī, N. </label> <item>war</item>
   <label xml:lang="la">bonus, -a, -um       </label> <item>good</item>
 </list></egXML>
-Additionally, the  <gi>term</gi> and <gi>gloss</gi> elements discussed
-in section <ptr target="#COHQU"/> might be used to make explicit the role
+Additionally, the <gi>term</gi> and <gi>gloss</gi> elements discussed
+in section <ptr target="#COHTG"/> might be used to make explicit the role
 that each column in the glossary list has, as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#CO-eg-04"><list type="gloss">
   <head>Unit Three — Vocabulary</head>
@@ -2610,7 +2955,48 @@ text, the <gi>span</gi> and <gi>interp</gi> elements may be more
 effective than the free form <gi>note</gi> element; these elements are
 available when the module for simple analysis is selected (see section
 <ptr target="#AISP"/>).
- </p>
+</p>
+
+<div type="div4" xml:id="CONONOGR"><head>Encoding Grouped Notes</head>
+<p>The following element is provided for the grouping of notes:
+    <specList><specDesc key="noteGrp"/></specList>	
+</p>
+<p>
+A text may have multiple alternative versions of the same note, such as
+the same annotation expressed in multiple languages, or
+both an extensive note and a short form for different audiences. In
+such cases multiple <gi>note</gi> elements may be grouped within a
+<gi>noteGrp</gi> element.
+</p>
+<p>
+Typically, the <gi>note</gi> elements within a <gi>noteGrp</gi> would
+be differentiated by use of attributes such as <att>xml:lang</att> or
+<att>type</att>, while sharing the same point of attachment. This differentiation 
+can be made either implicitly in case of inline notes, or explicitly via a
+<att>target</att> attribute, which may be specified on the
+<gi>noteGrp</gi> itself.
+</p>
+
+<p>The simple example below demonstrates the grouping of a short and a full version of
+    the same note, where the short version might be intended for use in contexts 
+    with space constraints.
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
+      <p>... reuerendos dominos archiepiscopum et canonicos Leopolienses
+        in duplicibus Quatuortemporibus
+        <noteGrp>
+          <note type="short">Quatuor Tempora, so called dry fast days.</note>
+          <note type="full">Quatuor Tempora, so called dry fast days (Wednesday, Friday, and Saturday)
+            falling on each of the quarters of the year. In the first quarter they were called Cinerum
+            (following Ash Wednesday), second Spiritus (following Pentecost), third Crucis
+            (after the Exaltation of the Holy Cross, September 14th), and Luciae
+            in the fourth (after the feast of St. Lucia, December 13th).
+          </note>
+        </noteGrp>
+        totaliter expediui.
+      </p>
+    </egXML>
+</p>
+</div>
 </div>
 <div type="div3" xml:id="CONOIX"><head>Index Entries</head>
 <p>The indexing of scholarly texts is a skilled activity, involving
@@ -2710,7 +3096,7 @@ dependent on the application software in use):
 <eg><![CDATA[<?tei indexplacement ?>]]></eg>
 Alternatively, the special purpose  <gi>divGen</gi> element might be used.</p>
 <p>In the simplest case, a single headword is supplied  by
-an  <gi>term</gi> elements contained by an
+a <gi>term</gi> element contained by an
 <gi>index</gi> element:
   <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p>The students understand procedures for Arabic lemmatisation
 <index>
@@ -2894,6 +3280,7 @@ internal cross-references must be added as part of the post-editing
 phase for an auto-generated index.</p>
 <specGrp xml:id="DCONO" n="Annotation">
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/note.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/noteGrp.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/index.xml"/>
 </specGrp>	
 </div>
@@ -2941,7 +3328,7 @@ namespace in the second case, and its content will fully define the
 graphic to be produced. In the first case, however, one of the elements
 <gi>graphic</gi> or <gi>media</gi> is used to mark the presence of the graphic only and the
 visual content itself is stored outside the XML document at a location 
-referenced by means of an <att>url</att> attribute. This attribute is
+referenced by means of a <att>url</att> attribute. This attribute is
 provided by membership of these elements in the <ident type="class">att.resourced</ident> class. Alternatively, if
 it is small, the media information may be embedded directly within the document
 using some suitable binary format such as Base64; in this case the
@@ -3477,8 +3864,8 @@ is recommended that the TEI header contain a description of its
 construction in the <gi>refsDecl</gi> element described in section
 <ptr target="#HD54"/>. As described there, the declaration
 may consist either of a formal declaration using the
-<gi>cRefPattern</gi> element or an informal description in prose.  The
-former is recommended because unlike prose it can be processed by
+<gi>cRefPattern</gi> or <gi>citeStructure</gi> elements, or an informal description in prose.  One of the
+former is recommended because unlike prose they can be processed by
 software.</p>
 
 <p>The three examples given in section <ptr target="#CORS1"/> would be declared as follows. The first example encodes
@@ -3547,6 +3934,46 @@ declaration for such an encoding could be:
 although in general there seems to be little advantage in this case:
 it is no more difficult to use a standard relative URI reference as
 the value of <att>target</att>.</p>
+<p>In cases where a more complete formal declaration of text structure is desirable,
+for example in systems that will present the contents of a large TEI file in smaller chunks, the
+<gi>citeStructure</gi> element may be used. This method permits canonical references
+to be resolved and also allows them to be extracted, so that, for example, a list of resolvable
+citations may be generated from the document. The example from the <title>Amores</title>
+above could be implemented using <gi>citeStructure</gi> thus:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <refsDecl>
+    <citeStructure unit="work" match="//div1" use="@n">
+      <citeStructure unit="book" match="div2" use="@n" delim=" ">
+        <citeStructure unit="poem" match="div3" use="@n" delim=".">
+          <citeStructure unit="line" match="l" use="@n" delim="."/>
+        </citeStructure>
+      </citeStructure>
+    </citeStructure>
+  </refsDecl>
+</egXML></p>
+<p><gi>citeStructure</gi> also provides a method for attaching informational properties to 
+  units of structure, by means of the <gi>citeData</gi> element. The work, book, and poem 
+  divisions above might all have <gi>head</gi> elements which provide a title for the section.
+  If we wish that information to be extractable, we can use citeData to specify where it is to
+  be found:
+  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <refsDecl>
+      <citeStructure unit="work" match="//div1" use="@n">
+        <citeData property="http://purl.org/dc/terms/title" use="head"/>
+        <citeStructure unit="book" match="div2" use="@n" delim=" ">
+          <citeData property="http://purl.org/dc/terms/title" use="head"/>
+          <citeStructure unit="poem" match="div3" use="@n" delim=".">
+            <citeData property="http://purl.org/dc/terms/title" use="head"/>
+            <citeStructure unit="line" match="l" use="@n" delim="."/>
+          </citeStructure>
+        </citeStructure>
+      </citeStructure>
+    </refsDecl>
+  </egXML>
+  The example above maps the head element to the <ref target="#CO-BIBL-2">Dublin Core</ref> 
+  property <code>title</code>. For convenience, property URIs may be abbreviated using
+  <gi>prefixDef</gi>.
+</p>
 <p>Reference systems recorded by means of milestone tags can also be
 declared; the following prose description could be used to declare
 the example given in section <ptr target="#CORS5"/>.
@@ -3734,7 +4161,7 @@ later examples are explained later in the current section.
           <surname>Tufte</surname>
         </persName>
         <idno type="scopus">6506403994</idno>
-        <idno type="lcaf">http://id.loc.gov/authorites/names/n50012763.html</idno>
+        <idno type="lcaf">https://id.loc.gov/authorities/names/n50012763.html</idno>
       </author>
       <title level="m">Envisioning Information</title>
       <imprint>
@@ -4076,7 +4503,7 @@ represented by means of an <gi>idno</gi> element placed within the
 <title level="a">Markup Systems and The Future of Scholarly Text
 Processing</title>
 <idno type="DOI">10.1145/32206.32209</idno>
-<ref type="url">http://xml.coverpages.org/coombs.html</ref>
+<ref target="http://xml.coverpages.org/coombs.html">http://xml.coverpages.org/coombs.html</ref>
 </analytic>
 <monogr>
 <title level="j">Communications of the ACM</title>
@@ -4987,18 +5414,22 @@ or is not to be encoded, the <gi>ptr</gi> element is used, as in the
 following example:
   <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">As shown above (<ptr target="#NEL80"/>) ...</egXML>
  </p>
-<p>Where the form of the reference is important, or contains additional
-qualifying information which is to be kept but distinguished from the
-surrounding text, the <gi>ref</gi> element should be used, as in the
-following example:
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">Nelson claims <ref target="#NEL80">(ibid, passim)</ref> ...</egXML>
-It may be important to distinguish between the short form of a
-bibliographic reference and some qualifying or additional information.
-The latter should not appear within the scope of the <gi>ref</gi>
-element when this is the case, as for example in an application
-concerned to normalize bibliographic references:
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">Nelson claims (<ref target="#NEL80">Nelson [1980]</ref> pages 13–37) ...</egXML>
- </p>
+<p>Where the form of the reference is important, or contains additional qualifying information
+  which is to be kept but distinguished from the surrounding text, the <gi>ref</gi> element
+  should be used, as in the following example: <egXML xmlns="http://www.tei-c.org/ns/Examples"
+    source="#NONE">Nelson claims <ref target="#NEL80">(ibid, passim)</ref> ...</egXML> It may
+  be important to distinguish between the short form of a bibliographic reference and some
+  qualifying or additional information. The latter should not appear within the scope of the
+    <gi>ref</gi> element when this is the case, as for example in an application concerned to
+  normalize bibliographic references: <egXML xmlns="http://www.tei-c.org/ns/Examples"
+    source="#NONE">Nelson claims (<ref target="#NEL80">Nelson [1980]</ref> pages 13–37)
+    ...</egXML> 
+  If it is desired to capture additional information like this in a short-form
+  reference, then <gi>bibl</gi> may be used with the <att>corresp</att> attribute pointing to
+  the full bibliographic reference: <egXML xmlns="http://www.tei-c.org/ns/Examples"
+    source="#NONE">Nelson claims (<bibl corresp="#NEL80">Nelson [1980] pages <biblScope
+        unit="page" from="13" to="37">13–37</biblScope></bibl>) ...</egXML>
+</p>
 <p>The <gi>ref</gi> element may also be used to provide a reference to a copy of the bibliographic item itself, particularly if this is available online, as in the following example: 
   <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
 <biblStruct>
@@ -5009,7 +5440,7 @@ concerned to normalize bibliographic references:
 </author>
 <title level="a">Beyond the Scriptorium: The Role of the Library in Text
 Encoding</title>
-<ref type="url">http://www.dlib.org/dlib/january02/sukovic/01sukovic.html</ref>  
+<ref target="https://www.dlib.org/dlib/january02/sukovic/01sukovic.html">https://www.dlib.org/dlib/january02/sukovic/01sukovic.html</ref>  
 </analytic>
 <monogr>
 <title level="j">D-Lib</title>
@@ -5488,7 +5919,7 @@ were dialogue in a play.  The following example is taken  from a 19th century
    <p>All the elements described in this chapter are provided by the
    <ident type="module">core</ident> module.
    <moduleSpec xml:id="DCO" ident="core">
-     <altIdent type="FPI">Common Core</altIdent>
+     <idno type="FPI">Common Core</idno>
      <desc xml:lang="en" versionDate="2006-09-13">Elements common to all TEI documents</desc>
      <desc xml:lang="fr" versionDate="2018-07-12">Éléments disponibles pour tous les documents TEI</desc>
      <desc xml:lang="zh-TW" versionDate="2018-07-12">所有TEI文件所通用的元素</desc>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -242,8 +242,8 @@ of the tagging throughout a document, rather than (as discussed so far) in one
 particular instance. The <att>match</att> attribute may be used to
 supply a pattern identifying the portion of a document
 concerning which certainty is being expressed. The value of the
-<att>match</att> attribute is an XPath expression <!--XSLT2 pattern,-->
-using the syntax defined in <ptr target="#XSLT2"/>. In the following
+<att>match</att> attribute is an XSLT selection pattern
+using the syntax defined in <ptr target="#XSLT3"/>. In the following
 example, we wish to indicate a low degree of confidence
 that the <gi>persName</gi> elements used throughout the whole document
 have been correctly applied:
@@ -276,8 +276,8 @@ elements which have a <att>type</att> value of <code>checked</code>:
 
 If an element in a document is matched by more than one match
 expression, then the most specific pattern applies. <note place="bottom">Specificity of
-pattern matching is defined further in the XSLT2 reference cited above
-(see <ptr target="http://www.w3.org/TR/xslt20/#conflict"/>)</note> As a
+pattern matching is defined further in the XSLT3 reference cited above
+(see <ptr target="https://www.w3.org/TR/xslt-30/#default-priority"/>)</note> As a
 simple case, if both the preceding <gi>certainty</gi> elements were
 present in the same document, a <gi>persName</gi> occurring within a
 <tag>div type="checked"</tag> element would potentially match both
@@ -345,7 +345,7 @@ alternative element content, as in this example:
 <div><head>Target or Match?</head>
 
 <p>As noted in <ptr target="#SA"/>, the <att>target</att> attribute
-may take any general <val>data.pointer</val> as values and may thus
+may take any general <val>teidata.pointer</val> as values and may thus
 also contain an XPath expression of arbitrary complexity. Because full
 support for XPath is not provided by current processors, it is not
 generally recommended TEI practice. There are however some simple
@@ -599,7 +599,7 @@ responsible for proposing the value of the <att>rend</att> attribute:
 additional elements:
 
 <moduleSpec xml:id="DCE" ident="certainty">
-  <altIdent type="FPI">Certainty and Uncertainty</altIdent>
+  <idno type="FPI">Certainty and Uncertainty</idno>
   <desc xml:lang="en" versionDate="2019-07-07">Certainty, Precision, and Responsibility</desc>
   <desc xml:lang="fr" versionDate="2018-07-12">Degré de certitude et responsabilité</desc>
   <desc xml:lang="zh-TW" versionDate="2018-07-12">確定程度與不確定程度</desc>

@@ -1,0 +1,16 @@
+name: "Generate and update JSON Spec lists for translation"
+on:
+  push:
+    paths:
+      - 'P5/Source/Specs/*.xml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/generate-spec-lists
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Re-generated spec lists.
+      

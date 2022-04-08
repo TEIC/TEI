@@ -8,9 +8,9 @@ $Id$
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec module="tagdocs" ident="content"
-	     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-	     xmlns:teix="http://www.tei-c.org/ns/Examples"
-	     xmlns="http://www.tei-c.org/ns/1.0" >
+             xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+             xmlns:teix="http://www.tei-c.org/ns/Examples"
+             xmlns="http://www.tei-c.org/ns/1.0" >
   <gloss versionDate="2007-07-04" xml:lang="en">content model</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">내용 모델</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">模型宣告</gloss>
@@ -34,7 +34,10 @@ $Id$
     <alternate>
       <elementRef key="valList" minOccurs="1" maxOccurs="1"/>
       <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>
-      <anyElement require="http://relaxng.org/ns/structure/1.0" minOccurs="1" maxOccurs="unbounded"/>
+      <anyElement
+          minOccurs="1" maxOccurs="unbounded"
+          require="http://relaxng.org/ns/compatibility/annotations/1.0
+                   http://relaxng.org/ns/structure/1.0"/>
     </alternate>
   </content>
   <attList>
@@ -48,45 +51,48 @@ $Id$
       <valList type="closed">
         <valItem ident="true">
           <desc versionDate="2010-05-13" xml:lang="en">Each name
-          referenced in e.g. a <gi>rng:ref</gi> element within a
+          referenced in e.g. an <gi>rng:ref</gi> element within a
           content model is automatically prefixed by the value of the
           <att>prefix</att> attribute on the current
           <gi>schemaSpec</gi>
-	  </desc>
-	</valItem>
-	<valItem ident="false">
-	  <desc versionDate="2010-05-13" xml:lang="en">No prefixes are
-	  added: any prefix required by the value of the
-	  <att>prefix</att> attribute on the current
-	  <gi>schemaSpec</gi> must therefore be supplied explicitly,
-	  as appropriate.</desc>
+          </desc>
+        </valItem>
+        <valItem ident="false">
+          <desc versionDate="2010-05-13" xml:lang="en">No prefixes are
+          added: any prefix required by the value of the
+          <att>prefix</att> attribute on the current
+          <gi>schemaSpec</gi> must therefore be supplied explicitly,
+          as appropriate.</desc>
         </valItem>
       </valList>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <p>This <gi>content</gi> element indicates that the element being
-    specified has no content:</p>
+    <p>This sample <gi>content</gi> element indicates that the element
+    being specified has no content:</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <content><empty/></content>
     </egXML></exemplum>
   <exemplum xml:lang="en">
-    <p>This <gi>content</gi> element defines a content model allowing either a sequence of paragraphs or a series of msItem elements
-      optionally preceded by a summary: </p>
+    <p>This <gi>content</gi> element defines a content model,
+    expressed directly in the TEI ODD language, that allows either a
+    sequence of paragraphs or a series of msItem elements optionally
+    preceded by a summary: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <content>
         <alternate>
             <classRef key="model.pLike" maxOccurs="unbounded"/>
             <sequence>
               <elementRef key="summary" minOccurs="0" maxOccurs="1"/>
-	      <elementRef key="msItem" maxOccurs="unbounded"/>
-	     </sequence>
-	</alternate>
+              <elementRef key="msItem" maxOccurs="unbounded"/>
+             </sequence>
+        </alternate>
       </content>
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <p>This content model defines a content model allowing either a
+    <p>This sample <gi>content</gi> element defines a content model,
+    expressed in the RELAX NG schema language, that allows either a
     sequence of paragraphs or a series of msItem elements optionally
     preceded by a summary: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
