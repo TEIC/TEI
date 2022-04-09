@@ -23,9 +23,26 @@ $Id$
         <classRef key="model.glossLike"/>
         <classRef key="model.descLike"/>
       </alternate>
-      <elementRef key="constraint" minOccurs="1" maxOccurs="1"/>
+      <elementRef key="constraint" minOccurs="0" maxOccurs="1"/>
     </sequence>
-  </content>    
+  </content>
+  <!--
+      Following <constraintSpec> might be more clearly accomplished
+      using abstract patterns, but our build process does not
+      currently support that. For an attempt at using them, see
+      https://github.com/TEIC/TEI/tree/sydb_issue-2179_1st_via_abstract_pats,
+      which was my first attempt at doing this. —Syd, 2021-10-13
+  -->
+  <constraintSpec scheme="schematron" ident="constraint-unless-delete">
+    <constraint>
+      <sch:rule context="tei:constraintSpec[ @mode eq 'delete' ]">
+        <sch:report test="child::tei:constraint">This 'constraintSpec' element has a mode= of "delete" even though it has a child constraint. Change the mode= to "add", "change", or "replace", or remove the 'constraint' child.</sch:report>
+      </sch:rule>
+      <sch:rule context="tei:constraintSpec[ @mode = ('add','replace') ]">
+        <sch:assert test="child::tei:constraint">This 'constraintSpec' element has a mode= of "<sch:value-of select="@mode"/>", but does not a 'constraint' child element. Specify a constraint or change the mode= to "delete".</sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <constraintSpec ident="sch_no_more" scheme="schematron">
     <desc xml:lang="en" versionDate="2018-07-06">Relationship between scheme attribute and contents: Schematron 1.x</desc>
     <constraint>
@@ -51,6 +68,16 @@ $Id$
       <sch:rule context="tei:macroSpec/tei:constraintSpec[@scheme eq 'schematron']/tei:constraint">
         <sch:report test="sch:assert|sch:report">An ISO Schematron constraint specification for a macro should not
         have an 'assert' or 'report' element without a parent 'rule' element</sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="unique-constraintSpec-ident" scheme="schematron">
+    <constraint>
+      <sch:rule context="tei:constraintSpec[ @mode eq 'add'  or  not( @mode ) ]">
+        <sch:let name="myIdent" value="normalize-space(@ident)"/>
+        <sch:report test="preceding::tei:constraintSpec[ normalize-space(@ident) eq $myIdent ]">
+        The @ident of 'constraintSpec' should be unique; this one (<sch:value-of select="$myIdent"/>) is the same as that of a previous 'constraintSpec'.
+        </sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -118,7 +145,7 @@ $Id$
     <p>This constraint uses SPITBOL (a language which is not
     expressed in XML) to check whether the title and author are identical: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <constraintSpec ident="local" scheme="SPITBOL">
+      <constraintSpec ident="author_ne_title" scheme="SPITBOL">
         <constraint> 
 (output = leq(title,author)  "title and author cannot be the same")
         </constraint>

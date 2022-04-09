@@ -1,10 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" type="atts" ident="att.spanning">
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" type="atts" ident="att.spanning">
   <desc versionDate="2006-01-05" xml:lang="en">provides attributes for elements which delimit a span of text by pointing mechanisms rather than by enclosing it.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">포함보다는 포인터 메카니즘을 통하여 구분된 텍스트 구간을 나타내는 요소의 속성을 제공한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供元素的屬性，這些元素使用參照機制來限定某一文字段，而非包含此文字段。</desc>
@@ -16,7 +19,7 @@ $Id$
   <attList>
     <attDef ident="spanTo" usage="opt">
       <desc versionDate="2005-10-10" xml:lang="en">indicates the end of a span initiated by the element
-	bearing this attribute.</desc>
+        bearing this attribute.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">이 속성을 포함하는 요소에 의해 시작된 구간의 끝을 나타낸다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指出文字段的結尾，該文字段以帶有此屬性的元素開頭。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該要素が示す範囲の終点を示す．</desc>
@@ -24,14 +27,14 @@ $Id$
       <desc versionDate="2007-05-04" xml:lang="es">indica el final de un fragmento de texto iniciado con el elemento al cual es asignaado el atributo.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la fine della porzione di testo che ha inizio con l'elemento a cui è assegnato l'attributo</desc>
       <datatype><dataRef key="teidata.pointer"/></datatype>
-      <constraintSpec ident="spanTo-2" scheme="schematron">
+      <constraintSpec ident="spanTo-points-to-following" scheme="schematron">
         <desc xml:lang="en" versionDate="2018-07-06">The @spanTo attribute must point to an element following the
-	current element</desc>
+        current element</desc>
         <constraint>
           <sch:rule context="tei:*[@spanTo]">
             <sch:assert test="id(substring(@spanTo,2)) and following::*[@xml:id=substring(current()/@spanTo,2)]">
 The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow the current element <sch:name/>
-                  </sch:assert>
+            </sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
