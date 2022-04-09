@@ -26,20 +26,22 @@ $Id$
       <elementRef key="constraint" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </content>
-  <!--
-      Following <constraintSpec> might be more clearly accomplished
-      using abstract patterns, but our build process does not
-      currently support that. For an attempt at using them, see
-      https://github.com/TEIC/TEI/tree/sydb_issue-2179_1st_via_abstract_pats,
-      which was my first attempt at doing this. —Syd, 2021-10-13
-  -->
-  <constraintSpec scheme="schematron" ident="constraint-unless-delete">
+  <constraintSpec scheme="schematron" ident="empty-based-on-mode">
+    <!-- 
+         This constraint specification is much like the
+         "child-constraint-based-on-mode" for <elementSpec>, which
+         does something something similar (in that it is based on
+         @mode), but not quite the same.
+    -->
     <constraint>
-      <sch:rule context="tei:constraintSpec[ @mode eq 'delete' ]">
-        <sch:report test="child::tei:constraint">This 'constraintSpec' element has a mode= of "delete" even though it has a child constraint. Change the mode= to "add", "change", or "replace", or remove the 'constraint' child.</sch:report>
+      <sch:rule context="tei:constraintSpec[ @mode eq 'delete']">
+        <sch:report test="child::*">This constraintSpec element has a mode= of "delete" even though it has child elements. Change the mode= to "add", "change", or "replace", or remove the child elements.</sch:report>
+      </sch:rule>
+      <sch:rule context="tei:constraintSpec[ @mode eq 'change']">
+        <sch:assert test="child::*">This constraintSpec element has a mode= of "change", but does not have any child elements. Specify child elements, or change the mode= to "delete".</sch:assert>
       </sch:rule>
       <sch:rule context="tei:constraintSpec[ @mode = ('add','replace') ]">
-        <sch:assert test="child::tei:constraint">This 'constraintSpec' element has a mode= of "<sch:value-of select="@mode"/>", but does not a 'constraint' child element. Specify a constraint or change the mode= to "delete".</sch:assert>
+        <sch:assert test="child::tei:constraint">This constraintSpec element has a mode= of "<sch:value-of select="@mode"/>", but does not have a child 'constraint' element. Use a child 'constraint' element or change the mode= to "delete" or "change".</sch:assert>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -152,6 +154,15 @@ $Id$
       </constraintSpec>
     </egXML>
   </exemplum>
+  <remarks xml:lang="en" versionDate="2022-04-09">
+    <p>A child <gi>constraint</gi> is required when the
+    <att>mode</att> attribute has the value <val>replace</val> or
+    <val>add</val> (or is not specified, as <val>add</val> is the
+    default). No child elements are permitted when the <att>mode</att>
+    attribute has the value <val>delete</val>. At least one child
+    element is required when the <att>mode</att> attribute has the
+    value <val>change</val>.</p>
+  </remarks>
   <listRef>
     <ptr target="#TDTAG"/>
   </listRef>
