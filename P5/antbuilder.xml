@@ -51,115 +51,12 @@
 
   <target name="outputs">
     <echo>make modular DTDs, RELAXNG schemas, json, odd schemas, schematron files</echo>
-<<<<<<< HEAD
-    <echo>Using ${XSL} for XSL stylesheets</echo>
-=======
     <echo>(using ${XSL} for XSL stylesheets)</echo>
->>>>>>> dev
     <delete dir="DTD"/>
     <mkdir dir="DTD"/>
     <delete dir="Schema"/>
     <mkdir dir="Schema"/>
 
-<<<<<<< HEAD
-    <sequential>
-      <echo>debug 01</echo>
-      <xslt processor="trax" force="yes" style="${XSL}/odds/odd2json.xsl" in="p5subset.xml" out="p5subset.json">
-        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      </xslt>
-      <echo>debug 02</echo>
-      <xslt processor="trax" force="yes" style="${XSL}/odds/odd2json.xsl" in="p5subset.xml" out="p5subset_en.json">
-        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-        <param name="doclang" expression="en"/>
-      </xslt>
-      <echo>debug 03</echo>
-      <xslt processor="trax" force="yes" style="${XSL}/odds/odd2json.xsl" in="p5subset.xml" out="p5subset_de.json">
-        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-        <param name="doclang" expression="de"/>
-      </xslt>
-      <echo>debug 04</echo>
-      <xslt processor="trax" force="yes" style="${XSL}/odds/odd2json.xsl" in="p5subset.xml" out="p5subset_es.json">
-        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-        <param name="doclang" expression="es"/>
-      </xslt>
-      <echo>debug 05</echo>
-      <xslt processor="trax" force="yes" style="${XSL}/odds/odd2json.xsl" in="p5subset.xml" out="p5subset_fr.json">
-        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-        <param name="doclang" expression="fr"/>
-      </xslt>
-      <echo>debug 06</echo>
-      <xslt processor="trax" force="yes" style="${XSL}/odds/odd2json.xsl" in="p5subset.xml" out="p5subset_it.json">
-        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-        <param name="doclang" expression="it"/>
-      </xslt>
-      <echo>debug 07</echo>
-      <xslt processor="trax" force="yes" style="${XSL}/odds/odd2json.xsl" in="p5subset.xml" out="p5subset_ja.json">
-        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-        <param name="doclang" expression="ja"/>
-      </xslt>
-      <echo>debug 08</echo>
-      <xslt processor="trax" force="yes" style="${XSL}/odds/odd2json.xsl" in="p5subset.xml" out="p5subset_ko.json">
-        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-        <param name="doclang" expression="ko"/>
-      </xslt>
-      <echo>debug 09</echo>
-      <xslt processor="trax" force="yes" style="${XSL}/odds/odd2json.xsl" in="p5subset.xml" out="p5subset_zh-TW.json">
-        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-        <param name="doclang" expression="zh-TW"/>
-      </xslt>
-      <echo>debug 10</echo>
-      <xslt processor="trax" force="yes" style="${XSL}/odds/odd2xslstripspace.xsl" in="p5subset.xml" out="stripspace.xsl.model">
-        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      </xslt>
-      <echo>debug 11</echo>
-      <xslt processor="trax" force="yes" style="Utilities/listofattributes.xsl" in="${inputDir}/p5.xml" out="p5attlist.txt">
-        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      </xslt>
-      <echo>debug 12</echo>
-      <xslt processor="trax" force="yes" style="${XSL}/odds/odd2dtd.xsl" in="p5subset.xml" out="/dev/stdout">
-        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-        <param name="outputDir" expression="${inputDir}/DTD"/>
-        <param name="lang" expression="${lang}"/>
-        <param name="documentationLanguage" expression="${docLang}"/>
-      </xslt>
-      <echo>debug 13</echo>
-      <xslt processor="trax" force="yes" style="${XSL}/odds/odd2relax.xsl" in="p5subset.xml" out="/dev/stdout">
-        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-        <param name="outputDir" expression="${inputDir}/Schema"/>
-        <param name="lang" expression="${lang}"/>
-        <param name="documentationLanguage" expression="${docLang}"/>
-      </xslt>
-      <echo>debug 14</echo>
-      <xslt processor="trax" force="yes" style="${XSL}/odds/extract-isosch.xsl" in="${inputDir}/p5.xml" out="p5.isosch">
-        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      </xslt>
-      <!--
-          These next 2 are XSLT 1, which will not run in SaxonHE
-          9.8.0.5, which is what we are currently running. Thus I have
-          used `xsltproc` here. We could, alternatively, update to
-          SaxonHE 9.8.0.7 which hsa re-instated XSLT 1.0 compatability
-          mode. —Syd, 2021-01-30 (copied from 2020-11-28 commnet)
-      -->
-      <echo>debug 15</echo>
-      <exec executable="xsltproc" failonerror="true">
-        <arg line="--output p5.included.isosch"/>
-        <arg line="Utilities/iso_dsdl_include.xsl"/>
-        <arg line="p5.isosch"/>
-      </exec>
-      <echo>debug 16</echo>
-      <exec executable="xsltproc" failonerror="true">
-        <arg line="--output p5.abstracted.isosch"/>
-        <arg line="Utilities/iso_abstract_expand.xsl"/>
-        <arg line="p5.included.isosch"/>
-      </exec>
-      <echo>debug 17</echo>
-      <xslt processor="trax" force="yes" style="Utilities/iso_svrl_for_xslt2.xsl" in="p5.abstracted.isosch" out="p5examples.isosch.xsl">
-        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      </xslt>
-      <echo>debug 18</echo>
-      <replace file="p5examples.isosch.xsl" token="tei-c.org/ns/1.0" value="tei-c.org/ns/Examples"/>
-    </sequential>
-=======
     <echo>step 1: p5subset XML → JSON</echo>
     <xslt processor="trax" force="yes" style="${XSL}/odds/odd2json.xsl" in="p5subset.xml" out="p5subset.json">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
@@ -240,7 +137,6 @@
     </xslt>
     <echo>step 9b: change TEI NS to Examples NS in p5examples.isosch.xsl</echo>
     <replace file="p5examples.isosch.xsl" token="tei-c.org/ns/1.0" value="tei-c.org/ns/Examples"/>
->>>>>>> dev
     <sequential>
       <echo>step 10: Do ODD processing for p5odds.odd ...</echo>
       <echo>... step 10a</echo>
