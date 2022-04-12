@@ -53,6 +53,13 @@ Child elements of <name/> are only allowed when an external module is being load
           </rule>
         </constraint>
       </constraintSpec>
+      <constraintSpec scheme="schematron" ident="not-except-and-include">
+        <constraint>
+          <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:moduleRef">
+            <report test="@except and @include">It is an error to supply both, the @include and the @except attribute</report>
+          </rule>
+        </constraint>
+      </constraintSpec>
       <remarks versionDate="2011-09-21" xml:lang="en">
         <p>Use of this attribute avoids name collisions (and
         thus invalid schemas) when the external schema being
