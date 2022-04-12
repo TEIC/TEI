@@ -505,7 +505,7 @@ hierarchy and proceeding down to the context node.</p>
 <p>The following example demonstrates an absolute URI reference
 that points to a remote document: 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">The current base URI in force is as defined in the
- W3C <ref target="http://www.w3.org/TR/xmlbase/">XML
+ W3C <ref target="https://www.w3.org/TR/xmlbase/">XML
  Base</ref> recommendation.</egXML></p>
 <p>This example points explicitly to a location on the Web,
 accessible via HTTP<!--, the web Protocol-->. Suppose however that we wish
@@ -687,7 +687,7 @@ chapter and elsewhere in these Guidelines. </p>
         
         Any number of <gi>prefixDef</gi> elements may be provided for the same prefix. A processor may decide to process one or all of them; if it processes only one, it should choose the first one with the correct <att>ident</att> value, so the primary or most important <gi>prefixDef</gi> for any given prefix should appear first in its parent <gi>listPrefixDef</gi>.</p>
       
-      <p>When creating private URI schemes, it is recommended that you avoid using any existing registered prefix. A list of registered prefixes is maintained by IANA at <ref target="http://www.iana.org/assignments/uri-schemes.html">http://www.iana.org/assignments/uri-schemes.html</ref>.</p>
+      <p>When creating private URI schemes, it is recommended that you avoid using any existing registered prefix. A list of registered prefixes is maintained by IANA at <ptr target="http://www.iana.org/assignments/uri-schemes.html"/>.</p>
       
       <p>Note that this mechanism can also be used to dereference other abbreviated pointing systems which are based on prefixes, such as Tag URIs.</p>
       
@@ -746,7 +746,7 @@ kinds of object:
 <list type="gloss">
 <label>Node</label>
 <item>A node is an instance of one of the node kinds defined in
-the <ref target="http://www.w3.org/TR/xpath-datamodel/">XQuery 
+the <ref target="https://www.w3.org/TR/xpath-datamodel/">XQuery 
 1.0 and XPath 2.0 Data Model (Second Edition)</ref>. It represents 
 a single item in the XML information 	set for a document. For pointing
 purposes, the only nodes that are of interest are Text Nodes,
@@ -763,7 +763,7 @@ and behaves as though all tags had been removed. A text stream begins
 at a reference node and encompasses all of the text inside that node (if any)
 and all the text following it in document order. In XPath terms, this would
 encompass all of the text nodes beginning at a particular node, and following 
-it on the <ref target="http://www.w3.org/TR/xpath20/#axes">following axis</ref>.
+it on the <ref target="https://www.w3.org/TR/xpath20/#axes">following axis</ref>.
 </item>
 <label>Point</label>
 <item>A Point represents a dimensionless point between nodes or characters in 
@@ -784,10 +784,10 @@ they cannot be said to have a fixed position.
 <p>The TEI recommends the following seven pointer schemes:
 <list type="gloss">
 <label><name type="xpscheme">xpath()</name></label>
-<item>Addresses a node or nodeset using the XPath syntax. (<ptr target="#SATSXP"/>)</item>
+<item>Addresses a node or node sequence using the XPath syntax. (<ptr target="#SATSXP"/>)</item>
 <label><name type="xpscheme">left()</name> and <name type="xpscheme">right()</name></label>
 <item>addresses the point before (left) or after (right) a node or node 
-set (<ptr target="#SATSL"/> and <ptr target="#SATSR"/>)</item>
+sequence (<ptr target="#SATSL"/> and <ptr target="#SATSR"/>)</item>
 <label><name type="xpscheme">string-index()</name></label>
 <item>addresses a point inside a text node (<ptr target="#SATSSI"/></item>
 <label><name type="xpscheme">range()</name></label>
@@ -813,7 +813,7 @@ towards revising this draft or issuing it as a recommendation. </p>
 
 <p><hi rend="bold">A note on namespaces</hi>: The W3C defines an 
 <name type="xpscheme">xmlns()</name> scheme (see 
-<ref target="http://www.w3.org/TR/xptr-xmlns/">XPointer xmlns() Scheme</ref>) 
+<ref target="https://www.w3.org/TR/xptr-xmlns/">XPointer xmlns() Scheme</ref>) 
 which when prepended to a resolvable pointer allows for the definition of 
 namespace prefixes to be used in XPaths in subsequent pointers. TEI Pointer 
 schemes assume that un-prefixed element names in TEI Pointer XPaths are in the 
@@ -828,15 +828,16 @@ scheme.</p>
 <div type="div4" xml:id="SATSXP">
 <head>xpath()</head>
 <p><code>Sequence xpath(XPATH)</code></p>
-<p>The <name type="xpscheme">xpath()</name> scheme locates zero or more nodes within an XML Information
-  Set. The single argument <rs>XPATH</rs> is an XPath path expression, following the latest
-  scheme adopted by the W3C (currently <ref target="http://www.w3.org/TR/xpath20/">XPath
-    2.0</ref>), that returns a sequence. XPaths returning atomic values (e.g.
-    <name>substring()</name>) are illegal in the <name type="xpscheme">xpath()</name> scheme
-  because they represent extracted values rather than locations in the source document.
-  Because the schemes below involve starting at a node and navigating from there, and
-  because attribute nodes have no intrinsic order, XPath expressions that address attribute
-  nodes should be avoided in schemes other than <name type="xpscheme">xpath()</name>. </p>
+<p>The <name type="xpscheme">xpath()</name> scheme locates zero or more nodes within an XML
+  Information Set. The single argument <rs>XPATH</rs> is an XPath selection pattern, as
+  defined in <ref target="https://www.w3.org/TR/xslt-30/#dt-selection-pattern">XSLT
+    3.0</ref>, that returns a node or sequence of nodes. XPaths returning atomic values
+  (e.g. <name>substring()</name>) are illegal in the <name type="xpscheme">xpath()</name>
+  scheme because they represent extracted values rather than locations in the source
+  document. Because the schemes below involve starting at a node and navigating from there,
+  and because attribute nodes have no intrinsic order, XPath expressions that address
+  attribute nodes should be avoided in schemes other than <name type="xpscheme"
+    >xpath()</name>. </p>
 <p>The example below, and all subsequent examples in this section refer 
 to the following TEI fragment<anchor xml:id="SATSXP-ex"/>:
 <!-- Ostrakon from Trimithis (O.Trim 1, 1)  http://papyri.info/ddbdp/o.trim;1;1 -->
@@ -855,8 +856,10 @@ to the following TEI fragment<anchor xml:id="SATSXP-ex"/>:
 <code>choice</code> in line 1 of the example might look like:
 <lb/><code>#xpath(//lb[@n='1']/following-sibling::choice[1]/reg)</code>. 
   Note that XPath values must be assumed to start from the document root. They cannot be relative 
-  to the element bearing the attribute that uses the pointer because TEI Pointers are URIs.
-</p>
+  to the element bearing the attribute that uses the pointer because TEI Pointers are URIs. Care
+  should be taken to ensure that XPaths used in TEI Pointers match only a single node, unless
+  multiple matches are desired. The examples that follow are relatively simple because the
+  document they refer to is short and does not contain many elements.</p>
 <p>When an XPath is interpreted by a TEI processor, the
 information set of the referenced document is interpreted
 without any additional information supplied by any schema
@@ -886,9 +889,11 @@ which is either an <rs>XPATH</rs> as defined above or an
 <rs>IDREF</rs>, the value of an <att>xml:id</att>
 occurring in the document addressed by the base URI in effect
 for the pointer.</p>
-<p>Example: the pointer <code>#left(//gap[1])</code> 
+<p>Example: the pointer <code>#left(//supplied[1])</code>
 indicates the point between the first <code>lb</code> and the first
-  <code>gap</code> in the <ref target="#SATSXP-ex">example</ref> above.</p>
+<code>supplied</code> in the <ref target="#SATSXP-ex">example</ref> above.</p>
+<p>Example: <code>#left(//gap[1])</code> indicates the point immediately before
+the first <code>gap</code> element in line two and the string <code>si</code>.</p>
 <p>Example: <code>#left(line1)</code> indicates the point immediately before
 the <code><![CDATA[<lb n="1"/>]]></code> element.</p></div>
 
@@ -922,7 +927,7 @@ LENGTH parameter found below in the <name type="xpscheme">string-range()</name>
 scheme) are measured in characters. What is considered a single character will
 depend (assuming the document being evaluated is in Unicode) on the 
 Normalization Form in use (see 
-<ref target="http://unicode.org/reports/tr15/">UNICODE NORMALIZATION 
+<ref target="https://unicode.org/reports/tr15/">UNICODE NORMALIZATION 
 FORMS</ref>). A letter followed by a combining diacritic counts as two 
 characters, but the same diacritic precombined with a letter would count 
 as a single character. Compare, for example, &#xE9; (<code>\u0060</code> 
@@ -1001,7 +1006,7 @@ the non-contiguous sequence <q>in mentem</q>.</p>
 <p>The match scheme locates a sequence based on matching the REGEX parameter
 against a text stream relative to the reference node identified by the first 
 parameter. REGEX is a regular expression as defined by 
-<ref target="http://www.w3.org/TR/xpath-functions/#regex-syntax">XQuery 
+<ref target="https://www.w3.org/TR/xpath-functions/#regex-syntax">XQuery 
 1.0 and XPath 2.0 Functions and Operators (Second Edition)</ref>, with some
 modifications: 
 <list>
@@ -1067,7 +1072,7 @@ corresponds with it. This is provided by the  <gi>refsDecl</gi> element <!--(whi
 which contains an algorithm for translating a canonical reference string
 (like <val>Matt 5:7</val>) into a URI such as <code>#xpath(//div[@n='Matt']/div[5]/div[7])</code>. The
 <gi>refsDecl</gi> element is described in section <ptr target="#HD54"/>; the following example is discussed in more
-detail below in section <ptr target="#SACRWE"/>.
+  detail below in section <ptr target="#SACRWE"/>. An alternative and less verbose method is described in section <ptr target="#SACRCS"/>.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl xml:id="biblical">
    <cRefPattern matchPattern="(.+) (.+):(.+)" replacementPattern="#xpath(//div[@n='$1']/div[@n='$2']/div[@n='$3]')">
     <p>This pointer pattern extracts and references the <q>book,</q>
@@ -1119,7 +1124,7 @@ specific steps to transform it into a URI reference:
 <p>The regular expression language used as the value of the
 <att>matchPattern</att> attribute is that used for the
 <term>pattern</term> facet of the World Wide Web Consortium's
-XML Schema Language in an <ref target="http://www.w3.org/TR/xmlschema-2/#regexs">Appendix to
+XML Schema Language in an <ref target="https://www.w3.org/TR/xmlschema-2/#regexs">Appendix to
 XML Schema Part 2</ref>.<note place="bottom">As always
 seems to be the case, no two regular expression languages are
 precisely the same. For those used to Perl regular expressions,
@@ -1212,7 +1217,65 @@ to <code>$</code> during processing.</p>
     references in non-TEI documents (such as plain text
     documents), possibly as part of their conversion to TEI.</p>
 </div>
-      
+      <div type="div4" xml:id="SACRCS">
+        <head>Citation Structures</head>
+        <p>Citation structures provide a more thorough and concise mechanism for describing canonical references
+           and the ways those references map on to parts of a TEI document. A <gi>citeStructure</gi> element
+           describes a single step in a reference, such as <q>Matt</q>, and may nest to handle multi-part references.
+        </p>
+        <p>The equivalent structure to the set of <gi>cRefPattern</gi>s in <ptr target="#SACRWE"/> would be:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <refsDecl xml:id="biblical2">
+            <citeStructure unit="book" match="//body/div" use="@n">
+              <citeStructure unit="chapter" match="div" use="@n" delim=" ">
+                <citeStructure unit="verse" match="div" use="@n" delim=":"/>
+              </citeStructure>
+            </citeStructure>
+          </refsDecl>
+        </egXML>
+        </p>
+        <p>An application wishing to resolve a canonical reference such as <val>Matt 5:7</val> might follow this procedure:
+          <list rend="numbered">
+            <item>Ascertain the correct <gi>refsDecl</gi>
+              following the rules summarized in section <ptr target="#CCAS3"/>.</item>
+            <item>Begin with the outer <tag>citeStructure</tag>. If it has a <att>delim</att> attribute 
+              and the reference begins with the value of <att>delim</att> then take the portion of 
+              the reference after the value of <att>delim</att> as input for the next child <tag>citeStructure</tag>.</item>
+            <item>For each nested <tag>citeStructure</tag>, if the input reference string contains the value 
+              of the <att>delim</att>, then split the string on the value of the <att>delim</att> attribute. 
+              If the input string does not contain <att>delim</att>, then stop. Take the portion of the input 
+              string after the value of <att>delim</att> and use it as the input string for the child <tag>citeStructure</tag>. 
+              After processing the outer <tag>citeStructure</tag>, the output will be <code>('Matt 5:7')</code>, after 
+              the second, <code>('Matt', '5:7')</code>. The end result will be a 
+              sequence like <code>('Matt','5','7')</code>.</item>
+            <item>For each item in the resulting sequence, resolve the matching node by evaluating 
+              the XPath in <att>match</att> with the predicate found in <att>use</att>, using the 
+              context of the previously matched node, if any. Start with the outer <gi>citeStructure</gi> 
+              and move to the next child <tag>citeStructure</tag> for each step in the sequence. For 
+              example, for the first <tag>citeStructure</tag>, we could construct an XPath 
+              <code>//div[@n='Matt']</code>. The full XPath after the reference <val>Matt 5:7</val> is resolved will be 
+              <code>//div[@n='Matt']/div[@n='5']/div[@n='7']</code>.</item>
+          </list>
+          One advantage <gi>citeStructure</gi> has is that it can be used to <emph>generate</emph> canonical 
+          references, using the declared citation structure to query the text structure. This means it is 
+          possible to automatically produce a list of resolvable citations for a TEI document. It also 
+          enables the automatic breaking of documents into smaller chunks for presentation and automated 
+          generation of tables of contents.</p>
+        <p>Citation structures may in addition specify how informational properties are to be extracted from the
+          document sections they identify, using the <gi>citeData</gi> element. For example, if a TEI document 
+          is divided into chapters with a <gi>div</gi> per chapter and those chapters have titles, contained in
+          <gi>head</gi> elements, then we might declare a citation structure for the document thus:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <citeStructure unit="chapter" match="/TEI/text/body/div" use="position()" delim="ch. ">
+              <citeData property="http://purl.org/dc/terms/title" use="head"/>
+            </citeStructure>
+          </egXML>
+        </p>
+        <p>This specifies that chapter references are given in the form <q>ch. n</q>, where <q>n</q>
+          is the position of the <gi>div</gi> in the <gi>body</gi> of the document, and that we may obtain
+          the title of the chapter (identified by the Dublin Core property <code>title</code>) from the chapter
+          heading. This would, for example, enable the automated generation of a chapter listing for the document.</p>
+      </div>
     </div>
   </div>
   <div type="div2" xml:id="SASE">
@@ -2448,13 +2511,13 @@ The <att>xml:id</att> attributes of
     <p><q>And after that,</q> he continued, <q>do not be deceived by others.</q></p>
     <p><q>Yes, sir; yes, sir,</q> he replied.</p>
     <ab type="aggregation">
-<ptr xml:id="rzuiq1" target="./#xpath(//div1[6]/p[1]/q[1])"/>
-<ptr xml:id="rzuiq2" target="./#xpath(//div1[6]/p[2]/q[1])"/>
-<ptr xml:id="rzuiq3" target="./#xpath(//div1[6]/p[3]/q[1])"/>
-<ptr xml:id="rzuiq4" target="./#xpath(//div1[6]/p[4]/q[1])"/>
-<ptr xml:id="rzuiq5" target="./#xpath(//div1[6]/p[5]/q[1])"/>
-<ptr xml:id="rzuiq6" target="./#xpath(//div1[6]/p[5]/q[2])"/>
-<ptr xml:id="rzuiq7" target="./#xpath(//div1[6]/p[6]/q[1])"/>
+<ptr xml:id="rzuiq1" target="#xpath(//div1[6]/p[1]/q[1])"/>
+<ptr xml:id="rzuiq2" target="#xpath(//div1[6]/p[2]/q[1])"/>
+<ptr xml:id="rzuiq3" target="#xpath(//div1[6]/p[3]/q[1])"/>
+<ptr xml:id="rzuiq4" target="#xpath(//div1[6]/p[4]/q[1])"/>
+<ptr xml:id="rzuiq5" target="#xpath(//div1[6]/p[5]/q[1])"/>
+<ptr xml:id="rzuiq6" target="#xpath(//div1[6]/p[5]/q[2])"/>
+<ptr xml:id="rzuiq7" target="#xpath(//div1[6]/p[6]/q[1])"/>
 <joinGrp evaluate="one" result="q">
   <join target="#rzuiq1 #rzuiq2 #rzuiq4 #rzuiq7">
    <desc>what Zui-Gan said</desc></join>
@@ -2913,17 +2976,17 @@ combination of exclusive and inclusive <gi>alt</gi> elements, as follows.
   <head>Overview of XInclude </head>
    <p>Stand-off markup which relies on the inclusion of virtual
    content is adequately supported by the W3C XInclude recommendation,
-   which is also recommended for use by these Guidelines.<note place="bottom">The version on which this text is based is the <ref target="http://www.w3.org/TR/2004/REC-xinclude-20041220/">W3C
+   which is also recommended for use by these Guidelines.<note place="bottom">The version on which this text is based is the <ref target="https://www.w3.org/TR/2004/REC-xinclude-20041220/">W3C
    Recommendation dated <date when="2004-12-20">20 December
    2004</date>.</ref>.</note> XInclude defines a namespace
    (<mentioned>http://www.w3.org/2001/XInclude</mentioned>), which in
    these Guidelines will be associated with the prefix
    <mentioned>xi:</mentioned>, and exactly two elements,
    <gi>xi:include</gi> and <gi>xi:fallback</gi>. XInclude relies on
-   the <ref target="http://www.w3.org/TR/xptr-framework/">XPointer
+   the <ref target="https://www.w3.org/TR/xptr-framework/">XPointer
    framework</ref> discussed elsewhere in this chapter to point to the
    actual fragments of text to be internalized. Although XInclude only
-   requires support for the <ref target="http://www.w3.org/TR/xptr-element/"><code>element()</code></ref>
+   requires support for the <ref target="https://www.w3.org/TR/xptr-element/"><code>element()</code></ref>
    scheme of XPointer, these Guidelines permit the use of any of the
    pointing schemes discussed in section <ptr target="#SAXP"/>.</p>
  
@@ -3405,7 +3468,7 @@ chapters<!-- , particularly in sections <ptr target="#AILA"/>, <ptr target="#FSF
   <p>The module described in this chapter makes available the
   following components:
   <moduleSpec xml:id="DSA" ident="linking">
-    <altIdent type="FPI">Linking, Segmentation, and Alignment</altIdent>
+    <idno type="FPI">Linking, Segmentation, and Alignment</idno>
     <desc xml:lang="en" versionDate="2019-07-07">Linking, segmentation, and alignment</desc>
     <desc xml:lang="fr" versionDate="2018-07-12">Liens, segmentation et alignement</desc>
     <desc xml:lang="zh-TW" versionDate="2020-12-20">連結、分割與隊列</desc>

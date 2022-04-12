@@ -11,7 +11,7 @@
   >
 
   <xsl:variable name="myName" select="'TEI-to-tei_customization.xslt'"/>
-  <xsl:variable name="version" select="'0.6.1b'"/>
+  <xsl:variable name="version" select="'0.7.0b'"/>
   <xsl:param name="versionDate" select="format-date(current-date(),'[Y]-[M01]-[D01]')"/>
 
   <!--
@@ -36,21 +36,28 @@
       ** output ODD should be documented in the CHANGE LOG block
       ** comment, immediately below.
   -->
-  <!-- *********************** CHANGE LOG for XSLT changes *********************** -->
-  <!-- 2017-11-05 by Syd: Harumph. Found that our output is not valid against      -->
-  <!--   p5odds.rng because ident/@type is not allowed to be "test", so I removed  -->
-  <!--   the attribute. -->
-  <!-- 2017-04-07 by Syd: bug fixes:                                               -->
-  <!--   * allow <classSpec> to be empty                                           -->
-  <!--   * actually enforce constraints listed in remarks for <schemaSpec>         -->
-  <!-- 2017-01-16 by Syd: embarrassing — copy over useful bits from last time I    -->
-  <!--   did the exact same thing. That was 2016-06-10/12, immediately before the  -->
-  <!--   advanced TEI class James & I did at DHSI. I had entirely forgotten I had  -->
-  <!--   already done this. Sigh.                                                  -->
-  <!-- *********************** segnahc TLSX rof GOL EGNAHC *********************** -->
+  <!--
+      *********************** CHANGE LOG for XSLT changes *********************** 
+      2017-11-05 by Syd: Harumph. Found that our output is not valid against
+        p5odds.rng because ident/@type is not allowed to be "test", so I removed
+        the attribute.
+      2017-04-07 by Syd: bug fixes:
+        * allow <classSpec> to be empty
+        * actually enforce constraints listed in remarks for <schemaSpec>
+      2017-01-16 by Syd: embarrassing — copy over useful bits from last time I
+        did the exact same thing. That was 2016-06-10/12, immediately before the
+        advanced TEI class James & I did at DHSI. I had entirely forgotten I had
+        already done this. Sigh.
+      *********************** segnahc TLSX rof GOL EGNAHC ***********************
+  -->
 
   <xsl:variable name="revisionDesc">
     <revisionDesc>
+      <change who="#sbauman.emt" when="2022-04-03">
+        Motivated by <ref
+        target="https://github.com/TEIC/Stylesheets/issues/136">#136</ref>,
+        restrict <att>docLang</att> of <gi>schemaSpec</gi> to only 1 value.
+      </change>
       <change who="#sbauman.emt" when="2020-10-29">
         Per <ref
         target="https://github.com/TEIC/TEI/issues/2050">#2050</ref>,
@@ -730,10 +737,14 @@
                   </constraint>
                 </constraintSpec>
                 <constraintSpec scheme="schematron" ident="only-one-schemaSpec">
-                  <desc>TEI permits <gi>schemaSpec</gi> as a repeatable child of <gi>div</gi> (or
-                      <gi>body</gi>) or of <gi>encodingDesc</gi>. But <name type="cmd">roma</name>
-                    only processes the first <gi>schemaSpec</gi> found (in document order). So we
-                    just limit ourselves to 1 and only 1.</desc>
+                  <desc>TEI permits <gi>schemaSpec</gi> as a
+                  repeatable child of a variety of elements (including
+                  <gi>front</gi>, <gi>body</gi>, <gi>back</gi>,
+                  <gi>encodingDesc</gi>, <gi>div</gi>, or any numbered
+                  division element). But <name type="cmd">roma</name>
+                  only processes the first <gi>schemaSpec</gi> found
+                  (in document order). So we just limit ourselves to 1
+                  and only 1.</desc>
                   <constraint>
                     <sch:rule context="/">
                       <sch:report test="count( //tei:schemaSpec ) eq 0">There's no ＜schemaSpec＞, so
@@ -745,6 +756,20 @@
                   </constraint>
                 </constraintSpec>
                 <attList>
+                  <attDef ident="docLang" mode="change">
+                    <desc versionDate="2022-04-03" xml:lang="en">
+                      specifies which language to use when creating
+                      documentation if the description for an element,
+                      attribute, class, or macro is available in more
+                      than one language
+                    </desc>
+                    <datatype minOccurs="1" maxOccurs="1">
+                      <dataRef key="teidata.language"/>
+                    </datatype>
+                    <remarks xml:lang="en" versionDate="{$versionDate}">
+                      <p>The current TEI ODD processor only handles 1 value as the value of <att>docLang</att>.</p>
+                    </remarks>
+                  </attDef>
                   <attDef ident="start" mode="replace">
                     <desc xml:lang="en" versionDate="{$versionDate}">specifies entry points to the schema, i.e. which elements may be used as
                       the root of documents conforming to it.</desc>
@@ -1476,13 +1501,13 @@
                 <desc>Constrains the <att>source</att> attribute of
                 various tagset documentation elements to those values
                 recommended by TEI</desc>
-		<!--
-		    WARNING: this rule/@context is not auto-generated,
-		    and may need to be updated to match the TEI
-		    Guidelines. Sadly, TEI P5 no longer has a separate
-		    class for this (it used to be att.readFrom),
-		    @source is now global.
-		-->
+                <!--
+                    WARNING: this rule/@context is not auto-generated,
+                    and may need to be updated to match the TEI
+                    Guidelines. Sadly, TEI P5 no longer has a separate
+                    class for this (it used to be att.readFrom),
+                    @source is now global.
+                -->
                 <constraint>
                   <sch:rule context=" tei:classRef[@source]
                                      |tei:dataRef[@source]

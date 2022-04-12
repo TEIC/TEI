@@ -1,10 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
-  Copyright TEI Consortium. 
-  Dual-licensed under CC-by and BSD2 licences 
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright TEI Consortium.
+  Dual-licensed under CC-by and BSD2 licences
   See the file COPYING.txt for details
   $Date$
   $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="namesdates" ident="listNym">
+  -->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="listNym" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
   <gloss versionDate="2007-07-04" xml:lang="en">list of canonical names</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">표준 이름 목록</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">lista de nombres canónicos</gloss>
@@ -24,26 +27,27 @@
     <memberOf key="att.sortable"/>
     <memberOf key="model.listLike"/>
   </classes>
-  <content>
-    <sequence>
-      
-        <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
-        <elementRef key="desc" minOccurs="0" maxOccurs="unbounded"/>
-      
-        <alternate minOccurs="1" maxOccurs="unbounded">
-          <elementRef key="nym"/>
-          <elementRef key="listNym"/>
-        </alternate>
-      
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <elementRef key="relation"/>
-          <elementRef key="listRelation"/>
-        </alternate>
-      
-    </sequence>
-  </content>
-  <constraintSpec ident="listNym-xeno" scheme="schematron">
+<content>
+ <sequence>
+   <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+   <elementRef key="desc" minOccurs="0" maxOccurs="unbounded"/>
+   <alternate minOccurs="0" maxOccurs="unbounded">
+     <elementRef key="relation" minOccurs="1" maxOccurs="1"/>
+     <elementRef key="listRelation" minOccurs="1" maxOccurs="1"/>
+   </alternate>
+   <sequence minOccurs="1" maxOccurs="unbounded">
+     <alternate minOccurs="1" maxOccurs="unbounded">
+       <elementRef key="nym" minOccurs="1" maxOccurs="1"/>
+       <elementRef key="listNym" minOccurs="1" maxOccurs="1"/>
+     </alternate>
+     <alternate minOccurs="0" maxOccurs="unbounded">
+       <elementRef key="relation" minOccurs="1" maxOccurs="1"/>
+       <elementRef key="listRelation" minOccurs="1" maxOccurs="1"/>
+     </alternate>
+   </sequence>
+ </sequence>
+</content>
+<constraintSpec ident="listNym-xeno" scheme="schematron">
     <constraint>
       <sch:pattern id="declarable_listNym" is-a="declarable">
         <sch:param name="tde" value="tei:listNym"/>

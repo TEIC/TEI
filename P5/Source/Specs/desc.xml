@@ -18,9 +18,11 @@
   <gloss versionDate="2007-01-21" xml:lang="it">descrizione</gloss>
   <gloss versionDate="2008-12-09" xml:lang="fr">description</gloss>
   <gloss versionDate="2017-06-04" xml:lang="de">Beschreibung</gloss>
-  <desc versionDate="2016-09-25" xml:lang="en">contains a brief
-  description of the object documented by its parent element,
-  typically a documentation element or an entity.</desc>
+  <desc versionDate="2021-03-15" xml:lang="en">contains a short description of the purpose, function, or
+    use of its parent element,
+    or when the parent is a documentation element, describes or defines the object being documented. 
+   <!--Alternate: provides a short description of that which its parent element represents or documents.-->
+  </desc>
   <desc versionDate="2007-12-20" xml:lang="ko">요소, 속성, 또는 속성 값의 목적과 적용에 대한 간단한 기술을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含一段簡短描述，說明一元素、屬性、或屬性值的應用與目的。</desc>
   <desc versionDate="2008-04-06" xml:lang="ja">当該要素，属性，属性値を採用した目的の簡単な解説を示す．</desc>
@@ -63,7 +65,7 @@
   </constraintSpec>
   <attList>
     <attDef ident="type" mode="change">
-      <valList type="semi">
+      <valList type="semi" mode="add">
         <valItem ident="deprecationInfo">
           <gloss versionDate="2018-09-14" xml:lang="en">deprecation
           information</gloss>
@@ -74,12 +76,6 @@
         </valItem>
       </valList>
       <exemplum xml:lang="en">
-        <!-- 2020-01-30 EBB: I'm setting a date in the long distant
-             future for this example because if I put its actual
-             @validUntil historic date (2019) in place, it breaks our
-             build. -->
-        <!-- 2020-01-30 SB: Indeed it does, but why? Shouldn't. See
-             Stylesheets ticket #417. -->
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
            <dataSpec module="tei" ident="teidata.point" validUntil="2050-02-25">
             <desc type="deprecationInfo" versionDate="2018-09-14"
@@ -93,10 +89,30 @@
       </exemplum>
     </attDef>
   </attList>
-  <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <desc>contains a brief description of the purpose and intended use  of a documentation element,  or a brief characterisation of a parent entity </desc>
+  <exemplum xml:lang="en" versionDate="2021-03-15">
+    <p>Example of a <gi>desc</gi> element inside a documentation element.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SELF">
+      <dataSpec module="tei" ident="teidata.point">
+        <desc versionDate="2010-10-17" xml:lang="en">defines the data type used to express a point in cartesian space.</desc>
+        <content>
+          <dataRef name="token" restriction="(-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?)"/>
+        </content>
+        <!-- ... -->
+      </dataSpec>
     </egXML>
+  </exemplum>
+  <exemplum xml:lang="en" versionDate="2021-03-15">
+    <p>Example of a <gi>desc</gi> element in a non-documentation element.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SELF"> 
+        <place xml:id="KERG2">
+          <placeName>Kerguelen Islands</placeName>
+          <!-- ... -->
+          <terrain>
+            <desc>antarctic tundra</desc>
+          </terrain>
+          <!-- ... -->
+        </place>
+      </egXML> 
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

@@ -1,10 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
     Copyright TEI Consortium.
     Dual-licensed under CC-by and BSD2 licences
     See the file COPYING.txt for details
     $Date$
     $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="core" ident="listBibl">
+    -->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="listBibl" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
   <gloss versionDate="2005-01-14" xml:lang="en">citation list</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">인용 목록</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">書目列表</gloss>
@@ -15,10 +18,8 @@
   <desc versionDate="2005-01-14" xml:lang="en">contains a list of bibliographic citations of any kind.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">여러 종류의 서지 인용 목록을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含任何種類的書目資料列表。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">
-        書誌項目引用のリストを示す．</desc>
-  <desc versionDate="2009-01-06" xml:lang="fr">contient une liste de références
-        bibliographiques de toute nature.</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">書誌項目引用のリストを示す．</desc>
+  <desc versionDate="2009-01-06" xml:lang="fr">contient une liste de références bibliographiques de toute nature.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene una lista de citas bibliográficas de cualquier tipo.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una lista di citazioni bibliografiche di qualsiasi natura.</desc>
   <desc versionDate="2017-06-13" xml:lang="de">enthält eine Liste von bibliografischen Angaben jeglicher Art.</desc>
@@ -34,22 +35,21 @@
   </classes>
   <content>
     <sequence>
-      
-        <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
-        <elementRef key="desc" minOccurs="0" maxOccurs="unbounded"/>
-      
-      
-        <alternate minOccurs="1" maxOccurs="unbounded">
-          <classRef key="model.biblLike"/>
-          <classRef key="model.milestoneLike"/>
-        </alternate>
-      
-      
+      <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      <elementRef key="desc" minOccurs="0" maxOccurs="unbounded"/>
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.milestoneLike" minOccurs="1" maxOccurs="1"/>
+        <elementRef key="relation" minOccurs="1" maxOccurs="1"/>
+        <elementRef key="listRelation" minOccurs="1" maxOccurs="1"/>
+      </alternate>
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <classRef key="model.biblLike" minOccurs="1" maxOccurs="unbounded"/>
         <alternate minOccurs="0" maxOccurs="unbounded">
-          <elementRef key="relation"/>
-          <elementRef key="listRelation"/>
+          <classRef key="model.milestoneLike" minOccurs="1" maxOccurs="1"/>
+          <elementRef key="relation" minOccurs="1" maxOccurs="1"/>
+          <elementRef key="listRelation" minOccurs="1" maxOccurs="1"/>
         </alternate>
-      
+      </sequence>
     </sequence>
   </content>
   <constraintSpec ident="listBibl-xeno" scheme="schematron">

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright TEI Consortium.
+Dual-licensed under CC-by and BSD2 licences
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec ident="charProp" module="gaiji" validUntil="2022-02-15" xml:id="CHARPROP"
+    xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <desc type="deprecationInfo" versionDate="2020-01-29"
+    xml:lang="en">The use of <gi>charProp</gi> to specify a character
+    property is being replaced by either <gi>unicodeProp</gi>,
+    <gi>localProp</gi>, or <gi>unihanProp</gi>.</desc>
+    <gloss versionDate="2005-01-14" xml:lang="en">character property</gloss>
+    <gloss versionDate="2007-12-20" xml:lang="ko">문자 특성</gloss>
+    <gloss versionDate="2007-05-02" xml:lang="zh-TW">文字性質</gloss>
+    <gloss versionDate="2007-06-12" xml:lang="fr">propriété d'un caractère</gloss>
+    <gloss versionDate="2007-05-04" xml:lang="es">propiedad de carácter</gloss>
+    <gloss versionDate="2007-01-21" xml:lang="it">proprietà del carattere.</gloss>
+    <desc versionDate="2005-01-14" xml:lang="en">provides a name and value for some property of the
+        parent character or glyph.</desc>
+    <desc versionDate="2007-12-20" xml:lang="ko">상위 문자 또는 그림문자의 특성에 대한 이름과 값을 제시한다.</desc>
+    <desc versionDate="2007-05-02" xml:lang="zh-TW">提供父文字或字體的性質名稱與性質值。</desc>
+    <desc versionDate="2008-04-05" xml:lang="ja">当該字またはグリフの特性に関する名前や値を示す．</desc>
+    <desc versionDate="2009-05-27" xml:lang="fr">fournit un nom et une valeur pour une propriété
+        quelconque d'un caractère ou d'un glyphe défini dans l'élément parent</desc>
+    <desc versionDate="2007-05-04" xml:lang="es">proporciona un nombre y un valor para alguna
+        propiedad del carácter o pictograma del padre.</desc>
+    <desc versionDate="2007-01-21" xml:lang="it">fornisce un nome e un valore per alcune proprietà
+        di un carattere o glifo parente.</desc>
+    <classes>
+        <memberOf key="att.global"/>
+        <memberOf key="att.typed"/>
+    </classes>
+    <content>
+        <sequence>
+            <alternate>
+                <elementRef key="unicodeName"/>
+                <elementRef key="localName"/>
+            </alternate>
+            <elementRef key="value"/>
+        </sequence>
+    </content>
+    <!-- TODO Phase 3: Mention conversion script as part of deprecation warning. #1805 -->
+    <exemplum xml:lang="und">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"> <charProp>
+            <unicodeName>Decomposition_Mapping</unicodeName> <value>circle</value> </charProp>
+            <charProp> <localName>daikanwa</localName> <value>36</value> </charProp> </egXML>
+    </exemplum>
+    <exemplum versionDate="2008-04-06" xml:lang="fr">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"> <charProp>
+            <unicodeName>Decomposition_Mapping</unicodeName> <value>circle</value> </charProp>
+            <charProp> <localName>daikanwa</localName> <value>36</value> </charProp> </egXML>
+    </exemplum>
+    <remarks versionDate="2007-12-05" xml:lang="en">
+        <p>If the property is a Unicode Normative Property, then its
+        <gi>unicodeName</gi> must be supplied. Otherwise, its name
+        must be specied by means of a <gi>localName</gi>.</p>
+    </remarks>
+    <remarks versionDate="2007-06-12" xml:lang="fr">
+        <p>Si la propriété est une propriété normative Unicode (Unicode Normative Property), alors
+            son <gi>unicodeName</gi> doit être donné. Sinon son nom devra être précisé par un
+            élément <gi>localName</gi>.</p>
+        <p>Dans une mise à jour ultérieure, des contraintes additionnelles seront définies sur les
+            combinaisons possibles valeur/nom, en utilisant des règles Schematron.</p>
+    </remarks>
+    <remarks versionDate="2008-04-05" xml:lang="ja">
+        <p> 当該要素の内容がユニコード基準特性の場合，要素<gi>unicodeName</gi> が使用される．それ以外では，要素<gi>localname</gi>で名前を示す必要
+            がある． </p>
+        <p> 後日，Schematronに従った追加制約が定義されるかもしれない． </p>
+    </remarks>
+    <listRef>
+        <ptr target="#D25-20"/>
+    </listRef>
+</elementSpec>
