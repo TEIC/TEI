@@ -120,13 +120,10 @@ detest: checkrnv
 	-rnv detest.rnc detest.xml > detest_xml_relaxng.log 2>&1
 	@echo "--- validate XML file using Schematron using Saxon:"
 	$(SAXON) -s:detest.xml -xsl:detest.xsl > detest_xml_schematron.log 2>&1
-	@echo "--- combine the outputs of above into one large log file (detest.log):"
-	grep "\[xslt\]" detest_odd_schematron.log | sed 's/Processing.*detest.odd//' | sed 's/Loading.*message.isosch.xsl//' > detest.log
-	sed 's/.*detest.xml:/detest.xml:/' detest_xml_relaxng.log >> detest.log
-	sed 's/.*detest.xml:/detest.xml:/' detest_xml_schematron.log >> detest.log
-	rm -f detest_odd_schematron.log detest_xml_relaxng.log detest_xml_schematron.log
-	@echo "--- compare the one large log file just created to the one in expected-results/:"
-	diff -C0 -bBw detest.log expected-results/detest.log
+	@echo "--- compare each of the 3 log files just created to the corresponding one in expected-results/:"
+	diff -C0 -bBw expected-results/detest_odd_schematron.log ./
+	diff -C0 -bBw expected-results/detest_xml_relaxng.log    ./
+	diff -C0 -bBw expected-results/detest_xml_schematron.log ./
 
 clean:
 	@echo " "
