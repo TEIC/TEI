@@ -112,7 +112,7 @@ detest: checkrnv
 #	is a RelaxNG error the build dies and no output is generated
 	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd validateodd > detest_odd_schematron.log 2>&1
 	@echo "--- run ant to compile ODD file inoto RelaxNG and Schematron"
-	@echo "(detest.odd → detest.rng & detst.isosch):"
+	@echo "(detest.odd → detest.rng & detest.isosch):"
 	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd compileodd rng isoschematron cleanup
 	@echo "--- convert RelaxNG to compact syntax with trang (detest.rng → detest.rnc):"
 	${TRANG} detest.rng detest.rnc
@@ -126,8 +126,8 @@ detest: checkrnv
 #	when executed in different environments (like the Travis server, e.g.). Thus rather than comparing the files
 #	directly, we delete those lines first, and compare the results of deletions.
 	bash -c "diff -C0 -bBw  \
-	  <(fgrep '[xslt]' expected-results/detest_odd_schematron.log | grep -v 'xslt\] Processing.*detest.odd|xslt\] Loading.*message.isosch.xsl')  \
-	  <(fgrep '[xslt]'                ./detest_odd_schematron.log | grep -v 'xslt\] Processing.*detest.odd|xslt\] Loading.*message.isosch.xsl')"
+	  <(grep -F '[xslt]' expected-results/detest_odd_schematron.log | grep -Ev 'xslt\] Processing.*detest.odd|xslt\] Loading.*message.isosch.xsl')  \
+	  <(grep -F '[xslt]'                ./detest_odd_schematron.log | grep -Ev 'xslt\] Processing.*detest.odd|xslt\] Loading.*message.isosch.xsl')"
 	diff -C0 -bBw expected-results/detest_xml_relaxng.log    ./
 	diff -C0 -bBw expected-results/detest_xml_schematron.log ./
 
