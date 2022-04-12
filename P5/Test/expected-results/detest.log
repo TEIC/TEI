@@ -61,34 +61,34 @@ required:
 	element http://www.tei-c.org/ns/1.0^cb
 	element http://www.tei-c.org/ns/1.0^fw
 	element http://www.tei-c.org/ns/1.0^anchor
-detest.xml:180:4: error: attribute ^target with invalid value "#spanTest"
+detest.xml:180:11: error: attribute ^target with invalid value "#spanTest"
 required:
 	data http://www.w3.org/2001/XMLSchema-datatypes^anyURI
-detest.xml:186:4: error: missing attributes of http://www.tei-c.org/ns/1.0^media
+detest.xml:186:11: error: missing attributes of http://www.tei-c.org/ns/1.0^media
 required:
 	attribute ^url
-detest.xml:187:4: error: missing attributes of http://www.tei-c.org/ns/1.0^media
+detest.xml:187:11: error: missing attributes of http://www.tei-c.org/ns/1.0^media
 required:
 	attribute ^mimeType
-detest.xml:193:44: error: invalid data or text not allowed
+detest.xml:193:51: error: invalid data or text not allowed
 required:
 	after
-detest.xml:194:34: error: invalid data or text not allowed
+detest.xml:194:41: error: invalid data or text not allowed
 required:
 	after
-detest.xml:195:54: error: invalid data or text not allowed
+detest.xml:195:61: error: invalid data or text not allowed
 required:
 	after
-detest.xml:196:18: error: invalid data or text not allowed
+detest.xml:196:25: error: invalid data or text not allowed
 required:
 	after
-detest.xml:219:5: error: element http://www.tei-c.org/ns/1.0^altIdentifier not allowed
+detest.xml:219:12: error: element http://www.tei-c.org/ns/1.0^altIdentifier not allowed
 required:
 	element http://www.tei-c.org/ns/1.0^msIdentifier
-detest.xml:222:3: error: unfinished content of element http://www.tei-c.org/ns/1.0^msPart
+detest.xml:222:10: error: unfinished content of element http://www.tei-c.org/ns/1.0^msPart
 required:
 	element http://www.tei-c.org/ns/1.0^msIdentifier
-detest.xml:251:3: error: element http://www.tei-c.org/ns/1.0^idno not allowed
+detest.xml:251:10: error: element http://www.tei-c.org/ns/1.0^idno not allowed
 required:
 	after
 allowed:
@@ -101,6 +101,9 @@ allowed:
 	element http://www.tei-c.org/ns/1.0^listRef
 	element http://www.tei-c.org/ns/1.0^relatedItem
 	element http://www.tei-c.org/ns/1.0^citedRange
+detest.xml:321:12: error: attribute ^target with invalid value ""
+required:
+	data http://www.w3.org/2001/XMLSchema-datatypes^anyURI
 error: some documents are invalid
  @calendar indicates one or more systems or calendars to
               which the date represented by the content of this element belongs, but this
@@ -153,6 +156,9 @@ subst must have at least one child add and at least one child del or surplus (ch
 subst must have at least one child add and at least one child del or surplus (child::tei:add and (child::tei:del or child::tei:surplus))
 subst must have at least one child add and at least one child del or surplus (child::tei:add and (child::tei:del or child::tei:surplus))
 subst must have at least one child add and at least one child del or surplus (child::tei:add and (child::tei:del or child::tei:surplus))
+In the context of tagset documentation, the listRef element must not self-nest. (tei:listRef)
+In the context of tagset documentation, each ptr or ref element inside a listRef must have a target attribute with only 1 pointer as its value. (@target and not( matches( @target,'\s') ))
+In the context of tagset documentation, each ptr or ref element inside a listRef must have a target attribute with only 1 pointer as its value. (@target and not( matches( @target,'\s') ))
               
 The @new attribute should always be supplied; use the special value
 "normal" to indicate that the feature concerned ceases to be

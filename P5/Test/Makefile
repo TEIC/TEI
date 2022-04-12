@@ -107,19 +107,26 @@ detest: checkrnv
 	@echo " "
 	@echo "--------- work on target $@ ---------"
 	@echo BUILD: Test file with deliberate mistakes
+	@echo "--- run ant to validate ODD file (./detest.odd):"
+#	Note that output below is called 'detest_odd_schematron' because if there
+#	is a RelaxNG error the build dies and no output is generated
+	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd validateodd > detest_odd_schematron.log 2>&1
+	@echo "--- run ant to compile ODD file inoto RelaxNG and Schematron"
+	@echo "(detest.odd → detest.rng & detst.isosch):"
 	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd compileodd rng isoschematron cleanup
+	@echo "--- convert RelaxNG to compact syntax with trang (detest.rng → detest.rnc):"
 	${TRANG} detest.rng detest.rnc
-	@echo Validate ODD file using Schematron
-	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd validateodd > detest1.log 2>&1
-	@echo Validate ODD file using RELAX NG schema
-	-rnv detest.rnc detest.xml > detest2.log 2>&1
-	@echo Validate XML file using Schematron
-	$(SAXON) detest.xml detest.xsl > detest3.log 2>&1
-	grep "\[xslt\]" detest1.log | sed 's/Processing.*detest.odd//' | sed 's/Loading.*message.isosch.xsl//' > detest.log
-	sed 's/.*detest.xml:/detest.xml:/' detest2.log >> detest.log
-	sed 's/.*detest.xml:/detest.xml:/' detest3.log >> detest.log
-	diff detest.log expected-results/detest.log
-	rm -f detest1.log detest2.log detest3.log
+	@echo "-- validate XML file (detest.xml) against RelaxNG schema (detest.rnc) using rnv:"
+	-rnv detest.rnc detest.xml > detest_xml_relaxng.log 2>&1
+	@echo "--- validate XML file using Schematron using Saxon:"
+	$(SAXON) -s:detest.xml -xsl:detest.xsl > detest_xml_schematron.log 2>&1
+	@echo "--- combine the outputs of above into one large log file (detest.log):"
+	grep "\[xslt\]" detest_odd_schematron.log | sed 's/Processing.*detest.odd//' | sed 's/Loading.*message.isosch.xsl//' > detest.log
+	sed 's/.*detest.xml:/detest.xml:/' detest_xml_relaxng.log >> detest.log
+	sed 's/.*detest.xml:/detest.xml:/' detest_xml_schematron.log >> detest.log
+	rm -f detest_odd_schematron.log detest_xml_relaxng.log detest_xml_schematron.log
+	@echo "--- compare the one large log file just created to the one in expected-results/:"
+	diff -C0 -bBw detest.log expected-results/detest.log
 
 clean:
 	@echo " "
