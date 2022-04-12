@@ -121,7 +121,13 @@ detest: checkrnv
 	@echo "--- validate XML file using Schematron using Saxon:"
 	$(SAXON) -s:detest.xml -xsl:detest.xsl > detest_xml_schematron.log 2>&1
 	@echo "--- compare each of the 3 log files just created to the corresponding one in expected-results/:"
-	diff -C0 -bBw expected-results/detest_odd_schematron.log ./
+#	Note on following somewhat complicated 'diff' command:
+#	The log file contains some lines (like "Processing…" and "Loading…") that include filepaths that are different
+#	when executed in different environments (like the Travis server, e.g.). Thus rather than comparing the files
+#	directly, we delete those lines first, and compare the results of deletions.
+	bash -c "diff -C0 -bBw  \
+	  <(fgrep '[xslt]' expected-results/detest_odd_schematron.log | grep -v 'xslt\] Processing.*detest.odd|xslt\] Loading.*message.isosch.xsl')  \
+	  <(fgrep '[xslt]'                ./detest_odd_schematron.log | grep -v 'xslt\] Processing.*detest.odd|xslt\] Loading.*message.isosch.xsl')"
 	diff -C0 -bBw expected-results/detest_xml_relaxng.log    ./
 	diff -C0 -bBw expected-results/detest_xml_schematron.log ./
 
