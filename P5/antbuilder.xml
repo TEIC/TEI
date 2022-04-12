@@ -260,30 +260,6 @@
       <xslt processor="trax" force="yes" style="${XSL}/odds/extract-isosch.xsl" in="p5odds.compiled.xml" out="p5odds.isosch">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       </xslt>
-<<<<<<< HEAD
-      <!--
-          These next 2 are XSLT 1, which will not run in SaxonHE
-          9.8.0.5, which is what we are currently running. Thus I have
-          used `xsltproc` here. We could, alternatively, update to
-          SaxonHE 9.8.0.7 which hsa re-instated XSLT 1.0 compatability
-          mode. —Syd, 2020-11-28
-      -->
-      <echo>... step 4</echo>
-      <exec executable="xsltproc" failonerror="true">
-        <arg line="--maxdepth 10000"/>
-	<arg line="--output p5odds.included.isosch"/>
-	<arg line="Utilities/iso_dsdl_include.xsl"/>
-	<arg line="p5odds.isosch"/>
-      </exec>
-      <echo>... step 5</echo>
-      <exec executable="xsltproc" failonerror="true">
-        <arg line="--maxdepth 10000"/>
-	<arg line="--output p5odds.abstracted.isosch"/>
-	<arg line="Utilities/iso_abstract_expand.xsl"/>
-	<arg line="p5odds.included.isosch"/>
-      </exec>
-      <echo>... step 6</echo>
-=======
       <echo>... step 10d</echo>
 
       <xslt force="yes" style="Utilities/iso_dsdl_include.xsl" in="p5odds.isosch" out="p5odds.included.isosch">
@@ -294,7 +270,6 @@
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       </xslt>
       <echo>... step 10f</echo>
->>>>>>> dev
       <xslt processor="trax" force="yes" style="Utilities/iso_svrl_for_xslt2.xsl" in="p5odds.abstracted.isosch" out="p5odds.isosch.xsl">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       </xslt>
