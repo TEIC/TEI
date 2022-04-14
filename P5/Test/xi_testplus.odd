@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI with maximal setup, plus external additions</title>
+        <author>Sebastian Rahtz</author>
+      </titleStmt>
+      <publicationStmt>
+	<publisher>TEI Consortium</publisher>
+        <availability status="free">
+          <p>This template file is freely available and you are hereby
+            authorised to copy, modify, and redistribute it in any way without
+            further reference or permissions.</p>
+          <p>When making such modifications, you are strongly recommended to
+            change the present text to include an accurate statement of the
+            licencing conditions applicable to your modified text.</p>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <p>This digital file is the orginal, although it is heavily based on the
+          file tei_all.odd.</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <head>TEI Complete, Plus</head>
+      <p>This TEI customization describes a schema that includes
+        <emph>all</emph> of the TEI (P5) modules, and all of the recommended
+        external schemas. This is a very useful starting place for manually
+        creating your own customizations — it is much easier to
+        delete the modules you do not want than to add the modules you do.
+        Furthermore this customization often provides helpful for testing TEI
+        software. </p>
+      <p>However, this particular TEI customization is <emph>not
+        recommended</emph> for actual use for encoding documents. It produces
+        schemas and reference documentation that will be much larger, and
+        include many more elements, than almost anyone could conceivably ever
+        need. Tempting though it may be simply to have absolutely everything,
+        and <q>just ignore</q> elements not required, experience has shown that
+        their presence makes the documentation harder to read and use, and makes
+        a schema that is often more lax than desired.</p>
+      <schemaSpec xmlns:teix="http://www.tei-c.org/ns/Examples" ident="testplus" prefix="tei_" start="TEI teiCorpus" defaultExceptions="http://www.tei-c.org/ns/1.0 http://www.w3.org/1998/Math/MathML http://www.w3.org/2000/svg teix:egXML">
+        <moduleRef key="tei"/>
+        <!-- required -->
+        <moduleRef key="core"/>
+        <!-- required -->
+        <moduleRef key="analysis"/>
+        <moduleRef key="certainty"/>
+        <moduleRef key="corpus"/>
+        <moduleRef key="declarefs"/>
+        <moduleRef key="dictionaries"/>
+        <moduleRef key="drama"/>
+        <moduleRef key="figures"/>
+        <moduleRef key="gaiji"/>
+        <moduleRef key="header"/>
+        <!-- required -->
+        <moduleRef key="iso-fs"/>
+        <moduleRef key="linking"/>
+        <moduleRef key="msdescription"/>
+        <moduleRef key="namesdates"/>
+        <moduleRef key="nets"/>
+        <moduleRef key="spoken"/>
+        <moduleRef key="tagdocs"/>
+        <moduleRef key="textcrit"/>
+        <moduleRef key="textstructure"/>
+        <!-- required -->
+        <moduleRef key="transcr"/>
+        <moduleRef key="verse"/>
+
+        <moduleRef url="its.rng">
+          <content>
+            <rng:define name="tei_model.teiHeaderPart" combine="choice">
+              <rng:ref name="its_rules"/>
+            </rng:define>
+            <rng:define name="tei_model.inter" combine="choice">
+              <rng:ref name="its_span"/>
+            </rng:define>
+          </content>
+        </moduleRef>
+        <classSpec ident="att.global" type="atts" mode="change">
+          <attList>
+            <attRef name="its_att.translate.attributes"/>
+            <attRef name="its_att.locNote.attributes"/>
+            <attRef name="its_att.term.attributes"/>
+            <attRef name="its_att.dir.attributes"/>
+          </attList>
+        </classSpec>
+
+        <elementSpec ident="geo" mode="change">
+          <content>
+            <rng:ref name="Feature"/>
+          </content>
+        </elementSpec>
+        <moduleRef xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" url="https://www.tei-c.org/release/xml/tei/custom/schema/relaxng/svg11.rng" xml:base="../Exemplars/tei_svg.odd">
+          <!-- this needs to be an absolute URI to keep oxGarage happy -->
+          <!-- also add <svg:svg> to class model.graphicLike -->
+          <content>
+            <rng:define name="tei_model.graphicLike" combine="choice">
+              <rng:ref name="svg"/>
+            </rng:define>
+          </content>
+        </moduleRef>
+        <moduleRef xmlns="http://www.tei-c.org/ns/1.0" url="https://www.tei-c.org/release/xml/tei/Exemplars/mathml2-main.rng" xml:base="../Exemplars/tei_math.odd"/><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="figures" ident="formula" mode="change" xml:base="../Exemplars/tei_math.odd">
+          <content>
+	    <elementRef key="mathml.math"/>
+          </content>
+        </elementSpec>
+        <elementSpec ident="egXML" mode="change" module="tagdocs" ns="http://www.tei-c.org/ns/Examples">
+          <content>
+            <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+              <choice>
+                <text/>
+                <ref name="anyThing"/>
+                <ref name="svg"/>
+                <ref name="mathml.math"/>
+              </choice>
+            </oneOrMore>
+          </content>
+        </elementSpec>
+      <elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="include" ns="http://www.w3.org/2001/XInclude" mode="add">
+	<desc xml:lang="en" versionDate="2014-01-12">The W3C XInclude element</desc>
+	<classes>
+	  <memberOf key="model.common"/>
+	  <memberOf key="model.teiHeaderPart"/>
+	  <memberOf key="model.graphicLike"/>
+	</classes>
+	<content>
+	  <rng:optional>
+	    <rng:ref name="fallback"/>
+	  </rng:optional>
+	</content>
+	<attList>
+	  <attDef ident="href">
+	    <desc xml:lang="en" versionDate="2014-01-12">pointer to the resource being included</desc>
+	    <datatype>
+	      <rng:ref name="data.pointer"/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="parse" usage="opt">
+	    <defaultVal>xml</defaultVal>
+	    <valList type="closed">
+	      <valItem ident="xml"/>
+	      <valItem ident="text"/>
+	    </valList>
+	  </attDef>
+	  
+	  <attDef ident="xpointer" usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="encoding" usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="accept" usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="accept-charset" usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="accept-language" usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	</attList>
+      </elementSpec>
+      
+      <elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="fallback" ns="http://www.w3.org/2001/XInclude" mode="add">
+	<desc xml:lang="en" versionDate="2014-01-12">Wrapper for fallback elements if an XInclude fails</desc>
+	<content>
+	  <rng:ref name="anyThing"/>
+	</content>
+      </elementSpec>
+        <macroSpec ident="anyThing" mode="add">
+          <content>
+            <?NameList?>
+          </content>
+        </macroSpec>
+      </schemaSpec>
+    </body>
+  </text>
+</TEI>
