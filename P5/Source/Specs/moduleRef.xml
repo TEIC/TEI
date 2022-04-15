@@ -53,6 +53,13 @@ Child elements of <name/> are only allowed when an external module is being load
           </rule>
         </constraint>
       </constraintSpec>
+      <constraintSpec scheme="schematron" ident="not-except-and-include">
+        <constraint>
+          <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:moduleRef">
+            <report test="@except and @include">It is an error to supply both the @include and @except attributes</report>
+          </rule>
+        </constraint>
+      </constraintSpec>
       <remarks versionDate="2011-09-21" xml:lang="en">
         <p>Use of this attribute avoids name collisions (and
         thus invalid schemas) when the external schema being
@@ -128,7 +135,7 @@ RELAX NG par une localisation externe.</desc>
     </egXML>
   </exemplum>
   <remarks versionDate="2010-05-09" xml:lang="en">
-    <p>If neither <att>include</att> nor <att>exclude</att> is
+    <p>If neither <att>include</att> nor <att>except</att> is
     supplied, the effect of this element is to make all the declarations
     contained by the referenced module available to the schema being
     compiled. If both attributes are supplied, an ODD
@@ -139,9 +146,9 @@ processor should signal an error. </p>
     online source from which the specification of that module may be
     read. A URI may alternatively be supplied in the case of a non-TEI
     module, and this is expected to be written as a RELAX NG schema.
-    </p><p>If the <att>uri</att> attribute is used, the <gi>content</gi> element may also be supplied as 
+    </p><p>If the <att>url</att> attribute is used, the <gi>content</gi> element may also be supplied as 
     a child of this element. Its content (which is assumed to be a fragment of RELAX NG code) will be copied
-    along with the content of the resource indicated by the  <att>uri</att> attribute into the 
+    along with the content of the resource indicated by the  <att>url</att> attribute into the 
       target RELAX NG schema. </p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
