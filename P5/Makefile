@@ -110,8 +110,6 @@ teiwebsiteguidelines:
 	make html-web ALLLANGUAGES="en es de ja ko fr it zh-TW" GOOGLEANALYTICS=UA-4372657-1
 	(cd Guidelines-web; zip -r -q ../teiwebsiteguidelines.zip . )
 
-pdf: Guidelines.pdf pdf-complete
-
 epub: Guidelines.epub
 
 Guidelines.epub: check.stamp p5.xml
@@ -141,9 +139,9 @@ fonttest:
 	fi
 	rm -f fonttest.*
 
-Guidelines.pdf: check.stamp p5.xml Utilities/guidelines-latex.xsl
+pdf-init: check.stamp p5.xml Utilities/guidelines-latex.xsl
 	@echo check if XeLaTeX exist
-	@command -v  xelatex || exit 1
+	@command -v xelatex || exit 1
 	perl -p -e \
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
@@ -152,10 +150,10 @@ Guidelines.pdf: check.stamp p5.xml Utilities/guidelines-latex.xsl
 	@echo Make sure you have Junicode and Noto CJK fonts installed
 	${ANT} -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfonce
 
-pdf-complete:
+pdf: pdf-init
 	${ANT} -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfrest 2> pdfbuild.log 1> pdfbuild.log
 	grep -v "Failed to convert input string to UTF16" pdfbuild.log
-	for i in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$i; done
+	for auxFile in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$auxFile; done
 
 rewraprnc:
 	for i in Guidelines-REF*tex; \
