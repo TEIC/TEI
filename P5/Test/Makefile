@@ -118,7 +118,7 @@ detest: checkrnv
 	${TRANG} detest.rng detest.rnc
 	@echo "-- validate XML file (detest.xml) against RelaxNG schema (detest.rnc) using rnv:"
 	-rnv detest.rnc detest.xml > detest_xml_relaxng.log 2>&1
-	@echo "--- validate XML file using Schematron using Saxon:"
+	@echo "--- validate XML file against Schematron using Saxon:"
 	$(SAXON) -s:detest.xml -xsl:detest.xsl > detest_xml_schematron.log 2>&1
 	@echo "--- compare each of the 3 log files just created to the corresponding one in expected-results/:"
 #	Note on following somewhat complicated 'diff' command:
