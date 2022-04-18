@@ -9,7 +9,7 @@
         <p>Unpublished</p>
       </publicationStmt>
       <sourceDesc>
-	<p>Born digital</p>
+        <p>Born digital</p>
       </sourceDesc>
     </fileDesc>
     <encodingDesc><!-- TODO duncdrum test for uniHan schematron constraints for Phase 4 #1805 <charDecl><glyph xml:id="r1"><unihanProp name="kRSUnicode" value="r1 r2 r3"/></glyph></charDecl>  -->
@@ -25,7 +25,7 @@
         @method="parallel-segmentation" then @location must be "internal".    -->
       <variantEncoding method="parallel-segmentation" location="external"/>
       <editorialDecl>
-	<quotation/>
+        <quotation/>
       </editorialDecl>
     </encodingDesc>
   </teiHeader>
@@ -43,8 +43,8 @@
       </div>
 
       <div>
-	<p>Added by MDH. This tests the Schematron constraint that any element with @calendar must have some textual content.</p>
-	<p><date when="2012-09-06" calendar="http://en.wikipedia.org/wiki/Gregorian_calendar"/></p>
+        <p>Added by MDH. This tests the Schematron constraint that any element with @calendar must have some textual content.</p>
+        <p><date when="2012-09-06" calendar="http://en.wikipedia.org/wiki/Gregorian_calendar"/></p>
       </div>
 
       <div>
@@ -97,8 +97,8 @@ that's also OK.
         <div type="redundant">
           <p>
             <s>This sentence contains
-	    <s>an illegally nested phrase</s>
-	    and should trigger a schematron squawk</s>
+            <s>an illegally nested phrase</s>
+            and should trigger a schematron squawk</s>
           </p>
         </div>
       </div>
@@ -165,143 +165,166 @@ that's also OK.
       </div>
 
       <div>
-	<head>Rules about span</head>
-	<p xml:id="spanTest"/>
-	<p xml:id="spanTest2"/>
-	<p> ... <span from="#spanTest">freddy</span></p>
-	<p> ... <span target="#spanTest">freddy</span></p>
-	<p> ... <span from="#spanTest2" target="#spanTest">freddy</span></p>
-	<p> ... <span to="#spanTest2" target="#spanTest">freddy</span></p>
+        <head>Rules about span</head>
+        <p xml:id="spanTest"/>
+        <p xml:id="spanTest2"/>
+        <p> ... <span from="#spanTest">freddy</span></p>
+        <p> ... <span target="#spanTest">freddy</span></p>
+        <p> ... <span from="#spanTest2" target="#spanTest">freddy</span></p>
+        <p> ... <span to="#spanTest2" target="#spanTest">freddy</span></p>
       </div>
 
      <div>
-	<head>Checking locally-changed attributes</head>
-	<p><abbr subtype="test">freddy</abbr></p>
-	<p><alt target="#spanTest" mode="excl"/></p>
-	<p><alt target="#spanTest #spanTest2" mode="excl"/></p>
+        <head>Checking locally-changed attributes</head>
+        <p><abbr subtype="test">freddy</abbr></p>
+        <p><alt target="#spanTest" mode="excl"/></p>
+        <p><alt target="#spanTest #spanTest2" mode="excl"/></p>
       </div>
 
       <div>
-	<head>Media</head>
-	<p><media mimeType="video/mp4"/></p>
-	<p><media url="foo.png"/></p>
+        <head>Media</head>
+        <p><media mimeType="video/mp4"/></p>
+        <p><media url="foo.png"/></p>
       </div>
 
       <div xml:id="subtypeTyped">
-	<head>@subtype requires @type</head>
-	<p>Added 2013-01-11 17:31 by Syd</p>
-	<div type="major" subtype="minor">test both</div>
-	<div type="major">test @type only</div>
-	<div subtype="minor">test @subtype only (should FAIL)</div>
-	<div>test neither</div>
+        <head>@subtype requires @type</head>
+        <p>Added 2013-01-11 17:31 by Syd</p>
+        <div type="major" subtype="minor">test both</div>
+        <div type="major">test @type only</div>
+        <div subtype="minor">test @subtype only (should FAIL)</div>
+        <div>test neither</div>
       </div>
 
       <div>
-	<head>Shift should have a new attribute</head>
-	<u who="who"><shift new="something"/>some thing<shift/>some more</u>
+        <head>Shift should have a new attribute</head>
+        <u who="who"><shift new="something"/>some thing<shift/>some more</u>
       </div>
 
       <div>
-	<head>msPart/altIdentifier deprecated</head>
-	<p><label>Syd 2016-09-10:</label> Should get an error because
-	<gi>altIdentifier</gi> is no longer permitted as a child of
-	<gi>msPart</gi>.</p>
-	<p><label>Syd 2014-09-09:</label> Should get a deprecation
-	warning for <gi>altIdentifier</gi> as a child of
-	<gi>msPart</gi>. Someday (around 2016-09-09) this should
-	become outright invalid, and the Schematron rule should be
-	removed.</p>
-	<msDesc>
-	  <msIdentifier>
-	    <msName>Test msPart/altIdentifier rule</msName>
-	  </msIdentifier>
-	  <msPart>
-	    <altIdentifier>
-	      <idno>0BAD</idno>
-	    </altIdentifier>
-	  </msPart>
-	  <msPart>
-	    <msIdentifier>
-	      <msName>this one should be valid</msName>
-	    </msIdentifier>
-	  </msPart>
-	</msDesc>
+        <head>msPart/altIdentifier deprecated</head>
+        <p><label>Syd 2016-09-10:</label> Should get an error because
+        <gi>altIdentifier</gi> is no longer permitted as a child of
+        <gi>msPart</gi>.</p>
+        <p><label>Syd 2014-09-09:</label> Should get a deprecation
+        warning for <gi>altIdentifier</gi> as a child of
+        <gi>msPart</gi>. Someday (around 2016-09-09) this should
+        become outright invalid, and the Schematron rule should be
+        removed.</p>
+        <msDesc>
+          <msIdentifier>
+            <msName>Test msPart/altIdentifier rule</msName>
+          </msIdentifier>
+          <msPart>
+            <altIdentifier>
+              <idno>0BAD</idno>
+            </altIdentifier>
+          </msPart>
+          <msPart>
+            <msIdentifier>
+              <msName>this one should be valid</msName>
+            </msIdentifier>
+          </msPart>
+        </msDesc>
       </div>
 
       <div>
-	<head>biblStruct/idno deprecated</head>
-	<p><label>Syd 2016-09-10:</label> Should get an error because
-	<gi>idno</gi> is no longer permitted as a child of
-	<gi>biblStruct</gi>.</p>
-	<p><label>Syd 2014-09-19:</label> Should get a deprecation
-	warning for <gi>idno</gi> as a child of <gi>biblStruct</gi>.
-	Someday (around 2016-09-09) this should become outright
-	invalid, and the Schematron rule should be removed.</p>
-	<biblStruct xml:id="previous_COHQHF-eg-5">
-	  <monogr>
-	    <author>Marriott, Henry J. L.</author>
-	    <title>Practical Electrocardiography</title>
-	    <edition>eighth edition</edition>
-	    <imprint>
-	      <pubPlace>Baltimore</pubPlace>
-	      <publisher>Williams &amp; Wilkins</publisher>
-	      <date when="1988"/>
-	    </imprint>
-	  </monogr>
-	  <idno type="isbn">0-683-05576-3</idno>
-	  <citedRange unit="pp">147</citedRange>
-	</biblStruct>
+        <head>biblStruct/idno deprecated</head>
+        <p><label>Syd 2016-09-10:</label> Should get an error because
+        <gi>idno</gi> is no longer permitted as a child of
+        <gi>biblStruct</gi>.</p>
+        <p><label>Syd 2014-09-19:</label> Should get a deprecation
+        warning for <gi>idno</gi> as a child of <gi>biblStruct</gi>.
+        Someday (around 2016-09-09) this should become outright
+        invalid, and the Schematron rule should be removed.</p>
+        <biblStruct xml:id="previous_COHQHF-eg-5">
+          <monogr>
+            <author>Marriott, Henry J. L.</author>
+            <title>Practical Electrocardiography</title>
+            <edition>eighth edition</edition>
+            <imprint>
+              <pubPlace>Baltimore</pubPlace>
+              <publisher>Williams &amp; Wilkins</publisher>
+              <date when="1988"/>
+            </imprint>
+          </monogr>
+          <idno type="isbn">0-683-05576-3</idno>
+          <citedRange unit="pp">147</citedRange>
+        </biblStruct>
       </div>
 
       <div>
-	<head>gloss list should have label-item pairs</head>
-	<p>Only the 3rd list (with the word <q>error</q>) should raise
-	an error from <ident>gloss-list-must-have-labels</ident>.</p>
-	<list>
-	  <item>untyped list with only <gi>item</gi>s</item>
-	</list>
-	<list>
-	  <label>ULLIP</label> <item>untyped list with
-	  <gi>label</gi>-<gi>item</gi> pairs</item>
-	</list>
-	<list type="gloss">
-	  <item>gloss list with only <gi>item</gi>s; an error</item>
-	</list>
-	<list type="gloss">
-	  <label>GLLIP</label> <item>gloss list with
-	  <gi>label</gi>-<gi>item</gi> pairs</item>
-	</list>
+        <head>gloss list should have label-item pairs</head>
+        <p>Only the 3rd list (with the word <q>error</q>) should raise
+        an error from <ident>gloss-list-must-have-labels</ident>.</p>
+        <list>
+          <item>untyped list with only <gi>item</gi>s</item>
+        </list>
+        <list>
+          <label>ULLIP</label> <item>untyped list with
+          <gi>label</gi>-<gi>item</gi> pairs</item>
+        </list>
+        <list type="gloss">
+          <item>gloss list with only <gi>item</gi>s; an error</item>
+        </list>
+        <list type="gloss">
+          <label>GLLIP</label> <item>gloss list with
+          <gi>label</gi>-<gi>item</gi> pairs</item>
+        </list>
       </div>
 
       <div>
-	<head>Abstract model constraint testing</head>
-	<p>This section created 2021-08-19 by Elisa Beshero-Bondar</p>
-	<p>Here is <floatingText><body><div><p>a little floating text</p></div></body></floatingText>.</p>
-	<ab>Here is <floatingText><body><div><p>another little floating text</p></div></body></floatingText>.</ab>
-	<lg>
-	  <l>I think that I shall never see <note><ab>Sight of TEI elements is significant in this little poem.</ab></note></l>
-	  <l>A <floatingText><body><ab>floating text</ab></body></floatingText> inside this <figure><ab>tree</ab></figure>.</l>
-	  <l>Nor can it be <floatingText><body><p>that I shall know</p></body></floatingText></l>
-	  <l><figure><p>A paragraph</p></figure> <note><p>herein below</p></note>.</l>
-	  <l>More likely maybe I could find</l>
-	  <l><floatingText><body><div><p>A div</p></div></body></floatingText> stuck in this poem's lines.</l>
-	</lg>
-	<p>And here is the same poem again, inside a giant floatingText and coded a little differently.</p>
-	<floatingText>
-	  <body>
-	    <lg>
-	      <l>I think that I shall never see <note><p>Let's try some <floatingText><body><ab>super deeply nested floating text here why don't we? 
-	      <note><p>Sight of TEI elements is significant in this little poem.</p></note></ab></body></floatingText></p></note></l>
-	      <l>A <floatingText><body><ab>floating text</ab></body></floatingText> inside this <figure><ab>tree</ab></figure>.</l>
-	      <l>Nor can it be that I shall know</l>
-	      <l><figure><p>A paragraph</p></figure> <note><p>herein below</p></note>.</l>
-	      <l>More likely maybe I could find</l>
-	      <l><floatingText><body><div><p>A div</p></div></body></floatingText> stuck in this poem's lines.</l>
-	    </lg>
-	  </body>
-	</floatingText>	
+        <head>Abstract model constraint testing</head>
+        <p>This section created 2021-08-19 by Elisa Beshero-Bondar</p>
+        <p>Here is <floatingText><body><div><p>a little floating text</p></div></body></floatingText>.</p>
+        <ab>Here is <floatingText><body><div><p>another little floating text</p></div></body></floatingText>.</ab>
+        <lg>
+          <l>I think that I shall never see <note><ab>Sight of TEI elements is significant in this little poem.</ab></note></l>
+          <l>A <floatingText><body><ab>floating text</ab></body></floatingText> inside this <figure><ab>tree</ab></figure>.</l>
+          <l>Nor can it be <floatingText><body><p>that I shall know</p></body></floatingText></l>
+          <l><figure><p>A paragraph</p></figure> <note><p>herein below</p></note>.</l>
+          <l>More likely maybe I could find</l>
+          <l><floatingText><body><div><p>A div</p></div></body></floatingText> stuck in this poem's lines.</l>
+        </lg>
+        <p>And here is the same poem again, inside a giant floatingText and coded a little differently.</p>
+        <floatingText>
+          <body>
+            <lg>
+              <l>I think that I shall never see <note><p>Let's try some <floatingText><body><ab>super deeply nested floating text here why don't we? 
+              <note><p>Sight of TEI elements is significant in this little poem.</p></note></ab></body></floatingText></p></note></l>
+              <l>A <floatingText><body><ab>floating text</ab></body></floatingText> inside this <figure><ab>tree</ab></figure>.</l>
+              <l>Nor can it be that I shall know</l>
+              <l><figure><p>A paragraph</p></figure> <note><p>herein below</p></note>.</l>
+              <l>More likely maybe I could find</l>
+              <l><floatingText><body><div><p>A div</p></div></body></floatingText> stuck in this poem's lines.</l>
+            </lg>
+          </body>
+        </floatingText> 
       </div>
       
     </body>
+    <back>
+      <schemaSpec ident="detest_ODD_error_check">
+        <desc>This <gi>schemaSpec</gi> exists for the sole purpose of
+        testing errors in the ODD language that cannot be tested in
+        <name type="file">detest.odd</name> because they would break
+        the build there</desc>
+        <elementSpec ident="silly_and_not_used" mode="add">
+          <desc>See <code>//elementSpec[@ident eq
+          'abbr']/listRef</code> in <name
+          type="file">detest.odd</name></desc>
+          <listRef>
+            <ref type="invalid" n="1">no target (2B caught by Schematron)</ref>
+            <ref type="valid" n="2" target="https://www.example.edu/tst">good target absolute URI</ref>
+            <ref type="valid" n="3" target="#one">good target shorthand pointer</ref>
+            <ref type="invalid" n="4" target="#one #two">bad target, two pointers (2B caught by Schematron)</ref>
+            <ref type="invalid" n="5" target="">bad target, no pointer (2B caught by RNG)</ref>
+            <listRef type="invalid">
+              <ptr type="valid" target="#ptr_OK_but_nested_listRef_NOT_valid"/>
+            </listRef>
+          </listRef>
+        </elementSpec>
+      </schemaSpec>
+    </back>
   </text>
 </TEI>
