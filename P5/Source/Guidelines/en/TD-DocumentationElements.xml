@@ -6,7 +6,7 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <div xmlns="http://www.tei-c.org/ns/1.0"
      type="div1" xml:id="TD" n="27"
      xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -210,7 +210,7 @@ an XML Document Type Declaration.</item-->
       like the following:
       <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SELF">
         <moduleSpec ident="namesdates">
-          <altIdent type="FPI">Names and Dates</altIdent>
+          <idno type="FPI">Names and Dates</idno>
           <desc>Additional elements for names and dates</desc>
         </moduleSpec>
       </egXML>
@@ -775,7 +775,7 @@ to mark any technical term, thus:
       TEI scheme. Because only Unicode characters are permitted, there
       is no way to record characters that are not (yet) represented in
       Unicode. Thus in TEI instead of <gi>textNode</gi> we often use a
-      reference to <ident type="macro">macro.xText</ident> which
+      reference to <ident type="macro">macro.xtext</ident> which
       permits both Unicode characters and the <gi>g</gi>
       element.</note></p>
     </div>
@@ -846,7 +846,7 @@ to mark any technical term, thus:
       <p>In addition to the <gi>content</gi> element, a set of general <gi>constraintSpec</gi> elements can be
         used to express rules about the validity of an element. Like some other specification elements, they
         are identifiable (using the <att>ident</att> attribute) in order that a TEI customization may
-        override, delete or change them individually. Each <gi>constraintSpec</gi> can be expressed in any
+        override, delete, or change them individually. Each <gi>constraintSpec</gi> can be expressed in any
         notation which is found useful; the notation used must be recorded using the <att>scheme</att>
         attribute.</p>
       <p>Schematron is an ISO standard (<ref target="#ISO-19757-3">ISO/IEC 19757-3:2006</ref>) which defines a
@@ -963,7 +963,7 @@ to mark any technical term, thus:
       SPITBOL to express the requirement that title and author should
       be different. 
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <constraintSpec ident="local" scheme="SPITBOL">
+          <constraintSpec ident="title_ne_author" scheme="SPITBOL">
             <constraint> (output = leq(title,author) "title and author cannot be the same") </constraint>
           </constraintSpec>
         </egXML>
@@ -1751,24 +1751,27 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
       <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><content>
           <classRef key="model.hiLike"/>
         </content></egXML>
-       would be equivalent to the explicit content model:
+      would be equivalent to the explicit content model:
       <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><content>
-          <alternate>
-            <elementRef key="hi"/>
-            <elementRef key="it"/>
-            <elementRef key="bo"/>
-          </alternate>
-        </content></egXML>
-       (or, to use RELAX NG compact syntax, <code>(hi|it|bo)*</code>). However, a content model of
-        <code>&lt;classRef expand="sequence"/></code> would be equivalent to the following explicit content
-      model:
+	<alternate>
+	  <elementRef key="hi"/>
+	  <elementRef key="it"/>
+	  <elementRef key="bo"/>
+	</alternate>
+      </content></egXML>
+      (or, to use RELAX NG compact syntax,
+      <code>(&#xA0;hi&#xA0;|&#xA0;it&#xA0;|&#xA0;bo&#xA0;)</code>).
+      However, a content model of <code>&lt;classRef
+      expand="sequence"/></code> would be equivalent to the
+      following explicit content model:
       <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><content>
-          <sequence>
-            <elementRef key="hi"/>
-            <elementRef key="it"/>
-            <elementRef key="bo"/>
-          </sequence></content></egXML>
-       (or, in RELAX NG compact syntax, <code>(hi,it,bo)*</code>). </p>
+	<sequence>
+	  <elementRef key="hi"/>
+	  <elementRef key="it"/>
+	  <elementRef key="bo"/>
+      </sequence></content></egXML>
+      (or, in RELAX NG compact syntax,
+    <code>(&#xA0;hi,&#xA0;it,&#xA0;bo&#xA0;)</code>). </p>
     <!-- <p>The following suffixes, appended with an underscore, can be given to a class name when it is referenced in a
         content model: <list type="gloss">
           <label>alternation</label>
@@ -2129,7 +2132,7 @@ most recent version of the Guidelines would be used instead.--></p>
       <head>Linking Schemas to XML Documents</head>
       <p>Schemas can be linked to XML documents by means of the <tag type="pi">?xml-model?</tag> processing
         instruction described in the W3C Working Group Note <title level="m">Associating Schemas with XML
-          documents</title> (<ptr target="http://www.w3.org/TR/xml-model/"/>). <tag type="pi"
+          documents</title> (<ptr target="https://www.w3.org/TR/xml-model/"/>). <tag type="pi"
           >?xml-model?</tag> can be used for any type of schema, and may be used for multiple schemas: <eg xml:space="preserve"><![CDATA[<?xml-model href="tei_tite.rng" type="application/xml" ?>
 <?xml-model href="checkLinks.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron" ?>
 <?xml-model href="tei_tite.odd" type="application/tei+xml" schematypens="http://www.tei-c.org/ns/1.0" ?>]]></eg>
@@ -2144,7 +2147,7 @@ most recent version of the Guidelines would be used instead.--></p>
     <head>Module for Documentation Elements</head>
     <p>The module described in this chapter makes available the following components:
     <moduleSpec xml:id="DTDDTD" ident="tagdocs">
-        <altIdent type="FPI">Documentation Elements</altIdent>
+        <idno type="FPI">Documentation Elements</idno>
         <desc xml:lang="en" versionDate="2019-07-07">Documentation of TEI and other XML markup languages</desc>
         <desc xml:lang="fr" versionDate="2018-07-12">Éléments de déclaration d’un modèle</desc>
         <desc xml:lang="zh-TW" versionDate="2018-07-12">TEI模組說明</desc>

@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" ident="constraintSpec">
   <gloss versionDate="2009-06-10" xml:lang="en">constraint on schema</gloss>
   <desc versionDate="2017-06-24" xml:lang="en">contains a formal constraint, typically expressed in a rule-based schema language, to which a construct must conform in order to be considered valid<!--ebb: old description of 2009-06-10 was: "contains  a constraint, expressed in some formal syntax,
@@ -23,9 +23,28 @@ $Id$
         <classRef key="model.glossLike"/>
         <classRef key="model.descLike"/>
       </alternate>
-      <elementRef key="constraint" minOccurs="0"/>
+      <elementRef key="constraint" minOccurs="0" maxOccurs="1"/>
     </sequence>
-  </content>    
+  </content>
+  <constraintSpec scheme="schematron" ident="empty-based-on-mode">
+    <!-- 
+         This constraint specification is much like the
+         "child-constraint-based-on-mode" for <elementSpec>, which
+         does something something similar (in that it is based on
+         @mode), but not quite the same.
+    -->
+    <constraint>
+      <sch:rule context="tei:constraintSpec[ @mode eq 'delete']">
+        <sch:report test="child::*">This constraintSpec element has a mode= of "delete" even though it has child elements. Change the mode= to "add", "change", or "replace", or remove the child elements.</sch:report>
+      </sch:rule>
+      <sch:rule context="tei:constraintSpec[ @mode eq 'change']">
+        <sch:assert test="child::*">This constraintSpec element has a mode= of "change", but does not have any child elements. Specify child elements, or change the mode= to "delete".</sch:assert>
+      </sch:rule>
+      <sch:rule context="tei:constraintSpec[ @mode = ('add','replace') ]">
+        <sch:assert test="child::tei:constraint">This constraintSpec element has a mode= of "<sch:value-of select="@mode"/>", but does not have a child 'constraint' element. Use a child 'constraint' element or change the mode= to "delete" or "change".</sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <constraintSpec ident="sch_no_more" scheme="schematron">
     <desc xml:lang="en" versionDate="2018-07-06">Relationship between scheme attribute and contents: Schematron 1.x</desc>
     <constraint>
@@ -54,6 +73,16 @@ $Id$
       </sch:rule>
     </constraint>
   </constraintSpec>
+  <constraintSpec ident="unique-constraintSpec-ident" scheme="schematron">
+    <constraint>
+      <sch:rule context="tei:constraintSpec[ @mode eq 'add'  or  not( @mode ) ]">
+        <sch:let name="myIdent" value="normalize-space(@ident)"/>
+        <sch:report test="preceding::tei:constraintSpec[ normalize-space(@ident) eq $myIdent ]">
+        The @ident of 'constraintSpec' should be unique; this one (<sch:value-of select="$myIdent"/>) is the same as that of a previous 'constraintSpec'.
+        </sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="scheme" usage="req">
       <desc versionDate="2009-06-10" xml:lang="en">supplies the name of the language in which the constraints
@@ -64,8 +93,8 @@ $Id$
           <gloss versionDate="2016-09-27" xml:lang="en">ISO Schematron</gloss>
         </valItem>
       </valList>
-      <remarks versionDate="2016-09-27" xml:lang="en">
-        <p>These Guidelines no longer recommend, and the available TEI
+      <remarks versionDate="2021-09-27" xml:lang="en">
+        <p>These Guidelines no longer recommend, and the current TEI
         stylesheets no longer support, the use of Schematron 1.x
         within <gi>constraintSpec</gi>. Thus the value
         <val>schematron</val> is used to indicate that ISO Schematron
@@ -79,11 +108,11 @@ $Id$
       construct.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="semi" mode="add">
-	<valItem ident="deprecationWarning">
-	  <desc xml:lang="en" versionDate="2018-09-17">Indicates that
-	  this constraint specification warns that some other
-	  construct in the schema is deprecated.</desc>
-	</valItem>
+        <valItem ident="deprecationWarning">
+          <desc xml:lang="en" versionDate="2018-09-17">Indicates that
+          this constraint specification warns that some other
+          construct in the schema is deprecated.</desc>
+        </valItem>
       </valList>
     </attDef>
   </attList>
@@ -104,8 +133,8 @@ $Id$
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <constraintSpec ident="demo-c2" scheme="schematron">
-        <desc>Implement an accessibility rule which says that pictures should
-    have textual explanations</desc>
+        <desc>Implement an accessibility rule which says that pictures
+        should have textual explanations</desc>
         <constraint>
           <sch:report test="not(tei:figDesc or tei:head)"> You should
           provide information in a figure from which
@@ -118,13 +147,22 @@ $Id$
     <p>This constraint uses SPITBOL (a language which is not
     expressed in XML) to check whether the title and author are identical: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <constraintSpec ident="local" scheme="SPITBOL">
+      <constraintSpec ident="author_ne_title" scheme="SPITBOL">
         <constraint> 
 (output = leq(title,author)  "title and author cannot be the same")
         </constraint>
       </constraintSpec>
     </egXML>
   </exemplum>
+  <remarks xml:lang="en" versionDate="2022-04-09">
+    <p>A child <gi>constraint</gi> is required when the
+    <att>mode</att> attribute has the value <val>replace</val> or
+    <val>add</val> (or is not specified, as <val>add</val> is the
+    default). No child elements are permitted when the <att>mode</att>
+    attribute has the value <val>delete</val>. At least one child
+    element is required when the <att>mode</att> attribute has the
+    value <val>change</val>.</p>
+  </remarks>
   <listRef>
     <ptr target="#TDTAG"/>
   </listRef>

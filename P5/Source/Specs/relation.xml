@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="relation">
   <gloss versionDate="2005-01-14" xml:lang="en">relationship</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">관련성</gloss>
@@ -39,13 +39,14 @@ $Id$
     </constraint>
   </constraintSpec>
   <constraintSpec ident="activemutual" scheme="schematron">
+    <!-- Note: this constraint is pointless in RELAX NG land, where
+         the org=choice works. It is useful in DTD land, where the
+         attList/@org has no effect. It looks to me like it is useful
+         in W3C XML Schema land, too, which I find suprising, as I
+         thought XSD could express a disjuntion like that w/o
+         difficulty. (But I may be reading the XSD incorrectly.) 
+         — Syd, 2018-05-01 -->
     <constraint>
-      <!-- Note: this constraint is pointless in RELAX NG land, where the
-	   org=choice works. It is useful in DTD land, where the attList/@org
-	   has no effect. It looks to me like it is useful in W3C XML Schema
-	   land, too, which I find suprising, as I thought XSD could express
-	   a disjuntion like that w/o difficulty. (But I may be reading the
-	   XSD incorrectly.) — Syd, 2018-05-01 -->
       <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@active and @mutual">Only one of the attributes @active and @mutual may be supplied</report>
     </constraint>
   </constraintSpec>
@@ -55,7 +56,8 @@ $Id$
     </constraint>
   </constraintSpec>
   <attList>
-  <!-- removed local definition for @type since it is both vacuous and inconsistent with the text : see bug #680 -->  
+    <!-- removed local definition for @type since it is both vacuous
+         and inconsistent with the text : see bug #680 -->
     <attDef ident="name">
       <desc versionDate="2005-10-27" xml:lang="en">supplies a name for the kind of relationship of which this is an instance.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">이것이 실례인 관련성 종류에 대한 이름을 제공한다.</desc>

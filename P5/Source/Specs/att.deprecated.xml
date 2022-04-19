@@ -1,10 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" type="atts" ident="att.deprecated" predeclare="true">
+-->
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" type="atts" ident="att.deprecated" predeclare="true">
   <desc versionDate="2013-05-16" xml:lang="en">provides attributes indicating how a deprecated feature will be treated in future releases.</desc>
   <desc versionDate="2019-04-08" xml:lang="ja">非推奨の機能を将来のリリースでどのように扱うかを示す属性を提供する。</desc>
   <attList>
@@ -12,7 +15,18 @@ $Id$
       <desc versionDate="2013-05-16" xml:lang="en">provides a date before which the construct being defined
       will not be removed.</desc>
       <desc versionDate="2019-04-08" xml:lang="ja">定義されている構文が削除される前の日付を提供する．</desc>
-      <datatype minOccurs="1" maxOccurs="1"><dataRef name="date"/></datatype>
+      <datatype minOccurs="1" maxOccurs="1">
+        <!--
+            WARNING: In the 'valid' target of the build process the
+            validity of @validUntil is tested against xsd:date not by
+            using the schema generated from this definition, but
+            rather by an ad-hoc test in an XSLT program, namely
+            P5/Utilities/extractegXML.xsl. Thus if we ever change the
+            datatype here, we may well need to change it there as
+            well. —Syd, 2022-02-02
+        -->
+        <dataRef name="date"/>
+      </datatype>
       <constraintSpec scheme="schematron" ident="deprecation-two-month-warning">
         <constraint>
           <sch:rule context="tei:*[@validUntil]">
@@ -66,8 +80,7 @@ $Id$
         the future. E.g., the documentation for such a construct might
         include the phrase <mentioned>warning: deprecated</mentioned>
         in red.</p>
-      </remarks>
-      
+      </remarks>      
       <remarks versionDate="2019-04-08" xml:lang="ja">
         <p>この属性の値は，（<code>yyyy-mm-dd</code>の形式で）日付を表し，属性がODDに追加された日付より後である必要がある。技術的には，この属性は，指定された日付まで定義されているマークアップ言語の将来のリリースで構造を残す意図のみを表明し，その日付以降に何が起こるかについて主張しない。実際には，<att>validUntil</att>日付の直後に定義されるマークアップ言語の将来のリリースからコンストラクトが削除されることが期待されます。</p>
         <p>ODDプロセッサは，通常，<att>validUntil</att>日付が過去のものである仕様要素を処理しない．ODDプロセッサは，通常，<att>validUntil</att>の日付を持つコンストラクトについてユーザに警告する。例えば，そのような構造のドキュメントには，<mentioned>warning：deprecated</mentioned>というフレーズが赤で表示される。</p>

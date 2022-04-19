@@ -10,34 +10,43 @@
         <author>Lou Burnard</author>
       </titleStmt>
       <publicationStmt>
-        <p> </p>
+        <p>Published along with TEI P5 as part of its build process test suite</p>
       </publicationStmt>
       <sourceDesc>
         <p>authored from scratch</p>
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
+      <change when="2022-04-04" who="#sbauman.emt">
+        <list>
+          <item>Tweaked some comments and wording of content</item>
+          <item>Added tests for <gi>listRef</gi> inside *Spec elements</item>
+        </list>
+      </change>
       <change when="2021-08-20" who="#sbauman.emt">
-	<list>
-	  <item>Inserted test material created by EBB for checking abstract model constraints</item>
-	  <item>Added <name type="module">figures</name>, because above uses <gi>figure</gi></item>
-	  <item>Changed heading of <gi>div</gi> that contans the
-	  schema specification because it is not remotely minimal any
-	  more</item>
-	</list>
+        <list>
+          <item>Inserted test material created by EBB for checking abstract model constraints</item>
+          <item>Added <name type="module">figures</name>, because above uses <gi>figure</gi></item>
+          <item>Changed heading of <gi>div</gi> that contans the
+          schema specification because it is not remotely minimal any
+          more</item>
+          <item>Added <att>xml:lang</att> and <att>versionDate</att>
+          attributes to some <gi>gloss</gi> and <gi>desc</gi>
+          elements.</item>
+        </list>
       </change>      
       <change when="2016-11-06" who="#sbauman.emt">
-	Added <gi>elementSpec</gi> for <gi>blort3</gi> in order to test
-	deprecation of <val>isoschematron</val>. (Note: this change begun
-	during TEI Council meeting in Vienna.)
+        Added <gi>elementSpec</gi> for <gi>blort3</gi> in order to test
+        deprecation of <val>isoschematron</val>. (Note: this change begun
+        during TEI Council meeting in Vienna.)
       </change>
       <change when="2015-03-27" who="#sbauman.emt">
-	Added an element specification to test constraints on
-	<gi>defaultVal</gi>
+        Added an element specification to test constraints on
+        <gi>defaultVal</gi>
       </change>
       <change when="2014-09-10" who="#sbauman.emt">
-	Added <name type="module">msdescription</name> and
-	<name type="module">tagdocs</name>
+        Added <name type="module">msdescription</name> and
+        <name type="module">tagdocs</name>
       </change>
     </revisionDesc>
   </teiHeader>
@@ -56,22 +65,22 @@
           <moduleRef key="textcrit"/>
           <moduleRef key="transcr"/>
           <moduleRef key="linking"/>
-	  <moduleRef key="msdescription"/>
-	  <moduleRef key="tagdocs"/>
+          <moduleRef key="msdescription"/>
+          <moduleRef key="tagdocs"/>
           <moduleRef key="spoken"/>
-	  <moduleRef key="figures"/>
+          <moduleRef key="figures"/>
           <elementSpec ident="p" mode="change">
             <constraintSpec mode="add" ident="c1" scheme="schematron">
               <constraint>
                 <sch:report test="tei:list"> 
-	    lists inside paragraphs not supported </sch:report>
+            lists inside paragraphs not supported </sch:report>
               </constraint>
             </constraintSpec>
             <constraintSpec mode="add" ident="c2" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:p|tei:q">
                   <sch:report test="contains(@rend,' ')"> 
-		multi-valued rend is not supported </sch:report>
+                multi-valued rend is not supported </sch:report>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -148,17 +157,17 @@
             <constraintSpec mode="add" ident="canondiv" scheme="schematron">
               <constraint>
                 <sch:report test="@type='canon' and          parent::tei:div/@type='canon'">
-	      divs of type 'canon' may not be nested
-	    </sch:report>
+              divs of type 'canon' may not be nested
+            </sch:report>
                 <sch:report test="@type='canon' and          parent::tei:div/@type='register'">
-	      divs of type 'canon' may not be nested within 'register'
-	    </sch:report>
+              divs of type 'canon' may not be nested within 'register'
+            </sch:report>
                 <sch:report test="@type='canon' and count          (tei:div[@type='canonText']) &gt;1">
-	      divs of type 'canon' may contain only one 'canonText'
-	    </sch:report>
+              divs of type 'canon' may contain only one 'canonText'
+            </sch:report>
                 <sch:report test="@type='canonText' and           not(parent::tei:div[@type='canon'])">
-	      divs of type 'canonText' can only occur inside 'canon'
-	    </sch:report>
+              divs of type 'canonText' can only occur inside 'canon'
+            </sch:report>
               </constraint>
             </constraintSpec>
           </elementSpec>
@@ -215,126 +224,126 @@
             </content>
             <attList>
               <attDef ident="cert">
-                <desc  xml:lang="en" versionDate="2014-01-12">certainty</desc>
+                <desc xml:lang="en" versionDate="2014-01-12">certainty</desc>
                 <datatype>
                   <dataRef key="teidata.certainty"/>
                 </datatype>
                 <valDesc/>
               </attDef>
               <attDef ident="code">
-                <desc  xml:lang="en" versionDate="2014-01-12">code</desc>
+                <desc xml:lang="en" versionDate="2014-01-12">code</desc>
                 <datatype>
                   <dataRef key="teidata.code"/>
                 </datatype>
                 <valDesc/>
               </attDef>
               <attDef ident="dur">
-                <desc  xml:lang="en" versionDate="2014-01-12">duration</desc>
+                <desc xml:lang="en" versionDate="2014-01-12">duration</desc>
                 <datatype>
                   <dataRef key="teidata.duration.w3c"/>
                 </datatype>
                 <valDesc/>
               </attDef>
               <attDef ident="enumerated">
-                <desc  xml:lang="en" versionDate="2014-01-12">enumerated</desc>
+                <desc xml:lang="en" versionDate="2014-01-12">enumerated</desc>
                 <datatype>
                   <dataRef key="teidata.enumerated"/>
                 </datatype>
                 <valDesc/>
               </attDef>
               <attDef ident="key">
-                <desc  xml:lang="en" versionDate="2014-01-12">key</desc>
+                <desc xml:lang="en" versionDate="2014-01-12">key</desc>
                 <datatype>
                   <dataRef key="teidata.key"/>
                 </datatype>
                 <valDesc/>
               </attDef>
               <attDef ident="count">
-                <desc  xml:lang="en" versionDate="2014-01-12">count</desc>
+                <desc xml:lang="en" versionDate="2014-01-12">count</desc>
                 <datatype>
                   <dataRef key="teidata.count"/>
                 </datatype>
                 <valDesc/>
               </attDef>
               <attDef ident="language">
-                <desc  xml:lang="en" versionDate="2014-01-12">language</desc>
+                <desc xml:lang="en" versionDate="2014-01-12">language</desc>
                 <datatype>
                   <dataRef key="teidata.language"/>
                 </datatype>
                 <valDesc/>
               </attDef>
               <attDef ident="name">
-                <desc  xml:lang="en" versionDate="2014-01-12">name</desc>
+                <desc xml:lang="en" versionDate="2014-01-12">name</desc>
                 <datatype>
                   <dataRef key="teidata.name"/>
                 </datatype>
                 <valDesc/>
               </attDef>
               <attDef ident="names">
-                <desc  xml:lang="en" versionDate="2014-01-12">names</desc>
+                <desc xml:lang="en" versionDate="2014-01-12">names</desc>
                 <datatype maxOccurs="unbounded">
                   <dataRef key="teidata.name"/>
                 </datatype>
                 <valDesc/>
               </attDef>
               <attDef ident="pattern">
-                <desc  xml:lang="en" versionDate="2014-01-12">pattern</desc>
+                <desc xml:lang="en" versionDate="2014-01-12">pattern</desc>
                 <datatype>
                   <dataRef key="teidata.pattern"/>
                 </datatype>
                 <valDesc/>
               </attDef>
               <attDef ident="numeric">
-                <desc  xml:lang="en" versionDate="2014-01-12">numeric</desc>
+                <desc xml:lang="en" versionDate="2014-01-12">numeric</desc>
                 <datatype>
                   <dataRef key="teidata.numeric"/>
                 </datatype>
                 <valDesc/>
               </attDef>
               <attDef ident="pointer">
-                <desc  xml:lang="en" versionDate="2014-01-12">pointer</desc>
+                <desc xml:lang="en" versionDate="2014-01-12">pointer</desc>
                 <datatype>
                   <dataRef key="teidata.pointer"/>
                 </datatype>
                 <valDesc/>
               </attDef>
               <attDef ident="pointers">
-                <desc  xml:lang="en" versionDate="2014-01-12">pointers</desc>
+                <desc xml:lang="en" versionDate="2014-01-12">pointers</desc>
                 <datatype maxOccurs="unbounded">
                   <dataRef key="teidata.pointer"/>
                 </datatype>
                 <valDesc/>
               </attDef>
               <attDef ident="prob">
-                <desc  xml:lang="en" versionDate="2014-01-12">probability</desc>
+                <desc xml:lang="en" versionDate="2014-01-12">probability</desc>
                 <datatype>
                   <dataRef key="teidata.probability"/>
                 </datatype>
                 <valDesc/>
               </attDef>
               <attDef ident="sex">
-                <desc  xml:lang="en" versionDate="2014-01-12">sex</desc>
+                <desc xml:lang="en" versionDate="2014-01-12">sex</desc>
                 <datatype>
                   <dataRef key="teidata.sex"/>
                 </datatype>
                 <valDesc/>
               </attDef>
               <attDef ident="temporal">
-                <desc  xml:lang="en" versionDate="2014-01-12">temporal</desc>
+                <desc xml:lang="en" versionDate="2014-01-12">temporal</desc>
                 <datatype>
                   <dataRef key="teidata.temporal.w3c"/>
                 </datatype>
                 <valDesc/>
               </attDef>
               <attDef ident="truth">
-                <desc  xml:lang="en" versionDate="2014-01-12">truth</desc>
+                <desc xml:lang="en" versionDate="2014-01-12">truth</desc>
                 <datatype>
                   <dataRef key="teidata.truthValue"/>
                 </datatype>
                 <valDesc/>
               </attDef>
               <attDef ident="xtruth">
-                <desc  xml:lang="en" versionDate="2014-01-12">xtruth</desc>
+                <desc xml:lang="en" versionDate="2014-01-12">xtruth</desc>
                 <datatype>
                   <dataRef key="teidata.xTruthValue"/>
                 </datatype>
@@ -342,7 +351,7 @@
               </attDef>
             </attList>
           </elementSpec>
-	  <elementSpec ident="blort2" mode="add">
+          <elementSpec ident="blort2" mode="add">
             <desc xml:lang="en" versionDate="2015-03-27">another completely spurious element made up for testing purposes only</desc>
             <classes>
               <memberOf key="model.pPart.data"/>
@@ -351,76 +360,76 @@
               <macroRef key="macro.phraseSeq"/>
             </content>
             <attList>
-	      <attDef ident="default-is-in-list-opt" usage="opt">
-		<datatype>
-		  <dataRef key="teidata.enumerated"/>
-		</datatype>
-		<defaultVal>ONE</defaultVal>
-		<valList mode="add" type="closed">
-		  <valItem ident="ONE"/>
-		  <valItem ident="TWO"/>
-		  <valItem ident="THREE"/>
-		</valList>
-	      </attDef>
-	      <attDef ident="default-is-in-list-rec" usage="rec">
-		<datatype>
-		  <dataRef key="teidata.enumerated"/>
-		</datatype>
-		<defaultVal>ONE</defaultVal>
-		<valList mode="add" type="closed">
-		  <valItem ident="ONE"/>
-		  <valItem ident="TWO"/>
-		  <valItem ident="THREE"/>
-		</valList>
-	      </attDef>
-	      <attDef ident="default-is-in-list-req" usage="req">
-		<datatype>
-		  <dataRef key="teidata.enumerated"/>
-		</datatype>
-		<defaultVal>ONE</defaultVal>
-		<valList mode="add" type="closed">
-		  <valItem ident="ONE"/>
-		  <valItem ident="TWO"/>
-		  <valItem ident="THREE"/>
-		</valList>
-	      </attDef>
-	      <attDef ident="default-NOT-in-list-opt" usage="opt">
-		<datatype>
-		  <dataRef key="teidata.enumerated"/>
-		</datatype>
-		<defaultVal>ONE</defaultVal>
-		<valList mode="add" type="closed">
-		  <valItem ident="TWO"/>
-		  <valItem ident="THREE"/>
-		</valList>
-	      </attDef>
-	      <attDef ident="default-NOT-in-list-rec" usage="rec">
-		<datatype>
-		  <dataRef key="teidata.enumerated"/>
-		</datatype>
-		<defaultVal>ONE</defaultVal>
-		<valList mode="add" type="closed">
-		  <valItem ident="TWO"/>
-		  <valItem ident="THREE"/>
-		</valList>
-	      </attDef>
-	      <attDef ident="default-NOT-in-list-req" usage="req">
-		<datatype>
-		  <dataRef key="teidata.enumerated"/>
-		</datatype>
-		<defaultVal>ONE</defaultVal>
-		<valList mode="add" type="closed">
-		  <valItem ident="TWO"/>
-		  <valItem ident="THREE"/>
-		</valList>
-	      </attDef>
-	    </attList>
-	    <remarks>
-	      <p>This element tests schematron constraints that try to
-	      ensure the saneness of <gi>defaultVal</gi></p>
-	    </remarks>
-	  </elementSpec>
-	  <elementSpec ident="blort3" mode="add">
+              <attDef ident="default-is-in-list-opt" usage="opt">
+                <datatype>
+                  <dataRef key="teidata.enumerated"/>
+                </datatype>
+                <defaultVal>ONE</defaultVal>
+                <valList mode="add" type="closed">
+                  <valItem ident="ONE"/>
+                  <valItem ident="TWO"/>
+                  <valItem ident="THREE"/>
+                </valList>
+              </attDef>
+              <attDef ident="default-is-in-list-rec" usage="rec">
+                <datatype>
+                  <dataRef key="teidata.enumerated"/>
+                </datatype>
+                <defaultVal>ONE</defaultVal>
+                <valList mode="add" type="closed">
+                  <valItem ident="ONE"/>
+                  <valItem ident="TWO"/>
+                  <valItem ident="THREE"/>
+                </valList>
+              </attDef>
+              <attDef ident="default-is-in-list-req" usage="req">
+                <datatype>
+                  <dataRef key="teidata.enumerated"/>
+                </datatype>
+                <defaultVal>ONE</defaultVal>
+                <valList mode="add" type="closed">
+                  <valItem ident="ONE"/>
+                  <valItem ident="TWO"/>
+                  <valItem ident="THREE"/>
+                </valList>
+              </attDef>
+              <attDef ident="default-NOT-in-list-opt" usage="opt">
+                <datatype>
+                  <dataRef key="teidata.enumerated"/>
+                </datatype>
+                <defaultVal>ONE</defaultVal>
+                <valList mode="add" type="closed">
+                  <valItem ident="TWO"/>
+                  <valItem ident="THREE"/>
+                </valList>
+              </attDef>
+              <attDef ident="default-NOT-in-list-rec" usage="rec">
+                <datatype>
+                  <dataRef key="teidata.enumerated"/>
+                </datatype>
+                <defaultVal>ONE</defaultVal>
+                <valList mode="add" type="closed">
+                  <valItem ident="TWO"/>
+                  <valItem ident="THREE"/>
+                </valList>
+              </attDef>
+              <attDef ident="default-NOT-in-list-req" usage="req">
+                <datatype>
+                  <dataRef key="teidata.enumerated"/>
+                </datatype>
+                <defaultVal>ONE</defaultVal>
+                <valList mode="add" type="closed">
+                  <valItem ident="TWO"/>
+                  <valItem ident="THREE"/>
+                </valList>
+              </attDef>
+            </attList>
+            <remarks>
+              <p>This element tests schematron constraints that try to
+              ensure the saneness of <gi>defaultVal</gi></p>
+            </remarks>
+          </elementSpec>
+          <elementSpec ident="blort3" mode="add">
             <desc xml:lang="en" versionDate="2016-09-27">another completely spurious element made up for testing purposes only</desc>
             <classes>
               <memberOf key="model.pPart.data"/>
@@ -428,46 +437,67 @@
             <content>
               <rng:ref name="macro.phraseSeq"/>
             </content>
-	    <!--
-		* The following <constraintSpec>s have an @ident that
-		* is of the form
-		* "@scheme_content-language_expected-result",
-		* where:
-		*   @scheme = the value of ../@scheme
-		*   content-language = whether ../* are Schematron 1.x ("schematron") or ISO Schematron elements
-		*   expected-result = OK, deprecated, or error
-	    -->
-	    <constraintSpec scheme="schematron" ident="schematron_isoschematron_OK">
-	      <!-- This should *not* raise an error, as ISO Schematron
-		   is allowed inside constraintSpec/schematron -->
-	      <constraint>
-		<sch:assert test="true()"/>
-	      </constraint>
-	    </constraintSpec>
-	    <constraintSpec scheme="isoschematron" ident="isoschematron_isoschematron_error">
- 	      <!-- This should raise an error now, as "isoschematron" -->
-	      <!-- is no longer be allowed. -->
-	      <constraint>
-		<sch:assert test="true()"/>
-	      </constraint>
-	    </constraintSpec>
-	  </elementSpec>
+            <!--
+                * The following <constraintSpec>s have an @ident that
+                * is of the form
+                * "@scheme_content-language_expected-result",
+                * where:
+                *   @scheme = the value of ../@scheme
+                *   content-language = whether ../* are Schematron 1.x ("schematron") or ISO Schematron elements
+                *   expected-result = OK, deprecated, or error
+            -->
+            <constraintSpec scheme="schematron" ident="schematron_isoschematron_OK">
+              <!-- This should *not* raise an error, as ISO Schematron
+                   is allowed inside constraintSpec/schematron -->
+              <constraint>
+                <sch:assert test="true()"/>
+              </constraint>
+            </constraintSpec>
+            <constraintSpec scheme="isoschematron" ident="isoschematron_isoschematron_error">
+              <!-- This should raise an error now, as "isoschematron"
+                   is no longer allowed. -->
+              <constraint>
+                <sch:assert test="true()"/>
+              </constraint>
+            </constraintSpec>
+          </elementSpec>
 
           <elementSpec ident="relation" mode="change">
             <constraintSpec ident="activepassive" mode="delete" scheme="schematron"/>
           </elementSpec>
 
-	  <elementSpec ident="abbr" mode="change">
-	    <desc>change for the sake of change</desc>
-	    <gloss>change for the sake of change</gloss>
-	    <attList>
-	      <attDef ident="type" mode="change">
-		<desc>change for the sake of change</desc>
-		<gloss>change for the sake of change</gloss>
-	      </attDef>
-	    </attList>
-	    <remarks><p>change for the sake of change</p></remarks>
-	  </elementSpec>
+          <elementSpec ident="abbr" mode="change">
+            <!-- missing @versionDate: -->
+            <gloss xml:lang="en">change of abbr for the sake of change (element gloss)</gloss>
+            <!-- missing @xml:lang: -->
+            <desc versionDate="2022-04-04">change of abbr for the sake of change (element desc)</desc>
+            <attList>
+              <attDef ident="type" mode="change">
+                <!-- missing both @versionDate and @xml:lang: -->
+                <gloss>change of type for the sake of change (attr gloss)</gloss>
+                <!-- missing neither @versionDate nor @xml:lang:-->
+                <desc xml:lang="en" versionDate="2022-04-04">change of type for the sake of change (attr desc)</desc>
+              </attDef>
+            </attList>
+            <remarks><p>change of abbr for the sake of change (remarks)</p></remarks>
+            <listRef>
+              <ref type="invalid" n="1">no target (2B caught by Schematron)</ref>
+              <ref type="valid" n="2" target="https://www.example.edu/tst">good target absolute URI</ref>
+              <ref type="valid" n="3" target="#one">good target shorthand pointer</ref>
+              <ref type="invalid" n="4" target="#one #two">bad target, two pointers (2B caught by Schematron)</ref>
+              <!-- Following canont be included because invalidity would break the testing process: -->
+              <!-- ref type="invalid" n="5" target="">bad target, no pointer (2B caught by RNG)</ref -->
+              <!-- (Currently a RELAX NG error in this file is not
+                   testable; a RELAX NG error in detest.xml is, of
+                   course, testable. Thus I have created a copy of
+                   this <listRef> in the detest.xml file that includes
+                   <ref>#5 so it gets tested. -->
+              <listRef type="invalid">
+                <ptr type="valid" target="#ptr_OK_but_nested_listRef_NOT_valid"/>
+              </listRef>
+            </listRef>
+          </elementSpec>
+
         </schemaSpec>
       </div>
     </body>
