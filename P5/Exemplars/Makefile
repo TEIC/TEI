@@ -124,7 +124,7 @@ dist: schemas docschemas
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/xml
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/epub
-	for i in *.template; do $(SAXON) -it:main make_template.xsl file=`basename $$i .template`;done
+	for tf in *.template; do $(SAXON) -xsl:make_template.xsl -s:$$tf; done
 	cp *.tei *.odd *.xsl ../release/tei-p5-exemplars/share/xml/tei/custom/odd
 	cp *.xml  ../release/tei-p5-exemplars/share/xml/tei/custom/templates
 	-rm -f../release/tei-p5-exemplars/share/xml/tei/custom/templates/*.doc.xml
