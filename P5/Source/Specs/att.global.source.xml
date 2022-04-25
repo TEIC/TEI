@@ -28,20 +28,20 @@ $Id$
       </datatype>
       <constraintSpec scheme="schematron" ident="only_1_ODD_source">
         <constraint>
-          <sch:rule context="tei:*/@source">
-            <sch:let name="srcs" value="tokenize( normalize-space(.),'&#x20;')"/>
-            <sch:report test="( parent::tei:classRef
-                              | parent::tei:dataRef
-                              | parent::tei:elementRef
-                              | parent::tei:macroRef
-                              | parent::tei:moduleRef
-                              | parent::tei:schemaSpec )
-                              and
-                              $srcs[2]">
+          <sch:rule context="tei:*[@source]">
+            <sch:let name="srcs" value="tokenize( normalize-space(@source),'&#x20;')"/>
+            <sch:report test="( self::tei:classRef
+              | self::tei:dataRef
+              | self::tei:elementRef
+              | self::tei:macroRef
+              | self::tei:moduleRef
+              | self::tei:schemaSpec )
+              and
+              $srcs[2]">
               When used on a schema description element (like
-              <sch:value-of select="name(..)"/>), the @source attribute
+              <sch:value-of select="name(.)"/>), the @source attribute
               should have only 1 value. (This one has <sch:value-of
-              select="count($srcs)"/>.)
+                select="count($srcs)"/>.)
             </sch:report>
           </sch:rule>
         </constraint>
