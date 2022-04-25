@@ -85,7 +85,7 @@ See the file COPYING.txt for details.
             </specList>
                 The <att>modality</att> attribute is required on the <gi>post</gi> element in order to describe the creation mechanism used in the CMC environment. The type of the content (i.e., whether the content of the post is written, an image, a video clip, etc.) is indicated by the child elements of the <gi>post</gi>. For example a written post from WhatsApp might include an audio-visual clip copied into the post, and in such case may not actually have any writing. Such a post is still considered in the “written” modality.
                     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                        <post modality="written" generatedBy="human" synch="#t005" who="#A06" xml:id="m12">
+                        <post modality="written" generatedBy="human" synch="#t005" who="#A06" xml:id="cmcEG01m12">
                             <figure type="image" generatedBy="human">
                                 <desc>Screenshot von der Google-Suche nach dem Friseur "Haarraum" mit der Durchschnitts-Google-Bewertung (4,5 von 5 Sternen), der Adresse, der Telefonnummer und den Öffnungszeiten</desc>
                             </figure>
@@ -196,7 +196,7 @@ See the file COPYING.txt for details.
             </egXML>
             <p>Similarly, the source post “Klar☺” might be encoded as follows:</p>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <post modality="written" generatedBy="human" synch="#lscLB.t004" who="#lscLB.A03" xml:id="lscLB.m6">
+                <post modality="written" generatedBy="human" synch="#lscLB.t004" who="#lscLB.A03" xml:id="lscLB.m6a">
                     <w pos="ADV">Klar</w>
                     <w pos="EMOIMG">☺</w>
                 </post>
@@ -212,7 +212,7 @@ See the file COPYING.txt for details.
             <p>Sometimes, e.g. when the source of the TEI document was a web page in HTML, the emojis may occur only as an icon graphic in the source. In that case, they can be encoded in TEI using <gi>figure</gi>. The corresponding unicode character can then be recorded in the <gi>desc</gi> element by the encoder if desired. </p>
             <p>Source text: ... ich überlege noch &#x1F648;</p>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <post modality="written" generatedBy="human" synch="#lscLB.t004" who="#lscLB.A03" xml:id="lscLB.m6"> 
+                <post modality="written" generatedBy="human" synch="#lscLB.t004" who="#lscLB.A03" xml:id="lscLB.m6b"> 
                     ... ich überlege noch 
                     <figure type="emoji" generatedBy="template">
                         <graphic url="fig1.png"/>
@@ -231,7 +231,7 @@ See the file COPYING.txt for details.
                 the graphic information, the TEI element <gi>figure</gi> should be used in the
                 appropriate place.</p>
             <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
-                <post modality="written" generatedBy="human" synch="#t005" who="#A06" xml:id="m12">
+                <post modality="written" generatedBy="human" synch="#t005" who="#A06" xml:id="cmcEG08m12">
                     <figure type="image" generatedBy="human">
                         <desc>Screenshot von der Google-Suche nach dem Friseur "Haarraum" mit der
                             Durchschnitts-Google-Bewertung (4,5 von 5 Sternen), der Adresse, der
@@ -243,7 +243,7 @@ See the file COPYING.txt for details.
                 result for a hairdresser. A link to the graphic file itself is not included because
                 it has not been retained for the corpus. </p>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <post type="tweet" key="1043823300479258624" mode="written" generatedBy="human"
+                <post type="tweet" key="1043823300479258624" modality="written" generatedBy="human"
                     synch="#tweetsbcrn18.t006" xml:id="p8" who="#u1" xml:lang="deu">
                     <time generatedBy="system"> 16:24 </time> Bro Tri-Engel...so hab ich mir das
                     vorgestellt!!! @AndreLo79 #bcrn18 #wikidach @Heiko komm' mal Twitter! #Engel
@@ -257,37 +257,34 @@ See the file COPYING.txt for details.
                 on the web just as in the source. </p>
         </div>
     </div>
-    
-    
+        
     <div xml:id="CMChow">
-        <head>“Putting it all together” – genre specific examples</head>
-        <?tei winita
-            * Twitter
-            * WhatsApp
-            * Wikipedia talk
-            * NB: not necessarily add complete examples (whole TEI file) but rather snippets
-        ?>
+      <head>“Putting it all together” – genre specific examples</head>
+      <?tei winita
+        * Twitter
+        * WhatsApp
+        * Wikipedia talk
+        * NB: not necessarily add complete examples (whole TEI file) but rather snippets
+      ?>
     </div>
     
-    
     <div xml:id="CMCmodule">
-        <head>The TEI CMC Module</head>
-        <p>The module described in this chapter makes available the following components:
-            <moduleSpec ident="cmc">
-                <desc xml:lang="en" versionDate="2021-09-07">Elements, Attributes, and Models for
-                    Computer-mediated communication (CMC). This module collects all cmc-specific
-                    extensions. Hence these will only be added to a TEI schema when this module is
-                    selected in a customisation.</desc>
-                <altIdent>TEI-CMC</altIdent>
-                <altIdent xml:lang="en">Computer-Mediated Communication</altIdent>
-            </moduleSpec> The selection and combination of modules to form a TEI schema is described
-            in <ptr target="#STIN"/>.</p>
-        <specGrp xml:id="CMCincludes">
-            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.cmc.xml"/>
-            <include xmlns="http://www.w3.org/2001/XInclude"
-                href="../../Specs/macro.specialPara.cmc.xml"/>
-            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.cmc.xml"/>
-            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/post.xml"/>
-        </specGrp>
+      <head>The TEI CMC Module</head>
+      <p>The module described in this chapter makes available the following components:
+      <moduleSpec ident="cmc">
+        <desc xml:lang="en" versionDate="2021-09-07">Elements, Attributes, and Models for
+        Computer-mediated communication (CMC). This module collects all cmc-specific
+        extensions. Hence these will only be added to a TEI schema when this module is
+        selected in a customisation.</desc>
+        <idno type="FPI">TEI-CMC</idno>
+      </moduleSpec>
+      The selection and combination of modules to form a TEI schema is described
+      in <ptr target="#STIN"/>.</p>
+      <specGrp xml:id="CMCincludes">
+        <xi:include href="../../Specs/att.cmc.xml"/>
+        <xi:include href="../../Specs/macro.specialPara.cmc.xml"/>
+        <xi:include href="../../Specs/model.cmc.xml"/>
+        <xi:include href="../../Specs/post.xml"/>
+      </specGrp>
     </div>
 </div>
