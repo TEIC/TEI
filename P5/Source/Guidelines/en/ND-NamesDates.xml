@@ -793,14 +793,13 @@ target="#CONA"/>).  The tag -->The
       </p>
 
       <p><soCalled>Characteristics</soCalled> or <soCalled>traits</soCalled> are typically independent of an individual's volition
-        or action and can be either physical, such as sex or hair and eye colour, or cultural, such as ethnicity, caste, or faith.
-        The distinction is not entirely straightforward, however: while sex is fairly obviously a physical trait, gender should
-        rather be regarded as culturally determined, and the division of mankind into different <soCalled>races</soCalled>,
-        proposed by early (white European) anthropologists on the basis of physical characteristics such as skin colour, hair type
-        and skull measurements, is now considered to be more a social or mental construct. Furthermore, while some characteristics
-        will obviously change over time, hair colour for example, none, in principle—not even sex—is immutable.</p>
+        or action and can be either physical, such as hair and eye colour, or cultural, such as ethnicity, caste, or faith.
+        The distinction is not entirely straightforward: gender and sex can be regarded as culturally determined with physical manifestations, 
+        and the division of humanity into different <soCalled>races</soCalled>,
+        proposed by early white European anthropologists on the basis of physical characteristics such as skin colour, hair type
+        and skull measurements, is now recognized as a social construct.</p>
 
-      <p><soCalled>States</soCalled> include, for example, marital status, place of residence and position or occupation. Such
+      <p><soCalled>States</soCalled> include, for example, marital status, place of residence, and position or occupation. Such
         states have a definite duration, that is, they have a beginning and an end and are typically a consequence of the
         individual's own action or that of others.</p>
 
@@ -808,7 +807,7 @@ target="#CONA"/>).  The tag -->The
         to office; such events will normally be associated with a specific date or a fairly narrow date-range. Changes in states
         can also cause or be caused by changes in characteristics. Any statement or assertion on any of these aspects of a
         person's life will be based on some source, possibly multiple sources, possibly contradictory. Taking all this into
-        account it follows that each such statement or assertion needs to be able to be documented, put into a time frame and be
+        account it follows that each such statement or assertion needs to be documentable, put into a time frame, and be
         relatable to other statements or assertions of the same or any of the other types.</p>
 
       <p>The elements defined by the module described in this chapter may, for the most part, all be regarded as specializations
@@ -1011,21 +1010,21 @@ target="#CONA"/>).  The tag -->The
       added state and trait. See http://purl.org/TEI/BUGS/3492947
       and discussion on Council list 2012-02-24. -->
           <specList>
-            <specDesc key="faith"/>
-            <specDesc key="langKnowledge"/>
-            <!--<specDesc key="langKnown"/>-->
-            <specDesc key="nationality"/>
-            <specDesc key="persPronouns"/>
-            <specDesc key="sex"/>
-            <specDesc key="age"/>
-            <specDesc key="socecStatus"/>
-            <specDesc key="persName"/>
-            <specDesc key="occupation"/>
-            <specDesc key="residence"/>
             <specDesc key="affiliation"/>
+            <specDesc key="age"/>
             <specDesc key="education"/>
+            <specDesc key="faith"/>
             <specDesc key="floruit"/>
+            <specDesc key="gender"/>
+            <specDesc key="langKnowledge"/>
+            <specDesc key="nationality"/>
+            <specDesc key="occupation"/>
+            <specDesc key="persName"/>
             <specDesc key="persona"/>
+            <specDesc key="persPronouns"/>
+            <specDesc key="residence"/>
+            <specDesc key="sex"/>
+            <specDesc key="socecStatus"/>
             <specDesc key="state"/>
             <specDesc key="trait"/>
           </specList> All, apart from <gi>langKnowledge</gi> and <gi>persona</gi>, allow content of ordinary prose containing
@@ -1035,8 +1034,8 @@ target="#CONA"/>).  The tag -->The
           <!-- socecstatus has its own @code and @scheme attributes which need
 exemplifying here too? -->
         </p>
-        <p>The meanings of concepts such as sex, nationality, or age are highly culturally-dependent, and the encoder should take
-          particular care to be explicit about any assumptions underlying their usage of them. For example, when recording
+        <p>The meanings of concepts such as sex-gender system, nationality, or age are highly culturally-dependent, and the encoder should take
+          particular care to be explicit about the assumptions underlying their usage of them. For example, when recording
           personal age in different cultures, there may be different assumptions about the point from which age is reckoned. A
           statement of the practice adopted in a given encoding may usefully be provided in the <gi>editorialDecl</gi> element
           discussed in <ptr target="#HD53"/>.</p>
@@ -1062,7 +1061,7 @@ exemplifying here too? -->
         <p>The <gi>persona</gi> element may contain the same component elements as a <gi>person</gi> element. Its function is to
           document a distinct persona assumed by the <gi>person</gi> element containing it. A person, not necessarily fictional,
           may take on different personas at different times or in different situations, each persona having different personal
-          characteristics, such as name, age, sex etc. We distinguish a persona, which is a set of characteristics associated with
+          characteristics, such as name, age, sex, gender etc. We distinguish a persona, which is a set of characteristics associated with
           one specific individual, from a role, which is a set of characteristics that many different people can assume. An actor
           does not change their persona when adopting a different role, but none of the personas associated with one person can
           properly be associated with another.</p>
@@ -1101,7 +1100,7 @@ exemplifying here too? -->
                 <surname>Griffin-Gracy</surname>
               </persName>
               <birth when="1940-10-25"/>
-              <sex value="transFemale" evidence="selfIdentification">trans woman</sex>
+              <gender value="transWoman" evidence="selfIdentification">trans woman</gender>
               <persPronouns value="she" evidence="selfIdentification"/>
               <note>
                 <p>Veteran of the Stonewall Riots. Founder of the
@@ -1138,20 +1137,16 @@ exemplifying here too? -->
         </closer>      
       </div>
 	  </egXML></p>
-          <p>The <gi>sex</gi> element carries a <att>value</att> attribute to give values from a project-internal taxonomy, or an
-          external standard, such as vCard's sex property <ptr target="http://microformats.org/wiki/gender-formats"/> (in which
-            <val>M</val> indicates male, <val>F</val> indicates female, <val>O</val> indicates other, <val>N</val> indicates none
-          or not applicable, <val>U</val> indicates unknown) or the often used ISO 5218:2004 <title>Representation of Human
-            Sexes</title>
-          <ptr target="http://standards.iso.org/ittf/PubliclyAvailableStandards/c036266_ISO_IEC_5218_2004(E_F).zip"/> (in which
-            <val>0</val> indicates unknown; <val>1</val> indicates male; <val>2</val> indicates female; and <val>9</val> indicates
-          not applicable, although the ISO standard is widely considered inadequate). <egXML
+          <p>The <gi>sex</gi> and <gi>gender</gi> elements carry a <att>value</att> attribute to give values from a project-internal taxonomy, or an
+          external standard. <egXML
             xmlns="http://www.tei-c.org/ns/Examples">
             <sex value="F">female</sex>
+            <gender value="W">woman</gender>
           </egXML> As elsewhere, these coded values may be used as an alternative to or normalization of the actual descriptive
           text contained in the element. The previous example might equally well be given as <egXML
             xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
             <sex value="F"/>
+            <gender value="W"/>
           </egXML>
         </p>
         <p>The generic <gi>trait</gi> and <gi>state</gi> elements are also members of this class, <specList>
