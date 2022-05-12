@@ -21,6 +21,7 @@ represent metrical information.</desc>
       <gloss versionDate="2008-04-06" xml:lang="es">estructura métrica, convencional</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">structure métrique, canonique</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">struttura metrica, convenzionale</gloss>
+      <gloss versionDate="2022-05-12" xml:lang="ja">韻律構造, 定型</gloss>
       <desc versionDate="2005-10-10" xml:lang="en">contains a user-specified encoding for the conventional
 metrical structure of the element.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">요소의 관례적 운율 구조에 대하여 사용자가 명시한 부호화를 포함한다.</desc>
@@ -45,10 +46,11 @@ from its parent.</p>
         <p>Lorsque l'attribut <att>met</att> n'est pas présent, le modèle métrique de
                         l'élément courant est considéré comme hérité de l'élément parent.</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
+      <remarks xml:lang="ja" versionDate="2022-05-12">
         <p>
-      当該属性の値が付与されていない場合，当該要素の韻律パタンは，親要
-      素にある内容を継承すると解釈される．
+パターンは，韻律単位の種類の標準用語（例えば，<mentioned>hexameter</mentioned>）または韻律パターンの符号化表現（例えば，<mentioned>+--+-+-+-+-</mentioned>）によって指定される．
+		どちらの場合でも，使用される表記法は，関連づけられたヘッダの<gi>encodingDesc</gi>内の<gi>metDecl</gi>要素によって記述されるべきである．
+		この属性が指定されていない場合，関係する要素の韻律パターンはその親から継承されると理解される．
       </p>
       </remarks>
     </attDef>
@@ -58,6 +60,7 @@ from its parent.</p>
       <gloss versionDate="2008-04-06" xml:lang="es">estructura métrica, realizada</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">structure métrique réelle</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">struttura metrica, attuata</gloss>
+      <gloss versionDate="2022-05-12" xml:lang="ja">韻律構造, 実現型</gloss>
       <desc versionDate="2005-10-10" xml:lang="en">contains a user-specified encoding for the actual realization
 of the conventional metrical structure applicable to the element.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">요소에 적용 가능한 관례적 운율 구조의 실제 실현에 대하여 사용자가 명시한 부호화를 포함한다.</desc>
@@ -83,10 +86,11 @@ to that specified or implied for the <att>met</att> attribute.</p>
                         de l'élément concerné est considérée comme identique à celle spécifiée de
                         manière explicite ou implicite au moyen de l'attribut <att>met</att>.</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
+      <remarks xml:lang="ja" versionDate="2022-05-12">
         <p>
-      当該属性の値が付与されていない場合，当該要素の韻律パタンは，親要
-      素にある内容を継承すると解釈される．
+パターンは，韻律単位の種類の標準用語（例えば，<mentioned>hexameter</mentioned>）または韻律パターンの符号化表現（例えば，<mentioned>+--+-+-+-+-</mentioned>）によって指定される．
+		どちらの場合でも，使用される表記法は，関連づけられたヘッダの<gi>encodingDesc</gi>内の<gi>metDecl</gi>要素によって記述されるべきである．
+		この属性が指定されていない場合，関係する要素の韻律の実現形は, <att>met</att>属性に対して指定された，または暗示されたものと同じであると理解される．
       </p>
       </remarks>
     </attDef>
@@ -96,6 +100,7 @@ to that specified or implied for the <att>met</att> attribute.</p>
       <gloss versionDate="2008-04-06" xml:lang="es">esquema de la rima</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">schéma rimique</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">schema rimico</gloss>
+      <gloss versionDate="2022-05-12" xml:lang="ja">韻構造</gloss>
       <desc versionDate="2005-10-10" xml:lang="en">specifies the rhyme scheme applicable to a group of verse lines.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">시행 군집에 적용 가능한 운 스키마를 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">標明適用於一詩行組的押韻組合。</desc>
@@ -132,12 +137,12 @@ user-defined alternative notations.</p>
         extensions requièrent des notations différentes définies par
         l'utilisateur de la TEI.</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
+      <remarks xml:lang="ja" versionDate="2022-05-09">
         <p>
-	デフォルトの表記法が使用される時，この属性を行以下の単位に付与
-      することには，意味がない．デフォルトの表記法は，内部の韻を記録す
-      るものではない．また，通常でない押韻を特定するものでもない．
-      これらの拡張には，ユーザが定義した別の表記法が求められるだろう．
+デフォルトでは，韻構造は，一つの韻を踏む行と逐一対応するアルファベットの文字列として表現される．すべての押韻しない行は，ハイフンまたはXで表す．
+		TEIヘッダーの<gi>metDecl</gi>要素を使用して，<att>met</att>の代替表記を定義できる．
+		デフォルトの表記法が使用される時，この属性を行未満の単位に指定しても，意味をなさない．
+		デフォルトの表記法は，行内部の韻を記録するものでも，定型でない押韻を指定するものでもない．このような拡張をするには，ユーザが代替の表記法を定義する必要がある．
       </p>
       </remarks>
     </attDef>
