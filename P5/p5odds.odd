@@ -477,7 +477,7 @@ $Id$
                           ident="require-translatability"
                           scheme="schematron">
             <constraint>
-              <sch:rule context="tei:elementSpec/tei:desc
+              <sch:rule context="  tei:elementSpec/tei:desc
                                  | tei:elementSpec/tei:gloss
                                  | tei:elementSpec/tei:remarks
                                  | tei:classSpec/tei:desc
@@ -496,17 +496,80 @@ $Id$
                                  | tei:moduleSpec/tei:gloss
                                  | tei:moduleSpec/tei:remarks
                                  ">
-                <sch:report test="not( @xml:lang and @versionDate )">
+                <sch:assert test="@xml:lang  and  @versionDate">
                   Error: both the versionDate and xml:lang attributes on "<sch:name/>" are required when it is a child of "<sch:value-of select="local-name(..)"/>".
-                </sch:report>
+                </sch:assert>
+              </sch:rule>
+            </constraint>
+          </constraintSpec>
+          <constraintSpec mode="add" ident="en-first" scheme="schematron">
+            <desc xml:lang="en" versionDate="2022-05-13">Per ticket <ref target="https://github.com/TEIC/TEI/issues/2279">2279</ref>, require
+            that the <val>en</val> translatable element goes first. Note that we would prefer to be
+            able to say <said>a member of att.translatable</said>, but there is currently no way to
+            that, so we enumerate them.</desc>
+            <constraint>
+              <sch:rule context="  tei:elementSpec/tei:desc[1]
+                                 | tei:elementSpec/tei:gloss[1]
+                                 | tei:elementSpec/tei:remarks[1]
+                                 | tei:classSpec/tei:desc[1]
+                                 | tei:classSpec/tei:gloss[1]
+                                 | tei:classSpec/tei:remarks[1]
+                                 | tei:macroSpec/tei:desc[1]
+                                 | tei:macroSpec/tei:gloss[1]
+                                 | tei:macroSpec/tei:remarks[1]
+                                 | tei:attDef/tei:desc[1]
+                                 | tei:attDef/tei:gloss[1]
+                                 | tei:attDef/tei:remarks[1]
+                                 | tei:valItem/tei:desc[1]
+                                 | tei:valItem/tei:gloss[1]
+                                 | tei:valItem/tei:remarks[1]
+                                 | tei:moduleSpec/tei:desc[1]
+                                 | tei:moduleSpec/tei:gloss[1]
+                                 | tei:moduleSpec/tei:remarks[1]
+                                  ">
+                <sch:let name="lang" value="normalize-space( @xml:lang )"/>
+                <sch:assert test="matches( $lang, '^en-?' )">The first <sch:value-of select="name(.)"/> child of a <sch:value-of select="name(..)"/> should have an @xml:lang that indicates it is in English.</sch:assert>
+              </sch:rule>
+            </constraint>
+          </constraintSpec>
+          <constraintSpec mode="add" ident="only-one-each-lang" scheme="schematron">
+            <desc xml:lang="en" versionDate="2022-05-13">Per ticket <ref target="https://github.com/TEIC/TEI/issues/2279">2279</ref>, require that there be only one
+              of any given att.translatable element sibling for any given language. Note that
+              we would prefer to be able to say <said>a member of att.translatable</said>, but
+              there is currently no way to that, so we enumerate them. Also note that we simply
+              compare <att>xml:lang</att> values, such that <val>fr-CA</val> and <val>fr-FR</val>
+              would be considered different languages. (We may want to be smarter about this in
+              the future.)</desc>
+            <constraint>
+              <sch:rule context="  tei:elementSpec/tei:desc[ position() > 1 ]
+                                 | tei:elementSpec/tei:gloss[ position() > 1 ]
+                                 | tei:elementSpec/tei:remarks[ position() > 1 ]
+                                 | tei:classSpec/tei:desc[ position() > 1 ]
+                                 | tei:classSpec/tei:gloss[ position() > 1 ]
+                                 | tei:classSpec/tei:remarks[ position() > 1 ]
+                                 | tei:macroSpec/tei:desc[ position() > 1 ]
+                                 | tei:macroSpec/tei:gloss[ position() > 1 ]
+                                 | tei:macroSpec/tei:remarks[ position() > 1 ]
+                                 | tei:attDef/tei:desc[ position() > 1 ]
+                                 | tei:attDef/tei:gloss[ position() > 1 ]
+                                 | tei:attDef/tei:remarks[ position() > 1 ]
+                                 | tei:valItem/tei:desc[ position() > 1 ]
+                                 | tei:valItem/tei:gloss[ position() > 1 ]
+                                 | tei:valItem/tei:remarks[ position() > 1 ]
+                                 | tei:moduleSpec/tei:desc[ position() > 1 ]
+                                 | tei:moduleSpec/tei:gloss[ position() > 1 ]
+                                 | tei:moduleSpec/tei:remarks[ position() > 1 ]
+                                  ">
+                <sch:let name="myGI" value="name(.)"/>
+                <sch:let name="lang" value="normalize-space( @xml:lang )"/>
+                <sch:report test="preceding-sibling::*[ name(.) eq $myGI ][ normalize-space( @xml:lang) eq $lang ]">The sibling <sch:value-of select="$myGI"/> children of a <sch:value-of select="name(..)"/> should each have a different @xml:lang; this one duplicates the "<sch:value-of select="$lang"/>" of a preceding sibling.</sch:report>
               </sch:rule>
             </constraint>
           </constraintSpec>
           <constraintSpec ident="all-sibling-parent-desc" scheme="schematron">
             <constraint>
               <sch:rule context="*[tei:desc[@versionDate]]">
-                <sch:report role="nonfatal" test="
-                                                  count( tei:desc )
+                <sch:report role="nonfatal" test="count( tei:desc )
                                                   ne
                                                   count( tei:desc[@versionDate] )
                                                   ">
@@ -518,8 +581,7 @@ $Id$
           <constraintSpec ident="all-sibling-parent-gloss" scheme="schematron">
             <constraint>
               <sch:rule context="*[tei:gloss[@versionDate]]">
-                <sch:report role="nonfatal" test="
-                                                  count( tei:gloss )
+                <sch:report role="nonfatal" test="count( tei:gloss )
                                                   ne
                                                   count( tei:gloss[@versionDate] )
                                                   ">
@@ -531,8 +593,7 @@ $Id$
           <constraintSpec ident="all-sibling-parent-remarks" scheme="schematron">
             <constraint>
               <sch:rule context="*[tei:remarks[@versionDate]]">
-                <sch:report role="nonfatal" test="
-                                                  count( tei:remarks )
+                <sch:report role="nonfatal" test="count( tei:remarks )
                                                   ne
                                                   count( tei:remarks[@versionDate] )
                                                   ">
