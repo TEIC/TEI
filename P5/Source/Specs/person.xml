@@ -69,16 +69,15 @@ specification.</p></remarks>
       <desc versionDate="2007-05-04" xml:lang="es">especifica el sexo de una persona.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il sesso di una persona</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.sex"/></datatype>
-      <remarks versionDate="2013-04-14" xml:lang="en">
-        <p>Values for this attribute may be locally defined by a project, or may refer to an external standard, such as
-          vCard's sex property <ptr target="http://microformats.org/wiki/gender-formats"/>
-          (in which <val>M</val> indicates male, <val>F</val> female, <val>O</val> other, <val>N</val> none or not applicable, <val>U</val> unknown),
-          or the often used ISO 5218:2004 <title>Representation of Human Sexes</title>
-               <ptr target="http://standards.iso.org/ittf/PubliclyAvailableStandards/c036266_ISO_IEC_5218_2004(E_F).zip"/> (in which <val>0</val>
-          indicates unknown; <val>1</val> male; <val>2</val> female; and <val>9</val> not applicable,
-          although the ISO standard is widely considered inadequate);
-          cf. CETH's <title>Recommendations for Inclusive Data Collection of Trans People</title>
-               <ptr target="http://transhealth.ucsf.edu/trans?page=lib-data-collection"/>.</p>
+      <remarks versionDate="2022-05-18" xml:lang="en">
+        <p>Values for this attribute may be locally defined by a project or according to an external standard.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="gender" usage="opt">
+      <desc versionDate="2022-05-18" xml:lang="en">specifies the gender of the person.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.gender"/></datatype>
+      <remarks versionDate="2022-05-18" xml:lang="en">
+        <p>Values for this attribute may be locally defined by a project or according to an external standard.</p>
       </remarks>
     </attDef>
     <attDef ident="age" usage="opt">
@@ -118,7 +117,7 @@ specification.</p></remarks>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <person sex="2" age="adult">
+      <person sex="F" age="adult">
         <p>Personne interrogée, de sexe féminin, instruite, née à Shropshire, au ROYAUME-UNI le 12
             Janvier 1950, d'occupation inconnue. Parle le français couramment. Statut
             socio-économique B2.</p>
@@ -127,7 +126,7 @@ specification.</p></remarks>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <person xml:id="fr_Ovi01" sex="1" role="poet">
+      <person xml:id="fr_Ovi01" sex="M" role="poet">
         <persName xml:lang="en">Ovid</persName>
         <persName xml:lang="la">Publius Ovidius Naso</persName>
         <birth when="-0044-03-20"> 20 March 43 BC<placeName><settlement type="city">Sulmona</settlement><country key="IT">Italie</country></placeName>
@@ -139,14 +138,14 @@ specification.</p></remarks>
   </exemplum>
   <exemplum xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <person sex="2" age="adult">
+      <person sex="F" age="adult">
         <p>女性被告。1950年1月12日生於西藏，受過良好教育，職業不明。能說流利漢語，中產階級。</p>
       </person>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <person xml:id="zh-tw_Ovi01" sex="1" role="poet">
+      <person xml:id="zh-tw_Ovi01" sex="M" role="poet">
         <persName xml:lang="en">Ovid</persName>
         <persName xml:lang="zh-TW">奧維德</persName>
         <birth when="-0044-03-20"> 西元前43年3月20日<placeName><settlement type="city">Sulmona</settlement><country key="IT">義大利</country></placeName>
@@ -158,13 +157,22 @@ specification.</p></remarks>
   </exemplum>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <person xml:id="Ovi01" sex="1" role="poet">
+      <person xml:id="Ovi01" sex="M" role="poet">
         <persName xml:lang="en">Ovid</persName>
         <persName xml:lang="la">Publius Ovidius Naso</persName>
         <birth when="-0044-03-20"> 20 March 43 BC <placeName><settlement type="city">Sulmona</settlement><country key="IT">Italy</country></placeName>
             </birth>
         <death notBefore="0017" notAfter="0018">17 or 18 AD <placeName><settlement type="city">Tomis (Constanta)</settlement><country key="RO">Romania</country></placeName>
             </death>
+      </person>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en" source="#vcard">
+    <p>The following exemplifies an adaptation of the vCard standard to indicate an unknown gender for a fictional character.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <person xml:id="ariel" gender="U">
+        <persName>Ariel</persName>
+        <note>Character in <title level="m">The Tempest</title>.</note>
       </person>
     </egXML>
   </exemplum>
