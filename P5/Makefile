@@ -255,6 +255,18 @@ dist-schema.stamp:check.stamp p5.xml schemas.stamp
 	| (cd release/tei-p5-schema/share/xml/tei/schema/relaxng; tar xf - )
 	touch dist-schema.stamp
 
+readus:
+	@echo Make just the README files for testing purposes only
+	@echo BUILD: Make distribution directory for doc
+	rm -rf release/tei-p5-doc*
+	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc/en
+	cp VERSION release/tei-p5-doc/share/doc/tei-p5-doc
+	@echo BUILD: Make web pages for release notes
+	for i in ReleaseNotes/readme*xml; do \
+	echo ${ANT} -f ${XSL}/html/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=readme \
+	-DinputFile=`pwd`/$$i -DoutputFile=`pwd`/release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
+	done
+
 dist-doc.stamp:  check.stamp p5.xml
 	@echo BUILD: Make distribution directory for doc
 	rm -rf release/tei-p5-doc*
