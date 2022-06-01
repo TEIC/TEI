@@ -101,9 +101,9 @@ or external to it.</desc>
       <constraintSpec ident="variantEncodingLocation" scheme="schematron">
         <constraint>
           <sch:rule context="tei:variantEncoding">
-            <sch:assert test="(@location != 'external') or (@method != 'parallel-segmentation')">
+            <sch:report test="@location eq 'external'  and  @method eq 'parallel-segmentation'">
               The @location value "external" is inconsistent with the
-              parallel-segmentation method of apparatus markup.</sch:assert>
+              parallel-segmentation method of apparatus markup.</sch:report>
           </sch:rule>
         </constraint>
       </constraintSpec>
