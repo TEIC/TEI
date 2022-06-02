@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0"
              xmlns:rng="http://relaxng.org/ns/structure/1.0"
              xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -43,6 +43,7 @@ $Id$
       <alternate minOccurs="0" maxOccurs="unbounded">
         <classRef key="model.oddRef"/>
         <classRef key="model.oddDecl"/>
+	<elementRef key="listRef"/>
       </alternate>      
     </sequence>
   </content>
@@ -134,6 +135,10 @@ $Id$
       <desc versionDate="2007-05-04" xml:lang="es">indica la lengua que se ha de utilizar para la creación de la documentación en el caso en que las descripciones de elementos, atributos, clases o macros esten disponibles en más lenguas.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la lingua da utilizzare per la creazione della documentazione nel caso in cui le descrizioni di elementi, attributi, classi o macro siano disponibili in più lingue</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.language"/></datatype>
+      <remarks xml:lang="en" versionDate="2022-04-04">
+        <p>Although multiple languages may be specified, the current
+        TEI ODD processor is only capable of handling one.</p>
+      </remarks>
     </attDef>
     <attDef ident="defaultExceptions" usage="rec">
       <gloss versionDate="2016-11-20" xml:lang="en">default namespace

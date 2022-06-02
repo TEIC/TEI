@@ -6,7 +6,7 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="CO" n="6">
 <head>Elements Available in All TEI Documents</head>
 <p>This chapter describes elements which may appear in any kind of text
@@ -1364,7 +1364,45 @@ overshadows the historical content</quote>.</egXML>
             </p>
           </egXML>
           
+          Multiple ruby annotations can appear in the same alignment relative to the main text. For example, there might be two annotations on the right. We use this 
+          instance to exemplify two ways of encoding this phenomenon, dependent on the interpretation of the text.  
+          We could use a parallel approach where a sequence of two <gi>rt</gi> elements, both with the same value for the <att>place</att> attribute, are 
+          assumed to appear in their document sequence. The first of the two <gi>rt</gi> elements would appear to the right of the ruby base (<gi>rb</gi>), while the second would appear to the right of the first <gi>rt</gi> element 
+          <note place="foot">Taken from <ref target="https://en.wikipedia.org/wiki/Bopomofo#/media/File:Bopomofo.gif">Wikipedia</ref>.</note>:
+          
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <p style="writing-mode: vertical-rl" xml:lang="ja"> 
+              <!--...-->
+              <ruby>
+                <rb>ㄅ</rb>
+                <rt place="right">B</rt>
+                <rt place="right">博</rt>
+              </ruby>
+              <!--...-->
+            </p>
+          </egXML>
+          
+          Alternatively, a nested approach can be used. With nested <gi>ruby</gi> elements, the structure suggests that the second <gi>rt</gi> element is glossing both the <gi>rb</gi> and the <gi>rt</gi> element:
+          
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <p style="writing-mode: vertical-rl" xml:lang="ja"> 
+              <!--...-->
+              <ruby>
+                <rb>
+                  <ruby>
+                    <rb>ㄅ</rb>
+                    <rt place="right">B</rt>
+                  </ruby>
+                </rb>
+                <rt place="right">博</rt>
+              </ruby>
+              <!--...-->
+            </p>
+          </egXML>
+          
         </p>
+      
+      
       
       <p>The <gi>rt</gi> element is a member of <ident type="class">att.written</ident>:
         <specList>
@@ -1397,7 +1435,7 @@ overshadows the historical content</quote>.</egXML>
         
         <p>The current support for ruby is rudimentary, and in future releases of the
           Guidelines we expect to see more development of these features and 
-          recommendations. While ruby is included for use with East Asian lanuages, 
+          recommendations. While ruby is included for use with East Asian languages, 
           encoders may find other contexts in which these elements are useful.</p>
         
       <specGrp xml:id="DCOHTGRB">
@@ -2355,14 +2393,14 @@ representation of the date given as content of the <gi>date</gi>
 element. The format used should be a valid W3C schema datatype.<note place="bottom">The datatypes are taken from the W3C Recommendation <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>. 
 The permitted datatypes are:
 <list rend="bulleted">
-<item><ref target="http://www.w3.org/TR/xmlschema-2/#date">date</ref></item>
-<item><ref target="http://www.w3.org/TR/xmlschema-2/#gYear">gYear</ref></item>
-<item><ref target="http://www.w3.org/TR/xmlschema-2/#gMonth">gMonth</ref></item>
-<item><ref target="http://www.w3.org/TR/xmlschema-2/#gDay">gDay</ref></item>
-<item><ref target="http://www.w3.org/TR/xmlschema-2/#gYearMonth">gYearMonth</ref></item>
-<item><ref target="http://www.w3.org/TR/xmlschema-2/#gMonthDay">gMonthDay</ref></item>
-<item><ref target="http://www.w3.org/TR/xmlschema-2/#time">time</ref></item>
-<item><ref target="http://www.w3.org/TR/xmlschema-2/#dateTime">dateTime</ref></item>
+<item><ref target="https://www.w3.org/TR/xmlschema-2/#date">date</ref></item>
+<item><ref target="https://www.w3.org/TR/xmlschema-2/#gYear">gYear</ref></item>
+<item><ref target="https://www.w3.org/TR/xmlschema-2/#gMonth">gMonth</ref></item>
+<item><ref target="https://www.w3.org/TR/xmlschema-2/#gDay">gDay</ref></item>
+<item><ref target="https://www.w3.org/TR/xmlschema-2/#gYearMonth">gYearMonth</ref></item>
+<item><ref target="https://www.w3.org/TR/xmlschema-2/#gMonthDay">gMonthDay</ref></item>
+<item><ref target="https://www.w3.org/TR/xmlschema-2/#time">time</ref></item>
+<item><ref target="https://www.w3.org/TR/xmlschema-2/#dateTime">dateTime</ref></item>
 </list>
 There 
 is one exception: these Guidelines permit a time to be expressed as only a number of hours, or as a number of hours and minutes,
@@ -2484,10 +2522,10 @@ attribute) to the more complex usage of a full URI with
 embedded XPointers. For example, the source of the following paragraph
 looks something like this: 
   <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE"><p>...
-The complete XPointer specification is managed by the W3C<note place="foot"><ptr target="http://www.w3.org/TR/xptr-framework/"/>, 
-<ptr target="http://www.w3.org/TR/xptr-element/"/>, 
-<ptr target="http://www.w3.org/TR/xptr-xmlns/"/>, and 
-<ptr target="http://www.w3.org/TR/xptr-xpointer/"/></note>;
+The complete XPointer specification is managed by the W3C<note place="foot"><ptr target="https://www.w3.org/TR/xptr-framework/"/>, 
+<ptr target="https://www.w3.org/TR/xptr-element/"/>, 
+<ptr target="https://www.w3.org/TR/xptr-xmlns/"/>, and 
+<ptr target="https://www.w3.org/TR/xptr-xpointer/"/></note>;
 for a discussion of TEI schemes for XPointer, see 
 <ptr target="#eSATS"/>.</p>
 <!--... -->
@@ -2499,7 +2537,7 @@ Alternatively, if no explicit link is to
 be encoded, but it is simply required to mark the phrase as a
 cross-reference, the <gi>ref</gi> element may be used without a
 <att>target</att> attribute.</p>
-<p>For an introduction to the use of links in general, see <ptr target="#SA"/>. The complete XPointer specification is managed by the W3C<note place="foot"><ptr target="http://www.w3.org/TR/xptr-framework/"/>, <ptr target="http://www.w3.org/TR/xptr-element/"/>, <ptr target="http://www.w3.org/TR/xptr-xmlns/"/>, and <ptr target="http://www.w3.org/TR/xptr-xpointer/"/></note>; for a discussion of
+<p>For an introduction to the use of links in general, see <ptr target="#SA"/>. The complete XPointer specification is managed by the W3C<note place="foot"><ptr target="https://www.w3.org/TR/xptr-framework/"/>, <ptr target="https://www.w3.org/TR/xptr-element/"/>, <ptr target="https://www.w3.org/TR/xptr-xmlns/"/>, and <ptr target="https://www.w3.org/TR/xptr-xpointer/"/></note>; for a discussion of
 TEI schemes for XPointer, see <ptr target="#SATS"/>.</p>
 <p>
 <specList><specDesc key="ptr"/><specDesc key="ref"/></specList>
@@ -2650,7 +2688,7 @@ appropriate value for the <att>rend</att> attribute. Suggested values
   Some of these values may of course be combined; a list may be inline, but also be rendered with 
   numbers. An example appears below. For more sophisticated and detailed description of list rendering, consider using the <att>style</att>
   attribute with Cascading Stylesheet properties and values, as described in the W3C's
-  <ref target="http://www.w3.org/TR/css-lists-3/">CSS Lists and Counters Module Level 3</ref>.</p>
+  <ref target="https://www.w3.org/TR/css-lists-3/">CSS Lists and Counters Module Level 3</ref>.</p>
 
 <p>Each distinct item in the list should be encoded as a distinct
 <gi>item</gi> element.  If the numbering or other identification for the
@@ -5919,7 +5957,7 @@ were dialogue in a play.  The following example is taken  from a 19th century
    <p>All the elements described in this chapter are provided by the
    <ident type="module">core</ident> module.
    <moduleSpec xml:id="DCO" ident="core">
-     <altIdent type="FPI">Common Core</altIdent>
+     <idno type="FPI">Common Core</idno>
      <desc xml:lang="en" versionDate="2006-09-13">Elements common to all TEI documents</desc>
      <desc xml:lang="fr" versionDate="2018-07-12">Éléments disponibles pour tous les documents TEI</desc>
      <desc xml:lang="zh-TW" versionDate="2018-07-12">所有TEI文件所通用的元素</desc>
