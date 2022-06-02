@@ -110,8 +110,6 @@ teiwebsiteguidelines:
 	make html-web ALLLANGUAGES="en es de ja ko fr it zh-TW" GOOGLEANALYTICS=UA-4372657-1
 	(cd Guidelines-web; zip -r -q ../teiwebsiteguidelines.zip . )
 
-pdf: Guidelines.pdf pdf-complete
-
 epub: Guidelines.epub
 
 Guidelines.epub: check.stamp p5.xml
@@ -141,9 +139,9 @@ fonttest:
 	fi
 	rm -f fonttest.*
 
-Guidelines.pdf: check.stamp p5.xml Utilities/guidelines-latex.xsl
+pdf-init: check.stamp p5.xml Utilities/guidelines-latex.xsl
 	@echo check if XeLaTeX exist
-	@command -v  xelatex || exit 1
+	@command -v xelatex || exit 1
 	perl -p -e \
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
@@ -152,10 +150,10 @@ Guidelines.pdf: check.stamp p5.xml Utilities/guidelines-latex.xsl
 	@echo Make sure you have Junicode and Noto CJK fonts installed
 	${ANT} -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfonce
 
-pdf-complete:
+pdf: pdf-init
 	${ANT} -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfrest 2> pdfbuild.log 1> pdfbuild.log
 	grep -v "Failed to convert input string to UTF16" pdfbuild.log
-	for i in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$i; done
+	for auxFile in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$auxFile; done
 
 rewraprnc:
 	for i in Guidelines-REF*tex; \
@@ -256,6 +254,18 @@ dist-schema.stamp:check.stamp p5.xml schemas.stamp
 	(cd Schema; tar --exclude .svn -c -f - .) \
 	| (cd release/tei-p5-schema/share/xml/tei/schema/relaxng; tar xf - )
 	touch dist-schema.stamp
+
+readus:
+	@echo Make just the README files for testing purposes only
+	@echo BUILD: Make distribution directory for doc
+	rm -rf release/tei-p5-doc*
+	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc/en
+	cp VERSION release/tei-p5-doc/share/doc/tei-p5-doc
+	@echo BUILD: Make web pages for release notes
+	for i in ReleaseNotes/readme*xml; do \
+	echo ${ANT} -f ${XSL}/html/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=readme \
+	-DinputFile=`pwd`/$$i -DoutputFile=`pwd`/release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
+	done
 
 dist-doc.stamp:  check.stamp p5.xml
 	@echo BUILD: Make distribution directory for doc
