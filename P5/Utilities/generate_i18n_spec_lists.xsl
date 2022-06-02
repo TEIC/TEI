@@ -41,7 +41,7 @@
           <string key="URL">{@ident}.xml</string>
           <xsl:for-each select="$languages">
             <map key="{.}">
-              <boolean key="out-of-date"><xsl:value-of select="exists($current//*[@xml:lang=current() and xs:date(@versionDate) lt xs:date((preceding-sibling::*[@xml:lang='en']/@versionDate)[1])])"/></boolean>
+              <boolean key="out-of-date"><xsl:value-of select="exists($current//*[@xml:lang=current() and xs:date(@versionDate) lt xs:date((preceding-sibling::*[@xml:lang='en'][1]/@versionDate))])"/></boolean>
               <boolean key="missing"><xsl:value-of select="exists($current//(desc|gloss|remarks)[@xml:lang='en' and not(local-name() = following-sibling::*[@versionDate and @xml:lang=current()]/local-name(.))])"/></boolean>
             </map>
           </xsl:for-each>

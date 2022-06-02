@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="elementSpec" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
   <gloss versionDate="2007-07-04" xml:lang="en">element specification</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">요소 명시</gloss>
@@ -53,6 +53,12 @@ $Id$
     </sequence>
   </content>
   <constraintSpec scheme="schematron" ident="child-constraint-based-on-mode">
+    <!-- 
+         This constraint specification is much like the
+         "empty-based-on-mode" for <constraintSpec> itself, which does
+         something something similar (in that it is based on @mode),
+         but not quite the same.
+    -->
     <constraint>
       <sch:rule context="tei:elementSpec[ @mode eq 'delete' ]">
         <sch:report test="child::*">This elementSpec element has a mode= of "delete" even though it has child elements. Change the mode= to "add", "change", or "replace", or remove the child elements.</sch:report>
