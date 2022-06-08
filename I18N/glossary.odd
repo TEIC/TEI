@@ -31,11 +31,11 @@
               can be used to include to insert a list of descriptions of elements
               and attributes. --></p>
          <schemaSpec ident="TEI-Glossary">     <!-- @ident is required -->
-            <desc><!-- put a one-sentence description of this TEI customization here --></desc>
-            <moduleRef key="tei"/>
-            <moduleRef key="core" include="list item desc label gloss title p note hi"/>
-            <moduleRef key="header" except="abstract appInfo application authority biblFull cRefPattern calendar calendarDesc catDesc catRef category change citeData citeStructure classCode classDecl conversion correction correspAction correspContext correspDesc creation distributor edition editionStmt editorialDecl encodingDesc extent funder geoDecl handNote hyphenation idno interpretation keywords listPrefixDef namespace normalization notesStmt prefixDef principal profileDesc projectDesc punctuation quotation refState refsDecl rendition samplingDecl schemaRef scriptNote segmentation seriesStmt sponsor stdVals styleDefDecl tagUsage tagsDecl taxonomy textClass unitDecl unitDef xenoData"/>
-            <moduleRef key="textstructure" include="body TEI div text"/>
+           <desc><!-- put a one-sentence description of this TEI customization here --></desc>
+           <moduleRef key="tei"/>
+           <moduleRef key="core" include="list item desc label gloss title p note hi ref"/>
+           <moduleRef key="header" except="abstract appInfo application authority biblFull cRefPattern calendar calendarDesc catDesc catRef category change citeData citeStructure classCode classDecl conversion correction correspAction correspContext correspDesc creation distributor edition editionStmt editorialDecl encodingDesc extent funder geoDecl handNote hyphenation idno interpretation keywords listPrefixDef namespace normalization notesStmt prefixDef principal profileDesc projectDesc punctuation quotation refState refsDecl rendition samplingDecl schemaRef scriptNote segmentation seriesStmt sponsor stdVals styleDefDecl tagUsage tagsDecl taxonomy textClass unitDecl unitDef xenoData"/>
+           <moduleRef key="textstructure" include="body TEI div text"/>
            <moduleRef key="tagdocs" include="eg gi att code"/>
             <!-- ODD-specific elements like <elementSpec> and <classSpec>;
              or references to <specGrp>s defined above using <specGrpRef>. -->
@@ -109,6 +109,13 @@
              <content>
                <elementRef key="item" minOccurs="1" maxOccurs="unbounded"/>
              </content>
+           </elementSpec>
+           <elementSpec ident="label" mode="change" module="core">
+             <constraintSpec ident="uniqlabel" scheme="schematron" mode="add">
+               <constraint>
+                 <report xmlns="http://purl.oclc.org/dsdl/schematron" test="../preceding-sibling::tei:item/tei:label = . or ../following-sibling::tei:item/tei:label = .">Labels must be unique.</report>
+               </constraint>
+             </constraintSpec>
            </elementSpec>
          </schemaSpec>
       </body>
