@@ -30,23 +30,11 @@ $Id$
       <constraintSpec scheme="schematron" ident="deprecation-two-month-warning">
         <constraint>
           <sch:rule context="tei:*[@validUntil]">
-            <sch:let name="advance_warning_period"
-                     value="current-date() + xs:dayTimeDuration('P60D')"/>
-            <sch:let name="me_phrase" value="if (@ident)
-                                               then concat('The ', @ident )
-                                               else concat('This ',
-                                                           local-name(.),
-                                                           ' of ',
-                                                           ancestor::tei:*[@ident][1]/@ident )"/>
-            <sch:assert test="@validUntil cast as xs:date  ge  current-date()">
-              <sch:value-of select="
-                 concat( $me_phrase,
-                         ' construct is outdated (as of ',
-                         @validUntil,
-                         '); ODD processors may ignore it, and its use is no longer supported'
-                       )"/></sch:assert>
-              <sch:assert role="nonfatal"
-                          test="@validUntil cast as xs:date  ge  $advance_warning_period">
+            <sch:let name="advance_warning_period" value="current-date() + xs:dayTimeDuration('P60D')"/>
+            <sch:let name="me_phrase" value="if (@ident) then concat('The ', @ident ) else concat('This ', local-name(.), ' of ', ancestor::tei:*[@ident][1]/@ident )"/>
+            <sch:assert test="@validUntil cast as xs:date ge current-date()">
+              <sch:value-of select="concat( $me_phrase, ' construct is outdated (as of ', @validUntil, '); ODD processors may ignore it, and its use is no longer supported' )"/></sch:assert>
+              <sch:assert role="nonfatal" test="@validUntil cast as xs:date ge $advance_warning_period">
                 <sch:value-of select="concat( $me_phrase, ' construct becomes outdated on ', @validUntil )"/>
               </sch:assert>
           </sch:rule>
@@ -56,9 +44,7 @@ $Id$
         <constraint>
           <sch:rule context="tei:*[@validUntil][ not( self::valDesc | self::valList | self::defaultVal )]">
             <sch:assert test="child::tei:desc[ @type eq 'deprecationInfo']">
-              A deprecated construct should include, whenever possible, an explanation, but this <sch:value-of
-              select="name(.)"
-              /> does not have a child &lt;desc type="deprecationInfo"></sch:assert>
+              A deprecated construct should include, whenever possible, an explanation, but this <sch:value-of select="name(.)"/> does not have a child &lt;desc type="deprecationInfo"&gt;</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
