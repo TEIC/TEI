@@ -11,7 +11,7 @@
   >
 
   <xsl:variable name="myName" select="'TEI-to-tei_customization.xslt'"/>
-  <xsl:variable name="version" select="'0.7.0b'"/>
+  <xsl:variable name="version" select="'0.8.0b'"/>
   <xsl:param name="versionDate" select="format-date(current-date(),'[Y]-[M01]-[D01]')"/>
 
   <!--
@@ -53,6 +53,15 @@
 
   <xsl:variable name="revisionDesc">
     <revisionDesc>
+      <change who="#sbauman.emt" when="2022-06-25">
+        Since <ref
+        target="https://github.com/TEIC/TEI/issues/1735">TEI ticket
+        #1735</ref> has now addressed the <code>( content | valList
+        )*</code> portion of the content models of <gi>dataSpec</gi>
+        and <gi>macroSpec</gi> (changing them to <code>( content |
+        valList )?</code>), we no longer need to do that here. Thus
+        undo most of the changes of 2018-07-19.
+      </change>
       <change who="#sbauman.emt" when="2022-04-03">
         Motivated by <ref
         target="https://github.com/TEIC/Stylesheets/issues/136">#136</ref>,
@@ -969,22 +978,6 @@
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="macroSpec" mode="change">
-                <content>
-                  <sequence>
-                    <alternate minOccurs="0" maxOccurs="unbounded">
-                      <classRef key="model.glossLike"/>
-                      <classRef key="model.descLike"/>
-                    </alternate>
-                    <alternate minOccurs="0" maxOccurs="1">
-                      <elementRef key="content"/>
-                      <elementRef key="valList"/>
-                    </alternate>
-                    <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
-                    <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
-                    <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
-                    <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
-                  </sequence>
-                </content>
                 <attList>
                   <attDef ident="ident" mode="replace" usage="req">
                     <datatype minOccurs="1" maxOccurs="1">
@@ -995,14 +988,6 @@
                     </valList>
                   </attDef>
                 </attList>
-                <remarks xml:lang="en" versionDate="{$versionDate}">
-                  <p>In tei_customization the <gi>macroSpec</gi>
-                  element (and the <gi>dataSpec</gi> element) allows
-                  at most one <gi>content</gi> or one <gi>valList</gi>
-                  child (not both). TEI P5 permits any number of
-                  either or both, but does not define what multiples mean,
-                  and current ODD processors only process one.</p>
-                </remarks>
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="macroRef" mode="change">
@@ -1050,22 +1035,6 @@
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="dataSpec" mode="change">
-                <content>
-                  <sequence>
-                    <alternate minOccurs="0" maxOccurs="unbounded">
-                      <classRef key="model.glossLike"/>
-                      <classRef key="model.descLike"/>
-                    </alternate>
-                    <alternate minOccurs="0" maxOccurs="1">
-                      <elementRef key="content"/>
-                      <elementRef key="valList"/>
-                    </alternate>
-                    <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
-                    <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
-                    <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
-                    <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
-                  </sequence>
-                </content>
                 <attList>
                   <attDef ident="ident" mode="replace">
                     <datatype minOccurs="1" maxOccurs="1">
@@ -1076,14 +1045,6 @@
                     </valList>
                   </attDef>
                 </attList>
-                <remarks xml:lang="en" versionDate="{$versionDate}">
-                  <p>In tei_customization the <gi>dataSpec</gi>
-                  element (and the <gi>macroSpec</gi> element) allows
-                  at most one <gi>content</gi> or one <gi>valList</gi>
-                  child (not both). TEI P5 permits any number of
-                  either or both, but does not define what multiples mean,
-                  and current ODD processors only process one.</p>
-                </remarks>
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="dataRef" mode="change">
