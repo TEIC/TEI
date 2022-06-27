@@ -170,24 +170,30 @@
             <code>except</code>ed in the test, and thus flag an error</item>
         </list>
       </change>
-      <change who="#sbauman.emt" when="2015-06-19"> Fix bug in <name>only-1-per</name> contraint
-        (which was added 674 days ago — why did this bug last even 1 day?) </change>
-      <change who="#sbauman.emt" when="2015-01-24"> Changes for <soCalled>Pure ODD</soCalled>: <list>
-        <item>constrain content of <gi>content</gi></item>
-        <item>delete <ident type="class">att.global.rendition</ident> and <ident type="class"
-          >att.global.responsibility</ident></item>
-        <item>delete <att>allowText</att> (as I think TEI has decided to go with
+      <change who="#sbauman.emt" when="2015-06-19">
+	Fix bug in <name>only-1-per</name> contraint (which was added
+	674 days ago — why did this bug last even 1 day?)
+      </change>
+      <change who="#sbauman.emt" when="2015-01-24">
+	Changes for <soCalled>Pure ODD</soCalled>:
+	<list>
+          <item>constrain content of <gi>content</gi></item>
+          <item>delete <ident type="class">att.global.rendition</ident> and <ident
+	  type="class" >att.global.responsibility</ident></item>
+          <item>delete <att>allowText</att> (as I think TEI has decided to go with
           <gi>textNode</gi> instead)</item>
-        <item>require <att>key</att> of <gi>elementRef</gi></item>
-        <item>change expression of all datatypes (which happen to all be <ident
+          <item>require <att>key</att> of <gi>elementRef</gi></item>
+          <item>change expression of all datatypes (which happen to all be <ident
           type="datatype">data.enumerated</ident>) from RNG to Pure ODD</item>
-        <item>change expression of most of our content models from RNG to Pure ODD.</item>
+          <item>change expression of most of our content models from RNG to Pure ODD.</item>
       </list>
       </change>
-      <change who="#sbauman.emt" when="2015-01-23"> Changes for <soCalled>Pure ODD</soCalled>: <list>
-        <item>constrain <att>key</att> of <gi>classRef</gi>, <gi>elementRef</gi>, and
+      <change who="#sbauman.emt" when="2015-01-23">
+	Changes for <soCalled>Pure ODD</soCalled>:
+	<list>
+          <item>constrain <att>key</att> of <gi>classRef</gi>, <gi>elementRef</gi>, and
           <gi>macroRef</gi></item>
-        <item>constrain <att>include</att> and <att>except</att> of <gi>classRef</gi>, also
+          <item>constrain <att>include</att> and <att>except</att> of <gi>classRef</gi>, also
           flagging an error if both are present</item>
       </list>
       </change>
@@ -203,9 +209,10 @@
             it.</item>
         </list>
       </change>
-      <change who="#sbauman.emt" when="2013-08-14"> Add constraint <name>only-1-per</name>,
-        which warns user iff there are more than 1 <gi>elementSpec</gi> with the same
-        <att>ident</att>
+      <change who="#sbauman.emt" when="2013-08-14">
+	Add constraint <name>only-1-per</name>, which warns user iff
+	there are more than 1 <gi>elementSpec</gi> with the same
+	<att>ident</att>
       </change>
       <change who="#sbauman.emt" when="2013-05-09">
         <list>
@@ -229,11 +236,13 @@
           <item>Add health warning about using <q>Check ID/IDREF</q> in oXygen</item>
         </list>
       </change>
-      <change who="#sbauman.emt" when="2013-03-09"> Added <gi>sch:pattern</gi> to list of
-        elements allowed inside <gi>constraint</gi>
+      <change who="#sbauman.emt" when="2013-03-09">
+	Added <gi>sch:pattern</gi> to list of elements allowed inside
+	<gi>constraint</gi>.
       </change>
-      <change who="#sbauman.emt" when="2012-06-17"> Remove the new <gi>notatedMusic</gi> and
-        <gi>gb</gi> elments </change>
+      <change who="#sbauman.emt" when="2012-06-17">
+	Remove the new <gi>notatedMusic</gi> and <gi>gb</gi> elments.
+      </change>
       <change who="#sbauman.emt" when="2011-09-20">
         <list>
           <item>neaten up a bit for readers of this XML file</item>
@@ -242,7 +251,9 @@
             <att>prefix</att></item>
         </list>
       </change>
-      <change who="#sbauman.emt" when="2011-09-05"> Test that required elements are not removed </change>
+      <change who="#sbauman.emt" when="2011-09-05">
+	Test that required elements are not removed.
+      </change>
       <change who="#sbauman.emt" when="2011-09-04">
         <list>
           <item>changed check for colons in <att>prefix</att> of <gi>schemaSpec</gi> from a
@@ -251,8 +262,10 @@
             <att>prefix</att> of anything else</item>
         </list>
       </change>
-      <change who="#sbauman.emt" when="2011-09"> Beefed up prose, then corrections per Julia,
-        including changing name of language (and thus <att>prefix</att>). </change>
+      <change who="#sbauman.emt" when="2011-09">
+	Beefed up prose, then corrections per Julia, including
+	changing name of language (and thus <att>prefix</att>).
+      </change>
       <change who="#sbauman.emt" when="2011-09-01">
         <list>
           <item>remove addition of <name type="class">att.identifiable</name> to <name
@@ -274,17 +287,19 @@
           <item>require <att>ident</att> of <gi>elementSpec</gi></item>
         </list>
       </change>
-      <change who="#sbauman.emt" when="2011-08-29"> constrain <att>ident</att> of
-        <gi>classSpec</gi>
+      <change who="#sbauman.emt" when="2011-08-29">
+	Constrain <att>ident</att> of <gi>classSpec</gi>.
       </change>
-      <change who="#sbauman.emt" when="2011-08-27"> during workshop <list>
-        <item>constrain <att>start</att> of <gi>schemaSpec</gi></item>
-        <item>constrain <att>key</att> of <gi>elmentRef</gi></item>
-        <item>improve remakrs of <gi>constraint</gi> so that it correctly reflects that we
+      <change who="#sbauman.emt" when="2011-08-27">
+	During workshop:
+	<list>
+          <item>constrain <att>start</att> of <gi>schemaSpec</gi></item>
+          <item>constrain <att>key</att> of <gi>elmentRef</gi></item>
+          <item>improve remakrs of <gi>constraint</gi> so that it correctly reflects that we
           only permit ISO Schematron</item>
-        <item>constrain content of <gi>altIdent</gi>, unless it is a child of
+          <item>constrain content of <gi>altIdent</gi>, unless it is a child of
           <gi>valItem</gi></item>
-      </list>
+	</list>
       </change>
       <change who="#sbauman.emt" when="2011-08-25">
         <list>
