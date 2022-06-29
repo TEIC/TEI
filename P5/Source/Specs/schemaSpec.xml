@@ -6,12 +6,8 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
-             xmlns:rng="http://relaxng.org/ns/structure/1.0"
-             xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-             xmlns:teix="http://www.tei-c.org/ns/Examples"
-             module="tagdocs" xml:id="SCHEMASPEC" ident="schemaSpec">
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:teix="http://www.tei-c.org/ns/Examples" module="tagdocs" xml:id="SCHEMASPEC" ident="schemaSpec">
   <gloss versionDate="2007-07-04" xml:lang="en">schema specification</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">스키마 명시</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">especificación de esquema</gloss>
@@ -43,6 +39,7 @@ $Id$
       <alternate minOccurs="0" maxOccurs="unbounded">
         <classRef key="model.oddRef"/>
         <classRef key="model.oddDecl"/>
+	<elementRef key="listRef"/>
       </alternate>      
     </sequence>
   </content>
@@ -134,6 +131,10 @@ $Id$
       <desc versionDate="2007-05-04" xml:lang="es">indica la lengua que se ha de utilizar para la creación de la documentación en el caso en que las descripciones de elementos, atributos, clases o macros esten disponibles en más lenguas.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la lingua da utilizzare per la creazione della documentazione nel caso in cui le descrizioni di elementi, attributi, classi o macro siano disponibili in più lingue</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.language"/></datatype>
+      <remarks xml:lang="en" versionDate="2022-04-04">
+        <p>Although multiple languages may be specified, the current
+        TEI ODD processor is only capable of handling one.</p>
+      </remarks>
     </attDef>
     <attDef ident="defaultExceptions" usage="rec">
       <gloss versionDate="2016-11-20" xml:lang="en">default namespace
@@ -142,7 +143,7 @@ $Id$
       <datatype minOccurs="1" maxOccurs="unbounded">
         <dataRef key="teidata.namespaceOrName"/>
       </datatype>
-      <defaultVal xmlns:teix="http://www.tei-c.org/ns/Examples">http://www.tei-c.org/ns/1.0 teix:egXML</defaultVal>
+      <defaultVal>http://www.tei-c.org/ns/1.0 teix:egXML</defaultVal>
       <remarks versionDate="2017-05-11" xml:lang="en">
         <p>Specifies defaults for the <att>except</att> attribute of <gi>anyElement</gi>. RELAX NG validation (unless DTD Compatibility Mode is turned off) requires that any elements which may take an <att>xml:id</att> be excluded from the content of <ident>anyName</ident> name classes. For normal TEI purposes, this includes anything in the TEI namespace and the <gi>egXML</gi> element. The <att>defaultExceptions</att> attribute sets the global defaults for these exclusions. Element prefixes must be declared using a namespace declaration on the parent or an ancestor element.</p>
       </remarks>

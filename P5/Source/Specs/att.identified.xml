@@ -1,10 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" type="atts" ident="att.identified">
+-->
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" type="atts" ident="att.identified">
   <desc versionDate="2021-08-22" xml:lang="en">provides identifying attributes for elements which can be
   subsequently referenced by means of a <att>key</att>
   attribute.</desc>
@@ -27,7 +30,7 @@ $Id$
   <constraintSpec ident="spec-in-module" scheme="schematron">
     <constraint>
       <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:elementSpec[@module]|tei:classSpec[@module]|tei:macroSpec[@module]">
-        <assert test="         (not(ancestor::tei:schemaSpec | ancestor::tei:TEI | ancestor::tei:teiCorpus)) or         (not(@module) or          (not(//tei:moduleSpec) and not(//tei:moduleRef))  or         (//tei:moduleSpec[@ident = current()/@module]) or          (//tei:moduleRef[@key = current()/@module]))         ">
+        <assert test="(not(ancestor::tei:schemaSpec | ancestor::tei:TEI | ancestor::tei:teiCorpus)) or (not(@module) or (not(//tei:moduleSpec) and not(//tei:moduleRef)) or (//tei:moduleSpec[@ident = current()/@module]) or (//tei:moduleRef[@key = current()/@module]))">
         Specification <value-of select="@ident"/>: the value of the module attribute ("<value-of select="@module"/>") 
 should correspond to an existing module, via a moduleSpec or
       moduleRef</assert>
