@@ -364,7 +364,8 @@ See the file COPYING.txt for details.
                     <att>generatedBy</att> follows: <list type="gloss">
                     <label>human</label>
                     <item>when then content of the respective element was “naturally” typed or
-                        spoken by a human user (cf. the chat posts in Listing 3)</item>
+                        spoken by a human user (cf. the chat posts in Example <ptr
+                            target="#ex.haarschnitt"/>)</item>
                     <label>template</label>
                     <item>when the content of the respective element was generated after a human
                         user activated a template for its insertion (cf. <gi>signed</gi> i.e.
@@ -381,6 +382,59 @@ See the file COPYING.txt for details.
                         element was generated (cf. the <gi>post</gi> of the retweet p2 in Listing
                         5)</item>
                 </list>
+                
+                <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.haarschnitt"> 
+                    <post modality="written" generatedBy="human" synch="#t003" who="#A02"
+                        xml:id="m8"> Da kostet ein Haarschnitt 50 € <figure
+                            type="emoji" generatedBy="template">
+                            <desc type="meaning">face screaming in fear</desc>
+                            <desc type="unicode">U+1F631</desc>
+                        </figure>
+                    </post>                  
+                </egXML>
+                
+                <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.naturally"> 
+                    <post mode="written" xml:id="p4" indentLevel="0" who="#u005" synch="#t005">
+                        <p>I'm not sure that this is a proper criterium, or even what this means.
+                            What if we set an explosion that breaks a comet into two pieces? What if
+                            we build a moon? Cheers, </p><signed generatedBy="template" rend="inline"><ref
+                                target="/wiki/User:Greenodd">Greenodd</ref> (<ref
+                                    target="/wiki/User_talk:Greenodd">talk</ref>) <time>01:00, 21
+                                        July 2011 (UTC)</time></signed>
+                    </post>
+                </egXML>
+                
+                <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.grunzen"> 
+                    <post mode="written" key="1043764753502486528" type="tweet" generatedBy="human"
+                        synch="#tweetsbcrn18.t001" xml:id="p1" who="#u1" xml:lang="deu">
+                        <time generatedBy="system"> 12:31 </time> Heute mit super Unterstützung, wir grunzen,
+                        wenn die Zeit vorbei ist. <ref type="hashtag"
+                            target="https://twitter.com/hashtag/bcrn18?src=hash">#bcrn18</ref>
+                        <ref type="hashtag" target="https://twitter.com/hashtag/wikidach?src=hash"
+                            >#wikidach</ref> PS: Die beiden brauchen noch Namen. Hinweise dazu am Empfang
+                        abgeben! <ref type="twitter-account" target="https://twitter.com/AndreLo79"
+                            >@AndreLo79</ref>
+                        <figure type="image" generatedBy="human">
+                            <graphic url="https://pbs.twimg.com/media/DnwygdSW4AAoTUn.jpg:large" />
+                        </figure>
+                    </post>
+                </egXML>
+                
+                <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.listPerson"> 
+                <listPerson>
+                    <person xml:id="SYSTEM">
+                        <persName>system</persName>
+                    </person>
+                    <!--  -->
+                </listPerson>
+                    
+                <!--  -->
+                <post type="event" generatedBy="system" who="#SYSTEM" rend="color:navy">
+                    <p>
+                        <name type="nickname" corresp="#A07">Interseb</name> betritt den Raum.
+                    </p>
+                </post>
+                </egXML>
             </p>
         </div>
     </div>
@@ -413,8 +467,8 @@ See the file COPYING.txt for details.
             <p>Both emoticons and emojis may be simply transcribed as a sequence of characters. As
                 with any other characters, they may be entered as numeric character entities if this
                 is more convenient. (E.g., <mentioned>&#x01F637;</mentioned> might be transcribed as
-                <code>&amp;#x01F637;</code> in any XML document, including a TEI document; see
-                <ptr target="#D4-44"/>.)</p>
+                    <code>&amp;#x01F637;</code> in any XML document, including a TEI document; see
+                    <ptr target="#D4-44"/>.)</p>
 
             <p> When the text of a post is being tokenized, e.g. for linguistic analysis, it may be
                 useful to encode the emoticon or emoji as a separate token. In such cases elements
@@ -427,9 +481,7 @@ See the file COPYING.txt for details.
 
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
                 <post modality="written" generatedBy="human" synch="#lscLB.t004" who="#lscLB.A03"
-                    xml:id="lscLB.m6a">   
-                    <w pos="ADV">Klar</w>   
-                    <w pos="EMOIMG">☺</w>
+                    xml:id="lscLB.m6a">   <w pos="ADV">Klar</w>   <w pos="EMOIMG">☺</w>
                 </post>
             </egXML>
 
@@ -448,9 +500,9 @@ See the file COPYING.txt for details.
                     <w pos="EMOASC">;)</w>
                 </post>
             </egXML>
-            
+
             <p>Similarly, the source post “Klar☺” might be encoded as follows:</p>
-            
+
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
                 <post modality="written" generatedBy="human" synch="#lscLB.t004" who="#lscLB.A03"
                     xml:id="lscLB.m6a">
@@ -458,12 +510,7 @@ See the file COPYING.txt for details.
                     <w pos="EMOIMG">☺</w>
                 </post>
             </egXML>
-            
-            
-            
-            
-            
-            
+
             <p>The values of <att>pos</att> in the above examples are from the STTS_IBK Tagset for
                 German (see <ptr type="cit" target="#STTS_IBK"/>), which includes tags for
                 interaction signs in CMC such as ‘EMOASC’ for an ASCII-based emoticon and ‘EMOIMG’
@@ -471,20 +518,20 @@ See the file COPYING.txt for details.
             <p>Alternatively, e.g. when <gi>w</gi> is not regularly used to encode tokens in the TEI
                 document, <gi>c</gi> can be used to mark an emoji. For example, the source post “Da
                 kostet ein Haarschnitt 50 € &#x01F631;” might be encoded as follows:</p>
-            
+
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
                 <post xml:lang="de"> Da kostet ein Haarschnitt 50 € <c type="emoji" ana="#fsif"
                         generatedBy="template">&#x01F631;</c>
                 </post>
             </egXML>
-            
+
             <p>Sometimes, e.g. when the source of the TEI document was a web page in HTML, the
                 emojis may occur only as an icon graphic in the source. In that case, they can be
                 encoded in TEI using <gi>figure</gi>. The corresponding unicode character can then
                 be recorded in the <gi>desc</gi> element by the encoder if desired. </p>
-            
+
             <p>Source text: ... ich überlege noch &#x1F648;</p>
-            
+
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
                 <post modality="written" generatedBy="human" synch="#lscLB.t004" who="#lscLB.A03"
                     xml:id="lscLB.m6b"> ... ich überlege noch <figure type="emoji"
