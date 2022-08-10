@@ -9,11 +9,16 @@ See the file COPYING.txt for details.
 <div xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" type="div1"
     xml:id="CMC">
     <head>Computer-mediated Communication</head>
+
+
     <div type="div2" xml:id="CMCoverview">
+
         <head>General Considerations and Overview</head>
+
         <p>This chapter describes the TEI encoding mechanisms available for textual data which
             represents discourse from genres of computer-mediated communication (CMC). It is
             intended to provide the basic framework needed to encode CMC corpora.</p>
+
         <p>While the term “computer-mediated communication”, in a broader sense, might be used to
             describe all sorts of communications between humans which are mediated by digital
             technologies (for example, text on web pages, dialogic written interaction in chats and
@@ -116,7 +121,7 @@ See the file COPYING.txt for details.
         <list rend="bulleted">
             <item>as <emph rend="bold">written / multimodal posts,</emph> which are produced with an
                 editor form that is designed for the composition of stretches of written text. Most
-                of contemporary post-based CMC technologies procide features for the inclusion of
+                of contemporary post-based CMC technologies provide features for the inclusion of
                 graphic and audiovisual content (emoji graphics, images, videos) into posts and even
                 to produce posts without verbal content (which then may exist only of emojis, an
                 image or a video file). Written / multimodal posts are the standard format for user
@@ -218,14 +223,15 @@ See the file COPYING.txt for details.
                     video files and hyperlinks into their posts.</item>
                 <item><emph rend="bold">audio posts</emph>: A growing number of CMC technologies,
                     e.g. messenger software such as WhatsApp or RocketChat, allow for an
-                    alternative, spoken production of posts providing a recorder function which
+                    alternative, spoken production of posts providing a recording function which
                     allows users to record a stretch of spoken language and transmit the resulting
                     audio file to the other parties.</item>
             </list>
 
-            <p> The element post may co-occur with u, kinesic, incident, or other existing TEI
-                elements within a <gi>div</gi>, or directly within the <gi>body</gi>, and may
-                contain headings, paragraphs, openers, closers, or salutations.</p>
+            <p> The element post may co-occur with <gi>u</gi>, <gi>kinesic</gi>, <gi>incident</gi>,
+                or other existing TEI elements within a <gi>div</gi>, or directly within the
+                    <gi>body</gi>, and may contain headings, paragraphs, openers, closers, or
+                salutations.</p>
 
             <p>As a member of the TEI attribute classes <ident type="class">att.ascribed</ident>,
                     <ident type="class">att.canonical</ident>, <ident type="class"
@@ -344,7 +350,7 @@ See the file COPYING.txt for details.
             <head>Attributes for general CMC encoding</head>
             <?tei winita discussion of @generatedBy ?>
 
-            <p>The attribute <att>generatedBy</att> is unique to CMC encoding. But unlike
+            <p>The attribute <att>generatedBy</att> is unique to CMC encoding, too. But unlike
                     <att>modality</att>, <att>replyTo</att>, and <att>indentLevel</att> as described
                 above, it pertains not only to the <gi>post</gi> element, but to all its possible
                 children as well. </p>
@@ -449,8 +455,8 @@ See the file COPYING.txt for details.
 
             <p>Emojis are iconic or symbolic, invariant graphic units which the users of social
                 media applications such as WhatsApp, Instagram or Twitter can select from a menu or
-                ‘emoji keyboard’ and embed into their written posts. Examples are 😀, 😷, ☺, or
-                😱🙈. An emoji is encoded by a single or several Unicode character(s) which is
+                ‘emoji keyboard’ and embed into their written posts. Examples are &#x1F601;, &#x1F637;, &#xFE0F;, or
+                &#x1F631;🙈. An emoji is encoded by a single or several Unicode character(s) which is
                 intended to be mapped directly to a pictorial symbol. </p>
 
             <p>Emoticons predate emojis and are created as combinations of ASCII punctuation and
@@ -469,7 +475,7 @@ See the file COPYING.txt for details.
 
             <p> When the text of a post is being tokenized, e.g. for linguistic analysis, it may be
                 useful to encode the emoticon or emoji as a separate token. In such cases elements
-                like <gi>w</gi> and <gi>c</gi> may be used for tokenization, and the <att>@pos</att>
+                like <gi>w</gi> and <gi>c</gi> may be used for tokenization, and the <att>pos</att>
                 attribute may be used to indicate that the encoded string is an emoji or an
                 emoticon. (See 18.1 Linguistic Segment Categories.) </p>
 
@@ -542,7 +548,9 @@ See the file COPYING.txt for details.
         </div>
 
         <div xml:id="CMCgraphic">
+
             <head>Post with graphics</head>
+
             <p>A post in a CMC interaction may contain a graphic in addition to some text or even
                 contain only a graphic (without any text). As explained in [REF section on
                 @modality], the modality of such a post should be considered as “written”. To encode
@@ -575,6 +583,71 @@ See the file COPYING.txt for details.
                 mentions) and a graphic. The <gi>graphic</gi> element retains the url of the graphic
                 on the web just as in the source. </p>
         </div>
+
+        <div xml:id="CMCcirculation">
+            <head>Circulation</head>
+            <!-- ToDo: Check twi21 corpus -->
+            <p>By the example of twitter posts (tweets), we would like to give some recommendations
+                on how to encode features of the circulation of posts, such as IDs, re-posts
+                (retweets), hashtags, and mentions.</p>
+            <p>First, we encode the type of post ("tweet") in the global attribute <att>type</att>,
+                and if it is a specific subtype of tweet, such as a retweet, that will be encoded in
+                the attribute <att>subtype</att> at the <gi>post</gi> element accordingly</p>
+            <p>Second, we distinguish between the ID that the post gets as part of the text
+                collection (e.g. a corpus or a dataset), and the original Tweet-ID as supplied by
+                twitter. The collection-related post ID should go in the global attribute
+                    <att>xml:id</att>, while the original tweet ID should go in the canonical
+                attribute <att>key</att>. </p>
+            <p>Third, a retweet and its corresponding retweeted tweet are encoded as two separate
+                posts each with its own set of attributes. The post representing the retweet itself
+                is specified for <att>subtype</att>=<val>retweet</val> and does not contain or
+                duplicate the content of the retweeted tweet. Instead it refers to the ID of the
+                retweeted tweet via the pointing attribute <att>ref</att>. All original content of
+                the retweet goes in the content of the <gi>post</gi> element. In the example <ptr
+                    target="#ex.tweets"/>, the retweeted tweet happens to be a retweet itself. </p>
+            <p>Fourth, hashtags occur on the in the body of tweets and are links like any other
+                hyperlink and should be encoded using the element <gi>ref</gi>. The <att>type</att>
+                attribute of the ref should contain the value <val>hashtag</val>, the
+                    <att>target</att> attribute should contain the URL of the hashtag, and the
+                content of <gi>ref</gi>should be the string of the hashtag itself.</p>
+
+            <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.tweets">
+                <post mode="written" key="1043796550101716993" generatedBy="human" type="tweet"
+                    subtype="retweet" who="#u1" xml:id="p4" synch="#tweetsbcrn18.t004" ref="#p5"
+                    xml:lang="de"> Ich mich auch? <ref type="hashtag"
+                        target="https://twitter.com/hashtag/dynamicduo?src=hash">#dynamicduo</ref>
+                    <ref type="hashtag"
+                        target="https://twitter.com/hashtag/wirk%C3%BCmmernunsauchumIhrenEmpfang?src=hash"
+                        >#wirkümmernunsauchumIhrenEmpfang</ref>
+                    <ref type="hashtag" target="https://twitter.com/hashtag/bcrn18?src=hash"
+                        >#bcrn18</ref>
+                    <ref type="hashtag" target="https://twitter.com/hashtag/wikidach?src=hash"
+                        >#wikidach</ref>
+                </post>
+                <post mode="written" key="1043796093786566656" generatedBy="human" type="tweet"
+                    subtype="retweet" who="#u2" synch="#tweetsbcrn18.t003" xml:lang="de" xml:id="p5">
+                    <time generatedBy="system"> 14:35 </time> Immer wieder gerne. Kann ich mich
+                    schon für nächstes Jahr als Empfangs- <ref type="hashtag"
+                        target="https://twitter.com/hashtag/Engel?src=hash">#Engel</ref> für das
+                    nächste BarCamp bewerben <figure type="emoji" generatedBy="template">
+                        <desc type="meaning">zany face</desc>
+                        <desc type="unicode">U+1F92A</desc>
+                    </figure>
+                    <ref type="hashtag" target="https://twitter.com/hashtag/bcrn18?src=hash"
+                        >#bcrn18</ref>
+                    <trailer>
+                        <!-- CoMeRe Style encoding of the counts of favouriting and likes: -->
+                        <fs>
+                            <f name="favoritecount">
+                                <numeric value="4"/>
+                            </f>
+                        </fs>
+                    </trailer>
+                </post>
+            </egXML>
+        </div>
+
+
     </div>
 
     <div xml:id="CMChow">
