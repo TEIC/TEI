@@ -195,10 +195,12 @@ See the file COPYING.txt for details.
         ?>
         <p>This chapter describes elements, attributes, and models which are unique to CMC and the
             TEI CMC module.</p>
-        <p>
+
+        <!-- p>
             <specList>
                 <specDesc key="post" atts="modality replyTo indentLevel"/>
-            </specList></p>
+            </specList>
+        </p-->
 
         <div xml:id="CMCcmcpost">
             <head>CMC Posts</head>
@@ -305,7 +307,8 @@ See the file COPYING.txt for details.
                     </post>
                 </egXML> Example: Three blog comments where, by the reply references in the source,
                 the first is a reply to the initial blog post (not part of the example), the second
-                is a reply to the first, and the third is a reply to the second. <?tei winitia
+                is a reply to the first, and the third is a reply to the second.
+                <?tei winitia
                     BIBL: should refer to the TEI encoding of a section of the blog page 
                     https://scilogs.spektrum.de/wild-dueck-blog/scheinzwerge-oder-viele-probleme-werden-groesser-wenn-man-sie-anpackt-griechenland/
                 ?>
@@ -455,15 +458,17 @@ See the file COPYING.txt for details.
 
             <p>Emojis are iconic or symbolic, invariant graphic units which the users of social
                 media applications such as WhatsApp, Instagram or Twitter can select from a menu or
-                ‘emoji keyboard’ and embed into their written posts. Examples are &#x1F601;, &#x1F637;, &#xFE0F;, 
-                &#x1F631;, or &#x1F648;🙈. An emoji is encoded by a single or several Unicode character(s) which is
-                intended to be mapped directly to a pictorial symbol. </p>
+                ‘emoji keyboard’ and embed into their written posts. Examples are &#x1F601;,
+                &#x1F637;, &#xFE0F;, &#x1F631;, or &#x1F648;🙈. An emoji is encoded by a single or
+                several Unicode character(s) which is intended to be mapped directly to a pictorial
+                symbol. </p>
 
             <p>Emoticons predate emojis and are created as combinations of ASCII punctuation and
                 other characters using the keyboard. Examples are &lt;:-)&gt;, &lt;;-)&gt;,
                 &lt;:-(&gt;, &lt;:-x&gt;, &lt;\O/&gt; or &lt;Oo&gt;. They first occured in newsgroup
-                (cf. original newsgroup post by Scott Fahlman of 19-Sep-82) and then frequently in
-                chat communication around the mid-1980s. An emoticon typically consists of several
+                (cf. <ref target="http://www.cs.cmu.edu/~sef/Orig-Smiley.htm ">original newsgroup
+                    post by Scott Fahlman of 19-Sep-82</ref>) and then frequently in chat
+                communication around the mid-1980s. An emoticon typically consists of several
                 Unicode characters (from the ASCII subset) in a row, each of which has an intended
                 use other than as part of an emoticon. </p>
 
@@ -500,24 +505,25 @@ See the file COPYING.txt for details.
                     <w pos="PTKNEG">nicht</w>
                     <w pos="ADV">so</w>
                     <w pos="ADJD">empfindlich</w>
-                    <w pos="EMOASC">;)</w>
+                    <w pos="EMOASC"><mentioned>;)</mentioned></w>
                 </post>
             </egXML>
 
-            <p>Similarly, the source post “Klar☺” might be encoded as follows:</p>
+            <p>Similarly, the source post “Klar &#x263A;” might be encoded as follows:</p>
 
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
                 <post modality="written" generatedBy="human" synch="#lscLB.t004" who="#lscLB.A03"
                     xml:id="lscLB.m6a">
                     <w pos="ADV">Klar</w>
-                    <w pos="EMOIMG">☺</w>
+                    <w pos="EMOIMG" >&#x263A;</w>
                 </post>
             </egXML>
 
             <p>The values of <att>pos</att> in the above examples are from the STTS_IBK Tagset for
                 German (see <ptr type="cit" target="#STTS_IBK"/>), which includes tags for
-                interaction signs in CMC such as ‘EMOASC’ for an ASCII-based emoticon and ‘EMOIMG’
+                CMC-specific elements such as ‘EMOASC’ for an ASCII-based emoticon and ‘EMOIMG’
                 for an icon-based emoji.</p>
+            
             <p>Alternatively, e.g. when <gi>w</gi> is not regularly used to encode tokens in the TEI
                 document, <gi>c</gi> can be used to mark an emoji. For example, the source post “Da
                 kostet ein Haarschnitt 50 € &#x01F631;” might be encoded as follows:</p>
@@ -629,10 +635,7 @@ See the file COPYING.txt for details.
                     <time generatedBy="system"> 14:35 </time> Immer wieder gerne. Kann ich mich
                     schon für nächstes Jahr als Empfangs- <ref type="hashtag"
                         target="https://twitter.com/hashtag/Engel?src=hash">#Engel</ref> für das
-                    nächste BarCamp bewerben <figure type="emoji" generatedBy="template">
-                        <desc type="meaning">zany face</desc>
-                        <desc type="unicode">U+1F92A</desc>
-                    </figure>
+                    nächste BarCamp bewerben <w pos="EMO">&#x1F92A;</w>
                     <ref type="hashtag" target="https://twitter.com/hashtag/bcrn18?src=hash"
                         >#bcrn18</ref>
                     <trailer>
