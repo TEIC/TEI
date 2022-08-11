@@ -13,7 +13,7 @@ See the file COPYING.txt for details.
     <p>This chapter describes the TEI encoding mechanisms available for textual data which
       represents discourse from genres of computer-mediated communication (CMC). It is intended to
       provide the basic framework needed to encode CMC corpora.</p>
-    <p>While the term “computer-mediated communication”, in a broader sense, might be used to
+    <p>While the term <q>computer-mediated communication</q>, in a broader sense, might be used to
       describe all sorts of communications between humans which are mediated by digital technologies
       (for example, text on web pages, dialogic written interaction in chats and forums, the spoken
       language in internet video meetings), herein we use the term to apply to forms of
@@ -214,7 +214,7 @@ See the file COPYING.txt for details.
         content (i.e., whether the content of the post is written, an image, a video clip, etc.) is
         indicated by the child elements of the <gi>post</gi>. For example a written post from
         WhatsApp might include an audio-visual clip copied into the post, and in such case may not
-        actually have any writing. Such a post is still considered in the “written” modality. <egXML
+        actually have any writing. Such a post is still considered in the <q>written</q> modality. <egXML
           xmlns="http://www.tei-c.org/ns/Examples">
           <post modality="written" generatedBy="human" synch="#t005" who="#A06" xml:id="cmcEG01m12">
             <figure type="image" generatedBy="human">
@@ -322,7 +322,7 @@ See the file COPYING.txt for details.
         when all text content has been created in the same mode and no distinction needs to be made.
         A list of suggested values for <att>generatedBy</att> follows: <list type="gloss">
           <label>human</label>
-          <item>when then content of the respective element was “naturally” typed or spoken by a
+          <item>when then content of the respective element was <q>naturally</q> typed or spoken by a
             human user (cf. the chat posts in Example <ptr target="#ex.haarschnitt"/>)</item>
           <label>template</label>
           <item>when the content of the respective element was generated after a human user
@@ -396,12 +396,12 @@ See the file COPYING.txt for details.
       <?tei winita add source for example in TEI <example> with ref to bibl element ?>
       <p>Emojis are iconic or symbolic, invariant graphic units which the users of social media
         applications such as WhatsApp, Instagram or Twitter can select from a menu or ‘emoji
-        keyboard’ and embed into their written posts. Examples are &#x1F601;, &#x1F637;, &#xFE0F;,
-        &#x1F631;, or &#x1F648;🙈. An emoji is encoded by a single or several Unicode character(s)
+        keyboard’ and embed into their written posts. Examples are &#x1F601;, &#x1F637;, &#x01F308;,
+        &#x1F631;, or &#x1F648;. An emoji is encoded by a single or several Unicode character(s)
         which is intended to be mapped directly to a pictorial symbol.</p>
       <p>Emoticons predate emojis and are created as combinations of ASCII punctuation and other
-        characters using the keyboard. Examples are &lt;:-)&gt;, &lt;;-)&gt;, &lt;:-(&gt;,
-        &lt;:-x&gt;, &lt;\O/&gt; or &lt;Oo&gt;. They first occured in newsgroup (cf. <ref
+        characters using the keyboard. Examples are <code>:-)</code>, <code>;-)</code>, <code>:-(</code>,
+        <code>:-x</code>, <code>\O/</code> or <code>Oo</code>. They first occured in newsgroup (cf. <ref
           target="http://www.cs.cmu.edu/~sef/Orig-Smiley.htm ">original newsgroup post by Scott
           Fahlman of 19-Sep-82</ref>) and then frequently in chat communication around the
         mid-1980s. An emoticon typically consists of several Unicode characters (from the ASCII
@@ -416,7 +416,7 @@ See the file COPYING.txt for details.
         and <gi>c</gi> may be used for tokenization, and the <att>pos</att> attribute may be used to
         indicate that the encoded string is an emoji or an emoticon. (See 18.1 Linguistic Segment
         Categories.)</p>
-      <p>For example, the source post “da bin ich nicht so empfindlich ;-)” ends with an emoticon,
+      <p>For example, the source post <q>da bin ich nicht so empfindlich ;-)</q> ends with an emoticon,
         and might be encoded as follows:</p>
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
         <?tei winita              
@@ -432,11 +432,11 @@ See the file COPYING.txt for details.
                  lest we end up with a validation error. 
                    — Syd, 2022-08-10  ?>
         <post modality="written" generatedBy="human" synch="#lscLB.t004" who="#lscLB.A03"
-          xml:id="lscLB.m6a">   <w pos="ADV">Klar</w>   <w pos="EMOIMG">☺</w>
+          xml:id="lscLB.m6a">   <w pos="ADV">Klar</w>   <w pos="EMOIMG">😁</w>
         </post>
       </egXML>
 
-      <p>For example, the source post “da bin ich nicht so empfindlich ;)” ends with an emoticon,
+      <p>For example, the source post <q>da bin ich nicht so empfindlich ;)</q> ends with an emoticon,
         and might be encoded as follows:</p>
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
         <post>
@@ -446,23 +446,23 @@ See the file COPYING.txt for details.
           <w pos="PTKNEG">nicht</w>
           <w pos="ADV">so</w>
           <w pos="ADJD">empfindlich</w>
-          <w pos="EMOASC"><mentioned>;)</mentioned></w>
+          <w pos="EMOASC">;)</w>
         </post>
       </egXML>
-      <p>Similarly, the source post “Klar &#x263A;” might be encoded as follows:</p>
+      <p>Similarly, the source post <q>Klar &#x01F601;</q> might be encoded as follows:</p>
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
         <post modality="written" generatedBy="human" synch="#lscLB.t004" who="#lscLB.A03"
           xml:id="lscLB.m6a">
           <w pos="ADV">Klar</w>
-          <w pos="EMOIMG">&#x263A;</w>
+          <w pos="EMOIMG">&#x01F601;</w>
         </post>
       </egXML>
       <p>The values of <att>pos</att> in the above examples are from the STTS_IBK Tagset for German
         (see <ptr type="cit" target="#STTS_IBK"/>), which includes tags for CMC-specific elements
         such as ‘EMOASC’ for an ASCII-based emoticon and ‘EMOIMG’ for an icon-based emoji.</p>
       <p>Alternatively, e.g. when <gi>w</gi> is not regularly used to encode tokens in the TEI
-        document, <gi>c</gi> can be used to mark an emoji. For example, the source post “Da kostet
-        ein Haarschnitt 50 € &#x01F631;” might be encoded as follows:</p>
+        document, <gi>c</gi> can be used to mark an emoji. For example, the source post <q>Da kostet
+        ein Haarschnitt 50 € &#x01F631;</q> might be encoded as follows:</p>
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
         <post xml:lang="de"> Da kostet ein Haarschnitt 50 € <c type="emoji" ana="#fsif"
             generatedBy="template">&#x01F631;</c>
