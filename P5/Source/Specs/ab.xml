@@ -15,7 +15,7 @@
   <gloss versionDate="2007-05-04" xml:lang="es">bloque anónimo</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">blocco anonimo</gloss>
   <gloss versionDate="2018-12-18" xml:lang="ja">無名ブロック</gloss>
-  <desc versionDate="2005-01-14" xml:lang="en">contains any arbitrary component-level unit of text, acting as an anonymous container for phrase or inter level elements analogous to, but without the semantic baggage of, a paragraph.</desc>
+  <desc versionDate="2022-08-11" xml:lang="en">contains any arbitrary component-level unit of text, acting as a container for phrase or inter level elements analogous to, but without same constraints as, a paragraph.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">의미적 부담 없이, 문단과 유사한 구 또는 상호층위 요소에 대한 익명 전달체로 기능하는 임의적 성분-층위 단위를 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含文件中任何隨機組合性層次的單元，匿名收容類似一個段落、但不包含段落語義的字詞或中間層元素。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">任意の部分的テキスト単位を示す．特定の意味はなくとも，段落に相当する， 句レベル・挿入レベルの単位として無名単位になる．</desc>
@@ -33,26 +33,6 @@
   <content>
     <macroRef key="macro.abContent"/>
   </content>
-  <constraintSpec ident="abstractModel-structure-ab-in-ab-or-p" scheme="schematron">
-    <constraint>
-      <sch:report test="    (ancestor::tei:p or ancestor::tei:ab) 
-                        and not( ancestor::tei:floatingText 
-                                |parent::tei:exemplum
-                                |parent::tei:item
-                                |parent::tei:note
-                                |parent::tei:q
-                                |parent::tei:quote
-                                |parent::tei:remarks
-                                |parent::tei:said
-                                |parent::tei:sp
-                                |parent::tei:stage
-                                |parent::tei:cell
-                                |parent::tei:figure
-                               )">
-        Abstract model violation: ab may not occur inside paragraphs or other ab elements.
-      </sch:report>
-    </constraint>
-  </constraintSpec>
   <constraintSpec ident="abstractModel-structure-ab-in-l-or-lg" scheme="schematron">
     <constraint>
       <sch:report test="    (ancestor::tei:l or ancestor::tei:lg)
@@ -78,8 +58,8 @@
       </div>
     </egXML>
   </exemplum>
-  <remarks versionDate="2005-01-14" xml:lang="en">
-    <p>The <gi>ab</gi> element may be used at the encoder's discretion to mark any component-level elements in a text for which no other more specific appropriate markup is defined.</p>
+  <remarks versionDate="2022-08-11" xml:lang="en">
+    <p>The <gi>ab</gi> element may be used at the encoder's discretion to mark any component-level elements in a text for which no other more specific appropriate markup is defined. Unlike paragraphs, <gi>ab</gi> may nest and may use the <att>type</att> and <att>subtype</att> attributes.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2009-10-06">
     <p>L'élément <gi>ab</gi> peut être utilisé à la discrétion de l'encodeur pour marquer dans un texte tout élément de niveau composant pour lequel aucune méthode appropriée de balisage plus spécifique n'est définie.</p>
