@@ -7,10 +7,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/generate-spec-lists
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
+          commit_user_name: ${{ github.actor }}
           commit_message: Re-generated spec lists.
       
