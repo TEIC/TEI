@@ -7,51 +7,90 @@ $Date$
 $Id$
 -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:dcr="http://www.isocat.org/ns/dcr" module="tei" xml:id="DATCAT" type="atts" ident="att.datcat">
-  <desc versionDate="2021-08-22" xml:lang="en">provides attributes that are used to 
-    align XML elements or attributes with the appropriate Data Categories (DCs) defined by the ISO 12620:2009 
-    standard and stored in the Web repository called ISOCat at <ptr target="http://www.isocat.org/"/>.</desc>
-  <desc xml:lang="ja" versionDate="2019-05-20"><att>dcr:datacat</att>属性と<att>dcr:ValueDatacat</att>属性を提供する．これらがXML要素や属性を連携させる日付分類は、国際標準ISO 12620:2009で定義されるものであり，<ptr target="http://www.isocat.org/"/>にあるISOCatと呼ばれるWebリポジトリに格納されている．</desc>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:dcr="http://www.isocat.org/ns/dcr" module="tei"
+  xml:id="DATCAT" type="atts" ident="att.datcat">
+  <desc versionDate="2022-09-17" xml:lang="en">provides attributes that are used to align XML
+    elements or attributes with the appropriate Data Categories (DCs) defined by an external taxonomy, ideally one conformant to the ISO 12620 standards family.
+.</desc>
+  <desc xml:lang="ja" versionDate="2019-05-20"
+    ><att>dcr:datacat</att>属性と<att>dcr:ValueDatacat</att>属性を提供する．これらがXML要素や属性を連携させる日付分類は、国際標準ISO
+      12620:2009で定義されるものであり，<ptr target="http://www.isocat.org/"
+    />にあるISOCatと呼ばれるWebリポジトリに格納されている．</desc>
   <attList>
     <attDef ident="datcat" usage="opt" ns="http://www.isocat.org/ns/dcr">
-      <desc versionDate="2012-04-15" xml:lang="en">contains a PID (persistent identifier) that aligns the given element with the appropriate 
-        Data Category (or categories) in ISOcat.</desc>
-      <desc xml:lang="ja" versionDate="2019-05-20">指定された要素をISOcatの適切なデータカテゴリ（または複数のデータカテゴリ）と対応付けるPID（永続的識別子）を含む．</desc>
-      <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
+      <desc versionDate="2022-09-17" xml:lang="en">provides a pointer to a definition of, and/or general
+        information about, (a) an information container (element or attribute) or (b) a value of an
+        information container (element content or attribute value), by referencing an external
+        taxonomy or ontology. If @valueDatcat is present in the immediate context, this attribute
+        takes on role (a), while @valueDatcat performs role (b).</desc>
+      <desc xml:lang="ja" versionDate="2019-05-20"
+        >指定された要素をISOcatの適切なデータカテゴリ（または複数のデータカテゴリ）と対応付けるPID（永続的識別子）を含む．</desc>
+      <datatype maxOccurs="unbounded">
+        <dataRef key="teidata.pointer"/>
+      </datatype>
     </attDef>
     <attDef ident="valueDatcat" usage="opt" ns="http://www.isocat.org/ns/dcr">
-      <desc versionDate="2012-04-15" xml:lang="en">contains a PID (persistent identifier) that aligns the content of the given
-        element or the value of the given attribute with the appropriate simple Data
-        Category (or categories) in ISOcat.</desc>
-      <desc xml:lang="ja" versionDate="2019-05-20">指定された要素の内容または指定された属性の値を，ISOcatの適切かつ単純なデータカテゴリ（または複数のデータカテゴリ）と対応付けるPID（永続的識別子）を含む．</desc>
-      <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
+      <desc versionDate="2022-09-17" xml:lang="en">provides a definition of, and/or general
+        information about a value of an information container (element content or attribute value),
+        by reference to an external taxonomy or ontology. Used especially where a contrast with
+        @datcat is needed.</desc>
+      <desc xml:lang="ja" versionDate="2019-05-20"
+        >指定された要素の内容または指定された属性の値を，ISOcatの適切かつ単純なデータカテゴリ（または複数のデータカテゴリ）と対応付けるPID（永続的識別子）を含む．</desc>
+      <datatype maxOccurs="unbounded">
+        <dataRef key="teidata.pointer"/>
+      </datatype>
+    </attDef>
+    <attDef ident="targetDatcat" usage="opt">
+      <desc versionDate="2022-09-17" xml:lang="en">Provides a definition of, and/or general
+        information about, information structure of an object referenced or modeled by the
+        containing element, by reference to an external taxonomy or ontology. This attribute has the
+        characteristics of the @datcat attribute, except that it addresses not its containing
+        element, but an object that is being referenced or modeled by its containing element.</desc>
+      <datatype maxOccurs="unbounded">
+        <dataRef key="teidata.pointer"/>
+      </datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
     <p>In this example <att>dcr:datcat</att> relates the feature name to the data category
       "partOfSpeech" and <att>dcr:valueDatcat</att> the feature value to the data category
-      "commonNoun". Both these data categories reside in the ISOcat DCR at <ref target="http://www.isocat.org">www.isocat.org</ref>, which is the DCR used by ISO
-      TC37 and hosted by its registration authority, the MPI for Psycholinguistics in
-      Nijmegen.</p>
+      "commonNoun". Both these data categories reside in the ISOcat DCR at <ref
+        target="http://www.isocat.org">www.isocat.org</ref>, which is the DCR used by ISO TC37 and
+      hosted by its registration authority, the MPI for Psycholinguistics in Nijmegen.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <fs>
-        <f name="POS" dcr:datcat="http://www.isocat.org/datcat/DC-1345" fVal="#commonNoun" dcr:valueDatcat="http://www.isocat.org/datcat/DC-1256"/>
+        <f name="POS" dcr:datcat="http://www.isocat.org/datcat/DC-1345" fVal="#commonNoun"
+          dcr:valueDatcat="http://www.isocat.org/datcat/DC-1256"/>
       </fs>
     </egXML>
   </exemplum>
-  <remarks versionDate="2012-04-22" xml:lang="en">
-    <p>ISO 12620:2009 is a standard describing the data model and procedures for a Data
-      Category Registry (DCR). Data categories are defined as elementary descriptors in a
-      linguistic structure. In the DCR data model each data category gets assigned a
-      unique Peristent IDentifier (PID), i.e., an URI. Linguistic resources or preferably
-      their schemas that make use of data categories from a DCR should refer to them using
-      this PID. For XML-based resources, like TEI documents, ISO 12620:2009 normative
-      Annex A gives a small Data Category Reference XML vocabulary (also available online
-      at <ptr target="http://www.isocat.org/12620/"/>),
-      which provides two attributes, <att>dcr:datcat</att> and
-      <att>dcr:valueDatcat</att>.</p>
+  <remarks versionDate="2022-09-17" xml:lang="en">
+    <p>TEI Abstract Model can be expressed as a hierarchy of nested attribute-value matrices (AVMs)
+      of various types and of various levels of complexity, nested or grouped in various ways. At
+      the most abstract level, an AVM consists of an information container and the value
+      ('contents') of that container. A simple example of an XML serialization of such structures
+      is, on the one hand, the opening and closing tags that delimit and name the container, and, on
+      the other, the content enclosed by the two tags that constitues the value (information
+      content). An analogous example is an attribute name and the value of that attribute. A TEI XML
+      example could be the element <gi>pos</gi> or the attribute <att>pos</att> as the container,
+      the the content of that element or the value of that attribute as the value of the container.
+      The att.datcat class provides means of addressing the containers and their values, and
+      providing a way to interpret them in the context of external taxonomies or ontologies. </p>
+    <p>ISO 12620:2009 is a standard describing the data model and procedures for a Data Category
+      Registry (DCR). Data categories are defined as elementary descriptors in a linguistic
+      structure. In the DCR data model each data category gets assigned a unique Peristent
+      IDentifier (PID), i.e., an URI. Linguistic resources or preferably their schemas that make use
+      of data categories from a DCR should refer to them using this PID. For XML-based resources,
+      like TEI documents, ISO 12620:2009 normative Annex A gives a small Data Category Reference XML
+      vocabulary (also available online at <ptr target="http://www.isocat.org/12620/"/>), which
+      provides two attributes, <att>dcr:datcat</att> and <att>dcr:valueDatcat</att>.</p>
   </remarks>
-  <remarks xml:lang="ja" versionDate="2019-06-16"><p>ISO 12620:2009は、データ分類のレジストリ（DCR）に関するデータモデルと手続きについての国際標準である．データ分類は，一つの言語の構造における基本的な記述子として定義される。DCRのデータモデルでは、個々のデータ分類には、ユニークな永続的識別子（PID)、つまり、URIが割り当てられる．DCRからデータ分類を利用する言語資源，あるいは、できることならそのスキーマは、このPIDを用いて参照すべきである。TEI文書のようなXMLベースの資源(<ptr target="https://www.iso.org/standard/37243.html"/>にて参照可能)に関しては、ISO 12620:2009 付録 Aに、<att>dcr:datcat</att>属性と<att>dcr:valueDatcat</att>属性を提供する小さなデータ分類参照のXML語彙がある。</p></remarks>
+  <remarks xml:lang="ja" versionDate="2019-06-16">
+    <p>ISO
+        12620:2009は、データ分類のレジストリ（DCR）に関するデータモデルと手続きについての国際標準である．データ分類は，一つの言語の構造における基本的な記述子として定義される。DCRのデータモデルでは、個々のデータ分類には、ユニークな永続的識別子（PID)、つまり、URIが割り当てられる．DCRからデータ分類を利用する言語資源，あるいは、できることならそのスキーマは、このPIDを用いて参照すべきである。TEI文書のようなXMLベースの資源(<ptr
+        target="https://www.iso.org/standard/37243.html"/>にて参照可能)に関しては、ISO 12620:2009 付録
+        Aに、<att>dcr:datcat</att>属性と<att>dcr:valueDatcat</att>属性を提供する小さなデータ分類参照のXML語彙がある。</p>
+  </remarks>
   <listRef>
     <ptr target="#DIMVLV"/>
     <ptr target="#FSSY"/>
