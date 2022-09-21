@@ -10,8 +10,9 @@ $Id$
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei"
   xml:id="DATCAT" type="atts" ident="att.datcat">
   <desc versionDate="2022-09-17" xml:lang="en">provides attributes that are used to align XML
-    elements or attributes with the appropriate Data Categories (DCs) defined by an external taxonomy, ideally one conformant to the ISO 12620 standards family.
-.</desc>
+    elements or attributes with the appropriate Data Categories (DCs) defined by an external 
+    taxonomy, in this way establishing the identity of information containers and values, 
+    and providing means of interpreting them.</desc>
   <desc xml:lang="ja" versionDate="2019-05-20"
     ><att>datacat</att>属性と<att>ValueDatacat</att>属性を提供する．これらがXML要素や属性を連携させる日付分類は、国際標準ISO
       12620:2009で定義されるものであり，<ptr target="http://www.isocat.org/"
@@ -41,7 +42,7 @@ $Id$
       </datatype>
     </attDef>
     <attDef ident="targetDatcat" usage="opt">
-      <desc versionDate="2022-09-17" xml:lang="en">Provides a definition of, and/or general
+      <desc versionDate="2022-09-17" xml:lang="en">provides a definition of, and/or general
         information about, information structure of an object referenced or modeled by the
         containing element, by reference to an external taxonomy or ontology. This attribute has the
         characteristics of the @datcat attribute, except that it addresses not its containing
@@ -65,25 +66,34 @@ $Id$
     </egXML>
   </exemplum>
   <remarks versionDate="2022-09-17" xml:lang="en">
-    <p>TEI Abstract Model can be expressed as a hierarchy of nested attribute-value matrices (AVMs)
+    <p>The TEI Abstract Model can be expressed as a hierarchy of nested attribute-value matrices (AVMs)
       of various types and of various levels of complexity, nested or grouped in various ways. At
       the most abstract level, an AVM consists of an information container and the value
-      ('contents') of that container. A simple example of an XML serialization of such structures
-      is, on the one hand, the opening and closing tags that delimit and name the container, and, on
-      the other, the content enclosed by the two tags that constitues the value (information
-      content). An analogous example is an attribute name and the value of that attribute. A TEI XML
-      example could be the element <gi>pos</gi> or the attribute <att>pos</att> as the container,
-      the the content of that element or the value of that attribute as the value of the container.
-      The att.datcat class provides means of addressing the containers and their values, and
-      providing a way to interpret them in the context of external taxonomies or ontologies. </p>
-    <p>ISO 12620:2009 is a standard describing the data model and procedures for a Data Category
-      Registry (DCR). Data categories are defined as elementary descriptors in a linguistic
-      structure. In the DCR data model each data category gets assigned a unique Peristent
-      IDentifier (PID), i.e., an URI. Linguistic resources or preferably their schemas that make use
-      of data categories from a DCR should refer to them using this PID. For XML-based resources,
-      like TEI documents, ISO 12620:2009 normative Annex A gives a small Data Category Reference XML
-      vocabulary (also available online at <ptr target="http://www.isocat.org/12620/"/>), which
-      provides two attributes, <att>datcat</att> and <att>valueDatcat</att>.</p>
+      ('contents') of that container.</p>
+    <p>A simple example of an XML serialization of such structures is, on the one hand, the opening
+      and closing tags that delimit and name the container, and, on the other, the content enclosed
+      by the two tags that constitues the value (information content). An analogous example is an
+      attribute name and the value of that attribute. A TEI XML example could be the element
+        <gi>pos</gi> or the attribute <att>pos</att> as the container, the the content of that
+      element or the value of that attribute as the value of the container. The <ident type="class">att.datcat</ident> class
+      provides means of addressing the containers and their values, while at the same time providing
+      a way to interpret them in the context of external taxonomies or ontologies. Aligning e.g.
+      both the <gi>pos</gi> element and the <att>pos</att> attribute with the same value of an
+      external reference point (i.e., an entry in an agreed taxonomy) affirms the identity of the
+      concept behind both the element container and the attribute container, and optionally provides
+      a definition of, in the case at hand, "part of speech".</p>
+    <p>The value of the <ident type="class">att.datcat</ident> attributes should be a PID
+      (persistent identifier) that points to a specific, ideally shared taxonomy or ontology. Among
+      the resources that to a smaller or greater extent can be used as inventories of (more or less)
+      standardized linguistic categories, are the GOLD ontology, CLARIN CCR, OLiA or termbase, and
+      also the Universal Dependencies inventory, on the assumption that its URI are going to
+      persist. Apart from these global resources, it is imaginable to address a project-wide
+      taxonomy as well, if global interoperability is not the goal.</p>  
+    <p>Historically, <att>datcat</att> and <att>valueDatcat</att> originate from (now obsolete) ISO
+      12620:2009 standard, describing the data model and procedures for a Data Category Registry
+      (DCR). The current version of the standard, ISO 12620-1, does not standardize the
+      serialization of pointers, merely mentioning the TEI <ident type="class">att.datcat</ident> as
+      an example.</p>   
   </remarks>
   <remarks xml:lang="ja" versionDate="2019-06-16">
     <p>ISO
