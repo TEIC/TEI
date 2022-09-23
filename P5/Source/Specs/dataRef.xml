@@ -22,21 +22,16 @@
     <constraint>
       <sch:rule context="tei:dataRef[tei:dataFacet]">
         <sch:assert test="@name" role="nonfatal">Data facets can only be specified for references to datatypes specified by
-          XML Schemas: Part 2: Datatypes</sch:assert>
-      </sch:rule>
-    </constraint>
-  </constraintSpec>
-  <constraintSpec ident="restrictAttRestriction" scheme="schematron">
-    <constraint>
-      <sch:rule context="tei:dataRef[tei:dataFacet]">
-        <sch:report test="@restriction" role="nonfatal">The attribute restriction cannot be used when dataFacet elements are present.</sch:report>
+          XML Schemas: Part 2: Datatypes — that is, for there to be a 'dataFacet' child there must be a @name attribute.</sch:assert>
+        <sch:report test="@restriction" role="nonfatal">Data facets and restrictions cannot both be expressed on the same data reference — that is, the @restriction attribute cannot be used when a 'dataFacet' element is present.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="restrictAttResctrictionName" scheme="schematron">
     <constraint>
-      <sch:rule context="tei:dataRef">
-        <sch:report test="@restriction and not(@name)" role="fatal">The attribute restriction can only be used with a name attribute.</sch:report>
+      <sch:rule context="tei:dataRef[@restriction]">
+        <sch:assert test="@name" role="nonfatal">Restrictions can only be specified for references to datatypes specified by
+          XML Schemas: Part 2: Datatypes — that is, for there to be a @restriction attribute there must be a @name attribute, too.</sch:assert>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -89,11 +84,8 @@
     </exemplum>
     
   <remarks versionDate="2010-05-14" xml:lang="en">
-    <p>Only one of the attributes <att>key</att>, <att>name</att>, and <att>ref</att> may be used. 
-    </p>
-    <p><gi>dataFacet</gi> children are only allowed when <gi>dataRef</gi> refers with <att>name</att> to a datatype from the specification <ref target="#XSD2">XML Schemas: Part 2: Datatypes</ref>.
-    </p>
-    <p><att>restriction</att> is only permitted when <gi>dataRef</gi> uses the <att>name</att> attribute.</p>
+    <p>Only one of the attributes <att>key</att>, <att>name</att>, and <att>ref</att> may be used on any given instance of <gi>dataRef</gi>.</p>
+    <p>Neither a <att>restriction</att> attribute not a <gi>dataFacet</gi> child element may be used unless the <gi>dataRef</gi> refers to a datatype from the specification <ref target="#XSD2">XML Schemas: Part 2: Datatypes</ref> with a <att>name</att> attribute.</p>
   </remarks>
   <listRef>
     <ptr target="#TD-datatypes"/>
