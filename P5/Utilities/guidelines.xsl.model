@@ -344,22 +344,29 @@
                     number($pos)=2)">
         <hr/>
         <p>
+	  <xsl:variable name="exemplumLang" select="tei:checkLang(ancestor::exemplum/@xml:lang)"/>
           <xsl:choose>
             <xsl:when test="ancestor::elementSpec">
               <a
-                  href="../../{tei:checkLang(ancestor::exemplum/@xml:lang)}/html/ref-{ancestor::elementSpec/@ident}.html">
+                  href="../../{$exemplumLang}/html/ref-{ancestor::elementSpec/@ident}.html">
                 <xsl:text>&lt;</xsl:text>
                 <xsl:value-of
                     select="ancestor::elementSpec/@ident"/>
                 <xsl:text>&gt;</xsl:text>
               </a>
+	      <xsl:if test="$exemplumLang ne $doclang">
+		<xsl:sequence select="'&#x20;('||$exemplumLang||')'"/>
+	      </xsl:if>
             </xsl:when>
             <xsl:when test="ancestor::classSpec">
               <a
-                  href="../../{tei:checkLang(ancestor::exemplum/@xml:lang)}/html/ref-{ancestor::classSpec/@ident}.html">
+                  href="../../{$exemplumLang}/html/ref-{ancestor::classSpec/@ident}.html">
                 <xsl:value-of
                     select="ancestor::classSpec/@ident"/>
               </a>
+	      <xsl:if test="$exemplumLang ne $doclang">
+		<xsl:sequence select="'&#x20;('||$exemplumLang||')'"/>
+	      </xsl:if>
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="ancestor::div[@xml:id and head][1]">
