@@ -6,10 +6,6 @@ See the file COPYING.txt for details.
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" ident="post" mode="add" module="cmc">
-    <!--desc xml:lang="en" versionDate="2021-09-07">a written (sometimes spoken) contribution to an ongoing CMC
-        interaction which (1) has been composed by its author in its entirety as
-        part of a private activity and (2) has been sent to the server en
-        bloc.</desc-->
     <desc xml:lang="en" versionDate="2022-08-09"> a written (or spoken) contribution to an ongoing
         CMC interaction which has been composed (or recorded) by its author in its entirety as part
         of a private activity, and has been transmitted through the internet and is made available
@@ -41,7 +37,7 @@ See the file COPYING.txt for details.
         </alternate>
     </content>
     <attList>
-        <attDef ident="modality" usage="req" mode="add">
+        <attDef ident="modality" usage="rec" mode="add">
             <desc xml:lang="en" versionDate="2021-09-07">written or spoken mode</desc>
             <datatype minOccurs="1" maxOccurs="1">
                 <dataRef key="teidata.enumerated"/>
@@ -227,28 +223,28 @@ See the file COPYING.txt for details.
                 <gi>incident</gi>, and <gi>kinesic</gi>in one and the same <gi>div</gi> in order to
             be able to represent the combined use of written and spoken utterances and nonverbal
             acts on the GUI of multimodal CMC environments.</p>
-        <p>The attribute <att>modality</att> for post is required, its value is either written or
-            spoken. The content model of a <gi>post</gi>
-            <att>modality</att>=<val>spoken</val> should be macro.paraContent, i.e. the same as the
-            one for <gi>u</gi>. The content model of a <gi>post</gi>
-            <att>modality</att>=<val>written</val> should be like the one from Chat2CLARIN, i,e,
-            similar to the one for <gi>div</gi>. However this co-occurrence constraint between the
-            values of <att>modality</att> and the content models cannot be expressed in ODD code. It
-            could be expressed in pure RNG code, but so far we have refrained from doing so, because
-            it is ignored by the ODD2HTML stylesheets.</p>
-        <p>References: <!--bibl>Lüngen, Harald, and Herzberg,
+	    <p>The use of the <att>modality</att> attribute is
+	    recommended, but not required. Its value is either
+	    <val>written</val> or <val>spoken</val>. Because spoken
+	    language differs fundamentally from written language, when
+	    the value is <val>spoken</val> projects may wish to limit
+	    the content of the <gi>post</gi> to character data and
+	    only those elements available in the <gi>u</gi> element,
+	    thus avoiding elements like <gi>p</gi> or <gi>head</gi>
+	    that are used for the encoding of written text.</p>
+        <!-- p>References: <bibl>Lüngen, Harald, and Herzberg,
             Laura (2018): Reply relations in CMC: Types and
             annotation. In: <ref
             target="https://www.uantwerpen.be/images/uantwerpen/container49896/files/proceedings_CMCcorpora2018.pdf"
             > >Proceedings of the 6th Conference on Computer-Mediated
             Communication (CMC) and Social Media Corpora (CMC-corpora
             2018) 17-18 September 2018, University of
-            Antwerp</ref></bibl-->
+            Antwerp</ref></bibl
             <bibl>Lüngen, Harald, and Herzberg, Laura (2019): Types and annotation of reply
                 relations in computer-mediated communication In <ref
                     target="https://doi.org/10.1515/eujal-2019-0006">European Journal of Applied
                     Linguistics, Vol.7(2),</ref> pp.305-331.</bibl>
-        </p>
+        </p -->
     </remarks>
     <listRef>
         <ptr target="#CMCPOST"/>
