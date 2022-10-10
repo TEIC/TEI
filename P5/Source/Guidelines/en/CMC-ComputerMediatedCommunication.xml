@@ -159,18 +159,17 @@ See the file COPYING.txt for details.
       obtained. Similarly, Wikipedia discussions come in a <emph rend="italic">talk page</emph>,
       which ultimately is a web page containing the user posts, sub-structured in threads. Likewise,
       youtube comments come in a webpage containing the YouTube video with its comment posts and
-      replying posts to these comments displayed below the video. The video serves as a
-        <emph>trigger</emph> for the whole discussion. In forum discussions, the trigger may be a
-      news item, and in Wikipedia may be viewed as the trigger for the discussion on the talk page
-      associated with the article. </p>
+      replying posts to these comments displayed below the video. The video serves as a trigger for
+      the whole discussion. In forum discussions, the trigger may be a news item, and in Wikipedia
+      may be viewed as the trigger for the discussion on the talk page associated with the article. </p>
 
     <!-- p>ToDo: Post as document</p-->
 
     <div xml:id="CMCmacro">
       <head>Macrostructure of CMC collections and documents</head>
 
-      <p>When CMC documents are compiled in collection, dataset, or corpus, we distinguish the
-        following levels in the macrostructure of a CMC corpus:</p>
+      <p>When CMC documents are compiled in a collection, dataset, or corpus, we distinguish the
+        following levels in the macrostructure of CMC in TEI:</p>
 
       <p><emph rend="bold">The corpus level</emph>: The level of a corpus or collection of CMC texts
         of a particular genre, generally obtained from a particular CMC platform. This level is
@@ -187,9 +186,9 @@ See the file COPYING.txt for details.
         will contain any number of <gi>TEI</gi> elements as usual.</p>
 
       <p>In the <gi>teiHeader</gi> of a <gi>text</gi>, the <gi>sourceDesc</gi> will contain metadata
-        about the CMC document, such as its title, author/owner, URL, date of its creation and
-        possibly of the last change made, and other metadata that are available and should be
-        recorded such as one or more categories associated with the document.</p>
+        about the CMC document such as its title, author/owner, URL, date of its creation and
+        possibly of the last change made, and other metadata that are available and to be recorded
+        such as one or more categories associated with the document.</p>
 
       <p> The document sometimes contains, or is associated with, a trigger such as a video or a
         news item, either provided by the initiating user herself or located elsewhere and
@@ -198,9 +197,9 @@ See the file COPYING.txt for details.
 
       <p><emph rend="bold">The post level</emph>: The level of the individual post is naturally
         represented by the element <gi>post</gi> and its encoding it further described in section
-          <ptr target="#CMCcmcpost"/>. A <gi>TEI</gi> will contain a number of posts that can be
-        grouped or ordered in <gi>div</gi> elements representing sequences or threads (section <ptr
-          target="#CMCthreads"/>) if appropriate. </p>
+          <ptr target="#CMCcmcpost"/>. A <gi>TEI</gi> element will contain a number of <gi>post</gi>
+        elements, which can be grouped or ordered in <gi>div</gi> elements representing sequences or
+        threads (section <ptr target="#CMCthreads"/>) if appropriate. </p>
 
 
       <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="macrostructure">
@@ -210,7 +209,7 @@ See the file COPYING.txt for details.
             <!-- metadata pertaining to the corpus or CMC dataset-->
           </teiHeader>
           <TEI>
-            <!-- a CMC document such as a chat log or a YouTube page or a discussion page -->
+            <!-- a CMC document such as a chat log or a discussion page -->
             <teiHeader>
               <!-- metadata pertaining to the CMC document -->
             </teiHeader>
@@ -226,7 +225,7 @@ See the file COPYING.txt for details.
               </body>
             </text>
           </TEI>
-          <!-- more texts -->
+          <!-- more documents -->
         </teiCorpus>
       </egXML>
 
@@ -235,7 +234,6 @@ See the file COPYING.txt for details.
     <div xml:id="CMCthreads">
       <!-- Threads, Sections, or simply sequences -->
       <head>Threads, sections, sequences</head>
-      <p>ToDo</p>
 
     </div>
 
@@ -247,7 +245,7 @@ See the file COPYING.txt for details.
         <head>Documenting the source of a corpus of CMC data</head>
 
         <p>The <gi>teiHeader</gi> of the <gi>teiCorpus</gi> will contain metadata about the CMC
-          platform, e.g. its name, information about its owner (often a company) and their 
+          platform, e.g. its name, information about its owner (often a company) and their
           address/location), the URL of the server where the CMC data were collected from, or the
           filename of a database dump that was used as a source. If applicable, metadata about the
           project in which the data were collected and the corpus built will be recorded as
@@ -315,16 +313,17 @@ See the file COPYING.txt for details.
       <div xml:id="CMCCocumentSource">
         <head>Documenting the source of a CMC document</head>
 
-        <p>A CMC document represents chat log, a discussion page or thematical thread of posts.
-          Among the metadata to be recorded in <gi>sourceDesc</gi> of its <gi>teiHeader</gi> are, if
-          available, its title, author or owner, its URL, the date of its creation and the date of
-          its last change (e.g. the time when the last post was added to it). </p>
+        <p>A CMC document may be chat log, a discussion page or thematical thread of posts and is
+          encode within a <gi>TEI</gi> element. Among the metadata to be recorded in the
+            <gi>sourceDesc</gi> of its <gi>teiHeader</gi> are, if available, its title, author or
+          owner, its URL, the date of its creation and/or the date of its last change (i.e. the time
+          when the last post was added to it). </p>
 
         <p>The following example is the <gi>sourceDesc</gi> of a YouTube page that contained a video
-          and the comments to the video (which are encoded in the <gi>body</gi> of the text as
+          and user comments to the video (which are encoded in the <gi>body</gi> of the text as
           posts). The metadata contain a URL reference to the video and the YouTube channel that
-          posted the video in <gi>relatedItem</gi> elements. The date when the page was created 
-          is not known. The video itself is not contained in the corpus.</p>
+          posted the video in <gi>relatedItem</gi> elements. The date when the page was created is
+          not known. The video itself is not contained in the corpus.</p>
 
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <sourceDesc>
@@ -347,8 +346,8 @@ See the file COPYING.txt for details.
         </egXML>
 
         <p>The following example is the <gi>sourceDesc</gi> of a Wikipedia talk page. Note that the
-          reference to the Wikipedia article that the discussion is about is given
-          in the <gi>relatedItem</gi> element.</p>
+          reference to the Wikipedia article that the discussion is about is given in the
+            <gi>relatedItem</gi> element.</p>
 
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <sourceDesc>
@@ -382,60 +381,60 @@ See the file COPYING.txt for details.
             </biblStruct>
           </sourceDesc>
         </egXML>
-        
+
       </div>
 
 
-        <div xml:id="CMCSampling">
-          <!-- sampling declaration -->
-          <head>Documenting the sampling of CMC data</head>
+      <div xml:id="CMCSampling">
+        <!-- sampling declaration -->
+        <head>Documenting the sampling of CMC data</head>
 
-          <p>The documentation of how the data were collected i.e. how it was downloaded, scraped or
-            sampled from the web, should be recorded in the <gi>samplingDecl</gi>. It maybe part of
-            the <gi>teiHeader</gi> of the corpus level, and/or of the document level. It has five
-            potential components:</p>
+        <p>The documentation of how the data were collected i.e. how it was downloaded, scraped or
+          sampled from the web, should be recorded in the <gi>samplingDecl</gi>. It maybe part of
+          the <gi>teiHeader</gi> of the corpus level, and/or of the document level. It has five
+          potential components:</p>
 
-          <list>
-            <item><gi>interface</gi>: The API that was used for the download</item>
-            <item><gi>client</gi>: The client or tool that was used for the download</item>
-            <item><gi>query</gi>: The query or command used for the download</item>
-            <item><gi>date</gi>: The date of the download</item>
-            <item><gi>respStmt</gi>: The person(s) or project responsible for the download</item>
-          </list>
+        <list>
+          <item>interface: The API that was used for the download</item>
+          <item>client: The client or tool that was used for the download</item>
+          <item>query: The query or command used for the download</item>
+          <item>date: The date of the download</item>
+          <item>respStmt: The person(s) or project responsible for the download</item>
+        </list>
 
-          <p>The information may be provided as prose in the <gi>samplingDecl</gi>. In the case of a
-            twitter corpus it may look like the following:</p>
+        <p>The information may be provided as prose in the <gi>samplingDecl</gi>. In the case of a
+          twitter corpus it may look like the following:</p>
 
-          <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <samplingDecl>
-              <p>Sampled using the Twitter "Filtered stream" v2-API (see
-                https://developer.twitter.com/en/docs/twitter-api/tweets/filtered-stream/api-reference/get-tweets-search-stream)
-                Filtered for countries (DE, AT, BE, CH, DK, LU) and lang=de</p>
-            </samplingDecl>
-          </egXML>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <samplingDecl>
+            <p>Sampled using the Twitter "Filtered stream" v2-API (see
+              https://developer.twitter.com/en/docs/twitter-api/tweets/filtered-stream/api-reference/get-tweets-search-stream)
+              Filtered for countries (DE, AT, BE, CH, DK, LU) and lang=de</p>
+          </samplingDecl>
+        </egXML>
 
-          <p>The <gi>samplingDecl</gi> of a Usenet Newsgroup corpus:</p>
+        <p>The <gi>samplingDecl</gi> of a Usenet Newsgroup corpus:</p>
 
-          <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <samplingDecl>
-              <p> Download from server news.individual.de 2016-01-15 using nntp client in Python</p>
-            </samplingDecl>
-          </egXML>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <samplingDecl>
+            <p> Download from server news.individual.de 2016-01-15 using nntp client in Python</p>
+          </samplingDecl>
+        </egXML>
 
 
-        </div>
+      </div>
 
-        <div xml:id="CMCTimeline">
-          <head>Timeline</head>
-          <!-- Timeline -->
-        </div>
+      <div xml:id="CMCTimeline">
+        <head>Timeline</head>
+        <!-- Timeline -->
+      </div>
 
-        <div xml:id="CMCParticipants">
-          <head>Participants</head>
-          <!-- Participants -->
-        </div>
+      <div xml:id="CMCParticipants">
+        <head>Participants</head>
+        <!-- Participants -->
+      </div>
 
-        <?tei winita 
+      <?tei winita 
         Still an open issue. How to document the source (e.g. database dump, web scraping, query parameters) of the current CMC encodings
         * Source: made tag abuse for documenting the source: <biblStruct> or <recordingStmt>
         * Timeline: in textDesc/interaction/
@@ -443,8 +442,8 @@ See the file COPYING.txt for details.
         ?>
 
 
-      </div>
     </div>
+  </div>
 
   <div xml:id="CMCcmc">
     <head>Encoding Unique to CMC</head>
@@ -815,7 +814,7 @@ See the file COPYING.txt for details.
       <p>Second, we distinguish between the ID that the post gets as part of the text collection
         (e.g. a corpus or a dataset), and the original Tweet-ID as supplied by Twitter. The
         collection-related post ID should go on the global attribute <att>xml:id</att>, while the
-        original tweet ID should go on the canonical attribute <att>key</att>.</p>
+        original tw eet ID should go on the canonical attribute <att>key</att>.</p>
       <p>Third, a retweet and its corresponding retweeted tweet are encoded as two separate posts
         each with its own set of attributes. The post representing the retweet itself is specified
         with <code>subtype="retweet"</code> and does not contain or duplicate the content of the
