@@ -49,7 +49,7 @@ See the file COPYING.txt for details.
       Life).</p>
   </div>
 
-  <div type="div2">
+  <div type="div2" xml:id="CMCUnits">
     <head>Basic Units of CMC</head>
     <p>This section describes the encoding mechanisms for the basic units of CMC and for their
       combined use to encode CMC data.</p>
@@ -148,15 +148,303 @@ See the file COPYING.txt for details.
       CMC, is introduced in <ptr target="#CMCcmcpost"/>.</p>
   </div>
 
-  <div xml:id="CMCmeta">
-    <head>Documenting CMC (and providing general meta data)</head>
-    <?tei winita 
+  <div xml:id="CMCmacrometa">
+    <head>Macrostructure and documentation of CMC (and providing general metadata)</head>
+
+
+    <p>In many CMC genres, posts come in a CMC document in which they are grouped and according to
+      which they are displayed e.g. in a sequence or in threads. For example, in chat communication
+      such WhatsApp, posts are part of "a chat" of one user with another user or among a group of
+      users. When a whole chat is downloaded and saved, a <emph>logfile</emph> of the chat is
+      obtained. Similarly, Wikipedia discussions come in a <emph rend="italic">talk page</emph>,
+      which ultimately is a web page containing the user posts, sub-structured in threads. Likewise,
+      youtube comments come in a webpage containing the YouTube video with its comment posts and
+      replying posts to these comments displayed below the video. The video serves as a
+        <emph>trigger</emph> for the whole discussion. In forum discussions, the trigger may be a
+      news item, and in Wikipedia may be viewed as the trigger for the discussion on the talk page
+      associated with the article. </p>
+
+    <!-- p>ToDo: Post as document</p-->
+
+    <div xml:id="CMCmacro">
+      <head>Macrostructure of CMC collections and documents</head>
+
+      <p>When CMC documents are compiled in collection, dataset, or corpus, we distinguish the
+        following levels in the macrostructure of a CMC corpus:</p>
+
+      <p><emph rend="bold">The corpus level</emph>: The level of a corpus or collection of CMC texts
+        of a particular genre, generally obtained from a particular CMC platform. This level is
+        represented by the element <gi>teiCorpus</gi>. The <gi>teiHeader</gi> of the
+          <gi>teiCorpus</gi> will then in its <gi>sourceDesc</gi> contain metadata about the CMC
+        platform. If applicable, metadata about the project in which the data were collected and the
+        corpus was built will be recorded as well.</p>
+
+      <p><emph rend="bold">The document level</emph>: pertains to a document that groups CMC posts
+        technically and thematically, such as a web page, a chat, or a discussion thread on a
+        particular topic. The document as such is often created by a particular user of the CMC
+        environment, thereby initiating the communication in which other users follow. This level
+        will naturally be represented by the TEI element <gi>TEI</gi>, i.e. a <gi>teiCorpus</gi>
+        will contain any number of <gi>TEI</gi> elements as usual.</p>
+
+      <p>In the <gi>teiHeader</gi> of a <gi>text</gi>, the <gi>sourceDesc</gi> will contain metadata
+        about the CMC document, such as its title, author/owner, URL, date of its creation and
+        possibly of the last change made, and other metadata that are available and should be
+        recorded such as one or more categories associated with the document.</p>
+
+      <p> The document sometimes contains, or is associated with, a trigger such as a video or a
+        news item, either provided by the initiating user herself or located elsewhere and
+        referenced a the beginning of the document. The <gi>teiHeader</gi> of the document will then
+        also contain metadata about this trigger.</p>
+
+      <p><emph rend="bold">The post level</emph>: The level of the individual post is naturally
+        represented by the element <gi>post</gi> and its encoding it further described in section
+          <ptr target="#CMCcmcpost"/>. A <gi>TEI</gi> will contain a number of posts that can be
+        grouped or ordered in <gi>div</gi> elements representing sequences or threads (section <ptr
+          target="#CMCthreads"/>) if appropriate. </p>
+
+
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="macrostructure">
+        <teiCorpus>
+          <!-- a corpus, collection or dataset of CMC documents -->
+          <teiHeader>
+            <!-- metadata pertaining to the corpus or CMC dataset-->
+          </teiHeader>
+          <TEI>
+            <!-- a CMC document such as a chat log or a YouTube page or a discussion page -->
+            <teiHeader>
+              <!-- metadata pertaining to the CMC document -->
+            </teiHeader>
+            <text>
+              <body>
+                <div>
+                  <!-- subdivisions of the CMC document e.g. in sections or threads if applicable-->
+                  <post>
+                    <!-- one post -->
+                  </post>
+                  <!-- more posts -->
+                </div>
+              </body>
+            </text>
+          </TEI>
+          <!-- more texts -->
+        </teiCorpus>
+      </egXML>
+
+    </div>
+
+    <div xml:id="CMCthreads">
+      <!-- Threads, Sections, or simply sequences -->
+      <head>Threads, sections, sequences</head>
+      <p>ToDo</p>
+
+    </div>
+
+    <div xml:id="CMCmetadata">
+      <head>Documenting CMC (and providing general meta data)</head>
+
+      <div xml:id="CMCCorpusSource">
+        <!-- source Description of a teicorpus header -->
+        <head>Documenting the source of a corpus of CMC data</head>
+
+        <p>The <gi>teiHeader</gi> of the <gi>teiCorpus</gi> will contain metadata about the CMC
+          platform, e.g. its name, information about its owner (often a company) and their 
+          address/location), the URL of the server where the CMC data were collected from, or the
+          filename of a database dump that was used as a source. If applicable, metadata about the
+          project in which the data were collected and the corpus built will be recorded as
+          well.</p>
+
+        <p>The following example shows the <gi>sourceDesc</gi> of a Twitter corpus.</p>
+
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <sourceDesc>
+            <biblStruct>
+              <monogr>
+                <title type="main">Twitter</title>
+                <editor/>
+                <imprint>
+                  <publisher>Twitter International Company</publisher>
+                  <pubPlace>Dublin</pubPlace>
+                </imprint>
+              </monogr>
+            </biblStruct>
+          </sourceDesc>
+        </egXML>
+
+        <p>The following example shows the <gi>sourceDesc</gi> of a YouTube comments corpus.</p>
+
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <sourceDesc>
+            <biblStruct>
+              <monogr>
+                <title type="main">YouTube</title>
+                <imprint>
+                  <publisher>YouTube</publisher>
+                  <pubPlace>San Bruno, California</pubPlace>
+                </imprint>
+              </monogr>
+            </biblStruct>
+          </sourceDesc>
+        </egXML>
+
+        <p>The following example shows how a Wikipedia database dump may be encoded as the
+          source.</p>
+
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <sourceDesc>
+            <biblStruct>
+              <monogr>
+                <title>dewiki-2019-08-01-pages-meta-current</title>
+                <edition>Dump file</edition>
+                <idno type="dump-filename">dewiki-2019-08-01-pages-meta-current</idno>
+                <imprint>
+                  <publisher>Wikimedia Foundation, Inc</publisher>
+                  <pubPlace>
+                    <ref target="http://dumps.wikimedia.org"/>
+                  </pubPlace>
+                  <date type="year">2019</date>
+                  <date type="month">08</date>
+                  <date type="day">01</date>
+                </imprint>
+              </monogr>
+            </biblStruct>
+          </sourceDesc>
+        </egXML>
+
+      </div>
+
+      <div xml:id="CMCCocumentSource">
+        <head>Documenting the source of a CMC document</head>
+
+        <p>A CMC document represents chat log, a discussion page or thematical thread of posts.
+          Among the metadata to be recorded in <gi>sourceDesc</gi> of its <gi>teiHeader</gi> are, if
+          available, its title, author or owner, its URL, the date of its creation and the date of
+          its last change (e.g. the time when the last post was added to it). </p>
+
+        <p>The following example is the <gi>sourceDesc</gi> of a YouTube page that contained a video
+          and the comments to the video (which are encoded in the <gi>body</gi> of the text as
+          posts). The metadata contain a URL reference to the video and the YouTube channel that
+          posted the video in <gi>relatedItem</gi> elements. The date when the page was created 
+          is not known. The video itself is not contained in the corpus.</p>
+
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <sourceDesc>
+            <biblStruct>
+              <analytic>
+                <title type="main">Iron Man 3 in 3D (Official Trailer German) Parodie</title>
+                <author>DieAussenseiter</author>
+                <ref type="url" target="https://www.youtube.com/watch?v=T-WU_3-0UpU"/>
+              </analytic>
+              <monogr>
+                <imprint>
+                  <publisher>YouTube</publisher>
+                </imprint>
+              </monogr>
+              <relatedItem type="video" target="https://youtu.be/T-WU_3-0UpU"/>
+              <relatedItem type="channel"
+                target="https://www.youtube.com/watch?v=UCKn1vL4Ou4DKu0BlcK3NlDQ"/>
+            </biblStruct>
+          </sourceDesc>
+        </egXML>
+
+        <p>The following example is the <gi>sourceDesc</gi> of a Wikipedia talk page. Note that the
+          reference to the Wikipedia article that the discussion is about is given
+          in the <gi>relatedItem</gi> element.</p>
+
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <sourceDesc>
+            <biblStruct>
+              <analytic>
+                <respStmt>
+                  <persName>OnkelSchuppig et al.</persName>
+                  <resp>Collaborative authors</resp>
+                </respStmt>
+                <title type="main">Diskussion:FKM-Richtlinie</title>
+                <ref target="https://de.wikipedia.org/wiki/Diskussion:FKM-Richtlinie"
+                  type="page_url"/>
+                <date type="last-change">2013-09-14T17:04:48Z</date>
+                <idno type="wikipedia-id">7632113</idno>
+                <textLang mainLang="de">German</textLang>
+              </analytic>
+              <monogr>
+                <title>Wikipedia, Die freie Enzyklopädie</title>
+                <edition>German language version</edition>
+                <imprint>
+                  <publisher>Wikimedia Foundation, Inc</publisher>
+                  <pubPlace>
+                    <ref target="https://wikipedia.org/"/>
+                  </pubPlace>
+                </imprint>
+              </monogr>
+              <relatedItem type="articleLink">
+                <ref n="5138958" target="https://de.wikipedia.org/wiki/FKM-Richtlinie"
+                  targetLang="de">FKM-Richtlinie</ref>
+              </relatedItem>
+            </biblStruct>
+          </sourceDesc>
+        </egXML>
+        
+      </div>
+
+
+        <div xml:id="CMCSampling">
+          <!-- sampling declaration -->
+          <head>Documenting the sampling of CMC data</head>
+
+          <p>The documentation of how the data were collected i.e. how it was downloaded, scraped or
+            sampled from the web, should be recorded in the <gi>samplingDecl</gi>. It maybe part of
+            the <gi>teiHeader</gi> of the corpus level, and/or of the document level. It has five
+            potential components:</p>
+
+          <list>
+            <item><gi>interface</gi>: The API that was used for the download</item>
+            <item><gi>client</gi>: The client or tool that was used for the download</item>
+            <item><gi>query</gi>: The query or command used for the download</item>
+            <item><gi>date</gi>: The date of the download</item>
+            <item><gi>respStmt</gi>: The person(s) or project responsible for the download</item>
+          </list>
+
+          <p>The information may be provided as prose in the <gi>samplingDecl</gi>. In the case of a
+            twitter corpus it may look like the following:</p>
+
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <samplingDecl>
+              <p>Sampled using the Twitter "Filtered stream" v2-API (see
+                https://developer.twitter.com/en/docs/twitter-api/tweets/filtered-stream/api-reference/get-tweets-search-stream)
+                Filtered for countries (DE, AT, BE, CH, DK, LU) and lang=de</p>
+            </samplingDecl>
+          </egXML>
+
+          <p>The <gi>samplingDecl</gi> of a Usenet Newsgroup corpus:</p>
+
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <samplingDecl>
+              <p> Download from server news.individual.de 2016-01-15 using nntp client in Python</p>
+            </samplingDecl>
+          </egXML>
+
+
+        </div>
+
+        <div xml:id="CMCTimeline">
+          <head>Timeline</head>
+          <!-- Timeline -->
+        </div>
+
+        <div xml:id="CMCParticipants">
+          <head>Participants</head>
+          <!-- Participants -->
+        </div>
+
+        <?tei winita 
         Still an open issue. How to document the source (e.g. database dump, web scraping, query parameters) of the current CMC encodings
         * Source: made tag abuse for documenting the source: <biblStruct> or <recordingStmt>
         * Timeline: in textDesc/interaction/
         * Participant description (in profile description)
         ?>
-  </div>
+
+
+      </div>
+    </div>
 
   <div xml:id="CMCcmc">
     <head>Encoding Unique to CMC</head>
