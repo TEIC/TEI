@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="https://jenkins-paderborn.tei-c.org/view/LingSIG/job/TEIP5-LingSIG-deadISOCat/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei"
   xml:id="DATCAT" type="atts" ident="att.datcat">
   <desc versionDate="2022-09-17" xml:lang="en">provides attributes that are used to align XML
@@ -55,16 +55,38 @@ $Id$
   <exemplum xml:lang="en">
     <p>In this example <att>datcat</att> relates the feature name to the data category
       "partOfSpeech" and <att>valueDatcat</att> the feature value to the data category
-      "commonNoun". Both these data categories reside in the ISOcat DCR at <ref
-        target="http://www.isocat.org">www.isocat.org</ref>, which is the DCR used by ISO TC37 and
-      hosted by its registration authority, the MPI for Psycholinguistics in Nijmegen.</p>
+      "commonNoun". Both these data categories should be defined in an external taxonomy or ontology.</p>
+    <p>Note that the "isocat" links should be replaced before this goes public.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <fs>
         <f name="POS" datcat="http://www.isocat.org/datcat/DC-1345" fVal="#commonNoun"
           valueDatcat="http://www.isocat.org/datcat/DC-1256"/>
       </fs>
     </egXML>
+    <p>Except, dear Council, this is super inefficient -- why would anyone explode their markup with
+      such redundant references; this is why I started experimenting with ways to make such cases
+      more optimal, but I got dragged away from that by some commitments.</p>
   </exemplum>
+  <exemplum xml:lang="en">
+    <p>Here's an example using <att>targetDatcat</att>, in modelling a feature.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+      <fDecl name="POS" targetDatcat="http://www.isocat.org/datcat/DC-1345">
+        <fDescr>part of speech (morphosyntactic category)</fDescr>
+        <vRange>
+          <vAlt>
+            <symbol value="NN" datcat="http://www.isocat.org/datcat/DC-1256"/>
+<!--        <symbol value="NN1"/>
+            <symbol value="NN1"/>
+            ....
+-->          </vAlt>
+        </vRange>
+      </fDecl>
+    </egXML>
+    <p>So, the modelled feature uses <att>targetDatcat</att>, because if it used <att>datcat</att>
+      then we would be saying that <gi>fDecl</gi> contains a part of speech, but it doesn't, it
+      models a container (<gi>f</gi>) that contains a part of speech.</p>
+  </exemplum>
+  
   <remarks versionDate="2022-09-17" xml:lang="en">
     <p>The TEI Abstract Model can be expressed as a hierarchy of nested attribute-value matrices (AVMs)
       of various types and of various levels of complexity, nested or grouped in various ways. At
