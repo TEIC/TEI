@@ -6,7 +6,7 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="https://jenkins-paderborn.tei-c.org/view/LingSIG/job/TEIP5-LingSIG-deadISOCat/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="DI" n="12">
   <head>Dictionaries</head>
 
@@ -2658,25 +2658,28 @@ equivalently "poj." in Polish, or "Ez." in German, etc., what is actually referr
 grammatical value that can be rendered with a plethora of markers, depending on the publisher, language, or lexicographic tradition.
 In order to signal that this variety of surface markers in fact indicate the same
 underlying value, it is possible to align them with an external inventory of standardized
-values. The TEI provides means to align grammatical categories as well as their content
-with the ISOcat reference, which is a Web implementation of <ref target="#ISO-12620">ISO 12620</ref>.</p>
+values. The TEI provides the <ident type="class">att.datcat</ident> attribute class for the purpose of aligning grammatical (or indeed any sort of) categories as well as their values
+with a reference taxonomy of shared data categories.</p>
 <p>In the example below, a fragment of the entry for <foreign>isotope</foreign> cited
-in section <ptr target="#DITPGR"/> is adorned by references to ISOcat definitions for "part
+in section <ptr target="#DITPGR"/> is adorned by references to external definitions for "part
 of speech" (<att>datcat</att>) and "adjective" (<att>valueDatcat</att>). Depending
 on the status and extent of the dictionary, various strategies may be used to reduce the
-redundancy of the repeated ISOcat references.<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
-<entry xmlns:dcr="http://www.isocat.org/ns/dcr">
+redundancy of the potentially redundant references.<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+<entry>
 <!--...-->
 <form>
 <orth>isotope</orth>
 </form>
 <gramGrp>
-<pos datcat="http://www.isocat.org/datcat/DC-1345" valueDatcat="http://www.isocat.org/datcat/DC-1230">adj</pos>
+<pos
+datcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3"
+valueDatcat="http://hdl.handle.net/11459/CCR_C-1230_23653c21-fca1-edf8-fd7c-3df2d6499157"
+>adj</pos>
 </gramGrp>
 <!--...-->
 </entry>
-</egXML></p>
-
+</egXML>
+In the above example, alignment is performed against the <ref target="https://www.clarin.eu/content/clarin-concept-registry">CLARIN Concept Registry</ref>.</p>
 </div>
 <div type="div3" xml:id="DIMVBO">
 <head>Retaining Both Views</head>
