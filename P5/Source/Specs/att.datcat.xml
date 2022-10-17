@@ -64,7 +64,7 @@ $Id$
       </fs>
     </egXML>
     <p>"NN" is the symbol for common noun used e.g. in the <ref
-      target="http://ucrel.lancaster.ac.uk/claws7tags.html">CLAWS-7 tagset</ref>defined by the
+      target="http://ucrel.lancaster.ac.uk/claws7tags.html">CLAWS-7 tagset</ref> defined by the
       University Centre for Computer Corpus Research on Language at the University of Lancaster.
       The very same data category used for tagging an early version of the British National
       Corpus, and coming from the so-called <ref
@@ -85,13 +85,36 @@ $Id$
       attribute to reference a definition of "part of speech". The reference taxonomy in this example is the 
       <ref target="https://www.clarin.eu/content/clarin-concept-registry">CLARIN Concept
         Registry</ref>.</p>
+    
+  </exemplum>
+  <exemplum xml:lang="en">
     <p>If the feature structure markup exemplified above is to be repeated many times in a single
       document, it is much efficient to gather the persistent identifiers in a single place and to
       only reference them, implicitly or directly, from the feature structure markup. The following
       example is much more concise and relies on the concepts of feature structure declaration and
       feature value library, discussed in chapter <ptr target="#FS"/>.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+      <fs>
+        <f name="POS" fVal="#commonNoun"/>
+      </fs>
+    </egXML>
+    <p>The assumption here is that there exists a <gi>fvLib</gi> element that collects the relevant feature values, as shown below.</p>
   </exemplum>
-  
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <fvLib n="POS values">
+        <symbol xml:id="commonNoun" value="NN" datcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3"/>
+        <!-- ... -->
+      </fvLib>
+    </egXML>
+    <p>Note that these Guidelines do not prescribe a specific choice between <att>datcat</att> and
+        <att>valueDatcat</att> in such cases. The former is the generic way of referencing a data
+      category, whereas the latter is more specific, in that it references a data category that
+      represents a value. The choice between them comes into play where a single element -- or a
+      tight element complex, such as the <gi>f</gi>/<gi>symbol</gi> complex illustrated above --
+      make it necessary or useful to distinguish between the container data category and its
+      value.</p>
+  </exemplum>
   <exemplum xml:lang="en">
     <p>In the context of dictionaries designed with semantic interoperability in mind, the following
       example ensures that the <gi>pos</gi> element is interpreted as the same information container
