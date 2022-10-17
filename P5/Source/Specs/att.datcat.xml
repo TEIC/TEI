@@ -53,9 +53,13 @@ $Id$
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <p>In this example <att>datcat</att> relates the feature <hi rend="italic">name</hi> to the data category
-      "part of speech" and <att>valueDatcat</att> relates the feature <hi rend="italic">value</hi> to the data category
-      "common noun". Both these data categories should be defined in an external taxonomy or ontology.</p>
+    <p>The below example presents the TEI encoding of the <ref
+        target="https://en.wikipedia.org/wiki/Name%E2%80%93value_pair">name-value pair</ref>
+      <code>&lt; part-of-speech, common-noun></code>" (where the name/key is abbreviated as "POS",
+      and the value is symbolized by "NN")). The <att>datcat</att> attribute relates the feature <hi rend="italic"
+        >name</hi> to the data category "part of speech" and the attribute <att>valueDatcat</att> relates the
+      feature <hi rend="italic">value</hi> to the data category "common noun". Both these data
+      categories should be defined in an external and preferably open reference taxonomy or ontology.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <fs>
         <f name="POS" datcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3">
@@ -64,19 +68,18 @@ $Id$
       </fs>
     </egXML>
     <p>"NN" is the symbol for common noun used e.g. in the <ref
-      target="http://ucrel.lancaster.ac.uk/claws7tags.html">CLAWS-7 tagset</ref> defined by the
-      University Centre for Computer Corpus Research on Language at the University of Lancaster.
-      The very same data category used for tagging an early version of the British National
-      Corpus, and coming from the so-called <ref
-        target="http://www.natcorp.ox.ac.uk/docs/c5spec.html">BNC Basic (C5) tagset</ref> uses the
-      symbol "NN0" (rather than "NN"). Making these values semantically interoperable /
-      interchangeable would be extremely difficult without a human expert if they were not
-      anchored in a single point of a reference morphosyntactic taxonomy. In the case in hand, the
-      string "<ref
+        target="http://ucrel.lancaster.ac.uk/claws7tags.html">CLAWS-7 tagset</ref> defined by the
+      University Centre for Computer Corpus Research on Language at the University of Lancaster. The
+      very same data category used for tagging an early version of the British National Corpus, and
+      coming from the so-called <ref target="http://www.natcorp.ox.ac.uk/docs/c5spec.html">BNC Basic
+        (C5) tagset</ref> uses the symbol "NN0" (rather than "NN"). Making these values semantically
+      interoperable / interchangeable would be extremely difficult without a human expert if they
+      were not anchored in a single point of an established reference taxonomy of morphosyntactic
+      data categories. In the case in hand, the string "<ref
         target="http://hdl.handle.net/11459/CCR_C-1256_7ec6083c-23d4-224d-6f94-eecbe6861545"
-        >http://hdl.handle.net/11459/CCR_C-1256_7ec6083c-23d4-224d-6f94-eecbe6861545</ref>" is
-      both a persistent identifier of this data category and the address of the place where a
-      definition of "common noun" is provided.</p>
+        >http://hdl.handle.net/11459/CCR_C-1256_7ec6083c-23d4-224d-6f94-eecbe6861545</ref>" is both
+      a persistent identifier of the data category in question, as well as the address of the place where a shared definition
+      of "common noun" is provided.</p>
     <p>While the symbols "NN", "NN0", and many others (often coming from languages other than
       English) are implicitly members of the container category "part of speech", it is sometimes
       useful not to rely on such an implicit relationship but rather use an explicit identifier
@@ -89,16 +92,21 @@ $Id$
   </exemplum>
   <exemplum xml:lang="en">
     <p>If the feature structure markup exemplified above is to be repeated many times in a single
-      document, it is much efficient to gather the persistent identifiers in a single place and to
-      only reference them, implicitly or directly, from the feature structure markup. The following
-      example is much more concise and relies on the concepts of feature structure declaration and
+      document, it is much more efficient to gather the persistent identifiers in a single place and to
+      only reference them, implicitly or directly, from feature structure markup. The following
+      example is much more concise than the one above and relies on the concepts of feature structure declaration and
       feature value library, discussed in chapter <ptr target="#FS"/>.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <fs>
         <f name="POS" fVal="#commonNoun"/>
       </fs>
     </egXML>
-    <p>The assumption here is that there exists a <gi>fvLib</gi> element that collects the relevant feature values, as shown below.</p>
+    <p>The assumption here is that the relevant feature values are collected in a place that the
+      annotation document in question has access to -- preferably, a single document per linguistic
+      resource, for example a <gi>fsdDecl</gi> that is XIncluded as a sibling of <gi>text</gi> or a
+      child of <gi>encodingDesc</gi>; a resource-wide <gi>taxonomy</gi> is also an option. The
+      example below presents <gi>fvLib</gi> element that collects the relevant feature values (most
+      of them omitted).</p>
   </exemplum>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -127,11 +135,13 @@ $Id$
     </egXML>
     <p>Again, the issue of efficiency and redundancy of this type of interoperable markup demands
       that the references to the particular data categories are provided either in the header of the
-      dictionary or at the level of ODD, in the element <gi>equiv</gi>, which constitutes an
+      dictionary or at the level of ODD, in the element <gi>equiv</gi> (child of <gi>elementSpec</gi>), which constitutes an
       equivalent of the <ident>att.datcat</ident> class.</p>
   </exemplum>
   <exemplum xml:lang="en">
-    <p>The <att>targetDatcat</att> attribute is reserved for feature structure declarations.</p>
+    <p>The <att>targetDatcat</att> attribute is reserved for feature structure declarations, and is
+      analogous to the <att>targetLang</att> attribute of <gi>ref</gi>, in that it describes the
+      object that is referenced, rather than the referencing object.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <fDecl name="POS" targetDatcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3">
         <fDescr>part of speech (morphosyntactic category)</fDescr>
@@ -143,34 +153,42 @@ $Id$
         </vRange>
       </fDecl>
     </egXML>
-    <p>Above, the modelled feature uses <att>targetDatcat</att>, because if it used <att>datcat</att>
-      then we would be saying that <gi>fDecl</gi> contains a part of speech, but it does not -- it
-      models a container (<gi>f</gi>) that contains a part of speech.</p>
+    <p>Above, the modelled feature uses <att>targetDatcat</att>, because if it used
+        <att>datcat</att> then we would be saying that the <gi>fDecl</gi> contains a part of speech,
+      whereas it does not -- the <gi>fDecl</gi> models a container (<gi>f</gi>) that encodes a part
+      of speech. Note also that it is the <gi>f</gi> that is modeled above, not its values, which
+      are used as direct references to data categories, hence the use of <att>datcat</att> in the
+        <gi>symbol</gi> element.</p>
   </exemplum>
   
   <remarks versionDate="2022-09-17" xml:lang="en">
-    <p>The TEI Abstract Model can be expressed as a hierarchy of nested attribute-value matrices (AVMs)
+    <p>The TEI Abstract Model can be expressed as a hierarchy of attribute-value matrices (AVMs)
       of various types and of various levels of complexity, nested or grouped in various ways. At
       the most abstract level, an AVM consists of an information container and the value
       ('contents') of that container.</p>
     <p>A simple example of an XML serialization of such structures is, on the one hand, the opening
       and closing tags that delimit and name the container, and, on the other, the content enclosed
-      by the two tags that constitues the value (information content). An analogous example is an
-      attribute name and the value of that attribute. A TEI XML example could be the element
-        <gi>pos</gi> or the attribute <att>pos</att> as the container, the the content of that
-      element or the value of that attribute as the value of the container. The <ident type="class">att.datcat</ident> class
-      provides means of addressing the containers and their values, while at the same time providing
-      a way to interpret them in the context of external taxonomies or ontologies. Aligning e.g.
-      both the <gi>pos</gi> element and the <att>pos</att> attribute with the same value of an
-      external reference point (i.e., an entry in an agreed taxonomy) affirms the identity of the
-      concept behind both the element container and the attribute container, and optionally provides
-      a definition of, in the case at hand, "part of speech".</p>
+      by the two tags that constitues the value. An analogous example is an
+      attribute name and the value of that attribute.</p>
+    <p>In a TEI XML example of two equivalent serializations expressing the name-value pair <code>&lt;part-of-speech,common-noun></code>:
+        <code>&lt;pos>commonNoun&lt;/pos></code> and <code>pos="common-noun"</code>, one would
+      classify the element <gi>pos</gi> and the attribute <att>pos</att> as containers (mapping onto
+      the first member of the relevant name-value pair,
+      while the <code>text()</code> content of <gi>pos</gi> or the string/symbolic value of <att>pos</att> would
+      be seen as mapping onto the second member of the pair.</p>
+    <p>The <ident type="class">att.datcat</ident> class provides means of addressing the containers
+      and their values, while at the same time providing a way to interpret them in the context of
+      external taxonomies or ontologies. Aligning e.g. both the <gi>pos</gi> element and the
+        <att>pos</att> attribute with the same value of an external reference point (i.e., an entry
+      in an agreed taxonomy) affirms the identity of the concept behind both the element container
+      and the attribute container, and optionally provides a definition of, in the case at hand,
+      "part of speech".</p>
     <p>The value of the <ident type="class">att.datcat</ident> attributes should be a PID
-      (persistent identifier) that points to a specific, ideally shared taxonomy or ontology. Among
+      (persistent identifier) that points to a specific -- and, ideally, shared -- taxonomy or ontology. Among
       the resources that to a smaller or greater extent can be used as inventories of (more or less)
       standardized linguistic categories, are the GOLD ontology, CLARIN CCR, OLiA or termbase, and
       also the Universal Dependencies inventory, on the assumption that its URI are going to
-      persist. Apart from these global resources, it is imaginable to address a project-wide
+      persist. Apart from these global resources, it is imaginable to address a project-specific
       taxonomy as well, if global interoperability is not the goal.</p>  
     <p>Historically, <att>datcat</att> and <att>valueDatcat</att> originate from (now obsolete) ISO
       12620:2009 standard, describing the data model and procedures for a Data Category Registry
