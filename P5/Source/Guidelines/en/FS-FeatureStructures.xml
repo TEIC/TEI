@@ -271,11 +271,12 @@ feature-value libraries, or individual features, it is possible to
 align both feature names and their values with standardized external
 data category repositories. <note place="bottom">See
 section <ptr target="#DIMVLV"/> for more discussion of the need and
-rationale for aligning the content of grammatical (and other) descriptions with standardized external taxonomies.</note> In the following example, both
+rationale for aligning the content of grammatical (and other) descriptions with 
+standardized external taxonomies.</note> In the following example, both
 the feature <val>part_of_speech</val> and its value
 <val>NN</val> (standing for "common noun") are aligned with the respective definitions
-   provided by the <ref target="https://www.clarin.eu/content/clarin-concept-registry">CLARIN Concept Registry (CCR)</ref>.
-<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND">
+provided by the <ref target="https://www.clarin.eu/content/clarin-concept-registry">CLARIN Concept Registry (CCR)</ref>.
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <fs>
 <f name="part_of_speech" datcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3">
 <symbol valueDatcat="http://hdl.handle.net/11459/CCR_C-1256_7ec6083c-23d4-224d-6f94-eecbe6861545" value="NN"/>
@@ -365,7 +366,7 @@ Other <gi>f</gi> elements may invoke them by reference, using the
 feature value pair such as: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><f name="dental-fricative" fVal="#T.DF"/> </egXML> rather than expanding the hierarchy of the
 component phonological features explicitly.</p>
 <p>The feature structure that concludes section <ptr target="#FSSY"/> above, identifying the
-value of some part of speech to be a "common noun" should be used in tandem with a
+value of some part of speech to be a "common noun" can be used in tandem with a
 feature-value library, which offers a way to encode a grammatical <term>tagset</term>, in this case
 containing labels for parts of speech:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -378,7 +379,7 @@ containing labels for parts of speech:
 Such a feature-value library combines the standard short symbolic label for a part of speech (e.g., "NN") with a 
 mnemonic identifier that can be referenced by means of <att>fVal</att>, and with a persistent identifier, maintained
 in a public reference taxonomy repository together with the basic definition of the given concept.</p>
-<p>Feature structures stored in this way  may also be associated with
+<p>Feature structures stored in the way presented in this section may also be associated with
 the text which they are intended to annotate, either by a link from the text
 (for example, using the TEI global <att>ana</att> attribute), or
 by means of stand-off annotation techniques (for example, using the TEI
@@ -1201,15 +1202,14 @@ using an XML identifier are discussed in <ptr target="#SAUR"/></note>
 way of accomplishing this is to add an XML identifier to each
 <gi>fsDecl</gi> element in <ident type="file">example.xml</ident>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND">
-           <!-- ... -->
-           <fsdDecl>
-           <fsDecl type="gpsg" xml:id="GPSG">
+<fsdDecl>
+   <fsDecl type="gpsg" xml:id="GPSG">
 	     <!-- information about this type -->
-	   </fsDecl>
-           <fsDecl type="lex" xml:id="LEX">
+	</fsDecl>
+   <fsDecl type="lex" xml:id="LEX">
 	     <!-- information about this type -->
-	   </fsDecl>
-	   </fsdDecl>
+	</fsDecl>
+</fsdDecl>
 </egXML>
 (Although in this case the XML identifier is simply an uppercase
 version of the type name, there is no necessary connection between the
@@ -1631,7 +1631,7 @@ with the appropriate locus in a reference taxonomy, as shown below:
 <vAlt>
 <symbol value="NN" datcat="http://hdl.handle.net/11459/CCR_C-1256_7ec6083c-23d4-224d-6f94-eecbe6861545"/>
 <symbol value="NP" datcat="http://hdl.handle.net/11459/CCR_C-1371_fbebd9ec-a7f4-9a36-d6e9-88ee16b944ae"/>
-<!-- ... -->
+   <!-- ... -->
 </vAlt>
 </vRange>
 </fDecl>
