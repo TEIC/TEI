@@ -89,7 +89,7 @@ Examples
   
   parses as
   
-  <body xmlns="http://www/w3.org/1999/xhtml"><a>1<br/>2</a><p>zzz</p><p>www</p></body>
+  <body xmlns="http://www.w3.org/1999/xhtml"><a>1<br/>2</a><p>zzz</p><p>www</p></body>
   
   With the default (one argument form) and parses as
 
