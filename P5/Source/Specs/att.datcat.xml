@@ -53,14 +53,17 @@ $Id$
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <p>The below example presents the TEI encoding of the <ref
-        target="https://en.wikipedia.org/wiki/Name%E2%80%93value_pair">name-value pair</ref>
-        "<tag>part-of-speech, common-noun</tag>" (where the name/key is abbreviated as "POS",
-      and the value is symbolized by "NN"). The <att>datcat</att> attribute relates the feature <hi
-        rend="italic">name</hi> to the data category "part of speech", while the attribute
-        <att>valueDatcat</att> relates the feature <hi rend="italic">value</hi> to the data category
-      "common noun". Both these data categories should be defined in an external and preferably open
-      reference taxonomy or ontology.</p>
+    <p>The example below presents the TEI encoding of the <ref
+        target="https://en.wikipedia.org/wiki/Name%E2%80%93value_pair">name-value pair</ref> "<hi
+        style="font-family:monospace">part of speech, common noun</hi>", where the name (key) "part
+      of speech" is abbreviated as "POS", and the value, "common noun" is symbolized by "NN". The
+      entire name-value pair is encoded by means of the element <gi>f</gi>. In TEI XML, that element
+      acts as the container, labeled with the <att>name</att> attribute. Its contents may be complex
+      or simple. In the case at hand, the content is the symbol "NN".</p>
+    <p>The <att>datcat</att> attribute relates the feature <hi rend="italic">name</hi> (i.e., the key) to the data
+      category "part of speech", while the attribute <att>valueDatcat</att> relates the feature <hi
+        rend="italic">value</hi> to the data category "common noun". Both these data categories
+      should be defined in an external and preferably open reference taxonomy or ontology.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <fs>
         <f name="POS" datcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3">
@@ -105,7 +108,7 @@ $Id$
       </fs>
     </egXML>
     <p>The assumption here is that the relevant feature values are collected in a place that the
-      annotation document in question has access to -- preferably, a single document per linguistic
+      annotation document in question has access to — preferably, a single document per linguistic
       resource, for example a <gi>fsdDecl</gi> that is XIncluded as a sibling of <gi>text</gi> or a
       child of <gi>encodingDesc</gi>; a <gi>taxonomy</gi> available resource-wide (e.g., in a shared
       header) is also an option. The example below presents a <gi>fvLib</gi> element that collects the
@@ -124,7 +127,7 @@ $Id$
     <p>Note that these Guidelines do not prescribe a specific choice between <att>datcat</att> and
         <att>valueDatcat</att> in such cases. The former is the generic way of referencing a data
       category, whereas the latter is more specific, in that it references a data category that
-      represents a value. The choice between them comes into play where a single element -- or a
+      represents a value. The choice between them comes into play where a single element — or a
       tight element complex, such as the <gi>f</gi>/<gi>symbol</gi> complex illustrated above --
       make it necessary or useful to distinguish between the container data category and its
       value.</p>
@@ -162,7 +165,7 @@ $Id$
     </egXML>
     <p>Above, the modeled feature uses <att>targetDatcat</att>, because if it used
         <att>datcat</att> then we would be saying that the <gi>fDecl</gi> is an instance of the part-of-speech container data category,
-      whereas it is not -- the <gi>fDecl</gi> models a container (<gi>f</gi>) that encodes a part
+      whereas it is not — the <gi>fDecl</gi> models a container (<gi>f</gi>) that encodes a part
       of speech. Note also that it is the <gi>f</gi> that is modeled above, not its values, which
       are used as direct references to data categories, hence the use of <att>datcat</att> in the
         <gi>symbol</gi> element.</p>
@@ -178,10 +181,11 @@ $Id$
       by the two tags that constitues the value. An analogous example is an
       attribute name and the value of that attribute.</p>
     <p>In a TEI XML example of two equivalent serializations expressing the name-value pair
-        <tag>part-of-speech,common-noun</tag>, namely <hi rend="mono"
-        >&lt;pos>commonNoun&lt;/pos></hi> and <hi rend="mono">pos="common-noun"</hi>, one would
+      <hi style="font-family:monospace">&lt;part-of-speech,common-noun></hi>, namely 
+      <hi style="font-family:monospace">&lt;pos>commonNoun&lt;/pos></hi> and 
+      <hi style="font-family:monospace">pos="common-noun"</hi>, one would
       classify the element <gi>pos</gi> and the attribute <att>pos</att> as containers (mapping onto
-      the first member of the relevant name-value pair, while the <hi rend="mono">text()</hi>
+      the first member of the relevant name-value pair, while the <hi style="font-family:monospace">text()</hi>
       content of <gi>pos</gi> or the string/symbolic value of <att>pos</att> would be seen as
       mapping onto the second member of the pair.</p>
     <p>The <ident type="class">att.datcat</ident> class provides means of addressing the containers
@@ -192,7 +196,7 @@ $Id$
       and the attribute container, and optionally provides a definition of, in the case at hand,
       "part of speech".</p>
     <p>The value of the <ident type="class">att.datcat</ident> attributes should be a PID
-      (persistent identifier) that points to a specific -- and, ideally, shared -- taxonomy or ontology. Among
+      (persistent identifier) that points to a specific — and, ideally, shared — taxonomy or ontology. Among
       the resources that to a smaller or greater extent can be used as inventories of (more or less)
       standardized linguistic categories, are the GOLD ontology, CLARIN CCR, OLiA or termbase, and
       also the Universal Dependencies inventory, on the assumption that its URI are going to
