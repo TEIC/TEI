@@ -85,32 +85,39 @@ organization of the module described here. This should be read in
 conjunction with chapter <ptr target="#ST"/>, describing the structure of
 the TEI document type definition.</p> 
 <div type="div2" xml:id="COPA"><head>Paragraphs</head>
-<p>The paragraph is the fundamental organizational unit for all prose
-texts, being the smallest regular unit into which prose can be
-divided. Prose can appear in all TEI texts, even those that are
-primarily of another genre (e.g., verse); thus the paragraph is
-described here, as an element which can appear in any kind of
-text.</p>
-<p>Paragraphs can contain any of the other elements described within
-this chapter, as well as some other elements which are specific to
-individual text types. We distinguish <term>phrase-level</term>
-elements, which must be entirely contained within a paragraph or similar structure and
-cannot appear except within one, from <term>chunks</term>, which can
-appear between, but not within, paragraphs, and from
-<term>inter-level</term> elements, which can appear either within a
-single paragraph or between paragraphs. The class of phrases includes
-emphasized or quoted phrases, names, dates, etc. The class of
-inter-level elements includes bibliographic citations, notes, lists,
-etc. The class of chunks includes the paragraph itself, and other
-elements which have similar structural properties, notably the
-<gi>ab</gi> (anonymous block) element described in <ptr target="#SASE"/>) which may be used as an alternative to the paragraph
-in some kinds of texts.</p>
-<p>Because paragraphs may appear in different base or additional tag
-sets, their possible contents may differ in different kinds of
-documents. In particular, additional elements not listed in this
-chapter may appear in paragraphs in certain kinds of text. However, the
-elements described in this chapter are always by default available in
-all kinds of text.</p>
+  <p>Paragraphs in modern printed or online text are typically visually 
+    offset with whitespace or an indented first line. But paragraphs are 
+    not simply blocks of text. The paragraph may be thought of as a mid-level 
+    unit of sense, a coherent grouping of sentences. Paragraphs may, in turn, 
+    be grouped into larger divisions, such as chapters. Because it is a unit 
+    of sense rather than simply a block of text, the <gi>p</gi> element in TEI 
+    may contain other structures displayed as blocks, such as lists or quotes. 
+    This distinguishes it from the <ref 
+      target="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/p">p</ref> 
+    element in HTML, which is primarily a block of text, and from the <gi>ab</gi> 
+    (anonymous block) element described in <ptr target="#SASE"/> which may be used 
+    as an alternative to the paragraph in cases that require a chunk-level container 
+    which is not necessarily a sense unit and which may have different structural properties.</p>
+  <p>The paragraph can be understood in the context of the distinct forms of textual 
+    division discussed in <ptr target="#STBTC"/>: <term>chunk</term>, 
+    <term>phrase</term>, and <term>inter</term>-level. 
+    Chunk-level elements are paragraphs and other elements which have similar 
+    structural properties. Phrase-level elements must be entirely contained within a 
+    paragraph or other chunk-level structure. This type includes emphasized or quoted 
+    phrases, names, dates, etc. Inter-level elements can appear either within a 
+    paragraph or between paragraphs, and include bibliographic citations, notes, and 
+    lists. The <gi>ab</gi> (anonymous block) element is an alternative to 
+    <gi>p</gi> which is useful in cases where paragraphs are not present, but chunk-level 
+    organization is still needed. <gi>ab</gi> may contain other <gi>ab</gi>s, 
+    may use the <att>type</att> attribute, and does not necessarily represent a coherent set of 
+    statements.</p>
+  <p>Paragraphs can contain many of the other elements described within this chapter, 
+    as well as other elements which are specific to individual text types. Because 
+    paragraphs may appear in different customizations, their possible 
+    contents may vary in different kinds of documents. In particular, additional 
+    elements not listed in this chapter may appear in paragraphs. However, 
+    the elements described in this chapter are available 
+    in all kinds of text unless they are excluded by a customization. </p>
 <p>The paragraph is marked using the <gi>p</gi> element:
  <specList><specDesc key="p"/></specList></p>
 <p>If a consistent internal subdivision of paragraphs is desired, the
@@ -120,19 +127,24 @@ respectively. More usually, however, paragraphs have no firm internal
 structure, but contain prose encoded as a mix of characters, entity
 references, phrases marked as described in the rest of this chapter, and
 embedded elements like lists, figures, or tables.</p>
-<p>Since paragraphs are usually explicitly marked in Western texts,
-typically by indentation, the application of the <gi>p</gi> tag
-usually presents few problems.</p>
-<p>In some cases, the body of a text may comprise but a single
-paragraph:
+<p>The following example demonstrates a basic application of the <gi>p</gi> tag for an indented passage in a printed book: 
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COPA-eg-1"><body>
-   <p>I fully appreciate Gen. Pope's splendid achievements with their
-invaluable results; but you must know that Major Generalships in the
-Regular Army, are not as plenty as blackberries.</p>
+  <p>It is in vain to say human beings ought to be satisfied with tranquillity: 
+    they must have action; and they will make it if they cannot find it. Millions are 
+    condemned to a stiller doom than mine, and millions are in silent revolt against 
+    their lot. Nobody knows how many rebellions besides political rebellions ferment 
+    in the masses of life which people earth. Women are supposed to be very calm 
+    generally: but women feel just as men feel; they need exercise for their faculties, 
+    and a field for their efforts, as much as their brothers do; they suffer from 
+    too rigid a restraint, too absolute a stagnation, precisely as men would suffer; and 
+    it is narrow-minded in their more privileged fellow-creatures to say that they ought to 
+    confine themselves to making puddings and knitting stockings, to playing on the piano 
+    and embroidering bags. It is thoughtless to condemn them, or laugh at them, if they 
+    seek to do more or learn more than custom has pronounced necessary for their sex.</p>
 </body></egXML>
  </p>
 <p>This news story shows typically short journalistic paragraphs:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NYT1992"><head>SARAJEVO, Bosnia and Herzegovina, April 19</head><p>Serbs seized more territory in this struggling new country today as
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NYT1992"><dateline>SARAJEVO, Bosnia and Herzegovina, April 19</dateline><p>Serbs seized more territory in this struggling new country today as
   the United States Air Force ended a two-day airlift of humanitarian
   aid into the capital, Sarajevo.</p>
 <p>International relief workers called on European Community nations
