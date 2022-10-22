@@ -10,63 +10,84 @@
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="measure">
   <gloss xml:lang="en" versionDate="2009-01-06">measure</gloss>
   <gloss versionDate="2009-01-06" xml:lang="fr">mesure</gloss>
-  <desc versionDate="2005-01-14" xml:lang="en">contains a word or phrase referring to some quantity of an object or commodity, usually
-        comprising a number, a unit, and a commodity name.</desc>
+  <desc versionDate="2005-01-14" xml:lang="en">contains a word or phrase referring to some quantity
+    of an object or commodity, usually comprising a number, a unit, and a commodity name.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">개체 또는 물체의 수량을 지시하는 단어 또는 구를 포함한다. 이들은 숫자, 단위, 물체명으로
-        구성되어 있다.</desc>
+    구성되어 있다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含用來表示某物品數量的字詞，通常是由數字、單位和物品名稱所組成。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">ある対象や商品の大きさを表す語句を示す。一般には、数値、単位、商品名 を含む。</desc>
   <desc versionDate="2009-01-06" xml:lang="fr">contient un mot ou une expression faisant référence à
-        la quantité d'un objet ou d'un produit, comprenant en général un nombre, une unité et le nom
-        d'un produit.</desc>
+    la quantité d'un objet ou d'un produit, comprenant en général un nombre, une unité et le nom
+    d'un produit.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene una palabra o sintagma referido a alguna
-        cantidad de un objeto o producto, normalmente incluye un número, una unidad y un nombre de
-        producto.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">contiene una parola o sintagma che fa riferimento alla
-        quantità di un oggetto o bene, contenente di solito il numero, l'unità e il nome del bene.</desc>
+    cantidad de un objeto o producto, normalmente incluye un número, una unidad y un nombre de
+    producto.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">contiene una parola o sintagma che fa riferimento
+    alla quantità di un oggetto o bene, contenente di solito il numero, l'unità e il nome del
+    bene.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.typed"/>
     <memberOf key="model.measureLike"/>
     <memberOf key="att.measurement"/>
+    <memberOf key="att.ranging"/>
   </classes>
   <content>
     <macroRef key="macro.phraseSeq"/>
   </content>
   <attList>
     <attDef ident="type" mode="change" usage="opt">
-      <desc versionDate="2005-11-18" xml:lang="en">specifies the type of measurement in any convenient typology.</desc>
+      <desc versionDate="2005-11-18" xml:lang="en">specifies the type of measurement in any
+        convenient typology.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">편리한 방식으로 측정 유형을 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">用任何適合的分類方法來說明度量的種類。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該計測種類を示す。</desc>
       <desc versionDate="2009-01-06" xml:lang="fr">précise le type de mesure exprimée dans la
-                typologie adaptée.</desc>
+        typologie adaptée.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica el tipo de medición en cualquier
-                tipología funcional.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">specifica il tipo di misurazione in una
-                tipologia funzionale.</desc>
-      <datatype><dataRef key="teidata.enumerated"/></datatype>
+        tipología funcional.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">specifica il tipo di misurazione in una tipologia
+        funzionale.</desc>
+      <datatype>
+        <dataRef key="teidata.enumerated"/>
+      </datatype>
     </attDef>
   </attList>
   <exemplum versionDate="2019-07-09" xml:lang="en">
     <p>This example references a definition of a measurement unit declared in the TEI header: </p>
-      <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
       <measure type="weight"><num>2</num> pounds of flesh</measure>
       <measure type="currency">£10-11-6d</measure>
       <measure type="area" unitRef="#merk">2 <unit>merks</unit> of old extent</measure>
-   
-        <!-- In the TEI Header: -->
-        
-        <encodingDesc>
-          <unitDecl>
-            <unitDef xml:id="merk" type="area">
-              <label>merk</label>
-              <placeName ref="#Scotland"/>
-              <desc>A merk was an area of land determined variably by its agricultural productivity.</desc>
-            </unitDef>
-          </unitDecl>
-        </encodingDesc>
-      </egXML>
+      <!-- In the TEI Header: -->
+      <encodingDesc>
+        <unitDecl>
+          <unitDef xml:id="merk" type="area">
+            <label>merk</label>
+            <placeName ref="#Scotland"/>
+            <desc>A merk was an area of land determined variably by its agricultural
+              productivity.</desc>
+          </unitDef>
+        </unitDecl>
+      </encodingDesc>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <measure quantity="40" unit="hogshead" commodity="rum">2 score hh rum</measure>
+      <measure quantity="12" unit="count" commodity="roses">1 doz. roses</measure>
+      <measure quantity="1" unit="count" commodity="tulips">a yellow tulip</measure>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en" versionDate="2022-09-13">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#TEI-Consortium-CFP2022">
+      <head>Long papers.</head>
+      <p>Speakers will be given 30 minutes each: 20 minutes for
+      presentation, 10 minutes for discussion. Proposals should not
+      exceed <measure max="500" unit="count" commodity="words">500
+      words</measure>. This presentation type is suitable for
+      substantial research, theoretical or critical discussions.</p>
+    </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -94,13 +115,6 @@
       <measure quantity="16" unit="weight" commodity="vegetable">一台斤青菜</measure>
       <measure quantity="12" unit="count" commodity="roses">一打玫瑰</measure>
       <measure quantity="1" unit="count" commodity="tulips">一朵黃色鬱金香</measure>
-    </egXML>
-  </exemplum>
-  <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <measure quantity="40" unit="hogshead" commodity="rum">2 score hh rum</measure>
-      <measure quantity="12" unit="count" commodity="roses">1 doz. roses</measure>
-      <measure quantity="1" unit="count" commodity="tulips">a yellow tulip</measure>
     </egXML>
   </exemplum>
   <listRef>
