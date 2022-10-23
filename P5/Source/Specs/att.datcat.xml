@@ -94,36 +94,34 @@ $Id$
       <ref target="https://www.clarin.eu/content/clarin-concept-registry">CLARIN Concept
         Registry</ref>.</p>
     
-  </exemplum>
-  <exemplum xml:lang="en">
     <p>If the feature structure markup exemplified above is to be repeated many times in a single
       document, it is much more efficient to gather the persistent identifiers in a single place and to
       only reference them, implicitly or directly, from feature structure markup. The following
       example is much more concise than the one above and relies on the concepts of feature structure declaration and
-      feature value library, discussed in chapter <ptr target="#FS"/>.</p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <fs>
-        <f name="POS" fVal="#commonNoun"/>
-        <!-- ... -->
-      </fs>
-    </egXML>
+      feature value library, discussed in chapter <ptr target="#FS"/>.
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <fs>
+          <f name="POS" fVal="#commonNoun"/>
+          <!-- ... -->
+        </fs>
+      </egXML></p>
+    
     <p>The assumption here is that the relevant feature values are collected in a place that the
       annotation document in question has access to — preferably, a single document per linguistic
       resource, for example a <gi>fsdDecl</gi> that is XIncluded as a sibling of <gi>text</gi> or a
       child of <gi>encodingDesc</gi>; a <gi>taxonomy</gi> available resource-wide (e.g., in a shared
-      header) is also an option. The example below presents a <gi>fvLib</gi> element that collects the
-      relevant feature values (most of them omitted).</p>
-  </exemplum>
-  <exemplum xml:lang="en">
-    <p>This example shows one way of encoding a <hi rend="bold">tagset</hi>, i.e., an established inventory of values of
-      (in the case at hand) morphosyntactic categories.</p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <fvLib n="POS values">
-        <symbol xml:id="commonNoun" value="NN" datcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3"/>
-        <symbol xml:id="properNoun" value="NP" datcat="http://hdl.handle.net/11459/CCR_C-1371_fbebd9ec-a7f4-9a36-d6e9-88ee16b944ae"/>
-        <!-- ... -->
-      </fvLib>
-    </egXML>
+      header) is also an option.</p>
+    <p>The example below presents a <gi>fvLib</gi> element that collects the relevant feature values
+      (most of them omitted). At the same time, this example shows one way of encoding a <hi
+        rend="bold">tagset</hi>, i.e., an established inventory of values of (in the case at hand)
+      morphosyntactic categories.
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <fvLib n="POS values">
+          <symbol xml:id="commonNoun" value="NN" datcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3"/>
+          <symbol xml:id="properNoun" value="NP" datcat="http://hdl.handle.net/11459/CCR_C-1371_fbebd9ec-a7f4-9a36-d6e9-88ee16b944ae"/>
+          <!-- ... -->
+        </fvLib>
+      </egXML></p>
     <p>Note that these Guidelines do not prescribe a specific choice between <att>datcat</att> and
         <att>valueDatcat</att> in such cases. The former is the generic way of referencing a data
       category, whereas the latter is more specific, in that it references a data category that
