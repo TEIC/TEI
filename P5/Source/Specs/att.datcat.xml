@@ -163,7 +163,32 @@ $Id$
         </tagsDecl>
       </egXML>
     </p>
-    <p>Another possibility is to associate the information about the relationship between a TEI
+    <p>Another possibility is to shorten the URIs by means of the <gi>prefixDef</gi> mechanism, as illustrated below:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+        <listPrefixDef>
+          <prefixDef ident="ccr" matchPattern="pos"
+            replacementPattern="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3"/>
+          <prefixDef ident="ccr" matchPattern="adj"
+            replacementPattern="http://hdl.handle.net/11459/CCR_C-1230_23653c21-fca1-edf8-fd7c-3df2d6499157"
+          />
+        </listPrefixDef>
+        <!-- ... -->
+        <entry>
+          <!--...-->
+          <form>
+            <orth>isotope</orth>
+          </form>
+          <gramGrp>
+            <pos datcat="ccr:pos" valueDatcat="ccr:adj">adj</pos>
+          </gramGrp>
+          <!--...-->
+        </entry></egXML></p>
+    <p>This mechanism creates implications that are not always wanted, among others, in the case at
+      hand, suggesting that the identifiers <q>pos</q> and <q>adj</q> belong to a namespace
+      associated with the CLARIN Concept Repository (CCR), whereas that is solely a shorthand
+      mechanism whose scope is the current resource. Documenting this clearly in the header of the
+      dictionary is therefore advised.</p>
+    <p>Yet another possibility is to associate the information about the relationship between a TEI
       markup element and the data category that it is intended to model already at the level of
       modeling the dictionary resource, that is, at the level of the ODD, in <gi>equiv</gi> element
       that is a child of <gi>elementSpec</gi> or <gi>attDef</gi>.</p>
