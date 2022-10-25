@@ -2649,34 +2649,37 @@ given together</item>
 </p>
 <p>Whether the given dictionary encoding focusses on the lexical view and thus approaches the status of
 lexical databases, or uses the typographic/editorial view approach and needs to communicate the
-sometimes informally stated values for the particular descriptive features, the issue of <soCalled>interoperability</soCalled> 
+sometimes informally stated values for the particular descriptive features, the issue of <term>interoperability</term> 
 of the content and of the container objects becomes relevant, in view of the growing
 tendency to interlink pieces of information across Internet resources. In such
 cases, it becomes crucial to be able to encode the fact that whether the information on,
-for instance, the value of the grammatical category of Number is provided as "sg.", "sing.", "Singular", or
-equivalently "poj." in Polish, or "Ez." in German, etc., what is actually referred to is always the same 
+for instance, the value of the grammatical category of Number is provided as <q>sg.</q>, <q>sing.</q>, <q>Singular</q>, or
+equivalently <q>poj.</q> in Polish, or <q>Ez.</q> in German, etc., what is actually referred to is always the same 
 grammatical value that can be rendered with a plethora of markers, depending on the publisher, language, or lexicographic tradition.
 In order to signal that this variety of surface markers in fact indicate the same
 underlying value, it is possible to align them with an external inventory of standardized
-values. The TEI provides means to align grammatical categories as well as their content
-with the ISOcat reference, which is a Web implementation of <ref target="#ISO-12620">ISO 12620</ref>.</p>
+values. The TEI provides the <ident type="class">att.datcat</ident> attribute class for the purpose of aligning grammatical (or indeed any sort of) categories as well as their values
+with a reference taxonomy of shared data categories.</p>
 <p>In the example below, a fragment of the entry for <foreign>isotope</foreign> cited
-in section <ptr target="#DITPGR"/> is adorned by references to ISOcat definitions for "part
-of speech" (<att>dcr:datcat</att>) and "adjective" (<att>dcr:valueDatcat</att>). Depending
+in section <ptr target="#DITPGR"/> is adorned by references to standardized definitions for <term>part
+of speech</term> (<att>datcat</att>) and <term>adjective</term> (<att>valueDatcat</att>). Depending
 on the status and extent of the dictionary, various strategies may be used to reduce the
-redundancy of the repeated ISOcat references.<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
-<entry xmlns:dcr="http://www.isocat.org/ns/dcr">
+redundancy of references.<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+<entry>
 <!--...-->
 <form>
 <orth>isotope</orth>
 </form>
 <gramGrp>
-<pos dcr:datcat="http://www.isocat.org/datcat/DC-1345" dcr:valueDatcat="http://www.isocat.org/datcat/DC-1230">adj</pos>
+<pos
+datcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3"
+valueDatcat="http://hdl.handle.net/11459/CCR_C-1230_23653c21-fca1-edf8-fd7c-3df2d6499157"
+>adj</pos>
 </gramGrp>
 <!--...-->
 </entry>
-</egXML></p>
-
+</egXML>
+In the above example, alignment is performed against the <ref target="https://www.clarin.eu/content/clarin-concept-registry">CLARIN Concept Registry</ref>.</p>
 </div>
 <div type="div3" xml:id="DIMVBO">
 <head>Retaining Both Views</head>
