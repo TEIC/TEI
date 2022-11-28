@@ -174,15 +174,14 @@ See the file COPYING.txt for details.
       <p><emph rend="bold">The corpus level</emph>: The level of a corpus or collection of CMC texts
         of a particular genre, generally obtained from a particular CMC platform, sometimes even
         from several platforms. This level may be represented by either a <gi>TEI</gi> element or a
-          <gi>teiCorpus</gi> element.
-        <!-- For simplicity in diffentiating information about the
+          <gi>teiCorpus</gi> element. <!-- For simplicity in diffentiating information about the
            corpus level from the document level, this chapter
            discusses and exemplifies corpora as if they were encoded
-           with <gi>teiCorpus</gi>. -->
-        The <gi>teiHeader</gi> of the corpus (i.e., the <gi>teiHeader</gi> that is a child of the
-        outermost <gi>TEI</gi> or <gi>teiCorpus</gi>) will contain metadata in its
-          <gi>sourceDesc</gi> about the CMC platform(s). Metadata about the project responsible for
-        collecting the data and building the corpus, if applicable, should be recorded as well.</p>
+           with <gi>teiCorpus</gi>. --> The <gi>teiHeader</gi> of the corpus (i.e., the
+          <gi>teiHeader</gi> that is a child of the outermost <gi>TEI</gi> or <gi>teiCorpus</gi>)
+        will contain metadata in its <gi>sourceDesc</gi> about the CMC platform(s). Metadata about
+        the project responsible for collecting the data and building the corpus, if applicable,
+        should be recorded as well.</p>
 
       <p><emph rend="bold">The document level</emph>: A set of posts collected (or sampled) by a
         researcher for analysis. The posts of the document will often map directly to the set of
@@ -240,10 +239,57 @@ See the file COPYING.txt for details.
     </div>
 
     <div xml:id="CMCthreads">
-      <head>Threads, sections, sequences</head>
+      <head>Sequences, sections, threads</head>
       <?tei winita?>
-      <!-- Threads, Sections, or simply sequences -->
-    </div>
+      <!-- ToDo Sections and sequences -->
+
+      <p>As shown in Example <ptr target="#CMCcmcpostatts"/> above, nested threads of posts can be
+        encoded sequentially, while the attribute <gi>indentLevel</gi> of <gi>post</gi> is used to
+        keep track of the original nesting depth. This is especially meant for CMC text obtained from a wiki code or HTML source, 
+        where it not 100 percent clear whether the indentation information actually reflects a reply action from a user. </p>
+
+      <p>In genres where technical reply information is available for each post, reply links can be
+        encoded using the attribute <att>replyTo</att> at <gi>post</gi> elements, as shown in
+        example <ptr target="#e9"/> . The network of all reply links will then also form a threaded
+        structure, i.e. threads can be reconstructed from it and need not explicitly be encoded.</p>
+
+      <p>But threads can also be explicitly encoded as nested <gi>div</gi> elements as in the
+        following skeleton.</p>
+
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <div type="thread" n="0">
+          <post>...</post>
+          <div type="thread" n="1">
+            <post>...</post>
+            <post>...</post>
+            <div type="thread" n="2">
+              <!-- posts -->
+            </div>
+          </div>
+        </div>
+      </egXML>
+
+    <p>Using this encoding stratety, the thread from Example <ptr target="#e9"/> would look like the
+      following.</p>
+
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
+      <div type="thread" n="0">
+        <post type="comment" xml:id="cmc_ex_p28" who="#u7" when-iso="2015-07-29T21:44">
+          <p>Es hat den Anschein, ...</p>
+        </post>
+        <div type="thread" n="1">
+          <post type="comment" xml:id="cmc_ex_p29" who="#u8" when-iso="2015-07-30T19:11">
+            <p>Nein Nein, an den Handwerkern kann es ...</p>
+          </post>
+          <div type="thread" n="2">
+            <post type="comment" xml:id="cmc_ex_p30" who="#u8" when-iso="2015-07-30T19:26">
+              <p>Stahlkunstruktionen dacht ich mal, ....</p>
+            </post>
+          </div>
+        </div>
+      </div>
+    </egXML>
+      
 
     <div xml:id="CMCmetadata">
       <head>Documenting CMC (and providing general meta data)</head>
@@ -468,8 +514,7 @@ See the file COPYING.txt for details.
 
         <!-- from wiki example talk page Astronomical Object used for cmc-core: anonymised and modified a bit -->
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <post modality="written" xml:id="p5" indentLevel="1" replyTo="#p4" who="#u006"
-            synch="#t006">
+          <post modality="written" xml:id="p5" indentLevel="1" who="#u006" synch="#t006">
             <p>Those haven't happened. If they do, we can revisit the concern. <signed
                 generatedBy="template"><ref target="/wiki/User:P">P</ref>
                 <date when="2014-04-08T01:35Z">01:35, 8 April 2014 (UTC)</date></signed></p>
@@ -530,8 +575,7 @@ See the file COPYING.txt for details.
           then for instance be kept in a separate file not to be distributed with the corpus.</p>
 
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="e10">
-          <post modality="written" xml:id="p5" indentLevel="1" replyTo="#p4" who="#u006"
-            synch="#t006">
+          <post modality="written" xml:id="p5" indentLevel="1" who="#u006" synch="#t006">
             <p>Those haven't happened. If they do, we can revisit the concern. <signed
                 generatedBy="template">[_DELETED-SIGNATURE_] <date synch="#t007"
                   >[_DELETED-TIMESTAMP_]</date></signed></p>
@@ -627,39 +671,41 @@ See the file COPYING.txt for details.
       <p>The <att>replyTo</att> attribute indicates the replied-to or referred-to posts by providing
         one or more pointers to them. In the following example, reply references in the source
         indicate that the first <gi>post</gi> is a reply to an initial post that is not part of the
-        example, the second is a reply to the first, and the third is a reply to the second. <egXML
-          xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
-          <post type="comment" modality="written" generatedBy="human" xml:id="cmc_ex_p28" who="#u7"
-            replyTo="#cmc_ex_p1" when-iso="2015-07-29T21:44">
-            <p>Es hat den Anschein, als wäre bei BER durchaus große Kompetenz am Bau, allerdings
-              nicht in Form von Handwerkern….</p>
-            <p>http://www.zeit.de/2015/29/imtech-flughafen-berlin-ber-verzoegerung/komplettansicht</p>
-          </post>
-          <post type="comment" modality="written" generatedBy="human" xml:id="cmc_ex_p29" who="#u8"
-            replyTo="#cmc_ex_p28" when-iso="2015-07-30T19:11">
-            <p>Nein Nein, an den Handwerkern kann es rein strukturel nicht gelegen haben. Niemand
-              lässt seine Handwerker auf der Baustelle derart allein. Zudem gibt es höchstoffizielle
-              “Abnahmen” von Bauabschnitten/phasen. Welcher Mangel auch bestanden hatte, er hätte
-              Zeitnah auffallen müssen.</p>
-            <p>Uuups, für Imtek hab ich mal in einer Nachunternehmerfirma gearbeitet. Imtek is
-              offenbar ein universeler Bauträger, der alles baut.</p>
-          </post>
-          <post type="comment" modality="written" generatedBy="human" xml:id="cmc_ex_p30" who="#u8"
-            replyTo="#cmc_ex_p29" when-iso="2015-07-30T19:26">
-            <p>Stahlkunstruktionen dacht ich mal, was die bauen — oder bauen lassen.</p>
-            <p>Das ist schon ein übles Ding. Die Ausschreibungenund Angebote sind unauffällig, aber
-              wenn Unregelmässigkeiten auftreten (im Bauverlauf) dann gibt es die saftigen
-              Rechnungen. Da steht dann der Bauherr da und fragt sich, wie er denn so schnell einen
-              fähigen Ersatz herbekommt. Und diese Frage erübrigt sich meist, weil der Markt der
-              Baufirmen das nicht hergibt — weil tendenziel 100 % Auslastung. (und noch schlimmer:
-              Absprachen) Was auch Folge des Marktdrucks gewesen war.</p>
-          </post>
-        </egXML>
-        <?tei winitia
+        example, the second is a reply to the first, and the third is a reply to the second.</p>
+
+      <egXML xml:id="e9" xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
+        <post type="comment" modality="written" generatedBy="human" xml:id="cmc_ex_p28" who="#u7"
+          replyTo="#cmc_ex_p1" when-iso="2015-07-29T21:44">
+          <p>Es hat den Anschein, als wäre bei BER durchaus große Kompetenz am Bau, allerdings nicht
+            in Form von Handwerkern….</p>
+          <p>http://www.zeit.de/2015/29/imtech-flughafen-berlin-ber-verzoegerung/komplettansicht</p>
+        </post>
+        <post type="comment" modality="written" generatedBy="human" xml:id="cmc_ex_p29" who="#u8"
+          replyTo="#cmc_ex_p28" when-iso="2015-07-30T19:11">
+          <p>Nein Nein, an den Handwerkern kann es rein strukturel nicht gelegen haben. Niemand
+            lässt seine Handwerker auf der Baustelle derart allein. Zudem gibt es höchstoffizielle
+            “Abnahmen” von Bauabschnitten/phasen. Welcher Mangel auch bestanden hatte, er hätte
+            Zeitnah auffallen müssen.</p>
+          <p>Uuups, für Imtek hab ich mal in einer Nachunternehmerfirma gearbeitet. Imtek is
+            offenbar ein universeler Bauträger, der alles baut.</p>
+        </post>
+        <post type="comment" modality="written" generatedBy="human" xml:id="cmc_ex_p30" who="#u8"
+          replyTo="#cmc_ex_p29" when-iso="2015-07-30T19:26">
+          <p>Stahlkunstruktionen dacht ich mal, was die bauen — oder bauen lassen.</p>
+          <p>Das ist schon ein übles Ding. Die Ausschreibungenund Angebote sind unauffällig, aber
+            wenn Unregelmässigkeiten auftreten (im Bauverlauf) dann gibt es die saftigen Rechnungen.
+            Da steht dann der Bauherr da und fragt sich, wie er denn so schnell einen fähigen Ersatz
+            herbekommt. Und diese Frage erübrigt sich meist, weil der Markt der Baufirmen das nicht
+            hergibt — weil tendenziel 100 % Auslastung. (und noch schlimmer: Absprachen) Was auch
+            Folge des Marktdrucks gewesen war.</p>
+        </post>
+      </egXML>
+
+      <?tei winitia
           BIBL: should refer to the TEI encoding of a section of the blog page
           https://scilogs.spektrum.de/wild-dueck-blog/scheinzwerge-oder-viele-probleme-werden-groesser-wenn-man-sie-anpackt-griechenland/
         ?>
-      </p>
+
       <p>In the CMC genre of Wiki talk, users insert their contribution to a discussion by modifying
         the wiki page of the discussion — the talk page. Since there is no technical reply action
         available in wiki software, users apply textual indentation in the wiki code to indicate a
@@ -890,8 +936,7 @@ See the file COPYING.txt for details.
         not included because it has not been retained for the
         <!-- This sentence needs a bit of re-wording, but I do not
            actually know when the graphic was not retained, so need to
-           ask, first. —Syd, 2022-08-12 -->
-        corpus.</p>
+           ask, first. —Syd, 2022-08-12 --> corpus.</p>
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
         <post type="tweet" key="1043823300479258624" modality="written" generatedBy="human"
           synch="#tweetsbcrn18.t006" xml:id="cmc_ex_p8" who="#u1" xml:lang="de">
@@ -999,3 +1044,4 @@ See the file COPYING.txt for details.
     </specGrp>
   </div>
 </div>
+
