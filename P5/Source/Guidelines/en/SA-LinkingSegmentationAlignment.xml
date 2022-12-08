@@ -1503,13 +1503,34 @@ where  the <gi>seg</gi> element is used simply to provide an
 element to which an identifier may be attached, for example so
 that another segment may be linked or related to it in some
 way.</p>
-<p>The <gi>ab</gi> (anonymous block) element performs a similar
-function to that of the <gi>seg</gi> element, but is used for portions
-of the text which occur not within paragraphs or other component-level
-elements, but at the component level themselves. It is therefore a
-member of the <ident type="class">model.pLike</ident> class.</p>
-
-<p>The <gi>ab</gi> element may be used, for
+<p>The <gi>ab</gi> (anonymous block) element functions like the 
+  <gi>seg</gi> element, but is used for portions
+  of the text which occur at the <term>chunk</term> level 
+  (See <ptr target="#STBTC"/>). It is therefore a member of the 
+  <ident type="class">model.pLike</ident> class. Like <gi>seg</gi>, 
+  but unlike <gi>p</gi>, <gi>ab</gi> may nest within other <gi>ab</gi> 
+  elements. So it may be used to represent texts with irregular
+  <term>chunk</term>-level structures.</p>
+<p>Probably the most common use for <gi>ab</gi> is as a container for
+text that does not naturally belong in a paragraph. The text of an
+epitaph, for example, may not be paragraph-like, but still requires
+a container:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<ab style="text-align: center;">
+  <lb/>SACRED 
+  <lb/>to the memory of
+  <lb/><abbr>M<hi rend="superscript">rs</hi><am>.</am></abbr> ALICE HUTTON
+  <lb/>born at Che<g ref="#long-s">s</g>terfield in
+  <lb/>Great Britain,
+  <lb/><abbr>Jan<hi rend="superscript">y</hi><am>.</am></abbr> <abbr>25<hi rend="superscript">th</hi><am>.</am></abbr> 1722:
+  <lb/>and died in Carolina
+  <lb/><abbr>Sept<hi rend="superscript">r</hi><am>.</am></abbr> <abbr>26<hi rend="superscript">th</hi><am>.</am></abbr> 1777.
+  <lb/>This <g ref="#long-s">s</g>tone
+  <lb/>is placed by her only Child
+  <lb/>ANN BOOTH POLLOK</ab>
+</egXML>
+Encoders may also prefer to treat other types of short documents, such as receipts, in this way.</p>
+<p>The <gi>ab</gi> element may also be used, for
 example, to tag the canonical verse divisions of Biblical texts:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SASE-eg-40"><div1 n="Gen" type="book">
   <head>The First Book of Moses, Called</head>
@@ -1576,7 +1597,7 @@ Enter a Ship-master, and a Boteswaine.</stage>
     Take in the toppe-sale: Tend to th' Masters whistle: Blow
     till thou burst thy winde, if roome e-nough.</ab></sp>
   </div2>
-</div1></egXML>
+</div1></egXML> 
 See further <ptr target="#CODR"/> and <ptr target="#DRPAL"/>.</p>
 <specGrp xml:id="DSASA" n="Blocks Segments and Anchors">
 <xi:include href="../../Specs/ab.xml"/>

@@ -7,51 +7,271 @@ $Date$
 $Id$
 -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:dcr="http://www.isocat.org/ns/dcr" module="tei" xml:id="DATCAT" type="atts" ident="att.datcat">
-  <desc versionDate="2021-08-22" xml:lang="en">provides attributes that are used to 
-    align XML elements or attributes with the appropriate Data Categories (DCs) defined by the ISO 12620:2009 
-    standard and stored in the Web repository called ISOCat at <ptr target="http://www.isocat.org/"/>.</desc>
-  <desc xml:lang="ja" versionDate="2019-05-20"><att>dcr:datacat</att>属性と<att>dcr:ValueDatacat</att>属性を提供する。これらがXML要素や属性を連携させる日付分類は、国際標準ISO 12620:2009で定義されるものであり、<ptr target="http://www.isocat.org/"/>にあるISOCatと呼ばれるWebリポジトリに格納されている。</desc>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei"
+  xml:id="DATCAT" type="atts" ident="att.datcat">
+  <desc versionDate="2022-09-17" xml:lang="en">provides attributes that are used to align XML
+    elements or attributes with the appropriate Data Categories (DCs) defined by an external 
+    taxonomy, in this way establishing the identity of information containers and values, 
+    and providing means of interpreting them.</desc>
+  <desc xml:lang="ja" versionDate="2019-05-20"
+    ><att>datacat</att>属性と<att>ValueDatacat</att>属性を提供する．これらがXML要素や属性を連携させる日付分類は、国際標準ISO
+      12620:2009で定義されるものであり，<ptr target="http://www.isocat.org/"
+    />にあるISOCatと呼ばれるWebリポジトリに格納されている．</desc>
   <attList>
-    <attDef ident="datcat" usage="opt" ns="http://www.isocat.org/ns/dcr">
-      <desc versionDate="2012-04-15" xml:lang="en">contains a PID (persistent identifier) that aligns the given element with the appropriate 
-        Data Category (or categories) in ISOcat.</desc>
-      <desc xml:lang="ja" versionDate="2019-05-20">指定された要素をISOcatの適切なデータカテゴリ（または複数のデータカテゴリ）と対応付けるPID（永続的識別子）を含む。</desc>
-      <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
+    <attDef ident="datcat" usage="opt">
+      <desc versionDate="2022-09-17" xml:lang="en">provides a pointer to a definition of, and/or general
+        information about, (a) an information container (element or attribute) or (b) a value of an
+        information container (element content or attribute value), by referencing an external
+        taxonomy or ontology. If <att>valueDatcat</att> is present in the immediate context, this attribute
+        takes on role (a), while <att>valueDatcat</att> performs role (b).</desc>
+      <desc xml:lang="ja" versionDate="2019-05-20"
+        >指定された要素をISOcatの適切なデータカテゴリ（または複数のデータカテゴリ）と対応付けるPID（永続的識別子）を含む．</desc>
+      <datatype maxOccurs="unbounded">
+        <dataRef key="teidata.pointer"/>
+      </datatype>
     </attDef>
-    <attDef ident="valueDatcat" usage="opt" ns="http://www.isocat.org/ns/dcr">
-      <desc versionDate="2012-04-15" xml:lang="en">contains a PID (persistent identifier) that aligns the content of the given
-        element or the value of the given attribute with the appropriate simple Data
-        Category (or categories) in ISOcat.</desc>
-      <desc xml:lang="ja" versionDate="2019-05-20">指定された要素の内容または指定された属性の値を、ISOcatの適切かつ単純なデータカテゴリ（または複数のデータカテゴリ）と対応付けるPID（永続的識別子）を含む。</desc>
-      <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
+    <attDef ident="valueDatcat" usage="opt">
+      <desc versionDate="2022-09-17" xml:lang="en">provides a definition of, and/or general
+        information about a value of an information container (element content or attribute value),
+        by reference to an external taxonomy or ontology. Used especially where a contrast with
+        <att>datcat</att> is needed.</desc>
+      <desc xml:lang="ja" versionDate="2019-05-20"
+        >指定された要素の内容または指定された属性の値を，ISOcatの適切かつ単純なデータカテゴリ（または複数のデータカテゴリ）と対応付けるPID（永続的識別子）を含む．</desc>
+      <datatype maxOccurs="unbounded">
+        <dataRef key="teidata.pointer"/>
+      </datatype>
+    </attDef>
+    <attDef ident="targetDatcat" usage="opt">
+      <desc versionDate="2022-09-17" xml:lang="en">provides a definition of, and/or general
+        information about, information structure of an object referenced or modeled by the
+        containing element, by reference to an external taxonomy or ontology. This attribute has the
+        characteristics of the <att>datcat</att> attribute, except that it addresses not its containing
+        element, but an object that is being referenced or modeled by its containing element.</desc>
+      <datatype maxOccurs="unbounded">
+        <dataRef key="teidata.pointer"/>
+      </datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <p>In this example <att>dcr:datcat</att> relates the feature name to the data category
-      "partOfSpeech" and <att>dcr:valueDatcat</att> the feature value to the data category
-      "commonNoun". Both these data categories reside in the ISOcat DCR at <ref target="http://www.isocat.org">www.isocat.org</ref>, which is the DCR used by ISO
-      TC37 and hosted by its registration authority, the MPI for Psycholinguistics in
-      Nijmegen.</p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+    <p>The example below presents the TEI encoding of the <ref
+      target="https://en.wikipedia.org/wiki/Name%E2%80%93value_pair">name-value pair</ref> 
+      <code style="font-weight: normal; font-family: monospace;">&lt;part of speech, common
+        noun></code>, where the name (key) <q>part
+      of speech</q> is abbreviated as <q>POS</q>, and the value, <q>common noun</q> is symbolized by <q>NN</q>. The
+      entire name-value pair is encoded by means of the element <gi>f</gi>. In TEI XML, that element
+      acts as the container, labeled with the <att>name</att> attribute. Its contents may be complex
+      or simple. In the case at hand, the content is the symbol <q>NN</q>.</p>
+    <p>The <att>datcat</att> attribute relates the feature <hi rend="italic">name</hi> (i.e., the key) to the data
+      category <q>part of speech</q>, while the attribute <att>valueDatcat</att> relates the feature <hi
+        rend="italic">value</hi> to the data category <term>common noun</term>. Both these data categories
+      should be defined in an external and preferably open reference taxonomy or ontology.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <fs>
-        <f name="POS" dcr:datcat="http://www.isocat.org/datcat/DC-1345" fVal="#commonNoun" dcr:valueDatcat="http://www.isocat.org/datcat/DC-1256"/>
+        <f name="POS" datcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3">
+          <symbol valueDatcat="http://hdl.handle.net/11459/CCR_C-1256_7ec6083c-23d4-224d-6f94-eecbe6861545" value="NN"/>
+        </f>
+        <!-- ... -->
       </fs>
     </egXML>
+    <p><q>NN</q> is the symbol for common noun used e.g. in the <ref
+        target="http://ucrel.lancaster.ac.uk/claws7tags.html">CLAWS-7 tagset</ref> defined by the
+      University Centre for Computer Corpus Research on Language at the University of Lancaster. The
+      very same data category used for tagging an early version of the British National Corpus, and
+      coming from the <ref target="http://www.natcorp.ox.ac.uk/docs/c5spec.html">BNC Basic
+        (C5) tagset</ref>, uses the symbol <q>NN0</q> (rather than <q>NN</q>). Making these values semantically
+      interoperable would be extremely difficult without a human expert if they
+      were not anchored in a single point of an established reference taxonomy of morphosyntactic
+      data categories. In the case at hand, the string <q><ref
+        target="http://hdl.handle.net/11459/CCR_C-1256_7ec6083c-23d4-224d-6f94-eecbe6861545"
+        >http://hdl.handle.net/11459/CCR_C-1256_7ec6083c-23d4-224d-6f94-eecbe6861545</ref></q> is both
+      a persistent identifier of the data category in question, as well as a pointer to a shared definition 
+      of <term rend="italics">common noun</term>.</p>
+    <p>While the symbols <q>NN</q>, <q>NN0</q>, and many others (often coming from languages other than
+      English) are implicitly members of the container category <q>part of speech</q>, it is sometimes
+      useful not to rely on such an implicit relationship but rather use an explicit identifier
+      for that data category, to distinguish it from other morphosyntactic data categories, such
+      as gender, tense, etc. For that purpose, the above example uses the <att>datcat</att>
+      attribute to reference a definition of 
+      <term>part of speech</term>. The reference taxonomy in this example is the 
+      <ref target="https://www.clarin.eu/content/clarin-concept-registry">CLARIN Concept
+        Registry</ref>.</p>
+    
+    <p>If the feature structure markup exemplified above is to be repeated many times in a single
+      document, it is much more efficient to gather the persistent identifiers in a single place and to
+      only reference them, implicitly or directly, from feature structure markup. The following
+      example is much more concise than the one above and relies on the concepts of feature structure declaration and
+      feature value library, discussed in chapter <ptr target="#FS"/>.
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <fs>
+          <f name="POS" fVal="#commonNoun"/>
+          <!-- ... -->
+        </fs>
+      </egXML></p>
+    
+    <p>The assumption here is that the relevant feature values are collected in a place that the
+      annotation document in question has access to — preferably, a single document per linguistic
+      resource, for example an <gi>fsdDecl</gi> that is XIncluded as a sibling of <gi>text</gi> or a
+      child of <gi>encodingDesc</gi>; a <gi>taxonomy</gi> available resource-wide (e.g., in a shared
+      header) is also an option.</p>
+    <p>The example below presents an <gi>fvLib</gi> element that collects the relevant feature values
+      (most of them omitted). At the same time, this example shows one way of encoding a 
+      <term>tagset</term>, i.e., an established inventory of values of (in the case at hand)
+      morphosyntactic categories.
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <fvLib n="POS values">
+          <symbol xml:id="commonNoun" value="NN" datcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3"/>
+          <symbol xml:id="properNoun" value="NP" datcat="http://hdl.handle.net/11459/CCR_C-1371_fbebd9ec-a7f4-9a36-d6e9-88ee16b944ae"/>
+          <!-- ... -->
+        </fvLib>
+      </egXML></p>
+    <p>Note that these Guidelines do not prescribe a specific choice between <att>datcat</att> and
+        <att>valueDatcat</att> in such cases. The former is the generic way of referencing a data
+      category, whereas the latter is more specific, in that it references a data category that
+      represents a value. The choice between them comes into play where a single element — or a
+      tight element complex, such as the <gi>f</gi>/<gi>symbol</gi> complex illustrated above —
+      make it necessary or useful to distinguish between the container data category and its
+      value.</p>
   </exemplum>
-  <remarks versionDate="2012-04-22" xml:lang="en">
-    <p>ISO 12620:2009 is a standard describing the data model and procedures for a Data
-      Category Registry (DCR). Data categories are defined as elementary descriptors in a
-      linguistic structure. In the DCR data model each data category gets assigned a
-      unique Peristent IDentifier (PID), i.e., an URI. Linguistic resources or preferably
-      their schemas that make use of data categories from a DCR should refer to them using
-      this PID. For XML-based resources, like TEI documents, ISO 12620:2009 normative
-      Annex A gives a small Data Category Reference XML vocabulary (also available online
-      at <ptr target="http://www.isocat.org/12620/"/>),
-      which provides two attributes, <att>dcr:datcat</att> and
-      <att>dcr:valueDatcat</att>.</p>
+  <exemplum xml:lang="en">
+    <p>In the context of dictionaries designed with semantic interoperability in mind, the following
+      example ensures that the <gi>pos</gi> element is interpreted as the same information container
+      as in the case of the example of <tag>f name="POS"</tag> above.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <gramGrp>
+        <pos datcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3"
+          valueDatcat="http://hdl.handle.net/11459/CCR_C-1256_7ec6083c-23d4-224d-6f94-eecbe6861545">NN</pos>
+      </gramGrp>
+    </egXML>
+    <p>Efficiency of this type of interoperable markup demands that the references to the particular
+      data categories should best be provided in a single place within the dictionary (or a single
+      place within the project), rather than being repeated inside every entry. For the container
+      elements, this can be achieved at the level of <gi>tagUsage</gi>, although here, the <att>valueDatcat</att> attribute should be used, because it is not the 
+      <gi>tagUsage</gi> element that is associated with the relevant data category, but rather the element <gi>pos</gi> (or <gi>case</gi>, etc.) that is described by 
+      <gi>tagUsage</gi>: <egXML
+        xmlns="http://www.tei-c.org/ns/Examples">
+        <tagsDecl partial="true">
+          <!-- ... -->
+          <namespace name="http://www.tei-c.org/ns/1.0">
+            <tagUsage gi="pos"
+              targetDatcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3"
+              >Contains the part of speech.</tagUsage>
+            <tagUsage gi="case"
+              targetDatcat="http://hdl.handle.net/11459/CCR_C-1840_9f4e319c-f233-6c90-9117-7270e215f039"
+              >Contains information about the grammatical case that the described form is inflected for.</tagUsage>
+            <!-- ... -->
+          </namespace>
+        </tagsDecl>
+      </egXML>
+    </p>
+    <p>Another possibility is to shorten the URIs by means of the <gi>prefixDef</gi> mechanism, as illustrated below:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+        <listPrefixDef>
+          <prefixDef ident="ccr" matchPattern="pos"
+            replacementPattern="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3"/>
+          <prefixDef ident="ccr" matchPattern="adj"
+            replacementPattern="http://hdl.handle.net/11459/CCR_C-1230_23653c21-fca1-edf8-fd7c-3df2d6499157"
+          />
+        </listPrefixDef>
+        <!-- ... -->
+        <entry>
+          <!--...-->
+          <form>
+            <orth>isotope</orth>
+          </form>
+          <gramGrp>
+            <pos datcat="ccr:pos" valueDatcat="ccr:adj">adj</pos>
+          </gramGrp>
+          <!--...-->
+        </entry></egXML></p>
+    <p>This mechanism creates implications that are not always wanted, among others, in the case at
+      hand, suggesting that the identifiers <q>pos</q> and <q>adj</q> belong to a namespace
+      associated with the CLARIN Concept Repository (CCR), whereas that is solely a shorthand
+      mechanism whose scope is the current resource. Documenting this clearly in the header of the
+      dictionary is therefore advised.</p>
+    <p>Yet another possibility is to associate the information about the relationship between a TEI
+      markup element and the data category that it is intended to model already at the level of
+      modeling the dictionary resource, that is, at the level of the ODD, in <gi>equiv</gi> element
+      that is a child of <gi>elementSpec</gi> or <gi>attDef</gi>.</p>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <p>The <att>targetDatcat</att> attribute is designed to be used in, e.g., feature structure
+      declarations, and is analogous to the <att>targetLang</att> attribute of the
+        <ident>att.pointing</ident> class, in that it describes the object that is being referenced,
+      rather than the referencing object.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <fDecl name="POS"
+        targetDatcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3">
+        <fDescr>part of speech (morphosyntactic category)</fDescr>
+        <vRange>
+          <vAlt>
+            <symbol value="NN"
+              datcat="http://hdl.handle.net/11459/CCR_C-1256_7ec6083c-23d4-224d-6f94-eecbe6861545"/>
+            <symbol value="NP"
+              datcat="http://hdl.handle.net/11459/CCR_C-1371_fbebd9ec-a7f4-9a36-d6e9-88ee16b944ae"/>
+            <!-- ... -->
+          </vAlt>
+        </vRange>
+      </fDecl>
+    </egXML><p>Above, the <gi>fDecl</gi> uses <att>targetDatcat</att>, because if it were to use
+        <att>datcat</att>, it would be asserting that it is an instance of the container data
+      category <term>part of speech</term>, whereas it is not — it models a container (<gi>f</gi>)
+      that encodes a part of speech. Note also that it is the <gi>f</gi> that is modeled above, not
+      its values, which are used as direct references to data categories; hence the use of
+        <att>datcat</att> in the <gi>symbol</gi> element.</p>
+  </exemplum>
+  
+  <remarks versionDate="2022-09-17" xml:lang="en">
+    <p>The TEI Abstract Model can be expressed as a hierarchy of attribute-value matrices (AVMs)
+      of various types and of various levels of complexity, nested or grouped in various ways. At
+      the most abstract level, an AVM consists of an information container and the value
+      (contents) of that container.</p>
+    <p>A simple example of an XML serialization of such structures is, on the one hand, the opening
+      and closing tags that delimit and name the container, and, on the other, the content enclosed
+      by the two tags that constitues the value. An analogous example is an
+      attribute name and the value of that attribute.</p>
+    <p>In a TEI XML example of two equivalent serializations expressing the name-value pair
+      <code style="font-weight: normal; font-family: monospace;">&lt;part-of-speech,common-noun></code>, namely 
+      <code style="font-weight: normal; font-family: monospace;">&lt;pos>commonNoun&lt;/pos></code> and 
+      <code style="font-weight: normal; font-family: monospace;">pos="common-noun"</code>, one would
+      classify the element <gi>pos</gi> and the attribute <att>pos</att> as containers (mapping onto
+      the first member of the relevant name-value pair), while the character data
+      content of <gi>pos</gi> or the value of <att>pos</att> would be seen as
+      mapping onto the second member of the pair.</p>
+    <p>The <ident type="class">att.datcat</ident> class provides means of addressing the containers
+      and their values, while at the same time providing a way to interpret them in the context of
+      external taxonomies or ontologies. Aligning e.g. both the <gi>pos</gi> element and the
+        <att>pos</att> attribute with the same value of an external reference point (i.e., an entry
+      in an agreed taxonomy) affirms the identity of the concept serialised by both the element container
+      and the attribute container, and optionally provides a definition of that concept (in the case at hand,
+      the concept <term>part of speech</term>).</p>
+    <p>The value of the <ident type="class">att.datcat</ident> attributes should be a PID
+      (persistent identifier) that points to a specific — and, ideally, shared — taxonomy or
+      ontology. Among the resources that can, to a lesser or greater extent, be used as inventories
+      of (more or less) standardized linguistic categories are the GOLD ontology, <ref
+        target="https://www.clarin.eu/content/clarin-concept-registry">CLARIN CCR</ref>, <ref
+        target="https://github.com/acoli-repo/olia">OLiA</ref>, or <ref
+        target="https://datcatinfo.net/">TermWeb's DatCatInfo</ref>, and also the <ref
+        target="https://universaldependencies.org/">Universal Dependencies</ref> inventory, on the
+      assumption that its URIs are going to persist. It is imaginable that a project may choose to
+      address a local taxonomy store instead, but this risks losing the advantage of 
+      interchangeability with other projects.</p>  
+    <p>Historically, <att>datcat</att> and <att>valueDatcat</att> originate from the (the now obsolete) ISO
+      12620:2009 standard, describing the data model and procedures for a Data Category Registry
+      (DCR). The current version of that standard, ISO 12620-1, does not standardize the
+      serialization of pointers, merely mentioning the TEI <ident type="class">att.datcat</ident> as
+      an example.</p> 
+    <p>Note that no constraint prevents the occurrence of a combination of 
+      <ident type="class">att.datcat</ident> attributes:
+      the <gi>fDecl</gi> element, which is a natural bearer of the <att>targetDatcat</att>
+      attribute, is an instance of a specific modeling element, and, in principle, could be
+      semantically fixed by an appropriate reference taxonomy of modeling devices.</p>
   </remarks>
-  <remarks xml:lang="ja" versionDate="2019-06-16"><p>ISO 12620:2009は、データ分類のレジストリ（DCR）に関するデータモデルと手続きについての国際標準である。データ分類は、一つの言語の構造における基本的な記述子として定義される。DCRのデータモデルでは、個々のデータ分類には、ユニークな永続的識別子（PID)、つまり、URIが割り当てられる。DCRからデータ分類を利用する言語資源、あるいは、できることならそのスキーマは、このPIDを用いて参照すべきである。TEI文書のようなXMLベースの資源(<ptr target="https://www.iso.org/standard/37243.html"/>にて参照可能)に関しては、ISO 12620:2009 付録 Aに、<att>dcr:datcat</att>属性と<att>dcr:valueDatcat</att>属性を提供する小さなデータ分類参照のXML語彙がある。</p></remarks>
+  <remarks xml:lang="ja" versionDate="2019-06-16">
+    <p>ISO
+        12620:2009は、データ分類のレジストリ（DCR）に関するデータモデルと手続きについての国際標準である．データ分類は，一つの言語の構造における基本的な記述子として定義される。DCRのデータモデルでは、個々のデータ分類には、ユニークな永続的識別子（PID)、つまり、URIが割り当てられる．DCRからデータ分類を利用する言語資源，あるいは、できることならそのスキーマは、このPIDを用いて参照すべきである。TEI文書のようなXMLベースの資源(<ptr
+        target="https://www.iso.org/standard/37243.html"/>にて参照可能)に関しては、ISO 12620:2009 付録
+        Aに、<att>datcat</att>属性と<att>valueDatcat</att>属性を提供する小さなデータ分類参照のXML語彙がある。</p>
+  </remarks>
   <listRef>
     <ptr target="#DIMVLV"/>
     <ptr target="#FSSY"/>

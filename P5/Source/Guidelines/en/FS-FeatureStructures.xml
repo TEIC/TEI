@@ -269,20 +269,35 @@ combinations of feature names and values are used is to provide a
 <p>Whether at the level of feature-system declarations, feature- and
 feature-value libraries, or individual features, it is possible to
 align both feature names and their values with standardized external
-data category repositories such as ISOcat. <note place="bottom">See
+data category repositories. <note place="bottom">See
 section <ptr target="#DIMVLV"/> for more discussion of the need and
-rationale for ISOcat references.</note> In the following example, both
+rationale for aligning the content of grammatical (and other) descriptions with 
+standardized external taxonomies.</note> In the following example, both
 the feature <val>part_of_speech</val> and its value
-<val>#commonNoun</val> are aligned with the respective definitions
-provided by <ref target="#ISO-12620">ISO DCR (Data Category
-Registry)</ref>, as implemented by ISOcat.
-<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND">
-<fs xmlns:dcr="http://www.isocat.org/ns/dcr">
-<!--...-->
-<f name="part_of_speech" dcr:datcat="http://www.isocat.org/datcat/DC-1345" fVal="#commonNoun" dcr:valueDatcat="http://www.isocat.org/datcat/DC-1256"/>
+<val>NN</val> (standing for <q>common noun</q>) are aligned with the respective definitions
+provided by the <ref target="https://www.clarin.eu/content/clarin-concept-registry">CLARIN Concept Registry (CCR)</ref>.
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<fs>
+<f name="part_of_speech" datcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3">
+<symbol valueDatcat="http://hdl.handle.net/11459/CCR_C-1256_7ec6083c-23d4-224d-6f94-eecbe6861545" value="NN"/>
+</f>
 <!-- ... -->
 </fs>
 </egXML></p>
+<p>Since the above representation takes up a lot of space and quickly becomes redundant and
+error-prone, it is possible to delegate the task of aligning with external repositories to
+elements such as <gi>fLib</gi>, <gi>fvLib</gi>, <gi>fDecl</gi>, or <gi>fsDecl</gi> to reduce the feature
+representation at hand and to increase its readability at the same time, as shown in the example below.
+ <egXML xmlns="http://www.tei-c.org/ns/Examples">
+<fs>
+<!-- ... -->
+<f name="POS" fVal="#common_noun"/>
+<!-- ... -->
+</fs>
+</egXML></p>
+<p>The value <val>common_noun</val> should best be listed (as an <att>xml:id</att>) either in a
+library of feature values (<gi>fvLib</gi>, see the following section) or in a
+<gi>taxonomy</gi> element.</p>
 </div>
 <div type="div2" xml:id="FSFL"><head>Feature Libraries and Feature-Value Libraries</head>
 <p>As the examples in the preceding section suggest, the direct
@@ -352,8 +367,22 @@ each one represented as an identifiable <gi>fs</gi> element within a
 Other <gi>f</gi> elements may invoke them by reference, using the
 <att>fVal</att> attribute; for example, one might use them in a
 feature value pair such as: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><f name="dental-fricative" fVal="#T.DF"/> </egXML> rather than expanding the hierarchy of the
-component phonological features explicitly.  </p>
-<p>Feature structures stored in this way  may also be associated with
+component phonological features explicitly.</p>
+<p>The feature structure that concludes section <ptr target="#FSSY"/> above, identifying the
+value of some part of speech to be a common noun, may be used in tandem with a
+feature-value library, which offers a way to encode a grammatical <term>tagset</term>, in this case
+containing labels for parts of speech:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<fvLib n="POS values">
+<symbol xml:id="common_noun" value="NN" datcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3"/>
+<symbol xml:id="proper_noun" value="NP" datcat="http://hdl.handle.net/11459/CCR_C-1371_fbebd9ec-a7f4-9a36-d6e9-88ee16b944ae"/>
+<!-- ... -->
+</fvLib>
+</egXML>
+Such a feature-value library combines the standard short symbolic label for a part of speech (e.g., <val>NN</val>) with a 
+mnemonic identifier that can be referenced by means of <att>fVal</att>, and with a persistent identifier, maintained
+in a public reference taxonomy repository together with the basic definition of the given concept.</p>
+<p>Feature structures stored in the way presented in this section may also be associated with
 the text which they are intended to annotate, either by a link from the text
 (for example, using the TEI global <att>ana</att> attribute), or
 by means of stand-off annotation techniques (for example, using the TEI
@@ -1176,15 +1205,14 @@ using an XML identifier are discussed in <ptr target="#SAUR"/></note>
 way of accomplishing this is to add an XML identifier to each
 <gi>fsDecl</gi> element in <ident type="file">example.xml</ident>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND">
-           <!-- ... -->
-           <fsdDecl>
-           <fsDecl type="gpsg" xml:id="GPSG">
+<fsdDecl>
+   <fsDecl type="gpsg" xml:id="GPSG">
 	     <!-- information about this type -->
-	   </fsDecl>
-           <fsDecl type="lex" xml:id="LEX">
+	</fsDecl>
+   <fsDecl type="lex" xml:id="LEX">
 	     <!-- information about this type -->
-	   </fsDecl>
-	   </fsdDecl>
+	</fsDecl>
+</fsdDecl>
 </egXML>
 (Although in this case the XML identifier is simply an uppercase
 version of the type name, there is no necessary connection between the
@@ -1593,6 +1621,26 @@ in a construction.  Since PFORM is specified above as an open set,
 This example makes use of a negated value:    <code>&lt;vNot&gt;&lt;string/&gt;&lt;/vNot&gt;</code>
 subsumes any string that is not the empty
 string.</p>
+<p>For the reduced feature structure that concludes section <ptr target="#FSSY"/> above and 
+identifies the value of some part of speech to be a common noun, it is possible to align 
+the concept of <term>part of speech</term> with its definition and persistent 
+identifier using the <att>targetDatcat</att> attribute, which connects the modeled XML object 
+with the appropriate locus in a reference taxonomy, as shown below:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<fDecl name="POS" targetDatcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3">
+<fDescr>part of speech (morphosyntactic category)</fDescr>
+<vRange>
+<vAlt>
+<symbol value="NN" datcat="http://hdl.handle.net/11459/CCR_C-1256_7ec6083c-23d4-224d-6f94-eecbe6861545"/>
+<symbol value="NP" datcat="http://hdl.handle.net/11459/CCR_C-1371_fbebd9ec-a7f4-9a36-d6e9-88ee16b944ae"/>
+   <!-- ... -->
+</vAlt>
+</vRange>
+</fDecl>
+</egXML>
+The above example declares the feature <q>POS</q> as instantiating the corresponding concept defined in a reference 
+taxonomy or ontology, and defines the range of values of the feature at hand by listing the appropriate 
+alternatives, together with their external persistent identifiers.</p>
 <p>Note that
 the class <ident type="class">model.featureVal</ident> includes all possible
 single feature values, including  feature structures, alternations

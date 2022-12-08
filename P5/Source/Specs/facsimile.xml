@@ -7,7 +7,7 @@ $Date$
 $Id$
 -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" ident="facsimile" module="transcr">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" ident="facsimile" module="transcr" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
   <desc versionDate="2007-08-26" xml:lang="en">contains a representation of some written source in the form of
 a set of images rather than as transcribed or encoded text.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">전사 또는 부호화된 텍스트 형태보다는 이미지 집합의 형태로 기록 원본의 표상을 포함한다.</desc>
@@ -24,17 +24,39 @@ ou encodé.</desc>
     <memberOf key="model.resource"/>
     <memberOf key="att.declaring"/>
   </classes>
-  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  <content>
     <sequence>
       <elementRef key="front" minOccurs="0"/>
       <alternate minOccurs="1" maxOccurs="unbounded">
-	<classRef key="model.graphicLike"/>
-	<elementRef key="surface"/>
-	<elementRef key="surfaceGrp"/>
+        <classRef key="model.graphicLike"/>
+        <elementRef key="surface"/>
+        <elementRef key="surfaceGrp"/>
       </alternate>
       <elementRef key="back" minOccurs="0"/>
     </sequence>
   </content>
+  <constraintSpec scheme="schematron" ident="no_facsimile_text_nodes">
+    <constraint>
+      <sch:rule context="tei:facsimile//tei:line | tei:facsimile//tei:zone">
+        <sch:report test="child::text()[ normalize-space(.) ne '']">
+  	  A facsimile element represents a text with images, thus
+	  transcribed text should not be present within it.
+	</sch:report>
+        <!-- 
+             What about:
+             * ellipses/supplied/text()
+             * writing
+             * label, formula, app, witDetail, metamark?
+             * notatedMusic?
+             * figure/[all-sorts-of-crazy-stuff-e.g.-entry]
+             * addSpan, damageSpan, delSpan
+             Or the fact that <front> and <back> (but not <body>) are
+             permitted inside <facsimile>, and thus *anything* can be
+             inside ther?
+        -->
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <facsimile>
