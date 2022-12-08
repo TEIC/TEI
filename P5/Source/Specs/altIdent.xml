@@ -34,8 +34,7 @@ $Id$
     <memberOf key="model.glossLike"/>
   </classes>
   <content>
-    <textNode/>
-    <!--ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.xtext"/-->
+    <dataRef key="teidata.xmlName"/>
   </content>
   <constraintSpec scheme="schematron" ident="deprecate_altIdent_in_non-ODD_places">
     <desc>
@@ -55,21 +54,6 @@ $Id$
         deprecated, and will no longer be valid after 2022-07-14;
         please use &lt;idno type="FPI"&gt; instead.
       </sch:report>
-    </constraint>
-  </constraintSpec>
-  <constraintSpec scheme="schematron" ident="altIdent_usually_an_NCName">
-    <desc>
-      Other than when used to indicate the formal public identifier of
-      a module (which is a deprecated usage), the content of
-      <gi>altIdent</gi> should be a single <ident type="datatype">teidata.xmlName</ident>.
-      </desc>
-    <constraint>
-      <sch:rule context="tei:altIdent[ not( parent::tei:moduleSpec or @type eq 'FPI' ) ]">
-        <sch:assert test=". castable as xs:NCName">
-          The content of this 'altIdent' element (<sch:value-of select="normalize-space(.)"/>)
-          should conform to teidata.xmlName.
-        </sch:assert>
-      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="und">
