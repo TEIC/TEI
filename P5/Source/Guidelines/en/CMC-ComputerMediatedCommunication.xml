@@ -413,12 +413,17 @@ See the file COPYING.txt for details.
       <!-- sampling declaration -->
       <head>Documenting the sampling of CMC data</head>
 
-      <p>The documentation of how the data were collected i.e. how
-      it was downloaded, scraped or sampled from the web, should be
-      recorded in the <gi>samplingDecl</gi>. It maybe part of the
-      <gi>teiHeader</gi> of the corpus level, and/or of the document
-      level. It typically should contain at least the following four
-      components:</p>
+      <p>The documentation of how the data were collected, e.g. how
+      it was scraped or sampled from the web, or downloaded from a
+      server, should be recorded in the <gi>samplingDecl</gi>.  Like
+      other metadata, information about sampling should be recorded at
+      the highest level applicable. That is, if the information
+      applies to an entire corpus, the <gi>samplingDecl</gi> should
+      appear in the <gi>teiHeader</gi> of the corpus level; if the
+      information is different for each document, it should appear in
+      the <gi>teiHeader</gi> of the document level texts.</p>
+      <p>The sampling information typically considered of interest
+      consists of at at least the following four components:</p>
       <list>
         <item>interface: The API that was used for the download,
         possibly encoded as a <tag>name type="API"</tag>;</item>
@@ -430,27 +435,27 @@ See the file COPYING.txt for details.
         <item>date: The date of the download.</item>
       </list>
 
-      <p>The information may be provided as prose in the <gi>samplingDecl</gi>. In the case of a
-      twitter corpus it may look like the following:</p>
-
+      <p>The information may be provided as prose in the
+      <gi>samplingDecl</gi>. For example, in the case of a Twitter
+      corpus it may look like the following:
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
         <samplingDecl>
           <p>Sampled using the
           <name type="API">Twitter Filtered stream v2-API</name>
           (see <ptr type="APIdoc" target="https://developer.twitter.com/en/docs/twitter-api/tweets/filtered-stream/api-reference/get-tweets-search-stream"/>)
-          Filtered for Germany, Austria, Belgium, Switzerland, Denmark, and Luxemburg; and filtered for the German language.
-          Downloaded on <date when="2022-12-12">Mon 12 Dec 22</date> using the command <code>HARALD FIX THIS</code>.</p>
+          Filtered for the German language and the following countries: Germany, Austria, Belgium, Switzerland, Denmark, and Luxemburg.
+          Downloaded on <date when="2022-12-12">Mon 12 Dec 22</date> using the command <code><?tei winita HARALD FIX THIS?></code>.</p>
         </samplingDecl>
       </egXML>
+      </p>
 
-      <p>The <gi>samplingDecl</gi> of a Usenet Newsgroup corpus:</p>
-
+      <p>The <gi>samplingDecl</gi> of a Usenet Newsgroup corpus:
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
         <samplingDecl>
-          <p> Download from server news.individual.de 2016-01-15 using nntp client in Python</p>
+          <p>Download from the news.individual.de server on 2016-01-15 using nntp client in Python</p>
         </samplingDecl>
       </egXML>
-
+      </p>
 
     </div>
 
@@ -458,47 +463,91 @@ See the file COPYING.txt for details.
       <head>Participants</head>
       <!-- Participants -->
 
-      <p>An inventory of users and/or bots taking part in a CMC interaction and information about
-      them (participants description) may be kept in the <gi>teiHeader</gi> where it would occur
-      in a <gi>particDesc</gi> within the <gi>profileDesc</gi> as in the following example.
+      <p>A <gi>listPerson</gi> may be used to maintain an inventory of
+      users and bots taking part in a CMC interaction, along with
+      information about them. As with other such contextual
+      information, it may be kept in the <gi>teiHeader</gi> (where it
+      would occur in a <gi>particDesc</gi> within the
+      <gi>profileDesc</gi>) or in a separate document completely. In
+      either case, an encoded <gi>post</gi> may then be linked to its
+      author by use of the <att>who</att> attribute.</p>
+      <p>In the following example, a list of participants is
+      maintained in a <gi>teiHeader</gi>.
+      <?tei winitia Could we put some actual information into these
+	<person> elements? Even if nothing but a made-up e-mail
+	address, seems to me it would better show why this is a useful
+	thing to do. —Syd, 2022-12-12 ?>
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	<!-- In the <teiHeader>: -->
         <profileDesc>
           <particDesc>
             <listPerson>
-              <person role="user" xml:id="u001">
+              <person role="user" xml:id="cmc_user_01">
                 <persName type="userName">M</persName>
                 <note type="link">/wiki/User:M</note>
               </person>
-              <!-- more persons -->
-              <person role="user" xml:id="u006">
+              <!-- … more persons … -->
+              <person role="user" xml:id="cmc_user_06">
                 <persName type="userName">P</persName>
                 <note type="link">/wiki/User:P</note>
               </person>
-              <person role="user" xml:id="u007">
+              <person role="user" xml:id="cmc_user_07">
                 <persName type="userName">PKP</persName>
                 <note type="link">/wiki/User:Pi</note>
               </person>
             </listPerson>
           </particDesc>
         </profileDesc>
+	<!-- In the <body>: -->
+	<div type="wiki_discussion_page" n="073">
+	  <!-- 4 other <post>s -->
+          <post modality="written" xml:id="cmc_post_i_073.005" indentLevel="1"
+		replyTo="#cmc_post_073.004" who="#cmc_user_06">
+            <p>Those haven't happened. If they do, we can revisit the concern.</p>
+	    <signed generatedBy="template" rend="noLineBreak">
+	      <ref target="/wiki/User:P">P</ref>
+              <date>01:35, 8 April 2014 (UTC)</date>
+	    </signed>
+          </post>
+	</div>
       </egXML>
       </p>
-
-      <p>A post may then be linked to its author in the
-      <gi>listPerson</gi> by the attribute <att>who</att> as in the
-      following example.</p>
-
+      <p>In the following version of the <gi>body</gi> portion of the
+      same example, the list of interactants is stored in a separate
+      file (in this case the file <name
+      type="file">userList.xml</name> in the same directory).
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <post modality="written" xml:id="p5" indentLevel="1" replyTo="#p4" who="#u006"
-              synch="#t006">
-          <p>Those haven't happened. If they do, we can revisit the concern. <signed
-          generatedBy="template"><ref target="/wiki/User:P">P</ref>
-          <date>01:35, 8 April 2014 (UTC)</date></signed></p>
-        </post>
+	<!-- In the <body>: -->
+	<div type="wiki_discussion_page" n="073">
+	  <!-- 4 other <post>s -->
+          <post modality="written" xml:id="cmc_post_e__073.005" indentLevel="1"
+		replyTo="#cmc_post_073.004" who="./userList.xml#cmc_user_06">
+            <p>Those haven't happened. If they do, we can revisit the concern.</p>
+	    <signed generatedBy="template" rend="noLineBreak">
+	      <ref target="/wiki/User:P">P</ref>
+              <date>01:35, 8 April 2014 (UTC)</date>
+	    </signed>
+          </post>
+	</div>
       </egXML>
+      Althernatively, a <gi>prefixDef</gi> may be used to declare a
+      prefix which can be used in conjunction with the value of
+      <att>who</att> to generate a complete URI, thus making the
+      values of <att>who</att> shorter, less error-prone, and easier
+      to maintain. For example, the prefix <code>uL:</code> could be
+      used to map the value <val>uL:06</val> to
+      <code>file:/userList.xml#cmc_user_06</code>. See <ptr
+      target="#SAPU"/> for more information on establishing prefix
+      defintions.</p>
 
-      <p>The purpose of this may be that user information should be anonymised in the text content
-      as shown in example <ptr target="#e10"/>. </p>
+      <p>This indirection — using a <gi>listPerson</gi>, particularly
+      one in a separate file, to store information about the users
+      involved in a CMC interaction — is particularly useful when
+      there is both a need to keep such information locally, and to
+      remove it (i.e., to <soCalled>anonymize</soCalled> the data)
+      when the data are published or shared with other
+      researchers.</p>
+
     </div>
 
     <div xml:id="CMCTimeline">
@@ -959,8 +1008,7 @@ See the file COPYING.txt for details.
     <div xml:id="CMCcirculation">
       <head>Circulation</head>
       <!-- ToDo: Check twi21 corpus -->
-      <?tei winita Need an intro paragraph here to explain what
-        “Circulation” means —Syd, 2022-08-12 ?>
+      <?tei winita Need an intro paragraph here to explain what “Circulation” means —Syd, 2022-08-12 ?>
       <p>The following recommendations on how to encode features of the circulation of posts, such
         as IDs, re-posts (retweets), hashtags, and mentions use twitter posts (tweets) as an
         example; this phenomenon is not in any way unique to Twitter, however.</p>
