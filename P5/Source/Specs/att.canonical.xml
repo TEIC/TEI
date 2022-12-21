@@ -24,29 +24,17 @@
       <desc xml:lang="ja" versionDate="2018-12-31">何らかのコード化された値を用いて、名付けられたエンティティを識別する外部的に定義された手段を提供する。</desc>
       <datatype><dataRef key="teidata.text"/></datatype>
       <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NZPaV01NgaK">
-          <author>
-            <name key="name-427308" type="organisation">New Zealand Parliament, Legislative Council</name>
-          </author>
-        </egXML>
-      </exemplum>
-      <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="fr" source="#NONE">
           <author>
             <name key="Hugo, Victor (1802-1885)" ref="http://www.idref.fr/026927608">Victor Hugo</name>
           </author>
         </egXML>
       </exemplum>
-      <remarks versionDate="2013-06-20" xml:lang="en">
+      <remarks versionDate="2022-12-21" xml:lang="en">
         <p>The value may be a unique identifier from a database, or any other externally-defined
-          string identifying the referent. </p>
-        <p>No particular syntax is proposed for the values of the <att>key</att> attribute, since 
-          its form will depend entirely on practice within a given project. For the same reason, this 
-          attribute is not recommended in data interchange, since there is no way of ensuring 
-          that the values used by one project are distinct from those used by another. In such
-          a situation, a preferable approach for magic tokens which follows standard practice 
-          on the Web is to use a <att>ref</att> attribute whose value is a tag URI as defined in 
-          <ref target="#RFC4151">RFC 4151</ref>.</p>
+          string identifying the referent. 
+          No particular syntax is proposed for the values of the <att>key</att> attribute, since 
+          its form will depend entirely on practice within a given project.</p>
       </remarks>
       <remarks versionDate="2009-05-25" xml:lang="fr">
         <p>La valeur peut être un identifiant unique dans une base de données, ou toute autre chaîne
@@ -64,18 +52,11 @@
         définition complète de l'entité nommée au moyen d'un ou plusieurs URIs.</desc>
       <desc xml:lang="ja" versionDate="2018-12-31">一つ以上のURIを用いて、名付けられたエンティティの完全な定義かIDを参照するための明確な手段を提供する。</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
-        <exemplum xml:lang="en">
-          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NONE">
-            <name ref="http://viaf.org/viaf/109557338" type="person">Seamus Heaney</name>
-            </egXML>
-        </exemplum>   
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NONE">
-          <author>
-            <name ref="https://nzetc.victoria.ac.nz/tm/scholarly/name-427308.html" type="organisation">New Zealand Parliament, Legislative Council</name>
-          </author>
+          <name ref="http://viaf.org/viaf/109557338" type="person">Seamus Heaney</name>
         </egXML>
-      </exemplum>      
+      </exemplum>   
       <remarks versionDate="2014-01-09" xml:lang="en">
 <p>The value must point directly to one or more XML elements or other resources by means of one or more URIs, separated by whitespace. If more than one is supplied the implication is that the name identifies several distinct entities.</p>
       </remarks>
@@ -85,6 +66,56 @@
       <remarks xml:lang="ja" versionDate="2018-12-31"><p>値は1つまたは複数のXML要素あるいは、空白によって区切られた1つまたは複数のURIを指し示すものでなければならない。1つ以上の値が与えられているときは、その名前が複数の異るエンティティに対応することを示唆する。</p></remarks>
     </attDef>
   </attList>
+  <exemplum xml:lang="en">
+    <p>In this contrived example, a canonical reference to the same
+    organisation is provided in four different ways.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#NZPaV01NgaK">
+      <author n="1">
+        <name ref="http://nzetc.victoria.ac.nz/tm/scholarly/name-427308.html" type="organisation">New Zealand Parliament, Legislative Council</name>
+      </author>
+      &#xA0;
+      <author n="2">
+        <name ref="nzvn:427308" type="organisation">New Zealand Parliament, Legislative Council</name>
+      </author>
+      &#xA0;   
+      <author n="3">
+        <name ref="./named_entities.xml#o427308" type="organisation">New Zealand Parliament, Legislative Council</name>
+      </author>
+      &#xA0;
+      <author n="4">
+        <name key="name-427308" type="organisation">New Zealand Parliament, Legislative Council</name>
+      </author>
+    </egXML>
+    <p>The first presumes the availability of an internet connection
+    and a processor that can resolve a URI (most can). The second
+    requires, in addition, a <gi>prefixDef</gi> that declares how the
+    <code>nzvm</code> prefix should be interpreted. The third does not
+    require an internet connection, but does require that a file named
+    <name type="file">named_entities.xml</name> be in the same
+    directory as the TEI document. The fourth requires that an entire
+    external system for key resolution be available.</p>
+  </exemplum>
+  <remarks xml:lang="en" versionDate="2022-12-21">
+    <!-- For the same reason, this attribute is not recommended in
+         data interchange, since there is no way of ensuring that the
+         values used by one project are distinct from those used by
+         another. In such a situation, a preferable approach for magic
+         tokens which follows standard practice on the Web is to use a
+         <att>ref</att> attribute whose value is a tag URI as defined
+         in <ref target="#RFC4151">RFC 4151</ref>. -->
+    <p>The <att>key</att> attribute is more flexible and
+    general-purpose, but its use in interchange requires that
+    documentation about how the key is to be resolved be sent to the
+    recipient of the TEI document. In contrast values of the
+    <att>ref</att> attribute are resolved using the widely accepted
+    protocols for a URI, and thus less documentation, if any, is
+    likely required by the recipient in data interchange.</p>
+    <p>These guidelines provide no semantic basis or suggested
+    precedence when both <att>key</att> and <att>ref</att> are
+    provided. For this reason simultaneous use of both is not
+    recommended unless documentation explaining the use is provided,
+    probably in an ODD customizaiton, for interchange.</p>
+  </remarks>
   <listRef>
     <ptr target="#NDATTSnr"/>
   </listRef>
