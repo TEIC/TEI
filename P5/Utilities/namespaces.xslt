@@ -53,6 +53,9 @@
         td.uri { font-family: monospace; font-size: small; }
         td.seq, td.cnt { text-align: right; font-family: monospace; }
         td.pfx { text-align: right; }
+        dl > dt { font-weight: bold; }
+        dl > dt:after { content:": " }
+        dl > dd { padding: 0ex 0ex 0.5ex 0ex; }
       </style>
     </head>
   </xsl:template>
@@ -69,9 +72,9 @@
       <dt>count</dt>
       <dd>The number of times this namespace URI occurs bound to this namespace prefix in the input document.</dd>
       <dt>namespace</dt>
-      <dd>The namespace URI of a namespace node.</dd>
+      <dd>The namespace URI of the namespace node.</dd>
       <dt>prefix</dt>
-      <dd>The namespace prefix a namespace node.</dd>
+      <dd>The namespace prefix of the namespace node.</dd>
     </dl>
   </xsl:template>
   
@@ -98,7 +101,7 @@
       <dt>this document created</dt>
       <dd>{current-dateTime()}</dd>
       <dt>input file</dt>
-      <dd>{document-uri(/)}</dd>
+      <dd>{base-uri(/)}</dd>
       <dt>stylesheet</dt>
       <dd>{static-base-uri()}</dd>
       <dt>input version</dt>
