@@ -1650,11 +1650,13 @@ performance.attributes = att.global.attributes, empty]]></eg> Here, the attribut
           <elementSpec ident="sp">
             <!-- ... -->
             <content>
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              <sequence minOccurs="0" maxOccurs="1">
-                <elementRef key="speaker"/>
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              </sequence>
+	      <sequence minOccurs="1" maxOccurs="1">
+		<classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+		<sequence minOccurs="0" maxOccurs="1">
+                  <elementRef key="speaker"/>
+                  <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	      </sequence>
             </content>
             <!-- ... -->
           </elementSpec>
@@ -1666,8 +1668,10 @@ performance.attributes = att.global.attributes, empty]]></eg> Here, the attribut
           <elementSpec ident="sp">
             <!-- ... -->
             <content>
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	      <sequence minOccurs="1" maxOccurs="1">
+		<classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	      </sequence>
             </content>
             <!-- ... -->
           </elementSpec>
@@ -1675,8 +1679,8 @@ performance.attributes = att.global.attributes, empty]]></eg> Here, the attribut
           <ident type="class">model.global</ident> it is impossible to be sure which rule is being
         used. This situation is not detected when RELAX NG is used, since the language is able to
         cope with non-deterministic content models of this kind and does not require that only a
-        single rule be used. </p>
-      <!-- not sure if this works : needs testing : original source clearly wrong though -->
+        single rule be used.</p>
+	<!-- not sure if this works : needs testing : original source clearly wrong though -->
 
       <p>Finally, an application will need to have some method of associating the schema with
         document instances that use it. The TEI does not mandate any particular method of doing
