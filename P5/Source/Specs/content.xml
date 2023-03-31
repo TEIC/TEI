@@ -54,13 +54,13 @@ $Id$
       <sch:let name="msg_part09" value="../@ident | ../@key | ../@url"/>
       <sch:let name="msg_part10" value="concat('&quot; and has ', $tot_kids, ' children,')"/>
       <sch:let name="msgs_1to10" value="concat( $msg_part01, $msg_part02, $msg_part03, $msg_part04, $msg_part05, $msg_part06, $msg_part07, $msg_part08, $msg_part09, $msg_part10 )"></sch:let>
-      <sch:report test="$tei_kids eq $tot_kids">
+      <sch:report test="$tei_kids eq $tot_kids" role="warning">
         <sch:value-of select="$msgs_1to10"/> which could be wrapped in a &lt;sequence> element.
       </sch:report>
-      <sch:report test="$rng_kids eq $tot_kids">
+      <sch:report test="$rng_kids eq $tot_kids" role="warning">
         <sch:value-of select="$msgs_1to10"/> which could be wrapped in an &lt;rng:div> element.
       </sch:report>
-      <sch:assert test="$tei_kids eq $tot_kids  or  $rng_kids eq $tot_kids">
+      <sch:assert test="$tei_kids eq $tot_kids  or  $rng_kids eq $tot_kids"   role="warning">
         <sch:value-of select="$msgs_1to10"/> but those children are neither all TEI elements nor
         all RELAX NG elements, and thus this &lt;content> is invalid and can not be easily rectified.
       </sch:assert>
