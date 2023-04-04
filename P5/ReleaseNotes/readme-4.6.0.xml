@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright TEI Consortium.
+Dual-licensed under CC-by and BSD2 licences
+See the file COPYING.txt for details
+-->
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI P5 version 4.6.0 and Stylesheets version 7.55.0 release notes</title>
+      </titleStmt>
+      <editionStmt>
+        <edition>
+          <date when="2023-04-04">Tuesday, 4 April 2023</date>
+        </edition>
+      </editionStmt>
+      <publicationStmt>
+        <authority>The Text Encoding Initiative</authority>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Created retrospectively from ChangeLog and GitHub trackers</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>Release 4.6.0 is codenamed <q>The Peace Release</q>.</p>
+      <p>This release introduces new features and resolves a number of issues raised by the TEI
+        community. As always, the majority of these changes and corrections are a consequence of
+        feature requests or bugs reported by the TEI community using the GitHub tracking system. A
+        full list of the issues resolved in the course of this release cycle may be found under the
+          <ref target="https://github.com/TEIC/TEI/milestone/14?closed=1">4.6.0 milestone</ref>.</p>
+      <p>The <q>Peace Release</q> delivers a new Roma v1.0.0, available at <ref
+          target="https://roma.tei-c.org/">https://roma.tei-c.org/</ref>. TEI Roma now has a
+        localized user interface for EN, ES, DE, FR, IT, and JA languages, with thanks to
+        translators listed on the home page. The original Roma remains available at <ref
+          target="http://romaantiqua.tei-c.org/">http://romaantiqua.tei-c.org/</ref>. </p>
+
+      <p>The following changes are particularly worth highlighting in this release: <list>
+
+          <head>New encoding features</head>
+
+          <item>The <gi>calendar</gi> element is now a member of <ident type="class"
+              >att.typed</ident>, permitting <att>type</att> and <att>subtype</att> attributes (<ref
+              target="https://github.com/TEIC/TEI/issues/2396">#2396</ref>).</item>
+          <item>The <gi>lg</gi> element may now contain any of the members of <ident type="class"
+              >model.pPart.transcriptional</ident>, including <gi>supplied</gi>, <gi>redo</gi>, and
+              <gi>damage</gi> (<ref target="https://github.com/TEIC/TEI/issues/2242"
+            >#2242</ref>).</item>
+          <item>The <att>gender</att> attribute has been added to the elements in <ident
+              type="class">model.castItem.part</ident> and the <att>sex</att> attribute to the
+              <gi>actor</gi> element so that these are available for encoding cast lists in
+            performance texts (<ref target="https://github.com/TEIC/TEI/issues/2400"
+            >#2400</ref>).</item>
+          <item><gi>vColl</gi> elements may now self-nest, so that the TEI specifications match the
+            Guidelines prose (<ref target="https://github.com/TEIC/TEI/issues/2034"
+            >2034</ref>).</item>
+
+
+
+
+
+        </list>
+        <list>
+          <head>Changes to content models</head>
+          <item>In the next 4.7.0 release Council will be altering to the content model of the
+              <gi>content</gi> element to permit it one and only one child element (<ref
+              target="https://github.com/TEIC/TEI/issues/2381">#2381</ref>). The current 4.6.0
+            release issues a Schematron deprecation warning about the upcoming change for ODD
+            writers (<ref target="https://github.com/TEIC/TEI/pull/2410">PR #2410</ref>). </item>
+
+          <!-- 2023-04-04 ebb: Should we say anything about the last stage of the altIdent series being implemented? (Just the removal of the deprecation?)
+            Or, what needs to be said of altIdent? See https://github.com/TEIC/TEI/pull/2334 
+           -->
+        </list>
+        <list>
+          <head>Improvements of prose and examples</head>
+
+          <item>The <gi>biblStruct</gi> element now has a new example featuring the use of a
+              <att>type</att> attribute (<ref target="https://github.com/TEIC/TEI/issues/1773"
+              >#1773</ref>).</item>
+
+          <item>An outdated link in an example in <ident type="class">att.global</ident> was updated
+            with a new example from a current archive, and the Bibliography was updated to reflect
+            the change (<ref target="https://github.com/TEIC/TEI/issues/2366">#2366</ref>). Another
+            misrepresented source for an example in the Manuscript Description chapter was corrected (<ref
+              target="https://github.com/TEIC/TEI/issues/2372">#2372</ref>).</item>
+
+          <item>To improve consistency, many <gi>desc</gi> elements were converted to <gi>gloss</gi>
+            elements and vice versa, and underscores were removed from glosses in several element
+            specifications (<ref target="https://github.com/TEIC/TEI/pull/2388">PR
+            #2388</ref>).</item>
+
+
+          <item>The explanation of the attribute <att>ns</att> has been clarified in <ident
+              type="class">att.namespaceable</ident> to indicate more precisely that it refers to an
+            element being defined (<ref target="https://github.com/TEIC/TEI/issues/2395"
+            >#2395</ref>).</item>
+
+          <item>In addition, several typos, unclear expressions, and faulty encodings have been
+            corrected (<ref target="https://github.com/TEIC/TEI/issues/2252">#2252</ref>, <ref
+              target="https://github.com/TEIC/TEI/issues/2403">#2403</ref>, <ref
+              target="https://github.com/TEIC/TEI/issues/2387">#2387</ref>), <ref
+              target="https://github.com/TEIC/TEI/issues/2225">#2225</ref>, <ref
+              target="https://github.com/TEIC/TEI/pull/2375">PR #2375</ref>, <ref
+              target="https://github.com/TEIC/TEI/issues/2356">#2356</ref>.</item>
+
+
+
+          <!-- ####################### FROM 4.5.0  ############################################## -->
+          <item>A number of translations have been added, updated or improved (<ref
+              target="https://github.com/TEIC/TEI/issues/2241">#2241</ref>, <ref
+              target="https://github.com/TEIC/TEI/pull/2233">PR #2233</ref>, <ref
+              target="https://github.com/TEIC/TEI/pull/2234">PR #2234</ref>, <ref
+              target="https://github.com/TEIC/TEI/pull/2237">PR #2237</ref>, <ref
+              target="https://github.com/TEIC/TEI/pull/2240">PR #2240</ref>, <ref
+              target="https://github.com/TEIC/TEI/pull/2281">PR #2281</ref>, <ref
+              target="https://github.com/TEIC/TEI/pull/2294">PR #2294</ref>, <ref
+              target="https://github.com/TEIC/TEI/pull/2305">PR #2305</ref>, <ref
+              target="https://github.com/TEIC/TEI/pull/2310">PR #2310</ref>, <ref
+              target="https://github.com/TEIC/TEI/pull/2311">PR #2311</ref>, <ref
+              target="https://github.com/TEIC/TEI/pull/2312">PR #2312</ref>, <ref
+              target="https://github.com/TEIC/TEI/pull/2322">PR #2322</ref>, <ref
+              target="https://github.com/TEIC/TEI/pull/2323">PR #2323</ref>, <ref
+              target="https://github.com/TEIC/TEI/pull/2324">PR #2324</ref>, <ref
+              target="https://github.com/TEIC/TEI/pull/2348">PR #2348</ref>).</item>
+
+
+
+          <!-- ####################### FROM 4.5.0  ############################################## -->
+        </list>
+        <list>
+          <head>Documentation</head>
+          <item/>
+        </list>
+        <list>
+          <head>Housekeeping</head>
+
+          <!-- 2023-04-02 ebb: Not sure I've captured this one: -->
+          <item>The TEI oXygen framework has been updated with the release of Saxon 11 (<ref
+              target="https://github.com/TEIC/TEI/issues/2251">#2251</ref>) </item>
+
+          <item>The <att>ref</att> attributes on <gi>title</gi> elements in the Guidelines have been
+            replaced with <gi>ref</gi> elements with <att>target</att> attributes to ensure their
+            values are properly processed as links (<ref
+              target="https://github.com/TEIC/TEI/issues/2368">#2368</ref>).</item>
+
+
+
+          <!-- ####################### FROM 4.5.0  ############################################## -->
+
+          <item>The datatypes <ident type="datatype">teidata.pointer</ident>, <ident type="datatype"
+              >teidata.namespace</ident>, and <ident type="datatype">teidata.namespaceOrName</ident>
+            have been restricted so that they do not allow any whitespace in a URI (<ref
+              target="https://github.com/TEIC/TEI/issues/2185">#2185</ref>).</item>
+
+          <item>Improvements of the TEI encoding of examples have been made (<ref
+              target="https://github.com/TEIC/TEI/issues/2314">#2314</ref>, <ref
+              target="https://github.com/TEIC/TEI/issues/2297">#2297</ref>).</item>
+
+          <item>The elements charName and glyphName have been removed from the <name type="exemplar"
+              >tei_simplePrint</name> exemplar ODD to align with the changes made in the 4.4.0
+            release (<ref target="https://github.com/TEIC/TEI/issues/2283">#2283</ref>).</item>
+
+          <item>Some constraints in <name type="exemplar">tei_customization</name> have been removed
+            now that the elements <gi>dataSpec</gi> and <gi>macroSpec</gi> allow at most one
+              <gi>content</gi> or <gi>valList</gi> element (<ref
+              target="https://github.com/TEIC/TEI/issues/2318">#2318</ref>).</item>
+
+          <item>Misleading documentation for the <att>prefix</att> attribute of the
+              <gi>elementSpec</gi> element has been removed (<ref
+              target="https://github.com/TEIC/TEI/issues/2319">#2319</ref>).</item>
+
+          <item>The schematron definition for reporting unused <gi>rendition</gi> definitions in
+            jTEI articles has been improved (<ref target="https://github.com/TEIC/TEI/pull/2325">#PR
+              2325</ref>).</item>
+
+          <item>Constraints on <gi>dataFacet</gi> and <att>restriction</att> have been made explicit
+            in the <gi>dataRef</gi> element (<ref target="https://github.com/TEIC/TEI/issues/2326"
+              >#2326</ref>.</item>
+
+          <item>The datatype <ident>teidata.unboundedInt</ident> has been renamed to
+              <ident>teidata.unboundedCount</ident> (<ref
+              target="https://github.com/TEIC/TEI/issues/2327">#2327</ref>).</item>
+
+          <item>Missing ISO references have been added to the bibliography (<ref
+              target="https://github.com/TEIC/TEI/pull/2344">PR #2344</ref>).</item>
+
+          <item>The references to the ISO 8601 standard named in the <ident type="class"
+              >att.datable.iso</ident> and <ident type="class">teidata.temporal.iso</ident> have
+            been updated with the version number 2004 (<ref
+              target="https://github.com/TEIC/TEI/pull/2250">PR #2250</ref>).</item>
+
+          <item>Vestigal declarations of the RelaxNG namespace have been removed (<ref
+              target="https://github.com/TEIC/TEI/pull/2353">PR #2353</ref>).</item>
+
+          <item>The values of the datatype <ident type="datatype">teidata.outputMeasure</ident> have
+            been updated to the latest CSS3 Candidate Recommendation (<ref
+              target="https://github.com/TEIC/TEI/pull/2354">PR #2354</ref>).</item>
+
+          <item>Various minor (but helpful) improvements have been made to our internal build
+            process (<ref target="https://github.com/TEIC/TEI/issues/2267">#2267</ref> and <ref
+              target="https://github.com/TEIC/Stylesheets/issues/551">#551</ref>).</item>
+          <!-- ####################### FROM 4.5.0  ############################################## -->
+
+        </list>
+      </p>
+
+      <p>In addition, many improvements have been made to the XSLT stylesheets (which provide
+        processing of TEI ODD files for <ref target="https://romabeta.tei-c.org/">Roma</ref> and
+          <ref target="https://teigarage.tei-c.org/">TEIGarage</ref> as well as other TEI
+        conversions). The Stylesheets are maintained separately from the Guidelines at <ref
+          target="https://github.com/TEIC/Stylesheets">https://github.com/TEIC/Stylesheets</ref>. A
+        full list of the issues resolved in the course of this release cycle may be found under the
+          <ref
+          target="https://github.com/TEIC/Stylesheets/issues?q=is%3Aclosed+milestone%3A%22Release+7.55.0%22"
+          >7.55.0 milestone</ref>.</p>
+
+      <p>Highlights of this release include:<list>
+
+
+
+
+          <!-- ####################### FROM 4.5.0  ############################################## -->
+
+          <item>The <name type="file">odds/odd2odd.xsl</name> program now copies over the attributes
+            of the children of <gi>content</gi> in order to retain attributes like
+              <att>preserveOrder</att> declared on the source element (<ref
+              target="https://github.com/TEIC/Stylesheets/issues/241">#241</ref>).</item>
+
+          <item>An XSLT template has been added to <name type="file">common/common_core.xsl</name>
+            that prevents the content of the <gi>index</gi> element within the <gi>head</gi> element
+            from being displayed in the table of contents (<ref
+              target="https://github.com/TEIC/Stylesheets/issues/382">#382</ref>).</item>
+
+          <item>A warning has been added to <name type="file">epub/epub_common.xsl</name> and <name
+              type="file">tools/makegraphicsanttask.xsl</name> in case the xml:id a <att>facs</att>
+            attribute refers to does not exist (<ref
+              target="https://github.com/TEIC/Stylesheets/issues/476">#476</ref>).</item>
+          <!-- The conversation on the associated PR is where David
+                 Maus made his now famous “I consider the Stylesheets
+                 as broken beyond repair. They work <sic>for a</sic>
+                 to a certain degree<corr>,</corr> but they are, from
+                 my point of view, effectively unmaintainable.”
+                 assertion. -->
+
+          <item>A bug in the processing of <gi>constraintSpec</gi> was fixed in <name type="file"
+              >odds/odd2odd.xsl</name> by changing the XSL keys in which <gi>constraintSpec</gi>
+            elements are looked up to use only the value of the <att>ident</att> attribute only;
+            and, when processing <gi>elementSpec</gi>, <gi>dataSpec</gi>, <gi>macroSpec</gi>, or
+              <gi>classSpec</gi> seeking all descendant <gi>constraintSpec</gi> elements, not just
+            child <gi>constraintSpec</gi> elements (<ref
+              target="https://github.com/TEIC/Stylesheets/issues/541">#541</ref>).</item>
+
+          <item>The attribute <code>classpathref="classpath"</code> has been added to <name
+              type="file">common/teianttasks.xml</name> to allow the TEI Stylesheets to be called
+            from external scripts that will submit the classpath location (<ref
+              target="https://github.com/TEIC/Stylesheets/issues/544">#544</ref>).</item>
+
+          <item>The whitespace differences that have caused errors in RNC when running the tests
+            were prevented by adding <code>-bBw</code> switches to the <code>diff</code> commands
+              (<ref target="https://github.com/TEIC/Stylesheets/issues/560">#560</ref>).</item>
+
+          <item>The issue with un-escaped hashes when transforming teitolatex has been fixed by
+            applying the template for text nodes and its <code>tei:escapeChars()</code> function to
+            the computed link text of pointers which are processed in the <val>xref</val> mode (<ref
+              target="https://github.com/TEIC/Stylesheets/issues/565">#565</ref>).</item>
+
+          <item>The examples of the show-all-examples pages have been appended with an indication
+            that the user is about to go into a different language version of the Guidelines (<ref
+              target="https://github.com/TEIC/Stylesheets/issues/571">#571</ref>).</item>
+        </list>
+      </p>
+    </body>
+  </text>
+</TEI>
