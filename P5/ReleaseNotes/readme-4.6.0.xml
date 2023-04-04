@@ -44,7 +44,7 @@ See the file COPYING.txt for details
           <head>New encoding features</head>
 
           <item>The <gi>calendar</gi> element is now a member of <ident type="class"
-              >att.typed</ident>, permitting the <att>type</att> and <att>subtype</att> attributes (<ref
+              >att.typed</ident>, giving it the <att>type</att> and <att>subtype</att> attributes (<ref
               target="https://github.com/TEIC/TEI/issues/2396">#2396</ref>).</item>
           <item>The <gi>lg</gi> element may now contain any of the members of <ident type="class"
               >model.pPart.transcriptional</ident>, including <gi>supplied</gi>, <gi>redo</gi>, and
@@ -106,14 +106,14 @@ See the file COPYING.txt for details
           <item>In addition, several typos, unclear expressions, and faulty encodings have been
             corrected (<ref target="https://github.com/TEIC/TEI/issues/2252">#2252</ref>, <ref
               target="https://github.com/TEIC/TEI/issues/2403">#2403</ref>, <ref
-              target="https://github.com/TEIC/TEI/issues/2387">#2387</ref>), <ref
+              target="https://github.com/TEIC/TEI/issues/2387">#2387</ref>, <ref
               target="https://github.com/TEIC/TEI/issues/2225">#2225</ref>, <ref
               target="https://github.com/TEIC/TEI/pull/2375">PR #2375</ref>, <ref
-              target="https://github.com/TEIC/TEI/issues/2356">#2356</ref>.</item>
+              target="https://github.com/TEIC/TEI/issues/2356">#2356</ref>).</item>
 
         </list>
 
-        <!-- 2023-04-03 ebb: I'm not finding updates to Documentation this round ?
+        <!-- 
           <list>
           <head>Documentation</head>
           <item/>
@@ -123,9 +123,8 @@ See the file COPYING.txt for details
         <list>
           <head>Housekeeping</head>
 
-          <!-- 2023-04-02 ebb: Not sure I've captured this one: -->
           <item>The TEI oXygen framework has been updated to
- 	    accomodate the fact that newer versions of oXygen use Saxon 11 (<ref
+ 	    accomodate the fact that versions 25+ of oXygen use Saxon 11 (<ref
               target="https://github.com/TEIC/TEI/issues/2251">#2251</ref>) </item>
 
             <item>The <gi>title</gi> elements with <att>ref</att>
@@ -155,8 +154,8 @@ See the file COPYING.txt for details
       class via an <gi>attRef</gi> that refers to another attribute
       class (as opposed to class membership via <gi>memberOf</gi> or
       attribute definition via <gi>attDef</gi>) was not showing up in
-      the documentation specification pages. (<ref
-      target="https://github.com/TEIC/Stylesheets/issues/419">#419</ref>)</item>
+      the documentation specification pages; this has been fixed (<ref
+      target="https://github.com/TEIC/Stylesheets/issues/419">#419</ref>).</item>
 
           <item>Infelicitous spacing in <gi>egXML</gi> was corrected with resetting the HTML output
             declaration to prevent indentation (<ref
@@ -165,23 +164,15 @@ See the file COPYING.txt for details
           <item>Corrected a problem with processing the
           <att>minOccurs</att> attribute on <gi>attDef</gi> — when set
           to <val>0</val>&#xA0;<att>minOccurs</att> was behaving as if
-          it has been set to <val>1</val> unless <att>maxOccurs</att>
+          it had been set to <val>1</val> unless <att>maxOccurs</att>
           was <val>unbounded</val> (<ref
           target="https://github.com/TEIC/Stylesheets/issues/557"
           >#557</ref>).</item>
 
-          <!-- item>New tests were added to check the <att>minOccurs</att> and <att>maxOccurs</att>
-            attributes on the <gi>datatype</gi> element inside an <gi>attDef</gi> with
-              <att>usage</att> either optional or required (<ref
-              target="https://github.com/TEIC/Stylesheets/pull/591">#591</ref>).</item
-	      As much as I am quite proud of that test file, I do
-	      not think this counts as a “highligt”. —Syd, 2023-04-04
-	      -->
-
-          <item>Cases of an <tag>attDef mode="delete"</tag> that was
-          inside an <gi>attList</gi> that was itself inside an
-          <gi>attList</gi> were not being processed; this was
-          corrected (<ref
+          <item>Cases of an <gi>attDef</gi> with a <att>mode</att> of
+          <val>delete</val> that was inside an <gi>attList</gi> that
+          was itself inside an <gi>attList</gi> were not being
+          processed; this was corrected (<ref
           target="https://github.com/TEIC/Stylesheets/pull/601">PR
           #601</ref>).</item>
 
