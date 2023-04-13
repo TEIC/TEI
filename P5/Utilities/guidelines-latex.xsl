@@ -437,7 +437,7 @@
 <xsl:template name="latexEnd">
 <xsl:text>\include{Guidelines-index}
 </xsl:text>
-<xsl:result-document href="Guidelines-index.tex" method="text" encoding="utf8">
+<xsl:result-document href="Guidelines-index.tex" method="text" encoding="UTF-8">
 \cleardoublepage
 \pdfbookmark[0]{Index}{INDEX}
 \hypertarget{INDEX}{}
@@ -462,7 +462,7 @@
     <xsl:result-document 
         href="Guidelines-{@xml:id}.tex" 
         method="text" 
-        encoding="utf8">
+        encoding="UTF-8">
     <xsl:apply-templates/>
     </xsl:result-document>
   </xsl:template>
@@ -474,7 +474,7 @@
     <xsl:result-document 
         href="Guidelines-toc.tex" 
         method="text" 
-        encoding="utf8">
+        encoding="UTF-8">
       \tableofcontents
     </xsl:result-document>
   </xsl:template>
@@ -486,7 +486,7 @@
     <xsl:result-document 
         href="Guidelines-titlepage.tex" 
         method="text" 
-        encoding="utf8">
+        encoding="UTF-8">
   \begin{titlepage}
 \begin{center}
 \vfill
