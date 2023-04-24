@@ -190,8 +190,59 @@ $Id$
       dictionary is therefore advised.</p>
     <p>Yet another possibility is to associate the information about the relationship between a TEI
       markup element and the data category that it is intended to model already at the level of
-      modeling the dictionary resource, that is, at the level of the ODD, in <gi>equiv</gi> element
+      modeling the dictionary resource, that is, at the level of the ODD, in the <gi>equiv</gi> element
       that is a child of <gi>elementSpec</gi> or <gi>attDef</gi>.</p>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <p>The <gi>taxonomy</gi> element is a handy tool for encoding taxonomies that are later
+      referenced by <ident type="class">att.datcat</ident> attributes, but it can also act as an
+      intermediary device, for example holding a fragment of an external taxonomy (or
+        <q>flattening</q> an external ontology) that is relevant to the project or document at hand.
+      (It is also imaginable that, for the purpose of the project at hand, the local
+        <gi>taxonomy</gi> element combines vocabularies that originate from more than one external
+      taxonomy or ontology.) In such cases, the <gi>taxonomy</gi> creates a local layer of
+      indirection: the <ident type="class">att.datcat</ident> attributes internal to the resource
+      may reference the <gi>category</gi> elements stored in the header (as well as the
+        <gi>taxonomy</gi> element itself), whereas these same <gi>category</gi> and
+        <gi>taxonomy</gi> elements use <ident type="class">att.datcat</ident> attributes to
+      reference the original taxonomy or ontology.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <encodingDesc>
+        <!-- ... -->
+        <classDecl>
+          <!-- ... -->
+          <taxonomy xml:id="UD-SYN" datcat="https://universaldependencies.org/u/dep/index.html">
+            <desc>
+              <term>UD syntactic relations</term>
+            </desc>
+            <category xml:id="acl" valueDatcat="https://universaldependencies.org/u/dep/acl.html">
+              <catDesc>
+                <term>acl</term>: Clausal modifier of noun (adjectival clause)</catDesc>
+            </category>
+            <category xml:id="acl_relcl" valueDatcat="https://universaldependencies.org/u/dep/acl-relcl.html">
+              <catDesc>
+                <term>acl:relcl</term>: relative clause modifier</catDesc>
+            </category>
+            <category xml:id="advcl" valueDatcat="https://universaldependencies.org/u/dep/advcl.html">
+              <catDesc>
+                <term>advcl</term>: Adverbial clause modifier</catDesc>
+            </category>
+            <!-- ... -->
+          </taxonomy>
+        </classDecl>
+      </encodingDesc>
+    </egXML>
+    <p>The above fragment was excerpted from the GB subset of the <ref
+        target="https://github.com/clarin-eric/ParlaMint">ParlaMint project</ref> in April 2023, and
+      enriched with <ident type="class">att.datcat</ident> attributes for the purpose of
+      illustrating the mechanism described here.</p>
+    <p>Note that, in the ideal case, the values of <ident type="class">att.datcat</ident> attributes
+      should be persistent identifiers, and that the addressing scheme of Universal Dependencies is
+      treated here as persistent for the sake of illustration. Note also that the contrast between
+        <att>datcat</att> used on <gi>taxonomy</gi> on the one hand, and the <att>valueDatcat</att>
+      used on <gi>category</gi> on the other, is not mandatory: both kinds of relations could be
+      encoded by means of the generic <att>datcat</att> attribute, but using the former for the
+      container and the latter for the content is more user-friendly.</p>
   </exemplum>
   <exemplum xml:lang="en">
     <p>The <att>targetDatcat</att> attribute is designed to be used in, e.g., feature structure
@@ -218,6 +269,45 @@ $Id$
       that encodes a part of speech. Note also that it is the <gi>f</gi> that is modeled above, not
       its values, which are used as direct references to data categories; hence the use of
         <att>datcat</att> in the <gi>symbol</gi> element.</p>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <p>The <ident type="class">att.datcat</ident> attributes can be used for any sort of taxonomies. The example below illustrates their usefulness for describing usage domain labels in dictionaries on the example of Morais (REFERENCE). </p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+      
+      <!--  in the dictionary header    -->
+      <encodingDesc>
+        <classDecl>
+          <taxonomy xml:id="domains">
+            <!--...-->
+            <category xml:id="domain.medical_and_health_sciences">
+              <catDesc xml:lang="en">Medical and Health Sciences</catDesc>
+              <catDesc xml:lang="pt">Ciências Médicas e da Saúde</catDesc>
+              <category xml:id="domain.medical_and_health_sciences.medicine"
+                valueDatacat="https://vocabs.rossio.fcsh.unl.pt/pub/morais_domains/pt/page/0025">
+                <catDesc xml:lang="en">
+                  <term>Medicine</term>
+                  <gloss><!--...--></gloss>
+                </catDesc>
+                <catDesc xml:lang="pt">
+                  <term>Medicina</term>
+                  <gloss><!--...--></gloss>
+                </catDesc>
+              </category>
+            </category>
+            <!--...-->
+          </taxonomy>
+        </classDecl>
+      </encodingDesc>
+      
+      <!-- inside an <entry> element: -->
+      <usg type="domain" valueDatacat="#domain.medical_and_health_sciences.medicine">Med.</usg>
+      
+    </egXML>
+    <p>In the Morais dictionary, domain labels are classified in the header, and those
+      classifications are further anchored in the 
+      <ref target="https://vocabs.rossio.fcsh.unl.pt/pub/en/about">MorDigital controlled vocabulary
+        service</ref> of the
+      NOVA University of Lisbon – School of Social Sciences and Humanities (NOVA FCSH).</p>
   </exemplum>
   
   <remarks versionDate="2022-09-17" xml:lang="en">
@@ -255,7 +345,7 @@ $Id$
       assumption that its URIs are going to persist. It is imaginable that a project may choose to
       address a local taxonomy store instead, but this risks losing the advantage of 
       interchangeability with other projects.</p>  
-    <p>Historically, <att>datcat</att> and <att>valueDatcat</att> originate from the (the now obsolete) ISO
+    <p>Historically, <att>datcat</att> and <att>valueDatcat</att> originate from the (now obsolete) ISO
       12620:2009 standard, describing the data model and procedures for a Data Category Registry
       (DCR). The current version of that standard, ISO 12620-1, does not standardize the
       serialization of pointers, merely mentioning the TEI <ident type="class">att.datcat</ident> as
