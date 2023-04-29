@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<macroSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="MSDESCPART" ident="macro.msDescPart">
+  <desc versionDate="2023-04-29" xml:lang="en">defines a portion of the content model used for describing manuscripts and objects</desc>
+  <!--
+      As with the rest of TEI P5, this content is expressed in a
+      manner that can be used with RELAX NG, the XML DTD language, or
+      the W3C Schema language. If and when TEI drops suport for the
+      latter two, the content could be vastly simplified to the
+      PureODD euqivalent of <code lang="RNC">( msContents? & physDesc?
+      & history? & additional? )</code>.
+      —Syd, 2023-04-29
+  -->
+  <content>
+    <alternate minOccurs="0" maxOccurs="1">
+      <sequence>
+        <elementRef key="additional"/>
+        <alternate minOccurs="0" maxOccurs="1">
+          <sequence>
+            <elementRef key="history"/>
+            <alternate minOccurs="0" maxOccurs="1">
+              <sequence>
+                <elementRef key="msContents"/>
+                <elementRef key="physDesc" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+              <sequence>
+                <elementRef key="physDesc"/>
+                <elementRef key="msContents" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+            </alternate>
+          </sequence>
+          <sequence>
+            <elementRef key="msContents"/>
+            <alternate minOccurs="0" maxOccurs="1">
+              <sequence>
+                <elementRef key="history"/>
+                <elementRef key="physDesc" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+              <sequence>
+                <elementRef key="physDesc"/>
+                <elementRef key="history" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+            </alternate>
+          </sequence>
+          <sequence>
+            <elementRef key="physDesc"/>
+            <alternate minOccurs="0" maxOccurs="1">
+              <sequence>
+                <elementRef key="history"/>
+                <elementRef key="msContents" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+              <sequence>
+                <elementRef key="msContents"/>
+                <elementRef key="history" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+            </alternate>
+          </sequence>
+        </alternate>
+      </sequence>
+      <sequence>
+        <elementRef key="history"/>
+        <alternate minOccurs="0" maxOccurs="1">
+          <sequence>
+            <elementRef key="additional"/>
+            <alternate minOccurs="0" maxOccurs="1">
+              <sequence>
+                <elementRef key="msContents"/>
+                <elementRef key="physDesc" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+              <sequence>
+                <elementRef key="physDesc"/>
+                <elementRef key="msContents" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+            </alternate>
+          </sequence>
+          <sequence>
+            <elementRef key="msContents"/>
+            <alternate minOccurs="0" maxOccurs="1">
+              <sequence>
+                <elementRef key="additional"/>
+                <elementRef key="physDesc" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+              <sequence>
+                <elementRef key="physDesc"/>
+                <elementRef key="additional" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+            </alternate>
+          </sequence>
+          <sequence>
+            <elementRef key="physDesc"/>
+            <alternate minOccurs="0" maxOccurs="1">
+              <sequence>
+                <elementRef key="additional"/>
+                <elementRef key="msContents" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+              <sequence>
+                <elementRef key="msContents"/>
+                <elementRef key="additional" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+            </alternate>
+          </sequence>
+        </alternate>
+      </sequence>
+      <sequence>
+        <elementRef key="msContents"/>
+        <alternate minOccurs="0" maxOccurs="1">
+          <sequence>
+            <elementRef key="additional"/>
+            <alternate minOccurs="0" maxOccurs="1">
+              <sequence>
+                <elementRef key="history"/>
+                <elementRef key="physDesc" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+              <sequence>
+                <elementRef key="physDesc"/>
+                <elementRef key="history" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+            </alternate>
+          </sequence>
+          <sequence>
+            <elementRef key="history"/>
+            <alternate minOccurs="0" maxOccurs="1">
+              <sequence>
+                <elementRef key="additional"/>
+                <elementRef key="physDesc" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+              <sequence>
+                <elementRef key="physDesc"/>
+                <elementRef key="additional" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+            </alternate>
+          </sequence>
+          <sequence>
+            <elementRef key="physDesc"/>
+            <alternate minOccurs="0" maxOccurs="1">
+              <sequence>
+                <elementRef key="additional"/>
+                <elementRef key="history" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+              <sequence>
+                <elementRef key="history"/>
+                <elementRef key="additional" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+            </alternate>
+          </sequence>
+        </alternate>
+      </sequence>
+      <sequence>
+        <elementRef key="physDesc"/>
+        <alternate minOccurs="0" maxOccurs="1">
+          <sequence>
+            <elementRef key="additional"/>
+            <alternate minOccurs="0" maxOccurs="1">
+              <sequence>
+                <elementRef key="history"/>
+                <elementRef key="msContents" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+              <sequence>
+                <elementRef key="msContents"/>
+                <elementRef key="history" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+            </alternate>
+          </sequence>
+          <sequence>
+            <elementRef key="history"/>
+            <alternate minOccurs="0" maxOccurs="1">
+              <sequence>
+                <elementRef key="additional"/>
+                <elementRef key="msContents" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+              <sequence>
+                <elementRef key="msContents"/>
+                <elementRef key="additional" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+            </alternate>
+          </sequence>
+          <sequence>
+            <elementRef key="msContents"/>
+            <alternate minOccurs="0" maxOccurs="1">
+              <sequence>
+                <elementRef key="additional"/>
+                <elementRef key="history" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+              <sequence>
+                <elementRef key="history"/>
+                <elementRef key="additional" minOccurs="0" maxOccurs="1"/>
+              </sequence>
+            </alternate>
+          </sequence>
+        </alternate>
+      </sequence>
+    </alternate>
+  </content>
+</macroSpec>
