@@ -147,7 +147,7 @@ $Id$
           <placeName period="#christian">Stauropolis</placeName></egXML></p>
       <p>The other dating attributes provided by this class support a wide range of methods of specifying temporal information in
         a normalized form. The <att>from</att> and <att>to</att> attributes may be used to express the begining and ending of a
-        period of time, for example: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        period of time, for example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><!-- XXX https://github.com/TEIC/TEI/issues/2382 `event` and `eventName` XXX -->
           <event xml:id="eMBB" from="1955-12-01" to="1956-12-20">
             <label>Montgomery Bus Boycott</label>
             <desc>A political and social protest campaign against the policy of racial segregation on the public transit system of
@@ -735,6 +735,38 @@ target="#CONA"/>).  The tag -->The
 
 
     </div>
+    
+    <div type="div3" xml:id="NDEVTN">
+      <head>Event Names</head>
+      <p><specList><specDesc key="eventName"/></specList></p>
+      
+      <p>The <gi>eventName</gi> element is provided in parallel to other naming mechanisms, and especially for <soCalled>canonical</soCalled>
+      names that are used in texts to mention specific named events.
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <p>On <date when="1719-03-19">Monday</date>, <rs type="person">she</rs> was writing about the 
+            <eventName ref="#SecondDefPrague">1618 Defenestration of Prague</eventName> which initiated the 
+            <rs type="event" ref="#ThirtyYearsWar">Thirty Years’ War</rs>.</p>
+        </egXML>
+      </p>
+      <p>The <gi>eventName</gi> element is used to mark up real and fictitious event names as they appear in the edited text.
+        As explained with regard to the <gi>event</gi> element, <!-- todo --> <!-- XXX https://github.com/TEIC/TEI/issues/2382 `event` and `eventName` XXX -->
+        the use of these elements does not define what might be an important event for a particular edition. Temporal extent, 
+        granularity of events (and hence of their names) are up to the encoders.
+      </p>
+      <p><gi>eventName</gi> may be used in conjunction with well-defined (e.g. historical) events that are established in a particular 
+        discipline, and which may have lead to authority file inclusion. There are two major applications of <gi>eventName</gi>: 
+        <list rend="bulleted">
+          <item>The element may be used for inline markup of mentioned named events such as in the above example;</item>
+          <item>another typical use case are lists of named <gi>event</gi>s. A sibling <gi>idno</gi> in 
+            the parent <gi>event</gi> element may be used for disambiguation and identification of multiple events with identical 
+            <gi>eventName</gi>s.
+            These may appear either as part of a prosopographical data construct such as <gi>person</gi>/<gi>event</gi> (or 
+            <gi>place</gi>/<gi>event</gi>) as described in <ref target="#NDPERSEpe">Personal Events</ref>, or separate, as part 
+            of a <gi>standOff</gi>/<gi>listEvent</gi>.
+          </item>
+        </list>
+      </p>
+    </div>
 
     <div type="div3" xml:id="NDOBJN">
       <head>Object Names</head>
@@ -783,7 +815,7 @@ target="#CONA"/>).  The tag -->The
       the text, and encode it directly using the more specific elements described in this section.</p>
     <div type="div3" xml:id="NDPERSbp">
       <head>Basic Principles</head>
-      <p>Information about people, places, and organizations, of whatever type, essentially comprises a series of statements or
+      <p>Information about people, places, organizations, events, of whatever type, essentially comprises a series of statements or
         assertions relating to: <list rend="bulleted">
           <item>characteristics or <term>traits</term> which do not, by and large, change over time</item>
           <item>characteristics or <term>states</term> which hold true only at a specific time</item>
@@ -1258,7 +1290,7 @@ exemplifying here too? -->
 
       </div>
       <div type="div4" xml:id="NDPERSEpe">
-        <head>Personal Events</head>
+        <head>Personal Events</head><!-- XXX https://github.com/TEIC/TEI/issues/2382 `event` and `eventName` XXX -->
         <p>Events in a person's history are not characteristics of an individual, but often cause an individual to gain such
           characteristics, or to enter a new state. Most such events, for example marriage, appointment, promotion, or a journey
           may be recorded using the generic element <gi>event</gi>, which may be grouped with <gi>listEvent</gi>, and has a
@@ -1906,9 +1938,11 @@ exemplifying here too? -->
           </egXML>
         </p>
 
+        <!-- XXX https://github.com/TEIC/TEI/issues/2382 `event` and `eventName` XXX -->
         <p>An <gi>event</gi> element is usually used to record information about a place, or a person; for this reason the element
           usually appears as content of a <gi>place</gi> or <gi>person</gi>. However, it is also possible to describe events
-          independently of either a person or a place. This may be useful in such applications as chronologies, lists of
+          independently of either a person or a place. This may be useful not only for encoding texts which describe named events and 
+          their <gi>eventName</gi>s in such applications as chronologies, lists of
           significant events such as battles, legislation, etc.</p>
 
         <p>The <gi>listEvent</gi> element is a member of the <ident
