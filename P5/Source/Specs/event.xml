@@ -33,22 +33,73 @@
   <content>
     <sequence>
        <elementRef key="idno" minOccurs="0" maxOccurs="unbounded"/>
-         <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
-      <alternate>
-        <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
-            <classRef key="model.labelLike" minOccurs="1" maxOccurs="unbounded"/>
-        </alternate>
-      <alternate minOccurs="0" maxOccurs="unbounded">
+       <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+       <alternate>
+         <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
+         <classRef key="model.labelLike" minOccurs="1" maxOccurs="unbounded"/>
+       </alternate>
+       <alternate minOccurs="0" maxOccurs="unbounded">
           <classRef key="model.noteLike"/>
           <classRef key="model.biblLike"/>
+          <elementRef key="eventName"/>
           <elementRef key="linkGrp"/>
           <elementRef key="link"/>
           <elementRef key="idno"/>
           <elementRef key="ptr"/>
         </alternate>
-        <elementRef key="event" minOccurs="0" maxOccurs="unbounded"/>
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <elementRef key="event" minOccurs="0" maxOccurs="unbounded"/>
+          <elementRef key="listEvent" minOccurs="0" maxOccurs="unbounded"/>
+        </alternate>
+      <alternate minOccurs="1" maxOccurs="unbounded">
+        <classRef key="model.personLike" minOccurs="1" maxOccurs="1"/>
+        <elementRef key="listPerson" minOccurs="1" maxOccurs="1"/>
+      </alternate>
+      <alternate minOccurs="1" maxOccurs="unbounded">
+        <classRef key="model.placeLike" minOccurs="1" maxOccurs="1"/>
+        <elementRef key="listPlace" minOccurs="1" maxOccurs="1"/>
+      </alternate>
       </sequence>
   </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listEvent>
+        <event when="1618-05-23" xml:id="SecondDefPrague" where="#Prague">
+          <eventName>1618 Defenestration of Prague</eventName>
+          <idno>https://www.wikidata.org/wiki/Q13365740</idno>
+          <listPerson type="defenstrated">
+            <person>
+              <persName>Jaroslav Bořita z Martinic</persName>
+              <idno type="GND">https://d-nb.info/gnd/116810998</idno>
+            </person>
+            <person>
+              <persName>Vilém Slavata z Chlumu a Košumberka</persName>
+              <idno type="GND">https://d-nb.info/gnd/1018376615</idno>
+            </person>
+            <person>
+              <persName>Filip Fabricius</persName>
+              <addName>Platter</addName>
+              <idno type="GND">https://d-nb.info/gnd/133946118</idno>
+            </person>
+          </listPerson>
+          <place xml:id="Prague"><placeName>Prague</placeName></place>
+        </event>
+        <event from="1618" to="1648" xml:id="ThirtyYearsWar">
+          <eventName>Thirty Years’ War</eventName>
+          <idno>https://www.wikidata.org/wiki/Q2487</idno>
+          <event when="1643-03-19" xml:id="BattleofRocroi" where="#Rocroi">
+            <eventName>Battle of Rocroi</eventName>
+            <idno>https://www.wikidata.org/wiki/Q728480</idno>
+            <idno>https://d-nb.info/gnd/4202901-6</idno>
+            <place xml:id="Rocroi">
+              <placeName>Rocroi</placeName>
+              <location><geo decls="#WGS">49.926111 4.522222</geo></location>
+            </place>
+          </event>
+        </event>
+      </listEvent>
+    </egXML>
+  </exemplum>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <person>
