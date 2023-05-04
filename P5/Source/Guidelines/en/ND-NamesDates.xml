@@ -1926,20 +1926,6 @@ exemplifying here too? -->
           its nearest ancestor. Dating is slightly different again, in that a child element may specify a date more precisely than
           its parent, as in the example above.</p>
 
-        <p>Events may also be subdivided into other events. For example, a two part meeting might be represented as follows:
-            <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <event type="meeting" when="2007-05-29">
-              <desc>All day meeting to resolve content models</desc>
-              <event type="preamble" notAfter="13:00:00">
-                <desc>first part</desc>
-              </event>
-              <event type="conclusions" notBefore="13:00:00">
-                <desc>second part</desc>
-              </event>
-            </event>
-          </egXML>
-        </p>
-        
         <p>As with other named elements, <gi>places</gi> may relate to one or more <gi>event</gi>s, such as  
           changes of names, foundations, sieges or destruction of settlements, or other changes of state. 
         </p>
@@ -2320,6 +2306,20 @@ occupation and residence.</p>
         Paris Attacks took place at six different locations in Paris; this
         might be encoded as an <gi>event</gi> with a <att>where</att>
         attribute with six space-separated values.</p>
+      
+      <p>Events may also be modeled as hierarchies of nested <gi>event</gi>s. For example, a two part meeting might be represented as follows:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <event type="meeting" when="2007-05-29">
+            <desc>All day meeting to resolve content models</desc>
+            <event type="preamble" notAfter="13:00:00">
+              <desc>first part</desc>
+            </event>
+            <event type="conclusions" notBefore="13:00:00">
+              <desc>second part</desc>
+            </event>
+          </event>
+        </egXML>
+      </p>
       
       <p>For <gi>event</gi> as a child element of <gi>person</gi>, note the Section on <ref target="#NDPERSEpe">Personal Events</ref>.</p>
       <p>
