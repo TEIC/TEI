@@ -7,7 +7,7 @@ $Date$
 $Id$
 -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" type="atts" ident="att.styleDef">
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" type="atts" ident="att.styleDef">
   <desc versionDate="2015-02-15" xml:lang="en">provides attributes to specify the name of a formal definition
   language used to provide formatting or rendition information.</desc>
   <attList>
@@ -20,7 +20,9 @@ $Id$
       <desc versionDate="2008-03-30" xml:lang="fr">identifie la langue employée pour décrire le rendu</desc>
       <desc versionDate="2007-11-06" xml:lang="it">identifica la lingua utilizzata per descrivere la
         resa</desc>
-      <datatype><dataRef key="teidata.enumerated"/></datatype>
+      <datatype>
+        <dataRef key="teidata.enumerated"/>
+      </datatype>
       <valList type="closed">
         <valItem ident="css">
           <desc versionDate="2012-10-06" xml:lang="en">Cascading Stylesheet Language</desc>
@@ -67,7 +69,9 @@ If no value for the @scheme attribute is provided, then the default assumption s
     </attDef>
     <attDef ident="schemeVersion" usage="opt">
       <desc versionDate="2013-04-12" xml:lang="en">supplies a version number for the style language provided in <att>scheme</att>.</desc>
-      <datatype><dataRef key="teidata.versionNumber"/></datatype>
+      <datatype>
+        <dataRef key="teidata.versionNumber"/>
+      </datatype>
       <constraintSpec ident="schemeVersionRequiresScheme" scheme="schematron">
         <constraint>
           <sch:rule context="tei:*[@schemeVersion]">
