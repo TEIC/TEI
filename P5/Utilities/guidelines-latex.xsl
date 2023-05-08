@@ -1,6 +1,6 @@
 <xsl:stylesheet
-  exclude-result-prefixes="xlink dbk rng tei teix xhtml a html xd xs xsl"
-  version="2.0"
+  version="3.0"
+  exclude-result-prefixes="#all"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:dbk="http://docbook.org/ns/docbook"
@@ -14,100 +14,100 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   
-<xsl:import href="/usr/share/xml/tei/stylesheet/latex/latex.xsl"/>
-<xsl:output method="text"/>
- <xsl:strip-space elements="tei:additional tei:address tei:adminInfo
-			    tei:altGrp tei:altIdentifier tei:analytic
-			    tei:app tei:appInfo tei:application
-			    tei:arc tei:argument tei:attDef
-			    tei:attList tei:availability tei:back
-			    tei:biblFull tei:biblStruct tei:bicond
-			    tei:binding tei:bindingDesc tei:body
-			    tei:broadcast tei:cRefPattern tei:calendar
-			    tei:calendarDesc tei:castGroup
-			    tei:castList tei:category tei:certainty
-			    tei:char tei:charDecl tei:charProp
-			    tei:choice tei:cit tei:classDecl
-			    tei:classSpec tei:classes tei:climate
-			    tei:cond tei:constraintSpec tei:correction
-			    tei:custodialHist tei:decoDesc
-			    tei:dimensions tei:div tei:div1 tei:div2
-			    tei:div3 tei:div4 tei:div5 tei:div6
-			    tei:div7 tei:divGen tei:docTitle tei:eLeaf
-			    tei:eTree tei:editionStmt
-			    tei:editorialDecl tei:elementSpec
-			    tei:encodingDesc tei:entry tei:epigraph
-			    tei:epilogue tei:equipment tei:event
-			    tei:exemplum tei:fDecl tei:fLib
-			    tei:facsimile tei:figure tei:fileDesc
-			    tei:floatingText tei:forest tei:front
-			    tei:fs tei:fsConstraints tei:fsDecl
-			    tei:fsdDecl tei:fvLib tei:gap tei:glyph
-			    tei:graph tei:graphic tei:group
-			    tei:handDesc tei:handNotes tei:history
-			    tei:hom tei:hyphenation tei:iNode tei:if
-			    tei:imprint tei:incident tei:index
-			    tei:interpGrp tei:interpretation tei:join
-			    tei:joinGrp tei:keywords tei:kinesic
-			    tei:langKnowledge tei:langUsage
-			    tei:layoutDesc tei:leaf tei:lg tei:linkGrp
-			    tei:list tei:listBibl tei:listChange
-			    tei:listEvent tei:listForest tei:listNym
-			    tei:listOrg tei:listPerson tei:listPlace
-			    tei:listRef tei:listRelation
-			    tei:listTranspose tei:listWit tei:location
-			    tei:locusGrp tei:macroSpec tei:metDecl
-			    tei:moduleRef tei:moduleSpec tei:monogr
-			    tei:msContents tei:msDesc tei:msIdentifier
-			    tei:msItem tei:msItemStruct tei:msPart
-			    tei:namespace tei:node tei:normalization
-			    tei:notatedMusic tei:notesStmt tei:nym
-			    tei:objectDesc tei:org tei:particDesc
-			    tei:performance tei:person tei:personGrp
-			    tei:physDesc tei:place tei:population
-			    tei:postscript tei:precision
-			    tei:profileDesc tei:projectDesc
-			    tei:prologue tei:publicationStmt
-			    tei:quotation tei:rdgGrp tei:recordHist
-			    tei:recording tei:recordingStmt
-			    tei:refsDecl tei:relatedItem tei:relation
-			    tei:relationGrp tei:remarks tei:respStmt
-			    tei:respons tei:revisionDesc tei:root
-			    tei:row tei:samplingDecl tei:schemaSpec
-			    tei:scriptDesc tei:scriptStmt tei:seal
-			    tei:sealDesc tei:segmentation
-			    tei:seriesStmt tei:set tei:setting
-			    tei:settingDesc tei:sourceDesc
-			    tei:sourceDoc tei:sp tei:spGrp tei:space
-			    tei:spanGrp tei:specGrp tei:specList
-			    tei:state tei:stdVals tei:subst
-			    tei:substJoin tei:superEntry
-			    tei:supportDesc tei:surface tei:surfaceGrp
-			    tei:table tei:tagsDecl tei:taxonomy
-			    tei:teiCorpus tei:teiHeader tei:terrain
-			    tei:text tei:textClass tei:textDesc
-			    tei:timeline tei:titlePage tei:titleStmt
-			    tei:trait tei:transpose tei:tree
-			    tei:triangle tei:typeDesc tei:vAlt
-			    tei:vColl tei:vDefault tei:vLabel
-			    tei:vMerge tei:vNot tei:vRange tei:valItem
-			    tei:valList tei:vocal"/>
-<xsl:param name="reencode">false</xsl:param>
-<xsl:param name="numberBackHeadings">true</xsl:param>
-<xsl:param name="numberFrontHeadings">true</xsl:param>
-<xsl:param name="spaceCharacter">\hspace*{1em}</xsl:param>
-<xsl:param name="classParameters">11pt,twoside</xsl:param>
-<xsl:param name="startNamespace"></xsl:param>
-<xsl:param name="tocNumberSuffix">.\ </xsl:param>
-<xsl:param name="numberSpacer">\ </xsl:param>
-<xsl:param name="specLinkDepth">1</xsl:param>
-<xsl:param name="exampleFont">DejaVu Sans Mono</xsl:param>
-<xsl:param name="typewriterFont">DejaVu Sans Mono</xsl:param>
-<xsl:param name="sansFont">DejaVu Sans Mono</xsl:param>
-<xsl:param name="romanFont">Linux Libertine O</xsl:param>
-<xsl:param name="chineseFont">Noto Sans CJK SC</xsl:param>
-<xsl:param name="koreanFont">Noto Sans CJK KR</xsl:param>
-<xsl:param name="japaneseFont">Noto Sans CJK JP</xsl:param>
+  <xsl:import href="/usr/share/xml/tei/stylesheet/latex/latex.xsl"/>
+  <xsl:output method="text"/>
+  <xsl:strip-space elements="tei:additional tei:address tei:adminInfo
+                             tei:altGrp tei:altIdentifier tei:analytic
+                             tei:app tei:appInfo tei:application
+                             tei:arc tei:argument tei:attDef
+                             tei:attList tei:availability tei:back
+                             tei:biblFull tei:biblStruct tei:bicond
+                             tei:binding tei:bindingDesc tei:body
+                             tei:broadcast tei:cRefPattern tei:calendar
+                             tei:calendarDesc tei:castGroup
+                             tei:castList tei:category tei:certainty
+                             tei:char tei:charDecl tei:charProp
+                             tei:choice tei:cit tei:classDecl
+                             tei:classSpec tei:classes tei:climate
+                             tei:cond tei:constraintSpec tei:correction
+                             tei:custodialHist tei:decoDesc
+                             tei:dimensions tei:div tei:div1 tei:div2
+                             tei:div3 tei:div4 tei:div5 tei:div6
+                             tei:div7 tei:divGen tei:docTitle tei:eLeaf
+                             tei:eTree tei:editionStmt
+                             tei:editorialDecl tei:elementSpec
+                             tei:encodingDesc tei:entry tei:epigraph
+                             tei:epilogue tei:equipment tei:event
+                             tei:exemplum tei:fDecl tei:fLib
+                             tei:facsimile tei:figure tei:fileDesc
+                             tei:floatingText tei:forest tei:front
+                             tei:fs tei:fsConstraints tei:fsDecl
+                             tei:fsdDecl tei:fvLib tei:gap tei:glyph
+                             tei:graph tei:graphic tei:group
+                             tei:handDesc tei:handNotes tei:history
+                             tei:hom tei:hyphenation tei:iNode tei:if
+                             tei:imprint tei:incident tei:index
+                             tei:interpGrp tei:interpretation tei:join
+                             tei:joinGrp tei:keywords tei:kinesic
+                             tei:langKnowledge tei:langUsage
+                             tei:layoutDesc tei:leaf tei:lg tei:linkGrp
+                             tei:list tei:listBibl tei:listChange
+                             tei:listEvent tei:listForest tei:listNym
+                             tei:listOrg tei:listPerson tei:listPlace
+                             tei:listRef tei:listRelation
+                             tei:listTranspose tei:listWit tei:location
+                             tei:locusGrp tei:macroSpec tei:metDecl
+                             tei:moduleRef tei:moduleSpec tei:monogr
+                             tei:msContents tei:msDesc tei:msIdentifier
+                             tei:msItem tei:msItemStruct tei:msPart
+                             tei:namespace tei:node tei:normalization
+                             tei:notatedMusic tei:notesStmt tei:nym
+                             tei:objectDesc tei:org tei:particDesc
+                             tei:performance tei:person tei:personGrp
+                             tei:physDesc tei:place tei:population
+                             tei:postscript tei:precision
+                             tei:profileDesc tei:projectDesc
+                             tei:prologue tei:publicationStmt
+                             tei:quotation tei:rdgGrp tei:recordHist
+                             tei:recording tei:recordingStmt
+                             tei:refsDecl tei:relatedItem tei:relation
+                             tei:relationGrp tei:remarks tei:respStmt
+                             tei:respons tei:revisionDesc tei:root
+                             tei:row tei:samplingDecl tei:schemaSpec
+                             tei:scriptDesc tei:scriptStmt tei:seal
+                             tei:sealDesc tei:segmentation
+                             tei:seriesStmt tei:set tei:setting
+                             tei:settingDesc tei:sourceDesc
+                             tei:sourceDoc tei:sp tei:spGrp tei:space
+                             tei:spanGrp tei:specGrp tei:specList
+                             tei:state tei:stdVals tei:subst
+                             tei:substJoin tei:superEntry
+                             tei:supportDesc tei:surface tei:surfaceGrp
+                             tei:table tei:tagsDecl tei:taxonomy
+                             tei:teiCorpus tei:teiHeader tei:terrain
+                             tei:text tei:textClass tei:textDesc
+                             tei:timeline tei:titlePage tei:titleStmt
+                             tei:trait tei:transpose tei:tree
+                             tei:triangle tei:typeDesc tei:vAlt
+                             tei:vColl tei:vDefault tei:vLabel
+                             tei:vMerge tei:vNot tei:vRange tei:valItem
+                             tei:valList tei:vocal"/>
+  <xsl:param name="reencode">false</xsl:param>
+  <xsl:param name="numberBackHeadings">true</xsl:param>
+  <xsl:param name="numberFrontHeadings">true</xsl:param>
+  <xsl:param name="spaceCharacter">\hspace*{1em}</xsl:param>
+  <xsl:param name="classParameters">11pt,twoside</xsl:param>
+  <xsl:param name="startNamespace"></xsl:param>
+  <xsl:param name="tocNumberSuffix">.\ </xsl:param>
+  <xsl:param name="numberSpacer">\ </xsl:param>
+  <xsl:param name="specLinkDepth">1</xsl:param>
+  <xsl:param name="exampleFont">DejaVu Sans Mono</xsl:param>
+  <xsl:param name="typewriterFont">DejaVu Sans Mono</xsl:param>
+  <xsl:param name="sansFont">DejaVu Sans Mono</xsl:param>
+  <xsl:param name="romanFont">Linux Libertine O</xsl:param>
+  <xsl:param name="chineseFont">Noto Sans CJK SC</xsl:param>
+  <xsl:param name="koreanFont">Noto Sans CJK KR</xsl:param>
+  <xsl:param name="japaneseFont">Noto Sans CJK JP</xsl:param>
 
 
   <xsl:variable name="docClass">book</xsl:variable>
@@ -161,7 +161,7 @@
 \def\sectionmark#1{\markright { \ifnum \c@secnumdepth >\z@
           \thesection. \ %
         \fi
-	#1}}
+        #1}}
 \def\egxmlcite#1{\raisebox{12pt}[0pt][0pt]{\parbox{.95\textwidth}{\raggedleft #1}}}
 \def\oddindex#1{{\bfseries\hyperpage{#1}}}
 \def\exampleindex#1{{\itshape\hyperpage{#1}}}
@@ -299,7 +299,7 @@
     </xsl:when>
     <xsl:otherwise>
       <xsl:call-template name="makePreamble-complex">
-	<xsl:with-param name="r" select="$r"/>
+        <xsl:with-param name="r" select="$r"/>
       </xsl:call-template>
     </xsl:otherwise>
   </xsl:choose>
@@ -308,12 +308,12 @@
   <xsl:choose>
     <xsl:when test="tei:head and not(@rend='display')">
       <xsl:if test="not(ancestor::tei:table)">
-	<xsl:text>\endfirsthead </xsl:text>
-	<xsl:text>\multicolumn{</xsl:text>
-	<xsl:value-of select="count(tei:row[1]/tei:cell)"/>
-	<xsl:text>}{c}{</xsl:text>
-	<xsl:apply-templates mode="ok" select="tei:head"/>
-	<xsl:text>(cont.)}\\\hline \endhead </xsl:text>
+        <xsl:text>\endfirsthead </xsl:text>
+        <xsl:text>\multicolumn{</xsl:text>
+        <xsl:value-of select="count(tei:row[1]/tei:cell)"/>
+        <xsl:text>}{c}{</xsl:text>
+        <xsl:apply-templates mode="ok" select="tei:head"/>
+        <xsl:text>(cont.)}\\\hline \endhead </xsl:text>
       </xsl:if>
       <xsl:text>\caption{</xsl:text>
       <xsl:apply-templates mode="ok" select="tei:head"/>
@@ -338,20 +338,20 @@
     <xsl:text> \par</xsl:text>
     <xsl:choose>
       <xsl:when test="@rend='wovenodd' or @rend='attList' or
-		      @rend='valList' or @rend='attDef'"> 
-	<xsl:text>\begin{small}\begin{tabular}</xsl:text>
-	<xsl:call-template name="makeTable"/>
-	<xsl:text>\end{tabular}\end{small}\par</xsl:text>
+                      @rend='valList' or @rend='attDef'"> 
+        <xsl:text>\begin{small}\begin{tabular}</xsl:text>
+        <xsl:call-template name="makeTable"/>
+        <xsl:text>\end{tabular}\end{small}\par</xsl:text>
       </xsl:when>
       <xsl:when test="ancestor::tei:table"> 
-	<xsl:text>\begin{tabular}</xsl:text>
-	<xsl:call-template  name="makeTable"/> 
-	<xsl:text>\end{tabular}</xsl:text>
+        <xsl:text>\begin{tabular}</xsl:text>
+        <xsl:call-template  name="makeTable"/> 
+        <xsl:text>\end{tabular}</xsl:text>
       </xsl:when>
       <xsl:otherwise> 
-	<xsl:text>\begin{longtable}</xsl:text>
-	<xsl:call-template name="makeTable"/>
-	<xsl:text>\end{longtable} \par</xsl:text>
+        <xsl:text>\begin{longtable}</xsl:text>
+        <xsl:call-template name="makeTable"/>
+        <xsl:text>\end{longtable} \par</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -437,7 +437,7 @@
 <xsl:template name="latexEnd">
 <xsl:text>\include{Guidelines-index}
 </xsl:text>
-<xsl:result-document href="Guidelines-index.tex" method="text" encoding="utf8">
+<xsl:result-document href="Guidelines-index.tex" method="text" encoding="UTF-8">
 \cleardoublepage
 \pdfbookmark[0]{Index}{INDEX}
 \hypertarget{INDEX}{}
@@ -450,7 +450,7 @@
     <xsl:if test="count(ancestor::tei:div)&lt;3">
       <xsl:number count="tei:div" format="i.1.1" level="multiple"/>
       <xsl:if test="$minimal='false'">
-	<xsl:value-of select="$numberSpacer"/>
+        <xsl:value-of select="$numberSpacer"/>
       </xsl:if>
     </xsl:if>
   </xsl:template>
@@ -460,9 +460,9 @@
     <xsl:value-of select="@xml:id"/>
     <xsl:text>}&#10;</xsl:text>
     <xsl:result-document 
-	href="Guidelines-{@xml:id}.tex" 
-	method="text" 
-	encoding="utf8">
+        href="Guidelines-{@xml:id}.tex" 
+        method="text" 
+        encoding="UTF-8">
     <xsl:apply-templates/>
     </xsl:result-document>
   </xsl:template>
@@ -472,9 +472,9 @@
 \include{Guidelines-toc} 
 </xsl:text>
     <xsl:result-document 
-	href="Guidelines-toc.tex" 
-	method="text" 
-	encoding="utf8">
+        href="Guidelines-toc.tex" 
+        method="text" 
+        encoding="UTF-8">
       \tableofcontents
     </xsl:result-document>
   </xsl:template>
@@ -484,9 +484,9 @@
 \include{Guidelines-titlepage} 
 </xsl:text>
     <xsl:result-document 
-	href="Guidelines-titlepage.tex" 
-	method="text" 
-	encoding="utf8">
+        href="Guidelines-titlepage.tex" 
+        method="text" 
+        encoding="UTF-8">
   \begin{titlepage}
 \begin{center}
 \vfill
@@ -537,5 +537,3 @@
 
 
 </xsl:stylesheet>
-
-
