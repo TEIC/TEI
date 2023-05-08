@@ -53,6 +53,11 @@
 
   <xsl:variable name="revisionDesc">
     <revisionDesc>
+      <change who="#sbauman.emt" when="2023-04-04">
+	We will soon not allow more than 1 child of <gi>content</gi>,
+	so updated the content model of <gi>schemaSpec</gi> to have
+	only 1 child (in this case, <gi>sequence</gi>).
+      </change>
       <change who="#sbauman.emt" when="2022-06-25">
         Since <ref
         target="https://github.com/TEIC/TEI/issues/1735">TEI ticket
@@ -721,12 +726,14 @@
 
               <elementSpec module="tagdocs" ident="schemaSpec" mode="change">
                 <content>
-                  <elementRef key="gloss" minOccurs="0" maxOccurs="1"/>
-                  <elementRef key="desc"  minOccurs="1" maxOccurs="1"/>
-                  <alternate minOccurs="0" maxOccurs="unbounded">
-                    <classRef key="model.oddRef"/>
-                    <classRef key="model.oddDecl"/>
-                  </alternate>
+		  <sequence>
+                    <elementRef key="gloss" minOccurs="0" maxOccurs="1"/>
+                    <elementRef key="desc"  minOccurs="1" maxOccurs="1"/>
+                    <alternate minOccurs="0" maxOccurs="unbounded">
+                      <classRef key="model.oddRef"/>
+                      <classRef key="model.oddDecl"/>
+                    </alternate>
+		  </sequence>
                 </content>
                 <constraintSpec scheme="schematron" ident="required-modules">
                   <gloss>required modules</gloss>
