@@ -78,7 +78,7 @@ html-web.stamp:  check.stamp p5.xml  Utilities/guidelines.xsl.model
 	@# remove vestiges of previous run
 	rm -rf Guidelines-web
 	@# generate XSL stylesheet by modifying paths in our model stylesheet
-	java -jar Utilities/lib/${SAXONJAR} -s:Utilities/guidelines.xsl.model -xsl:Utilities/guidelines_model_2_executable.xslt -o:Utilities/guidelines.xsl
+	java -jar Utilities/lib/${SAXONJAR} -s:Utilities/guidelines.xsl.model -xsl:Utilities/guidelines_model_2_executable.xslt -o:Utilities/guidelines.xsl XSL="${XSL}"
 	@# for each language, create a subdirectory and pre-populate it with CSS, source, and web navigation stuff
 	for i in $(ALLLANGUAGES) ;do \
 		mkdir -p Guidelines-web/$$i/html; \
@@ -139,7 +139,7 @@ fonttest:
 pdf-init: check.stamp p5.xml Utilities/guidelines-latex.xsl
 	@echo check if XeLaTeX exist
 	@command -v xelatex || exit 1
-	java -jar Utilities/lib/${SAXONJAR} -s:Utilities/guidelines-latex.xsl -xsl:Utilities/guidelines_model_2_executable.xslt -o:Utilities/guidelines.xsl
+	java -jar Utilities/lib/${SAXONJAR} -s:Utilities/guidelines.xsl.model -xsl:Utilities/guidelines_model_2_executable.xslt -o:Utilities/guidelines.xsl XSL="${XSL}"
 	@echo BUILD: build Lite version of Guidelines, then LaTeX version of Guidelines from Lite, then run to PDF using XeLaTeX
 	@echo Make sure you have Junicode and Noto CJK fonts installed
 	${ANT} -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfonce

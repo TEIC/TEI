@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version="3.0" >
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  version="3.0" >
 
   <xsl:param name="input" select="tokenize( base-uri(/), '/')[last()]"/>
   <xsl:output method="xml" indent="yes" omit-xml-declaration="no"/>
   <xsl:mode on-no-match="shallow-copy"/>
+  <xsl:param name="XSL" select="'/usr/share/xml/tei/stylesheet'" as="xs:string"/>
 
   <xsl:template match="xsl:import/@href">
     <xsl:attribute name="href" select="
                    replace( .,
-                            'http://www.tei-c.org/release/xml/tei/stylesheet/',
-                            '/usr/share/xml/tei/stylesheet/'
+                            'http://www.tei-c.org/release/xml/tei/stylesheet',
+                            $XSL
                           ) "/>
   </xsl:template>
 
