@@ -9,11 +9,14 @@
   <xsl:param name="XSL" select="'/usr/share/xml/tei/stylesheet'" as="xs:string"/>
 
   <xsl:template match="xsl:import/@href">
+    <!-- 
+      need to overwrite both variants of local and remote imports
+      with the provided $XSL parameter
+    -->
     <xsl:attribute name="href" select="
-                   replace( .,
-                            'http://www.tei-c.org/release/xml/tei/stylesheet',
-                            $XSL
-                          ) "/>
+      . 
+      => replace('http://www.tei-c.org/release/xml/tei/stylesheet', $XSL) 
+      => replace('/usr/share/xml/tei/stylesheet', $XSL)"/>
   </xsl:template>
 
   <xsl:template match="/xsl:stylesheet | /*/xsl:strip-space | /*/xsl:template | /*/xsl:function" expand-text="yes">
