@@ -733,6 +733,15 @@ $Id$
             </constraint>
           </constraintSpec>
         </elementSpec>
+
+	<!-- Per TEI ticket #2285, restrict where <altIdent> can go in GLs. -->
+	<elementSpec ident="altIdent" module="tagdocs" mode="change">
+	  <constraintSpec scheme="schematron" ident="restricted-altIdent-placement">
+	    <constraint>
+	      <sch:assert test="../tei:elementSpec|../tei:attDef|../tei:valItem">The &lt;altIdent> element should only be used as a child of &lt;elementSpec>, &lt;attDef>, or &lt;valItem>.</sch:assert>
+	    </constraint>
+	  </constraintSpec>
+	</elementSpec>
         
         <dataSpec ident="teidata.temporal.working" mode="change">
           <constraintSpec ident="not_in_future" scheme="schematron">
