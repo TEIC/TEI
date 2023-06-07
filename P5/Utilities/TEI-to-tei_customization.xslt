@@ -70,7 +70,7 @@
 	  type="class">model.identSynonyms</name> (leaving that class
 	  with only <gi>gloss</gi> and <gi>equiv</gi>, i.e. the same
 	  as <name type="class">model.identEquiv</name>, sigh) and add
-	  it back to XXXXXX.</item>
+	  it back to <gi>attDef</gi> and <gi>valItem</gi>.</item>
 	</list>
       </change>
       <change who="#sbauman.emt" when="2023-04-04">
