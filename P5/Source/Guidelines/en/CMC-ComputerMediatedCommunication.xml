@@ -245,17 +245,19 @@ See the file COPYING.txt for details.
 
       <p>As shown in Example <ptr target="#CMCcmcpostatts"/> above, nested threads of posts can be
         encoded sequentially, while the attribute <att>indentLevel</att> of <gi>post</gi> is used to
-        keep track of the original nesting depth. This is especially meant for CMC text obtained from a wiki code or HTML source, 
-        where it not always entirely clear whether the indentation information actually reflects a reply action from a user.</p>
+        keep track of the original nesting depth. This is especially meant for CMC text obtained
+        from a wiki code or HTML source, where it not always entirely clear whether the indentation
+        information actually reflects a reply action from a user.</p>
 
       <p>In genres where technical reply information is available for each post, reply links can be
         encoded using the <att>replyTo</att> attribute on <gi>post</gi> elements, as shown in
         example <ptr target="#e9"/>. The network of all reply links will then also form a threaded
-        structure, i.e. threads can be reconstructed from it and need not explicitly be encoded.<!-- Umm…
-	they *are* explicitly encoded, as @replyTo on <post>! —Syd, 2022-12-12 --></p>
+        structure, and visual indentations can be reconstructed from it and need not explicitly be encoded.<!-- Umm…
+	they *are* explicitly encoded, as @replyTo on <post>! —Syd, 2022-12-12 -->
+        <!-- changed 'threads' to 'visual indentations' to make it better - Harald 2023-06-15 --></p>
 
-      <p>Threads may also be explicitly encoded as nested <gi>div</gi> elements as in the
-        following skeleton.</p>
+      <p>Threads may also be explicitly encoded as nested <gi>div</gi> elements as in the following
+        skeleton.</p>
 
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
         <div type="thread" n="0">
@@ -270,27 +272,27 @@ See the file COPYING.txt for details.
         </div>
       </egXML>
 
-    <p>Using this encoding stratety, the thread from Example <ptr target="#e9"/>
-    could be encoded as follows.</p>
+      <p>Using this encoding stratety, the thread from Example <ptr target="#e9"/> could be encoded
+        as follows.</p>
 
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
-      <div type="thread" n="0">
-        <post type="comment" xml:id="cmc_post01" who="#u7" when-iso="2015-07-29T21:44">
-          <p>Es hat den Anschein, ...</p>
-        </post>
-        <div type="thread" n="1">
-          <post type="comment" xml:id="cmc_post02" who="#u8" when-iso="2015-07-30T19:11">
-            <p>Nein Nein, an den Handwerkern kann es ...</p>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
+        <div type="thread" n="0">
+          <post type="comment" xml:id="cmc_post01" who="#u7" when-iso="2015-07-29T21:44">
+            <p>Es hat den Anschein, ...</p>
           </post>
-          <div type="thread" n="2">
-            <post type="comment" xml:id="cmc_post03" who="#u8" when-iso="2015-07-30T19:26">
-              <p>Stahlkunstruktionen dacht ich mal, ....</p>
+          <div type="thread" n="1">
+            <post type="comment" xml:id="cmc_post02" who="#u8" when-iso="2015-07-30T19:11">
+              <p>Nein Nein, an den Handwerkern kann es ...</p>
             </post>
+            <div type="thread" n="2">
+              <post type="comment" xml:id="cmc_post03" who="#u8" when-iso="2015-07-30T19:26">
+                <p>Stahlkunstruktionen dacht ich mal, ....</p>
+              </post>
+            </div>
           </div>
         </div>
-      </div>
-    </egXML>
-      
+      </egXML>
+
     </div>
 
     <div xml:id="CMCmetadata">
@@ -355,304 +357,293 @@ See the file COPYING.txt for details.
         </p>
       </div>
 
-    <div xml:id="CMCDocumentSource">
-      <head>Documenting the source of a CMC document</head>
+      <div xml:id="CMCDocumentSource">
+        <head>Documenting the source of a CMC document</head>
 
-      <p>A CMC document may be chat log, a discussion page or thematical thread of posts and is
-      encode within a <gi>TEI</gi> element. Among the metadata to be recorded in the
-      <gi>sourceDesc</gi> of its <gi>teiHeader</gi> are, if available, its title, author or
-      owner, its URL, the date of its creation and/or the date of its last change (i.e. the time
-      when the last post was added to it). </p>
+        <p>A CMC document may be a chat logfile, a discussion page or thematical thread of posts and is
+          encoded within a <gi>TEI</gi> element. Among the metadata to be recorded in the
+            <gi>sourceDesc</gi> of its <gi>teiHeader</gi> are, if available, its title, author or
+          owner, its URL, the date of its creation and/or the date of its last change (i.e. the time
+          when the last post was added to it). </p>
 
-      <p>The following example is the <gi>sourceDesc</gi> of a YouTube page that contained a video
-      and user comments to the video (which are encoded in the <gi>body</gi> of the text as
-      posts). The metadata contain a URL reference to the video and the YouTube channel that
-      posted the video in <gi>relatedItem</gi> elements. The date when the page was created is
-      not known. The video itself is not contained in the corpus.
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <sourceDesc>
-          <bibl>
-            <title type="main">Iron Man 3 in 3D (Official Trailer German) Parodie</title>
-            <respStmt>
-              <name type="user">DieAussenseiter</name>
-              <resp>posted video, created page</resp>
-            </respStmt>
-            <distributor>YouTube</distributor>
-            <ptr type="url" target="https://www.youtube.com/watch?v=T-WU_3-0UpU"/>
-            <series>
-              <title>DieAussenseiter’s Channel</title>
-              <ptr target="https://www.youtube.com/watch?v=UCKn1vL4Ou4DKu0BlcK3NlDQ"/>
-            </series>
-          </bibl>
-        </sourceDesc>
-      </egXML>
-      </p>
+        <p>The following example is the <gi>sourceDesc</gi> of a YouTube page that contained a video
+          and user comments to the video (which are encoded in the <gi>body</gi> of the text as
+          posts). The metadata contain a URL reference to the video and the YouTube channel that
+          posted the video in <gi>relatedItem</gi> elements. The date when the page was created is
+          not known. The video itself is not contained in the corpus. <egXML
+            xmlns="http://www.tei-c.org/ns/Examples">
+            <sourceDesc>
+              <bibl>
+                <title type="main">Iron Man 3 in 3D (Official Trailer German) Parodie</title>
+                <respStmt>
+                  <name type="user">DieAussenseiter</name>
+                  <resp>posted video, created page</resp>
+                </respStmt>
+                <distributor>YouTube</distributor>
+                <ptr type="url" target="https://www.youtube.com/watch?v=T-WU_3-0UpU"/>
+                <series>
+                  <title>DieAussenseiter’s Channel</title>
+                  <ptr target="https://www.youtube.com/watch?v=UCKn1vL4Ou4DKu0BlcK3NlDQ"/>
+                </series>
+              </bibl>
+            </sourceDesc>
+          </egXML>
+        </p>
 
-      <p>The following example is the <gi>sourceDesc</gi> of a Wikipedia talk page. Note that the
-      reference to the Wikipedia article that the discussion is about is given in the
-      <gi>relatedItem</gi> element.
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <sourceDesc>
-          <bibl>
-            <title type="main">Diskussion:FKM-Richtlinie</title>
-            <author><name type="user">OnkelSchuppig</name>, et al.</author>
-            <publisher>Wikimedia Foundation, Inc.</publisher>
-            <ptr target="https://de.wikipedia.org/wiki/Diskussion:FKM-Richtlinie" type="page_url" targetLang="de"/>
-            <date type="last-change" when="2013-09-14T17:04:48Z"/>
-            <idno type="wikipedia-id">7632113</idno>
-            <relatedItem type="articleLink">
-              <ref n="5138958" target="https://de.wikipedia.org/wiki/FKM-Richtlinie" targetLang="de">FKM-Richtlinie</ref>
-            </relatedItem>
-          </bibl>
-        </sourceDesc>
-      </egXML>
-      </p>
-    </div>
+        <p>The following example is the <gi>sourceDesc</gi> of a Wikipedia talk page. Note that the
+          reference to the Wikipedia article that the discussion is about is given in the
+            <gi>relatedItem</gi> element. <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <sourceDesc>
+              <bibl>
+                <title type="main">Diskussion:FKM-Richtlinie</title>
+                <author><name type="user">OnkelSchuppig</name>, et al.</author>
+                <publisher>Wikimedia Foundation, Inc.</publisher>
+                <ptr target="https://de.wikipedia.org/wiki/Diskussion:FKM-Richtlinie"
+                  type="page_url" targetLang="de"/>
+                <date type="last-change" when="2013-09-14T17:04:48Z"/>
+                <idno type="wikipedia-id">7632113</idno>
+                <relatedItem type="articleLink">
+                  <ref n="5138958" target="https://de.wikipedia.org/wiki/FKM-Richtlinie"
+                    targetLang="de">FKM-Richtlinie</ref>
+                </relatedItem>
+              </bibl>
+            </sourceDesc>
+          </egXML>
+        </p>
+      </div>
 
-    <div xml:id="CMCSampling">
-      <!-- sampling declaration -->
-      <head>Documenting the sampling of CMC data</head>
+      <div xml:id="CMCSampling">
+        <!-- sampling declaration -->
+        <head>Documenting the sampling of CMC data</head>
 
-      <p>The documentation of how the data were collected, e.g. how
-      it was scraped or sampled from the web, or downloaded from a
-      server, should be recorded in the <gi>samplingDecl</gi>.  Like
-      other metadata, information about sampling should be recorded at
-      the highest level applicable. That is, if the information
-      applies to an entire corpus, the <gi>samplingDecl</gi> should
-      appear in the <gi>teiHeader</gi> of the corpus level; if the
-      information is different for each document, it should appear in
-      the <gi>teiHeader</gi> of the document level texts.</p>
-      <p>The sampling information typically considered of interest
-      consists of at at least the following four components:</p>
-      <list>
-        <item>interface: The API that was used for the download,
-        possibly encoded as a <tag>name type="API"</tag>;</item>
-        <item>client: The client or other tool that was used for the
-        download, possibly encoded as a <tag>name type="client"</tag>;</item>
-        <item>query: The query or command used for the download,
-        possibly encoded with a <tag>ptr type="query"</tag> when it
-        is a URI, or a <gi>code</gi> when it is a command;</item>
-        <item>date: The date of the download.</item>
-      </list>
+        <p>The documentation of how the data were collected, e.g. how it was scraped or sampled from
+          the web, or downloaded from a server, should be recorded in the <gi>samplingDecl</gi>.
+          Like other metadata, information about sampling should be recorded at the highest level
+          applicable. That is, if the information applies to an entire corpus, the
+            <gi>samplingDecl</gi> should appear in the <gi>teiHeader</gi> of the corpus level; if
+          the information is different for each document, it should appear in the <gi>teiHeader</gi>
+          of the document level texts.</p>
+        <p>The sampling information typically considered of interest consists of at least the
+          following four components:</p>
+        <list>
+          <item>interface: The API that was used for the download, possibly encoded as a <tag>name
+              type="API"</tag>;</item>
+          <item>client: The client or other tool that was used for the download, possibly encoded as
+            a <tag>name type="client"</tag>;</item>
+          <item>query: The query or command used for the download, possibly encoded with a <tag>ptr
+              type="query"</tag> when it is a URI, or a <gi>code</gi> when it is a command;</item>
+          <item>date: The date of the download.</item>
+        </list>
 
-      <p>The information may be provided as prose in the
-      <gi>samplingDecl</gi>. For example, in the case of a Twitter
-      corpus it may look like the following:
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <samplingDecl>
-          <p>Sampled using the
-          <name type="API">Twitter Filtered stream v2-API</name>
-          (see <ptr type="APIdoc" target="https://developer.twitter.com/en/docs/twitter-api/tweets/filtered-stream/api-reference/get-tweets-search-stream"/>)
-          Filtered for the German language and the following countries: Germany, Austria, Belgium, Switzerland, Denmark, and Luxemburg.
-          Downloaded on <date when="2022-12-12">Mon 12 Dec 22</date> using the command <code><?tei winita HARALD FIX THIS?></code>.</p>
-        </samplingDecl>
-      </egXML>
-      </p>
+        <p>The information may be provided as prose in the <gi>samplingDecl</gi>. For example, in
+          the case of a Twitter corpus it may look like the following: <egXML
+            xmlns="http://www.tei-c.org/ns/Examples">
+            <samplingDecl>
+              <p>Sampled using the <name type="API">Twitter Filtered stream v2-API</name> (see <ptr
+                  type="APIdoc"
+                  target="https://developer.twitter.com/en/docs/twitter-api/tweets/filtered-stream/api-reference/get-tweets-search-stream"
+                />) Filtered for the German language and the following countries: Germany, Austria,
+                Belgium, Switzerland, Denmark, and Luxemburg. Downloaded on <date when="2022-12-12"
+                  >Mon 12 Dec 22</date> using the command
+                  <code>requests.get("https://api.twitter.com/2/tweets/search/stream",
+                  headers=headers, params=params, stream=True,)</code> in the python script <name
+                  type="script">collectFilteredTwitterStream.py</name>. </p>
+            </samplingDecl>
+          </egXML>
+        </p>
 
-      <p>The <gi>samplingDecl</gi> of a Usenet Newsgroup corpus:
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <samplingDecl>
-          <p>Download from the news.individual.de server on 2016-01-15 using nntp client in Python</p>
-        </samplingDecl>
-      </egXML>
-      </p>
+        <p>The <gi>samplingDecl</gi> of a Usenet Newsgroup corpus: <egXML
+            xmlns="http://www.tei-c.org/ns/Examples">
+            <samplingDecl>
+              <p>Download from the news.individual.de server on 2016-01-15 using nntp client in
+                Python</p>
+            </samplingDecl>
+          </egXML>
+        </p>
 
-    </div>
+      </div>
 
-    <div xml:id="CMCParticipants">
-      <head>Participants</head>
-      <!-- Participants -->
+      <div xml:id="CMCParticipants">
+        <head>Participants</head>
+        <!-- Participants -->
 
-      <p>A <gi>listPerson</gi> may be used to maintain an inventory of
-      users and bots taking part in a CMC interaction, along with
-      information about them. As with other such contextual
-      information, it may be kept in the <gi>teiHeader</gi> (where it
-      would occur in a <gi>particDesc</gi> within the
-      <gi>profileDesc</gi>) or in a separate document completely. In
-      either case, an encoded <gi>post</gi> may then be linked to its
-      author by use of the <att>who</att> attribute.</p>
-      <p>In the following example, a list of participants is
-      maintained in a <gi>teiHeader</gi>.
-      <?tei winitia Could we put some actual information into these
+        <p>A <gi>listPerson</gi> may be used to maintain an inventory of users and bots taking part
+          in a CMC interaction, along with information about them. As with other such contextual
+          information, it may be kept in the <gi>teiHeader</gi> (where it would occur in a
+            <gi>particDesc</gi> within the <gi>profileDesc</gi>) or in a separate document
+          completely. In either case, an encoded <gi>post</gi> may then be linked to its author by
+          use of the <att>who</att> attribute.</p>
+        <p>In the following example, a list of participants is maintained in a <gi>teiHeader</gi>. <?tei winitia Could we put some actual information into these
 	<person> elements? Even if nothing but a made-up e-mail
 	address, seems to me it would better show why this is a useful
 	thing to do. —Syd, 2022-12-12 ?>
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
-	<!-- In the <teiHeader>: -->
-        <profileDesc>
-          <particDesc>
-            <listPerson>
-              <person role="user" xml:id="cmc_user_01">
-                <persName type="userName">M</persName>
-                <note type="link">/wiki/User:M</note>
-              </person>
-              <!-- … more persons … -->
-              <person role="user" xml:id="cmc_user_06">
-                <persName type="userName">P</persName>
-                <note type="link">/wiki/User:P</note>
-              </person>
-              <person role="user" xml:id="cmc_user_07">
-                <persName type="userName">PKP</persName>
-                <note type="link">/wiki/User:Pi</note>
-              </person>
-            </listPerson>
-          </particDesc>
-        </profileDesc>
-	<!-- In the <body>: -->
-	<div type="wiki_discussion_page" n="073">
-	  <!-- 4 other <post>s -->
-	  <post modality="written" xml:id="cmc_post04" indentLevel="1"
-		replyTo="#cmc_post_073.004" who="#cmc_user_06">
-            <p>Those haven't happened. If they do, we can revisit the concern.</p>
-	    <signed generatedBy="template" rend="noLineBreak">
-	      <ref target="/wiki/User:P">P</ref>
-              <date>01:35, 8 April 2014 (UTC)</date>
-	    </signed>
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <!-- In the <teiHeader>: -->
+            <profileDesc>
+              <particDesc>
+                <listPerson>
+                  <person role="user" xml:id="cmc_user_01">
+                    <persName type="userName">M</persName>
+                    <note type="link">/wiki/User:M</note>
+                  </person>
+                  <!-- … more persons … -->
+                  <person role="user" xml:id="cmc_user_06">
+                    <persName type="userName">P</persName>
+                    <note type="link">/wiki/User:P</note>
+                  </person>
+                  <person role="user" xml:id="cmc_user_07">
+                    <persName type="userName">PKP</persName>
+                    <note type="link">/wiki/User:Pi</note>
+                  </person>
+                </listPerson>
+              </particDesc>
+            </profileDesc>
+            <!-- In the <body>: -->
+            <div type="wiki_discussion_page" n="073">
+              <!-- 4 other <post>s -->
+              <post modality="written" xml:id="cmc_post04" indentLevel="1"
+                replyTo="#cmc_post_073.004" who="#cmc_user_06">
+                <p>Those haven't happened. If they do, we can revisit the concern.</p>
+                <signed generatedBy="template" rend="noLineBreak">
+                  <ref target="/wiki/User:P">P</ref>
+                  <date>01:35, 8 April 2014 (UTC)</date>
+                </signed>
+              </post>
+            </div>
+          </egXML>
+        </p>
+        <p>In the following version of the <gi>body</gi> portion of the same example, the list of
+          interactants is stored in a separate file (in this case the file <name type="file"
+            >userList.xml</name> in the same directory). <egXML
+            xmlns="http://www.tei-c.org/ns/Examples">
+            <!-- In the <body>: -->
+            <div type="wiki_discussion_page" n="073">
+              <!-- 4 other <post>s -->
+              <post modality="written" xml:id="cmc_post05" indentLevel="1"
+                replyTo="#cmc_post_073.004" who="./userList.xml#cmc_user_06">
+                <p>Those haven't happened. If they do, we can revisit the concern.</p>
+                <signed generatedBy="template" rend="noLineBreak">
+                  <ref target="/wiki/User:P">P</ref>
+                  <date>01:35, 8 April 2014 (UTC)</date>
+                </signed>
+              </post>
+            </div>
+          </egXML> Alternatively, a <gi>prefixDef</gi> may be used to declare a prefix which can be
+          used in conjunction with the value of <att>who</att> to generate a complete URI, thus
+          making the values of <att>who</att> shorter, less error-prone, and easier to maintain. For
+          example, the prefix <code>uL:</code> could be used to map the value <val>uL:06</val> to
+            <code>file:/userList.xml#cmc_user_06</code>. See <ptr target="#SAPU"/> for more
+          information on establishing prefix definitions.</p>
+
+        <p>This indirection — using a <gi>listPerson</gi>, particularly one in a separate file, to
+          store information about the users involved in a CMC interaction — is particularly useful
+          when there is both a need to keep such information locally, and to remove it (i.e., to
+            <soCalled>anonymize</soCalled> the data) when the data are published or shared with
+          other researchers.</p>
+
+      </div>
+
+      <div xml:id="CMCTimeline">
+        <head>Timeline</head>
+
+        <p>From most CMC environments, user posts come provided with a timestamp marking the time
+          (often down to the the second) when the post arrived and was registered at the CMC server.
+          In the display of chat interactions, for instance, the time is automatically added by the
+          system and usually precedes or follows the actual content of the post. In Wikipedia talk,
+          a timestamp is automatically added when the user inserts his or her signature. Timestamps
+          in the text body can be encoded using the elements <gi>date</gi> or <gi>time</gi>. A
+          normalized version of the time can then be given in the attribute <att>when</att> if
+          available or reconstructible.</p>
+
+        <!-- ex. from Dortmund chat corpus, example for cmc-core -->
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <post modality="written" rend="color:black" who="#f2213001.A06" xml:id="cmc_post06">
+            <time generatedBy="system">21:52</time> das ist auf jedenfall krankheit</post>
+        </egXML>
+
+        <!-- from wiki example talk page Astronomical Object used for cmc-core: anonymised and modified a bit -->
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <post modality="written" xml:id="cmc_post07" indentLevel="1" who="#u006" synch="#t006">
+            <p>Those haven't happened. If they do, we can revisit the concern. </p>
+            <signed generatedBy="template"><ref target="/wiki/User:P">P</ref>
+              <date when="2014-04-08T01:35:00Z">01:35, 8 April 2014 (UTC)</date></signed>
           </post>
-	</div>
-      </egXML>
-      </p>
-      <p>In the following version of the <gi>body</gi> portion of the
-      same example, the list of interactants is stored in a separate
-      file (in this case the file <name
-      type="file">userList.xml</name> in the same directory).
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
-	<!-- In the <body>: -->
-	<div type="wiki_discussion_page" n="073">
-	  <!-- 4 other <post>s -->
-	  <post modality="written" xml:id="cmc_post05" indentLevel="1"
-		replyTo="#cmc_post_073.004" who="./userList.xml#cmc_user_06">
-            <p>Those haven't happened. If they do, we can revisit the concern.</p>
-	    <signed generatedBy="template" rend="noLineBreak">
-	      <ref target="/wiki/User:P">P</ref>
-              <date>01:35, 8 April 2014 (UTC)</date>
-	    </signed>
+        </egXML>
+
+        <p>Alternatively, and similar to the encoding of transcripts of spoken utterances (REF
+          chapter 8), all timestamps of a document can be collected in <gi>when</gi> elements in a
+            <gi>timeline</gi> element in the <gi>teiHeader</gi>, most suitably under
+            <gi>interaction</gi>. under the <gi>textDesc</gi> in the <gi>profileDesc</gi>.</p>
+
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <profileDesc>
+            <particDesc>
+              <listPerson>
+                <person role="user" xml:id="u001">
+                  <persName type="userName">M</persName>
+                  <note type="link">/wiki/User:M</note>
+                </person>
+                <!-- more persons -->
+                <person role="user" xml:id="u006">
+                  <persName type="userName">P</persName>
+                  <note type="link">/wiki/User:P</note>
+                </person>
+                <person role="user" xml:id="u007">
+                  <persName type="userName">PKP</persName>
+                  <note type="link">/wiki/User:Pi</note>
+                </person>
+              </listPerson>
+            </particDesc>
+            <textDesc>
+              <channel/>
+              <constitution/>
+              <derivation/>
+              <domain/>
+              <factuality/>
+              <interaction>
+                <timeline>
+                  <when xml:id="t001" rend="19:56, 23 March 2011 (UTC)"/>
+                  <when xml:id="t002" rend="21:22, 14 June 2011 (UTC)"/>
+                  <when xml:id="t003" rend="23:28, 14 June 2011 (UTC)"/>
+                  <when xml:id="t004" rend="07:20, 2 July 2011 (UTC)"/>
+                  <when xml:id="t005" rend="01:00, 21 July 2011 (UTC)"/>
+                  <when xml:id="t006" rend="01:35, 8 April 2014 (UTC)"/>
+                </timeline>
+              </interaction>
+              <preparedness/>
+              <purpose/>
+            </textDesc>
+          </profileDesc>
+        </egXML>
+
+        <p>When a timeline is present in the <gi>teiHeader</gi>, the individual posts can be linked
+          to it via the <att>synch</att> attribute as in the follwing alternative encoding of the
+          Wikipedia talk example above. Removing timestamps from the text body can also help meet
+          requirements of text anonymisation. The <gi>particDesc</gi> and the <gi>timeline</gi> can
+          then for instance be kept in a separate file not to be distributed with the corpus.</p>
+
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="e10">
+          <post modality="written" xml:id="cmc_post08" indentLevel="1" who="#u006" synch="#t006">
+            <p>Those haven't happened. If they do, we can revisit the concern. </p>
+            <signed generatedBy="template">[_DELETED-SIGNATURE_] <date synch="#t007"
+                >[_DELETED-TIMESTAMP_]</date></signed>
           </post>
-	</div>
-      </egXML>
-      Althernatively, a <gi>prefixDef</gi> may be used to declare a
-      prefix which can be used in conjunction with the value of
-      <att>who</att> to generate a complete URI, thus making the
-      values of <att>who</att> shorter, less error-prone, and easier
-      to maintain. For example, the prefix <code>uL:</code> could be
-      used to map the value <val>uL:06</val> to
-      <code>file:/userList.xml#cmc_user_06</code>. See <ptr
-      target="#SAPU"/> for more information on establishing prefix
-      defintions.</p>
+        </egXML>
 
-      <p>This indirection — using a <gi>listPerson</gi>, particularly
-      one in a separate file, to store information about the users
-      involved in a CMC interaction — is particularly useful when
-      there is both a need to keep such information locally, and to
-      remove it (i.e., to <soCalled>anonymize</soCalled> the data)
-      when the data are published or shared with other
-      researchers.</p>
+      </div>
 
-    </div>
-
-    <div xml:id="CMCTimeline">
-      <head>Timeline</head>
-      
-      <p>From most CMC environments, user posts come provided with a timestamp marking the time
-      (often down to the the second) when the post arrived and was registered at the CMC server.
-      In the display of chat interactions, for instance, the time is automatically added by the
-      system and usually precedes or follows the actual content of the post. In Wikipedia talk,
-      a timestamp is automatically added when the user inserts his or her signature. Timestamps
-      in the text body can be encoded using the elements <gi>date</gi> or <gi>time</gi>. A
-      normalized version of the time can then be given in the attribute <att>when</att> if
-      available or reconstructible.</p>
-
-      <!-- ex. from Dortmund chat corpus, example for cmc-core -->
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <post modality="written" rend="color:black" who="#f2213001.A06" xml:id="cmc_post06">
-        <time generatedBy="system">21:52</time> das ist auf jedenfall krankheit</post>
-      </egXML>
-
-      <!-- from wiki example talk page Astronomical Object used for cmc-core: anonymised and modified a bit -->
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <post modality="written" xml:id="cmc_post07" indentLevel="1" who="#u006" synch="#t006">
-          <p>Those haven't happened. If they do, we can revisit the concern. </p>
-          <signed
-            generatedBy="template"><ref target="/wiki/User:P">P</ref>
-            <date when="2014-04-08T01:35:00Z">01:35, 8 April 2014 (UTC)</date></signed>
-        </post>
-      </egXML>
-
-      <p>Alternatively, and similar to the encoding of transcripts of spoken utterances (REF
-      chapter 8), all timestamps of a document can be collected in <gi>when</gi> elements in a
-      <gi>timeline</gi> element in the <gi>teiHeader</gi>, most suitably under
-      <gi>interaction</gi>. under the <gi>textDesc</gi> in the <gi>profileDesc</gi>.</p>
-
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <profileDesc>
-          <particDesc>
-            <listPerson>
-              <person role="user" xml:id="u001">
-                <persName type="userName">M</persName>
-                <note type="link">/wiki/User:M</note>
-              </person>
-              <!-- more persons -->
-              <person role="user" xml:id="u006">
-                <persName type="userName">P</persName>
-                <note type="link">/wiki/User:P</note>
-              </person>
-              <person role="user" xml:id="u007">
-                <persName type="userName">PKP</persName>
-                <note type="link">/wiki/User:Pi</note>
-              </person>
-            </listPerson>
-          </particDesc>
-          <textDesc>
-            <channel/>
-            <constitution/>
-            <derivation/>
-            <domain/>
-            <factuality/>
-            <interaction>
-              <timeline>
-                <when xml:id="t001" rend="19:56, 23 March 2011 (UTC)"/>
-                <when xml:id="t002" rend="21:22, 14 June 2011 (UTC)"/>
-                <when xml:id="t003" rend="23:28, 14 June 2011 (UTC)"/>
-                <when xml:id="t004" rend="07:20, 2 July 2011 (UTC)"/>
-                <when xml:id="t005" rend="01:00, 21 July 2011 (UTC)"/>
-                <when xml:id="t006" rend="01:35, 8 April 2014 (UTC)"/>
-              </timeline>
-            </interaction>
-            <preparedness/>
-            <purpose/>
-          </textDesc>
-        </profileDesc>
-      </egXML>
-
-      <p>When a timeline is present in the <gi>teiHeader</gi>, the individual posts can be linked
-      to it via the <att>synch</att> attribute as in the follwing alternative encoding of the
-      Wikipedia talk example above. Removing timestamps from the text body can also help meet
-      requirements of text anonymisation. The <gi>particDesc</gi> and the <gi>timeline</gi> can
-      then for instance be kept in a separate file not to be distributed with the corpus.</p>
-
-      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="e10">
-        <post modality="written" xml:id="cmc_post08" indentLevel="1" who="#u006" synch="#t006">
-          <p>Those haven't happened. If they do, we can revisit the concern. </p>
-          <signed
-            generatedBy="template">[_DELETED-SIGNATURE_] <date synch="#t007"
-              >[_DELETED-TIMESTAMP_]</date></signed>
-        </post>
-      </egXML>
-
-    </div>
-
-    <?tei winita 
+      <?tei winita 
       Still an open issue. How to document the source (e.g. database dump, web scraping, query parameters) of the current CMC encodings
       * Source: made tag abuse for documenting the source: <biblStruct> or <recordingStmt>
       * Timeline: in textDesc/interaction/
       * Participant description (in profile description)
      ?>
 
+    </div>
   </div>
-</div>
 
- <div xml:id="CMCcmc">
-   <head>Encoding Unique to CMC</head>
+  <div xml:id="CMCcmc">
+    <head>Encoding Unique to CMC</head>
     <?tei winita
             * Some introductory sentence
             * specList (will automatically insert post including its attributes)
@@ -836,8 +827,8 @@ See the file COPYING.txt for details.
       <p>An example of an emoji in a chat post marked as generated by template:</p>
 
       <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.haarschnitt">
-        <post modality="written" generatedBy="human" synch="#t003" who="#A02" xml:id="cmc_post18"> Da kostet
-          ein Haarschnitt 50 € <figure type="emoji" generatedBy="template">
+        <post modality="written" generatedBy="human" synch="#t003" who="#A02" xml:id="cmc_post18">
+          Da kostet ein Haarschnitt 50 € <figure type="emoji" generatedBy="template">
             <desc type="label">face screaming in fear</desc>
             <desc type="unicode">U+1F631</desc>
           </figure>
@@ -1037,8 +1028,8 @@ See the file COPYING.txt for details.
 
       <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.tweets">
         <post modality="written" key="1043796550101716993" generatedBy="human" type="tweet"
-          subtype="retweet" who="#u1" xml:id="cmc_post25" synch="#tweetsbcrn18.t004" ref="#cmc_ex_p5"
-          xml:lang="de"> Ich mich auch? <ref type="hashtag"
+          subtype="retweet" who="#u1" xml:id="cmc_post25" synch="#tweetsbcrn18.t004"
+          ref="#cmc_ex_p5" xml:lang="de"> Ich mich auch? <ref type="hashtag"
             target="https://twitter.com/hashtag/dynamicduo?src=hash">#dynamicduo</ref>
           <ref type="hashtag"
             target="https://twitter.com/hashtag/wirk%C3%BCmmernunsauchumIhrenEmpfang?src=hash"
