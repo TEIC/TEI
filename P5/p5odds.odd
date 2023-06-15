@@ -528,7 +528,7 @@ $Id$
                                  | tei:moduleSpec/tei:remarks[1]
                                   ">
                 <sch:let name="lang" value="normalize-space( @xml:lang )"/>
-                <sch:assert test="matches( $lang, '^en-?' )">The first <sch:value-of select="name(.)"/> child of a <sch:value-of select="name(..)"/> should have an @xml:lang that indicates it is in English.</sch:assert>
+                <sch:assert test="matches( $lang, '^en-?' )">The first <sch:value-of select="name(.)"/> child of a <sch:value-of select="name(..)"/> (in this case "<sch:value-of select="(../@xml:id, ../@ident)[1]"/>") should have an @xml:lang that indicates it is in English.</sch:assert>
               </sch:rule>
             </constraint>
           </constraintSpec>
@@ -562,7 +562,7 @@ $Id$
                                   ">
                 <sch:let name="myGI" value="name(.)"/>
                 <sch:let name="lang" value="normalize-space( @xml:lang )"/>
-                <sch:report test="preceding-sibling::*[ name(.) eq $myGI ][ normalize-space( @xml:lang) eq $lang ]">The sibling <sch:value-of select="$myGI"/> children of a <sch:value-of select="name(..)"/> should each have a different @xml:lang; this one duplicates the "<sch:value-of select="$lang"/>" of a preceding sibling.</sch:report>
+                <sch:report test="preceding-sibling::*[ name(.) eq $myGI ][ normalize-space( @xml:lang) eq $lang ]">The sibling <sch:value-of select="$myGI"/> children of a <sch:value-of select="name(..)"/> (in this case "<sch:value-of select="(../@xml:id, ../@ident)[1]"/>") should each have a different @xml:lang; this one duplicates the "<sch:value-of select="$lang"/>" of a preceding sibling.</sch:report>
               </sch:rule>
             </constraint>
           </constraintSpec>
