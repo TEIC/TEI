@@ -246,27 +246,32 @@
   </target>
 
   <target name="validators">
+    <echo>Running target "validators" ...</echo>
+    <echo>... step 01: p5.xml → v.xml, using Utilities/extractegXML.xsl</echo>
     <xslt processor="trax" force="yes" style="Utilities/extractegXML.xsl" in="p5.xml" out="v.xml">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
-    <echo>Run Schematron script (normal part of Guidelines)</echo>
+    <echo>... step 02: p5.xml → Schematron1.xml using p5odds.isosch.xsl (normal part of Guidelines)</echo>
     <xslt processor="trax" force="yes" style="p5odds.isosch.xsl" in="p5.xml" out="Schematron1.xml">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
-    <echo>Run Schematron script (Examples in Guidelines marked as valid)</echo>
+    <echo>... step 03: p5.xml → Schematron2.xml using p5examples.isosch.xsl (examples in Guidelines marked as)</echo>
     <xslt processor="trax" force="yes" style="p5examples.isosch.xsl" in="p5.xml" out="Schematron2.xml">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
-    <echo>Run ad hoc XSLT validators</echo>
+    <echo>... step 04: p5.xml → Utilities/pointerattributes.xsl using Utilities/prevalidator.xsl</echo>
     <xslt processor="trax" force="yes" style="Utilities/prevalidator.xsl" in="p5.xml" out="Utilities/pointerattributes.xsl">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
+    <echo>... step 05: p5.xml → ValidatorLog.xml using Utilities/validator.xsl</echo>
     <xslt processor="trax" force="yes" style="Utilities/validator.xsl" in="p5.xml" out="ValidatorLog.xml">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
+    <echo>... step 06: p5.xml → STDOUT using Utilities/listspecwithnoexample.xsl</echo>
     <xslt processor="trax" force="yes" style="Utilities/listspecwithnoexample.xsl" in="p5.xml" out="/dev/stdout">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
+    <echo>... step 07: p5.xml → graphics.sh using Utilities/listgraphics.xsl</echo>
     <xslt processor="trax" force="yes" style="Utilities/listgraphics.xsl" in="p5.xml" out="graphics.sh">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>

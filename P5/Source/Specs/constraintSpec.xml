@@ -83,6 +83,148 @@ $Id$
       </sch:rule>
     </constraint>
   </constraintSpec>
+  <constraintSpec ident="context_for_constraint" scheme="schematron">
+    <desc xml:lang="en" versionDate="2023-06-14">Any
+    <gi>constraintSpec</gi> that <emph>not</emph> a child of
+    <gi>schemaSpec</gi>, or a descendant of <gi>elementSpec</gi>, or
+    inside a <gi>specGrp</gi> which is referred to from a child of an
+    <gi>elementSpec</gi> should have a <att>context</att>
+    attribute.</desc>
+    <constraint>
+      <!-- Fire on <constraintSpec scheme=schematron> that has no descendant @context -->
+      <!-- Note that the “not( ancestor::teix:egXML )” predicate is
+           not needed for normal TEI procerssing. It is only needed
+           for the P5 build process itself, during which Schematron
+           rules are run with the "tei:" prefix is bound to the
+           Examples namespace, such that this rule would be fired
+           inside <egXML>s when we don’t want that, because quite a
+           few examples are contextless. -->
+      <sch:rule context="tei:constraintSpec[ not( ancestor::teix:egXML ) ][ @scheme eq 'schematron' and not( .//@context ) ]">
+        <!--
+            Since <specGrp> can self-nest, it is possible we have more
+            than 1 ancestor <specGrp>. We can keep track of them by
+            @xml:id, because although @xml:id is not a required
+            attribute on a <specGrp>, if there is no @xml:id it
+            *cannot* be referenced from anywhere, let alone somewhere
+            the Stylesheets can't figure out a context. So here assign
+            all of the IDs of all of my ancestor <specGrp>s to a
+            variable.
+
+            It is probably not necesssary to normalize the whitespace
+            around the @xml:id value, but use of normalize-space()
+            makes it clear that we are dealing with strings here, not
+            nodes.
+
+            It is probably better in the general XPath 3+ case to use
+            the simple mapping operator (‘!’) rather than the path
+            operator (‘/’) before the normalize-space() step, but my
+            current commandline Schematron processor (probatron)
+            chokes on it. Maybe after I have switched to the
+            poorly-named but well-executed SchXslt … —Syd
+        -->
+        <sch:let name="mySpecGrps" value="ancestor::tei:specGrp/@xml:id/normalize-space()"/>
+                
+        <!--
+            Collect a sequence of the distinct targets of every
+            <specGrpRef> in the current ODD document. Thus we end up
+            with something like "#one subCust.odd#two #three".
+
+            Note that there is no need to worry about multiple values
+            in a specGrpRef/@target value, as the attribute is defined
+            as having one and only one value (and is required).
+        -->
+        <sch:let name="allSpecGrpRefs"
+                 value="distinct-values( //tei:specGrpRef/@target/normalize-space() )"/>
+
+        <!--
+            Prune the list down to those that are just shorthand
+            pointer fragment identifiers, and then strip off their
+            leading ‘#’ characters so the result is a sequence of
+            unique IDs.
+                    
+            Thus we end up with something like "one three".  Yes, we
+            are dropping references to external files that might
+            somehow refer back to our <specGrp>. Such is life, we can
+            only do so much. (And that is, at least in part, why we
+            use role=warn.)
+        -->
+        <sch:let name="localSpecGrpRefs"
+                 value="for $r in $allSpecGrpRefs return
+                        if ( starts-with( $r,'#') )
+                          then substring( $r, 2 )
+                          else ''  "/>
+
+        <!--
+            If this <constraintSpec> (which remember, does not have a
+            @context or we would not be in this <sch:rule>) is *not* a
+            descdendant of an <elementSpec>, a <specGrp>, or the child
+            of a <schemaSpec>, then there is no way the (current)
+            Stylesheets can generate a context.
+        -->
+        <sch:assert test="  ancestor::tei:elementSpec
+                          | parent::tei:schemaSpec
+                          | ancestor::tei:specGrp"  role="warn">
+          this constraintSpec <sch:value-of select="if (@ident) then
+          concat('(&quot;', @ident,'&quot;)') else ''"/> does not have
+          an explicit context specified (via a @context attribte), but
+          software can probably not generate an appropriate context.
+        </sch:assert>
+
+        <!-- Now the hard part: check those in <specGrp>(s) -->
+        <sch:report role="warn"
+                    test="(: I am inside a specGrp, :)
+                          ancestor::tei:specGrp
+			  (: and I am not inside an elementSpec, :)
+			  and not( ancestor::tei:elementSpec )
+                          (: and there are one or more references to one or more of my
+                             scpecGrp ancestors (of which there is probably only one) :)
+                          and $mySpecGrps = $localSpecGrpRefs
+                          and
+                          (
+                            (: each of the specGrps I am in … :)
+                            every $id in $mySpecGrps satisfies
+                            (
+                              (: … is either not referred to by a local specGrpRef … :)
+                              not( $localSpecGrpRefs = $id )
+                              or
+                              (
+                                (: … OR it is not the case that every specGrpRef that
+                                   does point to it … :)
+                                not(
+                                  every $tsgr in (: tsgr = this specification group reference :)
+                                    //tei:specGrpRef[
+                                      substring( normalize-space( @target ), 2 )
+                                      =
+                                      tokenize( $mySpecGrps )
+                                      ]
+                                    satisfies
+                                      (: … is a descendant of elementSpec or
+                                           is a child of schemaSpec. :)
+                                        $tsgr/ancestor::tei:elementSpec
+                                      | $tsgr/parent::tei:schemaSpec
+                                      )
+                                      (: Which is to say none of the &lt;specGrpRef>s that
+                                         point to it are going to get an auto-generated
+                                         context. Note that one might argue that we don’t
+                                         really have to test for anyplace other than child
+                                         of &lt;schemaSpec> because the only places in the
+                                         tagdocs module in which a &lt;specGrpRef> is
+                                         allowed is as a child of &lt;specGrp> or
+                                         &lt;schemaSpec>. However, since (at the moment)
+                                         it can also be a child of &lt;p>, &lt;emph>,
+                                         or &lt;metaMark>, it is probably appropriate to
+                                         check. :)
+                              )
+                            )
+                          )">
+        this constraintSpec <sch:value-of select="
+        if (@ident)
+        then concat('(&quot;', @ident,'&quot;)')
+        else ''"/> has no @context, but is in a specGrp that has at
+        least 1 reference to it that is not contextulizable.</sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="scheme" usage="req">
       <desc versionDate="2009-06-10" xml:lang="en">supplies the name of the language in which the constraints
@@ -131,6 +273,12 @@ $Id$
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
+    <p>This example demonstrates a constraint that may be added to the
+    specification of <gi>figure</gi> to unsure that a textual
+    explanation is present. It checks for the existence of one of the
+    elements in which such an explanation is expected — it does not
+    actually check that there is textual content in that element, nor
+    that the textual explanation makes sense.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <constraintSpec ident="demo-c2" scheme="schematron">
         <desc>Implement an accessibility rule which says that pictures

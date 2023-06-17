@@ -27,7 +27,13 @@
 
   <xsl:template match="/">
     <Messages>
+      <xsl:text>&#x0A;</xsl:text>
+      <xsl:comment> *** results from specific hard-coded checks: *** </xsl:comment>
+      <xsl:text>&#x0A;</xsl:text>
       <xsl:apply-templates/>
+      <xsl:text>&#x0A;</xsl:text>
+      <xsl:comment> *** results from check uniquness of @xml:id values: *** </xsl:comment>
+      <xsl:text>&#x0A;</xsl:text>
       <xsl:for-each select="distinct-values( //*[@xml:id]/@xml:id )">
         <xsl:variable name="thisID" select="."/>
         <xsl:for-each select="$root">
@@ -36,8 +42,14 @@
           </xsl:if>
         </xsl:for-each>
       </xsl:for-each>
+      <xsl:text>&#x0A;</xsl:text>
+      <xsl:comment> *** results from Schematron, normal part of Guidelines, i.e. p5odds.isosch.xsl *** </xsl:comment>
+      <xsl:text>&#x0A;</xsl:text>
       <xsl:apply-templates select="doc('../Schematron1.xml')//svrl:failed-assert"/>
       <xsl:apply-templates select="doc('../Schematron1.xml')//svrl:successful-report"/>
+      <xsl:text>&#x0A;</xsl:text>
+      <xsl:comment> *** results from Schematron, examples in Guidelines marked as valid, i.e. p5examples.isosch.xsl *** </xsl:comment>
+      <xsl:text>&#x0A;</xsl:text>
       <xsl:apply-templates select="doc('../Schematron2.xml')//svrl:failed-assert"/>
       <xsl:apply-templates select="doc('../Schematron2.xml')//svrl:successful-report"/>
     </Messages>
