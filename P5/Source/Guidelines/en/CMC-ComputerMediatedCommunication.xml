@@ -360,8 +360,8 @@ See the file COPYING.txt for details.
       <div xml:id="CMCDocumentSource">
         <head>Documenting the source of a CMC document</head>
 
-        <p>A CMC document may be a chat logfile, a discussion page or thematical thread of posts and is
-          encoded within a <gi>TEI</gi> element. Among the metadata to be recorded in the
+        <p>A CMC document may be a chat logfile, a discussion page or thematical thread of posts and
+          is encoded within a <gi>TEI</gi> element. Among the metadata to be recorded in the
             <gi>sourceDesc</gi> of its <gi>teiHeader</gi> are, if available, its title, author or
           owner, its URL, the date of its creation and/or the date of its last change (i.e. the time
           when the last post was added to it). </p>
@@ -1062,6 +1062,94 @@ See the file COPYING.txt for details.
            <measure unit="count" commodity="favorites" quantity="4"/>
       -->
     </div>
+
+
+    <div xml:id="CMCanalysis">
+      <head>Linguistic annotation</head>
+
+      <p>For encoding linguistic analyses of CMC text, we may use the dedicated elements and
+        attributes from the analysis (REF) module. For example, the tokenisation (segmentation into
+        word-like units) of a CMC text should be encoded using the <gi>w</gi> element.</p>
+
+      <p>Original: '00:22 Bin soooooo im stress gewesen ich Armer lol' (engl.
+        'I was soooooo stressed out poor me lol') </p>
+
+      <!-- aus Dortmunder Chatkorpus Chat 1101004_Welcome_2004-11-08.tei.xml -->
+
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <post generatedBy="human" rend="color:black" synch="#t010.a" who="#A03.a" xml:id="m16.a">
+          <time>00:22</time>
+          <w>Bin</w>
+          <w>soooooo</w>
+          <w>im</w>
+          <w>stress</w>
+          <w>gewesen</w>
+          <w>ich</w>
+          <w>Armer</w>
+          <w>lol</w>
+        </post>
+      </egXML>
+
+      <p>In many CMC genres, especially in private chat, sloppy and/or creative writing abound
+        including irregular spellings imitating spoken language, omitted word boundaries but also
+        spurious boundaries leading to tokens separated in parts. For encoding these writing
+        phenomena typical of CMC, the TEI attributes <att>norm</att> and <att>join</att> can be
+        used.</p>
+
+      <p>We can add a normalized spelling using the <att>norm</att> attribute for a <gi>w</gi>
+        containing a non-normalized spelling as described under [REF att.linguistic].</p>
+
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <post generatedBy="human" rend="color:black" synch="#t010.b" who="#A03.b" xml:id="m16.b">
+          <time> 00:22 </time>
+          <w>Bin</w>
+          <w norm="so">soooooo</w>
+          <w>im</w>
+          <w norm="Stress">stress</w>
+          <w>gewesen</w>
+          <w>ich</w>
+          <w>Armer</w>
+          <w>lol</w>
+        </post>
+      </egXML>
+
+      <p>When the boundaries between <gi>w</gi> elements are generally thought of as denoting word
+        boundaries, we can keep track of boundaries not present in the source by using the
+          <att>join</att> attribute (section [REF att.linguistic]).</p>
+
+      <p>Original post: <hi rend="italic">Inmyoffice</hi></p>
+
+      <p>Encoding of missing word boundaries:</p>
+
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <post>
+          <w>In</w>
+          <w join="left">my</w>
+          <w join="left">office</w>
+        </post>
+      </egXML>
+
+
+      <p>Other analysis attributes like <att>lemma</att> and <att>pos</att> (for part of speech) can be used as with
+        traditional text.</p>
+
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <post generatedBy="human" rend="color:black" synch="#t010.c" who="#A03.c" xml:id="m16.c">
+          <time> 00:22 </time>
+          <w lemma="sein" pos="VAFIN" xml:id="m16.t9">Bin</w>
+          <w lemma="so" norm="so" pos="PTKIFG" xml:id="m16.t10">soooooo</w>
+          <w lemma="in" pos="APPRART" xml:id="m16.t11">im</w>
+          <w lemma="Stress" norm="Stress" pos="NN" xml:id="m16.t12">stress</w>
+          <w lemma="sein" pos="VAPP" xml:id="m16.t13">gewesen</w>
+          <w lemma="ich" pos="PPER" xml:id="m16.t14">ich</w>
+          <w lemma="Armer" pos="NN" xml:id="m16.t15">Armer</w>
+          <w lemma="lol" pos="AKW" xml:id="m16.t16">lol</w>
+        </post>
+      </egXML>
+
+    </div>
+
+
   </div>
 
   <div xml:id="CMChow">
