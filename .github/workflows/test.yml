@@ -25,6 +25,11 @@ jobs:
           repository: TEIC/Stylesheets
           ref: dev
           path: Stylesheets
+     
+      # Update permissions in GITHUB_WORKSPACE (e.g. /__w/TEI/TEI)
+      # to resolve "dubious permissions" in git (see TEI/TEIC#2399)  
+      - name: Fix Git permissions
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
       - name: Run tests from the Test directory
         run: |
