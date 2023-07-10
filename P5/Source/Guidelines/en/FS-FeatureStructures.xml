@@ -84,8 +84,8 @@ such libraries may then be referenced from other feature or
 feature-value representations, using the <att>feats</att> or
 <att>fVal</att> attribute as appropriate. </p>
 <p>We begin by considering the simple case of a feature structure
-which  contains binary-valued features only. The following three XML elements  are
-needed to  represent such a feature structure: 
+which contains binary-valued features only. The following three XML elements are
+needed to represent such a feature structure: 
 <specList>
 <specDesc key="fs" atts="type feats"/>
 <specDesc key="f" atts="name fVal"/>
@@ -93,7 +93,7 @@ needed to  represent such a feature structure:
 </specList>
 The attributes <att>feats</att> and the <att>fVal</att> are not
 discussed in this section: they provide an alternative way of
-indicating the content of an element, as further discussed in  section
+indicating the content of an element, as further discussed in section
 <ptr target="#FSFL"/>. 
  </p>
 <p>An <gi>fs</gi> element containing <gi>f</gi> elements with binary
@@ -200,7 +200,7 @@ feature when that value is a string drawn from a very large or potentially
 unbounded set of possible strings of characters, so that it would be
 impractical or impossible to use the <gi>symbol</gi> element.  The string
 value is expressed as the content of the <gi>string</gi> element,
-rather  than as an attribute value.  For example, one might encode a
+rather than as an attribute value.  For example, one might encode a
 street address as follows:
  <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs>
    <f name="address"><string>3418 East Third Street</string></f>
@@ -226,7 +226,7 @@ that the daily rainfall in mm is a feature of interest for some
 address, one might represent this by an encoding like the following:
  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fs>
    <f name="dailyRainFall"><numeric value="0.0" max="1.3" trunc="false"/></f>
-</fs></egXML> This  represents any of the infinite
+</fs></egXML> This represents any of the infinite
 number of numeric values falling between 0 and 1.3; by contrast
  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fs>
    <f name="dailyRainFall"><numeric value="0.0" max="1.3" trunc="true"/></f>
@@ -314,7 +314,7 @@ values of whatever type can be collected together in <gi>fvLib</gi> elements
 (<term>feature-value libraries</term>). If a feature has as its
 value a feature structure or other value which is predefined in this way, the
 <att>fVal</att> attribute may be used to point to it, as discussed in
-the next section. The following elements  are used for representing feature libraries and feature-value libraries:
+the next section. The following elements are used for representing feature libraries and feature-value libraries:
 <specList>
 <specDesc key="fLib"/>
 <specDesc key="fvLib"/></specList>
@@ -367,22 +367,8 @@ each one represented as an identifiable <gi>fs</gi> element within a
 Other <gi>f</gi> elements may invoke them by reference, using the
 <att>fVal</att> attribute; for example, one might use them in a
 feature value pair such as: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><f name="dental-fricative" fVal="#T.DF"/> </egXML> rather than expanding the hierarchy of the
-component phonological features explicitly.</p>
-<p>The feature structure that concludes section <ptr target="#FSSY"/> above, identifying the
-value of some part of speech to be a common noun, may be used in tandem with a
-feature-value library, which offers a way to encode a grammatical <term>tagset</term>, in this case
-containing labels for parts of speech:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<fvLib n="POS values">
-<symbol xml:id="common_noun" value="NN" datcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3"/>
-<symbol xml:id="proper_noun" value="NP" datcat="http://hdl.handle.net/11459/CCR_C-1371_fbebd9ec-a7f4-9a36-d6e9-88ee16b944ae"/>
-<!-- ... -->
-</fvLib>
-</egXML>
-Such a feature-value library combines the standard short symbolic label for a part of speech (e.g., <val>NN</val>) with a 
-mnemonic identifier that can be referenced by means of <att>fVal</att>, and with a persistent identifier, maintained
-in a public reference taxonomy repository together with the basic definition of the given concept.</p>
-<p>Feature structures stored in the way presented in this section may also be associated with
+component phonological features explicitly.  </p>
+<p>Feature structures stored in this way may also be associated with
 the text which they are intended to annotate, either by a link from the text
 (for example, using the TEI global <att>ana</att> attribute), or
 by means of stand-off annotation techniques (for example, using the TEI
@@ -492,7 +478,7 @@ semantics, the preceding example could be considerably simplified:
    </f>
 </fs>
 </egXML></p>
-<p>Although in principle the <att>fVal</att> attribute could  point to
+<p>Although in principle the <att>fVal</att> attribute could point to
 any kind of feature value, its use is not recommended for simple
 atomic values. </p>
 </div>
@@ -557,7 +543,7 @@ element is provided to represent such cases:
 <specDesc key="vColl"/>
 </specList>
 </p>
-<p>A feature whose value is regarded  as a set, bag, or list may have
+<p>A feature whose value is regarded as a set, bag, or list may have
 any positive number of values as its content, or none at
 all, (thus allowing for representation of the empty set, bag, or list).
 The items in a list are ordered, and need not be distinct. The items
@@ -572,7 +558,7 @@ not count for the former but do count for the latter.
 assumption is that the <gi>vColl</gi> defines a list of values. If the
 <gi>vColl</gi> element is empty, the assumption is that it represents
 the null list, set, or bag. <!--, unless the <att>feats</att> attribute is
-used to specify its contents. If values are supplied  within a <gi>vColl</gi> element
+used to specify its contents. If values are supplied within a <gi>vColl</gi> element
 which also specifies values on its <att>feats</att> attribute, the
 implication is that the two sets of values are to be unified.--></p>
 <p>To illustrate the use of the <att>org</att> attribute, suppose that
@@ -712,13 +698,13 @@ a house has two or three bathrooms. As we have already shown, one
 simple way to represent this would be with a numeric maximum:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><f name="number.of.bathrooms"><numeric value="2" max="3"/></f></egXML>
  </p>
-<p>A  more general way would be to represent the
+<p>A more general way would be to represent the
 alternation explicitly, in this way:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><f name="number.of.bathrooms"> <vAlt><numeric value="2"/><numeric value="3"/> </vAlt></f></egXML>
  </p>
 <p>The <gi>vAlt</gi> element represents alternation over feature
 values, not feature-value pairs. If therefore the uncertainty relates
-to two or more feature value specifications, each  must be represented
+to two or more feature value specifications, each must be represented
 as a feature structure, since a feature structure can always appear
 where a value is required. For example, suppose that it is uncertain
 as to whether the house being described has two bathrooms or two
@@ -731,7 +717,7 @@ bedrooms, a structure like the following may be used:
 </f></egXML>
  </p>
 <p>Note that alternation is always regarded as <term>exclusive</term>:
-in the case above, the implication is that  having two bathrooms
+in the case above, the implication is that having two bathrooms
 excludes the possibility of having two bedrooms and vice versa. If
 inclusive alternation is required, a <gi>vColl</gi> element may be
 included in the alternation as follows:
@@ -791,7 +777,7 @@ view.  This can be represented as follows.
 represented, involving a relatively small number of features and
 values, it is recommended that a stand-off technique, for example
 using the general-purpose <gi>alt</gi> element discussed in
-section <ptr target="#SAAT"/> <!-- of  TEI P5,--> be used, rather than the
+section <ptr target="#SAAT"/> <!-- of TEI P5,--> be used, rather than the
 special-purpose <gi>vAlt</gi> element.
 </p>
 </div>
@@ -831,7 +817,7 @@ other values which are possible for the feature. </p>
 <p>Any kind of value can be negated, including collections
 (represented by a <gi>vColl</gi> elements) or feature structures
 (represented by <gi>fs</gi> elements). The negation of any complex
-value is understood to be the set of values  which
+value is understood to be the set of values which
 cannot be unified with it. Thus, for example, the negation of the
 feature structure F is understood to be the set of feature structures
 which are not unifiable with F. In the absence of a constraint
@@ -854,7 +840,7 @@ are collections. For example, one can change a list to a set, or vice versa.</p>
 <p>As an example, suppose that we wish to represent the range of
 possible values for a feature <soCalled>genders</soCalled> used to
 describe some language. It would be natural to represent the possible
-values  as a set, using the <gi>vColl</gi> element as in the following
+values as a set, using the <gi>vColl</gi> element as in the following
 example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fs>
 <f name="genders">
@@ -918,7 +904,7 @@ system defined above, the following two representations are equivalent.
 </f></egXML>
  </p>
 <p>If, however, the value is explicitly stated to be the default one,
-using the <gi>default</gi> element, then the  following two representations
+using the <gi>default</gi> element, then the following two representations
 are equivalent: 
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><f name="gender"> <default/> </f></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><f name="gender"> <symbol value="neuter"/> </f></egXML>
@@ -985,7 +971,7 @@ words of the sample sentence):
 </fvLib></egXML>
 The components of each feature structure in the library are 
 referenced in much the same way, using the
-<att>feats</att> attribute to  identify one or more <gi>f</gi>
+<att>feats</att> attribute to identify one or more <gi>f</gi>
 elements in the following feature library (again, only a few of the
 available features are quoted here):
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><fLib>
@@ -1124,8 +1110,8 @@ declarations to aid in the automatic interpretation of encoded texts,
 or even for human readers to find the appropriate declarations which
 document the feature system used in markup, there must be a formal
 link from the encoded texts to the declarations. However, the
-schema  which declares the syntax of the Feature System itself
-should  be kept distinct from the feature structure schema, which is an
+schema which declares the syntax of the Feature System itself
+should be kept distinct from the feature structure schema, which is an
 application of that system.</p> 
 
 <p>A document containing typed feature structures may simply include a
@@ -1455,7 +1441,7 @@ values.  If no default is specified, or if none of the conditions is
 met, then the default value is <gi>none</gi>; in other words, the
 feature is not applicable (see section <ptr target="#FSBO"/> for a
 discussion of the <gi>none</gi> element).</p>-->
-<p>The following elements are  used in feature system declarations:
+<p>The following elements are used in feature system declarations:
 <specList>
 <specDesc key="fDecl" atts="name optional"/>
 <specDesc key="fDescr"/>
@@ -1508,11 +1494,11 @@ even if it is not valid.
 from Gazdar et al.'s <title>Generalized Phrase Structure
      Grammar</title>. In the appendix to their book, they
 propose a feature system for English of which this is just a sampling:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#FS-BIBL-3">feature    value range
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#FS-BIBL-3">feature value range
 INV        {+, -}
 CONJ       {and, both, but, either, neither, nor, or, NIL}
 COMP       {for, that, whether, if, NIL}
-AGR        CAT
+AGR CAT
 PFORM      {to, by, for, ...}</egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Feature specification defaults
 FSD 1:  [-INV]
@@ -1532,14 +1518,14 @@ be encoded as follows:
   <vDefault><binary value="false"/></vDefault>
 </fDecl></egXML></p>
 <p>The value range is specified as an alternation (more precisely, an
-exclusive disjunction), which can be represented by  the
+exclusive disjunction), which can be represented by the
 <gi>binary</gi> feature value.   That is,
 the value must be either true or false, but cannot be both or neither.</p>
 <p>The CONJ feature indicates the surface form of the conjunction used
 in a construction.  The ~ in the default rule (see FSD 2 above)
 represents negation.  This means that by default the feature is not
 applicable, in other words, no conjunction is taking place.  Note that
-CONJ not being present  is distinct from CONJ being present but having the NIL value allowed in
+CONJ not being present is distinct from CONJ being present but having the NIL value allowed in
 the value range.  In their analysis, NIL means that the phenomenon of
 conjunction is taking place but there is no explicit conjunction in the
 surface form of the sentence.  The feature declaration for this feature
@@ -1643,7 +1629,7 @@ taxonomy or ontology, and defines the range of values of the feature at hand by 
 alternatives, together with their external persistent identifiers.</p>
 <p>Note that
 the class <ident type="class">model.featureVal</ident> includes all possible
-single feature values, including  feature structures, alternations
+single feature values, including feature structures, alternations
 (<gi>vAlt</gi>) and complex collections (<gi>vColl</gi>).</p>
 <specGrp xml:id="DFDX" n="Feature definitions">
 
@@ -1896,7 +1882,7 @@ run through the chapter is reproduced below:
 Institute of Linguistics, Dallas, TX) on January 28, 1991.
 Revised April 8, 1993 to match the specification of FSDs
 in version P2 of the TEI Guidelines. Revised again December 2004 to
-be consistent with  the feature structure representation standard
+be consistent with the feature structure representation standard
 jointly developed with ISO TC37/SC4.
 </p></publicationStmt>
 <sourceDesc>
