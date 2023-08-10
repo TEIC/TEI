@@ -118,7 +118,12 @@ detest: checkrnv
 	grep "\[xslt\]" detest1.log | sed 's/Processing.*detest.odd//' | sed 's/Loading.*message.isosch.xsl//' > detest.log
 	sed 's/.*detest.xml:/detest.xml:/' detest2.log >> detest.log
 	sed 's/.*detest.xml:/detest.xml:/' detest3.log >> detest.log
-	diff detest.log expected-results/detest.log
+# We could nuke the <dct:created> line when creating detest3.log (on prev line), or when comparing
+# detest.log to expected version thereof (next non-comment line). I have chosen the latter with the
+# thought that maybe that bit of metadata in the log file will prove useful at some point. I would
+# kinda prefer to remove it with an XML-aware process, but `fgrep` is *much* faster and somewhat
+# easier, so as long as it works …   —Syd, 2023-08-10
+	bash -c 'diff -C0 <(fgrep -v "<dct:created>" detest.log) <(fgrep -v "<dct:created>" expected-results/detest.log)'
 	rm -f detest1.log detest2.log detest3.log
 
 clean:
