@@ -177,7 +177,7 @@
     <runjing rngfile="../p5odds.rng" file="${oddFile}" checkid="${DTDcompat}"/>
     <xslt processor="trax" 
           force="yes" 
-          style="../p5odds.message.isosch.xsl"
+          style="../p5odds.isosch.xsl"
           in="${oddFile}" 
           out="/dev/null">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
@@ -215,13 +215,13 @@
     <xslt processor="trax" force="yes" style="${odd2isosch}" in="${outputname}.odd.processed" out="${outputname}.isosch">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
-    <xslt processor="trax" force="yes" style="../Utilities/iso_schematron_message_xslt2.xsl" in="${outputname}.isosch" out="${outputname}.xsl">
+    <xslt processor="trax" force="yes" style="../Utilities/lib/schxslt-1.9.5/2.0/pipeline-for-svrl.xsl" in="${outputname}.isosch" out="${outputname}.xsl">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
   </target>
   <target name="validateschematron">
     <echo level="info">Validate using Schematron</echo>
-    <xslt processor="trax" force="yes" style="${outputname}.xsl" in="${testfile}" out="/dev/null">
+    <xslt processor="trax" force="yes" style="${outputname}.xsl" in="${testfile}" out="${outputname}.svrl">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
   </target>
