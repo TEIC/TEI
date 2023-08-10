@@ -118,12 +118,12 @@ detest: checkrnv
 	@echo --- Extract only the messages from the resulting SVRL
 	$(SAXON) -s:detest_tmp3.xml -xsl:../Utilities/svrl_text_only.xslt -o:detest3.log
 	@echo --- Assemble the full log
-	grep "\[xslt\]" detest1.log | sed 's/Processing.*detest.odd//' | sed 's/Loading.*message.isosch.xsl//' > detest.log
+	grep "\[xslt\]" detest1.log | sed 's/Processing.*detest.odd//' | sed 's/Loading.*.isosch.xsl//' > detest.log
 	sed 's/.*detest.xml:/detest.xml:/' detest2.log >> detest.log
 	cat detest3.log >> detest.log
 	@echo --- compare to expected log
 	diff -C0 detest.log expected-results/detest.log
-	rm -f detest1.log detest2.log detest3.log detest_tmp3.xml
+#	rm -f detest1.log detest2.log detest3.log detest_tmp3.xml
 
 clean:
 	@echo " "
