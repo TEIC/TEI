@@ -62,9 +62,8 @@ testall.examples: testall.xsd
 	${TRANG}   -o disable-abstract-elements $*.rng $*.xsd
 	-test -f xml.xsd && cp xml.xsd $*_xml.xsd    && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+;s+teix.xsd+$*_teix.xsd+" $*.xsd
 	-test -f teix.xsd && mv teix.xsd $*_teix.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+" $*_teix.xsd
-	-test -f dcr.xsd && mv dcr.xsd $*_dcr.xsd    && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+;s+teix.xsd+$*_teix.xsd+" $*_dcr.xsd  && perl -p -i -e "s/dcr.xsd/$*_dcr.xsd/" $*.xsd
 	-test -f spec.xsd && mv spec.xsd $*_spec.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+;s+teix.xsd+$*_teix.xsd+" $*_spec.xsd && perl -p -i -e "s/spec.xsd/$*_spec.xsd/" $*.xsd
-	-test -f ns1.xsd && mv ns1.xsd $*_ns1.xsd    && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*_ns1.xsd  && perl -p -i -e "s/ns1.xsd/$*_ns1.xsd/" $*.xsd
+	-test -f ns1.xsd && mv ns1.xsd $*_ns1.xsd    && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*_ns1.xsd 
 	@echo Validate XSD using Jing ...
 	${JING} $*.xsd $*.xml
 
@@ -107,23 +106,32 @@ detest: checkrnv
 	@echo " "
 	@echo "--------- work on target $@ ---------"
 	@echo BUILD: Test file with deliberate mistakes
+	@echo "-- validate XML file (detest.xml) against RelaxNG schema (detest.rnc) using rnv:"
+	-rnv detest.rnc detest.xml > detest_xml_relaxng.log 2>&1
+	@echo "--- run ant to validate ODD file (./detest.odd) against p5odds.rng & p5odds.isosch:"
+#	Note that output below is called 'detest_odd_schematron' even though
+#	detest.xml is validated against both RelaxNG and Schematron, because
+#	if there is a RelaxNG error the build dies and there is no output at
+#	all. (So if there is any output, it is Schematron messages.)
+	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd validateodd > detest_odd_schematron.log 2>&1
+	@echo "--- run ant to compile ODD file inoto RelaxNG and Schematron (detest.odd → detest.rng & detest.isosch):"
 	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd compileodd rng isoschematron cleanup
+	@echo "--- convert RelaxNG to compact syntax with trang (detest.rng → detest.rnc):"
 	${TRANG} detest.rng detest.rnc
-	@echo --- Validate ODD file using Schematron
-	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd validateodd > detest1.log 2>&1
-	@echo --- Validate ODD file using RELAX NG schema
-	-rnv detest.rnc detest.xml > detest2.log 2>&1
-	@echo --- Validate XML file using Schematron
-	$(SAXON) detest.xml detest.xsl > detest_tmp3.xml
+	@echo "--- validate XML file (./detest.xml) against Schematron (./detest.xsl) using Saxon:"
+	$(SAXON) -s:detest.xml -xsl:detest.xsl > detest.svrl
 	@echo --- Extract only the messages from the resulting SVRL
-	$(SAXON) -s:detest_tmp3.xml -xsl:../Utilities/svrl_text_only.xslt -o:detest3.log
-	@echo --- Assemble the full log
-	grep "\[xslt\]" detest1.log | sed 's/Processing.*detest.odd//' | sed 's/Loading.*.isosch.xsl//' > detest.log
-	sed 's/.*detest.xml:/detest.xml:/' detest2.log >> detest.log
-	cat detest3.log >> detest.log
-	@echo --- compare to expected log
-	diff -C0 detest.log expected-results/detest.log
-#	rm -f detest1.log detest2.log detest3.log detest_tmp3.xml
+	$(SAXON) -s:detest.svrl -xsl:../Utilities/svrl_text_only.xslt -o:detest_xml_schematron.log
+	@echo "--- compare each of the 3 log files just created to the corresponding one in expected-results/:"
+	diff -C0 -bBw expected-results/detest_xml_relaxng.log    ./
+	diff -C0 -bBw expected-results/detest_xml_schematron.log ./
+#	Note on following somewhat complicated 'diff' command:
+#	The log file contains some lines (like "Processing…" and "Loading…") that include filepaths that are different
+#	when executed in different environments (like the Travis server, e.g.). Thus rather than comparing the files
+#	directly, we delete those lines first, and compare the results of deletions.
+	bash -c "diff -C0 -bBw  \
+	  <(grep -F '[xslt]' expected-results/detest_odd_schematron.log | grep -Ev 'xslt\] Processing.*detest.odd|xslt\] Loading.*message.isosch.xsl')  \
+	  <(grep -F '[xslt]'                ./detest_odd_schematron.log | grep -Ev 'xslt\] Processing.*detest.odd|xslt\] Loading.*message.isosch.xsl')"
 
 clean:
 	@echo " "

@@ -6,17 +6,17 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="sex">
   <gloss xml:lang="en" versionDate="2009-03-19">sex</gloss>
   <gloss versionDate="2009-03-19" xml:lang="fr">sexe</gloss>
-  <desc versionDate="2006-06-21" xml:lang="en">specifies the sex of a person.</desc>
-  <desc versionDate="2009-03-19" xml:lang="fr">précise le sexe d'une personne.</desc>
+  <desc versionDate="2022-05-10" xml:lang="en">specifies the sex of an organism.</desc>
+  <desc versionDate="2022-05-10" xml:lang="fr">précise le sexe d'un organisme.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">개인의 성을 명시한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">指明個人性別。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">人物の性別を示す．</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">especifica el sexo de una persona.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">specifica il sesso di una persona</desc>
+  <desc versionDate="2021-09-21" xml:lang="ja">生物学的性別を示す。</desc>
+  <desc versionDate="2022-05-10" xml:lang="es">especifica el sexo de un organismo.</desc>
+  <desc versionDate="2022-05-10" xml:lang="it">specifica il sesso di un organismo.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.persStateLike"/>
@@ -28,45 +28,23 @@ $Id$
     <macroRef key="macro.phraseSeq"/>
   </content>
   <attList>
-    <attDef ident="type" usage="opt" mode="change">
-      <datatype>
-        <dataRef key="teidata.enumerated"/>
-      </datatype>
-      <valList type="open" mode="add">
-        <valItem ident="explicit"/>
-        <valItem ident="implicit"/>
-      </valList>
-    </attDef>
     <attDef ident="value" usage="opt">
       <desc versionDate="2012-10-07" xml:lang="en">supplies a coded value for sex</desc>
-      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.sex"/></datatype>
-      <remarks versionDate="2013-04-14" xml:lang="en">
-        <p>Values for this attribute may be locally defined by a project, or may refer to an external standard, such as
-          vCard's sex property <ptr target="http://microformats.org/wiki/gender-formats"/>
-          (in which <val>M</val> indicates male, <val>F</val> female, <val>O</val> other, <val>N</val> none or not applicable, <val>U</val> unknown),
-          or the often used ISO 5218:2004 <title>Representation of Human Sexes</title>
-               <ptr target="http://standards.iso.org/ittf/PubliclyAvailableStandards/c036266_ISO_IEC_5218_2004(E_F).zip"/> (in which <val>0</val>
-          indicates unknown; <val>1</val> male; <val>2</val> female; and <val>9</val> not applicable,
-          although the ISO standard is widely considered inadequate);
-          cf. CETH's <title>Recommendations for Inclusive Data Collection of Trans People</title>
-               <ptr target="http://transhealth.ucsf.edu/trans?page=lib-data-collection"/>.</p>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+        <dataRef key="teidata.sex"/>
+      </datatype>
+      <remarks versionDate="2022-08-27" xml:lang="en">
+        <p>Values for this attribute may be locally defined by a project, or they may refer to an
+          external standard.</p>
       </remarks>
-      <remarks xml:lang="fr" versionDate="2009-03-19">
-        <p>Les valeurs de cet attribut sont tirées de la norme ISO 5218:1977 <title>Échange d'information -- Représentation des sexes humains</title> ; 0 indique "inconnu" ; 1 indique "masculin" ; 2 indique "féminin" ; et 9 indique "ne s'applique pas".</p>
-      </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
-        <p> 当該属性の値は，ISO 5218:1977 <title>Representation of Human Sexes</title>で定義されている． 0は不明，1は男性，2は女性，9は不適切であることを示す． </p>
+      <remarks versionDate="2022-05-03" xml:lang="fr" >
+        <p>Les valeurs de cet attribut peuvent être définies localement par un projet ou peuvent faire référence à un standard externe.</p>
       </remarks>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <sex value="M">male</sex>
-    </egXML>
-  </exemplum>
-  <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <sex value="2">female</sex>
+      <sex value="F">female</sex>
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
@@ -74,30 +52,28 @@ $Id$
       <sex value="I">Intersex</sex>
     </egXML>
   </exemplum>
-  <exemplum xml:lang="en">
+  <exemplum xml:lang="en" versionDate="2022-05-31">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <sex value="TG F">Female (TransWoman)</sex>
     </egXML>
   </exemplum>
-  <exemplum versionDate="2008-04-06" xml:lang="fr">
+  <exemplum versionDate="2022-05-31" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <sex value="2">féminin</sex>
+      <sex value="F">féminin</sex>
     </egXML>
   </exemplum>
-  <exemplum xml:lang="zh-TW">
+  <exemplum xml:lang="zh-TW" versionDate="2022-05-31">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <sex value="2">女性</sex>
+      <sex value="F">女性</sex>
     </egXML>
   </exemplum>
-  <remarks versionDate="2013-04-13" xml:lang="en">
-    <p>As with other culturally-constructed traits such as
-    age, the way in which this concept is described in different
-    cultural contexts may vary. The normalizing attributes are
-    provided only as an optional means of simplifying that variety to 
-    one or more external standards for purposes of interoperability,
-    or project-internal taxonomies for consistency, and should not be used where that is
-    inappropriate or unhelpful. The content of the element may be used to describe
-    the intended concept in more detail, using plain text. </p>
+  <remarks versionDate="2022-05-03" xml:lang="en">
+    <p>As with other culturally-constructed traits such as age and gender, the way in which this
+      concept is described in different cultural contexts varies. The normalizing attributes are
+      provided only as an optional means of simplifying that variety for purposes of
+      interoperability or project-internal taxonomies for consistency, and should not be used where
+      that is inappropriate or unhelpful. The content of the element may be used to describe the
+      intended concept in more detail.</p>
   </remarks>
   <listRef>
     <ptr target="#NDPERSEpc"/>
