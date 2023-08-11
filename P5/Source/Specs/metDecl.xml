@@ -48,17 +48,20 @@ $Id$
   </classes>
   <content>
     <alternate>
-      
-        <alternate minOccurs="1" maxOccurs="unbounded">
-          <classRef key="model.pLike"/>
-          <classRef key="model.noteLike"/>
-        </alternate>
-      
-      
-        <elementRef key="metSym" minOccurs="1" maxOccurs="unbounded"/>
-      
+      <alternate minOccurs="1" maxOccurs="unbounded">
+        <classRef key="model.pLike"/>
+        <classRef key="model.noteLike"/>
+      </alternate>
+      <elementRef key="metSym" minOccurs="1" maxOccurs="unbounded"/>
     </alternate>
   </content>
+  <constraintSpec ident="metDecl-is-declarable" scheme="schematron">
+    <constraint>
+      <sch:pattern is-a="declarable">
+        <sch:param name="tde" value="tei:metDecl"/>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="type" usage="opt">
       <desc versionDate="2005-01-14" xml:lang="en">indicates whether the notation conveys the abstract metrical form, its actual prosodic

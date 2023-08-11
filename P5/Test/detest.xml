@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<TEI xmlns="http://www.tei-c.org/ns/1.0">
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0">
   <teiHeader>
     <fileDesc>
       <titleStmt>
@@ -9,20 +9,43 @@
         <p>Unpublished</p>
       </publicationStmt>
       <sourceDesc>
-        <p>Born digital</p>
+        <ab>Born digital</ab>
+        <p>This <gi>sourceDesc</gi> is in error because it has a sibling
+        <gi>sourceDesc</gi> but does not have an <att>xml:id</att>.</p>
+      </sourceDesc>
+      <sourceDesc xml:id="decltest01" default="true">
+        <bibl xml:id="decltest02" default="false">This sequence of elements</bibl>
+        <bibl xml:id="decltest03"                >should not raise any</bibl>
+        <bibl xml:id="decltest04" default="false">errors, at least not</bibl>
+        <bibl xml:id="decltest05"                >any from the <name>att-declarable</name></bibl>
+        <bibl xml:id="decltest06" default="true" >constraint specification.</bibl>
+      </sourceDesc>
+      <sourceDesc xml:id="decltest07">
+        <bibl xml:id="decltest08" default="false">This sequence of elements</bibl>
+        <bibl xml:id="decltest09"                >should raise an</bibl>
+        <bibl xml:id="decltest10" default="false">error because there no</bibl>
+        <bibl xml:id="decltest11"                >siblings with a @default of</bibl>
+        <bibl xml:id="decltest12" default="false">"true" (or "1").</bibl>
+      </sourceDesc>
+      <sourceDesc xml:id="decltest13">
+        <bibl xml:id="decltest14" default="false">This sequence of elements</bibl>
+        <bibl xml:id="decltest15"                >should raise an</bibl>
+        <bibl xml:id="decltest16" default="1"    >error because there are</bibl>
+        <bibl xml:id="decltest17"                >two siblings with a @default</bibl>
+        <bibl xml:id="decltest18" default="true" >of "true" (or "1").</bibl>
       </sourceDesc>
     </fileDesc>
     <encodingDesc><!-- TODO duncdrum test for uniHan schematron constraints for Phase 4 #1805 <charDecl><glyph xml:id="r1"><unihanProp name="kRSUnicode" value="r1 r2 r3"/></glyph></charDecl>  -->
-<!--  MDH 2013-04-12:
-      The following tests a Schematron constraint to the effect that 
-      @schemeVersion cannot be used unless @scheme is present and 
-      has a value which corresponds to a style language.
+      <!--  MDH 2013-04-12:
+	   The following tests a Schematron constraint to the effect that 
+	   @schemeVersion cannot be used unless @scheme is present and 
+	   has a value which corresponds to a style language.
       -->
       <styleDefDecl schemeVersion="2.1"></styleDefDecl>
       
-<!-- MDH 2013-02-01:
-        The following tests a Schematron constraint to the effect that if 
-        @method="parallel-segmentation" then @location must be "internal".    -->
+      <!-- MDH 2013-02-01:
+           The following tests a Schematron constraint to the effect that if 
+           @method="parallel-segmentation" then @location must be "internal".    -->
       <variantEncoding method="parallel-segmentation" location="external"/>
       <editorialDecl>
         <quotation/>
@@ -77,17 +100,17 @@
       <div>
         <head>Testing schematron constraints</head>
         <p xml:lang="la">sicut erat in <bibl><author>freddy</author></bibl> principia <list><item><num value="0.234"/><num value="0.0234E23"/><num value="1/2"/>
-cats</item></list>
-      </p>
+	cats</item></list>
+	</p>
 
-<div type="testingSpan">
-<p><del>This has some content which is OK </del>
-<delSpan spanTo="#ds1"/>This one doesn't<anchor xml:id="ds1"/> but
-that's also OK.
-<delSpan/> That last one is illegal
-<delSpan spanTo="#ds2"/> as are that one
-<delSpan spanTo="notMeaningful"/> and that one</p>
-</div>
+	<div type="testingSpan">
+	  <p><del>This has some content which is OK </del>
+	  <delSpan spanTo="#ds1"/>This one doesn't<anchor xml:id="ds1"/> but
+	  that's also OK.
+	  <delSpan/> That last one is illegal
+	  <delSpan spanTo="#ds2"/> as are that one
+	  <delSpan spanTo="notMeaningful"/> and that one</p>
+	</div>
 
         <div type="canon">
           <head>Canon 1</head>
@@ -131,11 +154,11 @@ that's also OK.
       </div>
       <div type="test">
         <p>Testing multiple occurences of a datatype in a single attribute
-    value. The following should be valid:
-     <distinct type="valid" o01="0" o02="0" o0i="0" o11="0" o12="1" o1i="1" o22="1 2" o2i="1 2">minimum</distinct>
-     <distinct type="valid" o01="1" o02="1" o0i="1" o11="1" o12="1 2" o1i="1 2" o22="1 2" o2i="1 2 3">min +1 unless ≤, in which case max</distinct> 
-     <distinct type="valid" o01="1" o02="1 2" o0i="1 2 3 4 5 6 7 8 9 0" o11="1" o12="1 2" o1i="1 2 3 4 5 6 7 8 9 0" o22="1 2" o2i="1 2 3 4 5 6 7 8 9 0">max</distinct>
-  </p>
+	value. The following should be valid:
+	<distinct type="valid" o01="0" o02="0" o0i="0" o11="0" o12="1" o1i="1" o22="1 2" o2i="1 2">minimum</distinct>
+	<distinct type="valid" o01="1" o02="1" o0i="1" o11="1" o12="1 2" o1i="1 2" o22="1 2" o2i="1 2 3">min +1 unless ≤, in which case max</distinct> 
+	<distinct type="valid" o01="1" o02="1 2" o0i="1 2 3 4 5 6 7 8 9 0" o11="1" o12="1 2" o1i="1 2 3 4 5 6 7 8 9 0" o22="1 2" o2i="1 2 3 4 5 6 7 8 9 0">max</distinct>
+	</p>
       </div>
 
       <div>
@@ -184,7 +207,7 @@ that's also OK.
       <div>
         <head>Some transcribed text with subst errors</head>
         <p>... are all included. <del hand="#RG">It is</del>
-    <subst><add>T</add></subst>the expressed</p>
+	<subst><add>T</add></subst>the expressed</p>
         <p> that he and his Sister Miſs D — <lb/>who always lived with him, wd. be very <subst><lb/><add>principally</add></subst> remembered in her Will.</p>
         <p><subst>ἐπιτρέψῃ [ἐπετρέψῃ]</subst> τῷ ὑποδέκτῃ μὴ ὀχλῆσαι</p>
         <p>τ<subst><add place="above">ῶν</add></subst>α συνκυρόντων<subst><del>α</del></subst> ἐργαστηρί<hi rend="above">ων</hi><subst><del>α</del></subst></p>
@@ -201,7 +224,7 @@ that's also OK.
         <p> ... <span to="#spanTest2" target="#spanTest">freddy</span></p>
       </div>
 
-     <div>
+      <div>
         <head>Checking locally-changed attributes</head>
         <p><abbr subtype="test">freddy</abbr></p>
         <p><alt target="#spanTest" mode="excl"/></p>

@@ -130,8 +130,8 @@ detest: checkrnv
 #	when executed in different environments (like the Travis server, e.g.). Thus rather than comparing the files
 #	directly, we delete those lines first, and compare the results of deletions.
 	bash -c "diff -C0 -bBw  \
-	  <(grep -F '[xslt]' expected-results/detest_odd_schematron.log | grep -Ev 'xslt\] Processing.*detest.odd|xslt\] Loading.*message.isosch.xsl')  \
-	  <(grep -F '[xslt]'                ./detest_odd_schematron.log | grep -Ev 'xslt\] Processing.*detest.odd|xslt\] Loading.*message.isosch.xsl')"
+	  <(grep -F '[xslt]' expected-results/detest_odd_schematron.log | grep -Ev 'xslt\] Processing.*detest.odd|xslt\] Loading.*.isosch.xsl')  \
+	  <(grep -F '[xslt]'                ./detest_odd_schematron.log | grep -Ev 'xslt\] Processing.*detest.odd|xslt\] Loading.*.isosch.xsl')"
 
 clean:
 	@echo " "
