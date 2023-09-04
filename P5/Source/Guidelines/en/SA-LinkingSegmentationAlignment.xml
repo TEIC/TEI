@@ -838,9 +838,9 @@ scheme.</p>
   attribute nodes should be avoided in schemes other than <name type="xpscheme"
     >xpath()</name>. </p>
 <p>The example below, and all subsequent examples in this section refer 
-to the following TEI fragment<anchor xml:id="SATSXP-ex"/>:
+to the following TEI fragment:
 <!-- Ostrakon from Trimithis (O.Trim 1, 1)  http://papyri.info/ddbdp/o.trim;1;1 -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SATSXP-ex" source="#OTrim1.1">
 <div xml:lang="la" type="edition" xml:space="preserve"><ab>
 <lb n="1" xml:id="line1"/><supplied reason="lost">si</supplied> non <choice><reg>habui</reg><orig>abui</orig></choice> quidquam vaco 
 <lb n="2"/>si<gap reason="illegible" quantity="3" unit="character"/>b<gap reason="illegible" quantity="3" unit="character"/> 
@@ -928,8 +928,8 @@ depend on the Normalization Form in use (see
 <ref target="https://unicode.org/reports/tr15/">UNICODE NORMALIZATION 
 FORMS</ref>). A letter followed by a combining diacritic counts as two 
 characters, but the same diacritic precombined with a letter would count 
-as a single character. Compare, for example, &#xE9; (<code>\u0060</code> 
-followed by <code>\u0301</code>) and &#xE9; (<code>\u00E9</code>). These are 
+as a single character. Compare, for example, &#xE9; (U+0060 
+followed by U+0301) and &#xE9; (>U+00E9). These are 
 equivalent, and a conversion between Normalization Forms C and D will 
 transform one into the other. This specification does not mandate a 
 particular Normalization Form (see <ptr target="#D4-46-2"/>), but 
@@ -1009,7 +1009,7 @@ parameter. REGEX is a regular expression as defined by
 modifications: 
 <list>
   <item>Because the regular expression is delimited by apostrophe 
-    characters, any such characters (<code>'</code> or <code>\u0027</code>) 
+    characters, any such characters (<code>'</code> or U+0027) 
     occurring inside the expression must be escaped using the URI 
     percent-encoding scheme <code>%27</code>. </item>
   <item>Regular expressions in <code>match()</code> are assumed to
