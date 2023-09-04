@@ -746,13 +746,12 @@ kinds of object:
 <list type="gloss">
 <label>Node</label>
 <item>A node is an instance of one of the node kinds defined in
-the <ref target="https://www.w3.org/TR/xpath-datamodel/">XQuery 
-1.0 and XPath 2.0 Data Model (Second Edition)</ref>. It represents 
+the <ref target="https://www.w3.org/TR/xpath-datamodel/">XQuery and XPath Data Model 3.1</ref>. It represents 
 a single item in the XML information 	set for a document. For pointing
 purposes, the only nodes that are of interest are Text Nodes,
 Element Nodes, and Attribute Nodes.</item> 
 <label>Sequence</label>
-<item>A Sequence follows the definition in the XPath 2.0 Data 
+<item>A Sequence follows the definition in the XPath 3.1 Data 
 Model, with one alteration. A Sequence is an ordered collection
 of zero or more items, where an item is either a node or a partial
 text node. 
@@ -829,7 +828,7 @@ scheme.</p>
 <head>xpath()</head>
 <p><code>Sequence xpath(XPATH)</code></p>
 <p>The <name type="xpscheme">xpath()</name> scheme locates zero or more nodes within an XML
-  Information Set. The single argument <rs>XPATH</rs> is an XPath selection pattern, as
+  Information Set. The single argument XPATH is an XPath selection pattern, as
   defined in <ref target="https://www.w3.org/TR/xslt-30/#dt-selection-pattern">XSLT
     3.0</ref>, that returns a node or sequence of nodes. XPaths returning atomic values
   (e.g. <name>substring()</name>) are illegal in the <name type="xpscheme">xpath()</name>
@@ -839,9 +838,9 @@ scheme.</p>
   attribute nodes should be avoided in schemes other than <name type="xpscheme"
     >xpath()</name>. </p>
 <p>The example below, and all subsequent examples in this section refer 
-to the following TEI fragment<anchor xml:id="SATSXP-ex"/>:
+to the following TEI fragment:
 <!-- Ostrakon from Trimithis (O.Trim 1, 1)  http://papyri.info/ddbdp/o.trim;1;1 -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SATSXP-ex" source="#OTrim1.1">
 <div xml:lang="la" type="edition" xml:space="preserve"><ab>
 <lb n="1" xml:id="line1"/><supplied reason="lost">si</supplied> non <choice><reg>habui</reg><orig>abui</orig></choice> quidquam vaco 
 <lb n="2"/>si<gap reason="illegible" quantity="3" unit="character"/>b<gap reason="illegible" quantity="3" unit="character"/> 
@@ -882,11 +881,11 @@ recommended when possible.</p>
 
 <div type="div4" xml:id="SATSL">
 <head>left()</head>
-<p><rs>Point</rs> <code>left( IDREF | XPATH )</code></p>
+  <p><code>Point left( IDREF | XPATH )</code></p>
 <p>The <name type="xpscheme">left()</name> scheme locates the
 point immediately preceding the node addressed by its argument,
-which is either an <rs>XPATH</rs> as defined above or an
-<rs>IDREF</rs>, the value of an <att>xml:id</att>
+which is either an XPATH as defined above or an
+IDREF, the value of an <att>xml:id</att>
 occurring in the document addressed by the base URI in effect
 for the pointer.</p>
 <p>Example: the pointer <code>#left(//supplied[1])</code>
@@ -895,11 +894,11 @@ indicates the point between the first <code>lb</code> and the first
 <p>Example: <code>#left(//gap[1])</code> indicates the point immediately before
 the first <code>gap</code> element in line two and the string <code>si</code>.</p>
 <p>Example: <code>#left(line1)</code> indicates the point immediately before
-the <code><![CDATA[<lb n="1"/>]]></code> element.</p></div>
+the <tag>lb n="1"</tag> element.</p></div>
 
 <div type="div4" xml:id="SATSR">
 <head>right()</head>
-<p><rs>Point</rs> <code>right( IDREF | XPATH )</code></p>
+  <p><code>Point right( IDREF | XPATH )</code></p>
 <p>The <name type="xpscheme">right()</name> scheme locates the
 point immediately following the node addressed by its argument.</p>
 <p>Example: the pointer <code>#right(//lb[@n='3'])</code> 
@@ -910,12 +909,12 @@ in the <ref target="#SATSXP-ex">example</ref>.</p>
 
 <div type="div4" xml:id="SATSSI">
 <head>string-index()</head>
-<p><rs>Point</rs> <code>string-index( IDREF | XPATH, OFFSET )</code></p>
+  <p><code>Point string-index( IDREF | XPATH, OFFSET )</code></p>
 <p>The <name type="xpscheme">string-index()</name> scheme locates a
   point based on character positions in a text stream relative 
-  to the node identified by the IDREF or XPATH parameter. The <rs>OFFSET</rs>
+  to the node identified by the IDREF or XPATH parameter. The OFFSET
 parameter is a positive, negative, or zero integer which determines 
-the position of the <rs>point</rs>. An offset of 0 represents the 
+the position of the point. An offset of 0 represents the 
 position immediately before the first character in either the first 
 text node descendant of the node addressed in the first parameter or the 
 first following text node, if the addressed element contains 
@@ -925,13 +924,12 @@ between the <q>s</q> and the <q>i</q> in the word <q>si</q> in line 2.</p>
 <p><hi rend="bold">Note</hi>: The OFFSET parameter (and similarly the 
 LENGTH parameter found below in the <name type="xpscheme">string-range()</name>
 scheme) are measured in characters. What is considered a single character will
-depend (assuming the document being evaluated is in Unicode) on the 
-Normalization Form in use (see 
+depend on the Normalization Form in use (see 
 <ref target="https://unicode.org/reports/tr15/">UNICODE NORMALIZATION 
 FORMS</ref>). A letter followed by a combining diacritic counts as two 
 characters, but the same diacritic precombined with a letter would count 
-as a single character. Compare, for example, &#xE9; (<code>\u0060</code> 
-followed by <code>\u0301</code>) and &#xE9; (<code>\u00E9</code>). These are 
+as a single character. Compare, for example, &#xE9; (U+0060 
+followed by U+0301) and &#xE9; (>U+00E9). These are 
 equivalent, and a conversion between Normalization Forms C and D will 
 transform one into the other. This specification does not mandate a 
 particular Normalization Form (see <ptr target="#D4-46-2"/>), but 
@@ -942,15 +940,15 @@ counting.</p>
 
 <div type="div4" xml:id="SATSRN">
 <head>range()</head>
-<p><rs>Sequence</rs> <code>range( POINTER, POINTER[, POINTER, POINTER ...])</code></p>
+  <p><code>Sequence range( POINTER, POINTER[, POINTER, POINTER ...])</code></p>
 <p>The <name type="xpscheme">range()</name> scheme takes as parameters one 
-or more pairs of <rs>POINTER</rs>s, which are each members of the set <rs>IDREF</rs>,
-<rs>XPATH</rs>, <name type="xpscheme">left()</name>, 
+or more pairs of POINTERs, which are each members of the set IDREF,
+XPATH, <name type="xpscheme">left()</name>, 
 <name type="xpscheme">right()</name>, or 
 <name type="xpscheme">string-index()</name>. A 
 <name type="xpscheme">range()</name> locates a (possibly non-contiguous) 
 sequence beginning at the first POINTER parameter and ending at the 
-last. If the POINTER locates a node (i.e. is an XPATH or IDREF), then 
+last. If a POINTER locates a node (i.e. is an XPATH or IDREF), then 
 that node is a member of the addressed sequence. If a sequence addressed
 by a range pointer overlaps, but does not wholly contain, an element
 (i.e. it contains only the start but not the end tag or vice-versa),
@@ -964,24 +962,24 @@ the whole of <ref target="#SATSXP-ex">line 3</ref> from the
 <code><![CDATA[<lb n="3"/>]]></code> to the point right before the 
 following <code><![CDATA[<lb n="4"/>]]></code>.</p>
 <p>Example: <code>#range(right(//lb[@n='3']),string-index(//lb[@n='3'],15))</code>
-  indicates the sequence <code><![CDATA[<unclear>s</unclear>emp<unclear>er</unclear> in mente]]></code>.</p>
+  indicates the sequence <code><![CDATA[<unclear>s</unclear>emp<unclear>er</unclear> in mente]]></code> (an element, a text node, another element, and a partial text node).</p>
 <p>Example: <code>#range(string-index(//lb[@n='3'],7),string-index(//lb[@n='3'],10),string-index(//lb[@n='3'],15),string-index(//lb[@n='3'],21))</code> indicates
 the non-contiguous sequence <q>in mentem</q>.</p>
 </div>
 
 <div type="div4" xml:id="SATSSR">
 <head>string-range()</head>
-<p><rs>Sequence</rs> <code>string-range(IDREF | XPATH, OFFSET, LENGTH[, OFFSET, LENGTH ...])</code></p>
+  <p><code>Sequence string-range(IDREF | XPATH, OFFSET, LENGTH[, OFFSET, LENGTH ...])</code></p>
 <p>The string-range() scheme
 locates a sequence based on character positions in a text stream relative 
 to the node identified by the first parameter. The location of the 
 beginning of the addressed sequence is determined precisely
-as for <name type="xpscheme">string-index()</name>. The <rs>OFFSET</rs>
+as for <name type="xpscheme">string-index()</name>. The OFFSET
 parameter is defined as above in <name type="xpscheme">string-index()</name>.
-The <rs>LENGTH</rs> parameter is a positive integer that denotes
+The LENGTH parameter is a positive integer that denotes
 the length of the text stream captured by the sequence. As with 
 <name type="xpscheme">range()</name>, the addressed sequence may 
-contain text nodes and/or elements. The 
+contain text nodes and elements. The 
 <name type="xpscheme">string-range()</name> scheme can accept multiple 
 OFFSET, LENGTH pairs to address a non-contiguous sequence in much the
 same way that range() can accept multiple pairs of pointers.</p> 
@@ -1002,7 +1000,7 @@ the non-contiguous sequence <q>in mentem</q>.</p>
   
 <div type="div4" xml:id="SATSMA">
 <head>match()</head>
-<p><rs>Sequence</rs> <code>match(IDREF | XPATH, 'REGEX' [, INDEX])</code></p>
+  <p><code>Sequence match(IDREF | XPATH, 'REGEX' [, INDEX])</code></p>
 <p>The match scheme locates a sequence based on matching the REGEX parameter
 against a text stream relative to the reference node identified by the first 
 parameter. REGEX is a regular expression as defined by 
@@ -1011,7 +1009,7 @@ parameter. REGEX is a regular expression as defined by
 modifications: 
 <list>
   <item>Because the regular expression is delimited by apostrophe 
-    characters, any such characters (<code>'</code> or <code>\u0027</code>) 
+    characters, any such characters (<code>'</code> or U+0027) 
     occurring inside the expression must be escaped using the URI 
     percent-encoding scheme <code>%27</code>. </item>
   <item>Regular expressions in <code>match()</code> are assumed to
@@ -1026,7 +1024,7 @@ modifications:
 </list>
 The optional INDEX parameter is an integer greater than 0 which specifies which 
 match should be chosen when there is more than one possibility. If omitted, the 
-first match in the text stream will be used.</p>
+first match in the text stream will be used to resolve the <code>match()</code>.</p>
 <p>Like <code>string-range()</code>, <code>match()</code> may capture elements 
 in the indicated sequence, even though they are ignored for purposes of evaluating 
 the match.</p>
