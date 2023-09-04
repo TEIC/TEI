@@ -8,18 +8,17 @@
 -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="event">
-  <gloss xml:lang="en" versionDate="2008-12-09">event</gloss>
+  <gloss versionDate="2008-12-09" xml:lang="en">event</gloss>
+  <gloss versionDate="2023-05-07" xml:lang="de">Ereignis</gloss>
   <gloss versionDate="2008-12-09" xml:lang="fr">évènement</gloss>
-  <desc versionDate="2007-08-01" xml:lang="en">contains data relating to any kind of significant event associated with a person, place, or organization.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">개인, 장소, 또는 조직과 관련된 중요한 사건에 해당하는 데이터를 포함한다.</desc>
+  <desc versionDate="2023-05-07" xml:lang="en">contains data relating to any kind of significant event associated with a person, organization, place, object, or other event.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">任何未必是口說的或溝通上的現象或發生情況，例如偶然的噪音或其他影響溝通的事件。</desc>
+  <desc versionDate="2023-05-07" xml:lang="de">enthält Daten zu einem Ereignis, das mit einer oder mehreren Personen,  Organisationen, Orten, Objekten oder anderen Ereignissen in Beziehung stehen kann.</desc>
+  <desc versionDate="2023-09-04" xml:lang="es">contiene datos relacionados con cualquier tipo de evento significativo asociado con una persona, lugar u organización.</desc>
+  <desc versionDate="2023-05-07" xml:lang="fr">contient des données liées à tout type d'évènement significatif dans l'existence d'une personne, d'un lieu, d'un objet ou d'une organisation.</desc>
+  <desc versionDate="2023-09-04" xml:lang="it">contiene dati a proposito di un qualsiasi tipo di evento significativo associato con una persona, luogo o organizzazione.</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">人生における特定の重要事象の解説を示す。</desc>
-  <desc versionDate="2009-03-19" xml:lang="fr">contient des données liées à tout type d'évènement significatif dans l'existence d'une personne, d'un
-        lieu ou d'une organisation.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">cualquier fenómeno o evento no necesariamente vocal o comunicativo, como ruidos accidentales u otros
-        fenómenos que inciden en la comunicación en acto.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">qualsiasi fenomeno o evento non necessariamente vocale o comunicativo, come rumori accidentali o altri
-        fenomeni che incidano sulla comunicazione in atto</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">개인, 장소, 또는 조직과 관련된 중요한 사건에 해당하는 데이터를 포함한다.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.datable"/>
@@ -32,23 +31,77 @@
   </classes>
   <content>
     <sequence>
-       <elementRef key="idno" minOccurs="0" maxOccurs="unbounded"/>
-         <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
-      <alternate>
-        <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
-            <classRef key="model.labelLike" minOccurs="1" maxOccurs="unbounded"/>
-        </alternate>
+      <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      <alternate minOccurs="0" maxOccurs="1">
+        <classRef key="model.pLike" minOccurs="0" maxOccurs="unbounded"/>
+        <classRef key="model.labelLike" minOccurs="0" maxOccurs="unbounded"/>
+      </alternate>
       <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.noteLike"/>
-          <classRef key="model.biblLike"/>
-          <elementRef key="linkGrp"/>
-          <elementRef key="link"/>
-          <elementRef key="idno"/>
-          <elementRef key="ptr"/>
-        </alternate>
-        <elementRef key="event" minOccurs="0" maxOccurs="unbounded"/>
-      </sequence>
+        <classRef key="model.noteLike"/>
+        <classRef key="model.biblLike"/>
+        <elementRef key="eventName"/>
+        <elementRef key="linkGrp"/>
+        <elementRef key="link"/>
+        <elementRef key="idno"/>
+        <elementRef key="ptr"/>
+      </alternate>
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <elementRef key="event" minOccurs="1" maxOccurs="1"/>
+        <elementRef key="listEvent" minOccurs="1" maxOccurs="1"/>
+      </alternate>
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.personLike" minOccurs="1" maxOccurs="1"/>
+        <elementRef key="listPerson" minOccurs="1" maxOccurs="1"/>
+      </alternate>
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.placeLike" minOccurs="1" maxOccurs="1"/>
+        <elementRef key="listPlace" minOccurs="1" maxOccurs="1"/>
+      </alternate>
+      <classRef key="model.objectLike" minOccurs="0" maxOccurs="unbounded"/>
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <elementRef key="relation" minOccurs="1" maxOccurs="1"/>
+        <elementRef key="listRelation" minOccurs="1" maxOccurs="1"/>
+      </alternate>
+    </sequence>
   </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listEvent>
+        <event when="1618-05-23" xml:id="SecondDefPrague" where="#Prague">
+          <eventName>1618 Defenestration of Prague</eventName>
+          <idno>https://www.wikidata.org/wiki/Q13365740</idno>
+          <listPerson type="defenstrated">
+            <person>
+              <persName>Jaroslav Bořita z Martinic</persName>
+              <idno type="GND">https://d-nb.info/gnd/116810998</idno>
+            </person>
+            <person>
+              <persName>Vilém Slavata z Chlumu a Košumberka</persName>
+              <idno type="GND">https://d-nb.info/gnd/1018376615</idno>
+            </person>
+            <person>
+              <persName>Filip Fabricius</persName>
+              <idno type="GND">https://d-nb.info/gnd/133946118</idno>
+            </person>
+          </listPerson>
+          <place xml:id="Prague"><placeName>Prague</placeName></place>
+        </event>
+        <event from="1618" to="1648" xml:id="ThirtyYearsWar">
+          <eventName>Thirty Years’ War</eventName>
+          <idno>https://www.wikidata.org/wiki/Q2487</idno>
+          <event when="1643-03-19" xml:id="BattleofRocroi" where="#Rocroi">
+            <eventName>Battle of Rocroi</eventName>
+            <idno type="Wikidata">https://www.wikidata.org/wiki/Q728480</idno>
+            <idno type="GND">https://d-nb.info/gnd/4202901-6</idno>
+            <place xml:id="Rocroi">
+              <placeName>Rocroi</placeName>
+              <location><geo decls="#WGS">49.926111 4.522222</geo></location>
+            </place>
+          </event>
+        </event>
+      </listEvent>
+    </egXML>
+  </exemplum>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <person>
@@ -83,6 +136,56 @@
           <label>畢業</label>
         </event>
       </person>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="de-AT">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listEvent type="generated">
+        <event xml:id="mrp-events-MRP-1-1-01-0-18480401-P-0001" ref="https://mrp.oeaw.ac.at/pages/show.html?directory=editions&amp;document=MRP-1-1-01-0-18480401-P-0001.xml" 
+          when="1848-04-01" where="Wien" type="session">
+          <head>Nr. 1 Ministerrat, Wien, 1. April 1848</head>
+          <label>Ministerratssitzung <date when="1848-04-01">1848-04-01</date>, aus Band 1 1/1, März 1848–21. November 1848</label>
+          <listEvent type="agenda_items">
+            <event type="agenda_item" ref="#top_1_1_1_1" when="1848-04-01" where="Wien" xml:id="mrp-events-MRP-1-1-01-0-18480401-P-0001-top_1_1_1_1">
+              <label>I. Enthebung Baron Karl Friedrich v. Kübecks als Finanzminister und Ernennung des Freiherrn Philipp v. Krauß zu seinem Nachfolger</label>
+            </event>
+            <event type="agenda_item" ref="#top_1_1_1_2" when="1848-04-01" where="Wien" xml:id="mrp-events-MRP-1-1-01-0-18480401-P-0001-top_1_1_1_2">
+              <label>II. Ernennung FML. Peter Zaninis zum Kriegsminister</label>
+            </event>
+            <event type="agenda_item" ref="#top_1_1_1_3" when="1848-04-01" where="Wien" xml:id="mrp-events-MRP-1-1-01-0-18480401-P-0001-top_1_1_1_3">
+              <label>III. Öffentliche Erklärung über die konstitutionellen Grundsätze; Umformung des Staatsrates</label>
+            </event>
+            <event type="agenda_item" ref="#top_1_1_1_4" when="1848-04-01" where="Wien" xml:id="mrp-events-MRP-1-1-01-0-18480401-P-0001-top_1_1_1_4">
+              <label>IV. Kriegserklärung Sardiniens; Vorgehen Radetzkys; Bestellung eines Hofkommissärs für Lombardo-Venetien</label>
+            </event>
+            <event type="agenda_item" ref="#top_1_1_1_5" when="1848-04-01" where="Wien" xml:id="mrp-events-MRP-1-1-01-0-18480401-P-0001-top_1_1_1_5">
+              <label>V. Beeidigung der Minister</label>
+            </event>
+            <event type="agenda_item" ref="#top_1_1_1_6" when="1848-04-01" where="Wien" xml:id="mrp-events-MRP-1-1-01-0-18480401-P-0001-top_1_1_1_6">
+              <label>VI. Tumulte im Kärntnertortheater</label>
+            </event>
+            <event type="agenda_item" ref="#top_1_1_1_7" when="1848-04-01" where="Wien" xml:id="mrp-events-MRP-1-1-01-0-18480401-P-0001-top_1_1_1_7">
+              <label>VII. Bewegung der tschechischen demokratischen Partei; Berufung Paul Josef Safaiřiks nach Wien</label>
+            </event>
+            <event type="agenda_item" ref="#top_1_1_1_8" when="1848-04-01" where="Wien" xml:id="mrp-events-MRP-1-1-01-0-18480401-P-0001-top_1_1_1_8">
+              <label>VIII. Behandlung der aus Lombardo-Venetien vertriebenen Justiz- und politischen Beamten</label>
+            </event>
+            <event type="agenda_item" ref="#top_1_1_1_9" when="1848-04-01" where="Wien" xml:id="mrp-events-MRP-1-1-01-0-18480401-P-0001-top_1_1_1_9">
+              <label>IX. Besetzung der Landeschef und Ständepräsidentenposten in Prag; böhmische Deputation in Wien</label>
+            </event>
+          </listEvent>
+          <listPerson type="attendants">
+            <person role="chair"><persName ref="#mpr8141"><surname>Kolowrat</surname></persName></person>
+            <person role="attendant"><persName ref="#mpr8145"><surname>Ficquelmont</surname></persName></person>
+            <person role="attendant"><persName ref="#mpr8154"><surname>Taaffe</surname></persName></person>
+            <person role="attendant"><persName ref="#mpr8148"><surname>Pillersdorf</surname></persName></person>
+            <person role="attendant"><persName ref="#mpr8151"><surname>Sommaruga</surname></persName></person>
+            <person role="signed-protocol"><persName ref="#mpr8141"><surname>Kolowrat</surname></persName><note>BdE. <date when="1848-04-02">2. 4.</date></note></person>
+            <person role="signed-protocol"><persName ref="#mpr9251"><surname>Franz Karl</surname></persName><note>BdE. <date when="1848-04-02">2. 4.</date></note></person>
+          </listPerson>
+        </event>
+        <!-- ... -->
+      </listEvent>
     </egXML>
   </exemplum>
   <listRef>

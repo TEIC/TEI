@@ -735,6 +735,46 @@ target="#CONA"/>).  The tag -->The
 
 
     </div>
+    
+    <div type="div3" xml:id="NDEVTN">
+      <head>Event Names</head>
+      <p><specList><specDesc key="eventName"/></specList></p>
+      
+      <p>The <gi>eventName</gi> element is provided in parallel to other naming mechanisms, and especially for <soCalled>canonical</soCalled>
+      names that are used in texts to mention specific named events.
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <p>On <date when="1719-03-19">Monday</date>, <rs type="person">she</rs> was writing about the 
+            <eventName ref="#SecondDefPrague">1618 Defenestration of Prague</eventName> which initiated the 
+            <rs type="event" ref="#ThirtyYearsWar">long war</rs>.</p>
+        </egXML>
+      </p>
+      <p>The <gi>eventName</gi> element is used to mark up real and fictitious event names as they appear in the edited text.
+        As explained with regard to the <gi>event</gi> element (see <ptr target="#NDEVNT"/>), 
+        the use of these elements does not define what might be an important event for a particular edition. Temporal extent, 
+        granularity of events (and hence of their names) are up to the encoders.
+      </p>
+      <p><gi>eventName</gi> may be used in conjunction with well-defined (e.g. historical) events that are established in a particular 
+        discipline, and which may have lead to authority file inclusion. There are two major applications of <gi>eventName</gi>: 
+        <list rend="bulleted">
+          <item>The element may be used for inline markup of mentioned named events such as in the above example;</item>
+          <item>another typical use case are lists of named <gi>event</gi>s. A sibling <gi>idno</gi> in 
+            the parent <gi>event</gi> element may be used for disambiguation and identification of multiple events with identical 
+            <gi>eventName</gi>s.
+            These may appear either as 
+            <list rend="bulleted">
+              <item>part of a prosopographical data construct such as <gi>person</gi>/<gi>event</gi> (or 
+                <gi>place</gi>/<gi>event</gi>) as described in <ptr target="#NDPERSEpe"/>, or</item>
+              <item> separate, as part of a <gi>standOff</gi>/<gi>listEvent</gi>.</item>
+            </list>
+          </item>
+        </list>
+      </p>
+      <p>
+        <specGrp xml:id="DNDEVNT" n="Names for events">
+          <xi:include href="../../Specs/eventName.xml"/>
+        </specGrp>
+      </p>
+    </div>
 
     <div type="div3" xml:id="NDOBJN">
       <head>Object Names</head>
@@ -783,7 +823,7 @@ target="#CONA"/>).  The tag -->The
       the text, and encode it directly using the more specific elements described in this section.</p>
     <div type="div3" xml:id="NDPERSbp">
       <head>Basic Principles</head>
-      <p>Information about people, places, and organizations, of whatever type, essentially comprises a series of statements or
+      <p>Information about people, places, organizations, events, of whatever type, essentially comprises a series of statements or
         assertions relating to: <list rend="bulleted">
           <item>characteristics or <term>traits</term> which do not, by and large, change over time</item>
           <item>characteristics or <term>states</term> which hold true only at a specific time</item>
@@ -1259,6 +1299,8 @@ exemplifying here too? -->
       </div>
       <div type="div4" xml:id="NDPERSEpe">
         <head>Personal Events</head>
+        <p>This section describes <gi>event</gi>s that relate to one or more <gi>person</gi>s, while the section on
+          <ref target="#NDEVNT">Events</ref> below describes the use of <gi>event</gi> in more general terms.</p>
         <p>Events in a person's history are not characteristics of an individual, but often cause an individual to gain such
           characteristics, or to enter a new state. Most such events, for example marriage, appointment, promotion, or a journey
           may be recorded using the generic element <gi>event</gi>, which may be grouped with <gi>listEvent</gi>, and has a
@@ -1890,239 +1932,13 @@ exemplifying here too? -->
           </egXML> The dating and responsibility attributes here behave slightly differently from the <att>type</att> attribute:
           responsibility is not an additive property, and therefore an element either states it explicitly, or inherits it from
           its nearest ancestor. Dating is slightly different again, in that a child element may specify a date more precisely than
-          its parent, as in the example above</p>
+          its parent, as in the example above.</p>
 
-        <p>Events may also be subdivided into other events. For example, a two part meeting might be represented as follows:
-            <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <event type="meeting" when="2007-05-29">
-              <desc>All day meeting to resolve content models</desc>
-              <event type="preamble" notAfter="13:00:00">
-                <desc>first part</desc>
-              </event>
-              <event type="conclusions" notBefore="13:00:00">
-                <desc>second part</desc>
-              </event>
-            </event>
-          </egXML>
+        <p>As with other named elements, <gi>places</gi> may relate to one or more <gi>event</gi>s, such as  
+          changes of names, foundations, sieges or destruction of settlements, or other changes of state. 
         </p>
-
-        <p>An <gi>event</gi> element is usually used to record information about a place, or a person; for this reason the element
-          usually appears as content of a <gi>place</gi> or <gi>person</gi>. However, it is also possible to describe events
-          independently of either a person or a place. This may be useful in such applications as chronologies, lists of
-          significant events such as battles, legislation, etc.</p>
-
-        <p>The <gi>listEvent</gi> element is a member of the <ident
-        type="class">model.listLike</ident> class, and may therefore
-        appear inside <gi>standOff</gi>, or wherever else lists are
-        permitted, in the same way as the <gi>listPerson</gi>,
-        <gi>listPlace</gi> etc. elements described elsewhere in this
-        chapter.</p>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <standOff>
-            <listEvent>
-              <event when="1713" ref="http://eco.canadiana.ca/view/oocihm.9_01832">
-                <label>Treaty of Utrecht</label>
-                <desc>France ceded to Great Britain its claims to the <orgName>Hudson's Bay Company</orgName> territories in
-                <placeName>Rupert's Land</placeName>, <placeName>Newfoundland</placeName>, and <placeName>Acadia</placeName> and
-                recognized British suzerainty over <orgName type="tribe">the Iroquois</orgName> but retained its other pre-war
-                North American possessions, including 
-                <placeName key="PEI">Île-Saint-Jean</placeName> 
-                (now <placeName key="PEI">Prince Edward Island</placeName>)...</desc>
-              </event>
-              <event when="1774" key="14-GeoIII-c83">
-                <label>Quebec Act</label>
-                <desc>This act of the British Parliament guaranteed free practice of the Catholic faith and restored use of the
-                French Civil Code for private matters throughout the Province of Quebec, which had been expanded in territory
-                following the <ref>Treaty of Paris</ref>.</desc>
-              </event>
-              <event when="1778" ref="http://avalon.law.yale.edu/18th_century/del1778.asp">
-                <label>Treaty of Fort Pitt</label>
-                <desc>Also known as the <name type="event">Treaty with the Delawares</name>, this was the first written treaty
-                between the newly formed <orgName>United States</orgName> and any Native American people, in this case, the
-                <orgName type="tribe">Lenape</orgName> or Delawares.</desc>
-              </event>
-            </listEvent>
-          </standOff>
-        </egXML>
-        <p>The next example demonstrates the use of the
-        <att>where</att> attribute with <gi>event</gi>, coordinated
-        with location information stored in <gi>listPlace</gi>.</p>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NDGEOGste-Falls">
-          <standOff>
-            <!-- ========= events ========= -->
-            <listEvent>
-              <event xml:id="DB-3F" where="#WWIIEast" when="1942-01">
-                <head>Luftwaffe shoots down Ilyushin Il-4</head>
-                <head type="short">DB-3F</head>
-                <ab type="altitude"><measure unit="m" quantity="7000"/></ab>
-                <ab type="survivor"><persName ref="#p-IC">Іван Чиссов</persName></ab>
-              </event>
-              <event xml:id="SCP" where="#l-GSN" when="1943-01-03">
-                <head>Snap, Crackle, Pop is shot down by German flak</head>
-                <head type="short">B-17</head>
-                <ab type="altitude"><measure unit="m" quantity="6700"/></ab>
-                <ab type="survivor"><persName ref="#p-AM">Alan Magee</persName></ab>
-              </event>
-              <event xml:id="DS664" where="#l-Obe" when="1944-03-24">
-                <head>Avro Lancaster shot down by Junkers Ju 88</head>
-                <head type="short">Lancaster</head>
-                <ab type="altitude"><measure unit="m" quantity="5490"/></ab>
-                <ab type="survivor"><persName ref="#p-NA">Nicholas Alkemade</persName></ab>
-              </event>
-              <event xml:id="LANSA508" where="#l-PI" when="1971-12-04">
-                <head>LANSA 508 struck by lightning</head>
-                <head type="short">Amazon rainforest</head>
-                <ab type="altitude"><measure unit="m" quantity="3000"/></ab>
-                <ab type="survivor"><persName ref="#p-JK">Juliane Diller (née Koepcke)</persName></ab>
-              </event>
-              <event xml:id="jat367" where="#l-Seb" when="1972-01-26T16:01:29Z">
-                <head>Bombing of Yugoslav Airlines Flight 367</head>
-                <head type="short">JAT 367</head>
-                <ab type="altitude"><measure unit="m" quantity="10050"/></ab>
-                <ab type="survivor"><persName ref="#p-VV">Весна Вуловић</persName></ab>
-                <ptr type="furtherInfo" target="https://en.wikipedia.org/wiki/JAT_Flight_367"/>
-              </event>
-              <event xml:id="BG" where="#l-KorZ" when="1996">
-                <head>SAS parachute failure</head>
-                <head type="short">Bear Grylls</head>
-                <ab type="altitude"><measure unit="m" quantity="4877"/></ab>
-                <ab type="survivor"><persName ref="#p-BG"></persName></ab>
-              </event>
-              <event xml:id="CM" where="#l-Joh" when="2004-08-22">
-                <head>Johannesburg parachute failure</head>
-                <head type="short">Christine McKenzie</head>
-                <ab type="altitude"><measure unit="m" quantity="3353"/></ab>
-                <ab type="survivor"><persName ref="#p-CM">Christine McKenzie</persName></ab>
-              </event>
-              <event xml:id="JBK" where="#l-Kam" when="2009-05">
-                <head>Cameraman fails to open chute</head>
-                <head type="short">Sport videographer</head>
-                <ab type="altitude"><measure unit="m" quantity="1829"/></ab>
-                <ab type="survivor"><persName ref="#p-JB"></persName></ab>
-              </event>
-            </listEvent>
-            <!-- ========= places ========= -->
-            <listPlace>
-              <place xml:id="l-GSN">
-                <placeName xml:lang="fr">Gare de Saint-Nazaire</placeName>
-                <location>
-                  <geo>47.28657,-2.21171</geo>
-                </location>
-              </place>
-              <place xml:id="l-Joh">
-                <placeName>Johannesburg</placeName>
-                <location>
-                  <country>South Africa</country>
-                  <region type="province">Gauteng</region>
-                </location>
-              </place>
-              <place xml:id="l-Kam">
-                <placeName xml:lang="ru">Камчатке</placeName>
-                <location>
-                  <country>Russia</country>
-                  <region>Kamchatka Krai</region>
-                </location>
-              </place>
-              <place xml:id="l-Ken">
-                <country>Kenya</country>
-              </place>
-              <place xml:id="l-Obe" xml:lang="de">
-                <placeName>Oberkirchen</placeName>
-                <location>
-                  <country>Deutschland</country>
-                  <region type="state">Nordrhein-Westfalen</region>
-                  <region>Arnsberg</region>
-                  <district>Hochsauerlandkreis</district>
-                  <settlement>Schmallenberg</settlement>
-                  <geo cert="low">51.154,8.357</geo>
-                </location>
-              </place>
-              <place xml:id="l-PI" xml:lang="es">
-                <placeName>Puerto Inca</placeName>
-                <location>
-                  <country>Peru</country>
-                  <region>Huánuco</region>
-                  <district>Puerto Inca</district>
-                </location>
-              </place>
-              <place xml:id="l-Sch">
-                <placeName xml:lang="de">Schmallenberg</placeName>
-                <placeName xml:lang="wep">Smalmereg</placeName>
-                <location>
-                </location>
-              </place>
-              <place xml:id="l-Seb">
-                <placeName xml:lang="de">Sebnitz</placeName>
-                <location>
-                  <geo>50.966667,14.283333</geo>
-                </location>
-              </place>
-              <place xml:id="l-WWIIEast">
-                <name>Eastern Front</name>
-                <ptr type="furtherInfo" target="https://en.wikipedia.org/wiki/Eastern_Front_(World_War_II)"/>
-              </place>
-              <place xml:id="l-Zam">
-                <country>Zambia</country>
-              </place>        
-            </listPlace>
-            <!-- ========= people ========= -->
-            <listPerson>
-              <person xml:id="p-VV">
-                <persName xml:lang="sr-Cyrl">Весна Вуловић</persName>
-                <persName xml:lang="sr-Latn">Vesna Vulović</persName>
-                <birth when="1950-01-03"/>
-                <death when="2016-12-23"/>
-                <ptr type="furtherInfo" target="https://en.wikipedia.org/wiki/Vesna_Vulovi%C4%87"/>
-              </person>
-              <person xml:id="p-IC">
-                <persName xml:lang="uk-Cyrl">Іван Михайлович Чиссов</persName>
-                <persName xml:lang="ru-Cyrl">Иван Михайлович Чисов</persName>
-                <persName xml:lang="uk-Latn">Ivan Mikhailovich Chisov</persName>
-                <birth when="1916"/>
-                <death when="1986"/>
-                <ptr type="furtherInfo" target="https://en.wikipedia.org/wiki/Ivan_Chisov"/>
-              </person>
-              <person xml:id="p-AM">
-                <persName>Alan Eugene Magee</persName>
-                <birth when="1919-01-13"/>
-                <death when="2003-12-20"/>
-                <ptr type="furtherInfo" target="https://en.wikipedia.org/wiki/Alan_Magee"/>
-              </person>
-              <person xml:id="p-NA">
-                <persName>Nicholas Stephen Alkemade</persName>
-                <birth when="1922-12-10"/>
-                <death when="1987-06-22"/>
-                <ptr type="furtherInfo" target="https://en.wikipedia.org/wiki/Nicholas_Alkemade"/>
-              </person>
-              <person xml:id="p-BG">
-                <persName>Edward Michael Grylls</persName>
-                <birth when="1974-06-07"/>
-                <ptr type="furtherInfo" target="https://www.beargrylls.com/pages/about-bear-grylls"/>
-              </person>
-              <person xml:id="p-JK">
-                <persName>Juliane Koepcke</persName>
-                <birth when="1954-10-10"/>
-                <ptr type="furtherInfo" target="https://en.wikipedia.org/wiki/Juliane_Koepcke"/>
-              </person>
-              <person xml:id="p-JB">
-                <persName>James Boole</persName>
-                <birth>1978, give or take a year</birth>
-                <ptr type="furtherInfo" target="https://www.facebook.com/james.boole/?ref=page_internal"/>
-              </person>
-            </listPerson>
-            <!-- ========= conjunctions and disjunctions ========= -->
-            <altGrp type="location">
-              <alt xml:id="l-KorZ" target="#l-Ken #l-Zam"/>
-            </altGrp>
-          </standOff>
-        </egXML>
-        <p>The <att>where</att> attribute on <gi>event</gi> can point to multiple 
-          canonical place descriptions, which should indicate 
-          that the event took place in multiple locations. For example, the November 2015
-          Paris Attacks took place at six different locations in Paris; this
-          might be encoded as an <gi>event</gi> with a <att>where</att>
-          attribute with six space-separated values.</p>
       </div>
+
       <div xml:id="place-rel">
         <head>Relations Between Places</head>
 
@@ -2269,6 +2085,265 @@ occupation and residence.</p>
       </div>
     </div>
 
+    <div xml:id="NDEVNT" type="div2">
+      <head>Events</head>
+      <p>
+        <specList>
+          <specDesc key="event"/>
+          <specDesc key="eventName"/>
+          <specDesc key="listEvent"/>
+        </specList> An event is a change of state whether real, planned, fictional, or purported about which more
+        information is known. For cases in which events have proper names, the <gi>eventName</gi> element may be used to encode these.
+        However, many events are not named but the <gi>event</gi> element may still be used to provide a description of them, 
+        using <gi>head</gi> or <gi>label</gi> and <gi>desc</gi> to encode the available information.
+        </p>
+      <p>The Guidelines do not prescribe what editors count as events, their granularity, nesting, and amount of other information to encode in 
+        relation to an event. Yet, most events can be identified either by using temporal, spatial or information with regard to specific agents 
+        involved (be it an <gi>org</gi>, <gi>person</gi> or <gi>object</gi>).</p>
+      <p>An <gi>event</gi> element may be used to record information about a place, a person or organisation related to the described event; for this reason the element
+        may appear as content of a <gi>place</gi>, <gi>person</gi> or <gi>org</gi>. However, it is also possible to describe events
+        independently of either a person, organization or a place. This may be useful not only for encoding texts which describe named events and 
+        their <gi>eventName</gi>s, but also in applications as chronologies, lists of significant events such as battles, legislation, etc.</p>
+      
+      <p>The <gi>listEvent</gi> element is a member of the <ident
+        type="class">model.listLike</ident> class, and may therefore
+        appear inside <gi>standOff</gi>, or wherever else lists are
+        permitted, in the same way as the <gi>listPerson</gi>,
+        <gi>listPlace</gi>, <gi>listOrg</gi> etc. elements described elsewhere in this
+        chapter.</p>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <standOff>
+          <listEvent>
+            <event when="1713" ref="http://eco.canadiana.ca/view/oocihm.9_01832">
+              <label>Treaty of Utrecht</label>
+              <!-- In this case, editors decided to understand treaties or legislation as an `event`, which can be considered 
+                a shortcut for several events that led up to their existence or validity (e.g. the signing of a treaty could also
+                be modeled as an event, with the result on paper as an `object` or `bibl`). -->
+              <desc>France ceded to Great Britain its claims to the <orgName>Hudson's Bay Company</orgName> territories in
+                <placeName>Rupert's Land</placeName>, <placeName>Newfoundland</placeName>, and <placeName>Acadia</placeName> and
+                recognized British suzerainty over <orgName type="tribe">the Iroquois</orgName> but retained its other pre-war
+                North American possessions, including 
+                <placeName key="PEI">Île-Saint-Jean</placeName> 
+                (now <placeName key="PEI">Prince Edward Island</placeName>)...</desc>
+            </event>
+            <event when="1774" key="14-GeoIII-c83">
+              <label>Quebec Act</label>
+              <desc>This act of the British Parliament guaranteed free practice of the Catholic faith and restored use of the
+                French Civil Code for private matters throughout the Province of Quebec, which had been expanded in territory
+                following the <ref>Treaty of Paris</ref>.</desc>
+            </event>
+            <event when="1778" ref="http://avalon.law.yale.edu/18th_century/del1778.asp">
+              <label>Treaty of Fort Pitt</label>
+              <desc>Also known as the <name type="event">Treaty with the Delawares</name>, this was the first written treaty
+                between the newly formed <orgName>United States</orgName> and any Native American people, in this case, the
+                <orgName type="tribe">Lenape</orgName> or Delawares.</desc>
+            </event>
+          </listEvent>
+        </standOff>
+      </egXML>
+      <p>The next example demonstrates the use of the
+        <att>where</att> attribute with <gi>event</gi>, coordinated
+        with location information stored in <gi>listPlace</gi>.</p>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NDGEOGste-Falls">
+        <standOff>
+          <!-- ========= events ========= -->
+          <listEvent>
+            <event xml:id="DB-3F" where="#WWIIEast" when="1942-01">
+              <head>Luftwaffe shoots down Ilyushin Il-4</head>
+              <head type="short">DB-3F</head>
+              <ab type="altitude"><measure unit="m" quantity="7000"/></ab>
+              <ab type="survivor"><persName ref="#p-IC">Іван Чиссов</persName></ab>
+            </event>
+            <event xml:id="SCP" where="#l-GSN" when="1943-01-03">
+              <head>Snap, Crackle, Pop is shot down by German flak</head>
+              <head type="short">B-17</head>
+              <ab type="altitude"><measure unit="m" quantity="6700"/></ab>
+              <ab type="survivor"><persName ref="#p-AM">Alan Magee</persName></ab>
+            </event>
+            <event xml:id="DS664" where="#l-Obe" when="1944-03-24">
+              <head>Avro Lancaster shot down by Junkers Ju 88</head>
+              <head type="short">Lancaster</head>
+              <ab type="altitude"><measure unit="m" quantity="5490"/></ab>
+              <ab type="survivor"><persName ref="#p-NA">Nicholas Alkemade</persName></ab>
+            </event>
+            <event xml:id="LANSA508" where="#l-PI" when="1971-12-04">
+              <head>LANSA 508 struck by lightning</head>
+              <head type="short">Amazon rainforest</head>
+              <ab type="altitude"><measure unit="m" quantity="3000"/></ab>
+              <ab type="survivor"><persName ref="#p-JK">Juliane Diller (née Koepcke)</persName></ab>
+            </event>
+            <event xml:id="jat367" where="#l-Seb" when="1972-01-26T16:01:29Z">
+              <head>Bombing of Yugoslav Airlines Flight 367</head>
+              <head type="short">JAT 367</head>
+              <ab type="altitude"><measure unit="m" quantity="10050"/></ab>
+              <ab type="survivor"><persName ref="#p-VV">Весна Вуловић</persName></ab>
+              <ptr type="furtherInfo" target="https://en.wikipedia.org/wiki/JAT_Flight_367"/>
+            </event>
+            <event xml:id="BG" where="#l-KorZ" when="1996">
+              <head>SAS parachute failure</head>
+              <head type="short">Bear Grylls</head>
+              <ab type="altitude"><measure unit="m" quantity="4877"/></ab>
+              <ab type="survivor"><persName ref="#p-BG"></persName></ab>
+            </event>
+            <event xml:id="CM" where="#l-Joh" when="2004-08-22">
+              <head>Johannesburg parachute failure</head>
+              <head type="short">Christine McKenzie</head>
+              <ab type="altitude"><measure unit="m" quantity="3353"/></ab>
+              <ab type="survivor"><persName ref="#p-CM">Christine McKenzie</persName></ab>
+            </event>
+            <event xml:id="JBK" where="#l-Kam" when="2009-05">
+              <head>Cameraman fails to open chute</head>
+              <head type="short">Sport videographer</head>
+              <ab type="altitude"><measure unit="m" quantity="1829"/></ab>
+              <ab type="survivor"><persName ref="#p-JB"></persName></ab>
+            </event>
+          </listEvent>
+          <!-- ========= places ========= -->
+          <listPlace>
+            <place xml:id="l-GSN">
+              <placeName xml:lang="fr">Gare de Saint-Nazaire</placeName>
+              <location>
+                <geo>47.28657,-2.21171</geo>
+              </location>
+            </place>
+            <place xml:id="l-Joh">
+              <placeName>Johannesburg</placeName>
+              <location>
+                <country>South Africa</country>
+                <region type="province">Gauteng</region>
+              </location>
+            </place>
+            <place xml:id="l-Kam">
+              <placeName xml:lang="ru">Камчатке</placeName>
+              <location>
+                <country>Russia</country>
+                <region>Kamchatka Krai</region>
+              </location>
+            </place>
+            <place xml:id="l-Ken">
+              <country>Kenya</country>
+            </place>
+            <place xml:id="l-Obe" xml:lang="de">
+              <placeName>Oberkirchen</placeName>
+              <location>
+                <country>Deutschland</country>
+                <region type="state">Nordrhein-Westfalen</region>
+                <region>Arnsberg</region>
+                <district>Hochsauerlandkreis</district>
+                <settlement>Schmallenberg</settlement>
+                <geo cert="low">51.154,8.357</geo>
+              </location>
+            </place>
+            <place xml:id="l-PI" xml:lang="es">
+              <placeName>Puerto Inca</placeName>
+              <location>
+                <country>Peru</country>
+                <region>Huánuco</region>
+                <district>Puerto Inca</district>
+              </location>
+            </place>
+            <place xml:id="l-Sch">
+              <placeName xml:lang="de">Schmallenberg</placeName>
+              <placeName xml:lang="wep">Smalmereg</placeName>
+              <location>
+              </location>
+            </place>
+            <place xml:id="l-Seb">
+              <placeName xml:lang="de">Sebnitz</placeName>
+              <location>
+                <geo>50.966667,14.283333</geo>
+              </location>
+            </place>
+            <place xml:id="l-WWIIEast">
+              <name>Eastern Front</name>
+              <ptr type="furtherInfo" target="https://en.wikipedia.org/wiki/Eastern_Front_(World_War_II)"/>
+            </place>
+            <place xml:id="l-Zam">
+              <country>Zambia</country>
+            </place>        
+          </listPlace>
+          <!-- ========= people ========= -->
+          <listPerson>
+            <person xml:id="p-VV">
+              <persName xml:lang="sr-Cyrl">Весна Вуловић</persName>
+              <persName xml:lang="sr-Latn">Vesna Vulović</persName>
+              <birth when="1950-01-03"/>
+              <death when="2016-12-23"/>
+              <ptr type="furtherInfo" target="https://en.wikipedia.org/wiki/Vesna_Vulovi%C4%87"/>
+            </person>
+            <person xml:id="p-IC">
+              <persName xml:lang="uk-Cyrl">Іван Михайлович Чиссов</persName>
+              <persName xml:lang="ru-Cyrl">Иван Михайлович Чисов</persName>
+              <persName xml:lang="uk-Latn">Ivan Mikhailovich Chisov</persName>
+              <birth when="1916"/>
+              <death when="1986"/>
+              <ptr type="furtherInfo" target="https://en.wikipedia.org/wiki/Ivan_Chisov"/>
+            </person>
+            <person xml:id="p-AM">
+              <persName>Alan Eugene Magee</persName>
+              <birth when="1919-01-13"/>
+              <death when="2003-12-20"/>
+              <ptr type="furtherInfo" target="https://en.wikipedia.org/wiki/Alan_Magee"/>
+            </person>
+            <person xml:id="p-NA">
+              <persName>Nicholas Stephen Alkemade</persName>
+              <birth when="1922-12-10"/>
+              <death when="1987-06-22"/>
+              <ptr type="furtherInfo" target="https://en.wikipedia.org/wiki/Nicholas_Alkemade"/>
+            </person>
+            <person xml:id="p-BG">
+              <persName>Edward Michael Grylls</persName>
+              <birth when="1974-06-07"/>
+              <ptr type="furtherInfo" target="https://www.beargrylls.com/pages/about-bear-grylls"/>
+            </person>
+            <person xml:id="p-JK">
+              <persName>Juliane Koepcke</persName>
+              <birth when="1954-10-10"/>
+              <ptr type="furtherInfo" target="https://en.wikipedia.org/wiki/Juliane_Koepcke"/>
+            </person>
+            <person xml:id="p-JB">
+              <persName>James Boole</persName>
+              <birth>1978, give or take a year</birth>
+              <ptr type="furtherInfo" target="https://www.facebook.com/james.boole/?ref=page_internal"/>
+            </person>
+          </listPerson>
+          <!-- ========= conjunctions and disjunctions ========= -->
+          <altGrp type="location">
+            <alt xml:id="l-KorZ" target="#l-Ken #l-Zam"/>
+          </altGrp>
+        </standOff>
+      </egXML>
+      <p>The <att>where</att> attribute on <gi>event</gi> can point to multiple 
+        canonical place descriptions, which should indicate 
+        that the event took place in multiple locations. For example, the November 2015
+        Paris Attacks took place at six different locations in Paris; this
+        might be encoded as an <gi>event</gi> with a <att>where</att>
+        attribute with six space-separated values, or using a <gi>listPlace</gi> (nested into the <gi>event</gi> or standalone).</p>
+      
+      <p>Events may also be modeled as hierarchies of nested <gi>event</gi>s. For example, a two part meeting might be represented as follows:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <event type="meeting" when="2007-05-29">
+            <desc>All day meeting to resolve content models</desc>
+            <event type="preamble" notAfter="13:00:00">
+              <desc>first part</desc>
+            </event>
+            <event type="conclusions" notBefore="13:00:00">
+              <desc>second part</desc>
+            </event>
+          </event>
+        </egXML>
+      </p>
+      
+      <p>For <gi>event</gi> as a child element of <gi>person</gi>, note the Section <ptr target="#NDPERSEpe"/>.</p>
+      <p>
+        <specList>
+          <specDesc key="history"/>
+          <specDesc key="additional"/>
+        </specList>
+      </p>
+
+    </div>
+    
     <div xml:id="NDOBJ">
       <head>Objects</head>
       <p>
