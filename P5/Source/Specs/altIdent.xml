@@ -31,47 +31,11 @@ $Id$
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.typed"/>
-    <memberOf key="model.glossLike"/>
+    <memberOf key="model.identSynonyms"/>
   </classes>
   <content>
-    <textNode/>
-    <!--ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.xtext"/-->
+    <dataRef name="NCName"/>  <!-- key=teidata.xmlName creates bad DTD, see https://github.com/TEIC/Stylesheets/issues/569  —Syd, 2022-12-07 -->
   </content>
-  <constraintSpec scheme="schematron" ident="deprecate_altIdent_in_non-ODD_places">
-    <desc>
-      The <gi>altIdent</gi> element should only be a child of
-      <gi>attDef</gi>, <gi>classSpec</gi>, <gi>constraintSpec</gi>,
-      <gi>dataSpec</gi>, <gi>elementSpec</gi>, <gi>macroSpec</gi>, or
-      <gi>valItem</gi>. Thus its use in other places is being
-      deprecated.
-    </desc>
-    <constraint>
-      <sch:report test="parent::tei:model | parent::tei:modelGrp | parent::tei:modelSequence | parent::tei:paramSpec | parent::tei:schemaSpec" role="nonfatal">
-        Use of &lt;altIdent&gt; as a child of &lt;<sch:value-of select="name(..)"/>&gt; is
-        deprecated, and will no longer be valid after 2022-07-14.
-      </sch:report>
-      <sch:report test="parent::tei:moduleSpec" role="nonfatal">
-        Use of &lt;altIdent&gt; to declare the FPI of a module is
-        deprecated, and will no longer be valid after 2022-07-14;
-        please use &lt;idno type="FPI"&gt; instead.
-      </sch:report>
-    </constraint>
-  </constraintSpec>
-  <constraintSpec scheme="schematron" ident="altIdent_usually_an_NCName">
-    <desc>
-      Other than when used to indicate the formal public identifier of
-      a module (which is a deprecated usage), the content of
-      <gi>altIdent</gi> should be a single <ident type="datatype">teidata.xmlName</ident>.
-      </desc>
-    <constraint>
-      <sch:rule context="tei:altIdent[ not( parent::tei:moduleSpec or @type eq 'FPI' ) ]">
-        <sch:assert test=". castable as xs:NCName">
-          The content of this 'altIdent' element (<sch:value-of select="normalize-space(.)"/>)
-          should conform to teidata.xmlName.
-        </sch:assert>
-      </sch:rule>
-    </constraint>
-  </constraintSpec>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
       <altIdent xml:lang="fr">balisageDoc</altIdent>

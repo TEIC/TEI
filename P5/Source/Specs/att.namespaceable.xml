@@ -8,8 +8,7 @@ $Id$
 -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" type="atts" ident="att.namespaceable">
-  <desc versionDate="2021-08-22" xml:lang="en">provides attributes indicating the target namespace for an
-  object being created</desc>
+  <desc versionDate="2021-08-22" xml:lang="en">provides attributes indicating the target namespace for an object being created.</desc>
   <desc versionDate="2022-08-26" xml:lang="ja">作成されているオブジェクトが対象とする名前空間を示す属性を提供する。</desc>
   <attList>
     <attDef ident="ns" usage="opt">
@@ -20,18 +19,29 @@ $Id$
       <gloss versionDate="2007-05-04" xml:lang="es">espacio de nombre</gloss>
       <gloss versionDate="2007-01-21" xml:lang="it">spazio del nome</gloss>
       <gloss versionDate="2022-08-26" xml:lang="ja">名前空間</gloss>
-      <desc versionDate="2012-10-21" xml:lang="en">specifies the namespace to which this element belongs</desc>
+      <desc versionDate="2023-02-07" xml:lang="en">specifies the namespace to which the element(s) being specified belongs.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">이 요소가 소속된 이름 공간을 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該元素所屬的名稱空間。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該要素が属する名前空間を示す。</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">précise l'espace de noms auquel appartient cet
-        élément.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">especifica el espacio de nombre al que pertenece tal
-        elemento.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica lo spazio del nome al quale appartiene tale
-        elemento</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">précise l'espace de noms auquel appartient cet élément.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">especifica el espacio de nombre al que pertenece tal elemento.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica lo spazio del nome al quale appartiene tale elemento</desc>
       <datatype minOccurs="0" maxOccurs="1"><dataRef key="teidata.namespace"/></datatype>
       <defaultVal>http://www.tei-c.org/ns/1.0</defaultVal>
+      <remarks xml:lang="en" versionDate="2023-02-07">
+        <p>When specified on an <gi>elementSpec</gi>, this attribute
+        specifies the namespace of the element being added, deleted,
+        replaced, or changed. When specified on a <gi>schemaSpec</gi>,
+        this attribute specifies the namespace of every element that
+        is added, deleted, replaced, or changed by
+        <gi>elementSpec</gi> children of the <gi>schemaSpec</gi>, or
+        by <gi>elementSpec</gi>s referred to by <gi>specGrpRef</gi>
+        children of the <gi>schemSpec</gi>, <emph>unless</emph>
+        overridden by an <att>ns</att> attribute on the
+        <gi>elementSpec</gi>.</p>
+        <p>Note that the value of <att>ns</att> of <gi>attDef</gi> is
+        <emph>not</emph> inherited from its ancestors.</p>
+      </remarks>
     </attDef>
   </attList>
 </classSpec>
