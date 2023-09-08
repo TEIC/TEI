@@ -1,0 +1,46 @@
+name: TEI Guidelines Tests
+
+on:
+  push:
+  pull_request:
+    branches: [ dev ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  test1:
+    if: github.repository == 'TEIC/TEI'
+    name: "Run the Guidelines tests against the Stylesheets' dev version"
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/teic/jenkins:dev
+      options: "--user root"
+
+    steps:
+      - name: Checkout Guidelines repo
+        uses: actions/checkout@v3
+      
+      - name: Checkout Stylesheets repo
+        uses: actions/checkout@v3
+        with:
+          repository: TEIC/Stylesheets
+          ref: dev
+          path: Stylesheets
+     
+      # Update permissions in GITHUB_WORKSPACE (e.g. /__w/TEI/TEI)
+      # to resolve "dubious permissions" in git (see TEI/TEIC#2399)  
+      - name: Fix Git permissions
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Run tests from the Test directory
+        run: |
+          cd P5
+          make clean validate test XSL=${GITHUB_WORKSPACE}/Stylesheets
+      
+      - name: Slack Notification
+        if: always()
+        continue-on-error: true
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_COLOR: ${{ job.status }}
+          MSG_MINIMAL: commit,actions url

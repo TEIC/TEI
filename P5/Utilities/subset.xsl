@@ -34,6 +34,8 @@
     happens to end with a child element.
     2020-08-30 by Syd Bauman: Better commenting. Also just copy @xml:id
     of bibliographic entries rather than processing them.
+    2021-10-01 by Syd Bauman: Per #2187, add <constraintSpec> to list
+    for which we keep_important_stuff_with_contents.
   -->
 
   <xsl:output method="xml" indent="no"/>
@@ -43,7 +45,13 @@
   
   <!-- The important parts get copied over in their entirety: -->
   <xsl:template name="keep_important_stuff_with_contents"
-      match="teiHeader | elementSpec | macroSpec | classSpec | moduleSpec | dataSpec">
+                match="teiHeader
+                     | elementSpec
+                     | macroSpec
+                     | classSpec
+                     | moduleSpec
+                     | dataSpec
+                     | constraintSpec ">
     <xsl:text>&#x0A;</xsl:text>
     <xsl:copy-of select="." /> <!--Comments & PIs inside me are copied, too-->
   </xsl:template>

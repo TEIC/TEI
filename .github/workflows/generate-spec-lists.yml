@@ -1,19 +1,24 @@
 name: "Generate and update JSON Spec lists for translation"
 on:
   push:
-    branches:
-      - dev
     paths:
       - 'P5/Source/Specs/*.xml'
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v2
-      - name: Generate Spec Lists
-        env: 
-          GITHUB_ACCESS_TOKEN: ${{ secrets.TEIBOT_ACCESS_TOKEN }}
-          ACTION_USER_EMAIL: ${{ secrets.I18N_USER_EMAIL }}
-          ACTION_USER_NAME: ${{ secrets.I18N_USER_NAME }}
+      - name: Checkout TEI Repository
+        uses: actions/checkout@v3
+
+      - name: Generate JSON Spec list        
         uses: ./.github/actions/generate-spec-lists
+
+      - name: Auto-commit Spec list  
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_user_name: ${{ github.actor }}
+          commit_message: Re-generated spec lists.
+      

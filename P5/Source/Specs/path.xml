@@ -6,8 +6,8 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="path" module="transcr">
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="path" module="transcr">
   <gloss xml:lang="en" versionDate="2018-07-13">path</gloss>
   <desc versionDate="2018-03-28" xml:lang="en">defines any line passing through two or more points within a <gi>surface</gi>
 element.</desc>
@@ -24,22 +24,21 @@ element.</desc>
     <empty/>
   </content>
   
-<!-- Thanks to Syd B for this approach -->
   <constraintSpec ident="pathmustnotbeclosed" scheme="schematron">
+    <desc versionDate="2023-04-11" xml:lang="en">
+      Since a <gi>path</gi>> represents a line with distinct start and
+      end points, the last coordinate should not be the same as the
+      first coordinate.
+    </desc>
     <constraint>
       <sch:rule context="tei:path[@points]">
-        <!--
-        For a <path> element, we should ensure that the last coordinate does not
-        repeat the first coordinate, otherwise we have a closed polygon, not a
-        path.
-      -->
         <sch:let name="firstPair" value="tokenize( normalize-space( @points ), ' ')[1]"/>
         <sch:let name="lastPair" value="tokenize( normalize-space( @points ), ' ')[last()]"/>
         <sch:let name="firstX" value="xs:float( substring-before( $firstPair, ',') )"/>
         <sch:let name="firstY" value="xs:float( substring-after( $firstPair, ',') )"/>
         <sch:let name="lastX" value="xs:float( substring-before( $lastPair, ',') )"/>
         <sch:let name="lastY" value="xs:float( substring-after( $lastPair, ',') )"/>
-        <sch:report test="$firstX eq $lastX  and  $firstY eq $lastY">The first and
+        <sch:report test="$firstX eq $lastX and $firstY eq $lastY">The first and
           last elements of this path are the same. To specify a closed polygon, use
           the zone element rather than the path element. </sch:report>
       </sch:rule>

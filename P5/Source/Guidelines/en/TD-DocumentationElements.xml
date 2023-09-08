@@ -6,7 +6,7 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <div xmlns="http://www.tei-c.org/ns/1.0"
      type="div1" xml:id="TD" n="27"
      xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -210,7 +210,7 @@ an XML Document Type Declaration.</item-->
       like the following:
       <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SELF">
         <moduleSpec ident="namesdates">
-          <altIdent type="FPI">Names and Dates</altIdent>
+          <idno type="FPI">Names and Dates</idno>
           <desc>Additional elements for names and dates</desc>
         </moduleSpec>
       </egXML>
@@ -503,37 +503,6 @@ to mark any technical term, thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
   This <term>recursion</term> is 
   giving me a headache.</egXML></p>]]></eg></p>
-      <!-- Removed following erroneous example per ticket https://sourceforge.net/p/tei/bugs/631/-->
-      <!--<p>When this approach is taken, but it is also desired to use markup within
-the example for example to indicate some aspect of its formatting, the
-markup concerned must be explicitly associated with the current (TEI)
-namespace, as in the following example:
-  <eg xml:space="preserve"><![CDATA[
-<egXML xmlns="http://www.tei-c.org/ns/Examples"
-xmlns:tei="http://www.tei-c.org/ns/1.0">
-<div>
-    <head>A slide about <gi>egXML</gi></head>
-    <list>
-     <item><gi>egXML</gi>  can be used to give XML examples in the TEI
-Examples namespace</item>
-     <item>Attributes values for<att>valid</att>:
-      <list tei:rend="collapsed">
-      <item><val tei:rend="green">true</val>: intended to be fully
-valid</item>
-      <item><val tei:rend="amber">feasible</val>: valid if missing nodes
-provided</item>
-      <item><val tei:rend="red">false</val>: not intended to be valid</item>
-      </list>
-      </item>
-      <item>The<att>rend</att>  attribute in the TEI namespace can be
-used for recording how parts of the example was rendered.</item>
-      </list>
-</div>
-</egXML>
-]]>
-  </eg></p>
-<p>If complex rendition information is required, then the <att>rendition</att> attribute, in the TEI namespace, can be used.
-</p>-->
       <p>Alternatively, the XML tagging within an example may be <soCalled>escaped</soCalled>, either by using
         entity references to represent the opening angle bracket, or by wrapping the whole example in a CDATA
         marked section: <eg xml:space="preserve"><![CDATA[<p>The <gi>term</gi> element may be used 
@@ -775,7 +744,7 @@ to mark any technical term, thus:
       TEI scheme. Because only Unicode characters are permitted, there
       is no way to record characters that are not (yet) represented in
       Unicode. Thus in TEI instead of <gi>textNode</gi> we often use a
-      reference to <ident type="macro">macro.xText</ident> which
+      reference to <ident type="macro">macro.xtext</ident> which
       permits both Unicode characters and the <gi>g</gi>
       element.</note></p>
     </div>
@@ -965,7 +934,7 @@ to mark any technical term, thus:
       SPITBOL to express the requirement that title and author should
       be different. 
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <constraintSpec ident="local" scheme="SPITBOL">
+          <constraintSpec ident="title_ne_author" scheme="SPITBOL">
             <constraint> (output = leq(title,author) "title and author cannot be the same") </constraint>
           </constraintSpec>
         </egXML>
@@ -1028,11 +997,13 @@ to mark any technical term, thus:
         <p>The <soCalled>datatype</soCalled> (i.e. the kind of value) for an attribute may be specified using
           the elements <gi>datatype</gi> and <gi>dataRef</gi>. A datatype may be defined in any of the
           following three ways: <list>
-            <item>by reference to an existing TEI datatype definition; </item>
-            <item>by use of its name in the widely used schema datatype library maintained by the W3C as part
-              of the definition of its schema language; </item>
+            <item>by reference to an existing TEI datatype definition, itself defined by a <gi>dataSpec</gi>;</item>
+            <item>by use of its name in <ref target="#XSD2">XML Schema
+            Part 2: Datatypes Second Edition</ref>, the widely used
+            datatype library maintained by the W3C as part of
+            the definition of its schema language;</item>
             <item>by referencing its URI within some other datatype library.</item>
-          </list>The TEI defines a number of datatypes, each with an identifier beginning
+          </list> The TEI defines a number of datatypes, each with an identifier beginning
             <code>teidata.</code>, which are used in preference to the datatypes available natively from a
           target schema such as RELAX NG or W3C Schema since the facilities provided by different schema
           languages vary so widely. The TEI datatypes available are described in section <ptr target="#DTYPES"
@@ -1048,17 +1019,32 @@ to mark any technical term, thus:
             <dataFacet name="minInclusive" value="-360.0"/>
             </dataRef></egXML>   
         Note that restrictions are either expressed with <att>restriction</att> or <gi>dataFacet</gi>, never both.</p>
-        <p>Attributes <att>minOccurs</att> and <att>maxOccurs</att> are available for the case where an
-          attribute may take more than one value of the type specified. For example, the <att>target</att>
-          attribute provided by the <ident type="class">att.pointing</ident> class has the following
-          declaration:
-          <egXML xmlns="http://www.tei-c.org/ns/Examples"><attDef ident="target">
-              <desc versionDate="2010-05-02" xml:lang="en">specifies the destination of the reference by
-                supplying one or more URI References</desc>
-              <datatype minOccurs="1" maxOccurs="unbounded">
-                <dataRef key="teidata.pointer"/>
-              </datatype>
-            </attDef></egXML>
+	<p>A datatype may be used to constrain the textual content of
+	an element, rather than the value of an attribute. But because
+	they are intended for use in defining ranges of attribute
+	values, datatypes may not contain elements or attributes.</p>
+        <p>The attributes <att>minOccurs</att> and
+        <att>maxOccurs</att> are available for the case where an
+        attribute may take more than one value of the type
+        specified. For example, the <att>columns</att> attribute of
+        the <gi>layout</gi> element can have one or two non-negative
+        integers as its value:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <attDef ident="columns">
+	      <gloss xml:lang="en" versionDate="2007-06-12">columns</gloss>
+	      <desc versionDate="2005-01-14" xml:lang="en">specifies the number of columns per page</desc>
+	      <datatype minOccurs="1" maxOccurs="2">
+		<dataRef key="teidata.count"/>
+	      </datatype>
+	      <remarks xml:lang="en" versionDate="2017-07-09">
+		<p>If a single number is given, all pages referenced
+		have this number of columns. If two numbers are given,
+		the number of columns per page varies between the
+		values supplied. Where <att>columns</att> is omitted
+		the number is assumed to be <val>1</val>.</p>
+	      </remarks>
+	    </attDef>
+	  </egXML>
            indicating that the <att>target</att> attribute may take any number of values, each being of the
           same datatype, namely the TEI data specification <ident>teidata.pointer</ident>. As is usual in XML,
           multiple values for a single attribute are separated by one or more white space characters. Hence,
@@ -1958,17 +1944,17 @@ most recent version of the Guidelines would be used instead.--></p>
         included or excluded respectively. For example:
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><schemaSpec ident="example">
             <moduleRef key="core" except="add del orig reg"/>
-            <moduleRef key="linking" include="linkGroup link"/>
+            <moduleRef key="linking" include="linkGrp link"/>
           </schemaSpec></egXML>
          The schema specified here will include all the elements supplied by the core module except for
           <gi>add</gi>, <gi>del</gi>, <gi>orig</gi>, and <gi>reg</gi>. It will also include only the
-          <gi>linkGroup</gi> and <gi>link</gi> elements from the linking module.</p>
+          <gi>linkGrp</gi> and <gi>link</gi> elements from the linking module. </p>
       <p>Alternatively, the element <gi>elementRef</gi> may be used to indicate explicitly which elements are
         to be included in a schema. The same effect as the preceding example might thus be achieved by the
         following:
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><schemaSpec ident="example">
             <moduleRef key="core" except="add del orig reg"/>
-            <elementRef key="linkGroup"/>
+            <elementRef key="linkGrp"/>
             <elementRef key="link"/>
           </schemaSpec></egXML>
          Note that in this last case, there is no need to specify the name of the module from which the two
@@ -2134,7 +2120,7 @@ most recent version of the Guidelines would be used instead.--></p>
       <head>Linking Schemas to XML Documents</head>
       <p>Schemas can be linked to XML documents by means of the <tag type="pi">?xml-model?</tag> processing
         instruction described in the W3C Working Group Note <title level="m">Associating Schemas with XML
-          documents</title> (<ptr target="http://www.w3.org/TR/xml-model/"/>). <tag type="pi"
+          documents</title> (<ptr target="https://www.w3.org/TR/xml-model/"/>). <tag type="pi"
           >?xml-model?</tag> can be used for any type of schema, and may be used for multiple schemas: <eg xml:space="preserve"><![CDATA[<?xml-model href="tei_tite.rng" type="application/xml" ?>
 <?xml-model href="checkLinks.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron" ?>
 <?xml-model href="tei_tite.odd" type="application/tei+xml" schematypens="http://www.tei-c.org/ns/1.0" ?>]]></eg>
@@ -2149,7 +2135,7 @@ most recent version of the Guidelines would be used instead.--></p>
     <head>Module for Documentation Elements</head>
     <p>The module described in this chapter makes available the following components:
     <moduleSpec xml:id="DTDDTD" ident="tagdocs">
-        <altIdent type="FPI">Documentation Elements</altIdent>
+        <idno type="FPI">Documentation Elements</idno>
         <desc xml:lang="en" versionDate="2019-07-07">Documentation of TEI and other XML markup languages</desc>
         <desc xml:lang="fr" versionDate="2018-07-12">Éléments de déclaration d’un modèle</desc>
         <desc xml:lang="zh-TW" versionDate="2018-07-12">TEI模組說明</desc>

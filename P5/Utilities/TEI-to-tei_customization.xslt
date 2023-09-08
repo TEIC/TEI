@@ -11,7 +11,7 @@
   >
 
   <xsl:variable name="myName" select="'TEI-to-tei_customization.xslt'"/>
-  <xsl:variable name="version" select="'0.6.2b'"/>
+  <xsl:variable name="version" select="'0.8.0b'"/>
   <xsl:param name="versionDate" select="format-date(current-date(),'[Y]-[M01]-[D01]')"/>
 
   <!--
@@ -36,21 +36,42 @@
       ** output ODD should be documented in the CHANGE LOG block
       ** comment, immediately below.
   -->
-  <!-- *********************** CHANGE LOG for XSLT changes *********************** -->
-  <!-- 2017-11-05 by Syd: Harumph. Found that our output is not valid against      -->
-  <!--   p5odds.rng because ident/@type is not allowed to be "test", so I removed  -->
-  <!--   the attribute. -->
-  <!-- 2017-04-07 by Syd: bug fixes:                                               -->
-  <!--   * allow <classSpec> to be empty                                           -->
-  <!--   * actually enforce constraints listed in remarks for <schemaSpec>         -->
-  <!-- 2017-01-16 by Syd: embarrassing — copy over useful bits from last time I    -->
-  <!--   did the exact same thing. That was 2016-06-10/12, immediately before the  -->
-  <!--   advanced TEI class James & I did at DHSI. I had entirely forgotten I had  -->
-  <!--   already done this. Sigh.                                                  -->
-  <!-- *********************** segnahc TLSX rof GOL EGNAHC *********************** -->
+  <!--
+      *********************** CHANGE LOG for XSLT changes *********************** 
+      2017-11-05 by Syd: Harumph. Found that our output is not valid against
+        p5odds.rng because ident/@type is not allowed to be "test", so I removed
+        the attribute.
+      2017-04-07 by Syd: bug fixes:
+        * allow <classSpec> to be empty
+        * actually enforce constraints listed in remarks for <schemaSpec>
+      2017-01-16 by Syd: embarrassing — copy over useful bits from last time I
+        did the exact same thing. That was 2016-06-10/12, immediately before the
+        advanced TEI class James & I did at DHSI. I had entirely forgotten I had
+        already done this. Sigh.
+      *********************** segnahc TLSX rof GOL EGNAHC ***********************
+  -->
 
   <xsl:variable name="revisionDesc">
     <revisionDesc>
+      <change who="#sbauman.emt" when="2023-04-04">
+	We will soon not allow more than 1 child of <gi>content</gi>,
+	so updated the content model of <gi>schemaSpec</gi> to have
+	only 1 child (in this case, <gi>sequence</gi>).
+      </change>
+      <change who="#sbauman.emt" when="2022-06-25">
+        Since <ref
+        target="https://github.com/TEIC/TEI/issues/1735">TEI ticket
+        #1735</ref> has now addressed the <code>( content | valList
+        )*</code> portion of the content models of <gi>dataSpec</gi>
+        and <gi>macroSpec</gi> (changing them to <code>( content |
+        valList )?</code>), we no longer need to do that here. Thus
+        undo most of the changes of 2018-07-19.
+      </change>
+      <change who="#sbauman.emt" when="2022-04-03">
+        Motivated by <ref
+        target="https://github.com/TEIC/Stylesheets/issues/136">#136</ref>,
+        restrict <att>docLang</att> of <gi>schemaSpec</gi> to only 1 value.
+      </change>
       <change who="#sbauman.emt" when="2020-10-29">
         Per <ref
         target="https://github.com/TEIC/TEI/issues/2050">#2050</ref>,
@@ -154,24 +175,30 @@
             <code>except</code>ed in the test, and thus flag an error</item>
         </list>
       </change>
-      <change who="#sbauman.emt" when="2015-06-19"> Fix bug in <name>only-1-per</name> contraint
-        (which was added 674 days ago — why did this bug last even 1 day?) </change>
-      <change who="#sbauman.emt" when="2015-01-24"> Changes for <soCalled>Pure ODD</soCalled>: <list>
-        <item>constrain content of <gi>content</gi></item>
-        <item>delete <ident type="class">att.global.rendition</ident> and <ident type="class"
-          >att.global.responsibility</ident></item>
-        <item>delete <att>allowText</att> (as I think TEI has decided to go with
+      <change who="#sbauman.emt" when="2015-06-19">
+	Fix bug in <name>only-1-per</name> contraint (which was added
+	674 days ago — why did this bug last even 1 day?)
+      </change>
+      <change who="#sbauman.emt" when="2015-01-24">
+	Changes for <soCalled>Pure ODD</soCalled>:
+	<list>
+          <item>constrain content of <gi>content</gi></item>
+          <item>delete <ident type="class">att.global.rendition</ident> and <ident
+	  type="class" >att.global.responsibility</ident></item>
+          <item>delete <att>allowText</att> (as I think TEI has decided to go with
           <gi>textNode</gi> instead)</item>
-        <item>require <att>key</att> of <gi>elementRef</gi></item>
-        <item>change expression of all datatypes (which happen to all be <ident
+          <item>require <att>key</att> of <gi>elementRef</gi></item>
+          <item>change expression of all datatypes (which happen to all be <ident
           type="datatype">data.enumerated</ident>) from RNG to Pure ODD</item>
-        <item>change expression of most of our content models from RNG to Pure ODD.</item>
+          <item>change expression of most of our content models from RNG to Pure ODD.</item>
       </list>
       </change>
-      <change who="#sbauman.emt" when="2015-01-23"> Changes for <soCalled>Pure ODD</soCalled>: <list>
-        <item>constrain <att>key</att> of <gi>classRef</gi>, <gi>elementRef</gi>, and
+      <change who="#sbauman.emt" when="2015-01-23">
+	Changes for <soCalled>Pure ODD</soCalled>:
+	<list>
+          <item>constrain <att>key</att> of <gi>classRef</gi>, <gi>elementRef</gi>, and
           <gi>macroRef</gi></item>
-        <item>constrain <att>include</att> and <att>except</att> of <gi>classRef</gi>, also
+          <item>constrain <att>include</att> and <att>except</att> of <gi>classRef</gi>, also
           flagging an error if both are present</item>
       </list>
       </change>
@@ -187,9 +214,10 @@
             it.</item>
         </list>
       </change>
-      <change who="#sbauman.emt" when="2013-08-14"> Add constraint <name>only-1-per</name>,
-        which warns user iff there are more than 1 <gi>elementSpec</gi> with the same
-        <att>ident</att>
+      <change who="#sbauman.emt" when="2013-08-14">
+	Add constraint <name>only-1-per</name>, which warns user iff
+	there are more than 1 <gi>elementSpec</gi> with the same
+	<att>ident</att>
       </change>
       <change who="#sbauman.emt" when="2013-05-09">
         <list>
@@ -213,11 +241,13 @@
           <item>Add health warning about using <q>Check ID/IDREF</q> in oXygen</item>
         </list>
       </change>
-      <change who="#sbauman.emt" when="2013-03-09"> Added <gi>sch:pattern</gi> to list of
-        elements allowed inside <gi>constraint</gi>
+      <change who="#sbauman.emt" when="2013-03-09">
+	Added <gi>sch:pattern</gi> to list of elements allowed inside
+	<gi>constraint</gi>.
       </change>
-      <change who="#sbauman.emt" when="2012-06-17"> Remove the new <gi>notatedMusic</gi> and
-        <gi>gb</gi> elments </change>
+      <change who="#sbauman.emt" when="2012-06-17">
+	Remove the new <gi>notatedMusic</gi> and <gi>gb</gi> elments.
+      </change>
       <change who="#sbauman.emt" when="2011-09-20">
         <list>
           <item>neaten up a bit for readers of this XML file</item>
@@ -226,7 +256,9 @@
             <att>prefix</att></item>
         </list>
       </change>
-      <change who="#sbauman.emt" when="2011-09-05"> Test that required elements are not removed </change>
+      <change who="#sbauman.emt" when="2011-09-05">
+	Test that required elements are not removed.
+      </change>
       <change who="#sbauman.emt" when="2011-09-04">
         <list>
           <item>changed check for colons in <att>prefix</att> of <gi>schemaSpec</gi> from a
@@ -235,8 +267,10 @@
             <att>prefix</att> of anything else</item>
         </list>
       </change>
-      <change who="#sbauman.emt" when="2011-09"> Beefed up prose, then corrections per Julia,
-        including changing name of language (and thus <att>prefix</att>). </change>
+      <change who="#sbauman.emt" when="2011-09">
+	Beefed up prose, then corrections per Julia, including
+	changing name of language (and thus <att>prefix</att>).
+      </change>
       <change who="#sbauman.emt" when="2011-09-01">
         <list>
           <item>remove addition of <name type="class">att.identifiable</name> to <name
@@ -258,17 +292,19 @@
           <item>require <att>ident</att> of <gi>elementSpec</gi></item>
         </list>
       </change>
-      <change who="#sbauman.emt" when="2011-08-29"> constrain <att>ident</att> of
-        <gi>classSpec</gi>
+      <change who="#sbauman.emt" when="2011-08-29">
+	Constrain <att>ident</att> of <gi>classSpec</gi>.
       </change>
-      <change who="#sbauman.emt" when="2011-08-27"> during workshop <list>
-        <item>constrain <att>start</att> of <gi>schemaSpec</gi></item>
-        <item>constrain <att>key</att> of <gi>elmentRef</gi></item>
-        <item>improve remakrs of <gi>constraint</gi> so that it correctly reflects that we
+      <change who="#sbauman.emt" when="2011-08-27">
+	During workshop:
+	<list>
+          <item>constrain <att>start</att> of <gi>schemaSpec</gi></item>
+          <item>constrain <att>key</att> of <gi>elmentRef</gi></item>
+          <item>improve remakrs of <gi>constraint</gi> so that it correctly reflects that we
           only permit ISO Schematron</item>
-        <item>constrain content of <gi>altIdent</gi>, unless it is a child of
+          <item>constrain content of <gi>altIdent</gi>, unless it is a child of
           <gi>valItem</gi></item>
-      </list>
+	</list>
       </change>
       <change who="#sbauman.emt" when="2011-08-25">
         <list>
@@ -690,12 +726,14 @@
 
               <elementSpec module="tagdocs" ident="schemaSpec" mode="change">
                 <content>
-                  <elementRef key="gloss" minOccurs="0" maxOccurs="1"/>
-                  <elementRef key="desc"  minOccurs="1" maxOccurs="1"/>
-                  <alternate minOccurs="0" maxOccurs="unbounded">
-                    <classRef key="model.oddRef"/>
-                    <classRef key="model.oddDecl"/>
-                  </alternate>
+		  <sequence>
+                    <elementRef key="gloss" minOccurs="0" maxOccurs="1"/>
+                    <elementRef key="desc"  minOccurs="1" maxOccurs="1"/>
+                    <alternate minOccurs="0" maxOccurs="unbounded">
+                      <classRef key="model.oddRef"/>
+                      <classRef key="model.oddDecl"/>
+                    </alternate>
+		  </sequence>
                 </content>
                 <constraintSpec scheme="schematron" ident="required-modules">
                   <gloss>required modules</gloss>
@@ -749,6 +787,20 @@
                   </constraint>
                 </constraintSpec>
                 <attList>
+                  <attDef ident="docLang" mode="change">
+                    <desc versionDate="2022-04-03" xml:lang="en">
+                      specifies which language to use when creating
+                      documentation if the description for an element,
+                      attribute, class, or macro is available in more
+                      than one language
+                    </desc>
+                    <datatype minOccurs="1" maxOccurs="1">
+                      <dataRef key="teidata.language"/>
+                    </datatype>
+                    <remarks xml:lang="en" versionDate="{$versionDate}">
+                      <p>The current TEI ODD processor only handles 1 value as the value of <att>docLang</att>.</p>
+                    </remarks>
+                  </attDef>
                   <attDef ident="start" mode="replace">
                     <desc xml:lang="en" versionDate="{$versionDate}">specifies entry points to the schema, i.e. which elements may be used as
                       the root of documents conforming to it.</desc>
@@ -948,22 +1000,6 @@
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="macroSpec" mode="change">
-                <content>
-                  <sequence>
-                    <alternate minOccurs="0" maxOccurs="unbounded">
-                      <classRef key="model.glossLike"/>
-                      <classRef key="model.descLike"/>
-                    </alternate>
-                    <alternate minOccurs="0" maxOccurs="1">
-                      <elementRef key="content"/>
-                      <elementRef key="valList"/>
-                    </alternate>
-                    <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
-                    <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
-                    <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
-                    <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
-                  </sequence>
-                </content>
                 <attList>
                   <attDef ident="ident" mode="replace" usage="req">
                     <datatype minOccurs="1" maxOccurs="1">
@@ -974,14 +1010,6 @@
                     </valList>
                   </attDef>
                 </attList>
-                <remarks xml:lang="en" versionDate="{$versionDate}">
-                  <p>In tei_customization the <gi>macroSpec</gi>
-                  element (and the <gi>dataSpec</gi> element) allows
-                  at most one <gi>content</gi> or one <gi>valList</gi>
-                  child (not both). TEI P5 permits any number of
-                  either or both, but does not define what multiples mean,
-                  and current ODD processors only process one.</p>
-                </remarks>
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="macroRef" mode="change">
@@ -1029,22 +1057,6 @@
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="dataSpec" mode="change">
-                <content>
-                  <sequence>
-                    <alternate minOccurs="0" maxOccurs="unbounded">
-                      <classRef key="model.glossLike"/>
-                      <classRef key="model.descLike"/>
-                    </alternate>
-                    <alternate minOccurs="0" maxOccurs="1">
-                      <elementRef key="content"/>
-                      <elementRef key="valList"/>
-                    </alternate>
-                    <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
-                    <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
-                    <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
-                    <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
-                  </sequence>
-                </content>
                 <attList>
                   <attDef ident="ident" mode="replace">
                     <datatype minOccurs="1" maxOccurs="1">
@@ -1055,14 +1067,6 @@
                     </valList>
                   </attDef>
                 </attList>
-                <remarks xml:lang="en" versionDate="{$versionDate}">
-                  <p>In tei_customization the <gi>dataSpec</gi>
-                  element (and the <gi>macroSpec</gi> element) allows
-                  at most one <gi>content</gi> or one <gi>valList</gi>
-                  child (not both). TEI P5 permits any number of
-                  either or both, but does not define what multiples mean,
-                  and current ODD processors only process one.</p>
-                </remarks>
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="dataRef" mode="change">

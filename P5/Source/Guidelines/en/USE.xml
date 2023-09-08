@@ -6,7 +6,7 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="USE">
   <head>Using the TEI</head>
 
@@ -866,7 +866,7 @@ that practice. -->
       <p>These Guidelines mandate the use of well-formed XML as representation format. Documents
         must conform to the World Wide Web Consortium recommendation of the <title>Extensible Markup
           Language (XML) 1.0 (Fourth Edition)</title> or successor editions found at <ptr
-          target="http://www.w3.org/TR/xml/"/>. Other ways of
+          target="https://www.w3.org/TR/xml/"/>. Other ways of
         representing the concepts of the TEI Abstract Model are possible, and other representations
         may be considered appropriate for use in particular situations (for example, for data
         capture, or project-internal processing). But such alternative representations
@@ -1391,12 +1391,11 @@ that practice. -->
             following the rules given above.</item>
 
           <item>Some components may occur multiple times, but are neither grouped nor identifiable.
-            Examples include the members of <ident type="class">model.glossLike</ident> such as
-              <gi>equiv</gi>, <gi>desc</gi>, <gi>gloss</gi>, the <gi>exemplum</gi>,
-            <gi>remarks</gi>, <gi>listRef</gi>, <gi>datatype</gi> or <gi>defaultVal</gi> elements.
-            These should be copied from both the TEI ODD specification and the ODD customization,
-            and all occurrences included in the output.</item>
-
+	    Examples include the <gi>desc</gi>, <gi>exemplum</gi>, <gi>remarks</gi>, <gi>listRef</gi>,
+	    <gi>datatype</gi> and <gi>defaultVal</gi> elements, and the members of
+	    <ident type="class">model.identSynonyms</ident>, i.e., the <gi>equiv</gi>,
+	    <gi>altIdent</gi>, and <gi>gloss</gi>, elements. These should be copied from both the TEI
+	    ODD specification and the ODD customization, and all occurrences included in the output.</item>
         </list>
       </p>
 
@@ -1651,11 +1650,13 @@ performance.attributes = att.global.attributes, empty]]></eg> Here, the attribut
           <elementSpec ident="sp">
             <!-- ... -->
             <content>
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              <sequence minOccurs="0" maxOccurs="1">
-                <elementRef key="speaker"/>
-                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              </sequence>
+	      <sequence minOccurs="1" maxOccurs="1">
+		<classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+		<sequence minOccurs="0" maxOccurs="1">
+                  <elementRef key="speaker"/>
+                  <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	      </sequence>
             </content>
             <!-- ... -->
           </elementSpec>
@@ -1667,8 +1668,10 @@ performance.attributes = att.global.attributes, empty]]></eg> Here, the attribut
           <elementSpec ident="sp">
             <!-- ... -->
             <content>
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	      <sequence minOccurs="1" maxOccurs="1">
+		<classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	      </sequence>
             </content>
             <!-- ... -->
           </elementSpec>
@@ -1676,8 +1679,8 @@ performance.attributes = att.global.attributes, empty]]></eg> Here, the attribut
           <ident type="class">model.global</ident> it is impossible to be sure which rule is being
         used. This situation is not detected when RELAX NG is used, since the language is able to
         cope with non-deterministic content models of this kind and does not require that only a
-        single rule be used. </p>
-      <!-- not sure if this works : needs testing : original source clearly wrong though -->
+        single rule be used.</p>
+	<!-- not sure if this works : needs testing : original source clearly wrong though -->
 
       <p>Finally, an application will need to have some method of associating the schema with
         document instances that use it. The TEI does not mandate any particular method of doing

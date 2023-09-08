@@ -6,8 +6,8 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="dataSpec">
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" ident="dataSpec">
   <gloss versionDate="2007-07-04" xml:lang="en">datatype specification</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">documents a datatype.</desc>
   <classes>
@@ -18,7 +18,7 @@ $Id$
   <content>
     <sequence>
       <alternate minOccurs="0" maxOccurs="unbounded">
-        <classRef key="model.glossLike"/>
+        <classRef key="model.identSynonyms"/>
         <classRef key="model.descLike"/>
       </alternate> 
       <alternate minOccurs="0" maxOccurs="1">
@@ -31,6 +31,15 @@ $Id$
       <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
+  <constraintSpec scheme="schematron" ident="no_elements_in_data_content">
+    <constraint>
+      <sch:rule role="warn" context="tei:dataSpec/tei:content">
+        <sch:report test=".//tei:anyElement | .//tei:classRef | .//tei:elementRef">
+          A datatype specification should not refer to an element or a class.
+        </sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <dataSpec ident="teidata.pointer">
