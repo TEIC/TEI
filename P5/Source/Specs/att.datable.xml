@@ -25,16 +25,13 @@ $Id$
     <memberOf key="att.datable.custom"/>
   </classes>
   <attList>
-    <!-- remove calendar after 2024-11-11 -->
-    <!--
-    <desc type="deprecationInfo" versionDate="2023-05-11" xml:lang="en">The <att>calendar</att> attribute will be removed from this element
+    <attDef ident="calendar" usage="opt" validUntil="2024-11-11">
+      <desc type="deprecationInfo" versionDate="2023-05-11" xml:lang="en">The <att>calendar</att> attribute will be removed from this element
         as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar</att> attribute
         (unlike <att>datingMethod</att> defined in
         <ident type="class">att.datable.custom</ident>) defines the calendar system of the date
         in the original material defined by the parent element, <emph>not</emph> the calendar to
         which the date is normalized.</desc>
-    -->
-    <attDef ident="calendar" usage="opt">
       <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the
         date represented by the content of this element belongs.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">날짜 표현 시스템 또는 달력 표시 형식을 표시한다.</desc>
@@ -55,20 +52,6 @@ $Id$
             <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
             systems or calendars to which the date represented by the content of this element belongs,
             but this <sch:name/> element has no textual content.</sch:assert>
-          </sch:rule>
-        </constraint>
-      </constraintSpec>
-      <constraintSpec scheme="schematron" ident="calendar-deprecated">
-        <constraint>
-          <sch:rule context="tei:*[@calendar][ not( self::tei:date | self::tei:time | self::tei:origDate ) ]">
-            <sch:let name="me_phrase"
-              value="concat( 'Attribute calendar on ', local-name(.))"/>
-            <sch:assert test="'2024-11-11' cast as xs:date ge current-date()">
-              <sch:value-of select="concat( $me_phrase, ' construct is outdated (as of 2024-11-11); ODD processors may ignore it, and its use is no longer supported' )"/>
-            </sch:assert>
-            <sch:report role="nonfatal" test="@calendar">
-              <sch:value-of select="concat( $me_phrase, ' becomes outdated on 2024-11-11' )"/>
-            </sch:report>
           </sch:rule>
         </constraint>
       </constraintSpec>
