@@ -230,7 +230,7 @@
 \catcode`説=\active \def説{{\fontspec{</xsl:text><xsl:value-of select="$japaneseFont"/><xsl:text>}\char35500}}
 \catcode`人=\active \def人{{\fontspec{</xsl:text><xsl:value-of select="$japaneseFont"/><xsl:text>}\char20154}}
 \catcode`&#x4EBB;=\active \def&#x4EBB;{{\fontspec{</xsl:text><xsl:value-of select="$japaneseFont"/><xsl:text>}\char20155}}
-\catcode`⁊=\active \def⁊{{\fontspec{Junicode Two Beta}\char8266}} 
+\catcode`⁊=\active \def⁊{{\fontspec{Junicode}\char8266}} 
 \catcode`Å=\active \defÅ{{\fontspec{DejaVu Serif}\char8491}} 
 \catcode`⁻=\active \def⁻{\textsuperscript{-}}
 \catcode` =\active \def {\,}
