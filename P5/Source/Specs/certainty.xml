@@ -12,7 +12,7 @@ $Id$
   with some aspect of the text markup.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">텍스트 마크업의 어떤 특성과 관련된 확실성 또는 불확실성의 정도를 가리킨다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">指出標記文本某些部分的確定或不確定的程度。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">当該マークアップの確信度を示す。</desc>
+  <desc versionDate="2023-10-02" xml:lang="ja">当該マークアップのなんらかの点に関する確実性の程度を示す</desc>
   <desc versionDate="2009-01-06" xml:lang="fr">Indique le degré de certitude ou d'incertitude
       associé à certains aspects du balisage du texte.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">Indica el grado de certeza o incertidumbre asociado a algun aspecto del marcaje de texto.</desc>
@@ -47,7 +47,9 @@ $Id$
       <gloss versionDate="2008-04-06" xml:lang="es">certeza</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">certitude</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">certezza</gloss>
+      <gloss versionDate="2023-10-02" xml:lang="ja">確実性</gloss>
       <desc versionDate="2011-04-13" xml:lang="en">signifies the degree of certainty associated with the object pointed to by the <gi>certainty</gi> element.</desc>
+      <desc versionDate="2023-10-02" xml:lang="ja">この<gi>certainty</gi>要素が指す対象に関する確実性の程度を示す。</desc>
       <datatype><dataRef key="teidata.certainty"/></datatype>
     </attDef>
     <attDef ident="locus" usage="req">
@@ -59,8 +61,7 @@ $Id$
 	etc.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">요소의 적용가능성, 시작 및 종료 태그의 정확한 위치, 명시적 속성 값 등과 같이 마크업에서 불확실성을 유발하는 정확한 위치를 가리킨다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指出不確定標記的確切位置：元素的應用性、開始標籤或結束標籤的確切位置、特定屬性的屬性值等。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該確信度が該当する場所の詳細を示す。例えば、要素全体、開始タグ
-      または終了タグの正確な位置、特定属性の値、など。</desc>
+      <desc versionDate="2023-10-02" xml:lang="ja">どの側面の確実性かをより具体的に示す。例えば、マークアップが正確か、要素や属性の名前が正確か、要素や属性の内容の正確か、など。</desc>
       <desc versionDate="2009-01-06" xml:lang="fr">Indique le point précis sur lequel porte
           l'incertitude de balisage : pertinence de l'élément, position exacte de la balise de début
           ou de fin, valeur d'un attribut spécifique, etc.</desc>
@@ -71,22 +72,27 @@ $Id$
         <valItem ident="name">
           <desc versionDate="2009-06-06" xml:lang="en">uncertainty concerns whether the name of the element
 	  or attribute  used is correctly applied.</desc>
+          <desc versionDate="2023-10-02" xml:lang="ja">適用された要素または属性の名前が不確実である</desc>
         </valItem>
         <valItem ident="start">
           <desc versionDate="2009-06-06" xml:lang="en">uncertainty concerns whether the start of the element
 	  is correctly identified.</desc>
+          <desc versionDate="2023-10-02" xml:lang="ja">要素の開始位置が不確実である</desc>
         </valItem>
         <valItem ident="end">
           <desc versionDate="2009-06-07" xml:lang="en">uncertainty concerns whether the end of the element
 	  is correctly identified.</desc>
+          <desc versionDate="2023-10-02" xml:lang="ja">要素の終了位置が不確実である</desc>
         </valItem>
         <valItem ident="location">
           <desc versionDate="2009-06-06" xml:lang="en">uncertainty concerns both the start and the end of the
 	  element.</desc>
+          <desc versionDate="2023-10-02" xml:lang="ja">要素の開始位置と終了位置の両方が不確実である</desc>
         </valItem>
         <valItem ident="value">
           <desc versionDate="2009-06-06" xml:lang="en">uncertainty concerns the content (for an element) or
 	  the value (for an attribute)</desc>
+          <desc versionDate="2023-10-02" xml:lang="ja">（要素の）内容または（属性の）値が不確実である</desc>
         </valItem>
       </valList>
     </attDef>
@@ -155,12 +161,9 @@ element.</p>
                         qu'il faille un identifiant générique <gi>placeName</gi> plutôt que
                         <gi>persName</gi>, qui est l'élément encodé.</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
+      <remarks xml:lang="ja" versionDate="2023-10-02">
         <p>
-	当該属性は、当該要素に対する代替値の確信度を示している。
-	上の例では、符号化する人が当該可能性(.2)を示している。これは当
-	該要素に使用される共通識別子は、<gi>persName</gi>ではなく
-	<gi>placeName</gi>であるべき可能性の度合いを示している。
+          当該属性は、参照するマークアップのある側面における特定の選択肢の確信度を示すことができる。上記の最初の例では、当該要素の共通識別子が、現在の<gi>persName</gi>ではなく<gi>placeName</gi>であるという可能性が 0.2 であることを示そうとしている。
 	</p>
       </remarks>
     </attDef>
@@ -170,7 +173,7 @@ element.</p>
       are assumed in the assignment of a degree of confidence.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">신뢰도 할당에서 추정된 조건을 표시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指出在評估確定程度時所設想的情況。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該確信度が成立する条件を示す。</desc>
+      <desc versionDate="2023-10-02" xml:lang="ja">確信度の割り当ての前提となる条件を与える一つ以上の要素を示す。</desc>
       <desc versionDate="2009-01-06" xml:lang="fr">Indique les conditions présumées lors de
           l'attribution d'un degré de confiance.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica las condiciones asumidas en la asignación de un grado de confianza</desc>
@@ -241,36 +244,10 @@ ambiguity-free system for indicating certainty.</p>
         <gi>certainty</gi> procure actuellement un système complet et
         sans ambiguïté pour indiquer le degré de certitude.</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
-        <!--<p>
-	プロジェクトによっては，当該属性で使用される用語を管理したいだ
-      ろう．
-      </p>-->
+      <remarks xml:lang="ja" versionDate="2023-10-02">
         <p>
-	当該属性値として考えられるものは、他の要素<gi>certainty</gi>の
-      識別子またはそのリストである。従って、この要素<gi>certainty</gi>
-      による連鎖は、確率ネットワークを作ることができる。この確率ネット
-      ワークは、条件の付かない(属性<att>given</att>がない)要素
-      <gi>certainty</gi>をベースに作られる。この要素の鎖は、以下のよう
-      に解釈することができる。
-      ある要素<gi>certainty</gi>を前提条件として参照している場合、
-      属性にある確信度は、前提条件の内容ではなく、当該要素に関する記述
-      を対象としたものである。例えば、上の例では、初めの要素
-      <gi>certainty</gi>は、<mentioned>msm</mentioned>としてある新しい
-      筆写者の識別子の確信度を示している。2番目のそれは、新しい筆写者
-      が<mentioned>msm</mentioned>とすれば、
-      <mentioned>Essex</mentioned>が個人名であるということの確信度を示
-      している。この2番目の要素<gi>certainty</gi>にあるのは、msmが新し
-      筆写者である確信度が0.6であるということではなく、msmは新しい筆写
-      者であるとしていることに注意して欲しい。このように確率ネットワー
-      クを作ることが推奨される。
-      </p>
-        <p>
-	果敢な人は、他の要素や散文的記述を参照し、要素<gi>alt</gi>,
-      <gi>join</gi>, <gi>not</gi>などの素性構造向け連結子を使い、
-      複雑な確率ネットワークを作ろうとするかもしれない。しかし、当該要
-      素<gi>certainty</gi>が、確信度を明瞭に示す包括的な解決策であると
-      は、現時点では考えていない。
+          当該属性値として考えられるものは、他の<gi>certainty</gi>要素の識別子またはそのリストである。従って、この<gi>certainty</gi>要素を繋げて確率ネットワークを作ることができる。この確率ネットワークは、最終的には条件の付かない(<att>given</att>属性がない) <gi>certainty</gi>要素を起点として作られるだろう。この要素のネットワークの意味は、以下のように解釈することができる。ある<gi>certainty</gi>要素を前提条件として参照している場合、 この要素が表す不確実さは前提条件側ではなく、当該要素に由来するものである。例えば、上の例では、最初の<gi>certainty</gi>要素は、新しい筆写者が<mentioned>msm</mentioned>である確信度を示している。2番目のものは、新しい筆写者が<mentioned>msm</mentioned>である場合に、 <mentioned>Essex</mentioned>が人名である確信度を示している。この2番目の<gi>certainty</gi>要素にあるのは、msmが新しい筆写者である確信度が0.6であるということではなく、msmは新しい筆写者であるとしていることに注意して欲しい。このように確率ネットワークを作ることが推奨される。</p>
+        <p>果敢な人は、他の要素や散文的記述を参照し、要素<gi>alt</gi>, <gi>join</gi>, <gi>note</gi>などの素性構造向け連結子を使い、 複雑な確率ネットワークを作ろうとするかもしれない。しかし、当該の<gi>certainty</gi>要素が、確信度を明瞭に示す包括的な解決策であるとは、現時点では考えていない。
       </p>
       </remarks>
     </attDef>
