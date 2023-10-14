@@ -1,0 +1,735 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rng:grammar xmlns:xlink="http://www.w3.org/1999/xlink"
+             xmlns:teix="http://www.tei-c.org/ns/Examples"
+             xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
+             ns="http://www.w3.org/2005/11/its"><!--Schema generated from ODD source 2007-02-02T10:55:55+00:00. This schema has been developed using the ODD (One Document Does it
+            all) language of the Text Encoding Initiative (). This is a literate programming language for writing XML schemas, with three
+            characteristics: (1) The element and attribute set is specified using
+              an XML vocabulary which includes support for macros
+              (like DTD entities, or schema patterns), a hierarchical
+              class system for attributes and elements, and creation
+              of modules. (2) The content models for elements and attributes is
+              written using embedded RELAX NG XML notation. (3) Documentation for elements, attributes, value
+              lists etc. is written inline, along with examples and
+              other supporting material. XSLT transformations
+              are provided by the TEI to extract documentation in
+              HTML, XSL FO or LaTeX forms, and to generate RELAX NG
+              documents and DTD. From the RELAX NG documents, James
+              Clark's trang
+              can be used to create XML Schema documents.--><define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rules">
+      <element name="rules" ns="http://www.w3.org/2005/11/its">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Container for global rules.</a:documentation>
+         <ref name="its_rules.content"/>
+         <ref name="its_rules.attributes"/>
+      </element>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rules.content">
+      <rng:group xmlns="http://www.tei-c.org/ns/1.0" xmlns:its="http://www.w3.org/2005/11/its"
+                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 xmlns:spec="http://example.com/xmlspec"
+                 xmlns:xi="http://www.w3.org/2001/XInclude">
+         <rng:zeroOrMore>
+            <rng:choice>
+               <rng:ref name="its_translateRule"/>
+               <rng:ref name="its_locNoteRule"/>
+               <rng:ref name="its_termRule"/>
+               <rng:ref name="its_dirRule"/>
+               <rng:ref name="its_rubyRule"/>
+               <rng:ref name="its_langRule"/>
+               <rng:ref name="its_withinTextRule"/>
+            </rng:choice>
+         </rng:zeroOrMore>
+      </rng:group>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rules.attributes">
+      <rng:attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="version"
+                     a:defaultValue="1.0">
+         <a:documentation>Version of the ITS schema.</a:documentation>
+         <data type="float"/>
+      </rng:attribute>
+      <rng:optional>
+         <rng:attribute name="href" ns="http://www.w3.org/1999/xlink">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Pointer to external rules files.</a:documentation>
+            <data type="anyURI"/>
+         </rng:attribute>
+      </rng:optional>
+      <rng:optional>
+         <rng:attribute name="type" ns="http://www.w3.org/1999/xlink">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Type of pointer to external rules files.</a:documentation>
+            <choice>
+               <value>simple</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Simple link.</a:documentation>
+            </choice>
+         </rng:attribute>
+      </rng:optional>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_att.selector.attributes">
+      <ref name="att.selector.attribute.selector"/>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0"
+           name="att.selector.attribute.selector">
+      <rng:attribute name="selector">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">XPath expression identifing the nodes to be selected.</a:documentation>
+         <data type="string"/>
+      </rng:attribute>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_att.version.attributes">
+      <ref name="att.version.attribute.version"/>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="att.version.attribute.version">
+      <rng:attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="version"
+                     ns="http://www.w3.org/2005/11/its"
+                     a:defaultValue="1.0">
+         <a:documentation>Version of the ITS schema.</a:documentation>
+         <data type="float"/>
+      </rng:attribute>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_span">
+      <element name="span" ns="http://www.w3.org/2005/11/its">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Inline element to contain ITS information.</a:documentation>
+         <ref name="its_span.content"/>
+         <ref name="its_span.attributes"/>
+      </element>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_span.content">
+      <rng:zeroOrMore xmlns="http://www.tei-c.org/ns/1.0" xmlns:its="http://www.w3.org/2005/11/its"
+                      xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                      xmlns:spec="http://example.com/xmlspec"
+                      xmlns:xi="http://www.w3.org/2001/XInclude">
+         <rng:choice>
+            <rng:text/>
+            <rng:ref name="its_ruby"/>
+            <rng:ref name="its_span"/>
+         </rng:choice>
+      </rng:zeroOrMore>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_span.attributes">
+      <ref name="its_att.translate.attributes"/>
+      <ref name="its_att.locNote.attributes"/>
+      <ref name="its_att.term.attributes"/>
+      <ref name="its_att.dir.attributes"/>
+      <rng:optional>
+         <rng:attribute name="translate">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The Translate data category information to be attached to
+		the current node.</a:documentation>
+            <choice>
+               <value>yes</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The nodes need to be translated.</a:documentation>
+               <value>no</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The nodes must not be translated.</a:documentation>
+            </choice>
+         </rng:attribute>
+      </rng:optional>
+      <rng:optional>
+         <rng:attribute name="locNote">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Localization note.</a:documentation>
+            <data type="string"/>
+         </rng:attribute>
+      </rng:optional>
+      <rng:optional>
+         <rng:attribute name="locNoteType">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The type of localization note.</a:documentation>
+            <choice>
+               <value>alert</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Localization note is an alert.</a:documentation>
+               <value>description</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Localization note is a description.</a:documentation>
+            </choice>
+         </rng:attribute>
+      </rng:optional>
+      <rng:optional>
+         <rng:attribute name="locNoteRef">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">URI referring to the location of the localization note.</a:documentation>
+            <data type="anyURI"/>
+         </rng:attribute>
+      </rng:optional>
+      <rng:optional>
+         <rng:attribute name="termInfoRef">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Pointer to a resource containing
+		      information about the term.</a:documentation>
+            <data type="anyURI"/>
+         </rng:attribute>
+      </rng:optional>
+      <rng:optional>
+         <rng:attribute name="term">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Indicates a term locally.</a:documentation>
+            <choice>
+               <value>yes</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The value 'yes' means that this is a term.</a:documentation>
+               <value>no</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The value 'no' means that this is not a term.</a:documentation>
+            </choice>
+         </rng:attribute>
+      </rng:optional>
+      <rng:optional>
+         <rng:attribute name="dir">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The text direction for the context.</a:documentation>
+            <choice>
+               <value>ltr</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Left-to-right text.</a:documentation>
+               <value>rtl</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Right-to-left text.</a:documentation>
+               <value>lro</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Left-to-right override.</a:documentation>
+               <value>rlo</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Right-to-left override.</a:documentation>
+            </choice>
+         </rng:attribute>
+      </rng:optional>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_translateRule">
+      <element name="translateRule" ns="http://www.w3.org/2005/11/its">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Rule about the Translate data category.</a:documentation>
+         <ref name="its_translateRule.content"/>
+         <ref name="its_translateRule.attributes"/>
+      </element>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_translateRule.content">
+      <rng:empty xmlns="http://www.tei-c.org/ns/1.0" xmlns:its="http://www.w3.org/2005/11/its"
+                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 xmlns:spec="http://example.com/xmlspec"
+                 xmlns:xi="http://www.w3.org/2001/XInclude"/>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_translateRule.attributes">
+      <ref name="its_att.selector.attributes"/>
+      <rng:attribute name="translate">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The Translate data category information to be
+		    applied to selected nodes.</a:documentation>
+         <choice>
+            <value>yes</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The nodes need to be translated.</a:documentation>
+            <value>no</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The nodes must not be translated.</a:documentation>
+         </choice>
+      </rng:attribute>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_att.translate.attributes">
+      <ref name="att.translate.attribute.translate"/>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0"
+           name="att.translate.attribute.translate">
+      <rng:optional>
+         <rng:attribute name="translate" ns="http://www.w3.org/2005/11/its">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The Translate data category information to be attached to
+		the current node.</a:documentation>
+            <choice>
+               <value>yes</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The nodes need to be translated.</a:documentation>
+               <value>no</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The nodes must not be translated.</a:documentation>
+            </choice>
+         </rng:attribute>
+      </rng:optional>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_locNoteRule">
+      <element name="locNoteRule" ns="http://www.w3.org/2005/11/its">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Rule about the Localization Note data category.</a:documentation>
+         <ref name="its_locNoteRule.content"/>
+         <ref name="its_locNoteRule.attributes"/>
+      </element>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_locNoteRule.content">
+      <rng:optional xmlns="http://www.tei-c.org/ns/1.0" xmlns:its="http://www.w3.org/2005/11/its"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                    xmlns:spec="http://example.com/xmlspec"
+                    xmlns:xi="http://www.w3.org/2001/XInclude">
+         <rng:ref name="its_locNote"/>
+      </rng:optional>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_locNoteRule.attributes">
+      <ref name="its_att.selector.attributes"/>
+      <rng:optional>
+         <rng:attribute name="locNotePointer">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Relative XPath expression pointing to a node that holds the localization note.</a:documentation>
+            <data type="string"/>
+         </rng:attribute>
+      </rng:optional>
+      <rng:attribute name="locNoteType">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The type of localization note.</a:documentation>
+         <choice>
+            <value>alert</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Localization note is an alert.</a:documentation>
+            <value>description</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Localization note is a description.</a:documentation>
+         </choice>
+      </rng:attribute>
+      <rng:optional>
+         <rng:attribute name="locNoteRef">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">URI referring to the location of the localization note.</a:documentation>
+            <data type="anyURI"/>
+         </rng:attribute>
+      </rng:optional>
+      <rng:optional>
+         <rng:attribute name="locNoteRefPointer">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Relative XPath expression pointing to a node that holds the URI referring to the location of the localization note.</a:documentation>
+            <data type="string"/>
+         </rng:attribute>
+      </rng:optional>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_locNote">
+      <element name="locNote" ns="http://www.w3.org/2005/11/its">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Contains a localization note.</a:documentation>
+         <ref name="its_locNote.content"/>
+         <ref name="its_locNote.attributes"/>
+      </element>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_locNote.content">
+      <rng:zeroOrMore xmlns="http://www.tei-c.org/ns/1.0" xmlns:its="http://www.w3.org/2005/11/its"
+                      xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                      xmlns:spec="http://example.com/xmlspec"
+                      xmlns:xi="http://www.w3.org/2001/XInclude">
+         <rng:choice>
+            <rng:text/>
+            <rng:ref name="its_ruby"/>
+            <rng:ref name="its_span"/>
+         </rng:choice>
+      </rng:zeroOrMore>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_locNote.attributes">
+      <ref name="its_att.translate.attributes"/>
+      <ref name="its_att.locNote.attributes"/>
+      <ref name="its_att.term.attributes"/>
+      <ref name="its_att.dir.attributes"/>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_att.locNote.attributes">
+      <ref name="att.locNote.attribute.locNote"/>
+      <ref name="att.locNote.attribute.locNoteType"/>
+      <ref name="att.locNote.attribute.locNoteRef"/>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="att.locNote.attribute.locNote">
+      <rng:optional>
+         <rng:attribute name="locNote" ns="http://www.w3.org/2005/11/its">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Localization note.</a:documentation>
+            <data type="string"/>
+         </rng:attribute>
+      </rng:optional>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0"
+           name="att.locNote.attribute.locNoteType">
+      <rng:optional>
+         <rng:attribute name="locNoteType" ns="http://www.w3.org/2005/11/its">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The type of localization note.</a:documentation>
+            <choice>
+               <value>alert</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Localization note is an alert.</a:documentation>
+               <value>description</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Localization note is a description.</a:documentation>
+            </choice>
+         </rng:attribute>
+      </rng:optional>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0"
+           name="att.locNote.attribute.locNoteRef">
+      <rng:optional>
+         <rng:attribute name="locNoteRef" ns="http://www.w3.org/2005/11/its">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">URI referring to the location of the localization note.</a:documentation>
+            <data type="anyURI"/>
+         </rng:attribute>
+      </rng:optional>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_termRule">
+      <element name="termRule" ns="http://www.w3.org/2005/11/its">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Rule about the Terminology data category.</a:documentation>
+         <ref name="its_termRule.content"/>
+         <ref name="its_termRule.attributes"/>
+      </element>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_termRule.content">
+      <rng:empty xmlns="http://www.tei-c.org/ns/1.0" xmlns:its="http://www.w3.org/2005/11/its"
+                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 xmlns:spec="http://example.com/xmlspec"
+                 xmlns:xi="http://www.w3.org/2001/XInclude"/>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_termRule.attributes">
+      <ref name="its_att.selector.attributes"/>
+      <rng:attribute name="term">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Indicates whether the selection is a term or not.</a:documentation>
+         <choice>
+            <value>yes</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The value 'yes' means that this is a term.</a:documentation>
+            <value>no</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The value 'no' means that this is not a term.</a:documentation>
+         </choice>
+      </rng:attribute>
+      <rng:optional>
+         <rng:attribute name="termInfoRef">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">URI referring to the resource providing information about the term.</a:documentation>
+            <data type="anyURI"/>
+         </rng:attribute>
+      </rng:optional>
+      <rng:optional>
+         <rng:attribute name="termInfoRefPointer">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Relative XPath expression pointing to a node containting a URI referring to the resource providing information about the term.</a:documentation>
+            <data type="string"/>
+         </rng:attribute>
+      </rng:optional>
+      <rng:optional>
+         <rng:attribute name="termInfoPointer">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Relative XPath expression pointing to a node containting
+		      information about the term.</a:documentation>
+            <data type="string"/>
+         </rng:attribute>
+      </rng:optional>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_att.term.attributes">
+      <ref name="att.term.attribute.termInfoRef"/>
+      <ref name="att.term.attribute.term"/>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0"
+           name="att.term.attribute.termInfoRef">
+      <rng:optional>
+         <rng:attribute name="termInfoRef" ns="http://www.w3.org/2005/11/its">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Pointer to a resource containing
+		      information about the term.</a:documentation>
+            <data type="anyURI"/>
+         </rng:attribute>
+      </rng:optional>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="att.term.attribute.term">
+      <rng:optional>
+         <rng:attribute name="term" ns="http://www.w3.org/2005/11/its">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Indicates a term locally.</a:documentation>
+            <choice>
+               <value>yes</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The value 'yes' means that this is a term.</a:documentation>
+               <value>no</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The value 'no' means that this is not a term.</a:documentation>
+            </choice>
+         </rng:attribute>
+      </rng:optional>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_dirRule">
+      <element name="dirRule" ns="http://www.w3.org/2005/11/its">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Rule about the Directionality data category.</a:documentation>
+         <ref name="its_dirRule.content"/>
+         <ref name="its_dirRule.attributes"/>
+      </element>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_dirRule.content">
+      <rng:empty xmlns="http://www.tei-c.org/ns/1.0" xmlns:its="http://www.w3.org/2005/11/its"
+                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 xmlns:spec="http://example.com/xmlspec"
+                 xmlns:xi="http://www.w3.org/2001/XInclude"/>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_dirRule.attributes">
+      <ref name="its_att.selector.attributes"/>
+      <rng:attribute name="dir">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The text direction for the selection.</a:documentation>
+         <choice>
+            <value>ltr</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Left-to-right text.</a:documentation>
+            <value>rtl</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Right-to-left text.</a:documentation>
+            <value>lro</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Left-to-right override.</a:documentation>
+            <value>rlo</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Right-to-left override.</a:documentation>
+         </choice>
+      </rng:attribute>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_att.dir.attributes">
+      <ref name="att.dir.attribute.dir"/>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="att.dir.attribute.dir">
+      <rng:optional>
+         <rng:attribute name="dir" ns="http://www.w3.org/2005/11/its">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The text direction for the context.</a:documentation>
+            <choice>
+               <value>ltr</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Left-to-right text.</a:documentation>
+               <value>rtl</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Right-to-left text.</a:documentation>
+               <value>lro</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Left-to-right override.</a:documentation>
+               <value>rlo</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Right-to-left override.</a:documentation>
+            </choice>
+         </rng:attribute>
+      </rng:optional>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rubyRule">
+      <element name="rubyRule" ns="http://www.w3.org/2005/11/its">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Rule about the Ruby data category.</a:documentation>
+         <ref name="its_rubyRule.content"/>
+         <ref name="its_rubyRule.attributes"/>
+      </element>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rubyRule.content">
+      <rng:optional xmlns="http://www.tei-c.org/ns/1.0" xmlns:its="http://www.w3.org/2005/11/its"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                    xmlns:spec="http://example.com/xmlspec"
+                    xmlns:xi="http://www.w3.org/2001/XInclude">
+         <rng:ref name="its_rubyText"/>
+      </rng:optional>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rubyRule.attributes">
+      <ref name="its_att.selector.attributes"/>
+      <rng:optional>
+         <rng:attribute name="rubyPointer">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Relative XPath expression pointing to a node that corresponds to a ruby element</a:documentation>
+            <data type="string"/>
+         </rng:attribute>
+      </rng:optional>
+      <rng:optional>
+         <rng:attribute name="rtPointer">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Relative XPath expression pointing to a node that
+                   corresponds to a rt element</a:documentation>
+            <data type="string"/>
+         </rng:attribute>
+      </rng:optional>
+      <rng:optional>
+         <rng:attribute name="rpPointer">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Relative XPath expression pointing to a node that
+                   corresponds to a rp element</a:documentation>
+            <data type="string"/>
+         </rng:attribute>
+      </rng:optional>
+      <rng:optional>
+         <rng:attribute name="rbcPointer">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Relative XPath expression pointing to a node that
+                   corresponds to a rbc element</a:documentation>
+            <data type="string"/>
+         </rng:attribute>
+      </rng:optional>
+      <rng:optional>
+         <rng:attribute name="rtcPointer">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Relative XPath expression pointing to a node that
+                   corresponds to a rtc element</a:documentation>
+            <data type="string"/>
+         </rng:attribute>
+      </rng:optional>
+      <rng:optional>
+         <rng:attribute name="rbspanPointer">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Relative XPath expression pointing to a node that corresponds to a rbspan attribute.</a:documentation>
+            <data type="string"/>
+         </rng:attribute>
+      </rng:optional>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rubyText">
+      <element name="rubyText" ns="http://www.w3.org/2005/11/its">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Ruby text.</a:documentation>
+         <ref name="its_rubyText.content"/>
+         <ref name="its_rubyText.attributes"/>
+      </element>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rubyText.content">
+      <rng:text xmlns="http://www.tei-c.org/ns/1.0" xmlns:its="http://www.w3.org/2005/11/its"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:spec="http://example.com/xmlspec"
+                xmlns:xi="http://www.w3.org/2001/XInclude"/>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rubyText.attributes">
+      <ref name="its_att.translate.attributes"/>
+      <ref name="its_att.locNote.attributes"/>
+      <ref name="its_att.term.attributes"/>
+      <ref name="its_att.dir.attributes"/>
+      <rng:optional>
+         <rng:attribute name="rbspan">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Allows an rt element to span multiple rb elements in complex ruby markup.</a:documentation>
+            <data type="string"/>
+         </rng:attribute>
+      </rng:optional>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_ruby">
+      <element name="ruby" ns="http://www.w3.org/2005/11/its">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Ruby markup.</a:documentation>
+         <ref name="its_ruby.content"/>
+         <ref name="its_ruby.attributes"/>
+      </element>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_ruby.content">
+      <rng:choice xmlns="http://www.tei-c.org/ns/1.0" xmlns:its="http://www.w3.org/2005/11/its"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:spec="http://example.com/xmlspec"
+                  xmlns:xi="http://www.w3.org/2001/XInclude">
+         <rng:group>
+            <rng:ref name="its_rb"/>
+            <rng:choice>
+               <rng:ref name="its_rt"/>
+               <rng:group>
+                  <rng:ref name="its_rp"/>
+                  <rng:ref name="its_rt"/>
+                  <rng:ref name="its_rp"/>
+               </rng:group>
+            </rng:choice>
+         </rng:group>
+         <rng:group>
+            <rng:ref name="its_rbc"/>
+            <rng:ref name="its_rtc"/>
+            <rng:optional>
+               <rng:ref name="its_rtc"/>
+            </rng:optional>
+         </rng:group>
+      </rng:choice>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_ruby.attributes">
+      <ref name="its_att.translate.attributes"/>
+      <ref name="its_att.locNote.attributes"/>
+      <ref name="its_att.term.attributes"/>
+      <ref name="its_att.dir.attributes"/>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rb">
+      <element name="rb" ns="http://www.w3.org/2005/11/its">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Ruby base text.</a:documentation>
+         <ref name="its_rb.content"/>
+         <ref name="its_rb.attributes"/>
+      </element>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rb.content">
+      <rng:zeroOrMore xmlns="http://www.tei-c.org/ns/1.0" xmlns:its="http://www.w3.org/2005/11/its"
+                      xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                      xmlns:spec="http://example.com/xmlspec"
+                      xmlns:xi="http://www.w3.org/2001/XInclude">
+         <rng:choice>
+            <rng:text/>
+            <rng:ref name="its_span"/>
+         </rng:choice>
+      </rng:zeroOrMore>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rb.attributes">
+      <ref name="its_att.translate.attributes"/>
+      <ref name="its_att.locNote.attributes"/>
+      <ref name="its_att.term.attributes"/>
+      <ref name="its_att.dir.attributes"/>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rt">
+      <element name="rt" ns="http://www.w3.org/2005/11/its">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Ruby text.</a:documentation>
+         <ref name="its_rt.content"/>
+         <ref name="its_rt.attributes"/>
+      </element>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rt.content">
+      <rng:zeroOrMore xmlns="http://www.tei-c.org/ns/1.0" xmlns:its="http://www.w3.org/2005/11/its"
+                      xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                      xmlns:spec="http://example.com/xmlspec"
+                      xmlns:xi="http://www.w3.org/2001/XInclude">
+         <rng:choice>
+            <rng:text/>
+            <rng:ref name="its_span"/>
+         </rng:choice>
+      </rng:zeroOrMore>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rt.attributes">
+      <ref name="its_att.translate.attributes"/>
+      <ref name="its_att.locNote.attributes"/>
+      <ref name="its_att.term.attributes"/>
+      <ref name="its_att.dir.attributes"/>
+      <rng:optional>
+         <rng:attribute name="rbspan">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Allows an rt element to span multiple rb elements in complex ruby markup.</a:documentation>
+            <data type="string"/>
+         </rng:attribute>
+      </rng:optional>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rbc">
+      <element name="rbc" ns="http://www.w3.org/2005/11/its">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Container for rb elements in the case of complex ruby markup.</a:documentation>
+         <ref name="its_rbc.content"/>
+         <ref name="its_rbc.attributes"/>
+      </element>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rbc.content">
+      <rng:oneOrMore xmlns="http://www.tei-c.org/ns/1.0" xmlns:its="http://www.w3.org/2005/11/its"
+                     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                     xmlns:spec="http://example.com/xmlspec"
+                     xmlns:xi="http://www.w3.org/2001/XInclude">
+         <rng:ref name="its_rb"/>
+      </rng:oneOrMore>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rbc.attributes">
+      <ref name="its_att.translate.attributes"/>
+      <ref name="its_att.locNote.attributes"/>
+      <ref name="its_att.term.attributes"/>
+      <ref name="its_att.dir.attributes"/>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rtc">
+      <element name="rtc" ns="http://www.w3.org/2005/11/its">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Container for rt elements in the case of complex ruby markup. </a:documentation>
+         <ref name="its_rtc.content"/>
+         <ref name="its_rtc.attributes"/>
+      </element>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rtc.content">
+      <rng:oneOrMore xmlns="http://www.tei-c.org/ns/1.0" xmlns:its="http://www.w3.org/2005/11/its"
+                     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                     xmlns:spec="http://example.com/xmlspec"
+                     xmlns:xi="http://www.w3.org/2001/XInclude">
+         <rng:ref name="its_rt"/>
+      </rng:oneOrMore>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rtc.attributes">
+      <ref name="its_att.translate.attributes"/>
+      <ref name="its_att.locNote.attributes"/>
+      <ref name="its_att.term.attributes"/>
+      <ref name="its_att.dir.attributes"/>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rp">
+      <element name="rp" ns="http://www.w3.org/2005/11/its">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Used in the case of simple ruby markup to specify characters that can denote the beginning and end of ruby text when user agents do not have other ways to present ruby text distinctively from the base text.</a:documentation>
+         <ref name="its_rp.content"/>
+         <ref name="its_rp.attributes"/>
+      </element>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rp.content">
+      <rng:text xmlns="http://www.tei-c.org/ns/1.0" xmlns:its="http://www.w3.org/2005/11/its"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:spec="http://example.com/xmlspec"
+                xmlns:xi="http://www.w3.org/2001/XInclude"/>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_rp.attributes">
+      <ref name="its_att.translate.attributes"/>
+      <ref name="its_att.locNote.attributes"/>
+      <ref name="its_att.term.attributes"/>
+      <ref name="its_att.dir.attributes"/>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_langRule">
+      <element name="langRule" ns="http://www.w3.org/2005/11/its">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Rule about the Language Information data category.</a:documentation>
+         <ref name="its_langRule.content"/>
+         <ref name="its_langRule.attributes"/>
+      </element>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_langRule.content">
+      <rng:empty xmlns="http://www.tei-c.org/ns/1.0" xmlns:its="http://www.w3.org/2005/11/its"
+                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 xmlns:spec="http://example.com/xmlspec"
+                 xmlns:xi="http://www.w3.org/2001/XInclude"/>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_langRule.attributes">
+      <ref name="its_att.selector.attributes"/>
+      <rng:attribute name="langPointer">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Relative XPath expression pointing to a node that contains language information.</a:documentation>
+         <data type="string"/>
+      </rng:attribute>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_withinTextRule">
+      <element name="withinTextRule" ns="http://www.w3.org/2005/11/its">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Rule about the Elements Within Text data category.</a:documentation>
+         <ref name="its_withinTextRule.content"/>
+         <ref name="its_withinTextRule.attributes"/>
+      </element>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_withinTextRule.content">
+      <rng:empty xmlns="http://www.tei-c.org/ns/1.0" xmlns:its="http://www.w3.org/2005/11/its"
+                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 xmlns:spec="http://example.com/xmlspec"
+                 xmlns:xi="http://www.w3.org/2001/XInclude"/>
+   </define>
+   <define xmlns="http://relaxng.org/ns/structure/1.0" name="its_withinTextRule.attributes">
+      <ref name="its_att.selector.attributes"/>
+      <rng:attribute name="withinText">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">States whether current context is regarded as
+		    "within text".</a:documentation>
+         <choice>
+            <value>yes</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The element and its content are part of the flow of its parent element.</a:documentation>
+            <value>no</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The element splits the text flow of its parent element and its content is an independent text flow.</a:documentation>
+            <value>nested</value>
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The element is part of the flow of its parent element, its content is an independent flow.</a:documentation>
+         </choice>
+      </rng:attribute>
+   </define>
+</rng:grammar>
