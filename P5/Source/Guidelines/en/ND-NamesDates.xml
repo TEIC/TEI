@@ -754,7 +754,7 @@ target="#CONA"/>).  The tag -->The
         granularity of events (and hence of their names) are up to the encoders.
       </p>
       <p><gi>eventName</gi> may be used in conjunction with well-defined (e.g. historical) events that are established in a particular 
-        discipline, and which may have lead to authority file inclusion. There are two major applications of <gi>eventName</gi>: 
+        discipline, and which may have led to authority file inclusion. There are two major applications of <gi>eventName</gi>: 
         <list rend="bulleted">
           <item>The element may be used for inline markup of mentioned named events such as in the above example;</item>
           <item>another typical use case are lists of named <gi>event</gi>s. A sibling <gi>idno</gi> in 
@@ -823,7 +823,7 @@ target="#CONA"/>).  The tag -->The
       the text, and encode it directly using the more specific elements described in this section.</p>
     <div type="div3" xml:id="NDPERSbp">
       <head>Basic Principles</head>
-      <p>Information about people, places, organizations, events, of whatever type, essentially comprises a series of statements or
+      <p>Information about people, places, organizations, and events, of whatever type, essentially comprises a series of statements or
         assertions relating to: <list rend="bulleted">
           <item>characteristics or <term>traits</term> which do not, by and large, change over time</item>
           <item>characteristics or <term>states</term> which hold true only at a specific time</item>
@@ -1306,7 +1306,7 @@ exemplifying here too? -->
           may be recorded using the generic element <gi>event</gi>, which may be grouped with <gi>listEvent</gi>, and has a
           content model similar to that of <gi>state</gi> and <gi>trait</gi>. The chief difference is that <gi>event</gi> can
           include a <gi>placeName</gi> element to identify the name of the place where the event occurred.</p>
-        <p>Two particular events in a persons life, namely birth and death, are both ubiquitous and usually considered
+        <p>Two particular events in a person's life, namely birth and death, are both ubiquitous and usually considered
           particularly important, and thus may be represented by specialized elements for the purpose: <specList>
             <specDesc key="birth"/>
             <specDesc key="death"/>
@@ -2097,13 +2097,12 @@ occupation and residence.</p>
         However, many events are not named but the <gi>event</gi> element may still be used to provide a description of them, 
         using <gi>head</gi> or <gi>label</gi> and <gi>desc</gi> to encode the available information.
         </p>
-      <p>The Guidelines do not prescribe what editors count as events, their granularity, nesting, and amount of other information to encode in 
-        relation to an event. Yet, most events can be identified either by using temporal, spatial or information with regard to specific agents 
-        involved (be it an <gi>org</gi>, <gi>person</gi> or <gi>object</gi>).</p>
-      <p>An <gi>event</gi> element may be used to record information about a place, a person or organisation related to the described event; for this reason the element
-        may appear as content of a <gi>place</gi>, <gi>person</gi> or <gi>org</gi>. However, it is also possible to describe events
-        independently of either a person, organization or a place. This may be useful not only for encoding texts which describe named events and 
-        their <gi>eventName</gi>s, but also in applications as chronologies, lists of significant events such as battles, legislation, etc.</p>
+      <p>These guidelines do not prescribe what encoders count as events, nor their granularity,
+        nesting, or amount of other information to record in relation to each event. Yet, most events can be identified by their time, location, or agents involved (be they organizations, persons, or objects).</p>
+      <p>An <gi>event</gi> element may be used to record information about a place, person, or organization related to the described event; for this reason the element
+        may appear as content of a <gi>place</gi>, <gi>person</gi>, or <gi>org</gi>. However, it is also possible to describe events
+        independently of either a place, person, or organization. This may be useful not only for encoding texts which describe named events and 
+        their <gi>eventName</gi>s, but also in applications as chronologies or lists of significant events (e.g., important  battles, legislative milestones, or the stages of construction of a large building, etc.).</p>
       
       <p>The <gi>listEvent</gi> element is a member of the <ident
         type="class">model.listLike</ident> class, and may therefore
@@ -2114,11 +2113,13 @@ occupation and residence.</p>
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
         <standOff>
           <listEvent>
-            <event when="1713" ref="http://eco.canadiana.ca/view/oocihm.9_01832">
+            <event when="1713" ref="https://www.canadiana.ca/view/oocihm.9_01832/2">
               <label>Treaty of Utrecht</label>
-              <!-- In this case, editors decided to understand treaties or legislation as an `event`, which can be considered 
-                a shortcut for several events that led up to their existence or validity (e.g. the signing of a treaty could also
-                be modeled as an event, with the result on paper as an `object` or `bibl`). -->
+              <!-- The following example presupposes that the editors of the TEI document decided
+                to understand legislation or a treaty as an <gi>event</gi>, which itself may be
+                considered a shortcut for several events that led up to the existence or validity
+                of the law or treaty (e.g. the signing of a treaty could also be modeled as an event,
+                and the result on paper could be encoded as an <gi>object</gi> or <gi>bibl</gi>). -->
               <desc>France ceded to Great Britain its claims to the <orgName>Hudson's Bay Company</orgName> territories in
                 <placeName>Rupert's Land</placeName>, <placeName>Newfoundland</placeName>, and <placeName>Acadia</placeName> and
                 recognized British suzerainty over <orgName type="tribe">the Iroquois</orgName> but retained its other pre-war
@@ -2335,13 +2336,6 @@ occupation and residence.</p>
       </p>
       
       <p>For <gi>event</gi> as a child element of <gi>person</gi>, note the Section <ptr target="#NDPERSEpe"/>.</p>
-      <p>
-        <specList>
-          <specDesc key="history"/>
-          <specDesc key="additional"/>
-        </specList>
-      </p>
-
     </div>
     
     <div xml:id="NDOBJ">
