@@ -2929,6 +2929,8 @@ $Id$
               <attDef ident="rendition" mode="delete"/>
             </attList>
           </classSpec>
+          
+          <classSpec ident="att.calendarSystem" module="tei" type="atts" mode="delete"/>
 
           <classSpec type="atts"
                      ident="att.global.linking"
@@ -2950,11 +2952,25 @@ $Id$
               <attDef ident="to" mode="delete"/>
             </attList>
           </classSpec>
-          <classSpec type="atts" ident="att.datable" module="tei" mode="change">
-            <attList>
-              <attDef ident="calendar" mode="delete"/>
-            </attList>
-          </classSpec>
+	  <!--
+	      start @calendar removal section
+	      This whole block should be removed along with the
+	      2024-11-11 removal of @calendar from individual TEI
+	      elements.  —Syd, 2023-10-16
+	  -->
+	  <elementSpec ident="author" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec>
+	  <elementSpec ident="change" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec>
+	  <elementSpec ident="creation" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec>
+	  <elementSpec ident="editor" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec>
+	  <elementSpec ident="funder" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec>
+	  <elementSpec ident="idno" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec>
+	  <elementSpec ident="licence" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec>
+	  <elementSpec ident="name" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec>
+	  <elementSpec ident="principal" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec>
+	  <elementSpec ident="resp" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec>
+	  <elementSpec ident="sponsor" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec>
+	  <elementSpec ident="title" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec>
+	  <!-- end @calendar removal block -->
           <classSpec type="atts"
                      ident="att.internetMedia"
                      module="tei"
