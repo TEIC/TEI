@@ -33,7 +33,7 @@ $Id$
             <sch:let name="me_phrase" value="if (@ident) then concat('The ', @ident ) else concat('This ', local-name(.), ' of ', ancestor::tei:*[@ident][1]/@ident )"/>
             <sch:assert test="@validUntil cast as xs:date ge current-date()">
               <sch:value-of select="concat( $me_phrase, ' construct is outdated (as of ', @validUntil, '); ODD processors may ignore it, and its use is no longer supported' )"/></sch:assert>
-              <sch:assert role="nonfatal" test="@validUntil cast as xs:date ge $advance_warning_period">
+              <sch:assert role="warning" test="@validUntil cast as xs:date ge $advance_warning_period">
                 <sch:value-of select="concat( $me_phrase, ' construct becomes outdated on ', @validUntil )"/>
               </sch:assert>
           </sch:rule>
