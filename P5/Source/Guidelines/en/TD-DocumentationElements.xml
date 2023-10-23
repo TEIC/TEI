@@ -995,17 +995,19 @@ to mark any technical term, thus:
         <p>The <soCalled>datatype</soCalled> (i.e. the kind of value) for an attribute may be specified using
           the elements <gi>datatype</gi> and <gi>dataRef</gi>. A datatype may be defined in any of the
           following three ways: <list>
-            <item>by reference to an existing TEI datatype definition; </item>
-            <item>by use of its name in the widely used schema datatype library maintained by the W3C as part
-              of the definition of its schema language; </item>
+            <item>by reference to an existing TEI datatype definition, itself defined by a <gi>dataSpec</gi>;</item>
+            <item>by use of its name in <ref target="#XSD2">XML Schema
+            Part 2: Datatypes Second Edition</ref>, the widely used
+            datatype library maintained by the W3C as part of
+            the definition of its schema language;</item>
             <item>by referencing its URI within some other datatype library.</item>
-          </list>The TEI defines a number of datatypes, each with an identifier beginning
+          </list> The TEI defines a number of datatypes, each with an identifier beginning
             <code>teidata.</code>, which are used in preference to the datatypes available natively from a
           target schema such as RELAX NG or W3C Schema since the facilities provided by different schema
           languages vary so widely. The TEI datatypes available are described in section <ptr target="#DTYPES"
           /> above. Note that each is, of necessity, mapped eventually to an externally defined datatype such
           as W3C Schema's <ident>text</ident> or <ident>name</ident>, possibly combined to give more
-          expressivity, or constrained to a particular defined usage. </p>
+          expressivity, or constrained to a particular defined usage.</p>
         <p>It is possible to reference a W3C schema datatype directly using <att>name</att>. In this case, 
           the child <gi>dataFacet</gi> can be used instead of <att>restriction</att> to set W3C schema compliant 
           restrictions on the datatype. A <gi>dataFacet</gi> is particularly useful for restrictions that can be difficult to impose and to read as a 
@@ -1015,17 +1017,32 @@ to mark any technical term, thus:
             <dataFacet name="minInclusive" value="-360.0"/>
             </dataRef></egXML>   
         Note that restrictions are either expressed with <att>restriction</att> or <gi>dataFacet</gi>, never both.</p>
-        <p>Attributes <att>minOccurs</att> and <att>maxOccurs</att> are available for the case where an
-          attribute may take more than one value of the type specified. For example, the <att>target</att>
-          attribute provided by the <ident type="class">att.pointing</ident> class has the following
-          declaration:
-          <egXML xmlns="http://www.tei-c.org/ns/Examples"><attDef ident="target">
-              <desc versionDate="2010-05-02" xml:lang="en">specifies the destination of the reference by
-                supplying one or more URI References</desc>
-              <datatype minOccurs="1" maxOccurs="unbounded">
-                <dataRef key="teidata.pointer"/>
-              </datatype>
-            </attDef></egXML>
+	<p>A datatype may be used to constrain the textual content of
+	an element, rather than the value of an attribute. But because
+	they are intended for use in defining ranges of attribute
+	values, datatypes may not contain elements or attributes.</p>
+        <p>The attributes <att>minOccurs</att> and
+        <att>maxOccurs</att> are available for the case where an
+        attribute may take more than one value of the type
+        specified. For example, the <att>columns</att> attribute of
+        the <gi>layout</gi> element can have one or two non-negative
+        integers as its value:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <attDef ident="columns">
+	      <gloss xml:lang="en" versionDate="2007-06-12">columns</gloss>
+	      <desc versionDate="2005-01-14" xml:lang="en">specifies the number of columns per page</desc>
+	      <datatype minOccurs="1" maxOccurs="2">
+		<dataRef key="teidata.count"/>
+	      </datatype>
+	      <remarks xml:lang="en" versionDate="2017-07-09">
+		<p>If a single number is given, all pages referenced
+		have this number of columns. If two numbers are given,
+		the number of columns per page varies between the
+		values supplied. Where <att>columns</att> is omitted
+		the number is assumed to be <val>1</val>.</p>
+	      </remarks>
+	    </attDef>
+	  </egXML>
            indicating that the <att>target</att> attribute may take any number of values, each being of the
           same datatype, namely the TEI data specification <ident>teidata.pointer</ident>. As is usual in XML,
           multiple values for a single attribute are separated by one or more white space characters. Hence,
