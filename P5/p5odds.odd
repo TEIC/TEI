@@ -563,8 +563,10 @@ $Id$
                                  | tei:moduleSpec/tei:remarks[ position() > 1 ]
                                   ">
                 <sch:let name="myGI" value="name(.)"/>
+                <sch:let name="myType" value="@type"/>
+                <sch:let name="hasType" value="if (@type) then true() else false()"/>
                 <sch:let name="lang" value="normalize-space( @xml:lang )"/>
-                <sch:report test="preceding-sibling::*[ name(.) eq $myGI ][ normalize-space( @xml:lang) eq $lang ]">The sibling <sch:value-of select="$myGI"/> children of a <sch:value-of select="name(..)"/> should each have a different @xml:lang; this one duplicates the "<sch:value-of select="$lang"/>" of a preceding sibling.</sch:report>
+                <sch:report test="preceding-sibling::*[ name(.) eq $myGI ][(not(@type) and not($hasType)) or @type eq $myType][ normalize-space( @xml:lang) eq $lang ]">The sibling <sch:value-of select="$myGI"/> children of a <sch:value-of select="name(..)"/> should each have a different @xml:lang; this one duplicates the "<sch:value-of select="$lang"/>" of a preceding sibling.</sch:report>
               </sch:rule>
             </constraint>
           </constraintSpec>
