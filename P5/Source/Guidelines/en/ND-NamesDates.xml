@@ -748,7 +748,7 @@ target="#CONA"/>).  The tag -->The
             <rs type="event" ref="#ThirtyYearsWar">long war</rs>.</p>
         </egXML>
       </p>
-      <p>The <gi>eventName</gi> element is used to mark up real and fictitious event names as they appear in the edited text.
+      <p>The <gi>eventName</gi> element is used to mark up real and fictional event names as they appear in the source.
         As explained with regard to the <gi>event</gi> element (see <ptr target="#NDEVNT"/>), 
         the use of these elements does not define what might be an important event for a particular edition. Temporal extent, 
         granularity of events (and hence of their names) are up to the encoders.
@@ -1934,9 +1934,10 @@ exemplifying here too? -->
           its nearest ancestor. Dating is slightly different again, in that a child element may specify a date more precisely than
           its parent, as in the example above.</p>
 
-        <p>As with other named elements, <gi>places</gi> may relate to one or more <gi>event</gi>s, such as  
-          changes of names, foundations, sieges or destruction of settlements, or other changes of state. 
-        </p>
+        <p>An <gi>event</gi> may be related to other named entities, and thus may appear within
+          an <gi>org</gi>, <gi>person</gi>, <gi>personGrp</gi>, <gi>persona</gi>, or <gi>place</gi>
+          element as well as within a <gi>listEvent</gi> or another <gi>event</gi>.</p>
+        
       </div>
 
       <div xml:id="place-rel">
@@ -2093,10 +2094,7 @@ occupation and residence.</p>
           <specDesc key="eventName"/>
           <specDesc key="listEvent"/>
         </specList> An event is a change of state whether real, planned, fictional, or purported about which more
-        information is known. For cases in which events have proper names, the <gi>eventName</gi> element may be used to encode these.
-        However, many events are not named but the <gi>event</gi> element may still be used to provide a description of them, 
-        using <gi>head</gi> or <gi>label</gi> and <gi>desc</gi> to encode the available information.
-        </p>
+        information is known. The <gi>eventName</gi> element may be used to encode the proper name of an event, if known. The <gi>head</gi> or <gi>label</gi> element may also appear in <gi>event</gi>, either in lieu of or in addition to the <gi>eventName</gi> element, to provide a human-readable heading or editorially supplied label for the event.</p>
       <p>These guidelines do not prescribe what encoders count as events, nor their granularity,
         nesting, or amount of other information to record in relation to each event. Yet, most events can be identified by their time, location, or agents involved (be they organizations, persons, or objects).</p>
       <p>An <gi>event</gi> element may be used to record information about a place, person, or organization related to the described event; for this reason the element
@@ -2314,9 +2312,7 @@ occupation and residence.</p>
           </altGrp>
         </standOff>
       </egXML>
-      <p>The <att>where</att> attribute on <gi>event</gi> can point to multiple 
-        canonical place descriptions, which should indicate 
-        that the event took place in multiple locations. For example, the November 2015
+      <p>The <att>where</att> attribute on <gi>event</gi> can point to multiple canonical place descriptions, which indicates that an event took place in multiple locations. For example, the November 2015
         Paris Attacks took place at six different locations in Paris; this
         might be encoded as an <gi>event</gi> with a <att>where</att>
         attribute with six space-separated values, or using a <gi>listPlace</gi> (nested into the <gi>event</gi> or standalone).</p>
