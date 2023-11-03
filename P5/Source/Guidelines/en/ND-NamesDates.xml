@@ -738,37 +738,47 @@ target="#CONA"/>).  The tag -->The
     
     <div type="div3" xml:id="NDEVTN">
       <head>Event Names</head>
-      <p><specList><specDesc key="eventName"/></specList></p>
       
-      <p>The <gi>eventName</gi> element is provided in parallel to other naming mechanisms, and especially for <soCalled>canonical</soCalled>
-      names that are used in texts to mention specific named events.
+      <p>The <gi>eventName</gi> element is provided in parallel to
+      other naming mechanisms; it is intended especially for
+      <soCalled>canonical</soCalled> names that are used in texts to
+      mention specific named events, whether real or fictional.
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <p>On <date when="1719-03-19">Monday</date>, <rs type="person">she</rs> was writing about the 
             <eventName ref="#SecondDefPrague">1618 Defenestration of Prague</eventName> which initiated the 
             <rs type="event" ref="#ThirtyYearsWar">long war</rs>.</p>
         </egXML>
       </p>
-      <p>The <gi>eventName</gi> element is used to mark up real and fictional event names as they appear in the source.
-        As explained with regard to the <gi>event</gi> element (see <ptr target="#NDEVNT"/>), 
-        the use of these elements does not define what might be an important event for a particular edition. Temporal extent, 
-        granularity of events (and hence of their names) are up to the encoders.
-      </p>
-      <p><gi>eventName</gi> may be used in conjunction with well-defined (e.g. historical) events that are established in a particular 
-        discipline, and which may have led to authority file inclusion. There are two major applications of <gi>eventName</gi>: 
+      <p><specList><specDesc key="eventName"/></specList></p>
+      <p>There are two major applications of <gi>eventName</gi>: 
         <list rend="bulleted">
-          <item>The element may be used for inline markup of mentioned named events such as in the above example;</item>
-          <item>another typical use case are lists of named <gi>event</gi>s. A sibling <gi>idno</gi> in 
-            the parent <gi>event</gi> element may be used for disambiguation and identification of multiple events with identical 
-            <gi>eventName</gi>s.
-            These may appear either as 
-            <list rend="bulleted">
-              <item>part of a prosopographical data construct such as <gi>person</gi>/<gi>event</gi> (or 
-                <gi>place</gi>/<gi>event</gi>) as described in <ptr target="#NDPERSEpe"/>, or</item>
-              <item> separate, as part of a <gi>standOff</gi>/<gi>listEvent</gi>.</item>
-            </list>
-          </item>
-        </list>
+          <item>to indicate names of events mentioned in transcribed text, such as in the above example; and</item>
+	  <item>to indicate the names of events for which details are being provided in an <gi>event</gi> element.</item>
+	</list>
       </p>
+      <p>For the first application, as with most other naming
+      elements, the <gi>eventName</gi> element is a member of the
+      <ident type="class">att.canonical</ident> class, and thus the
+      <att>ref</att> (or <att>key</att>) attribute may be used to
+      refer to a an <gi>event</gi> element (about which see <ptr
+      target="#NDEVNT"/>) or some other data item that contains
+      further information about the event.</p>
+      <p>When used as a direct child of <gi>event</gi>, an
+      <gi>eventName</gi> provides one of the names of the event about
+      which details are being provided in its parent <gi>event</gi>. A
+      single event may be known by many names. All, only one, or
+      indeed none of these might be provided in the <gi>event</gi> used
+      to provide information about such an event. If more than one
+      <gi>eventName</gi> is used they may be differentiated by use of
+      <att>type</att>, <att>where</att>, or dating attributes. In cases
+      where multiple <gi>event</gi> elements describe events that have
+      the same name, the <att>xml:id</att> attribute of the
+      <gi>event</gi> or an <gi>idno</gi>, <gi>head</gi>, or
+      <gi>label</gi> sibling of the <gi>eventName</gi> may be used for
+      disambiguation and identification. Typically <att>xml:id</att>
+      or <gi>idno</gi> would be used for machine-processable
+      disambiguation, and either <gi>head</gi> or <gi>label</gi> for
+      human readers.</p>
       <p>
         <specGrp xml:id="DNDEVNT" n="Names for events">
           <xi:include href="../../Specs/eventName.xml"/>
@@ -2096,7 +2106,7 @@ occupation and residence.</p>
         </specList> An event is a change of state whether real, planned, fictional, or purported about which more
         information is known. The <gi>eventName</gi> element may be used to encode the proper name of an event, if known. The <gi>head</gi> or <gi>label</gi> element may also appear in <gi>event</gi>, either in lieu of or in addition to the <gi>eventName</gi> element, to provide a human-readable heading or editorially supplied label for the event.</p>
       <p>These guidelines do not prescribe what encoders count as events, nor their granularity,
-        nesting, or amount of other information to record in relation to each event. Yet, most events can be identified by their time, location, or agents involved (be they organizations, persons, or objects).</p>
+        nesting, or amount of other information to record in relation to each event. Yet most events can be identified by their time, location, or agents involved (be they organizations, persons, or objects).</p>
       <p>An <gi>event</gi> element may be used to record information about a place, person, or organization related to the described event; for this reason the element
         may appear as content of a <gi>place</gi>, <gi>person</gi>, or <gi>org</gi>. However, it is also possible to describe events
         independently of either a place, person, or organization. This may be useful not only for encoding texts which describe named events and 
