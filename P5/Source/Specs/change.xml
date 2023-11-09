@@ -1,22 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="change">
+--><?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="change">
   <gloss xml:lang="en" versionDate="2016-11-25">change</gloss>
   <gloss versionDate="2016-11-25" xml:lang="de">Änderung</gloss>
+  <gloss versionDate="2023-10-02" xml:lang="ja">変更</gloss>
   <desc versionDate="2011-10-31" xml:lang="en">documents a change or set of changes made during the production
     of a source document, or during the revision of an electronic file.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">résume une modification ou une correction apportée à une
     version particulière d’un texte électronique partagé entre plusieurs chercheurs.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">몇몇 연구자들 사이에 공유된 전자 텍스트의 특정 버전에 대한 특정 변경 또는 수정 사항을 요약한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">概述多位研究者共享的某版本電子文本當中，某特定的內容變更或修正。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">研究者間で共有されている電子テキストの特定の版に対して施された変更や 修正を示す。</desc>
+  <desc versionDate="2023-10-02" xml:lang="ja">元文書の作成や電子ファイルの改訂においてなされた一つあるいは一連の変更を記述する。</desc>
   <desc versionDate="2016-11-25" xml:lang="de">verzeichnet Änderungen oder Korrekturen während der Erstellung eines 
     Basisdokuments oder während der Überarbeitung einer elektronischen Datei.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">resume un cambio o corrección determinada llevada a cabo
@@ -44,11 +42,46 @@ $Id$
     <macroRef key="macro.specialPara"/>
   </content>
   <attList>
-    <attDef ident="target">
+      <attDef ident="calendar" usage="opt" validUntil="2024-11-11">
+        <desc type="deprecationInfo" versionDate="2023-05-11" xml:lang="en">The <att>calendar</att> attribute will be removed from this element
+            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar</att> attribute
+            (unlike <att>datingMethod</att> defined in
+            <ident type="class">att.datable.custom</ident>) defines the calendar system of the date
+            in the original material defined by the parent element, <emph>not</emph> the calendar to
+            which the date is normalized.</desc>
+        <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the
+            date represented by the content of this element belongs.</desc>
+        <desc versionDate="2007-12-20" xml:lang="ko">날짜 표현 시스템 또는 달력 표시 형식을 표시한다.</desc>
+        <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該日期表示所使用的曆法計算系統。</desc>
+        <desc xml:lang="ja" versionDate="2019-02-03">この要素を含むコンテントにおける日付の暦やシステムを示す。</desc>
+        <desc versionDate="2009-01-06" xml:lang="fr">indique le système ou le calendrier auquel
+            appartient la date exprimée dans le contenu de l'élément.</desc>
+        <desc versionDate="2007-05-04" xml:lang="es">indica el sistema o calendario en que se muestra
+            una fecha.</desc>
+        <desc versionDate="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data
+            appartiene.</desc>
+        <datatype minOccurs="1" maxOccurs="unbounded">
+            <dataRef key="teidata.pointer"/>
+        </datatype>
+        <constraintSpec scheme="schematron" ident="calendar-check-change">
+            <constraint>
+                <sch:rule context="tei:*[@calendar]">
+                    <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+                        systems or calendars to which the date represented by the content of this element belongs,
+                        but this <sch:name/> element has no textual content.</sch:assert>
+                </sch:rule>
+            </constraint>
+        </constraintSpec>
+    </attDef>
+
+  
+      <attDef ident="target">
       <gloss xml:lang="en" versionDate="2016-11-25">target</gloss>
       <gloss versionDate="2016-11-25" xml:lang="de">Ziel</gloss>
+      <gloss versionDate="2023-10-02" xml:lang="ja">対象</gloss>
       <desc versionDate="2011-10-31" xml:lang="en">points to one or more elements that belong to this change.</desc>
       <desc versionDate="2016-11-25" xml:lang="de">verweist auf ein oder mehrere Elemente, die zu dieser Änderung gehören.  </desc>
+      <desc versionDate="2023-10-02" xml:lang="ja">この変更の対象となる一つ以上の要素を指す。</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
     </attDef>
   </attList>
@@ -129,8 +162,8 @@ supplied to printer.</change>
       producciónl.</p>
     <p>Se recomienda que los cambios se registren con el primero más reciente.</p>
   </remarks>
-  <remarks xml:lang="ja" versionDate="2008-04-05">
-    <p>修正は一貫した並びで記録されるべきである。例えば、最新のものが 最初に書かれる、など。 </p>
+  <remarks xml:lang="ja" versionDate="2023-10-02">
+    <p><att>who</att>属性は、他の任意の要素を指すことができるが、典型的には、ヘッダ内の他の場所にある、変更に関わった人物とその役割を示す<gi>respStmt</gi>または<gi>person</gi>要素を指定する。最新のものを最初に書くことを推奨する。<att>status</att>属性を、変更が適用された後の文書の状態を示すために使用してもよい。</p>
   </remarks>
   <remarks versionDate="2016-11-25" xml:lang="de">
     <p>Das <att>who</att>-Attribut kann dafür verwendet werden, um zu einem beliebigen anderen 
