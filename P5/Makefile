@@ -173,13 +173,16 @@ valid: jing_version=$(wordlist 1,3,$(shell jing))
 valid: check.stamp p5.xml
 	@echo BUILD: Check validity with rnv \(https://github.com/dtolpin/RNV\) if we have it
 	-command -v  rnv && rnv -v p5odds.rnc p5.xml
-	@echo BUILD: Check validity with special-purpose XSL code, looking for bad links etc
+	@echo BUILD: Check validity with special-purpose XSL code, looking for bad links etc — START
 	${ANT} -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} validators
+	@echo BUILD: Check validity with special-purpose XSL code, looking for bad links etc — END
 	@grep -v "ARNING: use of deprecated element" ValidatorLog.xml
 	(grep -q "<ERROR>" ValidatorLog.xml;if [ $$? -ne 1 ] ; then echo "Oh dear me. ERROR found";diff ValidatorLog.xml expected-results/ValidatorLog.xml;false; fi)
+	@echo BUILD: Test existence of graphic files \(using script generated in "validators step 07", above\)
 	sh graphics.sh
-	@echo BUILD: Check validity with nvdl, first examples with feasible validity, and then the valid ones
+	@echo BUILD: Check validity with nvdl, examples with feasible validity
 	./run-onvdl p5.nvdl p5.xml
+	@echo BUILD: Check validity with nvdl, valid examples
 	./run-onvdl p5valid.nvdl v.xml
 
 test: schemas.stamp
