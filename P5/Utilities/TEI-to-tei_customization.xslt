@@ -11,7 +11,7 @@
   >
 
   <xsl:variable name="myName" select="'TEI-to-tei_customization.xslt'"/>
-  <xsl:variable name="version" select="'0.8.0b'"/>
+  <xsl:variable name="version" select="'0.9.0b'"/>
   <xsl:param name="versionDate" select="format-date(current-date(),'[Y]-[M01]-[D01]')"/>
 
   <!--
@@ -53,6 +53,26 @@
 
   <xsl:variable name="revisionDesc">
     <revisionDesc>
+      <change who="#sbauman.emt" when="2023-06-06">
+	<list>
+	  <item>Remove the <ident>altIdent-only-NCName</ident>
+	  constraint, as it is no longer needed — the content of
+	  <gi>altIdent</gi> in P5 is now just <ident>xs:NCName</ident>.</item>
+          <item>update to use version 4.6.0 of P5</item>
+	  <item>Per <ref
+	  target="https://github.com/TEIC/TEI/issues/2285">TEI ticket
+	  #2285</ref> disallow <gi>altIdent</gi> as a direct child of
+	  <gi>classSpec</gi>, <gi>constraintSpec</gi>,
+	  <gi>dataSpec</gi>, <gi>macroSpec</gi>; thus leaving it as
+	  only available as a child of <gi>attDef</gi>,
+	  <gi>elementSpec</gi>, and <gi>valItem</gi>. In order to do
+	  this, remove <gi>altIdent</gi> from <name
+	  type="class">model.identSynonyms</name> (leaving that class
+	  with only <gi>gloss</gi> and <gi>equiv</gi>, i.e. the same
+	  as <name type="class">model.identEquiv</name>, sigh) and add
+	  it back to <gi>attDef</gi> and <gi>valItem</gi>.</item>
+	</list>
+      </change>
       <change who="#sbauman.emt" when="2023-04-04">
 	We will soon not allow more than 1 child of <gi>content</gi>,
 	so updated the content model of <gi>schemaSpec</gi> to have
@@ -491,7 +511,7 @@
       xmlns:xi="http://www.w3.org/2001/XInclude"
       xmlns:rng="http://relaxng.org/ns/structure/1.0"
       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-      version="3.3.0">
+      version="4.6.0">
       <teiHeader>
         <fileDesc>
           <titleStmt>
@@ -1101,11 +1121,54 @@
                 </attList>
               </elementSpec>
 
+              <elementSpec module="tagdocs" ident="attDef" mode="change">
+		<xsl:comment> adding altIdent to content model because it was removed from model.identSynonyms </xsl:comment>
+		<content>
+		  <sequence>      
+		    <alternate minOccurs="0" maxOccurs="unbounded">
+		      <elementRef key="altIdent"/>
+		      <classRef key="model.identSynonyms"/>
+		      <classRef key="model.descLike"/>
+		    </alternate>
+		    <elementRef key="datatype" minOccurs="0"/>
+		    <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
+		    <elementRef key="defaultVal" minOccurs="0"/>
+		    <alternate minOccurs="0">
+		      <elementRef key="valList"/>     
+		      <elementRef key="valDesc" minOccurs="1" maxOccurs="unbounded"/>
+		    </alternate>
+		    <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
+		    <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
+		  </sequence>
+		</content>
+              </elementSpec>
+
               <elementSpec module="tagdocs" ident="valList" mode="change">
                 <attList>
                   <attDef mode="change" ident="type" usage="req"/>
                 </attList>
               </elementSpec>
+
+              <elementSpec module="tagdocs" ident="valItem" mode="change">
+		<xsl:comment> adding altIdent to content model because it was removed from model.identSynonyms </xsl:comment>
+		<content>
+		  <sequence>
+		    <alternate minOccurs="0" maxOccurs="unbounded">
+		      <classRef key="model.identSynonyms"/>
+		      <elementRef key="altIdent"/>
+		    </alternate>
+		    <sequence minOccurs="0">
+		      <classRef key="model.descLike" minOccurs="1" maxOccurs="unbounded"/>
+		      <sequence minOccurs="0" maxOccurs="unbounded">
+			<classRef key="model.identSynonyms" minOccurs="1" maxOccurs="1"/>
+			<classRef key="model.descLike" minOccurs="0" maxOccurs="unbounded"/>
+		      </sequence>
+		      <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
+		    </sequence>
+		    <elementRef key="paramList" minOccurs="0" maxOccurs="1"/>
+		  </sequence>
+		</content>
+	      </elementSpec>
 
               <elementSpec module="tagdocs" ident="memberOf" mode="change">
                 <attList>
@@ -1299,20 +1362,9 @@
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="altIdent" mode="change">
-                <constraintSpec scheme="schematron" ident="altIdent-only-NCName">
-                  <constraint>
-                    <!-- Would like to just test if value is castable as an -->
-                    <!-- xs:NCName, but some Schematron processors object saying -->
-                    <!-- "The type xs:NCName is not recognized by a Basic XSLT Processor." -->
-                    <!-- But RELAX NG validation should already have said this -->
-                    <!-- is an xs:Name, so all we need do is test for a colon. -->
-                    <sch:report test="if ( parent::taxonomy | parent::valItem )
-                                      then false()
-                                      else contains( .,':')"
-                      > The content of ＜altIdent＞ should be an XML Name (w/o a namespace prefix),
-                      unless a child of ＜valItem＞ (and even then, it's not a bad idea :-)</sch:report>
-                  </constraint>
-                </constraintSpec>
+		<classes>
+		  <memberOf key="model.identSynonyms" mode="delete"/>
+		</classes>
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="gi" mode="change">
@@ -1472,6 +1524,7 @@
                   </attDef>
                 </attList>
               </classSpec>
+
 
               <classSpec ident="model.entryPart.top" module="tei" mode="delete" type="model"/>
               <classSpec ident="model.msItemPart" module="tei" mode="delete" type="model"/>
