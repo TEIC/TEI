@@ -36,13 +36,17 @@ See the file COPYING.txt for details
       <p>The following changes are particularly worth highlighting in this release: <list>
           <head>New encoding features</head>
           <item>New with this release is the <gi>eventName</gi> element, which may be used to encode
-            names of events either in general transcribed text, or particularly in the
-              <gi>event</gi> element. (<ref target="https://github.com/TEIC/TEI/issues/2382"
+            names of events in general transcribed text, or in the
+            <gi>event</gi> element. The new <gi>eventName</gi> element also has membership in several attribute classes associated with named entities, including <name type="class">att.datable</name> to supply a date range for the use of an event's name, and <name type="class">att.typed</name>, allowing it <att>type</att> and <att>subtype</att> attributes. It has also been added to <name type="class">att.editLike</name>, permitting its application in contexts of describing events in an editing process (<ref target="https://github.com/TEIC/TEI/issues/2382"
               >#2382</ref>).</item>
+        <item>The content model of <gi>event</gi> has been modified to contain <gi>eventName</gi> elements without invalidating older ways of labeling events. The first child of an <gi>event</gi> element may still be an <gi>idno</gi> a <gi>head</gi> element, but modelling of events may now begin instead with <gi>eventName</gi> or with members of <name type="class">model.pLike</name> (<gi>ab</gi> or <gi>p</gi>) or <name type="class">model.labelLike</name> (<gi>desc</gi> or <gi>label</gi>). See <ref target="https://github.com/TEIC/TEI/pull/2483">PR #2483</ref>.
+          
+          
+          </item>
           <item>The content model of <gi>event</gi> has been modified to allow <gi>eventName</gi>
             (but it still allows older ways of labeling events). See <ref
               target="https://github.com/TEIC/TEI/pull/2483">PR #2483</ref>. </item>
-          
+
 
         </list>
         <list>
