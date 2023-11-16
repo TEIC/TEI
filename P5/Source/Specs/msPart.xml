@@ -33,15 +33,21 @@ $Id$
     <sequence>
       <elementRef key="msIdentifier"/>
       <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      <!--
+          The desired content model for the following is
+            ( pLike | ( msContents? & physDesc? & history? & additional? & msPart* ) )
+          but of course we can't use interleave, as DTDs (and maybe XSD)
+          will not support that. See https://github.com/TEIC/TEI/issues/2214.
+        -->
       <alternate>
         <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
-        <sequence>
-          <elementRef key="msContents" minOccurs="0"/>
-          <elementRef key="physDesc" minOccurs="0"/>
-          <elementRef key="history" minOccurs="0"/>
-          <elementRef key="additional" minOccurs="0"/>
-          <elementRef key="msPart" minOccurs="0" maxOccurs="unbounded"/>
-        </sequence>
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <elementRef key="msContents"/>
+          <elementRef key="physDesc"/>
+          <elementRef key="history"/>
+          <elementRef key="additional"/>
+          <elementRef key="msPart"/>
+        </alternate>
       </alternate>
     </sequence>
   </content>
@@ -97,12 +103,12 @@ $Id$
           </msContents>
         </msPart>        
         <msPart>
-	  <msIdentifier>
-	    <altIdentifier>
-	      <idno>MS 6</idno>
-	    </altIdentifier>
-	  </msIdentifier>
-	  <!-- other information specific to this part here -->
+          <msIdentifier>
+            <altIdentifier>
+              <idno>MS 6</idno>
+            </altIdentifier>
+          </msIdentifier>
+          <!-- other information specific to this part here -->
         </msPart>
         <!-- more parts here -->
       </msDesc>
