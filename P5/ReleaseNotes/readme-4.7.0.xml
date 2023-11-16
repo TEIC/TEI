@@ -33,14 +33,16 @@ See the file COPYING.txt for details
         feature requests or bugs reported by the TEI community using the GitHub tracking system. A
         full list of the issues resolved in the course of this release cycle may be found under the
           <ref target="https://github.com/TEIC/TEI/milestone/15?closed=1">4.7.0 milestone</ref>.</p>
-      <p>The following changes are particularly worth highlighting in this release: <list>
+      <p>The following changes are particularly worth highlighting in this release:
+      
+      <list>
           <head>New encoding features</head>
           <item>New with this release is the <gi>eventName</gi> element, which may be used to encode
             names of events in general transcribed text, or in the <gi>event</gi> element. The new
               <gi>eventName</gi> element also has membership in several attribute classes associated
             with named entities, including <name type="class">att.datable</name> to supply a date
             range for the use of an event's name, and <name type="class">att.typed</name>, allowing
-            it <att>type</att> and <att>subtype</att> attributes. It has also been added to <name
+            it <att>type</att> and <att>subtype</att> attributes. It is also a memeber of <name
               type="class">att.editLike</name>, giving it the <att>evidence</att> attribute (<ref
               target="https://github.com/TEIC/TEI/issues/2382">#2382</ref>).</item>
           <item>The content model of <gi>event</gi> has been modified to contain <gi>eventName</gi>
@@ -49,8 +51,8 @@ See the file COPYING.txt for details
           <item>The <gi>taxonomy</gi> and <gi>category</gi> elements are now added to <name
               type="class">att.datacat</name> (<ref target="https://github.com/TEIC/TEI/issues/2419"
               >#2419</ref>).</item>
-
         </list>
+
         <list>
           <head>Changes to content models</head>
           <item>The content model of <gi>content</gi> has been changed to permit only one child
@@ -58,7 +60,7 @@ See the file COPYING.txt for details
               target="https://github.com/TEIC/TEI/issues/2381">#2381</ref>).</item>
           <item>At the request of the Manuscript SIG, the content model of <gi>additional</gi> is
             now more flexible, permitting any alternation of <name type="class">model.pLike</name>
-              (<gi>p</gi> or <gi>ab</gi>) with zero or more of <gi>adminInfo</gi>,
+              (<gi>p</gi> or <gi>ab</gi>) instead of zero or one each of <gi>adminInfo</gi>,
               <gi>surrogates</gi>, or <gi>listBibl</gi> (<ref
               target="https://github.com/TEIC/TEI/issues/2195">#2195</ref>).</item>
           <item>The content model of <gi>revisionDesc</gi> now permits multiple <gi>listChange</gi>
@@ -67,12 +69,11 @@ See the file COPYING.txt for details
             order to prevent the possibility of elements being included in the specification for an
             attribute’s datatype (<ref target="https://github.com/TEIC/TEI/pull/2443">PR #2443</ref>
             and <ref target="https://github.com/TEIC/TEI/issues/2426">#2426</ref>).</item>
-
-          <item>A <att>scheme</att> attribute is now usually optional on <gi>constraintSpec</gi>,
-            except for the case of a <gi>constraintSpec</gi> with <att>mode</att> = "add" or
-              <att>mode</att> = "replace" (<ref target="https://github.com/TEIC/TEI/pull/2453">PR
+          <item>A <att>scheme</att> attribute is now optional on a <gi>constraintSpec</gi>
+	  with a <att>mode</att> of either <val>change</val> or
+	  <val>delete</val> (it is still required when <att>mode</att>
+	  is <val>add</val>, <val>replace</val>, or unspecified — see <ref target="https://github.com/TEIC/TEI/pull/2453">PR
               #2453</ref> and <ref target="https://github.com/TEIC/TEI/issues/2261">#2261</ref>). </item>
-          
           <item>The datatype of the <att>class</att> attribute on <gi>attRef</gi> has been changed
             from teidata.word to teidata.name (<ref target="https://github.com/TEIC/TEI/issues/2276"
               >#2276</ref>).</item>
@@ -83,17 +84,17 @@ See the file COPYING.txt for details
       
         </list>-->
       </p>
-      <p>With these release notes we are beginning a practice of documenting changes to content
-        models that could invalidate ODD customizations in TEI projects if they are working with the
+      <p>With these release notes we are beginning a practice of documenting changes that could
+        invalidate ODD customizations in TEI projects if they are working with the
         current release of these TEI Guidelines. Those maintaining ODD customizations of the TEI may
         want to be aware of the following changes and adapt your ODD files accordingly. <list>
           <head>ODD-breaking changes and deprecation</head>
           <item>The <att>calendar</att> attribute has been removed from <name type="class"
               >att.datable</name> because it is supposed to designate information about a date
-            represented in an element’s contents and not be applied to elements that do not contain
+            represented in an element’s contents, and thus should not be applied to elements that do not contain
             dates. To clarify its intended usage, <att>calendar</att> has been moved to a new class,
               <name type="class">att.calendarSystem</name>, and its use is now deprecated on many
-            elements. The <att>calendar</att> attribute is now properly applied only to
+            elements. The <att>calendar</att> attribute is now properly available only on
               <gi>date</gi>, <gi>time</gi>, <gi>origDate</gi>, and <gi>docDate</gi>. See <ref
               target="https://github.com/TEIC/TEI/issues/2045">#2045</ref>.</item>
         </list>
@@ -103,12 +104,12 @@ See the file COPYING.txt for details
           <head>Improvements of prose and examples</head>
           <item>The title of the Guidelines section 2.2.8 has been changed to more accurately
             reflect its content (<ref target="https://github.com/TEIC/TEI/issues/2415"
-            >2415</ref>).</item>
+            >#2415</ref>).</item>
           <item>Several revisions were applied to the explanation of TEI XPointer Schemas in the
             Guidelines section 16.2.4 (<ref target="https://github.com/TEIC/TEI/issues/2083"
               >#2083</ref>).</item>
           <item>A new example was added for <gi>langKnown</gi> (<ref
-              target="https://github.com/TEIC/TEI/issues/2139">2139</ref>). </item>
+              target="https://github.com/TEIC/TEI/issues/2139">#2139</ref>). </item>
           <item>The examples for use of the <att>key</att> attribute are updated and a source
             attribution corrected (<ref target="https://github.com/TEIC/TEI/issues/2144"
             >#2144</ref>).</item>
@@ -132,17 +133,13 @@ See the file COPYING.txt for details
         -->
         <list>
           <head>Housekeeping</head>
-          <item>Bugs have been corrected in the processing of Guidelines release notes to HTML in
-            building the TEI Guidelines (<ref target="https://github.com/TEIC/TEI/issues/2070"
-              >#2070</ref>). </item>
+          <item>Bugs have been corrected in the processing of Guidelines release notes to HTML
+             (<ref target="https://github.com/TEIC/TEI/issues/2070" >#2070</ref>). </item>
           <item>The version <q>P5</q> is now properly represented in footers and headings of the
             published TEI Guidelines on the web (<ref
               target="https://github.com/TEIC/TEI/issues/2413">#2413</ref>).</item>
           <item>Bookmark links on examples in the Guidelines now feature mouseover text (<ref
               target="https://github.com/TEIC/TEI/issues/2137">#2137</ref>).</item>
-
-
-
         </list>
       </p>
 
@@ -157,15 +154,15 @@ See the file COPYING.txt for details
 
       <p>Highlights of this release include:<list>
 
-          <item>Attributes shown on the Guidelines element specification pages are now formatted as
-            a vertical nested list to improve their legibility (<ref
-              target="https://github.com/TEIC/Stylesheets/issues/592">Stylesheets #592</ref>). </item>
+          <item>Attributes shown on element and class specification pages are now formatted as
+            a vertical nested list to improve legibility
+	  (<ref
+	  target="https://github.com/TEIC/Stylesheets/pull/619">PR
+	  #619</ref> and 
+	  <ref target="https://github.com/TEIC/TEI/issues/2489">#2489</ref>).</item>
           <item>A bug in Stylesheets ODD processing that had produced output files with multiple
             superfluous filename extensions has now been corrected (<ref
-              target="https://github.com/TEIC/Stylesheets/issues/543">Stylehsheets 543</ref> and
-              <ref target="https://github.com/TEIC/TEI/issues/2489">#2489</ref>).</item>
-
-
+              target="https://github.com/TEIC/Stylesheets/issues/543">Stylehsheets 543</ref>).</item>
           <item>A serious problem in the processing of <att>ns</att> attributes in ODD
             customizations has been fixed (<ref
               target="https://github.com/TEIC/Stylesheets/issues/424">Stylesheets #424</ref>). </item>
@@ -187,7 +184,6 @@ See the file COPYING.txt for details
             (Stylesheets <ref target="https://github.com/TEIC/Stylesheets/pull/524">#524</ref>, <ref
               target="https://github.com/TEIC/Stylesheets/issues/610">#610</ref>, and PR <ref
               target="https://github.com/TEIC/Stylesheets/pull/634">#634</ref>).</item>
-
         </list>
       </p>
     </body>
