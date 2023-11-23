@@ -248,10 +248,9 @@ See the file COPYING.txt for details.
 
       <p>In genres where technical reply information is available for each post, reply links can be
         encoded using the <att>replyTo</att> attribute on <gi>post</gi> elements, as shown in
-        example <ptr target="#e9"/>. The network of all reply links will then also form a threaded
-        structure, and visual indentations can be reconstructed from it and need not explicitly be encoded.<!-- Umm…
-	they *are* explicitly encoded, as @replyTo on <post>! —Syd, 2022-12-12 -->
-        <!-- changed 'threads' to 'visual indentations' to make it better - Harald 2023-06-15 --></p>
+        second example of <ptr target="#CMCcmcpostatts"/>. The network of all reply links will then
+	also form a threaded structure, and visual indentations can be reconstructed from it and
+	need not explicitly be encoded.</p>
 
       <p>Threads may also be explicitly encoded as nested <gi>div</gi> elements as in the following
         skeleton.</p>
@@ -269,9 +268,9 @@ See the file COPYING.txt for details.
         </div>
       </egXML>
 
-      <p>Using this encoding stratety, the thread from Example <ptr target="#e9"/> could be encoded
-        as follows.</p>
-
+      <p>Using this encoding stratety, the thread from the second
+        example in <ptr target="#CMCcmcpostatts"/> could be encoded
+        as follows.
       <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
         <div type="thread" n="0">
           <post type="comment" xml:id="cmc_post01" who="#u7" when-iso="2015-07-29T21:44">
@@ -289,7 +288,7 @@ See the file COPYING.txt for details.
           </div>
         </div>
       </egXML>
-
+      </p>
     </div>
 
     <div xml:id="CMCmetadata">
@@ -576,11 +575,13 @@ See the file COPYING.txt for details.
           </post>
         </egXML>
 
-        <p>Alternatively, and similar to the encoding of transcripts of spoken utterances (REF
-          chapter 8), all timestamps of a document can be collected in <gi>when</gi> elements in a
-            <gi>timeline</gi> element in the <gi>teiHeader</gi>, most suitably under
-            <gi>interaction</gi>. under the <gi>textDesc</gi> in the <gi>profileDesc</gi>.</p>
-
+        <p>Alternatively, and similar to the encoding of transcripts
+        of spoken utterances (for which see <ptr target="#TS"/>), all
+        timestamps of a document can be collected in <gi>when</gi>
+        elements in a <gi>timeline</gi> element in the
+        <gi>teiHeader</gi>, most suitably in the <gi>interaction</gi>
+        element (itself in the <gi>textDesc</gi> in the
+        <gi>profileDesc</gi>).
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <profileDesc>
             <particDesc>
@@ -601,19 +602,14 @@ See the file COPYING.txt for details.
               </listPerson>
             </particDesc>
             <textDesc>
-              <channel/>
-              <constitution/>
-              <derivation/>
-              <domain/>
-              <factuality/>
               <interaction>
                 <timeline>
-                  <when xml:id="t001" rend="19:56, 23 March 2011 (UTC)"/>
-                  <when xml:id="t002" rend="21:22, 14 June 2011 (UTC)"/>
-                  <when xml:id="t003" rend="23:28, 14 June 2011 (UTC)"/>
-                  <when xml:id="t004" rend="07:20, 2 July 2011 (UTC)"/>
-                  <when xml:id="t005" rend="01:00, 21 July 2011 (UTC)"/>
-                  <when xml:id="t006" rend="01:35, 8 April 2014 (UTC)"/>
+                  <when xml:id="t001" when="2011-03-23T19:56:00"/>
+                  <when xml:id="t002" when="2011-06-14T21:22:00"/>
+                  <when xml:id="t003" when="2011-06-14T23:28:00"/>
+                  <when xml:id="t004" when="2011-07-02T07:20:00"/>
+                  <when xml:id="t005" when="2011-07-21T01:00:00"/>
+                  <when xml:id="t006" when="2014-04-08T01:35:00"/>
                 </timeline>
               </interaction>
               <preparedness/>
@@ -621,6 +617,7 @@ See the file COPYING.txt for details.
             </textDesc>
           </profileDesc>
         </egXML>
+	</p>
 
         <p>When a timeline is present in the <gi>teiHeader</gi>, the individual posts can be linked
           to it via the <att>synch</att> attribute as in the follwing alternative encoding of the
@@ -1076,12 +1073,17 @@ See the file COPYING.txt for details.
     <div xml:id="CMCanalysis">
       <head>Linguistic annotation</head>
 
-      <p>For encoding linguistic analyses of CMC text, we may use the dedicated elements and
-        attributes from the analysis (REF) module. For example, the tokenisation (segmentation into
-        word-like units) of a CMC text should be encoded using the <gi>w</gi> element.</p>
+      <p>For encoding linguistic analyses of CMC text, we may use the
+        dedicated elements and attributes from the analysis module,
+        which is described in <ptr target="#SA"/>. For example, the
+        tokenisation (segmentation into word-like units) of a CMC text
+        should be encoded using the <gi>w</gi> element.</p>
 
-      <p>Original: '00:22 Bin soooooo im stress gewesen ich Armer lol' (engl. 'I was soooooo
-        stressed out poor me lol') </p>
+	
+      <p>Let us take, for example a posting that contains the content
+      <q xml:lang="de">00:22 Bin soooooo im stress gewesen ich Armer
+      lol</q> (in English: <q>I was soooooo stressed out poor me
+      lol</q>'). This may be encoded as follows.
 
       <!-- aus Dortmunder Chatkorpus Chat 1101004_Welcome_2004-11-08.tei.xml -->
 
@@ -1099,16 +1101,19 @@ See the file COPYING.txt for details.
           <w>lol</w>
         </post>
       </egXML>
+      </p>
 
-      <p>In many CMC genres, especially in private chat, sloppy and/or creative writing abound
-        including irregular spellings imitating spoken language, omitted word boundaries but also
-        spurious boundaries leading to tokens separated in parts. For encoding these writing
-        phenomena typical of CMC, the TEI attributes <att>norm</att> and <att>join</att> can be
-        used.</p>
+      <p>In many CMC genres, especially in private chat, sloppy and
+        creative writing abound including irregular spellings imitating
+        spoken language, omitted word boundaries, and spurious
+        boundaries leading to tokens separated in parts. For encoding
+        these writing phenomena typical of CMC, the TEI attributes
+        <att>norm</att> and <att>join</att> may be used.</p>
 
-      <p>We can add a normalized spelling using the <att>norm</att> attribute for a <gi>w</gi>
-        containing a non-normalized spelling as described under [REF att.linguistic].</p>
-
+      <p>For example, the normalized spelling of an irregularly
+      spelled word may be recorded using the <att>norm</att> attribute
+      (from <ident type="class">att.linguistic</ident>):
+      <!-- Is this in German or a combination of German & English? —Syd, 2023-11-23 -->
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
         <post generatedBy="human" rend="color:black" synch="#t010.b" who="#A03.b"
           xml:id="cmc_post_m16.b">
@@ -1123,28 +1128,27 @@ See the file COPYING.txt for details.
           <w>lol</w>
         </post>
       </egXML>
+      </p>
 
       <p>When the boundaries between <gi>w</gi> elements are generally thought of as denoting word
         boundaries, we can keep track of boundaries not present in the source by using the
-          <att>join</att> attribute (section [REF att.linguistic]).</p>
-
-      <p>Original post: 'Inmyoffice'</p>
-
-      <p>Encoding of tokenisation and missing word boundaries:</p>
-
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <post>
-          <w>In</w>
-          <w join="left">my</w>
-          <w join="left">office</w>
-        </post>
-      </egXML>
-
+        <att>join</att> attribute, also from <ident type="class">att.linguistic</ident>.
+	For example, for an original post that has nothing more than the token <q>Inmyoffice</q>,
+	the following encoding demonstrates an interpretation that the single token represents the
+	three words <q>In my office</q>:
+	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <post>
+              <w>In</w>
+              <w join="left">my</w>
+              <w join="left">office</w>
+            </post>
+	  </egXML>
+      </p>
+      
       <p>Alternatively, and especially when the normalization information pertains to more than one
         token, we can apply the notation using the elements <gi>reg</gi> and <gi>orig</gi>, related
-        by a <gi>choice</gi> element as described in Section [REF 3.5.2 Regularization and
-        Normalization].</p>
-
+        by a <gi>choice</gi> element as described in <ptr target="COEDREG"/>.
+	<!-- What language is this examle in? —Syd, 2023-11-23 -->
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
         <post>
           <choice>
@@ -1159,13 +1163,13 @@ See the file COPYING.txt for details.
           </choice>
         </post>
       </egXML>
+      </p>
 
-      <p>Other analysis attributes like <att>lemma</att> and <att>pos</att> (for part of speech) can
+      <p>Other analysis attributes like <att>lemma</att> and <att>pos</att> (for part of speech) may
         be used as with traditional text. It is a matter of the tagset used to cater for POS
-        categories that are appropriate for CMC. In the example below, for instance, the tag 'AKW'
-        stands for <hi rend="italic">Aktionswort</hi> (action word, see REF <ptr type="cit"
-          target="#STTS_IBK"/>)</p>
-
+        categories that are appropriate for CMC. In the example below, for instance, the tag
+	<val>AKW</val> stands for <gloss xml:lang="de" rend="italic">Aktionswort</gloss>
+	(<gloss xml:lang="en">action word</gloss>, see <ptr type="cit" target="#STTS_IBK"/>).
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
         <post generatedBy="human" rend="color:black" synch="#t010.c" who="#A03.c"
           xml:id="cmc_post_m16.c">
@@ -1180,16 +1184,16 @@ See the file COPYING.txt for details.
           <w lemma="lol" pos="AKW" xml:id="m16.t16">lol</w>
         </post>
       </egXML>
+      </p>
 
       <div xml:id="CMCnames">
         <head>Named entities</head>
 
         <p>Named entites (NEs) may be marked up using <gi>name</gi> or the elements encoding
-          different subcategories of names as described in Section [REF 13 Names, Dates, People, and
-          Places ]. In the following chat example, nicknames are linked to a <gi>person</gi> entry
+          different subcategories of names as described in <ptr target="#ND"/>. In the
+	  following chat example, nicknames are linked to a <gi>person</gi> entry
           as shown in Section <ref target="#CMCParticipants"/> via the <att>corresp</att>
-          attribute.</p>
-
+          attribute.
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <!-- Dortmunder Chatkorpus, chat 2213001 -->
           <post modality="written" generatedBy="system" rend="color:black" synch="#f2213001.t007"
@@ -1208,12 +1212,12 @@ See the file COPYING.txt for details.
             <!-- ... -->
           </post>
         </egXML>
-
+	</p>
+	
         <p>In the the following version of the same chat snippet, the text strings with the
           nicknames have been replaced by category label strings for the purpose of anonymization.
           The category string and the <gi>name</gi> encoding offer some information about what has
-          been removed.</p>
-
+          been removed.
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <post modality="written" generatedBy="system" rend="color:black" synch="#f2213001.t007"
             type="standard" who="#f2213001.A04" xml:id="f2213001.m27.eg36">
@@ -1231,6 +1235,7 @@ See the file COPYING.txt for details.
             <!-- ... -->
           </post>
         </egXML>
+	</p>
       </div>
     </div>
 
