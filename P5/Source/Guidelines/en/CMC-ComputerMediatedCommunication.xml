@@ -5,8 +5,7 @@ Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details.
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<div xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" type="div1"
-  xml:id="CMC">
+<div xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" type="div1" xml:id="CMC">
   <head>Computer-mediated Communication</head>
   <p>This chapter describes the TEI encoding mechanisms available for textual data which represents
     discourse from genres of computer-mediated communication (CMC). It is intended to provide the
@@ -32,8 +31,8 @@ See the file COPYING.txt for details.
     </p>
     <p>Computer-mediated communication is conducted using <list rend="simple">
         <item>communication technologies such as chats, messengers, or online forums;</item>
-        <item>social media platforms and applications such as Twitter, Facebook, Instagram, or
-          WhatsApp;</item>
+        <item>social media platforms and applications such as X
+        (the platform formerly known as Twitter), Facebook, Instagram, or WhatsApp;</item>
         <item>the communication functions of collaborative platforms and projects (e.g. an online
           learning environment, or a Wikipedia <soCalled>talk</soCalled> page);</item>
         <item>3D environments (e.g. Second Life or gaming environments);</item>
@@ -77,18 +76,17 @@ See the file COPYING.txt for details.
       concerns the temporal nature of units exchanged via CMC technologies. The left part of the
       taxonomy describes units that are performed (by a producer) and perceived (by a recipient) as
       a continuous stream of behaviour. Units of this type can be performed as</p>
-    <list rend="bulleted">
-      <!--Should this be a list of <lable>-<item> pairs? —Syd, 2022-08-11-->
-      <item><emph rend="bold">spoken utterances,</emph> i.e. stretches of speech which are produced
-        to perform a speaker turn in a conversation,</item>
-      <item><emph rend="bold">bodily activity,</emph> i.e. nonverbal behavior (gesture, gaze)
-        produced to perform a speaker turn, either performed by the real body of an interlocutor
-        (e.g. in a video conference) or through the virtual avatar of an interlocutor in a 3D
-        environment,</item>
-      <item><emph rend="bold">onscreen activities,</emph> i.e. non-bodily forms of behaviour that
-        are transmitted to the group of interacting or coworking participants, for instance the
-        editing of content in a shared text editor which can be perceived by the other parties
-        simultaneously (as may be the case in learning or collaboration environments).</item>
+    <list type="gloss">
+      <label rend="bold">spoken utterances,</label>       <item>i.e. stretches of speech which are produced
+      to perform a speaker turn in a conversation,</item>
+      <label rend="bold">bodily activity,</label>      <item> i.e. nonverbal behavior (gesture, gaze)
+      produced to perform a speaker turn, either performed by the real body of an interlocutor
+      (e.g. in a video conference) or through the virtual avatar of an interlocutor in a 3D
+      environment,</item>
+      <label rend="bold">onscreen activities,</label>      <item> i.e. non-bodily forms of behaviour that
+      are transmitted to the group of interacting or coworking participants, for instance the
+      editing of content in a shared text editor which can be perceived by the other parties
+      simultaneously (as may be the case in learning or collaboration environments).</item>
     </list>
     <p>The right part of <ref target="#cmcunits-taxonomy">the taxonomy</ref> describes units in
       which the production, transmission, and perception of contributions to CMC interactions are
@@ -104,7 +102,7 @@ See the file COPYING.txt for details.
           without verbal content (which then may consist only of emojis, an image, or a video file).
           Written / multimodal posts are the standard format for user contributions in primarily
           text-based CMC genres and applications such as chat, SMS, WhatsApp, Instagram, Facebook,
-          Twitter, online forums, or Wikipedia talk pages.</item>
+          X (Twitter), online forums, or Wikipedia talk pages.</item>
         <item>as <emph rend="bold">audio posts</emph>, which are produced using a recording
           function. In contrast to CMC units of the type <emph rend="italic">utterance</emph> which
           are produced and transmitted simultaneously, audio posts first have to be recorded as a
@@ -167,29 +165,26 @@ See the file COPYING.txt for details.
       <head>Macrostructure of CMC collections and documents</head>
 
       <p>When CMC documents are compiled in a collection, dataset, or corpus, we distinguish the
-        following levels in the macrostructure of CMC in TEI:</p>
+      following levels in the macrostructure of CMC in TEI:
+      <list type="gloss">
 
-      <p><emph rend="bold">The corpus level</emph>: The level of a corpus or collection of CMC texts
+<label rend="bold">The corpus level</label>      <item><p>The level of a corpus or collection of CMC texts
         of a particular genre, generally obtained from a particular CMC platform, sometimes even
         from several platforms. This level may be represented by either a <gi>TEI</gi> element or a
-          <gi>teiCorpus</gi> element. <!-- For simplicity in diffentiating information about the
-           corpus level from the document level, this chapter
-           discusses and exemplifies corpora as if they were encoded
-           with <gi>teiCorpus</gi>. --> The <gi>teiHeader</gi> of the corpus (i.e., the
+          <gi>teiCorpus</gi> element. The <gi>teiHeader</gi> of the corpus (i.e., the
           <gi>teiHeader</gi> that is a child of the outermost <gi>TEI</gi> or <gi>teiCorpus</gi>)
         will contain metadata in its <gi>sourceDesc</gi> about the CMC platform(s). Metadata about
         the project responsible for collecting the data and building the corpus, if applicable,
-        should be recorded as well.</p>
+        should be recorded as well.</p></item>
 
-      <p><emph rend="bold">The document level</emph>: A set of posts collected (or sampled) by a
+<label rend="bold">The document level</label>      <item><p>A set of posts collected (or sampled) by a
         researcher for analysis. The posts of the document will often map directly to the set of
         posts grouped on an existing web page, thread, or document within a CMC environment. Within
         the CMC environment the document as such is often created by a particular user, thereby
         initiating the communication which other users may read, and to which some other users might
         contribute. This level will naturally be represented by the <gi>TEI</gi> element. The
           <gi>teiCorpus</gi> (or <gi>TEI</gi>) element that represents the corpus will contain one
-        or more <gi>TEI</gi> elements as usual.</p>
-
+          or more <gi>TEI</gi> elements as usual.</p>
       <p>In the <gi>teiHeader</gi> of a document level <gi>TEI</gi>, the <gi>sourceDesc</gi> will
         contain metadata about the CMC document such as its title, its author or owner, its URL, the
         date of its creation, the date of the last change made to it, and other metadata that are
@@ -200,13 +195,16 @@ See the file COPYING.txt for details.
         item, either provided by the initiating user herself or located elsewhere and referenced at
         the beginning of the document. In such cases, the <gi>teiHeader</gi> of the document should
         also contain metadata about this prompt.</p>
-
-      <p><emph rend="bold">The post level</emph>: The level of the individual post is naturally
+        </item>
+      
+<label rend="bold">The post level</label>
+      <item><p>The level of the individual post is naturally
         represented by the element <gi>post</gi> and its encoding it further described in section
           <ptr target="#CMCcmcpost"/>. A <gi>TEI</gi> element will contain a number of <gi>post</gi>
         elements, which can be grouped or ordered in <gi>div</gi> elements representing sequences or
-        threads (section <ptr target="#CMCthreads"/>) if appropriate. </p>
-
+        threads (section <ptr target="#CMCthreads"/>) if appropriate.</p></item>
+</list>
+      
       <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="macrostructure" valid="feasible">
         <teiCorpus>
           <!-- a corpus, collection or dataset of CMC documents -->
@@ -233,12 +231,11 @@ See the file COPYING.txt for details.
           <!-- more documents -->
         </teiCorpus>
       </egXML>
-
+      </p>
     </div>
 
     <div xml:id="CMCthreads">
       <head>Sequences, sections, threads</head>
-      <?tei winita?>
 
       <p>As shown in Example <ptr target="#CMCcmcpostatts"/> above, nested threads of posts can be
         encoded sequentially, while the attribute <att>indentLevel</att> of <gi>post</gi> is used to
@@ -247,14 +244,13 @@ See the file COPYING.txt for details.
         information actually reflects a reply action from a user.</p>
 
       <p>In genres where technical reply information is available for each post, reply links can be
-        encoded using the <att>replyTo</att> attribute on <gi>post</gi> elements, as shown in second
-        example of <ptr target="#CMCcmcpostatts"/>. The network of all reply links will then also
-        form a threaded structure, and visual indentations can be reconstructed from it and need not
-        explicitly be encoded.</p>
+        encoded using the <att>replyTo</att> attribute on <gi>post</gi> elements, as shown in
+        second example of <ptr target="#CMCcmcpostatts"/>. The network of all reply links will then
+        also form a threaded structure, and visual indentations can be reconstructed from it and
+        need not explicitly be encoded.</p>
 
       <p>Threads may also be explicitly encoded as nested <gi>div</gi> elements as in the following
-        skeleton.</p>
-
+        skeleton.
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
         <div type="thread" n="0">
           <post>...</post>
@@ -267,26 +263,28 @@ See the file COPYING.txt for details.
           </div>
         </div>
       </egXML>
+      </p>
 
-      <p>Using this encoding stratety, the thread from the second example in <ptr
-          target="#CMCcmcpostatts"/> could be encoded as follows. <egXML
-          xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
-          <div type="thread" n="0">
-            <post type="comment" xml:id="cmc_post01" who="#u7" when-iso="2015-07-29T21:44">
-              <p>Es hat den Anschein, ...</p>
+      <p>Using this encoding stratety, the thread from the second
+        example in <ptr target="#CMCcmcpostatts"/> could be encoded
+        as follows.
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
+        <div type="thread" n="0">
+          <post type="comment" xml:id="cmc_post01" who="#u7" when-iso="2015-07-29T21:44">
+            <p>Es hat den Anschein, ...</p>
+          </post>
+          <div type="thread" n="1">
+            <post type="comment" xml:id="cmc_post02" who="#u8" when-iso="2015-07-30T19:11">
+              <p>Nein Nein, an den Handwerkern kann es ...</p>
             </post>
-            <div type="thread" n="1">
-              <post type="comment" xml:id="cmc_post02" who="#u8" when-iso="2015-07-30T19:11">
-                <p>Nein Nein, an den Handwerkern kann es ...</p>
+            <div type="thread" n="2">
+              <post type="comment" xml:id="cmc_post03" who="#u8" when-iso="2015-07-30T19:26">
+                <p>Stahlkunstruktionen dacht ich mal, ....</p>
               </post>
-              <div type="thread" n="2">
-                <post type="comment" xml:id="cmc_post03" who="#u8" when-iso="2015-07-30T19:26">
-                  <p>Stahlkunstruktionen dacht ich mal, ....</p>
-                </post>
-              </div>
             </div>
           </div>
-        </egXML>
+        </div>
+      </egXML>
       </p>
     </div>
 
@@ -294,7 +292,6 @@ See the file COPYING.txt for details.
       <head>Documenting CMC (and providing general meta data)</head>
 
       <div xml:id="CMCCorpusSource">
-        <!-- source Description of a teicorpus header -->
         <head>Documenting the source of a corpus of CMC data</head>
 
         <p>The <gi>teiHeader</gi> of the corpus should contain metadata about the CMC platform(s),
@@ -304,26 +301,26 @@ See the file COPYING.txt for details.
           collecting the data and building the corpus, if applicable, should be recorded as
           well.</p>
 
-        <p>The following example shows the <gi>sourceDesc</gi> of a Twitter corpus. <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">
-            <sourceDesc>
-              <biblFull>
-                <titleStmt>
-                  <title>Twitter Sample</title>
-                </titleStmt>
-                <publicationStmt>
-                  <distributor>Twitter International Company</distributor>
-                  <address>
-                    <addrLine>1 Cumberland Place</addrLine>
-                    <addrLine>Fenian Street</addrLine>
-                    <addrLine>Dublin 2</addrLine>
-                    <postCode>D02 AX07</postCode>
-                    <country>Ireland</country>
-                  </address>
-                </publicationStmt>
-              </biblFull>
-            </sourceDesc>
-          </egXML>
+        <p>The following example shows the <gi>sourceDesc</gi> of a Twitter corpus.
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <sourceDesc>
+            <biblFull>
+              <titleStmt>
+                <title>Twitter Sample</title>
+              </titleStmt>
+              <publicationStmt>
+                <distributor>Twitter International Company</distributor>
+                <address>
+                  <addrLine>1 Cumberland Place</addrLine>
+                  <addrLine>Fenian Street</addrLine>
+                  <addrLine>Dublin 2</addrLine>
+                  <postCode>D02 AX07</postCode>
+                  <country>Ireland</country>
+                </address>
+              </publicationStmt>
+            </biblFull>
+          </sourceDesc>
+        </egXML>
         </p>
         <p>The following example shows how a Wikipedia database dump may be encoded as the source.
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -408,7 +405,6 @@ See the file COPYING.txt for details.
       </div>
 
       <div xml:id="CMCSampling">
-        <!-- sampling declaration -->
         <head>Documenting the sampling of CMC data</head>
 
         <p>The documentation of how the data were collected, e.g. how it was scraped or sampled from
@@ -431,8 +427,8 @@ See the file COPYING.txt for details.
         </list>
 
         <p>The information may be provided as prose in the <gi>samplingDecl</gi>. For example, in
-          the case of a Twitter corpus it may look like the following: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">
+          the case of a X (Twitter) corpus it may look like the following:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <samplingDecl>
               <p>Sampled using the <name type="API">Twitter Filtered stream v2-API</name> (see <ptr
                   type="APIdoc"
@@ -460,7 +456,6 @@ See the file COPYING.txt for details.
 
       <div xml:id="CMCParticipants">
         <head>Participants</head>
-        <!-- Participants -->
 
         <p>A <gi>listPerson</gi> may be used to maintain an inventory of users and bots taking part
           in a CMC interaction, along with information about them. As with other such contextual
@@ -468,58 +463,54 @@ See the file COPYING.txt for details.
             <gi>particDesc</gi> within the <gi>profileDesc</gi>) or in a separate document
           completely. In either case, an encoded <gi>post</gi> may then be linked to its author by
           use of the <att>who</att> attribute.</p>
-        <p>In the following example, a list of participants is maintained in a <gi>teiHeader</gi>. <?tei winitia Could we put some actual information into these
-	<person> elements? Even if nothing but a made-up e-mail
-	address, seems to me it would better show why this is a useful
-	thing to do. —Syd, 2022-12-12 ?>
-          <?tei winitia added some sex, email and country. —Harald, 2023-11-11 ?>
-          <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <!-- In the <teiHeader>: -->
-            <profileDesc>
-              <particDesc>
-                <listPerson>
-                  <person role="user" sex="male" xml:id="cmc_user_01">
-                    <persName type="userName">M</persName>
-                    <note type="link">/wiki/User:M</note>
-                    <affiliation>
-                      <email>mike@mydomain.com</email>
-                      <country>CH</country>
-                    </affiliation>
-                  </person>
-                  <!-- … more persons … -->
-                  <person role="user" sex="female" xml:id="cmc_user_06">
-                    <persName type="userName">P</persName>
-                    <note type="link">/wiki/User:P</note>
-                    <affiliation>
-                      <email>pat@super.net</email>
-                      <country>ES</country>
-                    </affiliation>
-                  </person>
-                  <person role="user" xml:id="cmc_user_07">
-                    <persName type="userName">PKP</persName>
-                    <note type="link">/wiki/User:Pi</note>
-                  </person>
-                </listPerson>
-              </particDesc>
-            </profileDesc>
-            <!-- In the <body>: -->
-            <div type="wiki_discussion_page" n="073">
-              <!-- 4 other <post>s -->
-              <post modality="written" xml:id="cmc_post04" indentLevel="1"
-                replyTo="#cmc_post_073.004" who="#cmc_user_06">
-                <p>Those haven't happened. If they do, we can revisit the concern.</p>
-                <signed generatedBy="template" rend="noLineBreak">
-                  <ref target="/wiki/User:P">P</ref>
-                  <date>01:35, 8 April 2014 (UTC)</date>
-                </signed>
-              </post>
-            </div>
-          </egXML>
+        <p>In the following example, a list of participants is maintained in a <gi>teiHeader</gi>.
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <!-- In the <teiHeader>: -->
+          <profileDesc>
+            <particDesc>
+              <listPerson>
+                <person role="user" sex="male" xml:id="cmc_user_01">
+                  <persName type="userName">M</persName>
+                  <note type="link">/wiki/User:M</note>
+                  <affiliation>
+                    <email>mike@mydomain.com</email>
+                    <country>CH</country>
+                  </affiliation>
+                </person>
+                <!-- … more persons … -->
+                <person role="user" sex="female" xml:id="cmc_user_06">
+                  <persName type="userName">P</persName>
+                  <note type="link">/wiki/User:P</note>
+                  <affiliation>
+                    <email>pat@super.net</email>
+                    <country>ES</country>
+                  </affiliation>
+                </person>
+                <person role="user" xml:id="cmc_user_07">
+                  <persName type="userName">PKP</persName>
+                  <note type="link">/wiki/User:Pi</note>
+                </person>
+              </listPerson>
+            </particDesc>
+          </profileDesc>
+          <!-- In the <body>: -->
+          <div type="wiki_discussion_page" n="073">
+            <!-- 4 other <post>s -->
+            <post modality="written" xml:id="cmc_post04" indentLevel="1"
+                  replyTo="#cmc_post_073.004" who="#cmc_user_06">
+              <p>Those haven't happened. If they do, we can revisit the concern.</p>
+              <signed generatedBy="template" rend="noLineBreak">
+                <ref target="/wiki/User:P">P</ref>
+                <date>01:35, 8 April 2014 (UTC)</date>
+              </signed>
+            </post>
+          </div>
+        </egXML>
         </p>
         <p>In the following version of the <gi>body</gi> portion of the same example, the list of
           interactants is stored in a separate file (in this case the file <name type="file"
-            >userList.xml</name> in the same directory). <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">
+            >userList.xml</name> in the same directory).
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <!-- In the <body>: -->
             <div type="wiki_discussion_page" n="073">
               <!-- 4 other <post>s -->
@@ -550,14 +541,18 @@ See the file COPYING.txt for details.
       <div xml:id="CMCTimeline">
         <head>Timeline</head>
 
-        <p>From most CMC environments, user posts come provided with a timestamp marking the time
-          (often down to the the second) when the post arrived and was registered at the CMC server.
-          In the display of chat interactions, for instance, the time is automatically added by the
-          system and usually precedes or follows the actual content of the post. In Wikipedia talk,
-          a timestamp is automatically added when the user inserts his or her signature. Timestamps
-          in the text body can be encoded using the elements <gi>date</gi> or <gi>time</gi>. A
-          normalized version of the time can then be given in the attribute <att>when</att> if
-          available or reconstructible.</p>
+        <p>From most CMC environments, user posts come provided with a
+        timestamp marking the time (often down to the the second) when
+        the post arrived and was registered at the CMC server.  In the
+        display of chat interactions, for instance, the time is
+        automatically added by the system and usually precedes or
+        follows the actual content of the post. In Wikipedia talk, a
+        timestamp is automatically added when the user inserts his or
+        her signature. Timestamps in the text body can be encoded
+        using the elements <gi>date</gi> or <gi>time</gi>. The
+        <att>when</att> attribute may be used to record a normalized
+        version of the date, time, or date and time if this
+        information is available or reconstructible.
 
         <!-- ex. from Dortmund chat corpus, example for cmc-core -->
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -565,8 +560,7 @@ See the file COPYING.txt for details.
             <time generatedBy="system">21:52</time> das ist auf jedenfall krankheit</post>
         </egXML>
 
-        <!-- from wiki example talk page Astronomical Object used for cmc-core: anonymised and modified a bit -->
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#BIB_WPTalkAstronomicalObject">
           <post modality="written" xml:id="cmc_post07" indentLevel="1" who="#u006" synch="#t006">
             <p>Those haven't happened. If they do, we can revisit the concern. </p>
             <signed generatedBy="template"><ref target="/wiki/User:P">P</ref>
@@ -574,45 +568,50 @@ See the file COPYING.txt for details.
           </post>
         </egXML>
 
-        <p>Alternatively, and similar to the encoding of transcripts of spoken utterances (for which
-          see <ptr target="#TS"/>), all timestamps of a document can be collected in <gi>when</gi>
-          elements in a <gi>timeline</gi> element in the <gi>teiHeader</gi>, most suitably in the
-            <gi>interaction</gi> element (itself in the <gi>textDesc</gi> in the
-            <gi>profileDesc</gi>). <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <profileDesc>
-              <particDesc>
-                <listPerson>
-                  <person role="user" xml:id="u001">
-                    <persName type="userName">M</persName>
-                    <note type="link">/wiki/User:M</note>
-                  </person>
-                  <!-- more persons -->
-                  <person role="user" xml:id="u006">
-                    <persName type="userName">P</persName>
-                    <note type="link">/wiki/User:P</note>
-                  </person>
-                  <person role="user" xml:id="u007">
-                    <persName type="userName">PKP</persName>
-                    <note type="link">/wiki/User:Pi</note>
-                  </person>
-                </listPerson>
-              </particDesc>
-              <textDesc>
-                <interaction>
-                  <timeline>
-                    <when xml:id="t001" when="2011-03-23T19:56:00"/>
-                    <when xml:id="t002" when="2011-06-14T21:22:00"/>
-                    <when xml:id="t003" when="2011-06-14T23:28:00"/>
-                    <when xml:id="t004" when="2011-07-02T07:20:00"/>
-                    <when xml:id="t005" when="2011-07-21T01:00:00"/>
-                    <when xml:id="t006" when="2014-04-08T01:35:00"/>
-                  </timeline>
-                </interaction>
-                <preparedness/>
-                <purpose/>
-              </textDesc>
-            </profileDesc>
-          </egXML>
+	</p>
+
+        <p>Alternatively, and similar to the encoding of transcripts
+        of spoken utterances (for which see <ptr target="#TS"/>), all
+        timestamps of a document can be collected in <gi>when</gi>
+        elements in a <gi>timeline</gi> element in the
+        <gi>teiHeader</gi>, most suitably in the <gi>interaction</gi>
+        element (itself in the <gi>textDesc</gi> in the
+        <gi>profileDesc</gi>).
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <profileDesc>
+            <particDesc>
+              <listPerson>
+                <person role="user" xml:id="u001">
+                  <persName type="userName">M</persName>
+                  <note type="link">/wiki/User:M</note>
+                </person>
+                <!-- more persons -->
+                <person role="user" xml:id="u006">
+                  <persName type="userName">P</persName>
+                  <note type="link">/wiki/User:P</note>
+                </person>
+                <person role="user" xml:id="u007">
+                  <persName type="userName">PKP</persName>
+                  <note type="link">/wiki/User:Pi</note>
+                </person>
+              </listPerson>
+            </particDesc>
+            <textDesc>
+              <interaction>
+                <timeline>
+                  <when xml:id="t001" when="2011-03-23T19:56:00"/>
+                  <when xml:id="t002" when="2011-06-14T21:22:00"/>
+                  <when xml:id="t003" when="2011-06-14T23:28:00"/>
+                  <when xml:id="t004" when="2011-07-02T07:20:00"/>
+                  <when xml:id="t005" when="2011-07-21T01:00:00"/>
+                  <when xml:id="t006" when="2014-04-08T01:35:00"/>
+                </timeline>
+              </interaction>
+              <preparedness/>
+              <purpose/>
+            </textDesc>
+          </profileDesc>
+        </egXML>
         </p>
 
         <p>When a timeline is present in the <gi>teiHeader</gi>, the individual posts can be linked
@@ -635,11 +634,6 @@ See the file COPYING.txt for details.
 
   <div xml:id="CMCcmc">
     <head>Encoding Unique to CMC</head>
-    <?tei winita
-            * Some introductory sentence
-            * specList (will automatically insert post including its attributes)
-            * Cf. https://tei-c.org/release/doc/tei-p5-doc/en/html/ref-specList.html 
-        ?>
     <p>This chapter describes elements, attributes, and models which are unique to CMC and the TEI
       CMC module.</p>
 
@@ -652,7 +646,7 @@ See the file COPYING.txt for details.
         private activity, transmitted through the internet, and made available on the monitor or
         screen of the other parties en bloc. Posts occur in a broad range of written CMC genres,
         including (but not limited to) <q>messages</q> in chats and WhatsApp dialogues, tweets in
-        Twitter timelines, comments on Facebook pages, posts in forum threads, and comments or
+        X (Twitter) timelines, comments on Facebook pages, posts in forum threads, and comments or
         contributions to discussions on Wikipedia talk pages or in the comments section of
         weblogs.</p>
       <p>Posts can be either written or spoken: <list>
@@ -708,10 +702,8 @@ See the file COPYING.txt for details.
       <p>The <att>replyTo</att> attribute indicates the replied-to or referred-to posts by providing
         one or more pointers to them. In the following example, reply references in the source
         indicate that the first <gi>post</gi> is a reply to an initial post that is not part of the
-        example, the second is a reply to the first, and the third is a reply to the second (TEI
-        encoding of a section of the discussion of the blog page <ptr target="#BIB_scilog1"/>.</p>
-
-      <egXML xml:id="e9" xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
+        example, the second is a reply to the first, and the third is a reply to the second.
+      <egXML xml:id="e9" xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de" source="#BIB_scilog1">
         <post type="comment" modality="written" generatedBy="human" xml:id="cmc_post10" who="#u7"
           replyTo="#cmc_ex_p1" when-iso="2015-07-29T21:44">
           <p>Es hat den Anschein, als wäre bei BER durchaus große Kompetenz am Bau, allerdings nicht
@@ -738,12 +730,7 @@ See the file COPYING.txt for details.
             Folge des Marktdrucks gewesen war.</p>
         </post>
       </egXML>
-
-      <?tei winitia
-          BIBL: should refer to the TEI encoding of a section of the blog page
-          https://scilogs.spektrum.de/wild-dueck-blog/scheinzwerge-oder-viele-probleme-werden-groesser-wenn-man-sie-anpackt-griechenland/
-        ?>
-      <!-- added that 2023-11-21 Harald -->
+      </p>
 
       <p>In the CMC genre of Wiki talk, users insert their contribution to a discussion by modifying
         the wiki page of the discussion — the talk page. Since there is no technical reply action
@@ -775,9 +762,7 @@ See the file COPYING.txt for details.
             </post>
           </div>
         </egXML> Example: TEI encoding of the discussion between four different users on the
-        Wikipedia talk page <ptr target="#BIB_WPTalkEiffel"/>. <?tei winita What are to do with this? —Syd, 2022-08-11 ?>
-        <!-- See how I included it in the BIB -Harald 2023-11-21 -->
-      </p>
+        Wikipedia talk page <ptr target="#BIB_WPTalkEiffel"/>.</p>
     </div>
 
     <div xml:id="CMCcmcatts">
@@ -795,32 +780,37 @@ See the file COPYING.txt for details.
         signature. The attribute is optional, and it might not be appropriate to use it when all
         text content has been created in the same mode and no distinction needs to be made.
         <!-- Is the above sentence necessary? Does it mean that @generatedBy is inherited? —Syd, 2022-08-11 -->
-        A list of suggested values for <att>generatedBy</att> follows: <list type="gloss">
+        <!-- Syd to search Guidelines for other discussion of
+             inherited attributes, and write a sentence here that says
+             this one is. -->
+        A list of suggested values for <att>generatedBy</att> follows:
+        <list type="gloss">
           <label>human</label>
           <item>when then content of the respective element was <q>naturally</q> typed or spoken by
-            a human user (cf. the chat posts in Example <ptr target="#ex.haarschnitt"/>)</item>
+            a human user (cf. the chat posts in Example <ref target="#ex.haarschnitt">haircut</ref>)</item>
           <label>template</label>
           <item>when the content of the respective element was generated after a human user
             activated a template for its insertion (cf. <gi>signed</gi> e.g., the signatures in wiki
             talk in Listing 2)</item>
-          <!-- What is “Listing 2”? —Syd, 2022-08-11 -->
+            <!-- Harald to look up “Listing 2” and “Listing 6” and
+                 “Listing 5”, below, in the paper and replace these
+                 references with something. (Not sure what, yet.) Ask
+                 Peter if you have any problems with this. —
+                 2023-11-24 -->
           <label>system</label>
           <item>when the content of the respective element was generated by the system, i.e. the CMC
             environment (cf. the system message in an IRC chat in Listing 6)</item>
-          <!-- ditto -->
           <label>bot</label>
           <item>when the content of the respective element was generated by a bot i.e. a non-human
             agent, mostly external to the CMC environment</item>
           <label>unspecified</label>
           <item>when it is unspecified or unknown how the content of the respective element was
             generated (cf. the <gi>post</gi> of the retweet cmc_ex_p2 in Listing 5)</item>
-          <!-- ditto -->
         </list>
       </p>
 
       <p>An example of an emoji in a chat post marked as generated by template (TEI encoding of a
-        chat in <ptr target="#BIB_MoCoDa2"/>):</p>
-
+        chat in <ptr target="#BIB_MoCoDa2"/>):
       <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.haarschnitt">
         <post modality="written" generatedBy="human" synch="#t003" who="#A02" xml:id="cmc_post18">
           Da kostet ein Haarschnitt 50 € <figure type="emoji" generatedBy="template">
@@ -829,11 +819,11 @@ See the file COPYING.txt for details.
           </figure>
         </post>
       </egXML>
+      </p>
 
       <p>In the following example (TEI encoding of a part of the discussion in <ptr
-          target="BIB_WPTalkAstronomicalObject"/>), the user signature of a wiki talk post was
-        inserted by activating a template and marked accordingly:</p>
-
+          target="#BIB_WPTalkAstronomicalObject"/>), the user signature of a wiki talk post was
+        inserted by activating a template and marked accordingly:
       <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.naturally">
         <post modality="written" xml:id="cmc_post19" indentLevel="0" who="#u005" synch="#t005">
           <p>I'm not sure that this is a proper criterium, or even what this means. What if we set
@@ -843,10 +833,10 @@ See the file COPYING.txt for details.
               July 2011 (UTC)</time></signed>
         </post>
       </egXML>
+      </p>
 
       <p> A tweet is specified for having been written by a human, however inside the tweet, the
-        timestamp is marked as generated by the system:</p>
-
+        timestamp is marked as generated by the system:
       <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.grunzen" xml:lang="de">
         <post modality="written" key="1043764753502486528" type="tweet" generatedBy="human"
           synch="#tweetsbcrn18.t001" xml:id="cmc_post20" who="#u1" xml:lang="deu">
@@ -861,17 +851,17 @@ See the file COPYING.txt for details.
           </figure>
         </post>
       </egXML>
+      </p>
 
       <p>Finally, in the following example of an IRC post, the status message that user "Interseb
         has entered the room" was generated by the system, i.e. the chat environment. SYSTEM is also
-        listed among: </p>
-
-      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.listPerson" xml:lang="de">
-        <post type="event" generatedBy="system" who="#SYSTEM" rend="color:navy">
-          <p>
-            <name type="nickname" corresp="#A07">Interseb</name> betritt den Raum.</p>
-        </post>
-      </egXML>
+        listed among:
+	<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.listPerson" xml:lang="de">
+          <post type="event" generatedBy="system" who="#SYSTEM" rend="color:navy">
+            <p><name type="nickname" corresp="#A07">Interseb</name> betritt den Raum.</p>
+          </post>
+	</egXML>
+      </p>
 
     </div>
   </div>
@@ -879,25 +869,19 @@ See the file COPYING.txt for details.
   <div xml:id="CMCrecs">
     <head>Recommendations for encoding CMC</head>
 
-    <?tei winita
-      Discussion of phenomena — short discussions, maybe with some code snippets, and references
-      to the other chapters where the TEI encoding is introduced; ?>
-
     <div xml:id="CMCemos">
       <head>Emojis and Emoticons</head>
 
-      <?tei winita add source for example in TEI <example> with ref to bibl element ?>
-
       <p>Emojis are iconic or symbolic, invariant graphic units which the users of social media
-        applications such as WhatsApp, Instagram, and Twitter can select from a menu or ‘emoji
+        applications such as WhatsApp, Instagram, and X (Twitter) can select from a menu or ‘emoji
         keyboard’ and embed into their written posts. Examples are &#x1F601;, &#x1F637;, &#x01F308;,
         &#x1F631;, and &#x1F648;. An emoji is encoded by one or more Unicode characters which are
         intended to be mapped directly to a pictorial symbol.</p>
       <p>Emoticons predate emojis and are created as combinations of ASCII punctuation and other
         characters using the keyboard. Examples are <code>:-)</code>, <code>;-)</code>,
           <code>:-(</code>, <code>:-x</code>, <code>\O/</code>, and <code>Oo</code>. They first
-        occured on a Usenet newsgroup (cf. <ref target="http://www.cs.cmu.edu/~sef/Orig-Smiley.htm "
-          >original newsgroup post by Scott Fahlman of 19-Sep-82</ref>) and then became frequent in
+        occured on a Usenet newsgroup (cf. <ref target="http://www.cs.cmu.edu/~sef/Orig-Smiley.htm"
+          >original newsgroup post by Scott Fahlman of 19-Sep-82</ref><?tei winita Syd to put this in BIBL ?>) and then became frequent in
         chat communications during the mid-1980s. An emoticon typically consists of several Unicode
         characters (from the ASCII subset) in a row, each of which has an intended use other than as
         part of an emoticon.</p>
@@ -912,8 +896,8 @@ See the file COPYING.txt for details.
         may be used to indicate that the encoded string is an emoji or an emoticon. (See <ptr
           target="#AILC"/>.)</p>
       <p>For example, the source post <q>da bin ich nicht so empfindlich ;)</q> (engl. 'I am not so
-        touchy with that ;) ') ends with an emoticon, and might be encoded as follows: <egXML
-          xmlns="http://www.tei-c.org/ns/Examples">
+        touchy with that ;) ') ends with an emoticon, and might be encoded as follows:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <post>
             <w pos="ADV">da</w>
             <w pos="VAFIN">bin</w>
@@ -939,12 +923,11 @@ See the file COPYING.txt for details.
       <p>Alternatively, e.g. when <gi>w</gi> is not regularly used to encode tokens in the TEI
         document, <gi>c</gi> may be used to mark an emoji. For example, the source post <q>Da kostet
           ein Haarschnitt 50 € &#x01F631;</q> (frome the corpus <ptr target="#CMC_Mocoda2"/>, engl.
-        'A haircut there costs 50 € &#x01F631;' ) might be encoded as follows:</p>
+        'A haircut there costs 50 € &#x01F631;' ) might be encoded as follows:
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <post xml:lang="de"> Da kostet ein Haarschnitt 50 € <c type="emoji" ana="#fsif"
-            generatedBy="template">&#x01F631;</c>
-        </post>
+        <post xml:lang="de">Da kostet ein Haarschnitt 50 € <c type="emoji" ana="#fsif" generatedBy="template">&#x01F631;</c></post>
       </egXML>
+      </p>
       <p>Sometimes, e.g. when the source of the TEI document was a web page in HTML, the emojis may
         occur only as an icon graphic in the source. In such a case, they may be encoded using
           <gi>figure</gi>. The corresponding unicode character can then be recorded in the
@@ -967,7 +950,7 @@ See the file COPYING.txt for details.
       <p>A post in a CMC interaction may contain a graphic in addition to some text or even contain
         only a graphic (without any text). As explained in <ptr target="#CMCcmcpostatts"/>, the
         modality of such a post should be considered as <val>written</val>. To encode the graphic
-        information, the TEI element <gi>figure</gi> may be used in the appropriate place.</p>
+        information, the TEI element <gi>figure</gi> may be used in the appropriate place.
       <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
         <post modality="written" generatedBy="human" synch="#t005" who="#A06" xml:id="cmc_post23">
           <figure type="image" generatedBy="human">
@@ -977,12 +960,11 @@ See the file COPYING.txt for details.
           </figure>
         </post>
       </egXML>
+      </p>
       <p>The preceding example represents an encoding of a private chat post that contained only a
         screenshot of a google search result for a hairdresser. A link to the graphic file itself is
-        not included because it has not been retained for the
-        <!-- This sentence needs a bit of re-wording, but I do not
-           actually know when the graphic was not retained, so need to
-           ask, first. —Syd, 2022-08-12 --> corpus.</p>
+        not included because this is a text-only corpus that did not
+        include images.
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
         <post type="tweet" key="1043823300479258624" modality="written" generatedBy="human"
           synch="#tweetsbcrn18.t006" xml:id="cmc_post24" who="#u1" xml:lang="de">
@@ -993,6 +975,7 @@ See the file COPYING.txt for details.
           </figure>
         </post>
       </egXML>
+      </p>
       <p>The preceding example represents an encoding of a tweet that contains some text (including
         hashtags and mentions) and a graphic. The <gi>graphic</gi> element retains the URL of the
         graphic on the web just as in the source.</p>
@@ -1000,18 +983,15 @@ See the file COPYING.txt for details.
 
     <div xml:id="CMCcirculation">
       <head>Circulation</head>
-      <!-- ToDo: Check twi21 corpus -->
-
-      <?tei winita Need an intro paragraph here to explain what “Circulation” means —Syd, 2022-08-12 ?>
 
       <p>The following recommendations on how to encode features of the circulation of posts, such
         as IDs, re-posts (retweets), hashtags, and mentions use twitter posts (tweets) as an
-        example; this phenomenon is not in any way unique to Twitter, however.</p>
+        example; this phenomenon is not in any way unique to X (Twitter), however.</p>
       <p>First, we encode the type of post (in this case, a tweet) in the <att>type</att> attribute,
         and if it is a specific subtype of tweet, such as a retweet, that will be encoded in the
           <att>subtype</att> attribute on the <gi>post</gi> element accordingly.</p>
       <p>Second, we distinguish between the ID that the post gets as part of the text collection
-        (e.g. a corpus or a dataset), and the original Tweet-ID as supplied by Twitter. The
+        (e.g. a corpus or a dataset), and the original Tweet-ID as supplied by X (Twitter). The
         collection-related post ID should go on the global attribute <att>xml:id</att>, while the
         original tweet ID should go on the canonical attribute <att>key</att>.</p>
       <p>Third, a retweet and its corresponding retweeted tweet are encoded as two separate posts
@@ -1019,15 +999,14 @@ See the file COPYING.txt for details.
         with <code>subtype="retweet"</code> and does not contain or duplicate the content of the
         retweeted tweet. Instead it refers to the ID of the retweeted tweet via the pointing
         attribute <att>ref</att>. All original content of the retweet goes in the content of the
-          <gi>post</gi> element. In the example
-        <!-- ptr target="#ex.tweets"/  This pointer to the example below does not look good in the HTML, Harald 2022-09-01 -->,
-        the retweeted tweet happens to be a retweet itself.</p>
+          <gi>post</gi> element. In the following example the retweeted tweet happens to be a retweet itself.</p>
       <p>Fourth, hashtags occur on the in the body of tweets and are links like any other hyperlink
         and should be encoded using the element <gi>ref</gi>. The <att>type</att> attribute of the
         ref should contain the value <val>hashtag</val>, the <att>target</att> attribute should
         contain the URL of the hashtag, and the content of <gi>ref</gi>should be the string of the
         hashtag itself.</p>
-
+        <?tei winita Consider moving example below to be right before the 4 paras discussing details about it — 2023-11-24 ?>
+        <?tei winita Following example needs a source= attribute ?>
       <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.tweets">
         <post modality="written" key="1043796550101716993" generatedBy="human" type="tweet"
           subtype="retweet" who="#u1" xml:id="cmc_post25" synch="#tweetsbcrn18.t004"
@@ -1056,169 +1035,176 @@ See the file COPYING.txt for details.
           </trailer>
         </post>
       </egXML>
-      <!-- Is the “CoMeRe Style encoding of the counts of favouriting
-           and likes:” intended to be part of the example (i.e., to
-           show up in the output)?
-           Either way, we should probably also exemplify other methods
-           of encoding such information, no? E.g.:
-           <measure unit="count" commodity="favorites" quantity="4"/>
-      -->
+      <p>Note that in the above example <soCalled>CoMeRe</soCalled>
+      style encoding is used to represent the number of favorites. It would
+      also be reasonable to use a TEI <gi>measure</gi> element instead
+      of the <gi>fs</gi>.</p>
     </div>
 
 
     <div xml:id="CMCanalysis">
       <head>Linguistic annotation</head>
 
-      <p>For encoding linguistic analyses of CMC text, we may use the dedicated elements and
-        attributes from the analysis module, which is described in <ptr target="#SA"/>. For example,
-        the tokenisation (segmentation into word-like units) of a CMC text should be encoded using
-        the <gi>w</gi> element.</p>
+      <p>For encoding linguistic analyses of CMC text, we may use the
+        dedicated elements and attributes from the analysis module,
+        which is described in <ptr target="#SA"/>. For example, the
+        tokenisation (segmentation into word-like units) of a CMC text
+        should be encoded using the <gi>w</gi> element.</p>
 
+        
+      <p>Let us take, for example a posting that contains the content
+      <q xml:lang="de">00:22 Bin soooooo im stress gewesen ich Armer
+      lol</q> (in English: <q>I was soooooo stressed out poor me
+      lol</q>'). This may be encoded as follows.
 
-      <p>Let us take, for example a posting that contains the content <q xml:lang="de">00:22 Bin
-          soooooo im stress gewesen ich Armer lol</q> (in English: <q>I was soooooo stressed out
-          poor me lol</q>'). This may be encoded as follows. <!-- aus Dortmunder Chatkorpus Chat 1101004_Welcome_2004-11-08.tei.xml -->
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <post generatedBy="human" rend="color:black" synch="#t010.a" who="#A03.a"
-            xml:id="cmc_post_m16.a">
-            <time>00:22</time>
-            <w>Bin</w>
-            <w>soooooo</w>
-            <w>im</w>
-            <w>stress</w>
-            <w>gewesen</w>
-            <w>ich</w>
-            <w>Armer</w>
-            <w>lol</w>
-          </post>
-        </egXML>
+      <!-- aus Dortmunder Chatkorpus Chat 1101004_Welcome_2004-11-08.tei.xml -->
+
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <post generatedBy="human" rend="color:black" synch="#t010.a" who="#A03.a"
+          xml:id="cmc_post_m16.a">
+          <time>00:22</time>
+          <w>Bin</w>
+          <w>soooooo</w>
+          <w>im</w>
+          <w>stress</w>
+          <w>gewesen</w>
+          <w>ich</w>
+          <w>Armer</w>
+          <w>lol</w>
+        </post>
+      </egXML>
       </p>
 
-      <p>In many CMC genres, especially in private chat, sloppy and creative writing abound
-        including irregular spellings imitating spoken language, omitted word boundaries, and
-        spurious boundaries leading to tokens separated in parts. For encoding these writing
-        phenomena typical of CMC, the TEI attributes <att>norm</att> and <att>join</att> may be
-        used.</p>
+      <p>In many CMC genres, especially in private chat, sloppy and
+        creative writing abound including irregular spellings imitating
+        spoken language, omitted word boundaries, and spurious
+        boundaries leading to tokens separated in parts. For encoding
+        these writing phenomena typical of CMC, the TEI attributes
+        <att>norm</att> and <att>join</att> may be used.</p>
 
-      <p>For example, the normalized spelling of an irregularly spelled word may be recorded using
-        the <att>norm</att> attribute (from <ident type="class">att.linguistic</ident>): <!-- Is this in German or a combination of German & English? —Syd, 2023-11-23 -->
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <post generatedBy="human" rend="color:black" synch="#t010.b" who="#A03.b"
-            xml:id="cmc_post_m16.b">
-            <time> 00:22 </time>
-            <w>Bin</w>
-            <w norm="so">soooooo</w>
-            <w>im</w>
-            <w norm="Stress">stress</w>
-            <w>gewesen</w>
-            <w>ich</w>
-            <w>Armer</w>
-            <w>lol</w>
-          </post>
-        </egXML>
+      <p>For example, the normalized spelling of an irregularly
+      spelled word may be recorded using the <att>norm</att> attribute
+      (from <ident type="class">att.linguistic</ident>):
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
+        <post generatedBy="human" rend="color:black" synch="#t010.b" who="#A03.b"
+          xml:id="cmc_post_m16.b">
+          <time> 00:22 </time>
+          <w>Bin</w>
+          <w norm="so">soooooo</w>
+          <w>im</w>
+          <w norm="Stress">stress</w>
+          <w>gewesen</w>
+          <w>ich</w>
+          <w>Armer</w>
+          <w>lol</w>
+        </post>
+      </egXML>
       </p>
 
       <p>When the boundaries between <gi>w</gi> elements are generally thought of as denoting word
         boundaries, we can keep track of boundaries not present in the source by using the
-          <att>join</att> attribute, also from <ident type="class">att.linguistic</ident>. For
-        example, for an original post that has nothing more than the token <q>Inmyoffice</q>, the
-        following encoding demonstrates an interpretation that the single token represents the three
-        words <q>In my office</q>: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <post>
-            <w>In</w>
-            <w join="left">my</w>
-            <w join="left">office</w>
-          </post>
-        </egXML>
+        <att>join</att> attribute, also from <ident type="class">att.linguistic</ident>.
+        For example, for an original post that has nothing more than the token <q>Inmyoffice</q>,
+        the following encoding demonstrates an interpretation that the single token represents the
+        three words <q>In my office</q>:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <post>
+              <w>In</w>
+              <w join="left">my</w>
+              <w join="left">office</w>
+            </post>
+          </egXML>
       </p>
-
+      
       <p>Alternatively, and especially when the normalization information pertains to more than one
         token, we can apply the notation using the elements <gi>reg</gi> and <gi>orig</gi>, related
-        by a <gi>choice</gi> element as described in <ptr target="COEDREG"/>. <!-- What language is this examle in? —Syd, 2023-11-23 -->
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <post>
-            <choice>
-              <orig>
-                <w pos="VAPPER" lemma="">hastes</w>
-              </orig>
-              <reg>
-                <w pos="VAFIN" lemma="haben">hast</w>
-                <w pos="PPER" lemma="du">du</w>
-                <w pos="PPER" lemma="es">es</w>
-              </reg>
-            </choice>
-          </post>
-        </egXML>
+        by a <gi>choice</gi> element as described in <ptr target="#COEDREG"/>.
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
+        <post>
+          <choice>
+            <orig>
+              <w pos="VAPPER" lemma="">hastes</w>
+            </orig>
+            <reg>
+              <w pos="VAFIN" lemma="haben">hast</w>
+              <w pos="PPER" lemma="du">du</w>
+              <w pos="PPER" lemma="es">es</w>
+            </reg>
+          </choice>
+        </post>
+      </egXML>
       </p>
 
       <p>Other analysis attributes like <att>lemma</att> and <att>pos</att> (for part of speech) may
         be used as with traditional text. It is a matter of the tagset used to cater for POS
         categories that are appropriate for CMC. In the example below, for instance, the tag
-          <val>AKW</val> stands for <gloss xml:lang="de" rend="italic">Aktionswort</gloss> (<gloss
-          xml:lang="en">action word</gloss>, see <ptr type="cit" target="#STTS_IBK"/>). <egXML
-          xmlns="http://www.tei-c.org/ns/Examples">
-          <post generatedBy="human" rend="color:black" synch="#t010.c" who="#A03.c"
-            xml:id="cmc_post_m16.c">
-            <time> 00:22 </time>
-            <w lemma="sein" pos="VAFIN" xml:id="m16.t9">Bin</w>
-            <w lemma="so" norm="so" pos="PTKIFG" xml:id="m16.t10">soooooo</w>
-            <w lemma="in" pos="APPRART" xml:id="m16.t11">im</w>
-            <w lemma="Stress" norm="Stress" pos="NN" xml:id="m16.t12">stress</w>
-            <w lemma="sein" pos="VAPP" xml:id="m16.t13">gewesen</w>
-            <w lemma="ich" pos="PPER" xml:id="m16.t14">ich</w>
-            <w lemma="Armer" pos="NN" xml:id="m16.t15">Armer</w>
-            <w lemma="lol" pos="AKW" xml:id="m16.t16">lol</w>
-          </post>
-        </egXML>
+        <val>AKW</val> stands for <gloss xml:lang="de" rend="italic">Aktionswort</gloss>
+        (<gloss xml:lang="en">action word</gloss>, see <ptr type="cit" target="#STTS_IBK"/>).
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <post generatedBy="human" rend="color:black" synch="#t010.c" who="#A03.c"
+          xml:id="cmc_post_m16.c">
+          <time> 00:22 </time>
+          <w lemma="sein" pos="VAFIN" xml:id="m16.t9">Bin</w>
+          <w lemma="so" norm="so" pos="PTKIFG" xml:id="m16.t10">soooooo</w>
+          <w lemma="in" pos="APPRART" xml:id="m16.t11">im</w>
+          <w lemma="Stress" norm="Stress" pos="NN" xml:id="m16.t12">stress</w>
+          <w lemma="sein" pos="VAPP" xml:id="m16.t13">gewesen</w>
+          <w lemma="ich" pos="PPER" xml:id="m16.t14">ich</w>
+          <w lemma="Armer" pos="NN" xml:id="m16.t15">Armer</w>
+          <w lemma="lol" pos="AKW" xml:id="m16.t16">lol</w>
+        </post>
+      </egXML>
       </p>
 
       <div xml:id="CMCnames">
         <head>Named entities</head>
 
         <p>Named entites (NEs) may be marked up using <gi>name</gi> or the elements encoding
-          different subcategories of names as described in <ptr target="#ND"/>. In the following
-          chat example, nicknames are linked to a <gi>person</gi> entry as shown in Section <ref
-            target="#CMCParticipants"/> via the <att>corresp</att> attribute. <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">
-            <!-- Dortmunder Chatkorpus, chat 2213001 -->
-            <post modality="written" generatedBy="system" rend="color:black" synch="#f2213001.t007"
-              type="standard" who="#f2213001.A04" xml:id="f2213001.m27.eg35">
-              <name corresp="#f2213001.A04" type="NICK">
-                <w lemma="Konstanze" pos="NE" xml:id="f2213001.m27.t1">Konstanze</w>
-              </name>
-              <w lemma="versuchen" pos="VVPP">versucht</w>
-              <name corresp="#f2213001.A03" type="NICK">
-                <w lemma="Nasenloch" pos="NN">nasenloch</w>
-              </name>
-              <w lemma="die" pos="ART">den</w>
-              <w lemma="Wunsch" pos="NN">wunsch</w>
-              <w lemma="zu" pos="PTKZU">zu</w>
-              <w lemma="erfüllen" pos="VVINF">erfüllen</w>
-              <!-- ... -->
-            </post>
-          </egXML>
+          different subcategories of names as described in <ptr target="#ND"/>. In the
+          following chat example, nicknames are linked to a <gi>person</gi> entry
+          as shown in Section <ref target="#CMCParticipants"/> via the <att>corresp</att>
+          attribute.
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
+          <!-- Dortmunder Chatkorpus, chat 2213001 -->
+          <post modality="written" generatedBy="system" rend="color:black" synch="#f2213001.t007"
+            type="standard" who="#f2213001.A04" xml:id="f2213001.m27.eg35">
+            <name corresp="#f2213001.A04" type="NICK">
+              <w lemma="Konstanze" pos="NE" xml:id="f2213001.m27.t1">Konstanze</w>
+            </name>
+            <w lemma="versuchen" pos="VVPP">versucht</w>
+            <name corresp="#f2213001.A03" type="NICK">
+              <w lemma="Nasenloch" pos="NN">nasenloch</w>
+            </name>
+            <w lemma="die" pos="ART">den</w>
+            <w lemma="Wunsch" pos="NN">wunsch</w>
+            <w lemma="zu" pos="PTKZU">zu</w>
+            <w lemma="erfüllen" pos="VVINF">erfüllen</w>
+            <!-- ... -->
+          </post>
+        </egXML>
         </p>
-
+        
         <p>In the the following version of the same chat snippet, the text strings with the
           nicknames have been replaced by category label strings for the purpose of anonymization.
           The category string and the <gi>name</gi> encoding offer some information about what has
-          been removed. <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <post modality="written" generatedBy="system" rend="color:black" synch="#f2213001.t007"
-              type="standard" who="#f2213001.A04" xml:id="f2213001.m27.eg36">
-              <name corresp="#f2213001.A04" type="NICK">
-                <w pos="NE">[_FEMALE-PARTICIPANT-A04_]</w>
-              </name>
-              <w lemma="versuchen" pos="VVPP">versucht</w>
-              <name corresp="#f2213001.A03" type="NICK">
-                <w pos="NN">[_PARTICIPANT-A03_]</w>
-              </name>
-              <w lemma="die" pos="ART">den</w>
-              <w lemma="Wunsch" pos="NN">wunsch</w>
-              <w lemma="zu" pos="PTKZU">zu</w>
-              <w lemma="erfüllen" pos="VVINF">erfüllen</w>
-              <!-- ... -->
-            </post>
-          </egXML>
+          been removed.
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <post modality="written" generatedBy="system" rend="color:black" synch="#f2213001.t007"
+            type="standard" who="#f2213001.A04" xml:id="f2213001.m27.eg36">
+            <name corresp="#f2213001.A04" type="NICK">
+              <w pos="NE">[_FEMALE-PARTICIPANT-A04_]</w>
+            </name>
+            <w lemma="versuchen" pos="VVPP">versucht</w>
+            <name corresp="#f2213001.A03" type="NICK">
+              <w pos="NN">[_PARTICIPANT-A03_]</w>
+            </name>
+            <w lemma="die" pos="ART">den</w>
+            <w lemma="Wunsch" pos="NN">wunsch</w>
+            <w lemma="zu" pos="PTKZU">zu</w>
+            <w lemma="erfüllen" pos="VVINF">erfüllen</w>
+            <!-- ... -->
+          </post>
+        </egXML>
         </p>
       </div>
     </div>
@@ -1227,44 +1213,13 @@ See the file COPYING.txt for details.
 
       <head>Multimodal CMC</head>
 
-      <p>Some basic multimodality is available in private chat such as WhatsApp, where spoken and
-        written posts and media posts containing images or video clips, can alternate. The following
-        shows the suggested encoding of a extended part of the hairdresser chat from above, including a
-        spoken post, several written posts, and a post with a graphic image (adapted from the
-        MoCoDa2 corpus <ptr target="#BIB_MoCoDa2"/>) </p>
-
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <post modality="spoken" generatedBy="human" synch="#t004" who="#A05" xml:id="m9"> In
-          Düsseldorf gibt's da so Abstufungen. Da gibt's einmal Oliver Schmidt, Oliver Schmidt's
-          Hair Design, also dann, ist eher also, keine Ahnung, zum Beispiel ich war da bei dem etwas
-          Günstigeren dann. Ich weiß nicht, ob's das in Essen auch gibt diese Abstufungen </post>
-        <post modality="written" generatedBy="human" synch="#t004" who="#A02" xml:id="m10"> Ich
-          schau mal :) </post>
-        <post modality="written" generatedBy="human" synch="#t005" who="#A06" xml:id="m11"> Ich gehe
-          immer nach Katernberg zu Pasha’s haarem Hahaha also die sind echt entspannt und gut und
-          nicht teuer </post>
-        <post modality="written" generatedBy="human" synch="#t005" who="#A06" xml:id="m12">
-          <figure type="image" generatedBy="human">
-            <desc>Screenshot von der Google-Suche nach dem Friseur "Pasha's Haare'm" mit der
-              Durchschnitts-Google-Bewertung (4,5 von 5 Sternen), der Adresse, der Telefonnummer und
-              den Öffnungszeiten</desc>
-          </figure>
-        </post>
-        <post modality="written" generatedBy="human" synch="#t006" who="#A03" xml:id="m13"> Olivers
-          hair und Oliver Schmidt gehören zusammen </post>
-      </egXML>
-
-      <p>On the GUI (graphical user interface) of a more complex multimodal CMC environment such as
-        Second life, a gaming or a learning platform, interactions may consist of interleaved
-        occurrences of posts (<gi>p</gi>), utterances (<gi>u</gi>) and non-verbal acts such as
-        bodily activities (<gi>kinesic</gi>) or other on-screen activities (<gi>incident</gi>). The
-        following example shows how a spoken utterance over the audio channel, an avatar's bodily
-        activity, and a written post occur on the same level within the text <gi>body</gi>,
-        representing parts of a multimodal chat in Second Life adapted from the Archi21 corpus <ptr
-          type="cit" target="#BIB_ChanierWigham2015"/>. Note that the <att>start</att> and
-          <att>end</att> attributes link to a timeline encoded in the <gi>teiHeader</gi> (see <ptr
-          target="#CMCTimeline"/></p>
-
+      <p>On the GUI (graphical user interface) of a multimodal CMC environment such as Second life,
+        a gaming or a learning platform, interactions may consist of interleaved occurrences of
+        posts (<gi>p</gi>), utterances (<gi>u</gi>) and non-verbal acts such as bodily activities
+          (<gi>kinesic</gi>) or other on-screen activities (<gi>incident</gi>). The following
+        example shows how a spoken utterance, an avatar's bodily activity, and a written post occur
+        on the same level within the text <gi>body</gi>, representing parts of a multimodal chat in
+        Second Life from the Archi21 corpus <ptr type="cit" target="#BIB_ChanierWigham2015"/>.
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
         <text>
           <body>
@@ -1289,22 +1244,8 @@ See the file COPYING.txt for details.
           </body>
         </text>
       </egXML>
+      </p>
     </div>
-
-
-
-
-
-  </div>
-
-  <div xml:id="CMChow">
-    <head>Putting it all Together — Genre Specific Examples</head>
-    <?tei winita
-        * Twitter
-        * WhatsApp
-        * Wikipedia talk
-        * NB: not necessarily add complete examples (whole TEI file) but rather snippets
-      ?>
   </div>
 
   <div xml:id="CMCmodule">
