@@ -5,7 +5,8 @@ Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details.
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<div xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" type="div1" xml:id="CMC">
+<div xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" type="div1"
+  xml:id="CMC">
   <head>Computer-mediated Communication</head>
   <p>This chapter describes the TEI encoding mechanisms available for textual data which represents
     discourse from genres of computer-mediated communication (CMC). It is intended to provide the
@@ -70,7 +71,7 @@ See the file COPYING.txt for details.
     </p>
     <figure xml:id="cmcunits-taxonomy">
       <graphic url="Images/cmcunits-taxonomy.png"/>
-      <head>Taxonomy of basic CMC units.<ptr type="cit" target="#BIB_CMC_Core"/></head>
+      <head>Taxonomy of basic CMC units according to <ptr type="cit" target="#BIB_CMC_Core"/></head>
     </figure>
     <p>The most important distinction in <ref target="#cmcunits-taxonomy">the taxonomy</ref>
       concerns the temporal nature of units exchanged via CMC technologies. The left part of the
@@ -268,7 +269,7 @@ See the file COPYING.txt for details.
 
       <p>Using this encoding strategy, the thread from the second example in <ptr
           target="#CMCcmcpostatts"/> could be encoded as follows. <egXML
-          xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
+          xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de" source="#BIB_scilog1">
           <div type="thread" n="0">
             <post type="comment" xml:id="cmc_post01" who="#u7" when-iso="2015-07-29T21:44">
               <p>Es hat den Anschein, ...</p>
@@ -362,8 +363,9 @@ See the file COPYING.txt for details.
           and user comments to the video (which are encoded in the <gi>body</gi> of the text as
           posts). The metadata contain a URL reference to the video and the YouTube channel that
           posted the video in <gi>relatedItem</gi> elements. The date when the page was created is
-          not known. The video itself is not contained in the corpus. <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">
+          not known. The example is adapted from the NottDeuYTSch corpus (<ptr
+            target="#BIB_Cotgrove"/>), where the video itself is not contained in the corpus. <egXML
+            xmlns="http://www.tei-c.org/ns/Examples" source="#BIB_Cotgrove" xml:lang="en">
             <sourceDesc>
               <bibl>
                 <title type="main">Iron Man 3 in 3D (Official Trailer German) Parodie</title>
@@ -464,7 +466,8 @@ See the file COPYING.txt for details.
           completely. In either case, an encoded <gi>post</gi> may then be linked to its author by
           use of the <att>who</att> attribute.</p>
         <p>In the following example, a list of participants is maintained in a <gi>teiHeader</gi>.
-            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en"
+            source="#BIB_WPTalkAstronomicalObjectal">
             <!-- In the <teiHeader>: -->
             <profileDesc>
               <particDesc>
@@ -510,7 +513,8 @@ See the file COPYING.txt for details.
         <p>In the following version of the <gi>body</gi> portion of the same example, the list of
           interactants is stored in a separate file (in this case the file <name type="file"
             >userList.xml</name> in the same directory). <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">
+            xmlns="http://www.tei-c.org/ns/Examples" source="#BIB_WPTalkAstronomicalObject"
+            xml:lang="en">
             <!-- In the <body>: -->
             <div type="wiki_discussion_page" n="073">
               <!-- 4 other <post>s -->
@@ -549,11 +553,12 @@ See the file COPYING.txt for details.
           in the text body can be encoded using the elements <gi>date</gi> or <gi>time</gi>. The
             <att>when</att> attribute may be used to record a normalized version of the date, time,
           or date and time if this information is available or reconstructible. <!-- ex. from Dortmund chat corpus, example for cmc-core -->
-          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" source="'BIB_DCK" xml:lang="de">
             <post modality="written" rend="color:black" who="#f2213001.A06" xml:id="cmc_post06">
               <time generatedBy="system">21:52</time> das ist auf jedenfall krankheit</post>
           </egXML>
-          <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#BIB_WPTalkAstronomicalObject">
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#BIB_WPTalkAstronomicalObject"
+            xml:lang="en">
             <post modality="written" xml:id="cmc_post07" indentLevel="1" who="#u006" synch="#t006">
               <p>Those haven't happened. If they do, we can revisit the concern. </p>
               <signed generatedBy="template"><ref target="/wiki/User:P">P</ref>
@@ -588,12 +593,12 @@ See the file COPYING.txt for details.
               <textDesc>
                 <interaction>
                   <timeline>
-                    <when xml:id="t001" when="2011-03-23T19:56:00"/>
-                    <when xml:id="t002" when="2011-06-14T21:22:00"/>
-                    <when xml:id="t003" when="2011-06-14T23:28:00"/>
-                    <when xml:id="t004" when="2011-07-02T07:20:00"/>
-                    <when xml:id="t005" when="2011-07-21T01:00:00"/>
-                    <when xml:id="t006" when="2014-04-08T01:35:00"/>
+                    <when xml:id="t001" absolute="2011-03-23T19:56:00"/>
+                    <when xml:id="t002" absolute="2011-06-14T21:22:00"/>
+                    <when xml:id="t003" absolute="2011-06-14T23:28:00"/>
+                    <when xml:id="t004" absolute="2011-07-02T07:20:00"/>
+                    <when xml:id="t005" absolute="2011-07-21T01:00:00"/>
+                    <when xml:id="t006" absolute="2014-04-08T01:35:00"/>
                   </timeline>
                 </interaction>
                 <preparedness/>
@@ -609,7 +614,8 @@ See the file COPYING.txt for details.
           requirements of text anonymisation. The <gi>particDesc</gi> and the <gi>timeline</gi> can
           then for instance be kept in a separate file not to be distributed with the corpus.</p>
 
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="e10">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="e10" xml:lang="en"
+          source="#BIB_WPTalkAstronomicalObject">
           <post modality="written" xml:id="cmc_post08" indentLevel="1" who="#u006" synch="#t006">
             <p>Those haven't happened. If they do, we can revisit the concern. </p>
             <signed generatedBy="template">[_DELETED-SIGNATURE_] <date synch="#t007"
@@ -672,12 +678,12 @@ See the file COPYING.txt for details.
         indicated by the child elements of the <gi>post</gi>. For example a written post from
         WhatsApp might include an audio-visual clip copied into the post, and in such case may not
         actually have any writing. Such a post is still considered to be in the <q>written</q>
-        modality. <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
+        modality. <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <post modality="written" generatedBy="human" synch="#t005" who="#A06" xml:id="cmc_post09">
             <figure type="image" generatedBy="human">
-              <desc>Screenshot von der Google-Suche nach dem Friseur <q>Haarraum</q> mit der
-                Durchschnitts-Google-Bewertung (4,5 von 5 Sternen), der Adresse, der Telefonnummer
-                und den Öffnungszeiten</desc>
+              <desc xml:lang="en">screenshot of the google search for hairdresser "Pasha's Haare'm"
+                with the average google rating (4,5 of 5 stars), the address, the phone number, and
+                the opening hours. </desc>
             </figure>
           </post>
         </egXML>
@@ -730,9 +736,9 @@ See the file COPYING.txt for details.
         author and in relation to the standard level of non-indentation which should be encoded with
         an <att>indentLevel</att> of <val>0</val>). It is used in wiki talk corpora but may also be
         used for other threaded genres, e.g. when HTML is used as a source.</p>
-        <p>The following is a sample encoding of a portion of a
-        discussion among four different users on a Wikipedia talk page.
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#BIB_WPTalkEiffel">
+      <p>The following is a sample encoding of a portion of a discussion among four different users
+        on a Wikipedia talk page. <egXML xmlns="http://www.tei-c.org/ns/Examples"
+          source="#BIB_WPTalkEiffel" xml:lang="en">
           <div type="thread" xml:id="i.10031_19">
             <head>[[WP:AUTO]]</head>
             <post indentLevel="0" modality="written" when-iso="2006-09-07T03:09+00"
@@ -753,37 +759,30 @@ See the file COPYING.txt for details.
             </post>
           </div>
         </egXML>
-        </p>
+      </p>
     </div>
 
     <div xml:id="CMCcmcatts">
       <head>Attributes for General CMC Encoding</head>
-      <p>The attribute <att>generatedBy</att> is also unique to CMC
-        encoding. But unlike <att>modality</att>, <att>replyTo</att>,
-        and <att>indentLevel</att>, it is available not only on the
-        <gi>post</gi> element, but on any of its descendants as well.
-        <specList>
+      <p>The attribute <att>generatedBy</att> is also unique to CMC encoding. But unlike
+          <att>modality</att>, <att>replyTo</att>, and <att>indentLevel</att>, it is available not
+        only on the <gi>post</gi> element, but on any of its descendants as well. <specList>
           <specDesc key="att.cmc" atts="generatedBy"/>
         </specList>
       </p>
-      <p><att>generatedBy</att> may indicate, for <gi>post</gi> or any
-      of its descendants, how the content transcribed in an element
-      was generated in a CMC environment. That is, whether the source
-      text being transcribed was created by a human user, created by
-      the CMC system at the request of a human user (e.g., when the
-      user activates a template that generates the conent, such as in
-      a signature), outright generated by the CMC system (e.g. a
-      status message or a timestamp), or generated by an automated
-      process external to the CMC system itself. This attribute is
-      optional; when it is not specified on a <gi>post</gi> element
-      its value is presumed to be <val>unspecified</val>; when it is
-      unspecified on any descendant of <gi>post</gi> its value is
-      inherited from the immediately enclosing element. (And, in turn,
-      if <att>generatedBy</att> is not specified on that element it
-      inherits the value from its immediately enclosing elment, and so
-      on up the document hierarchy until a <gi>post</gi> is reached;
-      the <gi>post</gi> either has a <att>generatedBy</att> attribute
-      specified or its presumved value is <val>unspecified</val>).</p>
+      <p><att>generatedBy</att> may indicate, for <gi>post</gi> or any of its descendants, how the
+        content transcribed in an element was generated in a CMC environment. That is, whether the
+        source text being transcribed was created by a human user, created by the CMC system at the
+        request of a human user (e.g., when the user activates a template that generates the conent,
+        such as in a signature), outright generated by the CMC system (e.g. a status message or a
+        timestamp), or generated by an automated process external to the CMC system itself. This
+        attribute is optional; when it is not specified on a <gi>post</gi> element its value is
+        presumed to be <val>unspecified</val>; when it is unspecified on any descendant of
+          <gi>post</gi> its value is inherited from the immediately enclosing element. (And, in
+        turn, if <att>generatedBy</att> is not specified on that element it inherits the value from
+        its immediately enclosing elment, and so on up the document hierarchy until a <gi>post</gi>
+        is reached; the <gi>post</gi> either has a <att>generatedBy</att> attribute specified or its
+        presumved value is <val>unspecified</val>).</p>
 
       <!-- BEGIN duplicative section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% … -->
       <!--
@@ -794,83 +793,94 @@ See the file COPYING.txt for details.
           correct, but they should match (if this section is kept).
           — Syd, 2023-11-24
       -->
-      <p>
-        A list of suggested values for <att>generatedBy</att> follows:
-        <list type="gloss">
+      <!-- What is the tagdoc? It does not seem to be part of this chapter, so I suggest to keep this here. -Harald 2023-11-27 -->
+      <!-- What is the difference between suggested and legal? Can't seem to find documentation of this -Harald 2023-11-27 -->
+      <p> A list of suggested values for <att>generatedBy</att> follows: <list type="gloss">
           <label>human</label>
           <item>when then content of the respective element was <q>naturally</q> typed or spoken by
             a human user (cf. the chat posts in Example <ref target="#ex.haarschnitt"
             >haircut</ref>)</item>
           <label>template</label>
           <item>when the content of the respective element was generated after a human user
-            activated a template for its insertion (cf. <gi>signed</gi> e.g., the signatures in wiki
-            talk in Listing 2)</item>
+            activated a template for its insertion (cf. <gi>signed</gi> and <gi>time</gi> i.e. the
+            signature in wiki talk in the second example below.</item>
           <!-- Harald to look up “Listing 2” and “Listing 6” and
                  “Listing 5”, below, in the paper and replace these
                  references with something. (Not sure what, yet.) Ask
                  Peter if you have any problems with this. —
                  2023-11-24 -->
+          <!-- Fixed all occurrences of "Listing" -Harald 2023-11-27 -->
           <label>system</label>
           <item>when the content of the respective element was generated by the system, i.e. the CMC
-            environment (cf. the system message in an IRC chat in Listing 6)</item>
+            environment (cf. the system message in an IRC chat in the fourth example below.</item>
           <label>bot</label>
           <item>when the content of the respective element was generated by a bot i.e. a non-human
             agent, mostly external to the CMC environment</item>
           <label>unspecified</label>
           <item>when it is unspecified or unknown how the content of the respective element was
-            generated (cf. the <gi>post</gi> of the retweet cmc_ex_p2 in Listing 5)</item>
+            generated (cf. the retweet that forms the second <gi>post</gi> in the third example
+            below). </item>
         </list>
       </p>
       <!-- … END duplicative section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 
-      <p>An example of an emoji in a chat post. Although the post was
-      written by a human, the emoji itself was marked in the source as
-      having been generated by a template:
-      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.haarschnitt" source="#BIB_MoCoDa2">
-        <post modality="written" generatedBy="human" synch="#t003" who="#A02" xml:id="cmc_post18">
-          Da kostet ein Haarschnitt 50 € <figure type="emoji" generatedBy="template">
-            <desc type="label">face screaming in fear</desc>
-            <desc type="unicode">U+1F631</desc>
-          </figure>
-        </post>
-      </egXML>
+      <p>An example of an emoji in a chat post. Although the post was written by a human, the emoji
+        itself was marked in the source as having been generated by a template: <egXML
+          xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.haarschnitt" source="#BIB_MoCoDa2"
+          xml:lang="en">
+          <post modality="written" generatedBy="human" synch="#t003" who="#A02" xml:id="cmc_post18">
+            Da kostet ein Haarschnitt 50 € <figure type="emoji" generatedBy="template">
+              <desc type="label" xml:lang="en">face screaming in fear</desc>
+              <desc type="unicode">U+1F631</desc>
+            </figure>
+          </post>
+        </egXML>
       </p>
 
-      <p>In the following example, the user signature of a wiki talk post was
-        inserted by activating a template, and is thus marked accordingly:
-      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.naturally" source="#BIB_WPTalkAstronomicalObject">
-        <post modality="written" xml:id="cmc_post19" indentLevel="0" who="#u005" synch="#t005">
-          <p>I'm not sure that this is a proper criterium, or even what this means. What if we set
-            an explosion that breaks a comet into two pieces? What if we build a moon? Cheers,
-            </p><signed generatedBy="template" rend="inline"><ref target="/wiki/User:Greenodd"
-              >Greenodd</ref> (<ref target="/wiki/User_talk:Greenodd">talk</ref>) <time>01:00, 21
-              July 2011 (UTC)</time></signed>
-        </post>
-      </egXML>
+      <p>In the following example, the user signature of a wiki talk post was inserted by activating
+        a template, and is thus marked accordingly: <egXML xmlns="http://www.tei-c.org/ns/Examples"
+          xml:id="ex.naturally" source="#BIB_WPTalkAstronomicalObject" xml:lang="en">
+          <post modality="written" xml:id="cmc_post19" indentLevel="0" who="#u005" synch="#t005">
+            <p>I'm not sure that this is a proper criterium, or even what this means. What if we set
+              an explosion that breaks a comet into two pieces? What if we build a moon? Cheers,
+              </p><signed generatedBy="template" rend="inline"><ref target="/wiki/User:Greenodd"
+                >Greenodd</ref> (<ref target="/wiki/User_talk:Greenodd">talk</ref>) <time>01:00, 21
+                July 2011 (UTC)</time></signed>
+          </post>
+        </egXML>
       </p>
 
-      <p>In the following example, a tweet is specified as having
-      been written by a human; however inside the tweet, the timestamp
-      is marked as generated by the CMC system:
-      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.grunzen" xml:lang="de">
-        <post modality="written" key="1043764753502486528" type="tweet" generatedBy="human"
-          synch="#tweetsbcrn18.t001" xml:id="cmc_post20" who="#u1" xml:lang="deu">
-          <time generatedBy="system"> 12:31 </time> Heute mit super Unterstützung, wir grunzen, wenn
-          die Zeit vorbei ist. <ref type="hashtag"
-            target="https://twitter.com/hashtag/bcrn18?src=hash">#bcrn18</ref>
-          <ref type="hashtag" target="https://twitter.com/hashtag/wikidach?src=hash">#wikidach</ref>
-          PS: Die beiden brauchen noch Namen. Hinweise dazu am Empfang abgeben! <ref
-            type="twitter-account" target="https://twitter.com/AndreLo79">@AndreLo79</ref>
-          <figure type="image">
-            <graphic url="https://pbs.twimg.com/media/DnwygdSW4AAoTUn.jpg:large"/>
-          </figure>
-        </post>
-      </egXML>
+      <p>In the following example, a tweet is specified as having been written by a human; however
+        inside the tweet, the timestamp is marked as generated by the CMC system: <egXML
+          xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.grunzen" xml:lang="de">
+          <post modality="written" key="1043764753502486528" type="tweet" generatedBy="human"
+            synch="#tweetsbcrn18.t001" xml:id="cmc_post20" who="#u1" xml:lang="deu">
+            <time generatedBy="system"> 12:31 </time> Heute mit super Unterstützung, wir grunzen,
+            wenn die Zeit vorbei ist. <ref type="hashtag"
+              target="https://twitter.com/hashtag/bcrn18?src=hash">#bcrn18</ref>
+            <ref type="hashtag" target="https://twitter.com/hashtag/wikidach?src=hash"
+              >#wikidach</ref> PS: Die beiden brauchen noch Namen. Hinweise dazu am Empfang abgeben!
+              <ref type="twitter-account" target="https://twitter.com/AndreLo79">@AndreLo79</ref>
+            <figure type="image">
+              <graphic url="https://pbs.twimg.com/media/DnwygdSW4AAoTUn.jpg:large"/>
+            </figure>
+          </post>
+          <post modality="written" key="1043769240136880128" generatedBy="unspecified" type="tweet"
+            subtype="retweet" who="#u1" ref="#p3" synch="#tweetsbcrn18.t002" xml:id="p2"/>
+          <post mode="written" key="1043767827927388160" creation="human" type="tweet" who="#u3"
+            synch="#tweetsbcrn18.t002" xml:lang="de" xml:id="p3">
+            <time creation="system"> 12:43 </time>
+            <figure type="image" creation="human">
+              <graphic url="https://pbs.twimg.com/media/Dnw1TRNXgAAKqlK.jpg:large"/>
+            </figure>
+          </post>
+        </egXML>
       </p>
 
       <p>Finally, in the following example of an IRC post, the status message that user <q>Interseb
-        has entered the room</q> was generated by the system, i.e. the chat environment.
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.listPerson" xml:lang="de">
+          has entered the room</q> was generated by the system, i.e. the chat environment. <egXML
+          xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.listPerson" xml:lang="de"
+          source="#BIB_DCK">
           <post type="event" generatedBy="system" who="#SYSTEM" rend="color:navy">
             <p><name type="nickname" corresp="#A07">Interseb</name> betritt den Raum.</p>
           </post>
@@ -887,17 +897,17 @@ See the file COPYING.txt for details.
       <head>Emojis and Emoticons</head>
 
       <p>Emojis are iconic or symbolic, invariant graphic units which the users of social media
-        applications such as WhatsApp, Instagram, and X (Twitter) can select from a menu or <soCalled>emoji
-        keyboard</soCalled> and embed into their written posts. Examples are &#x1F601;, &#x1F637;, &#x01F308;,
-        &#x1F631;, and &#x1F648;. An emoji is encoded by one or more Unicode characters which are
-        intended to be mapped directly to a pictorial symbol.</p>
+        applications such as WhatsApp, Instagram, and X (Twitter) can select from a menu or
+          <soCalled>emoji keyboard</soCalled> and embed into their written posts. Examples are
+        &#x1F601;, &#x1F637;, &#x01F308;, &#x1F631;, and &#x1F648;. An emoji is encoded by one or
+        more Unicode characters which are intended to be mapped directly to a pictorial symbol.</p>
       <p>Emoticons predate emojis and are created as combinations of ASCII punctuation and other
         characters using the keyboard. Examples are <code>:-)</code>, <code>;-)</code>,
           <code>:-(</code>, <code>:-x</code>, <code>\O/</code>, and <code>Oo</code>. They first
-        occured on a Usenet newsgroup (<ref target="#BIB_smiley">Fahlman, 2021</ref>) and then became frequent in
-        chat communications during the mid-1980s. An emoticon typically consists of several Unicode
-        characters (from the ASCII subset) in a row, each of which has an intended use other than as
-        part of an emoticon.</p>
+        occured on a Usenet newsgroup (<ref target="#BIB_smiley">Fahlman, 2021</ref>) and then
+        became frequent in chat communications during the mid-1980s. An emoticon typically consists
+        of several Unicode characters (from the ASCII subset) in a row, each of which has an
+        intended use other than as part of an emoticon.</p>
       <p>Both emoticons and emojis may be simply transcribed as a sequence of characters. As with
         any other characters, they may be entered as numeric character entities if this is more
         convenient. (E.g., <mentioned>&#x2764;;</mentioned> might be transcribed as
@@ -910,7 +920,7 @@ See the file COPYING.txt for details.
           target="#AILC"/>.)</p>
       <p>For example, the source post <q>da bin ich nicht so empfindlich ;)</q> (engl. 'I am not so
         touchy with that ;) ') ends with an emoticon, and might be encoded as follows: <egXML
-          xmlns="http://www.tei-c.org/ns/Examples">
+          xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
           <post>
             <w pos="ADV">da</w>
             <w pos="VAFIN">bin</w>
@@ -922,7 +932,7 @@ See the file COPYING.txt for details.
           </post>
         </egXML></p>
       <p>Similarly, the source post <q>Klar &#x01F601;</q> (engl. 'Sure &#x01F601;') might be
-        encoded as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        encoded as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
           <post modality="written" generatedBy="human" synch="#lscLB.t004" who="#lscLB.A03"
             xml:id="cmc_post21">
             <w pos="ADV">Klar</w>
@@ -936,9 +946,8 @@ See the file COPYING.txt for details.
       <p>Alternatively, e.g. when <gi>w</gi> is not regularly used to encode tokens in the TEI
         document, <gi>c</gi> may be used to mark an emoji. For example, the source post <q>Da kostet
           ein Haarschnitt 50 € &#x01F631;</q> (frome the corpus <ptr target="#CMC_Mocoda2"/>, engl.
-        'A haircut there costs 50 € &#x01F631;' ) might be encoded as follows: 
-        
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        'A haircut there costs 50 € &#x01F631;' ) might be encoded as follows: <egXML
+          xmlns="http://www.tei-c.org/ns/Examples">
           <post xml:lang="de">Da kostet ein Haarschnitt 50 € <c type="emoji" ana="#fsif"
               generatedBy="template">&#x01F631;</c></post>
         </egXML>
@@ -949,11 +958,11 @@ See the file COPYING.txt for details.
           <gi>desc</gi> element by the encoder if desired.</p>
       <p>For example, the source text: <q>... ich überlege noch &#x1F648;</q> (engl. '... I'm still
         thinking &#x1F648;' ) might be encoded as follows: <egXML
-          xmlns="http://www.tei-c.org/ns/Examples">
+          xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
           <post modality="written" generatedBy="human" synch="#lscLB.t004" who="#lscLB.A03"
             xml:id="cmc_post22"> ... ich überlege noch <figure type="emoji" generatedBy="template">
               <graphic url="fig1.png"/>
-              <desc type="gloss">see no evil monkey</desc>
+              <desc type="gloss" xml:lang="en">see no evil monkey</desc>
               <desc type="unicode">U+1F648</desc>
             </figure>
           </post>
@@ -1001,28 +1010,7 @@ See the file COPYING.txt for details.
       <p>The following recommendations on how to encode features of the circulation of posts, such
         as IDs, re-posts (retweets), hashtags, and mentions use twitter posts (tweets) as an
         example; this phenomenon is not in any way unique to X (Twitter), however.</p>
-      <p>First, we encode the type of post (in this case, a tweet) in the <att>type</att> attribute,
-        and if it is a specific subtype of tweet, such as a retweet, that will be encoded in the
-          <att>subtype</att> attribute on the <gi>post</gi> element accordingly.</p>
-      <p>Second, we distinguish between the ID that the post gets as part of the text collection
-        (e.g. a corpus or a dataset), and the original Tweet-ID as supplied by X (Twitter). The
-        collection-related post ID should go on the global attribute <att>xml:id</att>, while the
-        original tweet ID should go on the canonical attribute <att>key</att>.</p>
-      <p>Third, a retweet and its corresponding retweeted tweet are encoded as two separate posts
-        each with its own set of attributes. The post representing the retweet itself is specified
-        with <code>subtype="retweet"</code> and does not contain or duplicate the content of the
-        retweeted tweet. Instead it refers to the ID of the retweeted tweet via the pointing
-        attribute <att>ref</att>. All original content of the retweet goes in the content of the
-          <gi>post</gi> element. In the following example the retweeted tweet happens to be a
-        retweet itself.</p>
-      <p>Fourth, hashtags occur on the in the body of tweets and are links like any other hyperlink
-        and should be encoded using the element <gi>ref</gi>. The <att>type</att> attribute of the
-        ref should contain the value <val>hashtag</val>, the <att>target</att> attribute should
-        contain the URL of the hashtag, and the content of <gi>ref</gi>should be the string of the
-        hashtag itself.</p>
-      <?tei winita Consider moving example below to be right before the 4 paras discussing details about it — 2023-11-24 ?>
-      <?tei winita Following example needs a source= attribute -- anc bib entry for comere and link ?>
-      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.tweets">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.tweets" xml:lang="de">
         <post modality="written" key="1043796550101716993" generatedBy="human" type="tweet"
           subtype="retweet" who="#u1" xml:id="cmc_post25" synch="#tweetsbcrn18.t004"
           ref="#cmc_ex_p5" xml:lang="de"> Ich mich auch? <ref type="hashtag"
@@ -1050,9 +1038,31 @@ See the file COPYING.txt for details.
           </trailer>
         </post>
       </egXML>
-      <p>Note that in the above example <soCalled>CoMeRe</soCalled> style encoding is used to
-        represent the number of favorites. It would also be reasonable to use a TEI <gi>measure</gi>
-        element instead of the <gi>fs</gi>.</p>
+
+      <p>In the preceding example, we first encode the type of post (in this case, a tweet) in the
+          <att>type</att> attribute, and if it is a specific subtype of tweet, such as a retweet,
+        that will be encoded in the <att>subtype</att> attribute on the <gi>post</gi> element
+        accordingly.</p>
+      <p>Second, we distinguish between the ID that the post gets as part of the text collection
+        (e.g. a corpus or a dataset), and the original Tweet-ID as supplied by X (Twitter). The
+        collection-related post ID should go on the global attribute <att>xml:id</att>, while the
+        original tweet ID should go on the canonical attribute <att>key</att>.</p>
+      <p>Third, a retweet and its corresponding retweeted tweet are encoded as two separate posts
+        each with its own set of attributes. The post representing the retweet itself is specified
+        with <code>subtype="retweet"</code> and does not contain or duplicate the content of the
+        retweeted tweet. Instead it refers to the ID of the retweeted tweet via the pointing
+        attribute <att>ref</att>. All original content of the retweet goes in the content of the
+          <gi>post</gi> element. In the following example the retweeted tweet happens to be a
+        retweet itself.</p>
+      <p>Fourth, hashtags occur on the in the body of tweets and are links like any other hyperlink
+        and should be encoded using the element <gi>ref</gi>. The <att>type</att> attribute of the
+        ref should contain the value <val>hashtag</val>, the <att>target</att> attribute should
+        contain the URL of the hashtag, and the content of <gi>ref</gi>should be the string of the
+        hashtag itself.</p>
+
+      <p>Note that in the above example <soCalled>CoMeRe</soCalled> style (cf. <ptr
+          target="#BIB_CoMeRe"/>) encoding is used to represent the number of favorites. It would
+        also be reasonable to use a TEI <gi>measure</gi> element instead of the <gi>fs</gi>.</p>
     </div>
 
 
@@ -1068,7 +1078,7 @@ See the file COPYING.txt for details.
       <p>Let us take, for example a posting that contains the content <q xml:lang="de">00:22 Bin
           soooooo im stress gewesen ich Armer lol</q> (in English: <q>I was soooooo stressed out
           poor me lol</q>'). This may be encoded as follows. <!-- aus Dortmunder Chatkorpus Chat 1101004_Welcome_2004-11-08.tei.xml -->
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
           <post generatedBy="human" rend="color:black" synch="#t010.a" who="#A03.a"
             xml:id="cmc_post_m16.a">
             <time>00:22</time>
@@ -1113,7 +1123,7 @@ See the file COPYING.txt for details.
           <att>join</att> attribute, also from <ident type="class">att.linguistic</ident>. For
         example, for an original post that has nothing more than the token <q>Inmyoffice</q>, the
         following encoding demonstrates an interpretation that the single token represents the three
-        words <q>In my office</q>: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        words <q>In my office</q>: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
           <post>
             <w>In</w>
             <w join="left">my</w>
@@ -1146,7 +1156,7 @@ See the file COPYING.txt for details.
         categories that are appropriate for CMC. In the example below, for instance, the tag
           <val>AKW</val> stands for <gloss xml:lang="de" rend="italic">Aktionswort</gloss> (<gloss
           xml:lang="en">action word</gloss>, see <ptr type="cit" target="#STTS_IBK"/>). <egXML
-          xmlns="http://www.tei-c.org/ns/Examples">
+          xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
           <post generatedBy="human" rend="color:black" synch="#t010.c" who="#A03.c"
             xml:id="cmc_post_m16.c">
             <time> 00:22 </time>
@@ -1167,9 +1177,10 @@ See the file COPYING.txt for details.
 
         <p>Named entites (NEs) may be marked up using <gi>name</gi> or the elements encoding
           different subcategories of names as described in <ptr target="#ND"/>. In the following
-          chat example, nicknames are linked to a <gi>person</gi> entry as shown in Section <ref
-            target="#CMCParticipants"/> via the <att>corresp</att> attribute. <egXML
-            xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
+          chat example (adapted from <ptr target="#BIB_DCK"/>), nicknames are linked to a
+            <gi>person</gi> entry as shown in Section <ref target="#CMCParticipants"/> via the
+            <att>corresp</att> attribute. <egXML xmlns="http://www.tei-c.org/ns/Examples"
+            xml:lang="de" source="#BIB_DCK">
             <!-- Dortmunder Chatkorpus, chat 2213001 -->
             <post modality="written" generatedBy="system" rend="color:black" synch="#f2213001.t007"
               type="standard" who="#f2213001.A04" xml:id="f2213001.m27.eg35">
@@ -1192,7 +1203,7 @@ See the file COPYING.txt for details.
         <p>In the the following version of the same chat snippet, the text strings with the
           nicknames have been replaced by category label strings for the purpose of anonymization.
           The category string and the <gi>name</gi> encoding offer some information about what has
-          been removed. <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          been removed. <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#BIB_DCK">
             <post modality="written" generatedBy="system" rend="color:black" synch="#f2213001.t007"
               type="standard" who="#f2213001.A04" xml:id="f2213001.m27.eg36">
               <name corresp="#f2213001.A04" type="NICK">
@@ -1254,8 +1265,9 @@ See the file COPYING.txt for details.
           (<gi>kinesic</gi>) or other on-screen activities (<gi>incident</gi>). The following
         example shows how a spoken utterance, an avatar's bodily activity, and a written post occur
         on the same level within the text <gi>body</gi>, representing parts of a multimodal chat in
-        Second Life from the Archi21 corpus <ptr type="cit" target="#BIB_ChanierWigham2015"/>.
-          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        Second Life adapted from the Archi21 corpus <ptr type="cit" target="#BIB_ChanierWigham2015"
+        />. <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#BIB_ChanierWigham2015"
+          xml:lang="en">
           <text>
             <body>
               <u xml:id="cmr-archi21-slrefl-es-j3-1-a191" who="#tingrabu"
