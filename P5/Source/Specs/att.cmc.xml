@@ -5,7 +5,8 @@ Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details.
 -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" ident="att.cmc" type="atts" module="tei">
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="att.cmc" type="atts" module="tei">
+  <gloss xml:lang="en" versionDate="2023-11-24">computer mediated communication</gloss>
   <desc xml:lang="en" versionDate="2021-09-07">provides attributes
   categorizing how the element content was created in a CMC
   environment.</desc>
@@ -18,6 +19,13 @@ See the file COPYING.txt for details.
       <datatype minOccurs="1" maxOccurs="1">
         <dataRef key="teidata.enumerated"/>
       </datatype>
+      <constraintSpec scheme="schematron" ident="CMC_generatedBy_within_post">
+        <constraint>
+          <sch:rule context="@generatedBy">
+            <sch:assert test="ancestor::tei:post">The @generatedBy attribute is for use within a &lt;post> element.</sch:assert>
+          </sch:rule>
+        </constraint>
+      </constraintSpec>
       <valList type="closed">
         <valItem ident="human">
           <desc xml:lang="en" versionDate="2021-09-07">the content was
