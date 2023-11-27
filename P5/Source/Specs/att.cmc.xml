@@ -20,6 +20,11 @@ See the file COPYING.txt for details.
         <dataRef key="teidata.enumerated"/>
       </datatype>
       <constraintSpec scheme="schematron" ident="CMC_generatedBy_within_post">
+        <!-- WARNING: This constraint will NOT work using the skeleton
+             implementation (which we, TEI, currently use) due to a
+             bug in that system. Thus do not expect this constraint to
+             work until issue 1981 in TEIC TEI repo is fixed (e.g., by
+             PR 2509). —Syd, 2023-11-27 -->
         <constraint>
           <sch:rule context="@generatedBy">
             <sch:assert test="ancestor::tei:post">The @generatedBy attribute is for use within a &lt;post> element.</sch:assert>
