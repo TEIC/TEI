@@ -106,18 +106,18 @@ detest: checkrnv
 	@echo " "
 	@echo "--------- work on target $@ ---------"
 	@echo BUILD: Test file with deliberate mistakes
-	@echo "-- validate XML file (detest.xml) against RelaxNG schema (detest.rnc) using rnv:"
-	-rnv detest.rnc detest.xml > detest_xml_relaxng.log 2>&1
-	@echo "--- run ant to validate ODD file (./detest.odd) against p5odds.rng & p5odds.isosch:"
 #	Note that output below is called 'detest_odd_schematron' even though
 #	detest.xml is validated against both RelaxNG and Schematron, because
 #	if there is a RelaxNG error the build dies and there is no output at
 #	all. (So if there is any output, it is Schematron messages.)
+	@echo "--- run ant to validate ODD file (./detest.odd) against p5odds.rng & p5odds.isosch:"
 	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd validateodd > detest_odd_schematron.log 2>&1
-	@echo "--- run ant to compile ODD file inoto RelaxNG and Schematron (detest.odd → detest.rng & detest.isosch):"
-	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd compileodd rng isoschematron cleanup
-	@echo "--- convert RelaxNG to compact syntax with trang (detest.rng → detest.rnc):"
+	@echo "--- run ant to compile ODD file into RelaxNG and Schematron (detest.odd → detest.rng & detest.isosch):"
+	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd compileodd rng isoschematron 
+	@echo "--- convert RelaxNG to compact syntax with trang (./detest.rng → ./detest.rnc):"
 	${TRANG} detest.rng detest.rnc
+	@echo "-- validate XML file (./detest.xml) against RelaxNG schema (./detest.rnc) using rnv:"
+	-rnv detest.rnc detest.xml > detest_xml_relaxng.log 2>&1
 	@echo "--- validate XML file (./detest.xml) against Schematron (./detest.xsl) using Saxon:"
 	$(SAXON) -s:detest.xml -xsl:detest.xsl > detest.svrl
 	@echo --- Extract only the messages from the resulting SVRL

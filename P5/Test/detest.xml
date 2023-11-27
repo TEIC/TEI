@@ -35,17 +35,24 @@
         <bibl xml:id="decltest18" default="true" >of "true" (or "1").</bibl>
       </sourceDesc>
     </fileDesc>
-    <encodingDesc><!-- TODO duncdrum test for uniHan schematron constraints for Phase 4 #1805 <charDecl><glyph xml:id="r1"><unihanProp name="kRSUnicode" value="r1 r2 r3"/></glyph></charDecl>  -->
-      <!--  MDH 2013-04-12:
-	   The following tests a Schematron constraint to the effect that 
-	   @schemeVersion cannot be used unless @scheme is present and 
-	   has a value which corresponds to a style language.
+    <encodingDesc>
+      <!--
+          TODO duncdrum test for uniHan schematron constraints for
+          Phase 4 #1805 <charDecl><glyph xml:id="r1"><unihanProp
+          name="kRSUnicode" value="r1 r2 r3"/></glyph></charDecl> -->
+      <!--
+          MDH 2013-04-12:
+          The following tests a Schematron constraint to the effect that 
+          @schemeVersion cannot be used unless @scheme is present and 
+          has a value which corresponds to a style language.
       -->
-      <styleDefDecl schemeVersion="2.1"></styleDefDecl>
+      <styleDefDecl schemeVersion="2.1"/>
       
-      <!-- MDH 2013-02-01:
-           The following tests a Schematron constraint to the effect that if 
-           @method="parallel-segmentation" then @location must be "internal".    -->
+      <!--
+          MDH 2013-02-01:
+          The following tests a Schematron constraint to the effect that if 
+          @method="parallel-segmentation" then @location must be "internal".
+      -->
       <variantEncoding method="parallel-segmentation" location="external"/>
       <editorialDecl>
         <quotation/>
@@ -85,7 +92,9 @@
       <p>
         <delSpan/>
       </p>
-      <p>This tests the constraint that every &lt;lg&gt; element should have at least one of &lt;lg&gt;, &lt;lg&gt; or &lt;gap&gt; inside it.</p>
+      <p>This tests the constraint that every <gi>lg</gi> element
+      should have at least one of <gi>lg</gi>, <gi>lg</gi> or
+      <gi>gap</gi> inside it.</p>
       <p>Added by MDH.</p>
 
       <div>
@@ -93,25 +102,44 @@
       </div>
 
       <div>
-        <p>Added by MDH. This tests the Schematron constraint that any element with @calendar must have some textual content.</p>
-        <p><date when="2012-09-06" calendar="http://en.wikipedia.org/wiki/Gregorian_calendar"/></p>
-      </div>
-
-      <div>
         <head>Testing schematron constraints</head>
-        <p xml:lang="la">sicut erat in <bibl><author>freddy</author></bibl> principia <list><item><num value="0.234"/><num value="0.0234E23"/><num value="1/2"/>
-	cats</item></list>
-	</p>
 
-	<div type="testingSpan">
-	  <p><del>This has some content which is OK </del>
-	  <delSpan spanTo="#ds1"/>This one doesn't<anchor xml:id="ds1"/> but
-	  that's also OK.
-	  <delSpan/> That last one is illegal
-	  <delSpan spanTo="#ds2"/> as are that one
-	  <delSpan spanTo="notMeaningful"/> and that one</p>
-	</div>
+        <p xml:lang="la">
+          sicut erat in
+          <bibl><author>freddy</author></bibl> principia
+          <list>
+            <item>
+              <num value="0.234"/>
+              <num value="0.0234E23"/>
+              <num value="1/2"/> cats
+            </item>
+          </list>
+        </p>
 
+        <div type="testingSpan">
+          <p><del>This has some content which is OK </del>
+          <delSpan spanTo="#ds1"/>This one doesn't<anchor xml:id="ds1"/> but
+          that's also OK.
+          <delSpan/> That last one is illegal
+          <delSpan spanTo="#ds2"/> as are that one
+          <delSpan spanTo="notMeaningful"/> and that one</p>
+        </div>
+
+        <div>
+          <p>Added by MDH. This tests the Schematron constraint that any
+          element with <att>calendar</att> must have some textual
+          content.</p>
+          <p><date when="2012-09-06" calendar="http://en.wikipedia.org/wiki/Gregorian_calendar"/></p>
+        </div>
+
+        <div type="testingSpan">
+          <p><del>This has some content which is OK </del>
+          <delSpan spanTo="#ds1"/>This one doesn't<anchor xml:id="ds1"/> but that's also OK.
+          <delSpan/> That one (just to my left) is illegal
+          <delSpan spanTo="#ds2"/> as is that one
+          <delSpan spanTo="notMeaningful"/> and that one</p>
+        </div>
+        
         <div type="canon">
           <head>Canon 1</head>
           <p>hello</p>
@@ -153,12 +181,20 @@
         </div>
       </div>
       <div type="test">
-        <p>Testing multiple occurences of a datatype in a single attribute
-	value. The following should be valid:
-	<distinct type="valid" o01="0" o02="0" o0i="0" o11="0" o12="1" o1i="1" o22="1 2" o2i="1 2">minimum</distinct>
-	<distinct type="valid" o01="1" o02="1" o0i="1" o11="1" o12="1 2" o1i="1 2" o22="1 2" o2i="1 2 3">min +1 unless ≤, in which case max</distinct> 
-	<distinct type="valid" o01="1" o02="1 2" o0i="1 2 3 4 5 6 7 8 9 0" o11="1" o12="1 2" o1i="1 2 3 4 5 6 7 8 9 0" o22="1 2" o2i="1 2 3 4 5 6 7 8 9 0">max</distinct>
-	</p>
+
+        <p>
+          Testing multiple occurences of a datatype in a single
+          attribute value. The following should be valid:
+          <distinct type="valid" o01="0"   o02="0"   o0i="0"
+                                 o11="0"   o12="1"   o1i="1"
+                                           o22="1 2" o2i="1 2">minimum</distinct>
+          <distinct type="valid" o01="1" o02="1"   o0i="1"
+                                 o11="1" o12="1 2" o1i="1 2"
+                                         o22="1 2" o2i="1 2 3">min +1 unless ≤, in which case max</distinct> 
+          <distinct type="valid" o01="1" o02="1 2" o0i="1 2 3 4 5 6 7 8 9 0"
+                                 o11="1" o12="1 2" o1i="1 2 3 4 5 6 7 8 9 0"
+                                         o22="1 2" o2i="1 2 3 4 5 6 7 8 9 0">max</distinct>
+        </p>
       </div>
 
       <div>
@@ -207,11 +243,15 @@
       <div>
         <head>Some transcribed text with subst errors</head>
         <p>... are all included. <del hand="#RG">It is</del>
-	<subst><add>T</add></subst>the expressed</p>
-        <p> that he and his Sister Miſs D — <lb/>who always lived with him, wd. be very <subst><lb/><add>principally</add></subst> remembered in her Will.</p>
+          <subst><add>T</add></subst>the expressed</p>
+        <p> that he and his Sister Miſs D —
+        <lb/>who always lived with him, wd. be very
+        <subst><lb/><add>principally</add></subst> remembered in her Will.</p>
         <p><subst>ἐπιτρέψῃ [ἐπετρέψῃ]</subst> τῷ ὑποδέκτῃ μὴ ὀχλῆσαι</p>
-        <p>τ<subst><add place="above">ῶν</add></subst>α συνκυρόντων<subst><del>α</del></subst> ἐργαστηρί<hi rend="above">ων</hi><subst><del>α</del></subst></p>
-        <p>While <del xml:id="r112">pondering</del> thus <add xml:id="r113">she mus'd</add>, her pinions fann'd<substJoin target="#r112 #r113"/></p>
+        <p>τ<subst><add place="above">ῶν</add></subst>α συνκυρόντων<subst><del>α</del></subst>
+        ἐργαστηρί<hi rend="above">ων</hi><subst><del>α</del></subst></p>
+        <p>While <del xml:id="r112">pondering</del> thus <add xml:id="r113">she mus'd</add>,
+        her pinions fann'd<substJoin target="#r112 #r113"/></p>
       </div>
 
       <div>
@@ -246,6 +286,47 @@
         <div>test neither</div>
       </div>
 
+      <div xml:id="msDesc_unitary_parts">
+        <head>test msDesc elements that should not be repeated</head>
+        <p>Some manuscript description elements are supposed to occur
+        a max of only once, even though RelaxNG allows infinite.</p>
+        <p>Added 2023-10-11 19:21 by Syd.</p>
+        <msDesc>
+          <msIdentifier>
+            <repository>MEL</repository> <!-- Middle Earth Library -->
+            <collection>BB</collection>  <!-- Bilbo Baggins -->
+            <idno>mel:bb:ve:08</idno>    <!-- I just made the "08" up -->
+            <msName>riddle of Strider</msName>
+          </msIdentifier>
+          <msContents n="1"><ab>occurs only once, thus valid</ab></msContents>
+          <physDesc n="1"><ab>occurs twice, thus invalid</ab></physDesc>
+          <physDesc n="2"><ab>occurs twice, thus invalid</ab></physDesc>
+          <history n="1"><ab>three occurrences, thus invalid</ab></history>
+          <history n="2"><ab>three occurrences, thus invalid</ab></history>
+          <history n="3"><ab>three occurrences, thus invalid</ab></history>
+          <additional n="1"><surrogates>four occurrences, thus invalid</surrogates></additional>
+          <additional n="2"><surrogates>four occurrences, thus invalid</surrogates></additional>
+          <additional n="3"><surrogates>four occurrences, thus invalid</surrogates></additional>
+          <additional n="4"><surrogates>four occurrences, thus invalid</surrogates></additional>
+        </msDesc>
+        <p>The above <gi>msDesc</gi> should generate 3 errors, one
+        each for <gi>physDesc</gi>, <gi>history</gi>, and
+        <gi>additional</gi>.</p>
+        <lg>
+          <lg>
+            <l>All that is gold does not glitter,</l>
+            <l>Not all those who wander are lost;</l>
+            <l>The old that is strong does not wither,</l>
+            <l>Deep roots are not reached by the frost.</l>
+          </lg>
+          <lg>
+            <l>From the ashes a fire shall be woken,</l>
+            <l>A light from the shadows shall spring;</l>
+            <l>Renewed shall be blade that was broken,</l>
+            <l>The crownless again shall be king.</l>
+          </lg>
+        </lg>
+      </div>
       <div>
         <head>Shift should have a new attribute</head>
         <u who="who"><shift new="something"/>some thing<shift/>some more</u>
@@ -360,9 +441,7 @@
         <name type="file">detest.odd</name> because they would break
         the build there</desc>
         <elementSpec ident="silly_and_not_used" mode="add">
-          <desc>See <code>//elementSpec[@ident eq
-          'abbr']/listRef</code> in <name
-          type="file">detest.odd</name></desc>
+          <desc>See <code>//elementSpec[@ident eq 'abbr']/listRef</code> in <name type="file">detest.odd</name></desc>
           <listRef>
             <ref type="invalid" n="1">no target (2B caught by Schematron)</ref>
             <ref type="valid" n="2" target="https://www.example.edu/tst">good target absolute URI</ref>
