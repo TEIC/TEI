@@ -552,8 +552,8 @@ See the file COPYING.txt for details.
           a timestamp is automatically added when the user inserts his or her signature. Timestamps
           in the text body can be encoded using the elements <gi>date</gi> or <gi>time</gi>. The
             <att>when</att> attribute may be used to record a normalized version of the date, time,
-          or date and time if this information is available or reconstructible. <!-- ex. from Dortmund chat corpus, example for cmc-core -->
-          <egXML xmlns="http://www.tei-c.org/ns/Examples" source="'BIB_DCK" xml:lang="de">
+          or date and time if this information is available or reconstructible. <egXML
+            xmlns="http://www.tei-c.org/ns/Examples" source="'BIB_DCK" xml:lang="de">
             <post modality="written" rend="color:black" who="#f2213001.A06" xml:id="cmc_post06">
               <time generatedBy="system">21:52</time> das ist auf jedenfall krankheit</post>
           </egXML>
@@ -1017,7 +1017,6 @@ See the file COPYING.txt for details.
           bewerben <w pos="EMO">&#x1F92A;</w>
           <ref type="hashtag" target="https://twitter.com/hashtag/bcrn18?src=hash">#bcrn18</ref>
           <trailer>
-            <!-- CoMeRe Style encoding of the counts of favouriting and likes: -->
             <fs>
               <f name="favoritecount">
                 <numeric value="4"/>
@@ -1042,14 +1041,14 @@ See the file COPYING.txt for details.
         attribute <att>ref</att>. All original content of the retweet goes in the content of the
           <gi>post</gi> element. In the following example the retweeted tweet happens to be a
         retweet itself.</p>
-      <p>Fourth, hashtags occur on the in the body of tweets and are links like any other hyperlink
+      <p>Fourth, hashtags occur in the body of tweets and are links like any other hyperlink
         and should be encoded using the element <gi>ref</gi>. The <att>type</att> attribute of the
         ref should contain the value <val>hashtag</val>, the <att>target</att> attribute should
         contain the URL of the hashtag, and the content of <gi>ref</gi>should be the string of the
         hashtag itself.</p>
 
       <p>Note that in the above example <soCalled>CoMeRe</soCalled> style (cf. <ptr
-          target="#BIB_CoMeRe"/>) encoding is used to represent the number of favorites. It would
+        target="#BIB_CoMeRe"/>) encoding is used to represent the number of favorites. It would
         also be reasonable to use a TEI <gi>measure</gi> element instead of the <gi>fs</gi>.</p>
     </div>
 
@@ -1234,7 +1233,7 @@ See the file COPYING.txt for details.
               </w>
             </name>
             <w lemma="versuchen" pos="VVPP">versucht</w>
-            <!-- remainder of the post -->
+            <!-- the rest of the post -->
           </post>
         </egXML>
       </p>
@@ -1246,19 +1245,20 @@ See the file COPYING.txt for details.
 
       <head>Multimodal CMC</head>
 
-      <p>As explained in Section <ptr target="#CMCUnits"/> the elements <gi>post</gi>, <gi>u</gi>,
+      <p>As explained in Section <ptr target="#CMCUnits"/>, the elements <gi>post</gi>, <gi>u</gi>,
           <gi>kinesic</gi>, and <gi>incident</gi> are available to to encode textual transcriptions
-        of written posts, spoken turns, bodily activity of avatars, and onscreen activity by users
+        of written posts, spoken turns, bodily activities of avatars, and onscreen activity by users
         that occur in CMC data, and in Section <ptr/> we gave recommendations on how to encode
         graphics or other media data within posts with <att>modality</att> set to
         <val>written</val>. When two or more of these features occur in a CMC interaction, we can
         speak of <hi rend="italic">multimodal</hi> CMC.</p>
 
       <p>Some basic multimodality is available in private chat such as WhatsApp, where spoken and
-        written posts and media posts containing images or video clips, can alternate. The following
-        shows the suggested encoding of a extended part of the <hi rend="italic">haircut</hi> chat
-        example from above, including a spoken post, several written posts, and a post with a
-        graphic image (adapted from the MoCoDa2 corpus <ptr target="#BIB_MoCoDa2"/>) </p>
+        written posts and media posts containing images or video clips, can alternate in the
+        sequence of posts. The following shows the suggested encoding of a extended part of the <hi
+          rend="italic">haircut</hi> chat example from above, including a spoken post, several
+        written posts, and a post containing a graphic image (adapted from the MoCoDa2 corpus <ptr
+          target="#BIB_MoCoDa2"/>) </p>
 
       <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#BIB_MoCoDa2" xml:lang="de">
         <post modality="spoken" generatedBy="human" synch="#cmc-haircut_t004" who="#cmc-haircut_A05"
@@ -1321,8 +1321,7 @@ See the file COPYING.txt for details.
       <p>Note that the spoken utterance <gi>u</gi> represents a speaker turn that was transmitted
         via an audio channel of the application that is continuously open during a session, whereas
         a spoken <gi>post</gi> represents a spoken message that has been recorded in private and
-        been posted to the CMC server as a whole afterwards, see Section <ptr target="#CMCUnits"
-        /></p>
+        been posted to the CMC server as a whole, see Section <ptr target="#CMCUnits"/></p>
 
     </div>
   </div>
