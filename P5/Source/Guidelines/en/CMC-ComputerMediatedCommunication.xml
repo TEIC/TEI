@@ -1161,78 +1161,98 @@ See the file COPYING.txt for details.
       </p>
     </div>
 
-      <div xml:id="CMCnames">
-        <head>Named entities</head>
+    <div xml:id="CMCnames">
+      <head>Named entities</head>
 
-        <p>Named entites (NEs) may be marked up using <gi>name</gi> or the elements encoding
-          different subcategories of names as described in <ptr target="#ND"/>. In the following
-          chat example (adapted from <ptr target="#BIB_DCK"/>), nicknames are linked to a
-            <gi>person</gi> entry as shown in Section <ref target="#CMCParticipants"/> via the
-            <att>ref</att> attribute.
-	    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de" source="#BIB_DCK">
-              <!-- Dortmunder Chatkorpus, chat 2213001 -->
-              <post modality="written" generatedBy="system" rend="color:black" synch="#f2213001.t007"
-		    type="standard" who="#f2213001.A04" xml:id="f2213001.m27.eg35">
-		<name ref="#f2213001.A04" type="NICK">
-                  <w lemma="Konstanze" pos="NE" xml:id="f2213001.m27.t1">Konstanze</w>
-		</name>
-		<w lemma="versuchen" pos="VVPP">versucht</w>
-		<name ref="#f2213001.A03" type="NICK">
-                  <w lemma="Nasenloch" pos="NN">nasenloch</w>
-		</name>
-		<w lemma="die" pos="ART">den</w>
-		<w lemma="Wunsch" pos="NN">wunsch</w>
-		<w lemma="zu" pos="PTKZU">zu</w>
-		<w lemma="erfüllen" pos="VVINF">erfüllen</w>
-		<!-- ... -->
-              </post>
-          </egXML>
-        </p>
+      <p>Named entites (NEs) may be marked up using <gi>name</gi> or the elements encoding different
+        subcategories of names as described in <ptr target="#ND"/> such as <gi>surname</gi> or
+          <gi>geoName</gi>, or <gi>rs</gi> for a general referencing string. In the following chat
+        example (adapted from <ptr target="#BIB_DCK"/>), nicknames are linked to a <gi>person</gi>
+        entry as shown in Section <ref target="#CMCParticipants"/> via the <att>ref</att> attribute.
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de" source="#BIB_DCK">
+          <post modality="written" generatedBy="system" rend="color:black" synch="#f2213001.t007"
+            type="standard" who="#f2213001.A04" xml:id="f2213001.m27.eg35">
+            <name ref="#f2213001.A04" type="NICK">
+              <w lemma="Konstanze" pos="NE" xml:id="f2213001.m27.t1">Konstanze</w>
+            </name>
+            <w lemma="versuchen" pos="VVPP">versucht</w>
+            <name ref="#f2213001.A03" type="NICK">
+              <w lemma="Nasenloch" pos="NN">nasenloch</w>
+            </name>
+            <w lemma="die" pos="ART">den</w>
+            <w lemma="Wunsch" pos="NN">wunsch</w>
+            <w lemma="zu" pos="PTKZU">zu</w>
+            <w lemma="erfüllen" pos="VVINF">erfüllen</w>
+            <!-- ... -->
+          </post>
+        </egXML>
+      </p>
 
-        <p>In the the following version of the same chat snippet, the text strings with the
-          nicknames have been replaced by category label strings for the purpose of anonymization.
-          The category string and the <gi>name</gi> encoding offer some information about what has
-          been removed.
-	  <!-- %%%%%%%%% still working on how to anonymize as of 2023-12-08 %%%%%%%%% -->
-	  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#BIB_DCK">
-            <post modality="written" generatedBy="system" rend="color:black" synch="#f2213001.t007"
-		  type="standard" who="#f2213001.A04" xml:id="f2213001.m27.eg36">
-              <name ref="#f2213001.A04" type="NICK">
-                <w pos="NE">
-		  <gap reason="anonymised" unit="word" quantity="1"/>
-		</w>
-		<w pos="NE">
-		  <gap reason="anonymised" unit="word" quantity="1"/>
-		</w>
-              </name>
-              <w lemma="versuchen" pos="VVPP">versucht</w>
-              <rs ref="#f2213001.A03" type="anonymised">
-                <w pos="NN">[_PARTICIPANT-A03_]</w>
-              </rs>
-              <w lemma="die" pos="ART">den</w>
-              <w lemma="Wunsch" pos="NN">wunsch</w>
-              <w lemma="zu" pos="PTKZU">zu</w>
-              <w lemma="erfüllen" pos="VVINF">erfüllen</w>
-              <!-- ... -->
-            </post>
-          </egXML>
-        </p>
-      </div>
+      <p>In the the following version of the same chat snippet, the text strings with the nicknames
+        have been replaced by category label strings for the purpose of anonymisation. <egXML
+          xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de" source="#BIB_DCK">
+          <post modality="written" generatedBy="system" rend="color:black" synch="#f2213001.t007"
+            type="standard" who="#f2213001.A04" xml:id="f2213001.m27.eg35">
+            <name ref="#f2213001.A04" type="NICK">
+              <w pos="NE" xml:id="f2213001.m27.t1">
+                <gap reason="anonymisation" unit="token" quantity="1"/>
+                <supplied reason="anonymisation">[_FEMALE-PARTICIPANT-A04_]</supplied></w>
+            </name>
+            <w lemma="versuchen" pos="VVPP">versucht</w>
+            <name ref="#f2213001.A03" type="NICK">
+              <w pos="NN">
+                <gap reason="anonymisation" unit="token" quantity="1"/>
+                <supplied reason="anonymisation">[_PARTICIPANT-A04_]</supplied></w>
+            </name>
+            <w lemma="die" pos="ART">den</w>
+            <w lemma="Wunsch" pos="NN">wunsch</w>
+            <w lemma="zu" pos="PTKZU">zu</w>
+            <w lemma="erfüllen" pos="VVINF">erfüllen</w>
+            <!-- ... -->
+          </post>
+        </egXML>
+      </p>
+      <p>In the preceding example, pairs of a <gi>gap</gi> and a <gi>supplied</gi> element encode
+        the fact that some substring has been removed and replaced with another string for
+        anonymisation purposes. Note that in the example, the <gi>name</gi> and the <gi>w</gi>
+        elements and their attributes also provide some categorial information about what has been
+        removed. Using <gi>gap</gi> and <gi>supplied</gi> to record the anonymisation is especially
+        recommendable when the original name or referencing string has been
+          <soCalled>pseudonymised</soCalled> i.e. replaced by different referencing string of the
+        same ontological category (such as replacing the female name <hi rend="italic"
+          >Konstanze</hi> by the female name <hi rend="italic">Kornelia.</hi>) In that case, the
+        markup would be the only place where it can be seen that a pseudonymisation has been carried
+        out as in the following version of the example.</p>
+      <p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de" source="#BIB_DCK">
+          <post modality="written" generatedBy="system" rend="color:black" synch="#f2213001.t007"
+            type="standard" who="#f2213001.A04" xml:id="f2213001.m27.eg35">
+            <name ref="#f2213001.A04" type="NICK">
+              <w pos="NE" xml:id="f2213001.m27.t1">
+                <gap reason="pseudonymisation" unit="token" quantity="1"/>
+                <supplied reason="pseudonymisation">Kornelia</supplied>
+              </w>
+            </name>
+            <w lemma="versuchen" pos="VVPP">versucht</w>
+            <!-- remainder of the post -->
+          </post>
+        </egXML>
+      </p>
+    </div>
+
+
 
     <div xml:id="CMCmultimodal">
 
       <head>Multimodal CMC</head>
 
-      <p>As explained in Section <ptr target="#CMCUnits"/> the
-      elements <gi>post</gi>, <gi>u</gi>, <gi>kinesic</gi>, and
-      <gi>incident</gi> are available to to encode textual
-      transcriptions of written posts, spoken turns, bodily activity
-      of avatars, and onscreen activity by users that occur in CMC
-      data, and in Section <ptr/> we gave recommendations on how to
-      encode graphics or other media data within posts with
-      <att>modality</att> set to <val>written</val>. When two or more
-      of these features occur in a CMC interaction, we can speak of
-      <hi rend="italic">multimodal</hi> CMC.</p>
+      <p>As explained in Section <ptr target="#CMCUnits"/> the elements <gi>post</gi>, <gi>u</gi>,
+          <gi>kinesic</gi>, and <gi>incident</gi> are available to to encode textual transcriptions
+        of written posts, spoken turns, bodily activity of avatars, and onscreen activity by users
+        that occur in CMC data, and in Section <ptr/> we gave recommendations on how to encode
+        graphics or other media data within posts with <att>modality</att> set to
+        <val>written</val>. When two or more of these features occur in a CMC interaction, we can
+        speak of <hi rend="italic">multimodal</hi> CMC.</p>
 
       <p>Some basic multimodality is available in private chat such as WhatsApp, where spoken and
         written posts and media posts containing images or video clips, can alternate. The following
