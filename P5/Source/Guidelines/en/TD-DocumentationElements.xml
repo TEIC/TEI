@@ -872,11 +872,11 @@ to mark any technical term, thus:
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <constraintSpec ident="subclauses" scheme="schematron">
             <constraint>
-              <ns prefix="tei" uri="http://www.tei-c.org/ns/1.0" xmlns="http://purl.oclc.org/dsdl/schematron"/>
-              <rule context="tei:div" xmlns="http://purl.oclc.org/dsdl/schematron">
-                <report test="count( tei:div ) eq 1">if it contains any subdivisions, a
-                division must contain at least two of them</report>
-              </rule>
+              <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
+              <sch:rule context="tei:div" xmlns="http://purl.oclc.org/dsdl/schematron">
+                <sch:report test="count( tei:div ) eq 1">if it contains any subdivisions, a
+                division must contain at least two of them</sch:report>
+              </sch:rule>
             </constraint>
           </constraintSpec>
         </egXML>
@@ -906,13 +906,13 @@ to mark any technical term, thus:
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <constraintSpec ident="alt" scheme="schematron">
             <constraint>
-              <ns prefix="tei" uri="http://www.tei-c.org/ns/1.0" xmlns="http://purl.oclc.org/dsdl/schematron"/>
-              <pattern id="altTags" xmlns="http://purl.oclc.org/dsdl/schematron">
-                <rule context="tei:figure">
-                  <report test="not(tei:figDesc or tei:head)"> You should provide information in a figure from
-                    which we can construct an alt attribute in HTML </report>
-                </rule>
-              </pattern>
+              <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
+              <sch:pattern id="altTags" xmlns="http://purl.oclc.org/dsdl/schematron">
+                <sch:rule context="tei:figure">
+                  <sch:report test="not(tei:figDesc or tei:head)"> You should provide information in a figure from
+                    which we can construct an alt attribute in HTML </sch:report>
+                </sch:rule>
+              </sch:pattern>
             </constraint>
           </constraintSpec>
         </egXML>
@@ -921,14 +921,14 @@ to mark any technical term, thus:
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <constraintSpec ident="tables" scheme="schematron">
             <constraint>
-              <ns prefix="tei" uri="http://www.tei-c.org/ns/1.0" xmlns="http://purl.oclc.org/dsdl/schematron"/>
-              <pattern id="Tables" xmlns="http://purl.oclc.org/dsdl/schematron">
-                <rule context="tei:table">
-                  <assert test="tei:head">A &lt;table> should have a caption, using a &lt;head>
-                    element</assert>
-                  <report test="parent::tei:body">Do not use tables to lay out the document body</report>
-                </rule>
-              </pattern>
+              <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
+              <sch:pattern id="Tables">
+                <sch:rule context="tei:table">
+                  <sch:assert test="tei:head">A &lt;table> should have a caption, using a &lt;head>
+                    element</sch:assert>
+                  <sch:report test="parent::tei:body">Do not use tables to lay out the document body</sch:report>
+                </sch:rule>
+              </sch:pattern>
             </constraint>
           </constraintSpec>
         </egXML>
