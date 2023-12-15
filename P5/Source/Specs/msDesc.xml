@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licences; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="MSDESC" ident="msDesc" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="msdescription" xml:id="MSDESC" ident="msDesc">
   <gloss versionDate="2007-07-04" xml:lang="en">manuscript description</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">원고 기술</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -70,9 +64,7 @@ $Id$
              $gi][2]" because then an error would be generated for
              each of the multiple occurences of $gi. -->
         <sch:let name="gi" value="name(.)"/>
-        <sch:report test="preceding-sibling::*[ name(.) eq $gi ]
-                          and
-                          not( following-sibling::*[ name(.) eq $gi ] )">
+        <sch:report test="preceding-sibling::*[ name(.) eq $gi ]                           and                           not( following-sibling::*[ name(.) eq $gi ] )">
           Only one <sch:name/> is allowed as a child of <sch:value-of select="name(..)"/>.
         </sch:report>
       </sch:rule>

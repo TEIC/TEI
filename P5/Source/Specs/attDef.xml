@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licences; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" ident="attDef">
   <gloss versionDate="2005-01-14" xml:lang="en">attribute definition</gloss>
@@ -27,20 +21,20 @@ $Id$
     <memberOf key="att.namespaceable"/>
   </classes>
   <content>
-    <sequence>      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.identSynonyms"/>
-          <classRef key="model.descLike"/>
-        </alternate>
-        <elementRef key="datatype" minOccurs="0"/>
-        <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
-        <elementRef key="defaultVal" minOccurs="0"/>
-        <alternate minOccurs="0">
-          <elementRef key="valList"/>     
-          <elementRef key="valDesc" minOccurs="1" maxOccurs="unbounded"/>
-        </alternate>
-        <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
-        <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
+    <sequence>
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.identSynonyms"/>
+        <classRef key="model.descLike"/>
+      </alternate>
+      <elementRef key="datatype" minOccurs="0"/>
+      <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
+      <elementRef key="defaultVal" minOccurs="0"/>
+      <alternate minOccurs="0">
+        <elementRef key="valList"/>
+        <elementRef key="valDesc" minOccurs="1" maxOccurs="unbounded"/>
+      </alternate>
+      <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
+      <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
   <constraintSpec ident="attDefContents" scheme="schematron">
@@ -54,7 +48,7 @@ $Id$
   <constraintSpec ident="noDefault4Required" scheme="schematron">
     <constraint>
       <sch:rule context="tei:attDef[@usage eq 'req']">
-	<sch:report test="tei:defaultVal">Since the @<sch:value-of select="@ident"/> attribute is required, it will always be specified. Thus the default value (of "<sch:value-of select="normalize-space(tei:defaultVal)"/>") will never be used. Either change the definition of the attribute so it is not required ("rec" or "opt"), or remove the defaultVal element.</sch:report>
+        <sch:report test="tei:defaultVal">Since the @<sch:value-of select="@ident"/> attribute is required, it will always be specified. Thus the default value (of "<sch:value-of select="normalize-space(tei:defaultVal)"/>") will never be used. Either change the definition of the attribute so it is not required ("rec" or "opt"), or remove the defaultVal element.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -96,7 +90,9 @@ $Id$
       elemento</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il carattere facoltativo di un attributo o
       elemento</desc>
-      <datatype><dataRef key="teidata.enumerated"/></datatype>
+      <datatype>
+        <dataRef key="teidata.enumerated"/>
+      </datatype>
       <defaultVal>opt</defaultVal>
       <valList type="closed">
         <valItem ident="req">

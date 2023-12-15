@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licences; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" ident="constraintSpec">
   <gloss versionDate="2009-06-10" xml:lang="en">constraint on schema</gloss>
@@ -92,11 +86,13 @@ $Id$
       -->
       <desc versionDate="2009-06-10" xml:lang="en">supplies the name of the language in which the constraints
       are defined</desc>
-      <datatype><dataRef key="teidata.enumerated"/></datatype>
+      <datatype>
+        <dataRef key="teidata.enumerated"/>
+      </datatype>
       <constraintSpec scheme="schematron" ident="usage_based_on_mode">
         <constraint>
           <sch:rule context="tei:constraintSpec[ @mode = ('add','replace')  or  not( @mode ) ]">
-            <sch:assert test="@scheme">The @scheme attribute of &lt;constraintSpec> is required when the @mode is <sch:value-of select="if (@mode) then concat('&quot;',@mode,'&quot;') else 'not specified'"/>.</sch:assert>
+            <sch:assert test="@scheme">The @scheme attribute of &lt;constraintSpec&gt; is required when the @mode is <sch:value-of select="if (@mode) then concat('&quot;',@mode,'&quot;') else 'not specified'"/>.</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
@@ -125,7 +121,9 @@ $Id$
       <gi>constraintSpec</gi> element in some sense; used to indicate
       when a <gi>constraintSpec</gi> warns about a deprecated
       construct.</desc>
-      <datatype><dataRef key="teidata.enumerated"/></datatype>
+      <datatype>
+        <dataRef key="teidata.enumerated"/>
+      </datatype>
       <valList type="semi" mode="add">
         <valItem ident="deprecationWarning">
           <desc xml:lang="en" versionDate="2018-09-17">Indicates that

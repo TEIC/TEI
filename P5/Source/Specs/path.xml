@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licences; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="path" module="transcr">
   <gloss xml:lang="en" versionDate="2018-07-13">path</gloss>
@@ -23,10 +17,9 @@ element.</desc>
   <content>
     <empty/>
   </content>
-  
   <constraintSpec ident="pathmustnotbeclosed" scheme="schematron">
     <desc versionDate="2023-04-11" xml:lang="en">
-      Since a <gi>path</gi>> represents a line with distinct start and
+      Since a <gi>path</gi>&gt; represents a line with distinct start and
       end points, the last coordinate should not be the same as the
       first coordinate.
     </desc>
@@ -44,7 +37,6 @@ element.</desc>
       </sch:rule>
     </constraint>
   </constraintSpec>
-  
   <attList>
     <attDef ident="points" mode="change">
       <desc versionDate="2018-03-28" xml:lang="en">identifies a line 
@@ -54,11 +46,11 @@ element.</desc>
         gives the x,y coordinates
         of a point on the line.</desc>
       <desc versionDate="2018-07-13" xml:lang="de">beschreibt eine Linie innerhalb eines Begrenzungsrahmens, der durch das Elternelement definiert ist, über eine Reihe von zwei oder mehr Zahlenpaaren, die jeweils die X- und Y-Koordinaten eines Punktes dieser Linie angeben.</desc>
-      <datatype minOccurs="2" maxOccurs="unbounded"><dataRef key="teidata.point"/></datatype>
+      <datatype minOccurs="2" maxOccurs="unbounded">
+        <dataRef key="teidata.point"/>
+      </datatype>
     </attDef>
   </attList>
-  
-  
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <surface ulx="0" uly="0" lrx="443" lry="272">
@@ -68,16 +60,14 @@ element.</desc>
       </surface>
     </egXML>
   </exemplum>
-  
   <remarks versionDate="2018-10-07" xml:lang="en">
     <p>Although the simplest form of a path is a straight line between
     two points, a line with more than two points may bend at any point. The order
     of coordinates in <att>points</att> is significant, because the line follows
     the coordinate sequence.</p>
-      <p>To specify a closed polygon, use
+    <p>To specify a closed polygon, use
         the <gi>zone</gi> element rather than the <gi>path</gi> element. </p>
-    </remarks>
-
+  </remarks>
   <listRef>
     <ptr target="#PHFAX"/>
     <ptr target="#PHZLAB"/>

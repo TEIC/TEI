@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licences; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:teix="http://www.tei-c.org/ns/Examples" module="tagdocs" ident="content">
   <gloss versionDate="2007-07-04" xml:lang="en">content model</gloss>
@@ -39,32 +33,29 @@ $Id$
     future the content of <gi>content</gi> will be restricted to 1 and
     only 1 child element.</desc>
     <constraint>
-    <sch:rule context="tei:content[ *[2] ]">
-      <sch:let name="tot_kids" value="count( * )"/>
-      <sch:let name="tei_kids" value="count( tei:* )"/>
-      <sch:let name="rng_kids" value="count( rng:* | rna:* )"/>
-      <sch:let name="msg_part01" value="'In the near future the &lt;content> element will be limited to 1 and only 1 child element. '"/>
-      <sch:let name="msg_part02" value="'This &lt;content> element is in '"/>
-      <sch:let name="msg_part03" value="if ( local-name(..) eq 'elementSpec' ) then 'an ' else 'a '"/>
-      <sch:let name="msg_part04" value="concat( local-name(..), ' with ' )"/>
-      <sch:let name="msg_part05" value="if ( parent::tei:moduleRef/@key ) then 'a @key'    else ''"/>
-      <sch:let name="msg_part06" value="if ( parent::tei:moduleRef/@url ) then 'a @url'    else ''"/>
-      <sch:let name="msg_part07" value="if ( parent::tei:*/@ident )       then 'an @ident' else ''"/>
-      <sch:let name="msg_part08" value="' of &quot;'"/>
-      <sch:let name="msg_part09" value="../@ident | ../@key | ../@url"/>
-      <sch:let name="msg_part10" value="concat('&quot; and has ', $tot_kids, ' children,')"/>
-      <sch:let name="msgs_1to10" value="concat( $msg_part01, $msg_part02, $msg_part03, $msg_part04, $msg_part05, $msg_part06, $msg_part07, $msg_part08, $msg_part09, $msg_part10 )"></sch:let>
-      <sch:report test="$tei_kids eq $tot_kids" role="warning">
-        <sch:value-of select="$msgs_1to10"/> which could be wrapped in a &lt;sequence> element.
+      <sch:rule context="tei:content[ *[2] ]">
+        <sch:let name="tot_kids" value="count( * )"/>
+        <sch:let name="tei_kids" value="count( tei:* )"/>
+        <sch:let name="rng_kids" value="count( rng:* | rna:* )"/>
+        <sch:let name="msg_part01" value="'In the near future the &lt;content&gt; element will be limited to 1 and only 1 child element. '"/>
+        <sch:let name="msg_part02" value="'This &lt;content&gt; element is in '"/>
+        <sch:let name="msg_part03" value="if ( local-name(..) eq 'elementSpec' ) then 'an ' else 'a '"/>
+        <sch:let name="msg_part04" value="concat( local-name(..), ' with ' )"/>
+        <sch:let name="msg_part05" value="if ( parent::tei:moduleRef/@key ) then 'a @key'    else ''"/>
+        <sch:let name="msg_part06" value="if ( parent::tei:moduleRef/@url ) then 'a @url'    else ''"/>
+        <sch:let name="msg_part07" value="if ( parent::tei:*/@ident )       then 'an @ident' else ''"/>
+        <sch:let name="msg_part08" value="' of &quot;'"/>
+        <sch:let name="msg_part09" value="../@ident | ../@key | ../@url"/>
+        <sch:let name="msg_part10" value="concat('&quot; and has ', $tot_kids, ' children,')"/>
+        <sch:let name="msgs_1to10" value="concat( $msg_part01, $msg_part02, $msg_part03, $msg_part04, $msg_part05, $msg_part06, $msg_part07, $msg_part08, $msg_part09, $msg_part10 )"/>
+        <sch:report test="$tei_kids eq $tot_kids" role="warning"><sch:value-of select="$msgs_1to10"/> which could be wrapped in a &lt;sequence&gt; element.
       </sch:report>
-      <sch:report test="$rng_kids eq $tot_kids" role="warning">
-        <sch:value-of select="$msgs_1to10"/> which could be wrapped in an &lt;rng:div> element.
+        <sch:report test="$rng_kids eq $tot_kids" role="warning"><sch:value-of select="$msgs_1to10"/> which could be wrapped in an &lt;rng:div&gt; element.
       </sch:report>
-      <sch:assert test="$tei_kids eq $tot_kids  or  $rng_kids eq $tot_kids"   role="warning">
-        <sch:value-of select="$msgs_1to10"/> but those children are neither all TEI elements nor
-        all RELAX NG elements, and thus this &lt;content> is invalid and can not be easily rectified.
+        <sch:assert test="$tei_kids eq $tot_kids  or  $rng_kids eq $tot_kids" role="warning"><sch:value-of select="$msgs_1to10"/> but those children are neither all TEI elements nor
+        all RELAX NG elements, and thus this &lt;content&gt; is invalid and can not be easily rectified.
       </sch:assert>
-    </sch:rule>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>
@@ -73,7 +64,9 @@ $Id$
       not pattern names generated in the corresponding RELAX NG schema
       source are automatically prefixed to avoid potential
       nameclashes.</desc>
-      <datatype><dataRef key="teidata.truthValue"/></datatype>
+      <datatype>
+        <dataRef key="teidata.truthValue"/>
+      </datatype>
       <defaultVal>true</defaultVal>
       <valList type="closed">
         <valItem ident="true">
@@ -98,8 +91,11 @@ $Id$
     <p>This sample <gi>content</gi> element indicates that the element
     being specified has no content:</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
-      <content><empty/></content>
-    </egXML></exemplum>
+      <content>
+        <empty/>
+      </content>
+    </egXML>
+  </exemplum>
   <exemplum xml:lang="en">
     <p>This <gi>content</gi> element defines a content model,
     expressed directly in the TEI ODD language, that allows either a
@@ -108,11 +104,11 @@ $Id$
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <content>
         <alternate>
-            <classRef key="model.pLike" maxOccurs="unbounded"/>
-            <sequence>
-              <elementRef key="summary" minOccurs="0" maxOccurs="1"/>
-              <elementRef key="msItem" maxOccurs="unbounded"/>
-             </sequence>
+          <classRef key="model.pLike" maxOccurs="unbounded"/>
+          <sequence>
+            <elementRef key="summary" minOccurs="0" maxOccurs="1"/>
+            <elementRef key="msItem" maxOccurs="unbounded"/>
+          </sequence>
         </alternate>
       </content>
     </egXML>

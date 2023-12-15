@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licences; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" type="atts" ident="att.combinable">
   <desc versionDate="2010-05-11" xml:lang="en">provides attributes indicating how multiple
     references to the same object in a schema should be combined</desc>
-    <desc xml:lang="ja" versionDate="2019-01-19">あるスキーマにおける同一オブジェクトに対する複数の参照をどのように統合すべきか示す属性を提供する。</desc>
+  <desc xml:lang="ja" versionDate="2019-01-19">あるスキーマにおける同一オブジェクトに対する複数の参照をどのように統合すべきか示す属性を提供する。</desc>
   <classes>
     <memberOf key="att.deprecated"/>
   </classes>
@@ -87,74 +81,38 @@ $Id$
     </attDef>
   </attList>
   <remarks versionDate="2022-04-12" xml:lang="en">
-    <p>An ODD processor should handle the values for <att>mode</att> as follows: <list type="gloss">
-        <label>add</label>
-      <item>the object should be created (processing any children in add mode); raise an error if the object has an identifier and 
-        an object with the same identifier (and namespace in the case of an element or attribute) already exists.</item>
-        <label>replace</label>
-      <item>use this object in preference to any existing object with the same identifier (and namespace in the case of an element or attribute), 
-        and ignore any children of that object; process any new children in replace mode</item>
-        <label>delete</label>
-      <item>do not process this object or any existing object with the same identifier (and namespace in the case of an element or attribute); 
-        the element carrying this attribute must be empty: raise an error if there are any children</item>
-        <label>change</label>
-      <item>process this object and its children, replacing only those components of an existing object of the same type with the 
+    <p>An ODD processor should handle the values for <att>mode</att> as follows: <list type="gloss"><label>add</label><item>the object should be created (processing any children in add mode); raise an error if the object has an identifier and 
+        an object with the same identifier (and namespace in the case of an element or attribute) already exists.</item><label>replace</label><item>use this object in preference to any existing object with the same identifier (and namespace in the case of an element or attribute), 
+        and ignore any children of that object; process any new children in replace mode</item><label>delete</label><item>do not process this object or any existing object with the same identifier (and namespace in the case of an element or attribute); 
+        the element carrying this attribute must be empty: raise an error if there are any children</item><label>change</label><item>process this object and its children, replacing only those components of an existing object of the same type with the 
         same identifier (and namespace in case of an element or attribute) that are explicitly specified. This will change only 
         those existing attribute values and child elements that appear both in the original specification and in the new specification. 
-        Other children from the original specification will be preserved.</item>
-      </list>
+        Other children from the original specification will be preserved.</item></list>
     </p>
   </remarks>
   <remarks xml:lang="it" versionDate="2022-04-12">
     <p>Un processore ODD dovrebbe considerare i valori dell'attributo <att>mode</att> in questo modo:
-      <list type="gloss">
-        <label>add</label>
-        <item>l'oggetto dovrebbe essere creato, trattando tutti gli elementi figlio che hanno anch'essi il valore <val>add</val>.
+      <list type="gloss"><label>add</label><item>l'oggetto dovrebbe essere creato, trattando tutti gli elementi figlio che hanno anch'essi il valore <val>add</val>.
           Se esistesse un oggetto con lo stesso nome (e namespace nel caso di un elemento o attributo) bisognerà dare un errore.
-        </item>
-        <label>replace</label>
-        <item>utilizzare questo oggetto al posto di qualsiasi atro oggetto esistente con lo stesso nome (e namespace nel caso di un elemento o attributo),
+        </item><label>replace</label><item>utilizzare questo oggetto al posto di qualsiasi atro oggetto esistente con lo stesso nome (e namespace nel caso di un elemento o attributo),
           e ignorare gli elementi figlio di quell'oggetto; trattare tutti gli elementi che hanno anch'essi il valore <val>replace</val>.
-        </item>
-        <label>delete</label>
-        <item>non trattare questo oggetto o qualsiasi altro oggetto con lo stesso nome (e namespace nel caso di un elemento o attributo);
+        </item><label>delete</label><item>non trattare questo oggetto o qualsiasi altro oggetto con lo stesso nome (e namespace nel caso di un elemento o attributo);
           l'elemento con questo valore deve essere vuoto: dare un error nel caso in cui contenesse elementi figlio.
-        </item>
-        <label>change</label>
-        <item>trattare questo oggetto e tutti i suoi elementi figlio, sustituendo solo i componenti di un oggetto già esistente e 
+        </item><label>change</label><item>trattare questo oggetto e tutti i suoi elementi figlio, sustituendo solo i componenti di un oggetto già esistente e 
           direttamente specificato dello stesso tipo e con lo stesso nome (e namespace nel caso di un elemento o attributo).
           Questa operazione cambierà solamente i valori di attributi già esistenti ed elementi figlio che sono presenti sia nella specificazione originale
-          che nella nuova specificazione. Gli altri elementi filgio che fanno parte della specificazione originale verranno mantenuti.</item>
-      </list>
+          che nella nuova specificazione. Gli altri elementi filgio che fanno parte della specificazione originale verranno mantenuti.</item></list>
     </p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
-    <p>La signification informelle des valeurs de l'attribut <att>mode</att> est la suivante :<list type="gloss">
-        <label>add</label>
-        <item>l'objet doit être créé (traitement de tout enfant dans le mode <val>add</val>) ;
-          générer une erreur si un objet avec le même identifiant existe déjà.</item>
-        <label>replace</label>
-        <item>utiliser cet objet de préférence à tout autre portant le même identifiant et ignorer
-          tout enfant de cet objet ; traiter tout nouvel enfant dans le mode <val>replace</val>. </item>
-        <label>delete</label>
-        <item>ne pas traiter cet objet ou aucun autre portant le même identifiant ; générer une
-          erreur si de nouveaux enfants sont fournis.</item>
-        <label>change</label>
-        <item>traiter cet objet, et ses enfants, et ceux de n'importe quel objet portant le même
-          identifiant, dans le mode <val>change</val>. </item>
-      </list>
+    <p>La signification informelle des valeurs de l'attribut <att>mode</att> est la suivante :<list type="gloss"><label>add</label><item>l'objet doit être créé (traitement de tout enfant dans le mode <val>add</val>) ;
+          générer une erreur si un objet avec le même identifiant existe déjà.</item><label>replace</label><item>utiliser cet objet de préférence à tout autre portant le même identifiant et ignorer
+          tout enfant de cet objet ; traiter tout nouvel enfant dans le mode <val>replace</val>. </item><label>delete</label><item>ne pas traiter cet objet ou aucun autre portant le même identifiant ; générer une
+          erreur si de nouveaux enfants sont fournis.</item><label>change</label><item>traiter cet objet, et ses enfants, et ceux de n'importe quel objet portant le même
+          identifiant, dans le mode <val>change</val>. </item></list>
     </p>
   </remarks>
   <remarks xml:lang="ja" versionDate="2019-01-19">
-    <p>ODDプロセッサは<att>mode</att>属性値を次のように扱うべきである: <list type="gloss">
-        <label>add</label>
-        <item>オブジェクトを生成すべきである（子をすべて<val>add</val>モードで処理する）。同一の識別子を持つオブジェクトがすでに存在するばあいはエラーを発生させる。</item>
-        <label>replace</label>
-        <item>同一の識別子を持つ先んじて存在するすべてのオブジェクトよりも当該のオブジェクトを優先して使用し、それらのオブジェクトの子を無視する。新しい子はすべて<val>replace</val>モードで処理する。</item>
-        <label>delete</label>
-        <item>当該の、あるいは先んじて存在するすべてのオブジェクトを処理してはならない。子が与えられたときはエラーを発生させる。</item>
-        <label>change</label>
-        <item>当該のオブジェクトと子、また先んじて存在するすべてのオブジェクトの子を<val>change</val>モードで処理する。</item>
-      </list></p>
+    <p>ODDプロセッサは<att>mode</att>属性値を次のように扱うべきである: <list type="gloss"><label>add</label><item>オブジェクトを生成すべきである（子をすべて<val>add</val>モードで処理する）。同一の識別子を持つオブジェクトがすでに存在するばあいはエラーを発生させる。</item><label>replace</label><item>同一の識別子を持つ先んじて存在するすべてのオブジェクトよりも当該のオブジェクトを優先して使用し、それらのオブジェクトの子を無視する。新しい子はすべて<val>replace</val>モードで処理する。</item><label>delete</label><item>当該の、あるいは先んじて存在するすべてのオブジェクトを処理してはならない。子が与えられたときはエラーを発生させる。</item><label>change</label><item>当該のオブジェクトと子、また先んじて存在するすべてのオブジェクトの子を<val>change</val>モードで処理する。</item></list></p>
   </remarks>
 </classSpec>

@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licences; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" xml:id="LISTREF" ident="listRef">
   <gloss versionDate="2005-01-14" xml:lang="en">list of references</gloss>
@@ -34,7 +28,7 @@ $Id$
       <classRef key="model.ptrLike" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </content>
- <constraintSpec ident="TagDocsNestinglistRef" scheme="schematron">
+  <constraintSpec ident="TagDocsNestinglistRef" scheme="schematron">
     <constraint>
       <sch:rule context="( tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp )/tei:listRef">
         <sch:report test="tei:listRef">In the context of tagset documentation, the listRef element must not self-nest.</sch:report>
@@ -64,13 +58,10 @@ $Id$
   </exemplum>
   <remarks versionDate="2022-03-11" xml:lang="en">
     <p>When <gi>listRef</gi> is used in the context of <ident type="module">tagdocs</ident>, further restrictons apply:
-    <list>
-      <item>It may only contain <gi>ptr</gi> or <gi>ref</gi>
-        elements.</item>
-      <item>Each <gi>ptr</gi> or <gi>ref</gi> child should bear a
+    <list><item>It may only contain <gi>ptr</gi> or <gi>ref</gi>
+        elements.</item><item>Each <gi>ptr</gi> or <gi>ref</gi> child should bear a
         <att>target</att> attribute, the value of which should be a
-        single URI pointer.</item>
-    </list>
+        single URI pointer.</item></list>
     </p>
   </remarks>
 </elementSpec>

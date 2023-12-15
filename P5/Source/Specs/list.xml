@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Copyright TEI Consortium. 
-  Dual-licensed under CC-by and BSD2 licences 
-  See the file COPYING.txt for details
-  $Date$
-  $Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licences; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="list">
   <gloss xml:lang="en" versionDate="2007-06-12">list</gloss>
@@ -20,7 +14,7 @@
     organizados en una lista.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una qualsiasi sequenza di voci organizzate in
     una lista.</desc>
-    <desc versionDate="2016-11-25" xml:lang="de">enthält eine Reihe von Listenpunkten, die als Liste organisiert sind.</desc>
+  <desc versionDate="2016-11-25" xml:lang="de">enthält eine Reihe von Listenpunkten, die als Liste organisiert sind.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.sortable"/>
@@ -42,72 +36,54 @@
   <!-- removing the special-purpose <headItem> and <headLabel>. -Syd -->
   <content>
     <sequence>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          
-            <classRef key="model.divTop"/>
-            <classRef key="model.global"/>
-            <elementRef key="desc" minOccurs="0" maxOccurs="unbounded"/>          
-        </alternate>
-      
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.divTop"/>
+        <classRef key="model.global"/>
+        <elementRef key="desc" minOccurs="0" maxOccurs="unbounded"/>
+      </alternate>
       <alternate>
         <sequence minOccurs="1" maxOccurs="unbounded">
           <elementRef key="item"/>
-          
-            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          
+          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
         <sequence>
-          
-            <elementRef key="headLabel" minOccurs="0"/>
-          
-          
-            <elementRef key="headItem" minOccurs="0"/>
-          
+          <elementRef key="headLabel" minOccurs="0"/>
+          <elementRef key="headItem" minOccurs="0"/>
           <sequence minOccurs="1" maxOccurs="unbounded">
             <elementRef key="label"/>
-            
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-            
+            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
             <elementRef key="item"/>
-            
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-            
+            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
           </sequence>
         </sequence>
       </alternate>
-      
-        <sequence minOccurs="0" maxOccurs="unbounded">
-          
-            <classRef key="model.divBottom"/>
-          
-          
-            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          
-        </sequence>
-      
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.divBottom"/>
+        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+      </sequence>
     </sequence>
   </content>
   <constraintSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="gloss-list-must-have-labels" scheme="schematron">
     <constraint>
       <sch:rule context="tei:list[@type='gloss']">
-	<sch:assert test="tei:label">The content of a "gloss" list should include a sequence of one or more pairs of a label element followed by an item element</sch:assert>
+        <sch:assert test="tei:label">The content of a "gloss" list should include a sequence of one or more pairs of a label element followed by an item element</sch:assert>
       </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>
-<!--    MDH 2014-08-31: I'm removing an override of @rend which was last present in rev 12971, per discussions
+    <!--    MDH 2014-08-31: I'm removing an override of @rend which was last present in rev 12971, per discussions
         on the Council list. Its original purpose was to provide a guided transition between the old uses of 
         @type and the new recommendation to use @rend, but the general consensus is that providing suggestions
         in the prose is better than formalizing them in the ODD.
     -->
-    
     <attDef ident="type" usage="opt" mode="change">
       <gloss xml:lang="en" versionDate="2017-06-25">type</gloss>
       <gloss versionDate="2017-06-25" xml:lang="de">Typ</gloss>
       <desc versionDate="2014-07-29" xml:lang="en">describes the nature of the items in the list.</desc>
       <desc versionDate="2016-11-25" xml:lang="de">beschreibt die Art der Listenpunkte.</desc>
-      <datatype><dataRef key="teidata.enumerated"/></datatype>
+      <datatype>
+        <dataRef key="teidata.enumerated"/>
+      </datatype>
       <valList type="semi" mode="add">
         <valItem ident="gloss">
           <gloss xml:lang="en" versionDate="2017-06-25">gloss</gloss>
@@ -125,14 +101,14 @@
             concept qui est donné par un élément <gi>label</gi> précédant l'item de la liste.</desc>
           <desc versionDate="2007-01-21" xml:lang="it">ogni voce dell'elenco è la glossa di un termine o
             concetto dato da un elemento legenda che precede la voce stessa</desc>
-            <desc versionDate="2016-11-25" xml:lang="de">jeder Listenpunkt erläutert einen Begriff oder ein Konzept, das von einem voranstehenden <gi>label</gi>-Element genannt wird.</desc>
+          <desc versionDate="2016-11-25" xml:lang="de">jeder Listenpunkt erläutert einen Begriff oder ein Konzept, das von einem voranstehenden <gi>label</gi>-Element genannt wird.</desc>
         </valItem>
         <valItem ident="index">
           <gloss xml:lang="en" versionDate="2017-06-25">index</gloss>
           <gloss versionDate="2017-06-25" xml:lang="de">Index</gloss>
           <desc versionDate="2014-05-04" xml:lang="en">each list item is an entry in an index such as the alphabetical topical index 
           at the back of a print volume.</desc>
-            <desc versionDate="2016-11-25" xml:lang="de">jeder Listenpunkt ist ein Registereintrag z. B. in einem alphabetisch geordneten 
+          <desc versionDate="2016-11-25" xml:lang="de">jeder Listenpunkt ist ein Registereintrag z. B. in einem alphabetisch geordneten 
                 Sachregister am Ende einer Druckausgabe.</desc>
         </valItem>
         <valItem ident="instructions">
@@ -140,7 +116,7 @@
           <gloss versionDate="2017-06-25" xml:lang="de">Arbeitsschritt</gloss>
           <desc versionDate="2014-05-04" xml:lang="en">each list item is a step in a sequence of instructions, as in a
             recipe.</desc>
-            <desc versionDate="2016-11-25" xml:lang="de">jeder Listenpunkt ist ein Arbeitsschritt in einer Folge von Anweisungen, 
+          <desc versionDate="2016-11-25" xml:lang="de">jeder Listenpunkt ist ein Arbeitsschritt in einer Folge von Anweisungen, 
                 wie z. B. in einem Rezept.</desc>
         </valItem>
         <valItem ident="litany">
@@ -148,7 +124,7 @@
           <gloss versionDate="2017-06-25" xml:lang="de">Litanei</gloss>
           <desc versionDate="2014-05-04" xml:lang="en">each list item is one of a sequence of petitions, supplications 
             or invocations, typically in a religious ritual.</desc>
-            <desc versionDate="2016-11-25" xml:lang="de">jeder Listenpunkt ist Teil einer Reihenfolge von Gebeten, Bitten oder Anrufungen die 
+          <desc versionDate="2016-11-25" xml:lang="de">jeder Listenpunkt ist Teil einer Reihenfolge von Gebeten, Bitten oder Anrufungen die 
                 üblicherweise in einem religiösen Ritual verwendet werden.</desc>
         </valItem>
         <valItem ident="syllogism">
@@ -156,7 +132,7 @@
           <gloss versionDate="2017-06-25" xml:lang="de">logischer Schluss</gloss>
           <desc versionDate="2014-05-04" xml:lang="en">each list item is part of an argument consisting of two or more propositions 
             and a final conclusion derived from them.</desc>
-            <desc versionDate="2016-11-25" xml:lang="de">jeder Listenpunkt ist Teil eines Arguments, das aus zwei oder mehr Prämissen 
+          <desc versionDate="2016-11-25" xml:lang="de">jeder Listenpunkt ist Teil eines Arguments, das aus zwei oder mehr Prämissen 
                 und einem daraus gezogenen Schluss besteht.</desc>
         </valItem>
       </valList>
@@ -182,14 +158,14 @@
           これは意味上のエラーになる。 </p>
       </remarks>
       <remarks versionDate="2016-11-25" xml:lang="de">
-          <p>In älteren Versionen dieser Richtlinien wurde empfohlen, mit dem Attribut <att>type</att> am <gi>list</gi>-Element 
+        <p>In älteren Versionen dieser Richtlinien wurde empfohlen, mit dem Attribut <att>type</att> am <gi>list</gi>-Element 
               die Darstellung oder das Erscheinungsbild einer Liste zu kodieren (also ob sie z. B. nummeriert oder mit Symbolen 
               versehen ist). Die aktuelle Empfehlung ist, dafür die Attribute <att>rend</att> oder <att>style</att> zu verwenden, 
               während mit <att>type</att> der Inhalt der Liste charakterisiert werden sollte.</p>
-            <p>Die formale Syntax der Elementdeklaration 
+        <p>Die formale Syntax der Elementdeklaration 
                 erlaubt es, Listen vom <tag>list type="gloss"</tag> ohne das Element <gi>label</gi> zu verwenden; das ist jedoch ein 
                 semantischer Fehler.</p>
-        </remarks>
+      </remarks>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
@@ -394,7 +370,6 @@
       Struktur der zweistufigen Nummerierung der Klauseln wider. Die Klauseln könnten auch als eine
       einstufige Liste mit unregelmäßiger Nummerierung behandelt werden.</p>
   </exemplum>
-  
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <p>These decrees, most blessed Pope Hadrian, we propounded in the public council ... and they
@@ -427,7 +402,7 @@
       先行することがある。 </p>
   </remarks>
   <remarks xml:lang="de" versionDate="2017-06-25">
-      <p>Die Liste kann mit einer Überschrift <gi>head</gi> beginnen. Sie kann auch aus Paaren von Labels und Beschreibungen bestehen, 
+    <p>Die Liste kann mit einer Überschrift <gi>head</gi> beginnen. Sie kann auch aus Paaren von Labels und Beschreibungen bestehen, 
           sodass dann für jeden Teil spezielle Überschriften (<gi>headLabel</gi>, <gi>headItem</gi>) verwendet werden können.</p>
   </remarks>
   <listRef>

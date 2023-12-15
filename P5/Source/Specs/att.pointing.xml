@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licences; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" type="atts" ident="att.pointing">
   <desc versionDate="2016-01-15" xml:lang="en">provides a set of attributes used by all elements which point
@@ -21,7 +15,9 @@ $Id$
       <desc versionDate="2012-06-16" xml:lang="en">specifies the language of the content to be found at the destination referenced by <att>target</att>, using a <soCalled>language tag</soCalled> generated
         according to <ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>.</desc>
       <desc versionDate="2023-09-27" xml:lang="ja"><ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>に従って生成された<soCalled>言語タグ</soCalled>を使用することで、<att>target</att>の参照先にあるコンテンツの言語を特定する。</desc>
-      <datatype><dataRef key="teidata.language"/></datatype>
+      <datatype>
+        <dataRef key="teidata.language"/>
+      </datatype>
       <constraintSpec ident="targetLang" scheme="schematron">
         <constraint>
           <sch:rule context="tei:*[not(self::tei:schemaSpec)][@targetLang]">
@@ -41,7 +37,8 @@ $Id$
         Declaration of Human Rights</title>: one of them is in Polish,
         the other in Swahili.</p>
       </exemplum>
-      <remarks xml:lang="en" versionDate="2013-12-08"><p>The value must conform to BCP 47. If the value is a
+      <remarks xml:lang="en" versionDate="2013-12-08">
+        <p>The value must conform to BCP 47. If the value is a
       private use code (i.e., starts with <val>x-</val> or contains
       <val>-x-</val>), a <gi>language</gi> element with a matching
       value for its <att>ident</att> attribute should be supplied in
@@ -49,11 +46,12 @@ $Id$
       also optionally be supplied for non-private-use codes, though
       these must remain consistent with their
       <choice><abbr>IETF</abbr><expan>Internet Engineering Task
-      Force</expan></choice> definitions.</p></remarks>
-      
-      <remarks xml:lang="ja" versionDate="2023-09-27"><p>
-        値はBCP 47に準拠している必要がある。 (<val>x-</val>で始まっていたり、<val>-x-</val>を含むような記述のように)値がプライベートに使用されるコードの場合、自身の<att>ident</att>属性に対応する値をもった<gi>language</gi>要素は、TEIのヘッダーにおいてその値を記述しなくてはならない。そうした（非公式なコードの）記述はあるいは公式なコードにオプションとして取り入れられることもあるが、公式なコードは<choice><abbr>IETF</abbr><expan>Internet Engineering Task Force</expan></choice> （インターネット技術特別調査委員会）の定義に準拠したものでなくてはならない。</p></remarks>
-      
+      Force</expan></choice> definitions.</p>
+      </remarks>
+      <remarks xml:lang="ja" versionDate="2023-09-27">
+        <p>
+        値はBCP 47に準拠している必要がある。 (<val>x-</val>で始まっていたり、<val>-x-</val>を含むような記述のように)値がプライベートに使用されるコードの場合、自身の<att>ident</att>属性に対応する値をもった<gi>language</gi>要素は、TEIのヘッダーにおいてその値を記述しなくてはならない。そうした（非公式なコードの）記述はあるいは公式なコードにオプションとして取り入れられることもあるが、公式なコードは<choice><abbr>IETF</abbr><expan>Internet Engineering Task Force</expan></choice> （インターネット技術特別調査委員会）の定義に準拠したものでなくてはならない。</p>
+      </remarks>
     </attDef>
     <attDef ident="target" usage="opt">
       <desc versionDate="2010-05-02" xml:lang="en">specifies the destination of the reference by supplying one or more URI References</desc>
@@ -66,19 +64,27 @@ $Id$
         proporcionando una o más referencias URI.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica la destinazione di un riferimento, fornendo
         uno o più riferimenti URI</desc>
-      <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
-      <remarks versionDate="2007-01-21" xml:lang="en"><p>One or more syntactically valid URI references, separated by whitespace. Because
+      <datatype maxOccurs="unbounded">
+        <dataRef key="teidata.pointer"/>
+      </datatype>
+      <remarks versionDate="2007-01-21" xml:lang="en">
+        <p>One or more syntactically valid URI references, separated by whitespace. Because
         whitespace is used to separate URIs, no whitespace is permitted inside a single URI. If a
         whitespace character is required in a URI, it should be escaped with the normal mechanism,
-        e.g. <code>TEI%20Consortium</code>.</p></remarks>
-      <remarks versionDate="2007-01-21" xml:lang="fr"><p>Une ou plusieurs références URI syntaxiquement valables, séparée par
+        e.g. <code>TEI%20Consortium</code>.</p>
+      </remarks>
+      <remarks versionDate="2007-01-21" xml:lang="fr">
+        <p>Une ou plusieurs références URI syntaxiquement valables, séparée par
         un espace. Puisqu'un espace  est employé pour séparer des URIs, aucun espace
         n’est autorisé à l'intérieur d'un URI. Si un espace est requis dans un URI, il
         faut le représenter avec une séquence d'échappement, comme par exemple 
-        <code>TEI%20Consortium</code>.</p></remarks>
-      <remarks versionDate="2023-09-27" xml:lang="ja"><p>
+        <code>TEI%20Consortium</code>.</p>
+      </remarks>
+      <remarks versionDate="2023-09-27" xml:lang="ja">
+        <p>
       空白で区切られた1つもしくはそれ以上の構文的に有効なURI参照。空白はURIを区切るために使用されるため、各URI中において空白を使用することはできない。URIに空白文字が必要な場合は、たとえば<code> TEI％20Consortium </code>と言ったような通常の方法でエスケープする必要がある。
-      </p></remarks>
+      </p>
+      </remarks>
     </attDef>
     <attDef ident="evaluate" usage="opt">
       <gloss xml:lang="en" versionDate="2009-05-28">evaluate</gloss>
@@ -91,7 +97,9 @@ $Id$
       <desc versionDate="2007-06-12" xml:lang="fr">détermine le sens attendu, si la cible d'un pointeur est elle-même un pointeur.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica el significado previsto cuando la meta de un indicador es también un indicador.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il significato previsto quando la destinazione di un puntatore è essa stessa un puntatore</desc>
-      <datatype><dataRef key="teidata.enumerated"/></datatype>
+      <datatype>
+        <dataRef key="teidata.enumerated"/>
+      </datatype>
       <valList type="closed">
         <valItem ident="all">
           <desc versionDate="2007-06-27" xml:lang="en">if the element pointed to is itself a pointer, then

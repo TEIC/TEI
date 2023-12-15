@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licences; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="GLOBAL" type="atts" ident="att.global">
   <desc versionDate="2007-10-02" xml:lang="en">provides attributes common to all elements in the TEI encoding scheme.</desc>
@@ -27,7 +21,6 @@ $Id$
     <memberOf key="att.global.responsibility"/>
     <memberOf key="att.global.source"/>
   </classes>
-  
   <attList>
     <attDef ident="xml:id" usage="opt">
       <gloss versionDate="2007-07-02" xml:lang="en">identifier</gloss>
@@ -46,7 +39,9 @@ $Id$
         al cual se asocia el atributo.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">assegna un identificatore unico all'elemento a cui è
         associato l'attributo</desc>
-      <datatype><dataRef name="ID"/></datatype>
+      <datatype>
+        <dataRef name="ID"/>
+      </datatype>
       <remarks versionDate="2005-10-10" xml:lang="en">
         <p>The <att>xml:id</att> attribute may be used to specify a canonical reference for an
           element; see section <ptr target="#CORS"/>.</p>
@@ -60,7 +55,7 @@ $Id$
           para un elemento; ver la sección <ptr target="#CORS"/>.</p>
       </remarks>
       <remarks xml:lang="ja" versionDate="2022-08-26">
-        <p><att>xml:id</att>属性は、その要素に対する基準的形式の参照を表すために用いてもよい。詳細は<ptr target="#CORS"></ptr>節を参照のこと。</p>
+        <p><att>xml:id</att>属性は、その要素に対する基準的形式の参照を表すために用いてもよい。詳細は<ptr target="#CORS"/>節を参照のこと。</p>
       </remarks>
     </attDef>
     <attDef ident="n" usage="opt">
@@ -81,7 +76,9 @@ $Id$
         que no es necesariamente único en el documento.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">assegna un numero (o altra etichetta) a un elemento
         che non è necessariamente unico all'interno del documento</desc>
-      <datatype maxOccurs="1"><dataRef key="teidata.text"/></datatype>
+      <datatype maxOccurs="1">
+        <dataRef key="teidata.text"/>
+      </datatype>
       <remarks versionDate="2013-12-06" xml:lang="en">
         <p>The value of this attribute is always understood to be a single token, even if it contains space or other punctuation characters, and need not be composed of numbers only. It is typically used to specify the numbering of chapters, sections,
           list items, etc.; it may also be used in the specification of a standard reference system
@@ -97,7 +94,9 @@ $Id$
           capítulos, de las secciones, de los items de una lista, etc.; puede también ser utilizado
           en la especificación de un sistema de referencia estándar para el texto.</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2019-06-08"><p>この属性の値は、もし空白やその他の区切り符号があったとしても、つねにひとまとまりのトークンとして解釈され、また数字のみで構成される必要はない。この属性は典型的には章や節、リスト等の構成要素の付番に用いられる。テキストの標準的な参照体系の仕様に含めることができる。</p></remarks>
+      <remarks xml:lang="ja" versionDate="2019-06-08">
+        <p>この属性の値は、もし空白やその他の区切り符号があったとしても、つねにひとまとまりのトークンとして解釈され、また数字のみで構成される必要はない。この属性は典型的には章や節、リスト等の構成要素の付番に用いられる。テキストの標準的な参照体系の仕様に含めることができる。</p>
+      </remarks>
     </attDef>
     <attDef ident="xml:lang" usage="opt">
       <gloss versionDate="2007-07-02" xml:lang="en">language</gloss>
@@ -123,7 +122,9 @@ $Id$
         utilizzando i codici tratti da <ref target="https://www.ietf.org/rfc/rfc3066.txt">RFC
         3066</ref>
          </desc>
-      <datatype><dataRef key="teidata.language"/></datatype>
+      <datatype>
+        <dataRef key="teidata.language"/>
+      </datatype>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
           <p> … The consequences of
@@ -162,7 +163,7 @@ $Id$
             l'attribut<att>xml:lang</att> de l'élément immédiatement supérieur est héritée ; c'est
           pour cette raison qu'une valeur devrait toujours être attribuée à l'élément du plus haut
           niveau hiérarchique (<gi>TEI</gi>).</p>
-<p>La valeur doit être conforme au BCP 47. Si la
+        <p>La valeur doit être conforme au BCP 47. Si la
         valeur est un code d'usage privé (c'est-à-dire commence par <code>x-</code> ou contient
       <code>-x-</code>),  il devrait correspondre à la valeur d'un attribut <att>ident</att> d'un élément <gi>language</gi> fourni dans l'en-tête TEI du document courant.</p>
       </remarks>
@@ -170,11 +171,10 @@ $Id$
         <p>Si no se especifica ningún valor para <att>xml:lang</att>, el valor de <att>xml:lang</att> para el elemento inmediatamente englobado, se hereda; por esta razón, un valor
           se debe especificar siempre en el elemento exterior (<gi>TEI</gi>).</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2019-06-16"><p>xml:lang の値は、直接の親要素、そのまた親要素からというように、文書の上位階層から継承されてくる。できるだけ高い適切な階層に xml:lang を指定するのが一般には望ましいが、teiHeader には関連するリソース要素と異なるデフォルト値が必要となったり、一つのTEI文書が多くの言語のテキストを含みうることには注意されたい。登録された言語タグの正式なリストはIANAが管理しており、<ptr target="https://www.iana.org/assignments/language-subtag-registry"/> から確認できる。言語タグの構造についての良い概説は <ptr target="https://www.w3.org/International/articles/language-tags/"/> を、手順を追った実用的なガイドは <ptr target="https://www.w3.org/International/questions/qa-choosing-language-tags.en.php"/> を参照されたい。利用する値は、BCP 47 に準拠しなければならない。もし値が私用コード（<val>x-</val> から始まったり <val>-x-</val> を含む）ならば、その <att>ident</att> 属性と一致する値を持つ <gi>language</gi> 要素をTEIヘッダ内に追加して内容を説明すべきである。この説明は私用コード以外にも任意で追加できるが、<choice><abbr>IETF</abbr><expan>Internet Engineering Task Force</expan></choice> による定義と整合していなければならない。</p></remarks>
+      <remarks xml:lang="ja" versionDate="2019-06-16">
+        <p>xml:lang の値は、直接の親要素、そのまた親要素からというように、文書の上位階層から継承されてくる。できるだけ高い適切な階層に xml:lang を指定するのが一般には望ましいが、teiHeader には関連するリソース要素と異なるデフォルト値が必要となったり、一つのTEI文書が多くの言語のテキストを含みうることには注意されたい。登録された言語タグの正式なリストはIANAが管理しており、<ptr target="https://www.iana.org/assignments/language-subtag-registry"/> から確認できる。言語タグの構造についての良い概説は <ptr target="https://www.w3.org/International/articles/language-tags/"/> を、手順を追った実用的なガイドは <ptr target="https://www.w3.org/International/questions/qa-choosing-language-tags.en.php"/> を参照されたい。利用する値は、BCP 47 に準拠しなければならない。もし値が私用コード（<val>x-</val> から始まったり <val>-x-</val> を含む）ならば、その <att>ident</att> 属性と一致する値を持つ <gi>language</gi> 要素をTEIヘッダ内に追加して内容を説明すべきである。この説明は私用コード以外にも任意で追加できるが、<choice><abbr>IETF</abbr><expan>Internet Engineering Task Force</expan></choice> による定義と整合していなければならない。</p>
+      </remarks>
     </attDef>
-    
-    
-    
     <attDef ident="xml:base" usage="opt">
       <desc versionDate="2005-10-10" xml:lang="en">provides a base URI reference with which applications can resolve relative URI
         references into absolute URI references.</desc>
@@ -192,32 +192,31 @@ $Id$
       <desc versionDate="2007-01-21" xml:lang="it">assegna un riferimento URI di base grazie al quale
         eventuali applicazioni possono analizzare riferimenti URI relativi come riferimenti URI
         assoluti</desc>
-      <datatype><dataRef key="teidata.pointer"/></datatype>
+      <datatype>
+        <dataRef key="teidata.pointer"/>
+      </datatype>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <div type="bibl">
             <head>Selections from <title level="m">The Collected Letters of Robert Southey. Part 1: 1791-1797</title></head>
             <listBibl xml:base="https://romantic-circles.org/sites/default/files/imported/editions/southey_letters/XML/">
               <bibl>
-                <ref target="letterEEd.26.3.xml">
-                  <title>Robert Southey to Grosvenor Charles Bedford</title>, <date when="1792-04-03">3 April 1792</date>.
+                <ref target="letterEEd.26.3.xml"><title>Robert Southey to Grosvenor Charles Bedford</title>, <date when="1792-04-03">3 April 1792</date>.
                 </ref>
               </bibl>
               <bibl>
-                <ref target="letterEEd.26.57.xml">
-                  <title>Robert Southey to Anna Seward</title>, <date when="1793-09-18">18 September 1793</date>.
+                <ref target="letterEEd.26.57.xml"><title>Robert Southey to Anna Seward</title>, <date when="1793-09-18">18 September 1793</date>.
                 </ref>
               </bibl>
               <bibl>
-                <ref target="letterEEd.26.85.xml">
-                  <title>Robert Southey to Robert Lovell</title>, <date from="1794-04-05" to="1794-04-06">5-6 April, 1794</date>.
+                <ref target="letterEEd.26.85.xml"><title>Robert Southey to Robert Lovell</title>, <date from="1794-04-05" to="1794-04-06">5-6 April, 1794</date>.
                 </ref>
               </bibl>
             </listBibl>
           </div>
         </egXML>
       </exemplum>
-     <!-- <exemplum versionDate="2010-02-26" xml:lang="fr">
+      <!-- <exemplum versionDate="2010-02-26" xml:lang="fr">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Bibliog_Renaissance_Ital">
           <div type="bibl">
             <head>La Renaissance italienne, bibliographie sélective</head>
@@ -265,7 +264,9 @@ $Id$
       <desc versionDate="2007-05-04" xml:lang="es">señala la voluntad de hacer que el espaciado sea preservado por cualquier aplicación.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">segnala la volontà di far sì che la spaziatura sia mantenuta da qualsivoglia applicazione.</desc>
       <desc xml:lang="ja" versionDate="2019-06-08">空白文字類をアプリケーションがどう解釈するかを示す。</desc>
-      <datatype><dataRef key="teidata.enumerated"/></datatype>
+      <datatype>
+        <dataRef key="teidata.enumerated"/>
+      </datatype>
       <valList type="closed">
         <valItem ident="default">
           <desc versionDate="2012-09-07" xml:lang="en">signals that the application's default white-space processing modes are acceptable</desc>
@@ -281,7 +282,9 @@ $Id$
       specification</ref> provides further guidance on the use of this
       attribute. Note that many parsers may not handle xml:space correctly.</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2019-06-08"><p>この属性の利用に関する案内は<ref target="https://www.w3.org/TR/REC-xml/#sec-white-space">XML仕様</ref>を参照。xml:spaceを適切に扱うパーサーは多くない。</p></remarks>
+      <remarks xml:lang="ja" versionDate="2019-06-08">
+        <p>この属性の利用に関する案内は<ref target="https://www.w3.org/TR/REC-xml/#sec-white-space">XML仕様</ref>を参照。xml:spaceを適切に扱うパーサーは多くない。</p>
+      </remarks>
     </attDef>
   </attList>
   <listRef>
