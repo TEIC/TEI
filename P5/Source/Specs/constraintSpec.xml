@@ -47,10 +47,12 @@ $Id$
   <constraintSpec ident="sch_no_more" scheme="schematron">
     <desc xml:lang="en" versionDate="2018-07-06">Relationship between scheme attribute and contents: Schematron 1.x</desc>
     <constraint>
-      <sch:report test="tei:constraint/sch1x:* and @scheme = ('isoschematron','schematron')">Rules
+      <sch:rule context="tei:constraintSpec">
+        <sch:report test="tei:constraint/sch1x:* and @scheme = ('isoschematron','schematron')">Rules
         in the Schematron 1.* language must be inside a constraintSpec
         with a value other than 'schematron' or 'isoschematron' on the
         scheme attribute</sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="isosch" scheme="schematron">
@@ -63,11 +65,19 @@ $Id$
       </sch:rule>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="needrules" scheme="schematron">
+  <constraintSpec ident="context-required" scheme="schematron">
+    <!-- It is somewhat easier and clearer to use
+         "tei:constraintSpec[ @scheme eq 'schematron']//( sch:assert | sch:report )"
+         as the context and then test for "ancestor::sch:rule/@context".
+         But if we did that, then a user who had multiple
+         <sch:assert>s and <sch:report>s in a single contextless
+         constraint would get multiple messages. This way she only
+         gets one message. -->
     <constraint>
-      <sch:rule context="tei:macroSpec/tei:constraintSpec[@scheme eq 'schematron']/tei:constraint">
-        <sch:report test="sch:assert|sch:report">An ISO Schematron constraint specification for a macro should not
-        have an 'assert' or 'report' element without a parent 'rule' element</sch:report>
+      <sch:rule context="tei:constraintSpec[ @scheme eq 'schematron']/tei:constraint[ .//sch:assert | .//sch:report ]">
+        <sch:let name="assertsHaveContext" value="for $a in .//sch:assert return exists( $a/ancestor::sch:rule/@context )"/>
+        <sch:let name="reportsHaveContext" value="for $r in .//sch:report return exists( $r/ancestor::sch:rule/@context )"/>
+        <sch:report test="( $assertsHaveContext, $reportsHaveContext ) = false()">The use of an &lt;sch:assert> or &lt;sch:report> that does not have a context (i.e., does not have an ancestor &lt;sch:rule> with a @context attribute) in an ISO Schematron constraint specification is deprecated, and will become invalid after 2024-06-30. DEBUG: I am in <sch:value-of select="ancestor::*[@ident][1]/@ident"/>.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -90,8 +100,7 @@ $Id$
            Not sure, maybe @scheme should not be allowed when mode=change
            or mode=delete. Hmmm ...
       -->
-      <desc versionDate="2009-06-10" xml:lang="en">supplies the name of the language in which the constraints
-      are defined</desc>
+      <desc versionDate="2009-06-10" xml:lang="en">supplies the name of the language in which the constraints are defined</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <constraintSpec scheme="schematron" ident="usage_based_on_mode">
         <constraint>
@@ -143,8 +152,9 @@ $Id$
       <constraintSpec ident="demo-c1" scheme="schematron">
         <desc>Enforce the presence of the <att>spanTo</att> attribute</desc>
         <constraint>
-          <sch:assert test="@spanTo">The spanTo= attribute of <sch:name/>
-          is required.</sch:assert>
+          <sch:rule context="tei:addSpan">
+            <sch:assert test="@spanTo">The spanTo= attribute of <sch:name/> is required.</sch:assert>
+          </sch:rule>
         </constraint>
       </constraintSpec>
     </egXML>
@@ -155,9 +165,11 @@ $Id$
         <desc>Implement an accessibility rule which says that pictures
         should have textual explanations</desc>
         <constraint>
-          <sch:report test="not(tei:figDesc or tei:head)"> You should
-          provide information in a figure from which
-          we can construct an alt attribute in HTML </sch:report>
+          <sch:rule context="tei:figure">
+            <sch:report test="not( tei:figDesc | tei:head )">You should
+            provide information in a figure from which
+            we can construct an alt attribute in HTML</sch:report>
+          </sch:rule>
         </constraint>
       </constraintSpec>
     </egXML>
