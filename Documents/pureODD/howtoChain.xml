@@ -9,13 +9,14 @@
         <author>Lou Burnard</author>
       </titleStmt>
       <publicationStmt>
-        <p>Discussion draft</p>
+        <p>As published on lb42.github.io</p>
       </publicationStmt>
       <sourceDesc>
         <p>authored from scratch</p>
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
+      <change when="2023-12-20">Minor changes for publication on lb42.github.io</change>
       <change when="2018-01-04">Expanded and announced on TEI-L</change>
       <change when="2016-10-22">Uploaded for Council review</change>
       <change when="2016-10-21">Drafted first part on train from Paris to La Souterraine; then lost
@@ -73,22 +74,21 @@
         <p>Let's look more closely at the way the TEI defines a very light weight schema called
             <ident>TEI Bare</ident>. Its schema specification element begins like this: <egXML
             xmlns="http://www.tei-c.org/ns/Examples">
-            <schemaSpec ident="tei_bare" xml:lang="en">
-              <moduleRef key="core" include="p list item label head author title"/>
-              <moduleRef key="tei"/>
-              <moduleRef key="header"
-                include="teiHeader fileDesc titleStmt publicationStmt sourceDesc"/>
-              <moduleRef key="textstructure" include="TEI text body div front back"/>
-              <classSpec ident="att.global" mode="change" module="tei" type="atts">
-                <attList>
-                  <attDef ident="xml:space" mode="delete"/>
-                  <attDef ident="rend" mode="delete"/>
-                  <attDef ident="xml:base" mode="delete"/>
-                </attList>
-              </classSpec>
-              <classSpec ident="att.fragmentable" mode="delete" module="tei" type="atts"/>
-            </schemaSpec>
-          </egXML>
+ <schemaSpec ident="tei_bare" xml:lang="en">
+   <moduleRef key="core" include="p list item label head author title"/>
+   <moduleRef key="tei"/>
+   <moduleRef key="header"
+         include="teiHeader fileDesc titleStmt publicationStmt sourceDesc"/>
+   <moduleRef key="textstructure" include="TEI text body div front back"/>
+   <classSpec ident="att.global" mode="change" module="tei" type="atts">
+      <attList>
+       <attDef ident="xml:space" mode="delete"/>
+       <attDef ident="rend" mode="delete"/>
+       <attDef ident="xml:base" mode="delete"/>
+      </attList>
+   </classSpec>
+   <classSpec ident="att.fragmentable" mode="delete" module="tei" type="atts"/>
+</schemaSpec>         </egXML>
         </p>
         <p>No <att>source</att> is specified, so declarations for the elements requested here will
           be taken from the current <ident>p5subset.xml</ident>. </p>
@@ -251,7 +251,8 @@
               the value for the <att>source</att> attribute on the <gi>schemaSpec</gi> defining our
               ODD. We could do the same thing (though I don't recommend it) even at the level of
               individual elements, by specifying a different version as source for an
-              <gi>elementSpec</gi>.</p><p>And just to make life a little simpler, there is an
+              <gi>elementSpec</gi>.</p>
+          <p>And just to make life a little simpler, there is an
                 officially recognized short cut built into the current ODD processing stylesheets:
                 instead of the lengthy URL above, we could simply say <code>tei:3.0.0</code>. For
                 example, supposing that for some strange reason we don't want to add the current
