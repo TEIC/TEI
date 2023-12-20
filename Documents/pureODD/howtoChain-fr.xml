@@ -39,17 +39,23 @@
             </div>
             <div>
                 <head>Traitement d’un ODD</head>
-                <p>Regardons d’un peu plus près la manière dont la TEI définit un schéma très léger appelé <ident>TEI Bare</ident>. Son élément de spécification de schéma commence comme suit : <egXML
+                        <p>Regardons d’un peu plus près la manière dont la TEI définit un schéma très léger appelé <ident>TEI Bare</ident>. 
+                            Son élément de spécification de schéma commence comme suit : <egXML
                     xmlns="http://www.tei-c.org/ns/Examples"> <schemaSpec ident="tei_bare"
-                    xml:lang="en"> <moduleRef key="core"
-                    include="p list item label head author title"/> <moduleRef key="tei"/>
-                    <moduleRef key="header"
-                    include="teiHeader fileDesc titleStmt publicationStmt sourceDesc"/> <moduleRef
-                    key="textstructure" include="TEI text body div front back"/> <classSpec
-                    ident="att.global" mode="change" module="tei" type="atts"> <attList> <attDef
-                    ident="xml:space" mode="delete"/> <attDef ident="rend" mode="delete"/> <attDef
-                    ident="xml:base" mode="delete"/> </attList> </classSpec> <classSpec
-                    ident="att.fragmentable" mode="delete" module="tei" type="atts"/> </schemaSpec>
+                    xml:lang="en">
+                     <moduleRef key="core" include="p list item label head author title"/>
+                      <moduleRef key="tei"/>
+                    <moduleRef key="header" include="teiHeader fileDesc titleStmt publicationStmt sourceDesc"/> 
+                    <moduleRef key="textstructure" include="TEI text body div front back"/> 
+                    <classSpec ident="att.global" mode="change" module="tei" type="atts"> 
+                      <attList> 
+                      <attDef ident="xml:space" mode="delete"/> 
+                      <attDef ident="rend" mode="delete"/> 
+                      <attDef ident="xml:base" mode="delete"/> 
+                      </attList> 
+                      </classSpec> 
+                      <classSpec ident="att.fragmentable" mode="delete" module="tei" type="atts"/> 
+                    </schemaSpec>
                     </egXML> </p>
                 <p>Aucune attribut <att>source</att> n’est spécifié, ainsi la les déclarations des éléments demandés seront prises dans le fichier courant <ident>p5subset.xml</ident>. </p>
                 <p>Notez que cet ODD contient à la fois des références et des spécifications : il continet des références à des modèles (qui peuvent être conçues comme des raccourcis pour des références à des éléments ou des classes, dès lors qu’un module n’est rien d’autre qu’une collection de spécifications d’éléments et de classes) et des spécifications pour deux classes (<gi>classSpec</gi>), plutôt que des références (<gi>classRef</gi>). La référence au module <ident>tei</ident> contenue dans cette spécification icnlue la plupart des classes de la TEI, y compris ces deux classes-là. Un processeur ODD devra alors résoudre les spécifications de classe dupliquées pour les classes <ident>att.global</ident> et <ident>att.fragmentable</ident>. La solution requise est indiquée par la valeur de l’attribut <att>mode</att> : si celle-ci est <val>delete</val> alors les deux déclarations seront ignorées, et la classe est supprimée ; si sa valeur est <val>change</val> alors les deux déclarations seront mélangées de sorte que les parties spécification présentes dans la seconde spécification écrasent les premières. Dans ce cas, l’effet sera de supprimer les trois attributs mentionnés. </p>
