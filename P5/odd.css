@@ -304,6 +304,28 @@ div.moduleSpec {
 span.moduleSpecHead {
     font-style: italic;
 }
+/** Vertical, compressd attlists */
+ul.attList{}
+
+/* Display attList children as a inline list */
+ul.attList ul.classSpecAttDefs, 
+ul.attList ul.classSpecAttDefs > li{
+    display:inline;
+    margin:0;
+    padding:0;
+}
+
+/* class name links should have a colon after */
+ul.attList a.link_odd + ul.classSpecAttDefs::before{
+    content: ": ";
+    text-decoration: none;
+}
+
+/* All classes and defined attributes (i.e. items in the lists)
+   should be comma separated */
+ul.attList ul.classSpecAttDefs > li:not(:last-child)::after{
+    content: ", ";
+}
 ul.specList li {
     list-style: none;
 }
