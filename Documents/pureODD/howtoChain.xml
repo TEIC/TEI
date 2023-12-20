@@ -59,14 +59,14 @@
           in the current source tree. And one with the value
             <val>http://example.com/superODDs/anotherSubset.xml</val> will go looking for it at the
           URL indicated. </p>
-        <p>It's important to understand that the resource indicated by the <att>source</att>s
+        <p>It's important to understand that the resource indicated by the <att>source</att>
           attribute must contain complete and explicit specification elements: <gi>elementSpec</gi>
           rather than <gi>elementRef</gi>, <gi>classSpec</gi> rather than <gi>classRef</gi> and so
           on. It may of course contain other TEI elements, but these will be ignored entirely in the
           construction of a schema. A file called <ident>p5subset.xml</ident>, provided as part of
           every TEI release, is an example of such a resource: it contains specifications for every
-          single TEI element, class, macro, and datatype, but nothing else much. If the
-            <att>source</att> parameter is not supplied, the most recently available version of this
+          single TEI element, class, macro, and datatype, but nothing else much. If a value for the
+            <att>source</att> attribute is not specified, the most recently available version of this
           file is what will be used during the processing of an ODD.</p>
       </div>
       <div>
@@ -98,8 +98,8 @@
           specifications for two classes (<gi>classSpec</gi>), rather than references
             (<gi>classRef</gi>). The reference to the module <ident>tei</ident> brings with it
           specifications for most TEI classes, including these two. An ODD processor will therefore
-          have to resolve duplicate class specifications for the classes <ident>att.global</ident>
-          and <ident>att.fragmentable</ident>. The required resolution is indicated by the value of
+          have to deal with duplicate class specifications for the classes <ident>att.global</ident>
+          and <ident>att.fragmentable</ident>. The resolution method  required is indicated by the value of
           the <att>mode</att> attribute: if this is <val>delete</val> then both declarations are to
           be ignored, and the class is therefore suppressed; if it is <val>change</val> then the two
           declarations are to be merged, with any part of it present in the second specification
@@ -107,7 +107,7 @@
           attributes mentioned. </p>
         <p>If you'd like to check that this ODD does what you expect, and you have oXygen installed
           with a recent version of the TEI Frameworks, just download the file
-            <ident>tei_bare.odd</ident>, and tell oXygen to apply the predefined transformation
+            <ident>tei_bare.odd</ident> (you can get it from <ref target="https://github.com/TEIC/TEI/blob/dev/P5/Exemplars/tei_bare.odd">the TEI github repo</ref>), and tell oXygen to apply the predefined transformation
             <ident>TEI ODD to HTML</ident> to it. This will produce a mini-manual for the TEI Bare
           customization in HTML format, near the beginning of which you should see a list of the
           elements the schema contains.
