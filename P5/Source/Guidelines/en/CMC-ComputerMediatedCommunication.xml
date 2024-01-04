@@ -40,9 +40,8 @@ See the file COPYING.txt for details.
         <item>or similar technologies and services on the internet.</item>
       </list></p>
     <p>CMC is, by default, multimodal. Whereas early CMC systems (e.g. the predecessors of
-      contemporary chat/messaging software or the Usenet 'newgroups' developed in the 70s and 80s) 
-      <?tei winita the parenthetical needs some word smithing, but I am not 100% what is intended —Syd, 2023-12-17 ?>
-      <?tei winita we smithed it a little - is it now better understandable? -Michael and Harald, 2024-01-04 ?>
+      contemporary chat/messaging software or the Usenet 'newgroups' developed in the 70s and 80s) <?tei winita the parenthetical needs some word smithing, but I am not 100% what is intended —Syd, 2023-12-17 ?>
+      <?tei winita we smythed it a little - is it now better understandable? -Michael and Harald, 2024-01-04 ?>
       were completely ASCII-based, the lion’s share of contemporary CMC technologies and
       applications allow for the combination of different semiotic resources (e.g. written or spoken
       language with graphic icons and images) and even for the combined use of different CMC
@@ -379,9 +378,10 @@ See the file COPYING.txt for details.
               <graphic url="https://pbs.twimg.com/media/DnwygdSW4AAoTUn.jpg:large"/>
             </figure>
           </post>
-          <post modality="written" generatedBy="unspecified" type="tweet" subtype="retweet"
-            who="#u1" ref="#cmc_post_1043767827927388160" synch="#tweetsbcrn18.t002"
-            xml:id="cmc_post_1043769240136880128"/>
+          <post modality="written" generatedBy="unspecified" type="tweet" who="#u1"
+            synch="#tweetsbcrn18.t002" xml:id="cmc_post_1043769240136880128">
+            <ptr type="retweet" target="#cmc_post_1043767827927388160"/>
+          </post>
           <post mode="written" creation="human" type="tweet" who="#u3" synch="#tweetsbcrn18.t002"
             xml:lang="de" xml:id="cmc_post_1043767827927388160">
             <time creation="system"> 12:43 </time>
@@ -1033,7 +1033,7 @@ See the file COPYING.txt for details.
         example; this phenomenon is not in any way unique to X (Twitter), however.</p>
       <p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.tweets" xml:lang="de">
-          <post modality="written" generatedBy="human" type="tweet" subtype="retweet" who="#u1"
+          <post modality="written" generatedBy="human" type="tweet" who="#u1"
             xml:id="cmc_post_1043796550101716993" _synch="#tweetsbcrn18.t004" xml:lang="de">
             <ptr type="retweet" target="#cmc_post_1043796093786566656"/> Ich mich auch? <ref
               type="hashtag" target="https://twitter.com/hashtag/dynamicduo?src=hash"
@@ -1061,9 +1061,8 @@ See the file COPYING.txt for details.
             </trailer>
           </post>
         </egXML> In the preceding example, we first encode the type of post (in this case, a tweet)
-        in the <att>type</att> attribute, and if it is a specific subtype of tweet, such as a
-        retweet, that will be encoded in the <att>subtype</att> attribute of the <gi>post</gi>
-        element accordingly.</p>
+        in the <att>type</att> attribute, and if it is a specific subtype of tweet, that will be
+        encoded in a <att>subtype</att> attribute of the <gi>post</gi> element accordingly.</p>
       <p>Second, the original tweet-ID as supplied by X (Twitter) is contained in the value of the
         global attribute <att>xml:id</att>.</p>
       <?tei winita This does not sound right to me. —Syd, 2023-12-17 ?>
@@ -1071,12 +1070,11 @@ See the file COPYING.txt for details.
       twwet id in the xml:id. That is actually common practice in our corpora and a much better solution than 
       an additional use of @key -Harald 2024-01-02 ?>
       <p>Third, a retweet and its corresponding retweeted tweet are encoded as two separate posts
-        each with its own set of attributes. The post representing the retweet itself is specified
-        with <code>subtype="retweet"</code> and does not contain or duplicate the content of the
-        retweeted tweet. Instead it refers to the ID of the retweeted tweet via the pointing
-        attribute <att>ref</att>.<?tei winita ditto ?>
-        <?tei winita ditto -Harald 2024-01-02 ?>All original content of the retweet goes in the
-        content of the <gi>post</gi> element.</p>
+        each with its own set of attributes. The post representing the retweet itself does not
+        contain or duplicate the content of the retweeted tweet. Instead it refers to the ID of the
+        retweeted tweet via a <gi>ptr</gi> in the post content. <?tei winita ditto ?>
+        <?tei winita changed the wording to explain the use of ptr -Harald 2024-01-02 ?> All original
+        content of the retweet goes in the content of the <gi>post</gi> element as well.</p>
       <p>Fourth, hashtags occur in the body of tweets and are links like any other hyperlink and
         should be encoded using the element <gi>ref</gi>. The <att>type</att> attribute of the ref
         should contain the value <val>hashtag</val>, the <att>target</att> attribute should contain
