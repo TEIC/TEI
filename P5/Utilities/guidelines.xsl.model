@@ -176,7 +176,6 @@
             <xsl:with-param name="title"
                             select="string-join(tei:generateTitle(.),'')"/>
           </xsl:call-template>
-          <xsl:call-template name="includeJavascript"/>
           <xsl:call-template name="javascriptHook"/>
         </head>
         <body id="TOP">
@@ -637,13 +636,10 @@
 
   <xsl:template name="javascriptHook">
     <script type="text/javascript" src="jquery-3.5.1.min.js"/>
-    <script type="text/javascript" src="columnlist.js"/>
     <script type="text/javascript" src="popupFootnotes.js"/>
     <xsl:comment>CAMPAIGN JS</xsl:comment>
     <script type="text/javascript">
         $(function() {
-         $('ul.attrefs-class').columnizeList({cols:3,width:30,unit:'%'});
-         $('ul.attrefs-element').columnizeList({cols:3,width:30,unit:'%'});
          $(".displayRelaxButton").click(function() {
            $(this).parent().find('.RNG_XML').toggle();
            $(this).parent().find('.RNG_Compact').toggle();

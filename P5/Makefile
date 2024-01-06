@@ -96,7 +96,7 @@ html-web.stamp:  check.stamp p5.xml  Utilities/guidelines.xsl.model
 	@# use `ant` to run the lovely ANT file we just generated
 	${ANT} -lib Utilities/lib/jing.jar:Utilities/lib/${SAXONJAR} -f buildweb.xml -DgoogleAnalytics=${GOOGLEANALYTICS}
 	@# clean up after ourselves
-	rm -f buildweb.xml Utilities/teic-index.xml
+	rm -f buildweb.xml
 	@# let future `make`s know we been there, done that
 	touch html-web.stamp
 
