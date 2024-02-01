@@ -168,17 +168,17 @@ See the file COPYING.txt for details.
         screen of the other parties en bloc. Posts occur in a broad range of written CMC genres,
         including (but not limited to) <q>messages</q> in chats and WhatsApp dialogues, tweets in X
         (Twitter) timelines, comments on Facebook pages, posts in forum threads, and comments or
-        contributions to discussions on Wikipedia talk pages or in the comments section of
+        contributions to discussions on Wikipedia talk pages or in the comment sections of
         weblogs.</p>
       <p>Posts can be either written or spoken: <list>
-          <item><emph rend="bold">written / multimodal posts</emph>: In the majority of CMC
-            technologies posts are composed as stretches of text using an entry form on the screen
-            and the keyboard or speech-to-text conversion software. In many cases the technology
-            allows authors to include or embed graphics (emijos or images), video files, and
-            hyperlinks into their posts.</item>
+          <item><emph rend="bold">written</emph> or <emph rend="bold">multimodal posts</emph>: In
+	    the majority of CMC technologies posts are composed as stretches of text using a
+	    keyboard or speech-to-text conversion software in an entry form on the screen. In
+	    many cases the technology allows authors to include or embed graphics (emojis or
+	    images), video files, and hyperlinks into their posts.</item>
           <item><emph rend="bold">audio posts</emph>: A growing number of CMC technologies, e.g.
             messenger software such as WhatsApp or RocketChat, allow for an alternative, spoken
-            production of posts providing a recording function which allows users to record a
+            production of posts by providing a recording function which allows users to record a
             stretch of spoken language and transmit the resulting audio file to the other
             parties.</item>
         </list></p>
@@ -196,23 +196,25 @@ See the file COPYING.txt for details.
     </div>
     <div xml:id="CMCcmcpostatts">
       <head>Attributes specific to CMC <gi>post</gi></head>
-      <p>Three attributes pertain specifically to <gi>post</gi>: <specList>
+      <p>Three attributes pertain specifically to <gi>post</gi>:
+        <specList>
           <specDesc key="post" atts="modality replyTo indentLevel"/>
-        </specList> The type of the content of a post (i.e., whether the content is written, an
+        </specList>
+        The type of the content of a post (i.e., whether the content is written, an
         image, a video clip, etc.) is indicated by the child elements of the <gi>post</gi>. (E.g., a
-          <gi>post</gi> might have a child <gi>p</gi>, or a child <gi>figure</gi> with a
-          <gi>graphic</gi>, or a child <gi>figure</gi> with a <gi>media</gi>, or some combination
+        <gi>post</gi> might have a child <gi>p</gi>, or a child <gi>figure</gi> with a
+        <gi>graphic</gi>, or a child <gi>figure</gi> with a <gi>media</gi>, or some combination
         thereof.) How that content was created — in particular whether it was recorded speech or not
         — may be described with the <att>modality</att> attribute. Because spoken language differs
         significantly from written language the suggested values only separate <val>written</val>
         modality — which covers all cases other than spoken natural language — from
-          <val>spoken</val>. The use of <att>modality</att> is recommended but not required. <egXML
-          xmlns="http://www.tei-c.org/ns/Examples">
+        <val>spoken</val>. The use of <att>modality</att> is recommended but not required.
+	<egXML xmlns="http://www.tei-c.org/ns/Examples">
           <post modality="written" generatedBy="human" synch="#t005" who="#A06" xml:id="cmc_post09">
             <figure type="image" generatedBy="human">
               <desc xml:lang="en">screenshot of the google search for hairdresser "Pasha's Haare'm"
                 with the average google rating (4,5 of 5 stars), the address, the phone number, and
-                the opening hours. </desc>
+                the opening hours.</desc>
             </figure>
           </post>
         </egXML>
@@ -226,8 +228,8 @@ See the file COPYING.txt for details.
       <p>The <att>replyTo</att> attribute indicates the replied-to or referred-to posts by providing
         one or more pointers to them. In the following example, reply references in the source
         indicate that the first <gi>post</gi> is a reply to an initial post that is not part of the
-        example, the second is a reply to the first, and the third is a reply to the second. <egXML
-          xml:id="e9" xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de" source="#BIB_scilog1">
+        example, the second is a reply to the first, and the third is a reply to the second.
+	<egXML xml:id="e9" xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de" source="#BIB_scilog1">
           <post type="comment" modality="written" generatedBy="human" xml:id="cmc_post10" who="#u7"
             replyTo="#cmc_ex_p9" when-iso="2015-07-29T21:44">
             <p>Es hat den Anschein, als wäre bei BER durchaus große Kompetenz am Bau, allerdings
@@ -265,8 +267,8 @@ See the file COPYING.txt for details.
         an <att>indentLevel</att> of <val>0</val>). It is used in wiki talk corpora but may also be
         used for other threaded genres, e.g. when HTML is used as a source.</p>
       <p>The following is a sample encoding of a portion of a discussion among four different users
-        on a Wikipedia talk page. <egXML xmlns="http://www.tei-c.org/ns/Examples"
-          source="#BIB_WPTalkEiffel" xml:lang="en">
+        on a Wikipedia talk page.
+	<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#BIB_WPTalkEiffel" xml:lang="en">
           <div type="thread" xml:id="i.10031_19">
             <head>[[WP:AUTO]]</head>
             <post indentLevel="0" modality="written" when-iso="2006-09-07T03:09+00"
@@ -404,9 +406,11 @@ See the file COPYING.txt for details.
   </div>
   <div xml:id="CMCmacrometa">
     <head>CMC Macrostructure</head>
-    <p>In many CMC genres, posts come in a CMC document in which they are grouped and according to
-      which they are displayed e.g. in a sequence or in threads. For example, in chat communication
+    <p>In many CMC genres, posts come in a CMC document according to
+      which they are displayed, e.g. in a sequence or in threads;
+      posts within the document may be grouped. For example, in chat communication
       such as WhatsApp, posts are part of <q>a chat</q> of one user with another user or among a
+      <!-- shouldn’t “a chat” above be <soCalled> like “logfile” ?? —Syd, 2024-01-31 -->
       group of users. When an entire chat is saved, typically a <soCalled>logfile</soCalled> of the
       chat is obtained from the CMC system and downloaded. Similarly, Wikipedia discussions come in
       a <term>talk page</term>, which ultimately is a web page containing the user posts,
@@ -539,7 +543,7 @@ See the file COPYING.txt for details.
         graphics or other media data within posts are encoded in a <gi>post</gi> with
           <att>modality</att> set to <val>written</val>. When two or more of these features occur in
         a CMC interaction, we can speak of <term>multimodal</term> CMC.</p>
-      <p>Some basic multimodality is available in private chat such as WhatsApp, where spoken and
+      <p>Some basic multimodality is available in many private chat systems such as WhatsApp, where spoken and
         written posts and media posts containing images or video clips can alternate in the sequence
         of posts. The following shows the suggested encoding of an extended part of the <hi
           rend="italic">haircut</hi> chat example from above, including a spoken post, several
