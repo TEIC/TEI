@@ -138,7 +138,7 @@ See the file COPYING.txt for details.
       </row>
       <row>
         <cell>bodily activity</cell>
-        <cell>texual description</cell>
+        <cell>textual description</cell>
         <cell>&#x21D2;</cell>
         <cell>
           <gi>kinesic</gi>
@@ -313,9 +313,9 @@ See the file COPYING.txt for details.
         element its value is presumed to be <val>unspecified</val>; when it is unspecified on any
         descendant of <gi>post</gi> its value is inherited from the immediately enclosing element.
         (And, in turn, if <att>generatedBy</att> is not specified on that element it inherits the
-        value from its immediately enclosing elment, and so on up the document hierarchy until a
+        value from its immediately enclosing element, and so on up the document hierarchy until a
           <gi>post</gi> is reached; the <gi>post</gi> either has a <att>generatedBy</att> attribute
-        specified or its presumved value is <val>unspecified</val>).</p>
+        specified or its presumed value is <val>unspecified</val>).</p>
       <!-- BEGIN duplicative section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% … -->
       <!--
           If you make a change here, make it in the att.cmc.xml file,
@@ -909,12 +909,15 @@ See the file COPYING.txt for details.
         </egXML>
       </p>
       <p>When a timeline is present in the <gi>teiHeader</gi>, the individual posts can be linked to
-        it via the <att>synch</att> attribute as in the follwing alternative encoding of the
+        it via the <att>synch</att> attribute as in the following alternative encoding of the
         Wikipedia talk example above. Removing timestamps from the text body can help meet
-        requirements of text anonymisation. The <gi>particDesc</gi> and the <gi>timeline</gi> can
-        then for instance be kept in a separate file not to be distributed with the corpus.</p>
-      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="e10" xml:lang="en"
-        source="#BIB_WPTalkAstronomicalObject">
+        requirements of text anonymisation. For instance, if the <gi>particDesc</gi> and the
+	<gi>timeline</gi> are stored in a separate file, the rest of the corpus can be distributed
+	without this separate file. Thus the recipient of the corpus may know in what order posts
+	were made (if the values of the <att>synch</att> are sequential), and will be able to
+	group posts made by the same user, but will not have exact timestamps or actual user names,
+        thus providing a significant degree of anonymisation.</p>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="e10" xml:lang="en" source="#BIB_WPTalkAstronomicalObject">
         <post modality="written" xml:id="cmc_post08" indentLevel="1" who="#u006" synch="#t006">
           <p>Those haven't happened. If they do, we can revisit the concern. </p>
           <signed generatedBy="template">[_DELETED-SIGNATURE_] <date synch="#t007"
@@ -935,7 +938,7 @@ See the file COPYING.txt for details.
       <p>Emoticons predate emojis and are created as combinations of ASCII punctuation and other
         characters using the keyboard. Examples are <code>:-)</code>, <code>;-)</code>,
           <code>:-(</code>, <code>:-x</code>, <code>\O/</code>, and <code>Oo</code>. They first
-        occured on a Usenet newsgroup (<ref target="#BIB_smiley">Fahlman, 2021</ref>) and then
+        occurred on a Usenet newsgroup (<ref target="#BIB_smiley">Fahlman, 2021</ref>) and then
         became frequent in chat communications during the mid-1980s. An emoticon typically consists
         of several Unicode characters (from the ASCII subset) in a row, each of which has an
         intended use other than as part of an emoticon.</p>
@@ -949,7 +952,7 @@ See the file COPYING.txt for details.
           <gi>w</gi> or <gi>c</gi> may be used for tokenization, and the <att>pos</att> attribute
         may be used to indicate that the encoded string is an emoji or an emoticon. (See <ptr
           target="#AILC"/>.)</p>
-      <p>For example, the source post <q>da bin ich nicht so empfindlich ;)</q> (engl. <q>I am not
+      <p>For example, the source post <q>da bin ich nicht so empfindlich ;)</q> (English:. <q>I am not
           so touchy with that ;)</q>) ends with an emoticon, and might be encoded as follows: <egXML
           xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
           <post>
@@ -976,7 +979,7 @@ See the file COPYING.txt for details.
         icon-based emoji.</p>
       <p>Alternatively, e.g. when <gi>w</gi> is not regularly used to encode tokens in the TEI
         document, <gi>c</gi> may be used to mark an emoji. For example, the source post <q>Da kostet
-          ein Haarschnitt 50 € &#x01F631;</q> (frome the corpus <ptr target="#CMC_Mocoda2"/>, in
+          ein Haarschnitt 50 € &#x01F631;</q> (from the corpus <ptr target="#CMC_Mocoda2"/>, in
         English <q>A haircut there costs 50 € &#x01F631;</q>) might be encoded as follows: <egXML
           xmlns="http://www.tei-c.org/ns/Examples">
           <post xml:lang="de">Da kostet ein Haarschnitt 50 € <c type="emoji" ana="#fsif"
@@ -985,7 +988,7 @@ See the file COPYING.txt for details.
       </p>
       <p>Sometimes, e.g. when the source of the TEI document was a web page in HTML, the emojis may
         occur only as an icon graphic in the source. In such a case, they may be encoded using
-          <gi>figure</gi>. The corresponding unicode character can then be recorded in the
+          <gi>figure</gi>. The corresponding Unicode character can then be recorded in the
           <gi>desc</gi> element by the encoder if desired.</p>
       <p>For example, the source text: <q>... ich überlege noch &#x1F648;</q> (English: <q>... I'm
           still thinking &#x1F648;</q>) might be encoded as follows: <egXML
@@ -1234,7 +1237,7 @@ See the file COPYING.txt for details.
       <p>In the preceding example, pairs of a <gi>gap</gi> and a <gi>supplied</gi> element encode
         the fact that some substring has been removed and replaced with another string for
         anonymisation purposes. Note that in this example, the <gi>name</gi> and the <gi>w</gi>
-        elements and their attributes also provide some categorial information about what has been
+        elements and their attributes also provide some categorical information about what has been
         removed. Using <gi>gap</gi> and <gi>supplied</gi> to record the anonymisation is especially
         recommendable when the original name or referencing string has been
           <soCalled>pseudonymised</soCalled>, i.e. replaced by a different referencing string of the
