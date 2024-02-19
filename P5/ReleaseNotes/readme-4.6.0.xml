@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright TEI Consortium.
+Dual-licensed under CC-by and BSD2 licences
+See the file COPYING.txt for details
+-->
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI P5 version 4.6.0 and Stylesheets version 7.55.0 release notes</title>
+      </titleStmt>
+      <editionStmt>
+        <edition>
+          <date when="2023-04-04">Tuesday, 4 April 2023</date>
+        </edition>
+      </editionStmt>
+      <publicationStmt>
+        <authority>The Text Encoding Initiative</authority>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Created retrospectively from ChangeLog and GitHub trackers</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>Release 4.6.0 is codenamed <q>The Peace Release</q>.</p>
+      <p>This release introduces new features and resolves a number of issues raised by the TEI
+        community. As always, the majority of these changes and corrections are a consequence of
+        feature requests or bugs reported by the TEI community using the GitHub tracking system. A
+        full list of the issues resolved in the course of this release cycle may be found under the
+          <ref target="https://github.com/TEIC/TEI/milestone/14?closed=1">4.6.0 milestone</ref>.</p>
+      <p>The <q>Peace Release</q> delivers a new Roma v1.0.0, available at <ref target="https://roma.tei-c.org/">https://roma.tei-c.org/</ref>. TEI Roma now has a
+        localized user interfaces for English, Spanish, German, French, Italian, and Japanese, with thanks to
+        translators listed on the home page. The original Roma remains available at <ref target="http://romaantiqua.tei-c.org/">http://romaantiqua.tei-c.org/</ref>.</p>
+
+      <p>The following changes are particularly worth highlighting in this release: <list>
+
+          <head>New encoding features</head>
+
+          <item>The <gi>calendar</gi> element is now a member of <name type="class">att.typed</name>, giving it the <att>type</att> and <att>subtype</att> attributes (<ref target="https://github.com/TEIC/TEI/issues/2396">#2396</ref>).</item>
+          <item>The <gi>lg</gi> element may now contain any of the members of <name type="class">model.pPart.transcriptional</name>, including <gi>supplied</gi>, <gi>redo</gi>, and
+              <gi>damage</gi> (<ref target="https://github.com/TEIC/TEI/issues/2242">#2242</ref>).</item>
+          <item>The <att>gender</att> attribute has been added to the elements in <name type="class">model.castItem.part</name> and the <att>sex</att> attribute to the
+              <gi>actor</gi> element for the encoding of cast lists in
+            performance texts (<ref target="https://github.com/TEIC/TEI/issues/2400">#2400</ref>).</item>
+          <item><gi>vColl</gi> elements may now self-nest, so that the TEI specifications match the
+            Guidelines prose (<ref target="https://github.com/TEIC/TEI/issues/2034">2034</ref>).</item>
+        </list>
+
+        <list>
+          <head>Changes to content models</head>
+          <item>It is anticipated that in a future release the content model of the
+              <gi>content</gi> element will require that it have one and only one child element (<ref target="https://github.com/TEIC/TEI/issues/2381">#2381</ref>). Thus a Schematron
+	      warning for ODD
+              writers  about this upcoming change has been added to
+	      this release  (<ref target="https://github.com/TEIC/TEI/pull/2410">PR #2410</ref>). </item>
+	</list>
+
+	<list>
+          <head>Changes to classes</head>
+	  <item>The <name type="class">model.glossLike</name> class
+	  (which contained <gi>altIdent</gi>, <gi>equiv</gi>, and <gi>gloss</gi>)
+	  has been renamed to <name type="class">model.identSynonyms</name>.</item>
+        </list>
+
+        <list>
+          <head>Improvements of prose and examples</head>
+
+          <item>The <gi>biblStruct</gi> element now has a new example featuring the use of a
+              <att>type</att> attribute (<ref target="https://github.com/TEIC/TEI/issues/1773">#1773</ref>).</item>
+
+          <item>An outdated link in an example in <name type="class">att.global</name> was updated
+            with a new example from a current archive, and the Bibliography was updated to reflect
+            the change (<ref target="https://github.com/TEIC/TEI/issues/2366">#2366</ref>).</item>
+
+          <item>A misrepresented source for an example in the
+            Manuscript Description chapter was corrected (<ref target="https://github.com/TEIC/TEI/issues/2372">#2372</ref>).</item>
+
+          <item>To improve consistency, many <gi>desc</gi> elements were converted to <gi>gloss</gi>
+            elements and vice versa, and underscores were removed from glosses in several element
+            specifications (<ref target="https://github.com/TEIC/TEI/pull/2388">PR
+            #2388</ref>).</item>
+
+          <item>The explanation of the attribute <att>ns</att> has been clarified in <name type="class">att.namespaceable</name> to indicate more precisely that it refers to an
+            element being defined (<ref target="https://github.com/TEIC/TEI/issues/2395">#2395</ref>).</item>
+
+          <item>In addition, several typos, unclear expressions, and faulty encodings have been
+            corrected (<ref target="https://github.com/TEIC/TEI/issues/2252">#2252</ref>, <ref target="https://github.com/TEIC/TEI/issues/2403">#2403</ref>, <ref target="https://github.com/TEIC/TEI/issues/2387">#2387</ref>, <ref target="https://github.com/TEIC/TEI/issues/2225">#2225</ref>, <ref target="https://github.com/TEIC/TEI/pull/2375">PR #2375</ref>, <ref target="https://github.com/TEIC/TEI/issues/2356">#2356</ref>).</item>
+
+        </list>
+
+        <!-- 
+          <list>
+          <head>Documentation</head>
+          <item/>
+        </list> 
+        -->
+
+        <list>
+          <head>Housekeeping</head>
+
+          <item>The TEI oXygen framework has been updated to
+ 	    accommodate the fact that versions 25+ of oXygen use Saxon 11 (<ref target="https://github.com/TEIC/TEI/issues/2251">#2251</ref>) </item>
+
+            <item>The <gi>title</gi> elements with <att>ref</att>
+            attributes used to refer from the Guidelines to some
+            external standards have been replaced with <gi>ref</gi>
+            elements with <att>target</att> attributes both for
+            internal consistency of encoding and to ensure their
+            values are properly processed as links (<ref target="https://github.com/TEIC/TEI/issues/2368">#2368</ref>).</item>
+
+        </list>
+      </p>
+
+      <p>In addition, many improvements have been made to the XSLT stylesheets (which provide
+        processing of TEI ODD files for <ref target="https://romabeta.tei-c.org/">Roma</ref> and
+          <ref target="https://teigarage.tei-c.org/">TEIGarage</ref> as well as other TEI
+        conversions). The Stylesheets are maintained separately from the Guidelines at <ref target="https://github.com/TEIC/Stylesheets">https://github.com/TEIC/Stylesheets</ref>. A
+        full list of the issues resolved in the course of this release cycle may be found under the
+          <ref target="https://github.com/TEIC/Stylesheets/issues?q=is%3Aclosed+milestone%3A%22Release+7.55.0%22">7.55.0 milestone</ref>.</p>
+
+      <p>Highlights of this release include:<list>
+
+      <item>Information about attributes assigned to an attribute
+      class via an <gi>attRef</gi> that refers to another attribute
+      class (as opposed to class membership via <gi>memberOf</gi> or
+      attribute definition via <gi>attDef</gi>) was not showing up in
+      the documentation specification pages; this has been fixed (<ref target="https://github.com/TEIC/Stylesheets/issues/419">#419</ref>).</item>
+
+          <item>Infelicitous spacing in <gi>egXML</gi> was corrected with resetting the HTML output
+            declaration to prevent indentation (<ref target="https://github.com/TEIC/Stylesheets/pull/599">PR #599</ref>).</item>
+
+          <item>Corrected a problem with processing the
+          <att>minOccurs</att> attribute on <gi>attDef</gi> — when set
+          to <val>0</val> <att>minOccurs</att> was behaving as if
+          it had been set to <val>1</val> unless <att>maxOccurs</att>
+          was <val>unbounded</val> (<ref target="https://github.com/TEIC/Stylesheets/issues/557">#557</ref>).</item>
+
+          <item>Cases of an <gi>attDef</gi> with a <att>mode</att> of
+          <val>delete</val> that was inside an <gi>attList</gi> that
+          was itself inside an <gi>attList</gi> were not being
+          processed; this was corrected (<ref target="https://github.com/TEIC/Stylesheets/pull/601">PR
+          #601</ref>).</item>
+
+          <item>In processing ODDs, the contents of <gi>code</gi>
+	  elements within <gi>desc</gi> were being dropped from the
+	  RELAX NG output; this was corrected (<ref target="https://github.com/TEIC/Stylesheets/pull/514">PR #514</ref>).</item>
+
+          <item>Improved the documentation of the <code>$cssInlineFiles</code> parameter (<ref target="https://github.com/TEIC/Stylesheets/issues/538">#538</ref>).</item>
+
+          <item>Corrected serious problems in <name type="file">Test/test.odd</name> with invalid
+            and undocumented values of the <att>atts</att> attribute (<ref target="https://github.com/TEIC/Stylesheets/issues/329">#329</ref>).</item>
+
+          <item>Corrected a problem in the OxGarage conversion of XLSX spreadsheets to TEI in which
+            empty cells were being omitted (<ref target="https://github.com/TEIC/Stylesheets/issues/323">#323</ref>).</item>
+
+        </list>
+      </p>
+    </body>
+  </text>
+</TEI>

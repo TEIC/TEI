@@ -34,6 +34,39 @@ $Id$
       <anyElement minOccurs="1" maxOccurs="1" require="http://relaxng.org/ns/compatibility/annotations/1.0 http://relaxng.org/ns/structure/1.0"/>
     </alternate>
   </content>
+  <constraintSpec ident="only_1_child_of_content" scheme="schematron">
+    <desc>A temporary constraint to give users a warning that in the
+    future the content of <gi>content</gi> will be restricted to 1 and
+    only 1 child element.</desc>
+    <constraint>
+    <sch:rule context="tei:content[ *[2] ]">
+      <sch:let name="tot_kids" value="count( * )"/>
+      <sch:let name="tei_kids" value="count( tei:* )"/>
+      <sch:let name="rng_kids" value="count( rng:* | rna:* )"/>
+      <sch:let name="msg_part01" value="'In the near future the &lt;content> element will be limited to 1 and only 1 child element. '"/>
+      <sch:let name="msg_part02" value="'This &lt;content> element is in '"/>
+      <sch:let name="msg_part03" value="if ( local-name(..) eq 'elementSpec' ) then 'an ' else 'a '"/>
+      <sch:let name="msg_part04" value="concat( local-name(..), ' with ' )"/>
+      <sch:let name="msg_part05" value="if ( parent::tei:moduleRef/@key ) then 'a @key'    else ''"/>
+      <sch:let name="msg_part06" value="if ( parent::tei:moduleRef/@url ) then 'a @url'    else ''"/>
+      <sch:let name="msg_part07" value="if ( parent::tei:*/@ident )       then 'an @ident' else ''"/>
+      <sch:let name="msg_part08" value="' of &quot;'"/>
+      <sch:let name="msg_part09" value="../@ident | ../@key | ../@url"/>
+      <sch:let name="msg_part10" value="concat('&quot; and has ', $tot_kids, ' children,')"/>
+      <sch:let name="msgs_1to10" value="concat( $msg_part01, $msg_part02, $msg_part03, $msg_part04, $msg_part05, $msg_part06, $msg_part07, $msg_part08, $msg_part09, $msg_part10 )"></sch:let>
+      <sch:report test="$tei_kids eq $tot_kids" role="warning">
+        <sch:value-of select="$msgs_1to10"/> which could be wrapped in a &lt;sequence> element.
+      </sch:report>
+      <sch:report test="$rng_kids eq $tot_kids" role="warning">
+        <sch:value-of select="$msgs_1to10"/> which could be wrapped in an &lt;rng:div> element.
+      </sch:report>
+      <sch:assert test="$tei_kids eq $tot_kids  or  $rng_kids eq $tot_kids"   role="warning">
+        <sch:value-of select="$msgs_1to10"/> but those children are neither all TEI elements nor
+        all RELAX NG elements, and thus this &lt;content> is invalid and can not be easily rectified.
+      </sch:assert>
+    </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="autoPrefix">
       <desc versionDate="2010-05-13" xml:lang="en">controls whether or

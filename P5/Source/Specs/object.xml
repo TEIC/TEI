@@ -21,14 +21,21 @@ $Id$
     <sequence>
       <elementRef key="objectIdentifier" minOccurs="1" maxOccurs="unbounded"/>
       <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      <!--
+          The desired content model for the following is
+            ( pLike | ( msContents? & physDesc? & history? & additional? ) )
+          but of course we can't use interleave, as DTDs (and maybe XSD)
+          will not support that. See https://github.com/TEIC/TEI/issues/2214.
+        -->
       <alternate>
-        <classRef key="model.pLike" minOccurs="0" maxOccurs="unbounded"/>
-        <sequence>
-          <elementRef key="msContents" minOccurs="0"/>
-          <elementRef key="physDesc" minOccurs="0"/>
-          <elementRef key="history" minOccurs="0"/>
-          <elementRef key="additional" minOccurs="0"/>
-        </sequence>
+        <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
+        <!-- Cannot use maxOccurs=4 because resulting content model is ambiguous -->
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <elementRef key="msContents"/>
+          <elementRef key="physDesc"/>
+          <elementRef key="history"/>
+          <elementRef key="additional"/>
+        </alternate>
       </alternate>
       <alternate minOccurs="0" maxOccurs="unbounded">
         <classRef key="model.noteLike"/>
@@ -161,7 +168,7 @@ $Id$
     
   </exemplum>
 <remarks versionDate="2019-12-27" xml:lang="en">
-	<p>
+        <p>
         <!--JC: Remove warnings of version number after a couple of releases.  -->
         The <gi>object</gi> element is a recent addition to the TEI P5 Guidelines as of version 3.5.0 and as such may
         be more prone to further revision in the next few releases as its use develops. This may be particularly evident where its 

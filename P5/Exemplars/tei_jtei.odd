@@ -1948,12 +1948,14 @@
             <attList>
               <attDef ident="notAfter" mode="delete"/>
               <attDef ident="role" mode="delete"/>
+              <attDef ident="calendar" mode="delete"/> <!-- remove 2024-11-11 when @calender removed from <affliation> -->
             </attList>
           </elementSpec>
           <elementSpec ident="application" mode="change">
             <attList>
               <attDef ident="type" mode="delete"/>
               <attDef ident="notAfter" mode="delete"/>
+              <attDef ident="calendar" mode="delete"/> <!-- remove 2024-11-11 when @calender removed from <application> -->
             </attList>
           </elementSpec>
           <elementSpec ident="att" module="tagdocs" mode="change">
@@ -1971,6 +1973,7 @@
             </attList>
           </elementSpec>
           <classSpec ident="att.breaking" module="tei" type="atts" mode="delete"/>
+          <classSpec ident="att.calendarSystem" module="tei" type="atts" mode="delete"/>
           <classSpec ident="att.cReferencing" module="tei" type="atts" mode="delete"/>
           <classSpec ident="att.canonical" module="tei" type="atts" mode="delete"/>
           <classSpec ident="att.citing" module="tei" type="atts" mode="change">
@@ -1993,9 +1996,28 @@
               <attDef ident="group" mode="delete"/>
             </attList>
           </classSpec>
+	  <!--
+	      start @calendar removal section
+	      This whole block should be removed along with the
+	      2024-11-11 removal of @calendar from individual TEI
+	      elements. Note that elements that have @calendar deleted
+	      elsewhere in this ODD have been commented out here, and
+	      those @calendars need to be removed wherever they are
+	      declared in this ODD, too.  —Syd, 2023-10-16
+	  -->
+	  <!-- elementSpec ident="affiliation" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec -->
+	  <!-- elementSpec ident="application" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec -->
+	  <!-- elementSpec ident="author" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec -->
+	  <elementSpec ident="change" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec>
+	  <!-- elementSpec ident="editor" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec -->
+	  <!-- elementSpec ident="idno" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec -->
+	  <elementSpec ident="licence" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec>
+	  <!-- elementSpec ident="name" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec -->
+	  <!-- elementSpec ident="orgName" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec -->
+	  <elementSpec ident="resp" mode="change"><attList><attDef ident="calendar" mode="delete"/></attList></elementSpec>
+	  <!-- end @calendar removal block -->
           <classSpec ident="att.datable" module="tei" type="atts" mode="change">
             <attList>
-              <attDef ident="calendar" mode="delete"/>
               <attDef ident="period" mode="delete"/>
             </attList>
           </classSpec>
@@ -2143,6 +2165,7 @@
             </constraintSpec>
             <attList>
               <attDef ident="role" mode="delete"/>
+              <attDef ident="calendar" mode="delete"/> <!-- remove 2024-11-11 when @calender removed from <author> -->
             </attList>
           </elementSpec>
           <elementSpec ident="availability" mode="change">
@@ -2374,6 +2397,7 @@
                   <valItem ident="technical"/>
                 </valList>
               </attDef>
+              <attDef ident="calendar" mode="delete"/> <!-- remove 2024-11-11 when @calender removed from <editor> -->
             </attList>
           </elementSpec>
           <elementSpec ident="emph" module="core" mode="change">
@@ -2550,6 +2574,7 @@
               <attDef ident="role" mode="delete"/>
               <attDef ident="notAfter" mode="delete"/>
               <attDef ident="type" mode="delete"/>
+              <attDef ident="calendar" mode="delete"/> <!-- remove 2024-11-11 when @calender removed from <name> -->
             </attList>
           </elementSpec>
           <elementSpec ident="note" mode="change">
@@ -2697,6 +2722,7 @@
               <attDef ident="notAfter" mode="delete"/>
               <attDef ident="role" mode="delete"/>
               <attDef ident="type" mode="delete"/>
+              <attDef ident="calendar" mode="delete"/> <!-- remove 2024-11-11 when @calender removed from <orgName> -->
             </attList>
           </elementSpec>
           <elementSpec ident="pubPlace" mode="change">
@@ -3098,6 +3124,9 @@
                 </sch:rule>
               </constraint>
             </constraintSpec>
+	    <attList> <!-- remove 2024-11-11 when @calender removed from <idno> -->
+              <attDef ident="calendar" mode="delete"/> <!-- remove 2024-11-11 when @calender removed from <idno> -->
+	    </attList> <!-- remove 2024-11-11 when @calender removed from <idno> -->
           </elementSpec>
           <elementSpec ident="graphic" module="core" mode="change">
             <constraintSpec ident="jtei.sch-graphic-dimensions" scheme="schematron">

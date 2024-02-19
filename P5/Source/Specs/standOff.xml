@@ -5,11 +5,14 @@ See the file COPYING.txt for details
 -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0"
-             ident="standOff" mode="add" module="linking"
+             ident="standOff" module="linking"
              xmlns:sch="http://purl.oclc.org/dsdl/schematron">
   <desc xml:lang="en" versionDate="2018-10-31">Functions as a
   container element for linked data, contextual information, and
   stand-off annotations embedded in a TEI document.</desc>
+	  <desc xml:lang="ja" versionDate="2023-07-29">
+		  リンクト・データや文脈情報、TEI文書に埋め込まれたスタンドオフ・アノテーションをコンテナ化する要素として機能する。
+		  </desc>
   <classes>
     <memberOf key="model.resource"/>
     <memberOf key="att.global"/>
@@ -19,7 +22,7 @@ See the file COPYING.txt for details
   <content>
     <classRef key="model.standOffPart" minOccurs="1" maxOccurs="unbounded"/>
   </content>
-  <constraintSpec ident="nested_standOff_should_be_typed" scheme="schematron" mode="add">
+  <constraintSpec ident="nested_standOff_should_be_typed" scheme="schematron">
     <constraint>
       <sch:assert test="@type or not(ancestor::tei:standOff)">This
       <sch:name/> element must have a @type attribute, since it is
