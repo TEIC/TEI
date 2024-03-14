@@ -8,6 +8,8 @@
       <titleStmt>
         <title>Testing errors</title>
         <author>Lou Burnard</author>
+	<author>Sebastian Rhatz</author>
+	<author xml:id="sbauman.emt">Syd Bauman</author>
       </titleStmt>
       <publicationStmt>
         <p>Published along with TEI P5 as part of its build process test suite</p>
@@ -17,6 +19,9 @@
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
+      <change when="2024-03-13" who="#sbauman.emt">
+	
+      </change>
       <change when="2023-08-06" who="#sbauman.emt">
         Add the <name>add_missing_scheme</name> and
         <name>replace_missing_scheme</name> tests for
@@ -87,8 +92,7 @@
             <constraintSpec mode="add" ident="c2" scheme="schematron">
               <constraint>
                 <sch:rule context="tei:p|tei:q">
-                  <sch:report test="contains(@rend,' ')"> 
-                multi-valued rend is not supported </sch:report>
+                  <sch:report test="contains(@rend,' ')"> multi-valued rend is not supported </sch:report>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -362,7 +366,10 @@
             </attList>
           </elementSpec>
           <elementSpec ident="blort2" mode="add">
-            <desc xml:lang="en" versionDate="2015-03-27">another completely spurious element made up for testing purposes only</desc>
+            <desc xml:lang="en" versionDate="2024-03-13">
+	      Another completely spurious element made up for testing purposes only.
+	      For information on what is being tested, see <gi>remarks</gi>.
+	    </desc>
             <classes>
               <memberOf key="model.pPart.data"/>
             </classes>
@@ -535,6 +542,166 @@
             </listRef>
           </elementSpec>
 
+	  <elementSpec ident="no_duplicate_attrs_1_invalid" mode="add">
+            <desc xml:lang="en" versionDate="2024-03-13">
+	      Another completely spurious element made up for testing purposes only.
+	      For information on what is being tested, see <gi>remarks</gi>.
+	    </desc>
+	    <classes>
+	      <memberOf key="att.global"/>
+	    </classes>
+	    <content><empty/></content>
+	    <attList>
+	      <attDef ident="bad"/>
+	      <attDef ident="good"/>
+	      <attDef ident="better"/>
+	      <attDef ident="best"/>
+	      <attDef ident="bad"/>
+	    </attList>
+	    <remarks xml:lang="en" versionDate="2024-03-13">
+	      <p>Here we are testing the Schematron that tests for duplicate
+	      atttribute defintions, i.e. <name>no_duplicate_attrs</name>.</p>
+	      <p>This <gi>attList</gi> should be invalid because there
+	      are two <att>bad</att> attributes defined as siblings.</p>
+	      <p>Note that because this element is not a member of any
+	      model class nor in any other element’s content model, it
+	      will probably not show up in an output schema, which is
+	      a good thing, becase defining an attribute twice like
+	      that is an error in at least RELAX NG and DTD.</p>
+	    </remarks>
+	  </elementSpec>
+
+	  <elementSpec ident="no_duplicate_attrs_2_valid" mode="add">
+            <desc xml:lang="en" versionDate="2024-03-13">
+	      Another completely spurious element made up for testing purposes only.
+	      For information on what is being tested, see <gi>remarks</gi>.
+	    </desc>
+	    <classes>
+	      <memberOf key="att.global"/>
+	    </classes>
+	    <content><empty/></content>
+	    <attList>
+	      <attDef ident="have"/>
+	      <attList org="choice">
+		<attDef ident="fun"/>
+		<attDef ident="fun"/>
+		<attDef ident="fun"/>
+	      </attList>
+	      <attDef ident="til"/>
+	      <attDef ident="her"/>
+	      <attDef ident="daddy"/>
+	    </attList>
+	    <remarks xml:lang="en" versionDate="2024-03-13">
+	      <p>Here we are testing the Schematron that tests for duplicate
+	      atttribute defintions, i.e. <name>no_duplicate_attrs</name>.</p>
+	      <p>This <gi>attList</gi> should be valid because,
+	      although there are three <att>fun</att> attributes
+	      defined as siblings, they are in alternation with one
+	      another.</p>
+	      <p>Note that because this element is not a member of any
+	      model class nor in any other element’s content model, it
+	      will probably not show up in an output schema.</p>
+	    </remarks>
+	  </elementSpec>
+
+	  <elementSpec ident="no_duplicate_attrs_3_invalid" mode="add">
+            <desc xml:lang="en" versionDate="2024-03-13">
+	      Another completely spurious element made up for testing purposes only.
+	      For information on what is being tested, see <gi>remarks</gi>.
+	    </desc>
+	    <classes>
+	      <memberOf key="att.global"/>
+	    </classes>
+	    <content><empty/></content>
+	    <attList>
+	      <attList org="choice">
+		<attDef ident="Your"/>
+		<attDef ident="My"/>
+	      </attList>
+	      <attDef ident="spirit"/> 
+	      <attDef ident="and"/> 
+	      <attList org="choice">
+		<attDef ident="my"/>
+		<attDef ident="your"/>
+	      </attList>
+	      <attDef ident="voice"/> 
+	      <attDef ident="in"/> 
+	      <attDef ident="one"/> 
+	      <attDef ident="combined"/>
+	      <attDef ident="The"/> 
+	      <attDef ident="Phantom"/> 
+	      <attDef ident="of"/> 
+	      <attDef ident="the"/> 
+	      <attDef ident="Opera"/> 
+	      <attDef ident="is"/> 
+	      <attDef ident="there"/>
+	      <attDef ident="Inside"/>
+	      <attList org="choice">
+		<attDef ident="my"/>
+		<attDef ident="your"/>
+	      </attList>
+	      <attDef ident="mind"/>
+	    </attList>
+	    <remarks xml:lang="en" versionDate="2024-03-13">
+	      <p>Here we are testing the Schematron that tests for duplicate
+	      atttribute defintions, i.e. <name>no_duplicate_attrs</name>.</p>
+	      <p>This <gi>attList</gi> should be invalid because there
+	      are both two <att>my</att> and two <att>your</att>
+	      attributes defined, and although each is in an alternate
+	      group, the two <att>my</att> attributes are not in
+	      alternation with one another (nor are the two
+	      <att>your</att>s).</p>
+	      <p>Note that the <att>Your</att> vs <att>your</att> and
+	      <att>The</att> vs <att>the</att> are not problems at all
+	      — XML is completely case sensitive, those are different
+	      attributes.</p>
+	      <p>Note that because this element is not a member of any
+	      model class nor in any other element’s content model, it
+	      will probably not show up in an output schema, which is
+	      a good thing, becase defining an attribute twice like
+	      that is an error in at least RELAX NG and DTD.</p>
+	    </remarks>
+	  </elementSpec>
+
+	  <elementSpec ident="no_duplicate_attrs_4_invalid" mode="add">
+            <desc xml:lang="en" versionDate="2024-03-13">
+	      Another completely spurious element made up for testing purposes only.
+	      For information on what is being tested, see <gi>remarks</gi>.
+	    </desc>
+	    <classes>
+	      <memberOf key="att.global"/>
+	    </classes>
+	    <content><empty/></content>
+	    <attList>
+	      <attDef ident="all"/>
+	      <attDef ident="the"/>
+	      <attDef ident="leaves"/>
+	      <attDef ident="are"/>
+	      <attDef ident="brown"/>
+	      <attList>
+		<attDef ident="and"/>
+		<attList>
+		  <attDef ident="the"/>
+		  <attDef ident="sky"/>
+		</attList>
+		<attDef ident="is"/>
+	      </attList>
+	      <attDef ident="gray"/>
+	    </attList>
+	    <remarks xml:lang="en" versionDate="2024-03-13">
+	      <p>Here we are testing the Schematron that tests for duplicate
+	      atttribute defintions, i.e. <name>no_duplicate_attrs</name>.</p>
+	      <p>This <gi>attList</gi> should be invalid due to the
+	      two definitions of the <att>the</att> attribute, which
+	      are not in alternation.</p>
+	      <p>Note that because this element is not a member of any
+	      model class nor in any other element’s content model, it
+	      will probably not show up in an output schema, which is
+	      a good thing, becase defining an attribute twice like
+	      that is an error in at least RELAX NG and DTD.</p>
+	    </remarks>
+	  </elementSpec>
+	 
         </schemaSpec>
       </div>
     </body>
