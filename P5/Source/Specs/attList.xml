@@ -31,6 +31,11 @@
     each <gi>attDef</gi> with a matching <att>ident</att>.</desc>
     <constraint>
       <sch:rule context="tei:attList[ not( ancestor::tei:attList ) ]">
+        <!--
+            Set up a dummy string that contains at least 1 character that is not legal in a URI,
+            and thus cannot be a namespace.
+        -->
+        <sch:let name="notanamespace" value="'☮🄯'"/>
         <!-- generate a sequence of my <attDef> descendants -->
         <sch:let name="defs" value="descendant::tei:attDef"/>
         <!--
@@ -47,18 +52,20 @@
             The sequence should be ('klaatu','bodsworth','rugglesby','').
         -->
         <sch:let name="idents"
-                 value="for $ad in $defs return
-                        if ( 
-                             $ad
-                             [
-                               parent::tei:attList[ @org eq 'choice']
-                               and
-                               preceding-sibling::tei:attDef[ @ident eq $ad/@ident ]
-                             ]
-                           )
-                           then ''
-                           else normalize-space( $ad/@ident )
-                         "/>
+          value="for $ad in $defs return
+                   if ( $ad[
+                          parent::tei:attList[ @org eq 'choice']
+                          and
+                          preceding-sibling::tei:attDef[
+                            @ident eq $ad/@ident
+                            and
+                            ( @ns, $notanamespace )[1] eq ( $ad/@ns, $notanamespace )[1]
+                            ]
+                          ]
+                      )
+                   then ''
+                   else normalize-space( if ($ad/@ns) then 'Q{'||$ad/@ns||'}'||$ad/@ident else $ad/@ident )
+                 "/>
         <!-- get a sequence of any that occur 2+ times: -->
         <sch:let name="dups" value="for $n in $idents return ( $idents[ . eq $n ][2] )"/>
         <!-- remove any duplicates from the list of duplicates (-: -->

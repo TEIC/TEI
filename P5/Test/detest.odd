@@ -547,6 +547,36 @@
             </listRef>
           </elementSpec>
 
+          <elementSpec ident="no_duplicate_attrs_1_valid" mode="add">
+            <desc xml:lang="en" versionDate="2024-03-13">
+              Another completely spurious element made up for testing purposes only.
+              For information on what is being tested, see <gi>remarks</gi>.
+            </desc>
+            <classes>
+              <memberOf key="att.global"/>
+            </classes>
+            <content><empty/></content>
+            <attList>
+              <attDef ident="bad" ns="https://www.youtube.com/watch?v=enuOArEfqGo"/>
+              <attDef ident="good" ns="https://www.youtube.com/watch?v=6YdkQWN59HY"/>
+              <attDef ident="better" ns="https://www.youtube.com/watch?v=qSzYchDIk7E"/>
+              <attDef ident="best" ns="https://www.youtube.com/watch?v=klsEniiVg74"/>
+              <attDef ident="bad" ns="https://www.youtube.com/watch?v=Qikp08PPBf0"/>
+            </attList>
+            <remarks xml:lang="en" versionDate="2024-03-15">
+              <p>Here we are testing the Schematron that tests for duplicate
+              atttribute defintions, i.e. <name>no_duplicate_attrs</name>.</p>
+              <p>This <gi>attList</gi> should be valid because
+              although there are two <att>bad</att> attributes defined
+              as siblings, they have different namespaces.</p>
+              <p>Note that because this element is not a member of any
+              model class nor in any other element’s content model, it
+              will probably not show up in an output schema, which is
+              a good thing, becase defining an attribute twice like
+              that is an error in at least RELAX NG and DTD.</p>
+            </remarks>
+          </elementSpec>
+
           <elementSpec ident="no_duplicate_attrs_1_invalid" mode="add">
             <desc xml:lang="en" versionDate="2024-03-13">
               Another completely spurious element made up for testing purposes only.
@@ -656,6 +686,63 @@
               group, the two <att>my</att> attributes are not in
               alternation with one another (nor are the two
               <att>your</att>s).</p>
+              <p>Note that the <att>Your</att> vs <att>your</att> and
+              <att>The</att> vs <att>the</att> are not problems at all
+              — XML is completely case sensitive, those are different
+              attributes.</p>
+              <p>Note that because this element is not a member of any
+              model class nor in any other element’s content model, it
+              will probably not show up in an output schema, which is
+              a good thing, becase defining an attribute twice like
+              that is an error in at least RELAX NG and DTD.</p>
+            </remarks>
+          </elementSpec>
+
+          <elementSpec ident="no_duplicate_attrs_3_valid" mode="add">
+            <desc xml:lang="en" versionDate="2024-03-13">
+              Another completely spurious element made up for testing purposes only.
+              For information on what is being tested, see <gi>remarks</gi>.
+            </desc>
+            <classes>
+              <memberOf key="att.global"/>
+            </classes>
+            <content><empty/></content>
+            <attList>
+              <attList org="choice">
+                <attDef ident="Your"/>
+                <attDef ident="My"/>
+              </attList>
+              <attDef ident="spirit"/> 
+              <attDef ident="and"/> 
+              <attList org="choice">
+                <attDef ident="my" ns="https://www.youtube.com/watch?v=TM23gaT4zkY"/>
+                <attDef ident="your" ns="https://www.youtube.com/watch?v=j9qLfyLowjg"/>
+              </attList>
+              <attDef ident="voice"/> 
+              <attDef ident="in"/> 
+              <attDef ident="one"/> 
+              <attDef ident="combined"/>
+              <attDef ident="The"/> 
+              <attDef ident="Phantom"/> 
+              <attDef ident="of"/> 
+              <attDef ident="the"/> 
+              <attDef ident="Opera"/> 
+              <attDef ident="is"/> 
+              <attDef ident="there"/>
+              <attDef ident="Inside"/>
+              <attList org="choice">
+                <attDef ident="my" ns="https://www.youtube.com/watch?v=FKHMRGMkQHU"/>
+                <attDef ident="your" ns="https://www.youtube.com/watch?v=TQGQgiKDBbU"/>
+              </attList>
+              <attDef ident="mind"/>
+            </attList>
+            <remarks xml:lang="en" versionDate="2024-03-15">
+              <p>Here we are testing the Schematron that tests for duplicate
+              atttribute defintions, i.e. <name>no_duplicate_attrs</name>.</p>
+              <p>This <gi>attList</gi> should be valid because although there
+              are both two <att>my</att> and two <att>your</att>
+              attributes defined that are not in alternation, they are
+              in different namespaces.</p>
               <p>Note that the <att>Your</att> vs <att>your</att> and
               <att>The</att> vs <att>the</att> are not problems at all
               — XML is completely case sensitive, those are different
