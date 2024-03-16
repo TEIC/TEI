@@ -59,7 +59,12 @@
       </sch:rule>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="context-required" scheme="schematron">
+  <constraintSpec ident="context-required" scheme="schematron" type="deprecationWarning" validUntil="2025-03-15">
+    <desc type="deprecationInfo" xml:lang="en" versionDate="2024-03-15">
+      The use of ISO Schematron <gi>sch:assert</gi> and
+      <gi>sch:report</gi> elements without a parent <gi>sch:rule</gi>
+      with a <att>context</att> attribute is deprecated — it will be
+      an error after 2025-03-15.</desc>
     <!-- It is somewhat easier and clearer to use
          "tei:constraintSpec[ @scheme eq 'schematron']//( sch:assert | sch:report )"
          as the context and then test for "ancestor::sch:rule/@context".
@@ -71,7 +76,7 @@
       <sch:rule context="tei:constraintSpec[ @scheme eq 'schematron']/tei:constraint[ .//sch:assert | .//sch:report ]">
         <sch:let name="assertsHaveContext" value="for $a in .//sch:assert return exists( $a/ancestor::sch:rule/@context )"/>
         <sch:let name="reportsHaveContext" value="for $r in .//sch:report return exists( $r/ancestor::sch:rule/@context )"/>
-        <sch:report test="( $assertsHaveContext, $reportsHaveContext ) = false()">The use of an &lt;sch:assert> or &lt;sch:report> that does not have a context (i.e., does not have an ancestor &lt;sch:rule> with a @context attribute) in an ISO Schematron constraint specification is deprecated, and will become invalid after 2024-06-30. DEBUG: I am in <sch:value-of select="ancestor::*[@ident][1]/@ident"/>.</sch:report>
+        <sch:report test="( $assertsHaveContext, $reportsHaveContext ) = false()" role="warning">The use of an &lt;sch:assert> or &lt;sch:report> that does not have a context (i.e., does not have an ancestor &lt;sch:rule> with a @context attribute) in an ISO Schematron constraint specification is deprecated, and will become invalid after 2025-03-15.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
