@@ -36,7 +36,7 @@
       <datatype minOccurs="0" maxOccurs="1"><dataRef key="teidata.xmlName"/></datatype>
       <constraintSpec scheme="schematron" ident="not-same-prefix">
         <constraint>
-          <sch:rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:moduleRef">
+          <sch:rule context="tei:moduleRef">
             <sch:report test="//*[ not( generate-id(.) eq generate-id( current() ) ) ]/@prefix = @prefix">The prefix attribute
             of <sch:name/> should not match that of any other
             element (it would defeat the purpose)</sch:report>
@@ -45,7 +45,7 @@
       </constraintSpec>
       <constraintSpec scheme="schematron" ident="not-except-and-include">
         <constraint>
-          <sch:rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:moduleRef">
+          <sch:rule context="tei:moduleRef">
             <sch:report test="@except and @include">It is an error to supply both the @include and @except attributes</sch:report>
           </sch:rule>
         </constraint>
