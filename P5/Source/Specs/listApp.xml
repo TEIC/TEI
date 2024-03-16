@@ -20,17 +20,21 @@
   </classes>
   <content>
     <sequence>
-      
-        <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
-       
-        <elementRef key="desc" minOccurs="0" maxOccurs="unbounded"/>
-        <alternate minOccurs="1" maxOccurs="unbounded">
-          <elementRef key="app"/>
-          <elementRef key="listApp"/>
-        </alternate>
-      
+      <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      <elementRef key="desc" minOccurs="0" maxOccurs="unbounded"/>
+      <alternate minOccurs="1" maxOccurs="unbounded">
+        <elementRef key="app"/>
+        <elementRef key="listApp"/>
+      </alternate>
     </sequence>
   </content>
+  <constraintSpec ident="listApp-is-declarable" scheme="schematron">
+    <constraint>
+      <sch:pattern is-a="declarable">
+        <sch:param name="tde" value="tei:listApp"/>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="en" versionDate="2012-08-06">
     <p>In the following example from the exegetical Yasna, the base text is encoded in the <gi>body</gi> of 
     the document, and two separate <gi>listApp</gi> elements are used in the <gi>back</gi>, containing 
