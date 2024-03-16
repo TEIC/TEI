@@ -3,7 +3,11 @@
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" ident="constraintSpec">
   <gloss versionDate="2009-06-10" xml:lang="en">constraint on schema</gloss>
+
+  <gloss versionDate="2024-02-28" xml:lang="ja">スキーマの制約</gloss>
   <desc versionDate="2017-06-24" xml:lang="en">contains a formal constraint, typically expressed in a rule-based schema language, to which a construct must conform in order to be considered valid</desc>
+  <desc versionDate="2024-02-28" xml:lang="ja">〔データの〕構造が妥当であるために満たしていなければならない形式的な制約。
+    通常は規則ベースのスキーマ言語で表現される。</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.identified"/>
@@ -100,6 +104,7 @@
            or mode=delete. Hmmm ...
       -->
       <desc versionDate="2009-06-10" xml:lang="en">supplies the name of the language in which the constraints are defined</desc>
+      <desc versionDate="2024-02-28" xml:lang="ja">制約を定義する言語名を示す。</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <constraintSpec scheme="schematron" ident="usage_based_on_mode">
         <constraint>
@@ -111,6 +116,7 @@
       <valList type="semi">
         <valItem ident="schematron">
           <gloss versionDate="2016-09-27" xml:lang="en">ISO Schematron</gloss>
+          <gloss versionDate="2024-02-28" xml:lang="ja">ISO スキマトロン</gloss>
         </valItem>
       </valList>
       <remarks versionDate="2023-08-06" xml:lang="en">
@@ -126,6 +132,10 @@
         <val>delete</val>, but these Guidelines make no reccomendation
         for what a processor should do if its value does not match
         that of the <gi>constraintSpec</gi> being deleted.</p>
+      </remarks>
+      <remarks versionDate="2024-02-28" xml:lang="ja">
+        <p><gi>constraintSpec</gi>でのSchematron 1.xの利用は、このガイドラインでは推奨せず最近のTEIスタイルシートでもサポートしない。
+        それ故、<val>schematron</val>の値はISO Schematronが<gi>constraintSpec</gi>で用いられることを示すのに使う。</p>
       </remarks>
     </attDef>
     <attDef ident="type" mode="replace">
