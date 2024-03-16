@@ -160,7 +160,8 @@ etc. </p>
 basis of etymology, part-of-speech, or both, and typically provide a
 numeric superscript on the headword identifying the homograph
 number. In these cases each homograph should be encoded as a separate
-entry; an outer <gi>entry</gi> element with a <att>type</att> attribute value of <val>encompassing</val> may be used to group
+entry; an outer <gi>entry</gi> element, perhaps with a <att>type</att> attribute,
+may be used to group
 such successive homograph entries. In addition to a series of
 <gi>entry</gi> elements, the <gi>entry</gi> may contain a
 preliminary <gi>form</gi> group (see section <ptr target="#DITPFO"/>)
@@ -177,34 +178,35 @@ order of entries does not follow the local character-set collating
 sequence (as, for example, when an entry for <q>3D</q> appears at the
 place where <q>three-D</q> would appear). </p>
 
-
-
-<p>A dictionary with no internal divisions might thus have a structure like
-  the following; an outer <gi>entry</gi> element with a <att>type</att> attribute value of <val>encompassing</val> is shown grouping two homograph
-entries.<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und">
-<body>
-<entry>
-<form>
+<p>A dictionary with no internal divisions might thus have a structure
+like the following; an outer <gi>entry</gi> element with a
+<att>type</att> attribute value of <val>wordFamily</val> is shown
+grouping two homograph entries.
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und">
+  <body>
+    <entry>
+      <form>
 	<orth>manifestation</orth> <!-- demonstration -->
-</form>
-</entry>
-<entry>
-<form>
+      </form>
+    </entry>
+    <entry>
+      <form>
 	<orth>émeute</orth> <!-- riot -->
-</form></entry>
-<entry type="encompassing">
- <entry type="hom" n="1">
-<form>
-	<orth>grève</orth> <!-- strike -->
-</form>
-</entry>
- <entry type="hom" n="2">
-<form>
-	<orth>grève</orth> <!-- shore -->
-</form>
-</entry>
-</entry>
-</body>
+      </form>
+    </entry>
+    <entry type="wordFamily">
+      <entry type="hom" n="1">
+	<form>
+	  <orth>grève</orth> <!-- strike -->
+	</form>
+      </entry>
+      <entry type="hom" n="2">
+	<form>
+	  <orth>grève</orth> <!-- shore -->
+	</form>
+      </entry>
+    </entry>
+  </body>
 </egXML>
 </p>
 
@@ -298,37 +300,38 @@ anomalous, as further discussed in section <ptr target="#DIFR"/>.<specList>
 </p>
 <p>An entry with two homographs, the first with two senses and the second with three
  (one of which has two sub-senses), may have a structure like this:<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
-<entry>
-<hom n="1">
-<sense n="1"> <!-- ... --> </sense>
-<sense n="2"> <!-- ... --> </sense>
-</hom>
-<hom n="2">
-<sense n="1">
-<sense n="a"> <!-- ... --> </sense>
-<sense n="b"> <!-- ... --> </sense>
-</sense>
-<sense n="2"> <!-- ... --> </sense>
-<sense n="3"> <!-- ... --> </sense>
-</hom>
+ <entry>
+   <hom n="1">
+     <sense n="1"> <!-- ... --> </sense>
+     <sense n="2"> <!-- ... --> </sense>
+   </hom>
+   <hom n="2">
+     <sense n="1">
+       <sense n="a"> <!-- ... --> </sense>
+       <sense n="b"> <!-- ... --> </sense>
+     </sense>
+     <sense n="2"> <!-- ... --> </sense>
+     <sense n="3"> <!-- ... --> </sense>
+   </hom>
 </entry>
 </egXML> In some dictionaries, homographs have separate entries; in
 such a case, as noted in section <ptr target="#DIBO"/>, the two homographs may be
-  treated as entries, optionally grouped in an outer <gi>entry</gi> element with a <att>type</att> attribute value of <val>encompassing</val>:<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
-<entry type="encompassing">
-<entry n="1" type="hom">
-<sense n="1"> <!-- ... --> </sense>
-<sense n="2"> <!-- ... --> </sense>
-</entry>
-<entry n="2" type="hom">
-<sense n="1">
-<sense n="a"> <!-- ... --> </sense>
-<sense n="b"> <!-- ... --> </sense>
-</sense>
-<sense n="2"> <!-- ... --> </sense>
-<sense n="3"> <!-- ... --> </sense>
-</entry>
-</entry>
+treated as entries, optionally grouped in an outer <gi>entry</gi> element:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
+  <entry>
+    <entry n="1" type="hom">
+      <sense n="1"> <!-- ... --> </sense>
+      <sense n="2"> <!-- ... --> </sense>
+    </entry>
+    <entry n="2" type="hom">
+      <sense n="1">
+	<sense n="a"> <!-- ... --> </sense>
+	<sense n="b"> <!-- ... --> </sense>
+      </sense>
+      <sense n="2"> <!-- ... --> </sense>
+      <sense n="3"> <!-- ... --> </sense>
+    </entry>
+  </entry>
 </egXML>
 </p>
 <p>The hierarchic structure of a dictionary entry is enforced by the
