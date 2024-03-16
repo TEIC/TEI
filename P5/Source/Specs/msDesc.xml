@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="MSDESC" ident="msDesc">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="MSDESC" ident="msDesc" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
   <gloss versionDate="2007-07-04" xml:lang="en">manuscript description</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">원고 기술</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -34,21 +28,50 @@ $Id$
     <sequence>
       <elementRef key="msIdentifier"/>
       <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      <!--
+          The desired content model for the following is
+            ( pLike | ( msContents? & physDesc? & history? & additional? & msPart* & msFrag* ) )
+          but of course we can't use interleave, as DTDs (and maybe XSD)
+          will not support that. See https://github.com/TEIC/TEI/issues/2214.
+      -->
       <alternate>
         <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
-        <sequence>
-          <elementRef key="msContents" minOccurs="0"/>
-          <elementRef key="physDesc" minOccurs="0"/>
-          <elementRef key="history" minOccurs="0"/>
-          <elementRef key="additional" minOccurs="0"/>
-          <alternate>
-            <elementRef key="msPart" minOccurs="0" maxOccurs="unbounded"/>
-            <elementRef key="msFrag" minOccurs="0" maxOccurs="unbounded"/>
-          </alternate>
-        </sequence>
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <elementRef key="msContents"/>
+          <elementRef key="physDesc"/>
+          <elementRef key="history"/>
+          <elementRef key="additional"/>
+          <elementRef key="msPart"/>
+          <elementRef key="msFrag"/>
+        </alternate>
       </alternate>
     </sequence>
   </content>
+  <constraintSpec scheme="schematron" ident="one_ms_singleton_max">
+    <constraint>
+      <sch:rule context="tei:msContents|tei:physDesc|tei:history|tei:additional">
+        <!-- Note: This rule applies to <msContents>, <physDesc>,
+             <history>, and <additional> wherever they occur. Luckily
+             they are only allowed in places where they are
+             constrained to 0 or 1 occurence. If that changes someday,
+             this constraint may will likely need to be updated,
+             too. -->
+        <!-- Also worth noting that
+             a) if & when we can use abstract patterns, this would be
+             better handled as a single abstract rule somewhere, and
+             concrete rules in the individual <elementSpec>s; and
+             b) I did not test for the existence of "../*[name(.) eq
+             $gi][2]" because then an error would be generated for
+             each of the multiple occurences of $gi. -->
+        <sch:let name="gi" value="name(.)"/>
+        <sch:report test="preceding-sibling::*[ name(.) eq $gi ]
+                          and
+                          not( following-sibling::*[ name(.) eq $gi ] )">
+          Only one <sch:name/> is allowed as a child of <sch:value-of select="name(..)"/>.
+        </sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <msDesc>
@@ -217,10 +240,13 @@ $Id$
     </egXML>
   </exemplum>
   <remarks versionDate="2019-12-27" xml:lang="en">
-    <p>Although the <gi>msDesc</gi> has primarily been designed with a view to encoding manuscript descriptions, it may also be 
-      used for other objects such as early printed books, fascicles, epigraphs, or any text-bearing objects that require substantial description. 
-      If an object is not text-bearing or the reasons for describing the object is not primarily the textual content, the more general <gi>object</gi> may be 
-      more suitable.</p>
+    <p>Although the <gi>msDesc</gi> has primarily been designed with a
+    view to encoding manuscript descriptions, it may also be used for
+    other objects such as early printed books, fascicles, epigraphs,
+    or any text-bearing objects that require substantial description.
+    If an object is not text-bearing or the reasons for describing the
+    object is not primarily the textual content, the more general
+    <gi>object</gi> may be more suitable.</p>
   </remarks>
   <listRef>
     <ptr target="#msov"/>

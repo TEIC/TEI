@@ -9,13 +9,14 @@
         <author>Lou Burnard</author>
       </titleStmt>
       <publicationStmt>
-        <p>Discussion draft</p>
+        <p>As published on lb42.github.io</p>
       </publicationStmt>
       <sourceDesc>
         <p>authored from scratch</p>
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
+      <change when="2023-12-20">Minor changes for publication on lb42.github.io</change>
       <change when="2018-01-04">Expanded and announced on TEI-L</change>
       <change when="2016-10-22">Uploaded for Council review</change>
       <change when="2016-10-21">Drafted first part on train from Paris to La Souterraine; then lost
@@ -58,14 +59,14 @@
           in the current source tree. And one with the value
             <val>http://example.com/superODDs/anotherSubset.xml</val> will go looking for it at the
           URL indicated. </p>
-        <p>It's important to understand that the resource indicated by the <att>source</att>s
+        <p>It's important to understand that the resource indicated by the <att>source</att>
           attribute must contain complete and explicit specification elements: <gi>elementSpec</gi>
           rather than <gi>elementRef</gi>, <gi>classSpec</gi> rather than <gi>classRef</gi> and so
           on. It may of course contain other TEI elements, but these will be ignored entirely in the
           construction of a schema. A file called <ident>p5subset.xml</ident>, provided as part of
           every TEI release, is an example of such a resource: it contains specifications for every
-          single TEI element, class, macro, and datatype, but nothing else much. If the
-            <att>source</att> parameter is not supplied, the most recently available version of this
+          single TEI element, class, macro, and datatype, but nothing else much. If a value for the
+            <att>source</att> attribute is not specified, the most recently available version of this
           file is what will be used during the processing of an ODD.</p>
       </div>
       <div>
@@ -73,22 +74,21 @@
         <p>Let's look more closely at the way the TEI defines a very light weight schema called
             <ident>TEI Bare</ident>. Its schema specification element begins like this: <egXML
             xmlns="http://www.tei-c.org/ns/Examples">
-            <schemaSpec ident="tei_bare" xml:lang="en">
-              <moduleRef key="core" include="p list item label head author title"/>
-              <moduleRef key="tei"/>
-              <moduleRef key="header"
-                include="teiHeader fileDesc titleStmt publicationStmt sourceDesc"/>
-              <moduleRef key="textstructure" include="TEI text body div front back"/>
-              <classSpec ident="att.global" mode="change" module="tei" type="atts">
-                <attList>
-                  <attDef ident="xml:space" mode="delete"/>
-                  <attDef ident="rend" mode="delete"/>
-                  <attDef ident="xml:base" mode="delete"/>
-                </attList>
-              </classSpec>
-              <classSpec ident="att.fragmentable" mode="delete" module="tei" type="atts"/>
-            </schemaSpec>
-          </egXML>
+ <schemaSpec ident="tei_bare" xml:lang="en">
+   <moduleRef key="core" include="p list item label head author title"/>
+   <moduleRef key="tei"/>
+   <moduleRef key="header"
+         include="teiHeader fileDesc titleStmt publicationStmt sourceDesc"/>
+   <moduleRef key="textstructure" include="TEI text body div front back"/>
+   <classSpec ident="att.global" mode="change" module="tei" type="atts">
+      <attList>
+       <attDef ident="xml:space" mode="delete"/>
+       <attDef ident="rend" mode="delete"/>
+       <attDef ident="xml:base" mode="delete"/>
+      </attList>
+   </classSpec>
+   <classSpec ident="att.fragmentable" mode="delete" module="tei" type="atts"/>
+</schemaSpec>         </egXML>
         </p>
         <p>No <att>source</att> is specified, so declarations for the elements requested here will
           be taken from the current <ident>p5subset.xml</ident>. </p>
@@ -98,8 +98,8 @@
           specifications for two classes (<gi>classSpec</gi>), rather than references
             (<gi>classRef</gi>). The reference to the module <ident>tei</ident> brings with it
           specifications for most TEI classes, including these two. An ODD processor will therefore
-          have to resolve duplicate class specifications for the classes <ident>att.global</ident>
-          and <ident>att.fragmentable</ident>. The required resolution is indicated by the value of
+          have to deal with duplicate class specifications for the classes <ident>att.global</ident>
+          and <ident>att.fragmentable</ident>. The resolution method  required is indicated by the value of
           the <att>mode</att> attribute: if this is <val>delete</val> then both declarations are to
           be ignored, and the class is therefore suppressed; if it is <val>change</val> then the two
           declarations are to be merged, with any part of it present in the second specification
@@ -107,7 +107,7 @@
           attributes mentioned. </p>
         <p>If you'd like to check that this ODD does what you expect, and you have oXygen installed
           with a recent version of the TEI Frameworks, just download the file
-            <ident>tei_bare.odd</ident>, and tell oXygen to apply the predefined transformation
+            <ident>tei_bare.odd</ident> (you can get it from <ref target="https://github.com/TEIC/TEI/blob/dev/P5/Exemplars/tei_bare.odd">the TEI github repo</ref>), and tell oXygen to apply the predefined transformation
             <ident>TEI ODD to HTML</ident> to it. This will produce a mini-manual for the TEI Bare
           customization in HTML format, near the beginning of which you should see a list of the
           elements the schema contains.
@@ -251,7 +251,8 @@
               the value for the <att>source</att> attribute on the <gi>schemaSpec</gi> defining our
               ODD. We could do the same thing (though I don't recommend it) even at the level of
               individual elements, by specifying a different version as source for an
-              <gi>elementSpec</gi>.</p><p>And just to make life a little simpler, there is an
+              <gi>elementSpec</gi>.</p>
+          <p>And just to make life a little simpler, there is an
                 officially recognized short cut built into the current ODD processing stylesheets:
                 instead of the lengthy URL above, we could simply say <code>tei:3.0.0</code>. For
                 example, supposing that for some strange reason we don't want to add the current

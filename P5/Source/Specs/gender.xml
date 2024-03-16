@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
-<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="gender">
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="namesdates" ident="gender">
   <gloss xml:lang="en" versionDate="2022-05-03">gender</gloss>
   <desc versionDate="2022-05-17" xml:lang="en">specifies the gender identity of a person, persona, or character.</desc>
   <desc versionDate="2022-05-03" xml:lang="es">especifica la identidad de género de una persona.</desc>
@@ -24,7 +17,40 @@ $Id$
     <macroRef key="macro.phraseSeq"/>
   </content>
   <attList>
-    <attDef ident="value" usage="opt">
+      <attDef ident="calendar" usage="opt" validUntil="2024-11-11">
+        <desc type="deprecationInfo" versionDate="2023-05-11" xml:lang="en">The <att>calendar</att> attribute will be removed from this element
+            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar</att> attribute
+            (unlike <att>datingMethod</att> defined in
+            <ident type="class">att.datable.custom</ident>) defines the calendar system of the date
+            in the original material defined by the parent element, <emph>not</emph> the calendar to
+            which the date is normalized.</desc>
+        <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the
+            date represented by the content of this element belongs.</desc>
+        <desc versionDate="2007-12-20" xml:lang="ko">날짜 표현 시스템 또는 달력 표시 형식을 표시한다.</desc>
+        <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該日期表示所使用的曆法計算系統。</desc>
+        <desc xml:lang="ja" versionDate="2019-02-03">この要素を含むコンテントにおける日付の暦やシステムを示す。</desc>
+        <desc versionDate="2009-01-06" xml:lang="fr">indique le système ou le calendrier auquel
+            appartient la date exprimée dans le contenu de l'élément.</desc>
+        <desc versionDate="2007-05-04" xml:lang="es">indica el sistema o calendario en que se muestra
+            una fecha.</desc>
+        <desc versionDate="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data
+            appartiene.</desc>
+        <datatype minOccurs="1" maxOccurs="unbounded">
+            <dataRef key="teidata.pointer"/>
+        </datatype>
+        <constraintSpec scheme="schematron" ident="calendar-check-gender">
+            <constraint>
+                <sch:rule context="tei:*[@calendar]">
+                    <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+                        systems or calendars to which the date represented by the content of this element belongs,
+                        but this <sch:name/> element has no textual content.</sch:assert>
+                </sch:rule>
+            </constraint>
+        </constraintSpec>
+    </attDef>
+
+  
+      <attDef ident="value" usage="opt">
       <desc versionDate="2022-05-03" xml:lang="en">supplies a coded value for gender identity</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.gender"/></datatype>
       <remarks versionDate="2022-08-27" xml:lang="en">
@@ -53,8 +79,8 @@ $Id$
   </remarks>
   <remarks versionDate="2022-09-21" xml:lang="ja">
     <p>年齢や性別など他の文化的特質と同様に、この概念が異なる文化的文脈で記述される方法は様々である。
-      属性の正規化は，相互運用性あるいはプロジェクト内部の分類法の一貫性のために，その多様性を単純化する付随的な手段としてのみ提供されるものであり、それが不適切であったり有用でない場合には，使用されるべきではない。
-      要素の内容は，意図する概念をより詳細に記述するために利用できる。</p>
+      属性の正規化は、相互運用性あるいはプロジェクト内部の分類法の一貫性のために、その多様性を単純化する付随的な手段としてのみ提供されるものであり、それが不適切であったり有用でない場合には、使用されるべきではない。
+      要素の内容は、意図する概念をより詳細に記述するために利用できる。</p>
   </remarks>
   <listRef>
     <ptr target="#NDPERSEpc"/>

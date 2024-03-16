@@ -17,6 +17,11 @@
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
+      <change when="2023-08-06" who="#sbauman.emt">
+        Add the <name>add_missing_scheme</name> and
+        <name>replace_missing_scheme</name> tests for
+        <gi>constraintSpec</gi>.
+      </change>
       <change when="2022-04-04" who="#sbauman.emt">
         <list>
           <item>Tweaked some comments and wording of content</item>
@@ -72,8 +77,11 @@
           <elementSpec ident="p" mode="change">
             <constraintSpec mode="add" ident="c1" scheme="schematron">
               <constraint>
-                <sch:report test="tei:list"> 
-            lists inside paragraphs not supported </sch:report>
+                <sch:rule context="p">
+                  <sch:report test="tei:list"> 
+                    lists inside paragraphs not supported
+                  </sch:report>
+                </sch:rule>
               </constraint>
             </constraintSpec>
             <constraintSpec mode="add" ident="c2" scheme="schematron">
@@ -156,18 +164,20 @@
           <elementSpec ident="div" mode="change">
             <constraintSpec mode="add" ident="canondiv" scheme="schematron">
               <constraint>
-                <sch:report test="@type='canon' and          parent::tei:div/@type='canon'">
-              divs of type 'canon' may not be nested
-            </sch:report>
-                <sch:report test="@type='canon' and          parent::tei:div/@type='register'">
-              divs of type 'canon' may not be nested within 'register'
-            </sch:report>
-                <sch:report test="@type='canon' and count          (tei:div[@type='canonText']) &gt;1">
-              divs of type 'canon' may contain only one 'canonText'
-            </sch:report>
-                <sch:report test="@type='canonText' and           not(parent::tei:div[@type='canon'])">
-              divs of type 'canonText' can only occur inside 'canon'
-            </sch:report>
+                <sch:rule context="div">
+                  <sch:report test="@type eq 'canon'  and  parent::tei:div/@type eq 'canon'">
+                    divs of type 'canon' may not be nested
+                  </sch:report>
+                  <sch:report test="@type eq 'canon'  and  parent::tei:div/@type eq 'register'">
+                    divs of type 'canon' may not be nested within 'register'
+                  </sch:report>
+                  <sch:report test="@type eq 'canon'  and  count( tei:div[ @type eq 'canonText'] ) gt 1">
+                    divs of type 'canon' may contain only one 'canonText'
+                  </sch:report>
+                  <sch:report test="@type eq 'canonText'  and  not( parent::tei:div[ @type eq 'canon'] )">
+                    divs of type 'canonText' can only occur inside 'canon'
+                  </sch:report>
+                </sch:rule>
               </constraint>
             </constraintSpec>
           </elementSpec>
@@ -437,6 +447,29 @@
             <content>
               <rng:ref name="macro.phraseSeq"/>
             </content>
+            <constraintSpec ident="add_missing_scheme">
+              <desc>This <gi>constraintSpec</gi> is invalid because it is
+              missing <att>scheme</att> in <val>add</val> mode.</desc>
+              <constraint>
+                <sch:report test="false()">This rule never fires.</sch:report>
+              </constraint>
+            </constraintSpec>
+            <constraintSpec ident="replace_missing_scheme" mode="replace">
+              <desc>This <gi>constraintSpec</gi> is invalid because it is
+              missing <att>scheme</att> in <val>replace</val> mode.</desc>
+              <constraint>
+                <sch:report test="false()">This rule never fires.</sch:report>
+              </constraint>
+            </constraintSpec>
+            <constraintSpec ident="test_contextless_report" scheme="schematron">
+              <desc>This <gi>constraintSpec</gi> is invalid because it
+              has an <gi>sch:report</gi> that does not have a context
+              (i.e., does not have a <tag>sch:rule
+              context="…"</tag>.)</desc>
+              <constraint>
+                <sch:report test="false()">This rule never fires.</sch:report>
+              </constraint>
+            </constraintSpec>
             <!--
                 * The following <constraintSpec>s have an @ident that
                 * is of the form
@@ -450,14 +483,18 @@
               <!-- This should *not* raise an error, as ISO Schematron
                    is allowed inside constraintSpec/schematron -->
               <constraint>
-                <sch:assert test="true()"/>
+                <sch:rule context="*">
+                  <sch:assert test="true()"/>
+                </sch:rule>
               </constraint>
             </constraintSpec>
             <constraintSpec scheme="isoschematron" ident="isoschematron_isoschematron_error">
               <!-- This should raise an error now, as "isoschematron"
                    is no longer allowed. -->
               <constraint>
-                <sch:assert test="true()"/>
+                <sch:rule context="*">
+                  <sch:assert test="true()"/>
+                </sch:rule>
               </constraint>
             </constraintSpec>
           </elementSpec>

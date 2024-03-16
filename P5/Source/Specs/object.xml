@@ -1,10 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
---><?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="object">
   <desc versionDate="2018-07-15" xml:lang="en">contains a description of a single identifiable physical object.</desc>
   <desc versionDate="2019-01-22" xml:lang="de">enthält die Beschreibung eines einzelnen identifizierbaren physischen Objekts.</desc>
@@ -21,14 +17,21 @@ $Id$
     <sequence>
       <elementRef key="objectIdentifier" minOccurs="1" maxOccurs="unbounded"/>
       <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      <!--
+          The desired content model for the following is
+            ( pLike | ( msContents? & physDesc? & history? & additional? ) )
+          but of course we can't use interleave, as DTDs (and maybe XSD)
+          will not support that. See https://github.com/TEIC/TEI/issues/2214.
+        -->
       <alternate>
-        <classRef key="model.pLike" minOccurs="0" maxOccurs="unbounded"/>
-        <sequence>
-          <elementRef key="msContents" minOccurs="0"/>
-          <elementRef key="physDesc" minOccurs="0"/>
-          <elementRef key="history" minOccurs="0"/>
-          <elementRef key="additional" minOccurs="0"/>
-        </sequence>
+        <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
+        <!-- Cannot use maxOccurs=4 because resulting content model is ambiguous -->
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <elementRef key="msContents"/>
+          <elementRef key="physDesc"/>
+          <elementRef key="history"/>
+          <elementRef key="additional"/>
+        </alternate>
       </alternate>
       <alternate minOccurs="0" maxOccurs="unbounded">
         <classRef key="model.noteLike"/>
@@ -161,7 +164,7 @@ $Id$
     
   </exemplum>
 <remarks versionDate="2019-12-27" xml:lang="en">
-	<p>
+        <p>
         <!--JC: Remove warnings of version number after a couple of releases.  -->
         The <gi>object</gi> element is a recent addition to the TEI P5 Guidelines as of version 3.5.0 and as such may
         be more prone to further revision in the next few releases as its use develops. This may be particularly evident where its 

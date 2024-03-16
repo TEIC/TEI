@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="alternate" module="tagdocs">
   <desc versionDate="2013-11-21" xml:lang="en">indicates that the constructs referenced by its children form an alternation</desc>
@@ -23,14 +17,16 @@ $Id$
   </content>
   <constraintSpec ident="alternatechilden" scheme="schematron">
     <constraint>
-      <sch:assert test="count(*)&gt;1">The alternate element must have at least two child elements</sch:assert>
+      <sch:rule context="tei:alternate">
+        <sch:assert test="count(*) gt 1">The alternate element must have at least two child elements</sch:assert>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#UND"><content>
       <alternate>
-	<elementRef key="name"/>
-	<elementRef key="persName"/>
+        <elementRef key="name"/>
+        <elementRef key="persName"/>
       </alternate>
     </content>
     </egXML>

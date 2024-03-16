@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textcrit" ident="rdgGrp">
   <gloss versionDate="2005-01-14" xml:lang="en">reading group</gloss>
@@ -14,15 +8,12 @@ $Id$
   <gloss versionDate="2007-06-12" xml:lang="fr">groupe de leçons</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">grupo de lecturas</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">gruppo di letture</gloss>
-  <desc versionDate="2005-01-14" xml:lang="en">within a textual variation,
-groups two or more readings perceived to have a genetic
-relationship or other affinity.</desc>
+  <desc versionDate="2005-01-14" xml:lang="en">within a textual variation, groups two or more readings perceived to have a genetic relationship or other affinity.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">텍스트 변이형 내에서 계통 관계 또는 유사 관계로 이해되는 둘 이상의 독법을 모아 놓는다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">原文變異中，匯集兩個或多個認為具有根源關係或於其他方面性質類似的對應本。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">異なるテキストで、系統関係や類縁性があるとされる、二つ以上の読みをま
   とめる。</desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">regroupe deux leçons ou plus qui sont perçues
-			comme ayant une relation génétique ou une autre affinité.</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">regroupe deux leçons ou plus qui sont perçues comme ayant une relation génétique ou une autre affinité.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">agrupa al interno de una variante textual dos o más lecturas consideradas emparentadas o afines.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">all'interno di una variante testuale raggruppa due o più letture considerate imparentate o affini</desc>
   <classes>
@@ -43,7 +34,9 @@ relationship or other affinity.</desc>
   </content>
   <constraintSpec scheme="schematron" ident="only1lem">
     <constraint xmlns:sch="http://purl.oclc.org/dsdl/schematron">
-      <sch:assert test="count(tei:lem) &lt; 2">Only one &lt;lem&gt; element may appear within a &lt;rdgGrp&gt;</sch:assert>
+      <sch:rule context="tei:rdgGrp">
+        <sch:assert test="count(tei:lem) lt 2">Only one &lt;lem&gt; element may appear within a &lt;rdgGrp&gt;</sch:assert>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">

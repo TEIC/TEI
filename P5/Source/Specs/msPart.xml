@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="MSPART" ident="msPart">
   <gloss versionDate="2007-07-04" xml:lang="en">manuscript part</gloss>
@@ -33,15 +27,21 @@ $Id$
     <sequence>
       <elementRef key="msIdentifier"/>
       <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      <!--
+          The desired content model for the following is
+            ( pLike | ( msContents? & physDesc? & history? & additional? & msPart* ) )
+          but of course we can't use interleave, as DTDs (and maybe XSD)
+          will not support that. See https://github.com/TEIC/TEI/issues/2214.
+        -->
       <alternate>
         <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
-        <sequence>
-          <elementRef key="msContents" minOccurs="0"/>
-          <elementRef key="physDesc" minOccurs="0"/>
-          <elementRef key="history" minOccurs="0"/>
-          <elementRef key="additional" minOccurs="0"/>
-          <elementRef key="msPart" minOccurs="0" maxOccurs="unbounded"/>
-        </sequence>
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <elementRef key="msContents"/>
+          <elementRef key="physDesc"/>
+          <elementRef key="history"/>
+          <elementRef key="additional"/>
+          <elementRef key="msPart"/>
+        </alternate>
       </alternate>
     </sequence>
   </content>
@@ -97,12 +97,12 @@ $Id$
           </msContents>
         </msPart>        
         <msPart>
-	  <msIdentifier>
-	    <altIdentifier>
-	      <idno>MS 6</idno>
-	    </altIdentifier>
-	  </msIdentifier>
-	  <!-- other information specific to this part here -->
+          <msIdentifier>
+            <altIdentifier>
+              <idno>MS 6</idno>
+            </altIdentifier>
+          </msIdentifier>
+          <!-- other information specific to this part here -->
         </msPart>
         <!-- more parts here -->
       </msDesc>

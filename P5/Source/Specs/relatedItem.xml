@@ -1,49 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Copyright TEI Consortium.
-    Dual-licensed under CC-by and BSD2 licences
-    See the file COPYING.txt for details
-    $Date$
-    $Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="relatedItem" module="core">
-  <desc versionDate="2007-03-19" xml:lang="en">contains or references some other bibliographic item which is related to the present one in
-    some specified manner, for example as a constituent or alternative version of it.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">구성물이나 대체 버전과 같이 현 항목과 특정 방식으로 관련된 다른 서지 항목을 명시적 방식에 따라
-    포함하거나 지시한다.</desc>
+  <desc versionDate="2007-03-19" xml:lang="en">contains or references some other bibliographic item which is related to the present one in some specified manner, for example as a constituent or alternative version of it.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">구성물이나 대체 버전과 같이 현 항목과 특정 방식으로 관련된 다른 서지 항목을 명시적 방식에 따라 포함하거나 지시한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含或參照到其他書目項目，該些項目與目前的書目項目在某種程度上相關，例如作為其組成或者替代項目。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">当該内容と関連する書誌情報項目を示す、または参照する。例えば、構成要 素または他の版など。</desc>
-  <desc versionDate="2009-01-06" xml:lang="fr">contient ou référe à un autre élément bibliographique
-    ayant une relation quelconque avec l'objet décrit, par exemple comme faisant partie d'une version alternative de celui-ci, ou bien en étant une version alternative.</desc>
-  <desc versionDate="2007-11-06" xml:lang="it">contiene o si riferisce ad altra entità bibliografica
-    legata alla presente tramite una relazione specificata quale, per esempio, versione costitutiva
-    o alternativa</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">contiene o refiere algún otro elemento bibliográfico que
-    se relaciona con el actual de alguna manera, por ejemplo como un versión complementaria o
-    alternativa de este.</desc>
-  <desc versionDate="2017-06-13" xml:lang="de">enthält oder verweist auf ein anderes bibliografisches Objekt, welches zu dem aktuellen in einer
-    bestimmten Beziehung steht, z. B. als Bestandteil oder Alternativfassung.</desc>
+  <desc versionDate="2009-01-06" xml:lang="fr">contient ou référe à un autre élément bibliographique ayant une relation quelconque avec l'objet décrit, par exemple comme faisant partie d'une version alternative de celui-ci, ou bien en étant une version alternative.</desc>
+  <desc versionDate="2007-11-06" xml:lang="it">contiene o si riferisce ad altra entità bibliografica legata alla presente tramite una relazione specificata quale, per esempio, versione costitutiva o alternativa</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">contiene o refiere algún otro elemento bibliográfico que se relaciona con el actual de alguna manera, por ejemplo como un versión complementaria o alternativa de este.</desc>
+  <desc versionDate="2017-06-13" xml:lang="de">enthält oder verweist auf ein anderes bibliografisches Objekt, welches zu dem aktuellen in einer bestimmten Beziehung steht, z. B. als Bestandteil oder Alternativfassung.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.biblPart"/>
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    
-      <alternate minOccurs="0">
-        <classRef key="model.biblLike"/>
-        <classRef key="model.ptrLike"/>
-      </alternate>
-    
+    <alternate minOccurs="0">
+      <classRef key="model.biblLike"/>
+      <classRef key="model.ptrLike"/>
+    </alternate>
   </content>
   <constraintSpec ident="targetorcontent1" scheme="schematron">
     <constraint>
-      <sch:report test="@target and count( child::* ) &gt; 0">
-If the @target attribute on <sch:name/> is used, the
-relatedItem element must be empty</sch:report>
-      <sch:assert test="@target or child::*">A relatedItem element should have either a 'target' attribute
-        or a child element to indicate the related bibliographic item</sch:assert>
+      <sch:rule context="tei:relatedItem">
+        <sch:report test="@target and count( child::* ) &gt; 0">If the @target attribute on <sch:name/> is used, the relatedItem element must be empty</sch:report>
+        <sch:assert test="@target or child::*">A relatedItem element should have either a @target attribute or a child element to indicate the related bibliographic item</sch:assert>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>

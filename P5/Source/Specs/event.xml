@@ -1,54 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Copyright TEI Consortium. 
-  Dual-licensed under CC-by and BSD2 licences 
-  See the file COPYING.txt for details
-  $Date$
-  $Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="event">
-  <gloss xml:lang="en" versionDate="2008-12-09">event</gloss>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="namesdates" ident="event">
+  <gloss versionDate="2008-12-09" xml:lang="en">event</gloss>
+  <gloss versionDate="2023-05-07" xml:lang="de">Ereignis</gloss>
   <gloss versionDate="2008-12-09" xml:lang="fr">évènement</gloss>
-  <desc versionDate="2007-08-01" xml:lang="en">contains data relating to any kind of significant event associated with a person, place, or organization.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">개인, 장소, 또는 조직과 관련된 중요한 사건에 해당하는 데이터를 포함한다.</desc>
+  <desc versionDate="2023-09-05" xml:lang="en">contains data relating to anything of significance that happens in time.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">任何未必是口說的或溝通上的現象或發生情況，例如偶然的噪音或其他影響溝通的事件。</desc>
+  <desc versionDate="2023-09-05" xml:lang="de">enthält Daten mit Bezug zu etwas Bemerkenswertem, das in der Zeit geschieht.</desc>
+  <desc versionDate="2023-09-04" xml:lang="es">contiene datos relacionados con cualquier tipo de evento significativo asociado con una persona, lugar u organización.</desc>
+  <desc versionDate="2023-05-07" xml:lang="fr">contient des données liées à tout type d'évènement significatif dans l'existence d'une personne, d'un lieu, d'un objet ou d'une organisation.</desc>
+  <desc versionDate="2023-09-04" xml:lang="it">contiene dati a proposito di un qualsiasi tipo di evento significativo associato con una persona, luogo o organizzazione.</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">人生における特定の重要事象の解説を示す。</desc>
-  <desc versionDate="2009-03-19" xml:lang="fr">contient des données liées à tout type d'évènement significatif dans l'existence d'une personne, d'un
-        lieu ou d'une organisation.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">cualquier fenómeno o evento no necesariamente vocal o comunicativo, como ruidos accidentales u otros
-        fenómenos que inciden en la comunicación en acto.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">qualsiasi fenomeno o evento non necessariamente vocale o comunicativo, come rumori accidentali o altri
-        fenomeni che incidano sulla comunicazione in atto</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">개인, 장소, 또는 조직과 관련된 중요한 사건에 해당하는 데이터를 포함한다.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.datable"/>
     <memberOf key="att.editLike"/>
-    <memberOf key="att.typed"/>
+    <memberOf key="att.locatable"/>
     <memberOf key="att.naming"/>
     <memberOf key="att.sortable"/>
+    <memberOf key="att.typed"/>
     <memberOf key="model.eventLike"/>
-    <memberOf key="att.locatable"/>
   </classes>
   <content>
     <sequence>
-       <elementRef key="idno" minOccurs="0" maxOccurs="unbounded"/>
-         <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      <elementRef key="idno" minOccurs="0" maxOccurs="unbounded"/>
+      <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
       <alternate>
         <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
-            <classRef key="model.labelLike" minOccurs="1" maxOccurs="unbounded"/>
-        </alternate>
+        <classRef key="model.labelLike" minOccurs="1" maxOccurs="unbounded"/>
+        <elementRef key="eventName" minOccurs="1" maxOccurs="unbounded"/>
+      </alternate>
       <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.noteLike"/>
-          <classRef key="model.biblLike"/>
-          <elementRef key="linkGrp"/>
-          <elementRef key="link"/>
-          <elementRef key="idno"/>
-          <elementRef key="ptr"/>
-        </alternate>
-        <elementRef key="event" minOccurs="0" maxOccurs="unbounded"/>
-      </sequence>
+        <classRef key="model.noteLike"/>
+        <classRef key="model.biblLike"/>
+        <elementRef key="linkGrp"/>
+        <elementRef key="link"/>
+        <elementRef key="idno"/>
+        <elementRef key="ptr"/>
+      </alternate>
+      <classRef key="model.eventLike" minOccurs="0" maxOccurs="unbounded"/>
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.personLike" minOccurs="1" maxOccurs="1"/>
+        <elementRef key="listPerson" minOccurs="1" maxOccurs="1"/>
+      </alternate>
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.placeLike" minOccurs="1" maxOccurs="1"/>
+        <elementRef key="listPlace" minOccurs="1" maxOccurs="1"/>
+      </alternate>
+      <classRef key="model.objectLike" minOccurs="0" maxOccurs="unbounded"/>
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <elementRef key="relation" minOccurs="1" maxOccurs="1"/>
+        <elementRef key="listRelation" minOccurs="1" maxOccurs="1"/>
+      </alternate>
+    </sequence>
   </content>
+  <attList>
+    <attDef ident="calendar" usage="opt" validUntil="2024-11-11">
+      <desc type="deprecationInfo" versionDate="2023-05-11" xml:lang="en">The <att>calendar</att> attribute will be removed from this element
+        as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar</att> attribute
+        (unlike <att>datingMethod</att> defined in
+        <ident type="class">att.datable.custom</ident>) defines the calendar system of the date
+        in the original material defined by the parent element, <emph>not</emph> the calendar to
+        which the date is normalized.</desc>
+      <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the date represented by the content of this element belongs.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">날짜 표현 시스템 또는 달력 표시 형식을 표시한다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該日期表示所使用的曆法計算系統。</desc>
+      <desc xml:lang="ja" versionDate="2019-02-03">この要素を含むコンテントにおける日付の暦やシステムを示す。</desc>
+      <desc versionDate="2009-01-06" xml:lang="fr">indique le système ou le calendrier auquel appartient la date exprimée dans le contenu de l'élément.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">indica el sistema o calendario en que se muestra una fecha.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data appartiene.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+        <dataRef key="teidata.pointer"/>
+      </datatype>
+      <constraintSpec scheme="schematron" ident="calendar-check-event">
+        <constraint>
+          <sch:rule context="tei:*[@calendar]">
+            <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+            systems or calendars to which the date represented by the content of this element belongs,
+            but this <sch:name/> element has no textual content.</sch:assert>
+          </sch:rule>
+        </constraint>
+      </constraintSpec>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listEvent>
+        <event when="1618-05-23" xml:id="SecondDefPrague" where="#Prague">
+          <eventName>1618 Defenestration of Prague</eventName>
+          <idno>https://www.wikidata.org/wiki/Q13365740</idno>
+          <listPerson type="defenstrated">
+            <person>
+              <persName>Jaroslav Bořita z Martinic</persName>
+              <idno type="GND">https://d-nb.info/gnd/116810998</idno>
+            </person>
+            <person>
+              <persName>Vilém Slavata z Chlumu a Košumberka</persName>
+              <idno type="GND">https://d-nb.info/gnd/1018376615</idno>
+            </person>
+            <person>
+              <persName>Filip Fabricius</persName>
+              <idno type="GND">https://d-nb.info/gnd/133946118</idno>
+            </person>
+          </listPerson>
+          <place xml:id="Prague"><placeName>Prague</placeName></place>
+        </event>
+        <event from="1618" to="1648" xml:id="ThirtyYearsWar">
+          <eventName>Thirty Years’ War</eventName>
+          <idno>https://www.wikidata.org/wiki/Q2487</idno>
+          <event when="1643-03-19" xml:id="BattleofRocroi" where="#Rocroi">
+            <eventName>Battle of Rocroi</eventName>
+            <idno type="Wikidata">https://www.wikidata.org/wiki/Q728480</idno>
+            <idno type="GND">https://d-nb.info/gnd/4202901-6</idno>
+            <place xml:id="Rocroi">
+              <placeName>Rocroi</placeName>
+              <location><geo decls="#WGS">49.926111 4.522222</geo></location>
+            </place>
+          </event>
+        </event>
+      </listEvent>
+    </egXML>
+  </exemplum>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <person>
@@ -83,6 +157,66 @@
           <label>畢業</label>
         </event>
       </person>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="de-AT">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listEvent type="generated">
+        <event xml:id="mrp-events-MRP-1-1-01-0-18480401-P-0001" ref="https://mrp.oeaw.ac.at/pages/show.html?directory=editions&amp;document=MRP-1-1-01-0-18480401-P-0001.xml" 
+          type="session">
+          <head>Nr. 1 Ministerrat, Wien, 1. April 1848</head>
+          <label>Ministerratssitzung <date when="1848-04-01">1848-04-01</date>, aus Band 1 1/1, März 1848–21. November 1848</label>
+          <listEvent type="agenda_items">
+            <event type="agenda_item" xml:id="mrp-events-MRP-1-1-01-0-18480401-P-0001-top_1_1_1_1">
+              <label>I. Enthebung Baron Karl Friedrich v. Kübecks als Finanzminister und Ernennung des Freiherrn Philipp v. Krauß zu seinem Nachfolger</label>
+            </event>
+            <event type="agenda_item" xml:id="mrp-events-MRP-1-1-01-0-18480401-P-0001-top_1_1_1_2">
+              <label>II. Ernennung FML. Peter Zaninis zum Kriegsminister</label>
+            </event>
+            <event type="agenda_item" xml:id="mrp-events-MRP-1-1-01-0-18480401-P-0001-top_1_1_1_3">
+              <label>III. Öffentliche Erklärung über die konstitutionellen Grundsätze; Umformung des Staatsrates</label>
+            </event>
+            <event type="agenda_item" xml:id="mrp-events-MRP-1-1-01-0-18480401-P-0001-top_1_1_1_4">
+              <label>IV. Kriegserklärung Sardiniens; Vorgehen Radetzkys; Bestellung eines Hofkommissärs für Lombardo-Venetien</label>
+            </event>
+            <event type="agenda_item" xml:id="mrp-events-MRP-1-1-01-0-18480401-P-0001-top_1_1_1_5">
+              <label>V. Beeidigung der Minister</label>
+            </event>
+            <event type="agenda_item" xml:id="mrp-events-MRP-1-1-01-0-18480401-P-0001-top_1_1_1_6">
+              <label>VI. Tumulte im Kärntnertortheater</label>
+            </event>
+            <event type="agenda_item" xml:id="mrp-events-MRP-1-1-01-0-18480401-P-0001-top_1_1_1_7">
+              <label>VII. Bewegung der tschechischen demokratischen Partei; Berufung Paul Josef Safaiřiks nach Wien</label>
+            </event>
+            <event type="agenda_item" xml:id="mrp-events-MRP-1-1-01-0-18480401-P-0001-top_1_1_1_8">
+              <label>VIII. Behandlung der aus Lombardo-Venetien vertriebenen Justiz- und politischen Beamten</label>
+            </event>
+            <event type="agenda_item" xml:id="mrp-events-MRP-1-1-01-0-18480401-P-0001-top_1_1_1_9">
+              <label>IX. Besetzung der Landeschef- und Ständepräsidentenposten in Prag; böhmische Deputation in Wien</label>
+            </event>
+          </listEvent>
+          <listPerson type="attendants">
+            <person role="chair"><persName ref="https://mpr.acdh.oeaw.ac.at/entity/8141"><surname>Kolowrat</surname></persName></person>
+            <person role="attendant"><persName ref="https://mpr.acdh.oeaw.ac.at/entity/8145"><surname>Ficquelmont</surname></persName></person>
+            <person role="attendant"><persName ref="https://mpr.acdh.oeaw.ac.at/entity/8154"><surname>Taaffe</surname></persName></person>
+            <person role="attendant"><persName ref="https://mpr.acdh.oeaw.ac.at/entity/8148"><surname>Pillersdorf</surname></persName></person>
+            <person role="attendant"><persName ref="https://mpr.acdh.oeaw.ac.at/entity/8151"><surname>Sommaruga</surname></persName></person>
+            <person role="signed-protocol"><persName ref="https://mpr.acdh.oeaw.ac.at/entity/8141"><surname>Kolowrat</surname></persName><note>BdE. <date when="1848-04-02">2. 4.</date></note></person>
+            <person role="signed-protocol"><persName ref="https://mpr.acdh.oeaw.ac.at/entity/9251"><surname>Franz Karl</surname></persName><note>BdE. <date when="1848-04-02">2. 4.</date></note></person>
+          </listPerson>
+          <listPlace>
+            <place xml:id="Wien">
+              <placeName xml:lang="de">Wien</placeName>
+              <placeName xml:lang="en">Vienna</placeName>
+              <location>
+                <geo>48.208199 16.37169</geo>
+              </location>
+              <idno type="GeoNames">https://sws.geonames.org/2761369</idno>
+            </place>
+          </listPlace>
+        </event>
+        <!-- ... -->
+      </listEvent>
     </egXML>
   </exemplum>
   <listRef>

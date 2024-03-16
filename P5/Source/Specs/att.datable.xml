@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" type="atts" xml:id="DATABLE" ident="att.datable">
   <desc versionDate="2007-06-12" xml:lang="en">provides attributes for normalization of elements
@@ -25,66 +19,9 @@ $Id$
     <memberOf key="att.datable.custom"/>
   </classes>
   <attList>
-    <attDef ident="calendar" usage="opt">
-      <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the
-        date represented by the content of this element belongs.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">날짜 표현 시스템 또는 달력 표시 형식을 표시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該日期表示所使用的曆法計算系統。</desc>
-      <desc xml:lang="ja" versionDate="2019-02-03">この要素を含むコンテントにおける日付の暦やシステムを示す。</desc>
-      <desc versionDate="2009-01-06" xml:lang="fr">indique le système ou le calendrier auquel
-        appartient la date exprimée dans le contenu de l'élément.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">indica el sistema o calendario en que se muestra
-        una fecha.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data
-        appartiene.</desc>
-      <datatype minOccurs="1" maxOccurs="unbounded">
-        <dataRef key="teidata.pointer"/>
-      </datatype>
-      <constraintSpec ident="calendar" scheme="schematron">
-        <constraint>
-          <sch:rule context="tei:*[@calendar]">
-            <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
-            systems or calendars to which the date represented by the content of this element belongs,
-            but this <sch:name/> element has no textual content.</sch:assert>
-          </sch:rule>
-        </constraint>
-      </constraintSpec>
-      <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">He was born on <date calendar="#gregorian">Feb. 22, 1732</date> (<date calendar="#julian" when="1732-02-22">Feb. 11, 1731/32,
-            O.S.</date>).
-        </egXML> 
-      </exemplum>
-      <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          He was born on <date calendar="#gregorian #julian" when="1732-02-22">Feb. 22, 1732 
-            (Feb. 11, 1731/32, O.S.)</date>.
-        </egXML>
-      </exemplum>
-      <exemplum xml:lang="de">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <date calendar="#julian #gregorian" when="1829-05-19">Dienstag 7/19
-          Mai</date>.
-        </egXML>
-      </exemplum>
-      <exemplum versionDate="2008-04-06" xml:lang="fr">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Bouiller_Rapport"> L'année
-          1960 fut, en vertu du calendrier grégorien, bissextile ; le 22 juin tomba ainsi le jour de
-          l'été, le <date calendar="#gregorian">22 juin</date>. </egXML>
-      </exemplum>
-      <remarks xml:lang="en" versionDate="2015-05-29">
-        <p>Note that the <att>calendar</att> attribute (unlike <att>datingMethod</att> defined in
-            <ident type="class">att.datable.custom</ident>) defines the calendar system of the date
-          in the original material defined by the parent element, <emph>not</emph> the calendar to
-          which the date is normalized.</p>
-      </remarks>
-      <remarks xml:lang="ja" versionDate="2019-02-03"><p>
-        <att>calendar</att>属性は(<ident type="class">att.datable.custom</ident>クラスで定義される<att>datingMethod</att>属性と異なり、
-        親要素によって定義される原資料の日付の暦日システムを定義するものであり、
-        どの暦日に日付を正規化するかではない。</p></remarks>
-    </attDef>
     <attDef ident="period" usage="opt">
       <desc versionDate="2021-04-19" xml:lang="en">supplies pointers to one or more definitions of 
-        named periods of time (typically <gi>category</gi>s or <gi>calendar</gi>s) within which the datable item is understood to have occurred.</desc>
+        named periods of time (typically <gi>category</gi>s, <gi>date</gi>s or <gi>event</gi>s) within which the datable item is understood to have occurred.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">시간을 명시할 수 있는 항목이 일어난 시간의 기간명을 정의하는 특정 위치로의 포인터를
         제공한다.</desc>
       <desc versionDate="2008-04-06" xml:lang="es">suministra un indicador a una localización

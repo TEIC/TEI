@@ -563,8 +563,10 @@ $Id$
                                  | tei:moduleSpec/tei:remarks[ position() > 1 ]
                                   ">
                 <sch:let name="myGI" value="name(.)"/>
+                <sch:let name="myType" value="@type"/>
+                <sch:let name="hasType" value="if (@type) then true() else false()"/>
                 <sch:let name="lang" value="normalize-space( @xml:lang )"/>
-                <sch:report test="preceding-sibling::*[ name(.) eq $myGI ][ normalize-space( @xml:lang) eq $lang ]">The sibling <sch:value-of select="$myGI"/> children of a <sch:value-of select="name(..)"/> should each have a different @xml:lang; this one duplicates the "<sch:value-of select="$lang"/>" of a preceding sibling.</sch:report>
+                <sch:report test="preceding-sibling::*[ name(.) eq $myGI ][(not(@type) and not($hasType)) or @type eq $myType][ normalize-space( @xml:lang) eq $lang ]">The sibling <sch:value-of select="$myGI"/> children of a <sch:value-of select="name(..)"/> should each have a different @xml:lang; this one duplicates the "<sch:value-of select="$lang"/>" of a preceding sibling.</sch:report>
               </sch:rule>
             </constraint>
           </constraintSpec>
@@ -733,6 +735,15 @@ $Id$
             </constraint>
           </constraintSpec>
         </elementSpec>
+
+	<!-- Per TEI ticket #2285, restrict where <altIdent> can go in GLs. -->
+	<elementSpec ident="altIdent" module="tagdocs" mode="change">
+	  <constraintSpec scheme="schematron" ident="restricted-altIdent-placement">
+	    <constraint>
+	      <sch:assert test="parent::tei:elementSpec|parent::tei:attDef|parent::tei:valItem">The &lt;altIdent> element should only be used as a child of &lt;elementSpec>, &lt;attDef>, or &lt;valItem>.</sch:assert>
+	    </constraint>
+	  </constraintSpec>
+	</elementSpec>
         
         <dataSpec ident="teidata.temporal.working" mode="change">
           <constraintSpec ident="not_in_future" scheme="schematron">
