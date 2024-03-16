@@ -29,16 +29,35 @@
   </content>
   <constraintSpec ident="abstractModel-structure-p-in-ab-or-p" scheme="schematron">
     <constraint>
-      <sch:report test="(ancestor::tei:ab or ancestor::tei:p) and not( ancestor::tei:floatingText |parent::tei:exemplum |parent::tei:item |parent::tei:note |parent::tei:q |parent::tei:quote |parent::tei:remarks |parent::tei:said |parent::tei:sp |parent::tei:stage |parent::tei:cell |parent::tei:figure )">
-        Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.
-      </sch:report>
+      <sch:rule context="tei:p">
+        <sch:report test="(ancestor::tei:ab or ancestor::tei:p) and
+                       not( ancestor::tei:floatingText
+                          | parent::tei:exemplum
+                          | parent::tei:item
+                          | parent::tei:note
+                          | parent::tei:q
+                          | parent::tei:quote
+                          | parent::tei:remarks
+                          | parent::tei:said
+                          | parent::tei:sp
+                          | parent::tei:stage
+                          | parent::tei:cell
+                          | parent::tei:figure )">
+          Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.
+        </sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="abstractModel-structure-p-in-l-or-lg" scheme="schematron">
     <constraint>
-      <sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )">
-        Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.
-      </sch:report>
+      <sch:rule context="tei:p">
+        <sch:report test="( ancestor::tei:l  or  ancestor::tei:lg ) and
+                       not( ancestor::tei:floatingText
+                          | parent::tei:figure
+                          | parent::tei:note )">
+          Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.
+        </sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
