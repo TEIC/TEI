@@ -634,18 +634,20 @@ to mark any technical term, thus:
         <specDesc key="att.repeatable" atts="minOccurs maxOccurs"/>
       </specList>
       </p>
-      <p>Additionally, two wrapper elements are provided to indicate
-      whether the components listed as their children form a sequence
-      or an alternation:
+      <p>Additionally, three wrapper elements are provided to indicate
+      whether the components listed as their children form a sequence,
+      an alternation, or are interleaved:
       <specList>
         <specDesc key="sequence"/>
         <specDesc key="alternate"/>
+        <specDesc key="interleave"/>
       </specList>
-      These two wrapper elements are also members of <ident
+      These three wrapper elements are also members of <ident
       type="class">att.repeatable</ident>. References listed as
       children of <gi>sequence</gi> must appear in the order and
-      cardinality specified. Only one of the references listed as
-      children of <gi>alternate</gi> may appear, although the
+      cardinality specified whereas references listed as children
+      of <gi>interleave</gi> may appear in any order. Only one of the 
+      references listed as children of <gi>alternate</gi> may appear, although the
       cardinality of the <gi>alternate</gi> itself applies. Thus the
       following fanciful content model permits either any number of
       <gi>ptr</gi> elements (except zero) or any number of
@@ -673,8 +675,8 @@ to mark any technical term, thus:
         </content>
       </egXML>
       </p>
-      <p>The <gi>sequence</gi> and <gi>alternate</gi> elements may be
-      used in combination with great expressive power. For example, in
+      <p>The <gi>sequence</gi>, <gi>alternate</gi>, and <gi>interleave</gi>
+      elements may be used in combination with great expressive power. For example, in
       the following example, which might be imagined as a clean
       replacement for the content of the <gi>choice</gi> element, one
       and only one of the element pairs <gi>sic</gi> and
@@ -698,6 +700,26 @@ to mark any technical term, thus:
           </alternate>
         </content>
       </egXML>
+      In the above example, the alternation of element pairs must be encoded in the order specified (i.e. <gi>sic</gi> and then <gi>corr</gi>). This next example, which might
+        be imagined as a clean replacement for the content of the <gi>person</gi>
+        element, declares that the element must contain one <gi>persName</gi> element,
+        either both <gi>birth</gi> and <gi>death</gi> elements (in that order) or a single
+        <gi>floruit</gi> element, and one <gi>note</gi> element in any order:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#NONE">
+          <content>
+            <interleave>
+              <elementRef key="persName"/>
+              <alternate minOccurs="0" maxOccurs="1">
+                <sequence>
+                  <elementRef key="birth"/>
+                  <elementRef key="death"/>
+                </sequence>
+                <elementRef key="floruit"/>
+              </alternate>
+              <elementRef key="note"/>
+            </interleave>
+          </content>
+        </egXML>
       In the following example, which might be imagined as a clean
       replacement for the content of the <gi>address</gi> element, the
       encoder is given a choice of either:
