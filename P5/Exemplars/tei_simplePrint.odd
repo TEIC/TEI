@@ -3997,8 +3997,10 @@ live without God in the world, and only mind earthly things.
             <elementSpec ident="bibl" mode="change">
               <constraintSpec mode="add" ident="noEmptyBibl" scheme="schematron">
                 <constraint>
-                  <sch:assert test="child::* or child::text()[normalize-space()]" role="ERROR"> Element
-                    "<sch:name/>" may not be empty. </sch:assert>
+                  <sch:rule context="tei:bibl">
+                    <sch:assert test="child::* or child::text()[normalize-space()]" role="ERROR"> Element
+                      "<sch:name/>" may not be empty. </sch:assert>
+                  </sch:rule>
                 </constraint>
               </constraintSpec>
               <model predicate="parent::listBibl" behaviour="listItem"/>
@@ -4112,26 +4114,30 @@ live without God in the world, and only mind earthly things.
             <elementSpec ident="choice" mode="change">
               <constraintSpec ident="choiceSize" scheme="schematron" mode="add">
                 <constraint>
-                  <sch:assert test="count(*) &gt; 1" role="ERROR"> Element "<sch:name/>" must have at least two child elements.</sch:assert>
+                  <sch:rule context="tei:choice">
+                    <sch:assert test="count(*) &gt; 1" role="ERROR"> Element "<sch:name/>" must have at least two child elements.</sch:assert>
+                  </sch:rule>
                 </constraint>
               </constraintSpec>
               <constraintSpec ident="choiceContent" scheme="schematron" mode="add">
                 <constraint>
-                  <sch:assert test="( tei:corr
-                                   or tei:sic
-                                   or tei:expan
-                                   or tei:abbr
-                                   or tei:reg
-                                   or tei:orig )
-                                   and
-                                   (
-                                     (tei:corr and tei:sic)
-                                     or
-                                     (tei:expan and tei:abbr)
-                                     or
-                                     (tei:reg and tei:orig)
-                                   )" role="ERROR">
+                  <sch:rule context="tei:choice">
+                    <sch:assert test="( tei:corr
+                                     or tei:sic
+                                     or tei:expan
+                                     or tei:abbr
+                                     or tei:reg
+                                     or tei:orig )
+                                     and
+                                      (
+                                       (tei:corr and tei:sic)
+                                       or
+                                       (tei:expan and tei:abbr)
+                                       or
+                                       (tei:reg and tei:orig)
+                                     )" role="ERROR">
                     Element "<sch:name/>" must have corresponding corr/sic, expand/abbr, reg/orig </sch:assert>
+		  </sch:rule>
                 </constraint>
               </constraintSpec>
               <model output="plain" predicate="sic and corr" behaviour="inline">
