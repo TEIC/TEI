@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<TEI xmlns="http://www.tei-c.org/ns/1.0">
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0">
   <teiHeader>
     <fileDesc>
       <titleStmt>
@@ -16,13 +16,14 @@
   </teiHeader>
   <text xmlns:xi="http://www.w3.org/2001/XInclude">
     <body>
-      <schemaSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" ns="http://www.tei-c.org/ns/Examples" ident="p5odds-examples" prefix="TEI_" start="p egXML">
+      <schemaSpec ns="http://www.tei-c.org/ns/Examples" ident="p5odds-examples" prefix="TEI_" start="p egXML">
+	<!-- I daresay this should be a generated list —Syd, 2022-04-24 -->
         <moduleRef key="tei"/>
         <moduleRef key="core"/>
         <moduleRef key="analysis"/>
         <moduleRef key="certainty"/>
+        <moduleRef key="cmc"/>
         <moduleRef key="corpus"/>
-        <moduleRef key="declarefs"/>
         <moduleRef key="dictionaries"/>
         <moduleRef key="drama"/>
         <moduleRef key="figures"/>
@@ -41,9 +42,9 @@
         <moduleRef key="verse"/>
         <moduleRef url="Exemplars/svg11.rng">
           <content>
-            <define xmlns="http://relaxng.org/ns/structure/1.0" combine="choice" name="tei_model.graphicLike">
-              <ref name="svg"/>
-            </define>
+            <rng:define combine="choice" name="tei_model.graphicLike">
+              <rng:ref name="svg"/>
+            </rng:define>
           </content>
         </moduleRef>
         <moduleRef url="Exemplars/mathml2-main.rng"/>
