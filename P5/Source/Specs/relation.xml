@@ -1,18 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
---><?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="namesdates" ident="relation">
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="namesdates" ident="relation">
   <gloss versionDate="2005-01-14" xml:lang="en">relationship</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">관련성</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">人際關係</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">relation</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">relación</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">relazione</gloss>
-  <desc versionDate="2013-04-12" xml:lang="en">describes any kind of relationship or linkage amongst a
-  specified group of places, events, persons, objects or other items.</desc>
+  <desc versionDate="2013-04-12" xml:lang="en">describes any kind of relationship or linkage amongst a specified group of places, events, persons, objects or other items.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">명시된 참여자군 사이에 관련성 또는 연결 종류를 기술한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">描述在特定團體中，參與者彼此之間的關係或關聯。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">指定された参加者グループ間の関連性の種類を示す。</desc>
@@ -30,12 +26,14 @@ $Id$
   <content>
     <elementRef key="desc" minOccurs="0"/>
   </content>
-  <constraintSpec ident="reforkeyorname" scheme="schematron">
+  <constraintSpec ident="ref-or-key-or-name" scheme="schematron">
     <constraint>
-      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="@ref or @key or @name">One of the attributes  'name', 'ref' or 'key' must be supplied</assert>
+      <sch:rule context="tei:relation">
+        <sch:assert test="@ref or @key or @name">One of the attributes @name, @ref or @key must be supplied</sch:assert>
+      </sch:rule>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="activemutual" scheme="schematron">
+  <constraintSpec ident="active-mutual" scheme="schematron">
     <!-- Note: this constraint is pointless in RELAX NG land, where
          the org=choice works. It is useful in DTD land, where the
          attList/@org has no effect. It looks to me like it is useful
@@ -44,12 +42,16 @@ $Id$
          difficulty. (But I may be reading the XSD incorrectly.) 
          — Syd, 2018-05-01 -->
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@active and @mutual">Only one of the attributes @active and @mutual may be supplied</report>
+      <sch:rule context="tei:relation">
+        <sch:report test="@active and @mutual">Only one of the attributes @active and @mutual may be supplied</sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="activepassive" scheme="schematron">
+  <constraintSpec ident="active-passive" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@passive and not(@active)">the attribute 'passive' may be supplied only if the attribute 'active' is supplied</report>
+      <sch:rule context="tei:relation">
+        <sch:report test="@passive and not(@active)">the attribute @passive may be supplied only if the attribute @active is supplied</sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>
@@ -62,32 +64,26 @@ $Id$
             <ident type="class">att.datable.custom</ident>) defines the calendar system of the date
             in the original material defined by the parent element, <emph>not</emph> the calendar to
             which the date is normalized.</desc>
-        <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the
-            date represented by the content of this element belongs.</desc>
+        <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the date represented by the content of this element belongs.</desc>
         <desc versionDate="2007-12-20" xml:lang="ko">날짜 표현 시스템 또는 달력 표시 형식을 표시한다.</desc>
         <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該日期表示所使用的曆法計算系統。</desc>
         <desc xml:lang="ja" versionDate="2019-02-03">この要素を含むコンテントにおける日付の暦やシステムを示す。</desc>
-        <desc versionDate="2009-01-06" xml:lang="fr">indique le système ou le calendrier auquel
-            appartient la date exprimée dans le contenu de l'élément.</desc>
-        <desc versionDate="2007-05-04" xml:lang="es">indica el sistema o calendario en que se muestra
-            una fecha.</desc>
-        <desc versionDate="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data
-            appartiene.</desc>
+        <desc versionDate="2009-01-06" xml:lang="fr">indique le système ou le calendrier auquel appartient la date exprimée dans le contenu de l'élément.</desc>
+        <desc versionDate="2007-05-04" xml:lang="es">indica el sistema o calendario en que se muestra una fecha.</desc>
+        <desc versionDate="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data appartiene.</desc>
         <datatype minOccurs="1" maxOccurs="unbounded">
-            <dataRef key="teidata.pointer"/>
+          <dataRef key="teidata.pointer"/>
         </datatype>
         <constraintSpec scheme="schematron" ident="calendar-check-relation">
-            <constraint>
-                <sch:rule context="tei:*[@calendar]">
-                    <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
-                        systems or calendars to which the date represented by the content of this element belongs,
-                        but this <sch:name/> element has no textual content.</sch:assert>
-                </sch:rule>
-            </constraint>
+          <constraint>
+            <sch:rule context="tei:*[@calendar]">
+              <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
+              systems or calendars to which the date represented by the content of this element belongs,
+              but this <sch:name/> element has no textual content.</sch:assert>
+            </sch:rule>
+          </constraint>
         </constraintSpec>
-    </attDef>
-
-  
+      </attDef>
       <attDef ident="name">
       <desc versionDate="2005-10-27" xml:lang="en">supplies a name for the kind of relationship of which this is an instance.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">이것이 실례인 관련성 종류에 대한 이름을 제공한다.</desc>
@@ -100,20 +96,15 @@ $Id$
     </attDef>
     <attList org="choice">
       <attDef ident="active">
-        <desc versionDate="2005-07-24" xml:lang="en">identifies the <soCalled>active</soCalled> participants in a non-mutual relationship, or all the participants in a mutual
-                    one.</desc>
-        <desc versionDate="2008-04-06" xml:lang="es">identifica los participantes activos en una relación no-mutua, o todos los participantes de
-                    una mutua.</desc>
-        <desc versionDate="2008-03-30" xml:lang="fr">identifie les participants actifs dans une relation à sens unique, ou tous les participants
-                    dans une relation réciproque.</desc>
-        <desc versionDate="2007-11-06" xml:lang="it">identifica i partecipanti attivi in una relazione di non reciprocità, oppure tutti i
-                    partecipanti in una relazione di reciprocità</desc>
+        <desc versionDate="2005-07-24" xml:lang="en">identifies the <soCalled>active</soCalled> participants in a non-mutual relationship, or all the participants in a mutual one.</desc>
+        <desc versionDate="2008-04-06" xml:lang="es">identifica los participantes activos en una relación no-mutua, o todos los participantes de una mutua.</desc>
+        <desc versionDate="2008-03-30" xml:lang="fr">identifie les participants actifs dans une relation à sens unique, ou tous les participants dans une relation réciproque.</desc>
+        <desc versionDate="2007-11-06" xml:lang="it">identifica i partecipanti attivi in una relazione di non reciprocità, oppure tutti i partecipanti in una relazione di reciprocità</desc>
         <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
       </attDef>
       <attDef ident="mutual" usage="opt">
         <desc versionDate="2005-07-24" xml:lang="en">supplies a list of participants amongst all of whom the relationship holds equally.</desc>
-        <desc versionDate="2008-04-06" xml:lang="es">proporciona una lista de participantes entre los cuales se establece una idéntica
-                    relación</desc>
+        <desc versionDate="2008-04-06" xml:lang="es">proporciona una lista de participantes entre los cuales se establece una idéntica relación</desc>
         <desc versionDate="2009-03-19" xml:lang="fr">fournit une liste de participants entre lesquels la relation est réciproque.</desc>
         <desc versionDate="2007-11-06" xml:lang="it">fornisce una lista di partecipanti tra i quali c'è una relazione paritaria</desc>
         <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>

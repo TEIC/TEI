@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" ident="constraintSpec">
   <gloss versionDate="2009-06-10" xml:lang="en">constraint on schema</gloss>
+
+  <gloss versionDate="2024-02-28" xml:lang="ja">スキーマの制約</gloss>
   <desc versionDate="2017-06-24" xml:lang="en">contains a formal constraint, typically expressed in a rule-based schema language, to which a construct must conform in order to be considered valid</desc>
+  <desc versionDate="2024-02-28" xml:lang="ja">〔データの〕構造が妥当であるために満たしていなければならない形式的な制約。
+    通常は規則ベースのスキーマ言語で表現される。</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.identified"/>
@@ -47,10 +45,12 @@ $Id$
   <constraintSpec ident="sch_no_more" scheme="schematron">
     <desc xml:lang="en" versionDate="2018-07-06">Relationship between scheme attribute and contents: Schematron 1.x</desc>
     <constraint>
-      <sch:report test="tei:constraint/sch1x:* and @scheme = ('isoschematron','schematron')">Rules
+      <sch:rule context="tei:constraintSpec">
+        <sch:report test="tei:constraint/sch1x:* and @scheme = ('isoschematron','schematron')">Rules
         in the Schematron 1.* language must be inside a constraintSpec
         with a value other than 'schematron' or 'isoschematron' on the
         scheme attribute</sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="isosch" scheme="schematron">
@@ -63,11 +63,24 @@ $Id$
       </sch:rule>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="needrules" scheme="schematron">
+  <constraintSpec ident="context-required" scheme="schematron" type="deprecationWarning" validUntil="2025-03-15">
+    <desc type="deprecationInfo" xml:lang="en" versionDate="2024-03-15">
+      The use of ISO Schematron <gi>sch:assert</gi> and
+      <gi>sch:report</gi> elements without a parent <gi>sch:rule</gi>
+      with a <att>context</att> attribute is deprecated — it will be
+      an error after 2025-03-15.</desc>
+    <!-- It is somewhat easier and clearer to use
+         "tei:constraintSpec[ @scheme eq 'schematron']//( sch:assert | sch:report )"
+         as the context and then test for "ancestor::sch:rule/@context".
+         But if we did that, then a user who had multiple
+         <sch:assert>s and <sch:report>s in a single contextless
+         constraint would get multiple messages. This way she only
+         gets one message. -->
     <constraint>
-      <sch:rule context="tei:macroSpec/tei:constraintSpec[@scheme eq 'schematron']/tei:constraint">
-        <sch:report test="sch:assert|sch:report">An ISO Schematron constraint specification for a macro should not
-        have an 'assert' or 'report' element without a parent 'rule' element</sch:report>
+      <sch:rule context="tei:constraintSpec[ @scheme eq 'schematron']/tei:constraint[ .//sch:assert | .//sch:report ]">
+        <sch:let name="assertsHaveContext" value="for $a in .//sch:assert return exists( $a/ancestor::sch:rule/@context )"/>
+        <sch:let name="reportsHaveContext" value="for $r in .//sch:report return exists( $r/ancestor::sch:rule/@context )"/>
+        <sch:report test="( $assertsHaveContext, $reportsHaveContext ) = false()" role="warning">The use of an &lt;sch:assert> or &lt;sch:report> that does not have a context (i.e., does not have an ancestor &lt;sch:rule> with a @context attribute) in an ISO Schematron constraint specification is deprecated, and will become invalid after 2025-03-15.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -90,8 +103,8 @@ $Id$
            Not sure, maybe @scheme should not be allowed when mode=change
            or mode=delete. Hmmm ...
       -->
-      <desc versionDate="2009-06-10" xml:lang="en">supplies the name of the language in which the constraints
-      are defined</desc>
+      <desc versionDate="2009-06-10" xml:lang="en">supplies the name of the language in which the constraints are defined</desc>
+      <desc versionDate="2024-02-28" xml:lang="ja">制約を定義する言語名を示す。</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <constraintSpec scheme="schematron" ident="usage_based_on_mode">
         <constraint>
@@ -103,6 +116,7 @@ $Id$
       <valList type="semi">
         <valItem ident="schematron">
           <gloss versionDate="2016-09-27" xml:lang="en">ISO Schematron</gloss>
+          <gloss versionDate="2024-02-28" xml:lang="ja">ISO スキマトロン</gloss>
         </valItem>
       </valList>
       <remarks versionDate="2023-08-06" xml:lang="en">
@@ -118,6 +132,10 @@ $Id$
         <val>delete</val>, but these Guidelines make no reccomendation
         for what a processor should do if its value does not match
         that of the <gi>constraintSpec</gi> being deleted.</p>
+      </remarks>
+      <remarks versionDate="2024-02-28" xml:lang="ja">
+        <p><gi>constraintSpec</gi>でのSchematron 1.xの利用は、このガイドラインでは推奨せず最近のTEIスタイルシートでもサポートしない。
+        それ故、<val>schematron</val>の値はISO Schematronが<gi>constraintSpec</gi>で用いられることを示すのに使う。</p>
       </remarks>
     </attDef>
     <attDef ident="type" mode="replace">
@@ -143,8 +161,9 @@ $Id$
       <constraintSpec ident="demo-c1" scheme="schematron">
         <desc>Enforce the presence of the <att>spanTo</att> attribute</desc>
         <constraint>
-          <sch:assert test="@spanTo">The spanTo= attribute of <sch:name/>
-          is required.</sch:assert>
+          <sch:rule context="tei:addSpan">
+            <sch:assert test="@spanTo">The spanTo= attribute of <sch:name/> is required.</sch:assert>
+          </sch:rule>
         </constraint>
       </constraintSpec>
     </egXML>
@@ -155,9 +174,11 @@ $Id$
         <desc>Implement an accessibility rule which says that pictures
         should have textual explanations</desc>
         <constraint>
-          <sch:report test="not(tei:figDesc or tei:head)"> You should
-          provide information in a figure from which
-          we can construct an alt attribute in HTML </sch:report>
+          <sch:rule context="tei:figure">
+            <sch:report test="not( tei:figDesc | tei:head )">You should
+            provide information in a figure from which
+            we can construct an alt attribute in HTML</sch:report>
+          </sch:rule>
         </constraint>
       </constraintSpec>
     </egXML>

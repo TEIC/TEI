@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Copyright TEI Consortium.
-    Dual-licensed under CC-by and BSD2 licences
-    See the file COPYING.txt for details
-    $Date$
-    $Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="rt" module="core">
   <gloss versionDate="2021-01-30" xml:lang="en">ruby text</gloss>
@@ -30,18 +24,19 @@
       <desc versionDate="2021-01-31" xml:lang="ja">ルビテキストの対象へのポインタを示す。</desc>
       <datatype><dataRef key="teidata.pointer"/></datatype>
       <constraintSpec scheme="schematron" ident="rt-target-not-span">
-        <!-- Note: this constraint should not be necessary, as
-                     the desired semantics should be something we
-                     could describe in PureODD using attList/@org. But
-                     I don’t think we can. —Syd -->
+        <!-- Note: this constraint should not be necessary, as the
+             desired semantics should be something we could describe
+             in PureODD using attList/@org. But I don’t think we
+             can. —Syd -->
         <desc>Enforce that <emph>either</emph>
           <att>target</att> or both <att>from</att> and
           <att>to</att> (or none) are used, but not
           <att>target</att> in combination with either
           <att>from</att> or <att>to</att>.</desc>
         <constraint>
-          <sch:report test="../@from | ../@to">When target= is
-            present, neither from= nor to= should be.</sch:report>
+          <sch:rule context="tei:rt/@target">
+            <sch:report test="../@from | ../@to">When target= is present, neither from= nor to= should be.</sch:report>
+          </sch:rule>
         </constraint>
       </constraintSpec>
       <remarks xml:lang="en" versionDate="2020-02-01">
@@ -59,15 +54,16 @@
         <dataRef key="teidata.pointer"/>
       </datatype>
       <constraintSpec scheme="schematron" ident="rt-from">
-        <!-- Note: this constraint should not be necessary, as
-                       the desired semantics should be something we
-                       could describe in PureODD using attList/@org. But
-                       I don’t think we can. —Syd -->
+        <!-- Note: this constraint should not be necessary, as the
+             desired semantics should be something we could describe
+             in PureODD using attList/@org. But I don’t think we
+             can. —Syd -->
         <desc>Enforce the presence of <att>to</att> iff there
           is a <att>from</att>.</desc>
         <constraint>
-          <sch:assert test="../@to" >When from= is present, the to=
-            attribute of <sch:name/> is required.</sch:assert>
+          <sch:rule context="tei:rt/@from">
+            <sch:assert test="../@to" >When from= is present, the to= attribute of <sch:name/> is required.</sch:assert>
+          </sch:rule>
         </constraint>
       </constraintSpec>
     </attDef>
@@ -79,15 +75,16 @@
         <dataRef key="teidata.pointer"/>
       </datatype>
       <constraintSpec scheme="schematron" ident="rt-to">
-        <!-- Note: this constraint should not be necessary, as
-                       the desired semantics should be something we
-                       could describe in PureODD using attList/@org. But
-                       I don’t think we can. —Syd -->
+        <!-- Note: this constraint should not be necessary, as the
+             desired semantics should be something we could describe
+             in PureODD using attList/@org. But I don’t think we
+             can. —Syd -->
         <desc>Enforce the presence of <att>from</att> iff there
           is a <att>to</att>.</desc>
         <constraint>
-          <sch:assert test="../@from" >When to= is present, the from=
-            attribute of <sch:name/> is required.</sch:assert>
+          <sch:rule context="tei:rt/@to">
+            <sch:assert test="../@from" >When to= is present, the from= attribute of <sch:name/> is required.</sch:assert>
+          </sch:rule>
         </constraint>
       </constraintSpec>
     </attDef>

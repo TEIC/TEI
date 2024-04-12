@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Copyright TEI Consortium.
-    Dual-licensed under CC-by and BSD2 licences
-    See the file COPYING.txt for details
-    $Date: 2015-08-21 10:44:07 +0100 (Fri, 21 Aug 2015) $
-    $Id:  $
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="modelSequence" module="tagdocs">
-  <desc versionDate="2017-02-07" xml:lang="en">any sequence of model or <gi>modelSequence</gi> elements which
-    is to be processed as a single set of actions</desc>
+  <desc versionDate="2017-02-07" xml:lang="en">any sequence of model or <gi>modelSequence</gi> elements which is to be processed as a single set of actions</desc>
   <classes>
     <memberOf key="att.global"/>
   </classes>
@@ -24,22 +17,22 @@
   </content>
   <constraintSpec scheme="schematron" ident="no_outputs_nor_predicates_4_my_kids">
     <constraint>
-      <sch:report test="tei:model[@output]" role="warning">The 'model' children
-      of a 'modelSequence' element inherit the @output attribute of the
-      parent 'modelSequence', and thus should not have their own</sch:report>
+      <sch:rule context="tei:modelSequence">
+        <sch:report test="tei:model[@output]" role="warning">The 'model' children
+        of a 'modelSequence' element inherit the @output attribute of the
+        parent 'modelSequence', and thus should not have their own</sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>
     <attDef ident="predicate" usage="opt">
-      <desc versionDate="2015-05-15" xml:lang="en">the condition under which this model applies
-        given as an XPath Predicate Expression</desc>
+      <desc versionDate="2015-05-15" xml:lang="en">the condition under which this model applies given as an XPath Predicate Expression</desc>
       <datatype>
         <dataRef key="teidata.xpath"/>
       </datatype>
     </attDef>
     <attDef ident="useSourceRendition" usage="opt">
-      <desc versionDate="2015-05-15" xml:lang="en">whether to obey any rendition attribute that is
-        present</desc>
+      <desc versionDate="2015-05-15" xml:lang="en">whether to obey any rendition attribute that is present</desc>
       <datatype>
         <dataRef key="teidata.truthValue"/>
       </datatype>
@@ -51,16 +44,13 @@
       </datatype>
       <valList type="semi">
         <valItem ident="web">
-          <desc versionDate="2015-05-15" xml:lang="en">the output is intended for presentation in a
-            web format</desc>
+          <desc versionDate="2015-05-15" xml:lang="en">the output is intended for presentation in a web format</desc>
         </valItem>
         <valItem ident="print">
-          <desc versionDate="2015-05-15" xml:lang="en">the output is intended for presentation in a
-            print format</desc>
+          <desc versionDate="2015-05-15" xml:lang="en">the output is intended for presentation in a print format</desc>
         </valItem>
         <valItem ident="plaintext">
-          <desc versionDate="2015-05-15" xml:lang="en">the output is intended for presentation in a
-            plain text format</desc>
+          <desc versionDate="2015-05-15" xml:lang="en">the output is intended for presentation in a plain text format</desc>
         </valItem>
       </valList>
     </attDef>

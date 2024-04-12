@@ -714,9 +714,9 @@ $Id$
         <elementSpec mode="change" ident="TEI">
           <constraintSpec ident="must-have-attglobal" scheme="schematron" mode="add">
             <constraint>
-              <rule context="tei:elementSpec[not(@mode)]" xmlns="http://purl.oclc.org/dsdl/schematron">
-                <assert test="tei:classes/tei:memberOf[@key='att.global']">Error: TEI element <value-of select="@ident"/> must be member of att.global class</assert>
-              </rule>
+              <sch:rule context="tei:elementSpec[not(@mode)]">
+                <sch:assert test="tei:classes/tei:memberOf[@key='att.global']">Error: TEI element <sch:value-of select="@ident"/> must be member of att.global class</sch:assert>
+              </sch:rule>
             </constraint>
           </constraintSpec>
         </elementSpec>
@@ -724,14 +724,14 @@ $Id$
         <elementSpec ident="remarks" mode="change">          
           <constraintSpec ident="only-one-remark-per-lang" scheme="schematron" mode="add">
             <constraint>
-              <rule context="tei:remarks[@xml:lang]" xmlns="http://purl.oclc.org/dsdl/schematron">
-                <let name="langVal" value="@xml:lang"/>
-                <assert test="not(following-sibling::tei:remarks[@xml:lang=$langVal])">
-                  Error: There should only be one <value-of select="@ident"/> element per 
-                  language. Merge the contents of multiple <value-of select="@ident"/> elements
+              <sch:rule context="tei:remarks[@xml:lang]">
+                <sch:let name="langVal" value="@xml:lang"/>
+                <sch:assert test="not(following-sibling::tei:remarks[@xml:lang=$langVal])">
+                  Error: There should only be one <sch:value-of select="@ident"/> element per 
+                  language. Merge the contents of multiple <sch:value-of select="@ident"/> elements
                   using separate p elements.
-                </assert>
-              </rule>
+                </sch:assert>
+              </sch:rule>
             </constraint>
           </constraintSpec>
         </elementSpec>

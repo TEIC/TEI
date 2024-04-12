@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" ident="attDef">
   <gloss versionDate="2005-01-14" xml:lang="en">attribute definition</gloss>
@@ -45,16 +39,26 @@ $Id$
   </content>
   <constraintSpec ident="attDefContents" scheme="schematron">
     <constraint>
-      <ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="teix" uri="http://www.tei-c.org/ns/Examples"/>
-      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="ancestor::teix:egXML[@valid='feasible'] or @mode eq 'change' or @mode eq 'delete' or tei:datatype or tei:valList[@type='closed']">Attribute: the definition of the @<value-of select="@ident"/> attribute in the <value-of select="ancestor::*[@ident][1]/@ident"/>
-      <value-of select="' '"/>
-      <value-of select="local-name(ancestor::*[@ident][1])"/> should have a closed valList or a datatype</assert>
+      <sch:ns prefix="teix" uri="http://www.tei-c.org/ns/Examples"/>
+      <sch:rule context="tei:attDef">
+        <sch:assert test="ancestor::teix:egXML[ @valid eq 'feasible']
+                       or @mode eq 'change'
+                       or @mode eq 'delete'
+                       or tei:datatype
+                       or tei:valList[ @type eq 'closed']">
+          Attribute: the definition of the @<sch:value-of select="@ident"/> attribute in the
+          <sch:value-of select="ancestor::*[@ident][1]/@ident"/>
+          <sch:value-of select="'&#x20;'"/>
+          <sch:value-of select="local-name(ancestor::*[@ident][1])"/> should
+          have a closed valList or a datatype
+        </sch:assert>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="noDefault4Required" scheme="schematron">
     <constraint>
       <sch:rule context="tei:attDef[@usage eq 'req']">
-	<sch:report test="tei:defaultVal">Since the @<sch:value-of select="@ident"/> attribute is required, it will always be specified. Thus the default value (of "<sch:value-of select="normalize-space(tei:defaultVal)"/>") will never be used. Either change the definition of the attribute so it is not required ("rec" or "opt"), or remove the defaultVal element.</sch:report>
+        <sch:report test="tei:defaultVal">Since the @<sch:value-of select="@ident"/> attribute is required, it will always be specified. Thus the default value (of "<sch:value-of select="normalize-space(tei:defaultVal)"/>") will never be used. Either change the definition of the attribute so it is not required ("rec" or "opt"), or remove the defaultVal element.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -65,9 +69,17 @@ $Id$
   <!-- confident these work properly, could condense them to one. -->
   <!-- -Syd, 2015-03-29 -->
   <constraintSpec ident="defaultIsInClosedList-twoOrMore" scheme="schematron">
+    <!-- The use of the '>' operator (expressed as "&gt;"), below, is
+         not needed for comparison of a sequence, but seems to
+         automatically handle a left hand operand that is an
+         untypedAtomic, whereas the "gt" operator did not.
+         — Syd, 2023-12-14 -->
     <constraint>
-      <sch:rule context="tei:attDef[ tei:defaultVal and tei:valList[@type eq 'closed'] and tei:datatype[ @maxOccurs &gt; 1 or @minOccurs &gt; 1 or @maxOccurs = 'unbounded' ] ]">
-        <sch:assert test="tokenize(normalize-space(tei:defaultVal),' ') = tei:valList/tei:valItem/@ident">In the <sch:value-of select="local-name(ancestor::*[@ident][1])"/> defining
+      <sch:rule context="tei:attDef[     tei:defaultVal
+                                     and tei:valList[ @type eq 'closed']
+                                     and tei:datatype[ @maxOccurs &gt; 1  or  @minOccurs &gt; 1  or  @maxOccurs eq 'unbounded']
+                                   ]">
+        <sch:assert test="tokenize(normalize-space(tei:defaultVal),'&#x20;') = tei:valList/tei:valItem/@ident">In the <sch:value-of select="local-name(ancestor::*[@ident][1])"/> defining
         <sch:value-of select="ancestor::*[@ident][1]/@ident"/> the default value of the
         @<sch:value-of select="@ident"/> attribute is not among the closed list of possible
         values</sch:assert>
@@ -76,7 +88,13 @@ $Id$
   </constraintSpec>
   <constraintSpec ident="defaultIsInClosedList-one" scheme="schematron">
     <constraint>
-      <sch:rule context="tei:attDef[ tei:defaultVal and tei:valList[@type eq 'closed'] and tei:datatype[ not(@maxOccurs) or ( if ( @maxOccurs castable as xs:integer ) then ( @maxOccurs cast as xs:integer eq 1 ) else false() )] ]">
+      <sch:rule context="tei:attDef[     tei:defaultVal
+                                     and tei:valList[ @type eq 'closed']
+                                     and tei:datatype[
+                                            not(@maxOccurs)
+                                        or  ( if ( @maxOccurs castable as xs:integer ) then ( @maxOccurs cast as xs:integer eq 1 ) else false() )
+                                                     ]
+                                   ]">
         <sch:assert test="string(tei:defaultVal) = tei:valList/tei:valItem/@ident">In the <sch:value-of select="local-name(ancestor::*[@ident][1])"/> defining
         <sch:value-of select="ancestor::*[@ident][1]/@ident"/> the default value of the
         @<sch:value-of select="@ident"/> attribute is not among the closed list of possible
@@ -90,12 +108,9 @@ $Id$
       <desc versionDate="2007-12-20" xml:lang="ko">속성 또는 요소의 수의성을 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">說明屬性或元素的必備性。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">属性または要素の選択性を示す。</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">précise qu'un attribut ou un élément sont
-      facultatifs.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">especifica el caracter opcional de un atributo o un
-      elemento</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica il carattere facoltativo di un attributo o
-      elemento</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">précise qu'un attribut ou un élément sont facultatifs.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">especifica el caracter opcional de un atributo o un elemento</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica il carattere facoltativo di un attributo o elemento</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <defaultVal>opt</defaultVal>
       <valList type="closed">

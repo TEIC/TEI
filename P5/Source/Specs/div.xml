@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="textstructure" ident="div">
   <gloss versionDate="2005-01-14" xml:lang="en">text division</gloss>
@@ -19,13 +13,10 @@ $Id$
   <desc versionDate="2007-12-20" xml:lang="ko">텍스트의 전면부, 본문, 후면부의 하위 구역을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">文本的正文前資訊、正文、及正文後資訊的分段。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">前付、本文、後付中のテキスト部分を示す。</desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">contient une subdivision dans le texte préliminaire, dans le
-  corps d’un texte ou dans le texte postliminaire.</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">contient une subdivision dans le texte préliminaire, dans le corps d’un texte ou dans le texte postliminaire.</desc>
   <desc versionDate="2017-06-13" xml:lang="de">enthält einen Unterabschnitt in Vorspann (front), Textkörper oder Nachspann (back) eines Textes.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">contiene una subdivisión del paratexto inicial, del
-  cuerpo del texto o del paratexto final.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">contiene una suddivisione del peritesto iniziale, del
-  corpo del testo, o del peritesto finale</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">contiene una subdivisión del paratexto inicial, del cuerpo del texto o del paratexto final.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">contiene una suddivisione del peritesto iniziale, del corpo del testo, o del peritesto finale</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.divLike"/>
@@ -76,16 +67,20 @@ $Id$
   </content>
   <constraintSpec ident="abstractModel-structure-div-in-l-or-lg" scheme="schematron">
     <constraint>
-      <sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)">
-        Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
-      </sch:report>
+      <sch:rule context="tei:div">
+        <sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)">
+          Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
+        </sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="abstractModel-structure-div-in-ab-or-p" scheme="schematron">
     <constraint>
-      <sch:report test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)">
-        Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
-      </sch:report>
+      <sch:rule context="tei:div">
+        <sch:report test="(ancestor::tei:p or ancestor::tei:ab) and not(ancestor::tei:floatingText)">
+          Abstract model violation: p and ab may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
+        </sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">

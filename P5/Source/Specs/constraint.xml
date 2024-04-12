@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="constraint">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" ident="constraint">
   <gloss versionDate="2009-06-10" xml:lang="en">constraint rules</gloss>
+  <gloss versionDate="2024-02-28" xml:lang="ja">制約規則</gloss>
   <desc versionDate="2009-06-10" xml:lang="en">the formal rules of a constraint</desc>
+  <desc versionDate="2024-02-24" xml:lang="ja">形式的な制約規則</desc>
   <classes>
     <memberOf key="att.global"/>
   </classes>
@@ -23,8 +19,9 @@ $Id$
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <constraintSpec ident="isoconstraint" scheme="schematron">
         <constraint>
-          <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="tei:fileDesc/tei:titleStmt/tei:title[@type='main']"> a main title must be supplied
-          </assert>
+          <sch:rule context="tei:constraint">
+            <sch:assert test="tei:fileDesc/tei:titleStmt/tei:title[ @type eq 'main']">a main title must be supplied</sch:assert>
+          </sch:rule>
         </constraint>
       </constraintSpec>
     </egXML>
@@ -34,7 +31,7 @@ $Id$
       <constraintSpec ident="local" scheme="private">
         <constraint> 
 (output = (ident(title) ident(author) "You must supply a title or an author"))
-	</constraint>
+        </constraint>
       </constraintSpec>
     </egXML>
   </exemplum>
