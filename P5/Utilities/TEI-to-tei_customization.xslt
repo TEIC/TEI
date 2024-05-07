@@ -53,6 +53,10 @@
 
   <xsl:variable name="revisionDesc">
     <revisionDesc>
+      <change who="#sbauman.emt" when="2024-04-12">
+	Added <gi>sch:rule</gi> elements PRN to avoid new warning
+	about contextless Schematron.
+      </change>
       <change who="#sbauman.emt" when="2023-06-06">
 	<list>
 	  <item>Remove the <ident>altIdent-only-NCName</ident>
@@ -758,16 +762,17 @@
                 <constraintSpec scheme="schematron" ident="required-modules">
                   <gloss>required modules</gloss>
                   <constraint>
-                    <sch:assert test="
-                      ( tei:moduleRef[ @key eq 'tei'] or tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'tei'] ] )                      
-                      and
-                      ( tei:moduleRef[ @key eq 'core'] or tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'core'] ] )                      
-                      and
-                      ( tei:moduleRef[ @key eq 'header'] or tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'header'] ] )                      
-                      and
-                      ( tei:moduleRef[ @key eq 'textstructure'] or tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'textstructure'] ] )                      
-                      "> missing one or more of the required modules (tei, core, header,
-                      textstructure). </sch:assert>
+		    <sch:rule context="tei:schemaSpec">
+                      <sch:assert test="
+                        ( tei:moduleRef[ @key eq 'tei'] or tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'tei'] ] )                      
+                        and
+                        ( tei:moduleRef[ @key eq 'core'] or tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'core'] ] )                      
+                        and
+                        ( tei:moduleRef[ @key eq 'header'] or tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'header'] ] )                      
+                        and
+                        ( tei:moduleRef[ @key eq 'textstructure'] or tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'textstructure'] ] )                      
+                        ">missing one or more of the required modules (tei, core, header, textstructure).</sch:assert>
+		    </sch:rule>
                   </constraint>
                 </constraintSpec>
                 <constraintSpec scheme="schematron" ident="no-outside-specs">
@@ -1204,38 +1209,44 @@
                 </content>
                 <constraintSpec scheme="schematron" ident="module-except-when-add">
                   <constraint>
-                    <sch:assert test="@mode">in a customization ODD, the mode= attribute of
-                      ＜elementSpec＞ should be specified</sch:assert>
-                    <sch:report
-                      test="not( @module )  and  not( @mode='add')"
-                      >the module= attribute of ＜elementSpec＞ must be specified anytime the mode= is
-                      not 'add'</sch:report>
+		   <sch:rule context="tei:elementSpec">
+                     <sch:assert test="@mode">
+		       in a customization ODD, the mode= attribute of ＜elementSpec＞ should be specified
+		     </sch:assert>
+                     <sch:report test="not( @module )  and  not( @mode='add')" >
+		       the module= attribute of ＜elementSpec＞ must be specified anytime the mode= is not 'add'
+		     </sch:report>
+		   </sch:rule>
                   </constraint>
                 </constraintSpec>
                 <constraintSpec scheme="schematron" ident="only-1-per">
                   <constraint>
-                    <sch:report test=
-                      "//tei:elementSpec[ @ident eq current()/@ident  and  not( . is current() ) ]"
-                      >Current ODD processors will not correctly handle more than one ＜elementSpec＞ with the same @ident</sch:report>
+		   <sch:rule context="tei:elementSpec">
+                     <sch:report test="//tei:elementSpec[ @ident eq current()/@ident  and  not( . is current() ) ]" >
+		       Current ODD processors will not correctly handle more than one ＜elementSpec＞ with the same @ident
+		     </sch:report>
+		   </sch:rule>
                   </constraint>
                 </constraintSpec>
                 <constraintSpec scheme="schematron" ident="dont-delete-required">
                   <constraint>
-                    <sch:report test="@mode='delete' and @ident='TEI'">Removing ＜TEI＞ from your
-                      schema guarantees it is not TEI conformant</sch:report>
-                    <sch:report test="@mode='delete' and @ident='teiHeader'">Removing ＜teiHeader＞
-                      from your schema guarantees it is not TEI conformant</sch:report>
-                    <sch:report test="@mode='delete' and @ident='fileDesc'">Removing ＜fileDesc＞ from
-                      your schema guarantees it is not TEI conformant</sch:report>
-                    <sch:report test="@mode='delete' and @ident='titleStmt'">Removing ＜titleStmt＞
-                      from your schema guarantees it is not TEI conformant</sch:report>
-                    <sch:report test="@mode='delete' and @ident='title'">Removing ＜title＞ from your
-                      schema guarantees it is not TEI conformant</sch:report>
-                    <sch:report test="@mode='delete' and @ident='publicationStmt'">Removing
-                      ＜publicationStmt＞ from your schema guarantees it is not TEI
-                      conformant</sch:report>
-                    <sch:report test="@mode='delete' and @ident='sourceDesc'">Removing ＜sourceDesc＞
-                      from your schema guarantees it is not TEI conformant</sch:report>
+		    <sch:rule context="tei:elementSpec">
+                      <sch:report test="@mode='delete' and @ident='TEI'">Removing ＜TEI＞ from your
+                        schema guarantees it is not TEI conformant</sch:report>
+                      <sch:report test="@mode='delete' and @ident='teiHeader'">Removing ＜teiHeader＞
+                        from your schema guarantees it is not TEI conformant</sch:report>
+                      <sch:report test="@mode='delete' and @ident='fileDesc'">Removing ＜fileDesc＞ from
+                        your schema guarantees it is not TEI conformant</sch:report>
+                      <sch:report test="@mode='delete' and @ident='titleStmt'">Removing ＜titleStmt＞
+                        from your schema guarantees it is not TEI conformant</sch:report>
+                      <sch:report test="@mode='delete' and @ident='title'">Removing ＜title＞ from your
+                        schema guarantees it is not TEI conformant</sch:report>
+                      <sch:report test="@mode='delete' and @ident='publicationStmt'">Removing
+                        ＜publicationStmt＞ from your schema guarantees it is not TEI
+                        conformant</sch:report>
+                      <sch:report test="@mode='delete' and @ident='sourceDesc'">Removing ＜sourceDesc＞
+                        from your schema guarantees it is not TEI conformant</sch:report>
+		    </sch:rule>
                   </constraint>
                 </constraintSpec>
                 <constraintSpec scheme="schematron" ident="content_when_adding">
@@ -1514,17 +1525,18 @@
                   <attDef ident="xml:id" mode="change" ns="http://www.w3.org/XML/1998/namespace">
                     <constraintSpec scheme="schematron" ident="unique_xmlIDs">
                       <constraint>
-                        <sch:let name="myID" value="normalize-space(.)"/>
-                        <sch:report test="../(ancestor::*|preceding::*)/@xml:id[ normalize-space(.) eq $myID ]"
-                          >The @xml:id "<sch:value-of select="."
-                          />" on ＜<sch:value-of select="name(..)"
-                          />＞ duplicates an @xml:id found earlier in the document</sch:report>
+			<sch:rule context="@xml:id">
+                          <sch:let name="myID" value="normalize-space(.)"/>
+                          <sch:report test="../(ancestor::*|preceding::*)/@xml:id[ normalize-space(.) eq $myID ]"
+                            >The @xml:id "<sch:value-of select="."
+                            />" on ＜<sch:value-of select="name(..)"
+                            />＞ duplicates an @xml:id found earlier in the document</sch:report>
+			</sch:rule>
                       </constraint>
                     </constraintSpec>
                   </attDef>
                 </attList>
               </classSpec>
-
 
               <classSpec ident="model.entryPart.top" module="tei" mode="delete" type="model"/>
               <classSpec ident="model.msItemPart" module="tei" mode="delete" type="model"/>

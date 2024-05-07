@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details.
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="DI" n="12">
   <head>Dictionaries</head>
@@ -94,8 +88,7 @@ text.</p>
 
 <p>Overall, dictionaries have the same structure of front matter,
 body, and back matter familiar from other texts. In addition,
-this module defines <gi>entry</gi>, <gi>entryFree</gi>,
-and <gi>superEntry</gi> as component-level elements which can occur
+this module defines <gi>entry</gi>, and <gi>entryFree</gi>, as component-level elements which can occur
 directly within a text division or the text body. </p>
 
 <p>The following tags can therefore be used to mark the gross structure of a
@@ -108,7 +101,6 @@ in the following section.<specList>
 <specDesc key="div"/>
 <specDesc key="entry"/>
 <specDesc key="entryFree"/>
-<specDesc key="superEntry"/>
 </specList></p>
 
 <p>As members of the classes <ident type="class">att.entryLike</ident> and 
@@ -168,9 +160,10 @@ etc. </p>
 basis of etymology, part-of-speech, or both, and typically provide a
 numeric superscript on the headword identifying the homograph
 number. In these cases each homograph should be encoded as a separate
-entry; the <gi>superEntry</gi> element may optionally be used to group
+entry; an outer <gi>entry</gi> element, perhaps with a <att>type</att> attribute,
+may be used to group
 such successive homograph entries. In addition to a series of
-<gi>entry</gi> elements, the <gi>superEntry</gi> may contain a
+<gi>entry</gi> elements, the <gi>entry</gi> may contain a
 preliminary <gi>form</gi> group (see section <ptr target="#DITPFO"/>)
 when information about hyphenation, pronunciation, etc., is given only
 once for two or more homograph entries. If the homograph number is to
@@ -185,34 +178,35 @@ order of entries does not follow the local character-set collating
 sequence (as, for example, when an entry for <q>3D</q> appears at the
 place where <q>three-D</q> would appear). </p>
 
-
-
-<p>A dictionary with no internal divisions might thus have a structure like
-the following; a <gi>superEntry</gi> is shown grouping two homograph
-entries.<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und">
-<body>
-<entry>
-<form>
+<p>A dictionary with no internal divisions might thus have a structure
+like the following; an outer <gi>entry</gi> element with a
+<att>type</att> attribute value of <val>wordFamily</val> is shown
+grouping two homograph entries.
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und">
+  <body>
+    <entry>
+      <form>
 	<orth>manifestation</orth> <!-- demonstration -->
-</form>
-</entry>
-<entry>
-<form>
+      </form>
+    </entry>
+    <entry>
+      <form>
 	<orth>émeute</orth> <!-- riot -->
-</form></entry>
-<superEntry>
- <entry type="hom" n="1">
-<form>
-	<orth>grève</orth> <!-- strike -->
-</form>
-</entry>
- <entry type="hom" n="2">
-<form>
-	<orth>grève</orth> <!-- shore -->
-</form>
-</entry>
-</superEntry>
-</body>
+      </form>
+    </entry>
+    <entry type="wordFamily">
+      <entry type="hom" n="1">
+	<form>
+	  <orth>grève</orth> <!-- strike -->
+	</form>
+      </entry>
+      <entry type="hom" n="2">
+	<form>
+	  <orth>grève</orth> <!-- shore -->
+	</form>
+      </entry>
+    </entry>
+  </body>
 </egXML>
 </p>
 
@@ -306,37 +300,38 @@ anomalous, as further discussed in section <ptr target="#DIFR"/>.<specList>
 </p>
 <p>An entry with two homographs, the first with two senses and the second with three
  (one of which has two sub-senses), may have a structure like this:<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
-<entry>
-<hom n="1">
-<sense n="1"> <!-- ... --> </sense>
-<sense n="2"> <!-- ... --> </sense>
-</hom>
-<hom n="2">
-<sense n="1">
-<sense n="a"> <!-- ... --> </sense>
-<sense n="b"> <!-- ... --> </sense>
-</sense>
-<sense n="2"> <!-- ... --> </sense>
-<sense n="3"> <!-- ... --> </sense>
-</hom>
+ <entry>
+   <hom n="1">
+     <sense n="1"> <!-- ... --> </sense>
+     <sense n="2"> <!-- ... --> </sense>
+   </hom>
+   <hom n="2">
+     <sense n="1">
+       <sense n="a"> <!-- ... --> </sense>
+       <sense n="b"> <!-- ... --> </sense>
+     </sense>
+     <sense n="2"> <!-- ... --> </sense>
+     <sense n="3"> <!-- ... --> </sense>
+   </hom>
 </entry>
 </egXML> In some dictionaries, homographs have separate entries; in
 such a case, as noted in section <ptr target="#DIBO"/>, the two homographs may be
- treated as entries, optionally grouped in a <gi>superEntry</gi>:<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
-<superEntry>
-<entry n="1" type="hom">
-<sense n="1"> <!-- ... --> </sense>
-<sense n="2"> <!-- ... --> </sense>
-</entry>
-<entry n="2" type="hom">
-<sense n="1">
-<sense n="a"> <!-- ... --> </sense>
-<sense n="b"> <!-- ... --> </sense>
-</sense>
-<sense n="2"> <!-- ... --> </sense>
-<sense n="3"> <!-- ... --> </sense>
-</entry>
-</superEntry>
+treated as entries, optionally grouped in an outer <gi>entry</gi> element:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
+  <entry>
+    <entry n="1" type="hom">
+      <sense n="1"> <!-- ... --> </sense>
+      <sense n="2"> <!-- ... --> </sense>
+    </entry>
+    <entry n="2" type="hom">
+      <sense n="1">
+	<sense n="a"> <!-- ... --> </sense>
+	<sense n="b"> <!-- ... --> </sense>
+      </sense>
+      <sense n="2"> <!-- ... --> </sense>
+      <sense n="3"> <!-- ... --> </sense>
+    </entry>
+  </entry>
 </egXML>
 </p>
 <p>The hierarchic structure of a dictionary entry is enforced by the
@@ -652,14 +647,14 @@ appeal earnestly to ... [CP] </q>
 -->
 </p>
 <p>Alone among the constituent groups, <gi>form</gi> can appear at the
-<gi>superEntry</gi> level as well as at the <gi>entry</gi>, <gi>hom</gi>, and
+<gi>entry</gi>, <gi>hom</gi>, and
 <gi>sense</gi> levels:<q rend="display">
 <hi rend="bold">a.ban.don</hi> 1<code lang="ipa">/@"band@n/ </code>
 v [T1] 1 to leave completely and for ever; desert: The sailors abandoned the
 burning ship. 2 …<hi rend="bold">abandon</hi> 2 n [U] the state when one's
 feelings and actions are uncontrolled; freedom from control...<ref target="#DIC-LDOCE">LDOCE</ref></q>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<superEntry>
+<entry>
 <form>
 <orth>abandon</orth>
 <hyph>a|ban|don</hyph>
@@ -685,7 +680,7 @@ feelings and actions are uncontrolled; freedom from control...<ref target="#DIC-
 from control…</def>
 </sense>
 </entry>
-</superEntry>
+</entry>
 </egXML>
 </p>
 </div>

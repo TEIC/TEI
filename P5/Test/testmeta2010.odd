@@ -51,9 +51,10 @@
 	     <attDef ident="type" mode="change">
 	       <constraintSpec mode="add" ident="a1" scheme="schematron">
 		 <constraint>
-		   <sch:assert
-		       test="count(ancestor-or-self::tei:list[1]/tei:item)&lt;2">list
-		 too short </sch:assert></constraint>
+		   <sch:rule context="tei:list/@type">		   
+		     <sch:assert test="count( ancestor-or-self::tei:list[1]/tei:item ) lt 2">list too short </sch:assert>
+		   </sch:rule>
+		 </constraint>
 	       </constraintSpec>
 	       <valList type="closed" mode="replace">
 		 <valItem ident="enumerated"/>

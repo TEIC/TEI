@@ -1,41 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="quotation">
   <gloss xml:lang="en" versionDate="2007-06-12">quotation</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">citation</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">specifies editorial practice adopted with respect to quotation marks in the original.</desc>
-  <desc versionDate="2009-01-05" xml:lang="fr">décrit la pratique éditoriale adoptée par rapport aux
-    guillements dans l’original.</desc>
+  <desc versionDate="2009-01-05" xml:lang="fr">décrit la pratique éditoriale adoptée par rapport aux guillements dans l’original.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">원본 인용 부호에 관해 채택한 편집 방식을 명시한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">說明在編輯上是如何處理來源文件中的引文符號。</desc>
   <desc versionDate="2008-04-06" xml:lang="ja">元資料にあった引用をどのように編集したのかを示す。</desc>
-  <desc versionDate="2006-10-18" xml:lang="de">beschreibt die editorische Praxis bezüglich der
-    Anführungszeichen im Originaltext.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">indica las prácticas editoriales adoptadas respecto al
-    entrecomillado en el original.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">specifica le pratiche editoriali rispetto all'uso delle
-    virgolette nell'originale</desc>
+  <desc versionDate="2006-10-18" xml:lang="de">beschreibt die editorische Praxis bezüglich der Anführungszeichen im Originaltext.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">indica las prácticas editoriales adoptadas respecto al entrecomillado en el original.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">specifica le pratiche editoriali rispetto all'uso delle virgolette nell'originale</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.declarable"/>
     <memberOf key="model.editorialDeclPart"/>
   </classes>
   <content>
-    
-      <classRef key="model.pLike" minOccurs="0" maxOccurs="unbounded"/>
-    
+    <classRef key="model.pLike" minOccurs="0" maxOccurs="unbounded"/>
   </content>
   <constraintSpec ident="quotationContents" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="not(@marks) and not (tei:p)">
-On <name/>, either the @marks attribute should be used, or a paragraph of description provided</report>
+      <sch:rule context="tei:quotation">
+        <sch:report test="not( @marks )  and  not( tei:p )">
+          On <sch:name/>, either the @marks attribute should be used, or a paragraph of description provided
+        </sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>
@@ -88,33 +79,6 @@ On <name/>, either the @marks attribute should be used, or a paragraph of descri
         </valItem>
       </valList>
     </attDef>
-<!--   MDH: 2014-05-01: Commented out this obsolete attribute. -->
-    <!--<attDef ident="form" usage="opt" validUntil="2014-04-28">
-      <desc versionDate="2005-01-14" xml:lang="en">specifies how quotation marks are indicated within the text.</desc>
-      <desc versionDate="2009-01-05" xml:lang="fr">précise comment les guillemets sont indiqués dans le
-        texte.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">텍스트 내에 인용 부호가 표시되는 방법을 명시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">說明引文符號如何標示於文本中。</desc>
-      <desc versionDate="2008-04-06" xml:lang="ja">当該テキスト中に引用符がどのように示されているかを示す．</desc>
-      <desc versionDate="2006-10-18" xml:lang="de"> beschreibt, wie Anführungszeichen im Text angezeigt
-        werden</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">indica cómo se ha marcado el entrecomillado al
-        interno del texto.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">specifica in che modo le virgolette sono indicate
-        ell'interno del testo</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
-      <defaultVal>unknown</defaultVal>
-      <remarks versionDate="2008-04-05" xml:lang="en">
-        <p>The <att>form</att> attribute is deprecated. Although retained for compatibility, this
-          attribute will be removed at a subsequent release.</p>
-      </remarks>
-      <remarks xml:lang="fr" versionDate="2007-06-12">
-        <p>L'attribut <att>forme</att> est condamné. Bien qu'il soit conservé pour raison de
-          compatiblité, cet attribut sera supprimé à la prochaine mise à jour.</p>
-      </remarks>
-    </attDef>-->
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
