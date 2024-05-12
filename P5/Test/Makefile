@@ -106,12 +106,10 @@ detest: checkrnv
 	@echo " "
 	@echo "--------- work on target $@ ---------"
 	@echo BUILD: Test file with deliberate mistakes
-#	Note that output below is called 'detest_odd_schematron' even though
-#	detest.xml is validated against both RelaxNG and Schematron, because
-#	if there is a RelaxNG error the build dies and there is no output at
-#	all. (So if there is any output, it is Schematron messages.)
 	@echo "--- run ant to validate ODD file (./detest.odd) against p5odds.rng & p5odds.isosch:"
 	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd validateodd > detest_odd_schematron.log 2>&1
+#	If a RELAX NG error is found by the above cmd, it dies, and this (the "detest") target fails.
+#	Any Schematron errors that are found are written to detest_odd_schematron.svrl.
 	@echo "--- run ant to compile ODD file into RelaxNG and Schematron (detest.odd → detest.rng & detest.isosch):"
 	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd compileodd rng isoschematron 
 	@echo "--- convert RelaxNG to compact syntax with trang (./detest.rng → ./detest.rnc):"
@@ -129,9 +127,8 @@ detest: checkrnv
 #	The log file contains some lines (like "Processing…" and "Loading…") that include filepaths that are different
 #	when executed in different environments (like the Travis server, e.g.). Thus rather than comparing the files
 #	directly, we delete those lines first, and compare the results of deletions.
-	bash -c "diff -C0 -bBw  \
-	  <(grep -F '[xslt]' expected-results/detest_odd_schematron.log | grep -Ev 'xslt\] Processing.*detest.odd|xslt\] Loading.*.isosch.xsl')  \
-	  <(grep -F '[xslt]'                ./detest_odd_schematron.log | grep -Ev 'xslt\] Processing.*detest.odd|xslt\] Loading.*.isosch.xsl')"
+	bash -c "diff -C0 -bBw <(grep -vF 'dct:created' expected-results/detest_odd_schematron.svrl)  \
+                               <(grep -vF 'dct:created'                ./detest_odd_schematron.svrl)"
 
 clean:
 	@echo " "
