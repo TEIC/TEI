@@ -124,11 +124,29 @@ detest: checkrnv
 	diff -C0 -bBw expected-results/detest_xml_relaxng.log    ./
 	diff -C0 -bBw expected-results/detest_xml_schematron.log ./
 #	Note on following somewhat complicated 'diff' command:
-#	The log file contains some lines (like "Processing…" and "Loading…") that include filepaths that are different
-#	when executed in different environments (like the Travis server, e.g.). Thus rather than comparing the files
-#	directly, we delete those lines first, and compare the results of deletions.
-	bash -c "diff -C0 -bBw <(grep -vF 'dct:created' expected-results/detest_odd_schematron.svrl)  \
-                               <(grep -vF 'dct:created'                ./detest_odd_schematron.svrl)"
+#	The SVRL file contains lots of stuff, like timestamps,
+#	filepaths, and auto-assigned namespace prefixes that are
+#	different when executed in different environments (like the
+#	Travis server, e.g.). Thus rather than comparing the files
+#	directly, we extract only the <svrl:text> elements first, and
+#	compare the results of only that. (Yes, it would be more
+#	efficient to store expected-results/detest_odd_schematron.txt
+#	in the repo rather than generating it every time it is to be
+#	tested, but it seems to me this generation process is wonky
+#	enough that it would be difficult to reproduce every time the
+#	Schematron is updated.)
+	@xmllint --xpath '//*[local-name(.)="text"]/text()[normalize-space(.)!=""]' \
+	        expected-results/detest_odd_schematron.svrl                         \
+        | perl -pe 's, +, ,g;'                                                      \
+	| egrep -v '^ *$$'                                                          \
+	> expected-results/detest_odd_schematron.txt
+	@xmllint --xpath '//*[local-name(.)="text"]/text()[normalize-space(.)!=""]' \
+	                         detest_odd_schematron.svrl                         \
+        | perl -pe 's, +, ,g;'                                                      \
+	| egrep -v '^ *$$'                                                          \
+	>                  detest_odd_schematron.txt
+	diff -C0 -bBw expected-results/detest_odd_schematron.txt ./
+
 
 clean:
 	@echo " "
