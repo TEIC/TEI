@@ -125,12 +125,14 @@
   <xsl:param name="verboseSpecDesc">false</xsl:param>
 
   <xsl:template match="/">
-    <xsl:result-document doctype-public="{$doctypePublic}"
-                         omit-xml-declaration="yes"                     
-                         doctype-system="{$doctypeSystem}" 
-                         encoding="{$outputEncoding}"
-                         href="{$outputDir}/index-toc.html" 
-                         method="{$outputMethod}">
+    
+    <xsl:result-document
+      html-version="{$htmlVersion}"
+      normalization-form="{$normalizationForm}"
+      encoding="{$outputEncoding}"
+      method="{$outputMethod}"
+      omit-xml-declaration="{$omitXMLDeclaration}"
+      href="{$outputDir}/index-toc.html">
       <html>
         <head>
           <title>TEI P5: Guidelines for Electronic Text and Interchange</title>
@@ -144,12 +146,13 @@
       </html>
     </xsl:result-document>
 
-    <xsl:result-document doctype-public="{$doctypePublic}"
-                         omit-xml-declaration = "yes"                     
-                         doctype-system="{$doctypeSystem}" 
-                         encoding="{$outputEncoding}"
-                         href="{$outputDir}/TitlePageRecto.html" 
-                         method="{$outputMethod}">
+    <xsl:result-document
+      html-version="{$htmlVersion}"
+      normalization-form="{$normalizationForm}"
+      encoding="{$outputEncoding}"
+      method="{$outputMethod}"
+      omit-xml-declaration="{$omitXMLDeclaration}"
+      href="{$outputDir}/TitlePageRecto.html" >
       <html>
         <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (97) </xsl:comment>
         <head>
@@ -195,12 +198,13 @@
       <xsl:variable name="langs">
         <xsl:value-of select="concat(normalize-space(tei:generateDocumentationLang(.)),' ')"/>
       </xsl:variable>
-      <xsl:result-document doctype-public="{$doctypePublic}"
-                           doctype-system="{$doctypeSystem}" 
-                           encoding="{$outputEncoding}"
-                           omit-xml-declaration = "yes"
-                           href="{$outputDir}/examples-{$me}.html" 
-                           method="{$outputMethod}">
+      <xsl:result-document       
+        html-version="{$htmlVersion}"
+        normalization-form="{$normalizationForm}"
+        encoding="{$outputEncoding}"
+        method="{$outputMethod}"
+        omit-xml-declaration="{$omitXMLDeclaration}"
+        href="{$outputDir}/examples-{$me}.html">
         <html>
           <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (98) </xsl:comment>
           <head>
