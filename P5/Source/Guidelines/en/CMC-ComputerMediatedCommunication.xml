@@ -1057,56 +1057,62 @@ See the file COPYING.txt for details.
     </div>
     <div xml:id="CMCcirculation">
       <head>Circulation</head>
-      <p>The following recommendations on how to encode features of the circulation of posts, such
-        as IDs, re-posts (retweets), hashtags, and mentions use twitter posts (tweets) as an
-        example; this phenomenon is not in any way unique to X (Twitter), however.</p>
-      <p>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.tweets" xml:lang="de">
-          <post modality="written" generatedBy="human" type="tweet" who="#u1"
-            xml:id="cmc_post_1043796550101716993" synch="#tweetsbcrn18.t004" xml:lang="de">
-            <ptr type="retweet" target="#cmc_post_1043796093786566656"/> Ich mich auch? <ref
-              type="hashtag" target="https://twitter.com/hashtag/dynamicduo?src=hash"
-              >#dynamicduo</ref>
-            <ref type="hashtag"
-              target="https://twitter.com/hashtag/wirk%C3%BCmmernunsauchumIhrenEmpfang?src=hash"
-              >#wirkümmernunsauchumIhrenEmpfang</ref>
-            <ref type="hashtag" target="https://twitter.com/hashtag/bcrn18?src=hash">#bcrn18</ref>
-            <ref type="hashtag" target="https://twitter.com/hashtag/wikidach?src=hash"
-              >#wikidach</ref>
-          </post>
-          <post modality="written" generatedBy="human" type="tweet" who="#u2"
-            synch="#tweetsbcrn18.t003" xml:lang="de" xml:id="cmc_post_1043796093786566656">
-            <time generatedBy="system"> 14:35 </time> Immer wieder gerne. Kann ich mich schon für
-            nächstes Jahr als Empfangs- <ref type="hashtag"
-              target="https://twitter.com/hashtag/Engel?src=hash">#Engel</ref> für das nächste
-            BarCamp bewerben <w pos="EMO">&#x1F92A;</w>
-            <ref type="hashtag" target="https://twitter.com/hashtag/bcrn18?src=hash">#bcrn18</ref>
-            <trailer>
-              <fs>
-                <f name="favoritecount">
-                  <numeric value="4"/>
-                </f>
-              </fs>
-            </trailer>
-          </post>
-        </egXML> In the preceding example, we first encode the type of post (in this case, a tweet)
-        in the <att>type</att> attribute, and if it is a specific subtype of tweet, that will be
-        encoded in a <att>subtype</att> attribute of the <gi>post</gi> element accordingly.</p>
-      <p>Second, the original tweet-ID as supplied by X (Twitter) is contained in the value of the
-        global attribute <att>xml:id</att>.</p>
-      <p>Third, a retweet and its corresponding retweeted tweet are encoded as two separate posts
-        each with its own set of attributes. The post representing the retweet itself does not
-        contain or duplicate the content of the retweeted tweet. Instead it refers to the ID of the
-        retweeted tweet via a <gi>ptr</gi> in the post content. All original
-        content of the retweet goes in the content of the <gi>post</gi> element as well.</p>
-      <p>Fourth, hashtags occur in the body of tweets and are links like any other hyperlink and
-        should be encoded using the element <gi>ref</gi>. The <att>type</att> attribute of the ref
-        should contain the value <val>hashtag</val>, the <att>target</att> attribute should contain
-        the URL of the hashtag, and the content of <gi>ref</gi>should be the string of the hashtag
-        itself.</p>
+      <p>The following recommendations on how to encode features of
+      the circulation of posts, such as IDs, re-posts (retweets),
+      hashtags, and mentions use X (Twitter) posts (tweets) as an
+      example; this phenomenon is not in any way unique to X
+      (Twitter), however.</p>
+      <p>In the following example, the type of post (in this case, a
+      tweet) is recorded using the <att>type</att> attribute of
+      <gi>post</gi>. If it were useful to record a particular
+      sub-catagorization of tweet, the <att>subtype</att> attribute
+      could also be used. Furthermore, the original unique identifer
+      of the tweet as supplied by X (Twitter) is recorded as part of
+      the value of the <att>xml:id</att> attribute of the
+      <gi>post</gi>.</p>
+      <p>Also in the following example a retweet and its corresponding
+      retweeted tweet are encoded as two separate posts each with its
+      own set of attributes. The post representing the retweet itself
+      does not contain or duplicate the content of the retweeted
+      tweet. Instead it refers to the ID of the retweeted tweet via a
+      <gi>ptr</gi> in the post content. All original content of the
+      retweet goes in the content of the <gi>post</gi> element as
+      well. In addition, the hashtags found in the body of the source
+      tweets have been encoded using <gi>ref</gi> elements (with a
+      <att>type</att> of <val>hashtag</val>), as they are links like
+      any other hyperlink.</p>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ex.tweets" xml:lang="de">
+        <post modality="written" generatedBy="human" type="tweet" who="#u1"
+          xml:id="cmc_post_1043796550101716993" synch="#tweetsbcrn18.t004" xml:lang="de">
+          <ptr type="retweet" target="#cmc_post_1043796093786566656"/> Ich mich auch? <ref
+            type="hashtag" target="https://twitter.com/hashtag/dynamicduo?src=hash"
+            >#dynamicduo</ref>
+          <ref type="hashtag"
+            target="https://twitter.com/hashtag/wirk%C3%BCmmernunsauchumIhrenEmpfang?src=hash"
+            >#wirkümmernunsauchumIhrenEmpfang</ref>
+          <ref type="hashtag" target="https://twitter.com/hashtag/bcrn18?src=hash">#bcrn18</ref>
+          <ref type="hashtag" target="https://twitter.com/hashtag/wikidach?src=hash"
+            >#wikidach</ref>
+        </post>
+        <post modality="written" generatedBy="human" type="tweet" who="#u2"
+          synch="#tweetsbcrn18.t003" xml:lang="de" xml:id="cmc_post_1043796093786566656">
+          <time generatedBy="system"> 14:35 </time> Immer wieder gerne. Kann ich mich schon für
+          nächstes Jahr als Empfangs- <ref type="hashtag"
+            target="https://twitter.com/hashtag/Engel?src=hash">#Engel</ref> für das nächste
+          BarCamp bewerben <w pos="EMO">&#x1F92A;</w>
+          <ref type="hashtag" target="https://twitter.com/hashtag/bcrn18?src=hash">#bcrn18</ref>
+          <trailer>
+            <fs>
+              <f name="favoritecount">
+                <numeric value="4"/>
+              </f>
+            </fs>
+          </trailer>
+        </post>
+      </egXML>
       <p>Note that in the above example <soCalled>CoMeRe</soCalled> style (cf. <ptr
-          target="#BIB_CoMeRe"/>) encoding is used to represent the number of favorites. It would
-        also be reasonable to use a TEI <gi>measure</gi> element instead of the <gi>fs</gi>.</p>
+      target="#BIB_CoMeRe"/>) encoding is used to represent the number of favorites. It would
+      also be reasonable to use a TEI <gi>measure</gi> element instead of the <gi>fs</gi>.</p>
     </div>
     <div xml:id="CMCanalysis">
       <head>Linguistic Annotation</head>
