@@ -46,65 +46,64 @@
 
        <p>Now make some changes and deletions</p>
        <specGrp xml:id="Changes">
-         <elementSpec ident="list" mode="change">
-           <attList>
-             <attDef ident="type" mode="change">
-               <constraintSpec mode="add" ident="a1" scheme="schematron">
-                 <constraint>
-                   <sch:rule context="tei:list">
-                     <sch:assert test="count(ancestor-or-self::tei:list[1]/tei:item)&lt;2">list too short </sch:assert>
-                   </sch:rule>
-                 </constraint>
-               </constraintSpec>
-               <valList type="closed" mode="replace">
-                 <valItem ident="enumerated"/>
-                 <valItem ident="itemized"/>
-               </valList>
-             </attDef>
-           </attList>
-         </elementSpec>
-         <classSpec ident="att.canonical" type="atts" mode="delete"/>
-         <classSpec ident="att.global.rendition" type="atts" mode="change">
-           <attList>
-             <attDef ident="rendition" mode="delete"/>
-           </attList>
-         </classSpec>
-         <macroSpec ident="macro.specialPara" mode="change">
-           <content>
-             <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-               <choice>
-                 <text/>
-                 <ref name="model.phrase"/>
-               </choice>
-             </zeroOrMore>
-           </content>
-         </macroSpec>
-         <elementSpec ident="div" mode="change">
-           <attList>
-             <attDef ident="type" mode="delete"/>
-             <attDef ident="rend" mode="change">
-               <valList type="closed" mode="add">
-                 <valItem ident="i">
-                   <gloss xml:lang="en" versionDate="2014-01-12">italic</gloss>
-                 </valItem>
-                 <valItem ident="b">
-                   <gloss xml:lang="en" versionDate="2014-01-12">bold</gloss>
-                 </valItem>
-               </valList>
-             </attDef>
-           </attList>
-         </elementSpec>
-         <classSpec mode="change" type="atts" ident="att.docStatus">
-           <attList>
-             <attDef ident="status" mode="change">
-               <valList  type="closed" mode="replace">
-                 <valItem ident="good"/>
-                 <valItem ident="bad"/>
-               </valList>
-             </attDef>
-           </attList>
-         </classSpec>
-
+	 <elementSpec ident="list" mode="change">
+	   <attList>
+	     <attDef ident="type" mode="change">
+	       <constraintSpec mode="add" ident="a1" scheme="schematron">
+		 <constraint>
+		   <sch:rule context="tei:list/@type">		   
+		     <sch:assert test="count( ancestor-or-self::tei:list[1]/tei:item ) lt 2">list too short </sch:assert>
+		   </sch:rule>
+		 </constraint>
+	       </constraintSpec>
+	       <valList type="closed" mode="replace">
+		 <valItem ident="enumerated"/>
+		 <valItem ident="itemized"/>
+	       </valList>
+	     </attDef>
+	   </attList>
+	 </elementSpec>
+	 <classSpec ident="att.canonical" type="atts" mode="delete"/>
+	 <classSpec ident="att.global.rendition" type="atts" mode="change">
+	   <attList>
+	     <attDef ident="rendition" mode="delete"/>
+	   </attList>
+	 </classSpec>
+	 <macroSpec ident="macro.specialPara" mode="change">
+	   <content>
+	     <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+	       <choice>
+		 <text/>
+		 <ref name="model.phrase"/>
+	       </choice>
+	     </zeroOrMore>
+	   </content>
+	 </macroSpec>
+	 <elementSpec ident="div" mode="change">
+	   <attList>
+	     <attDef ident="type" mode="delete"/>
+	     <attDef ident="rend" mode="change">
+	       <valList type="closed" mode="add">
+		 <valItem ident="i">
+		   <gloss xml:lang="en" versionDate="2014-01-12">italic</gloss>
+		 </valItem>
+		 <valItem ident="b">
+		   <gloss xml:lang="en" versionDate="2014-01-12">bold</gloss>
+		 </valItem>
+	       </valList>
+	     </attDef>
+	   </attList>
+	 </elementSpec>
+	 <classSpec mode="change" type="atts" ident="att.docStatus">
+	   <attList>
+	     <attDef ident="status" mode="change">
+	       <valList  type="closed" mode="replace">
+		 <valItem ident="good"/>
+		 <valItem ident="bad"/>
+	       </valList>
+	     </attDef>
+	   </attList>
+	 </classSpec>
        </specGrp>
 
        <p>Now add an element in another namespace, implementing parts

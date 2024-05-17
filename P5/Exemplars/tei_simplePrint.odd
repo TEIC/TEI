@@ -3484,8 +3484,13 @@ live without God in the world, and only mind earthly things.
                   <constraintSpec ident="validtarget" scheme="schematron">
                     <constraint>
                       <sch:rule context="tei:*[@target]">
+			<!-- If & when we are confident the processor
+			     will be an XPath 3+ processor the
+			     “tokenize(normalize-space(@target),'\s+')”
+			     below could be shortened to just
+			     “tokenize(@target)”. —Syd, 2024-04-12 -->
                         <sch:let name="results"
-                          value="for $t in  tokenize(normalize-space(@target),'\s+') return starts-with($t,'#') and not(id(substring($t,2)))"/>
+                          value="for $t in tokenize(normalize-space(@target),'\s+') return starts-with($t,'#') and not(id(substring($t,2)))"/>
                         <sch:report test="some $x in $results satisfies $x"> Error: Every local pointer
                           in "<sch:value-of select="@target"/>" must point to an ID in this document
                             (<sch:value-of select="$results"/>)</sch:report>
@@ -3997,10 +4002,11 @@ live without God in the world, and only mind earthly things.
             <elementSpec ident="bibl" mode="change">
               <constraintSpec mode="add" ident="noEmptyBibl" scheme="schematron">
                 <constraint>
-                  <sch:rule context="tei:bibl">
-                    <sch:assert test="child::* or child::text()[normalize-space()]" role="ERROR"> Element
-                      "<sch:name/>" may not be empty. </sch:assert>
-                  </sch:rule>
+		   <sch:rule context="tei:bibl">		   		  
+                     <sch:assert test="child::* or child::text()[normalize-space()]" role="ERROR">
+		       Element "<sch:name/>" may not be empty.
+		     </sch:assert>
+		   </sch:rule>
                 </constraint>
               </constraintSpec>
               <model predicate="parent::listBibl" behaviour="listItem"/>
@@ -4114,29 +4120,23 @@ live without God in the world, and only mind earthly things.
             <elementSpec ident="choice" mode="change">
               <constraintSpec ident="choiceSize" scheme="schematron" mode="add">
                 <constraint>
-                  <sch:rule context="tei:choice">
-                    <sch:assert test="count(*) &gt; 1" role="ERROR"> Element "<sch:name/>" must have at least two child elements.</sch:assert>
-                  </sch:rule>
+		   <sch:rule context="tei:choice"> 		  
+                     <sch:assert test="count(*) gt 1" role="ERROR">
+		       Element "<sch:name/>" must have at least two child elements.
+		     </sch:assert>
+		   </sch:rule>
                 </constraint>
               </constraintSpec>
               <constraintSpec ident="choiceContent" scheme="schematron" mode="add">
                 <constraint>
-                  <sch:rule context="tei:choice">
-                    <sch:assert test="( tei:corr
-                                     or tei:sic
-                                     or tei:expan
-                                     or tei:abbr
-                                     or tei:reg
-                                     or tei:orig )
-                                     and
-                                      (
-                                       (tei:corr and tei:sic)
-                                       or
-                                       (tei:expan and tei:abbr)
-                                       or
-                                       (tei:reg and tei:orig)
-                                     )" role="ERROR">
-                    Element "<sch:name/>" must have corresponding corr/sic, expand/abbr, reg/orig </sch:assert>
+		  <sch:rule context="tei:choice">
+		    <sch:assert test="( tei:corr and tei:sic )
+                                      or
+                                      ( tei:expan and tei:abbr )
+                                      or
+                                      ( tei:reg and tei:orig )" role="ERROR">
+                      Element "<sch:name/>" must have corresponding corr/sic, expand/abbr, reg/orig
+		    </sch:assert>
 		  </sch:rule>
                 </constraint>
               </constraintSpec>

@@ -53,6 +53,10 @@
 
   <xsl:variable name="revisionDesc">
     <revisionDesc>
+      <change who="#sbauman.emt" when="2024-04-12">
+	Added <gi>sch:rule</gi> elements PRN to avoid new warning
+	about contextless Schematron.
+      </change>
       <change who="#sbauman.emt" when="2023-06-06">
         <list>
           <item>Remove the <ident>altIdent-only-NCName</ident>
