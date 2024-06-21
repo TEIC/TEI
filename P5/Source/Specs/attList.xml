@@ -24,25 +24,25 @@
   <constraintSpec scheme="schematron" ident="no_duplicate_attrs">
     <desc>Because it is illegal in XML to have two attributes with the
     same name on the same element instance, it is illegal in TEI to
-    have two <gi>attDef</gi> elements with the same value of
-    <att>ident</att> as within a single <gi>attList</gi>, unless the
-    parent <gi>attList</gi> has an <att>org</att> of
-    <val>choice</val>. This applies regardless of <att>mode</att> of
-    each <gi>attDef</gi> with a matching <att>ident</att>.</desc>
+    have two <gi>attDef</gi> elements with the same values of
+    <att>ns</att> and <att>ident</att> in a single <gi>attList</gi>,
+    unless the parent <gi>attList</gi> has an <att>org</att> of
+    <val>choice</val>. This applies regardless of the <att>mode</att>
+    of each <gi>attDef</gi>.</desc>
     <constraint>
       <sch:rule context="tei:attList[ not( ancestor::tei:attList ) ]">
         <!--
-            Set up a dummy string that contains at least 1 character that is not legal in a URI,
-            and thus cannot be a namespace.
+            Set up a dummy string that contains at least 1 character that
+            is not legal in a URI, and thus cannot be a namespace.
         -->
         <sch:let name="notanamespace" value="'☮🄯'"/>
         <!-- generate a sequence of my <attDef> descendants -->
         <sch:let name="defs" value="descendant::tei:attDef"/>
         <!--
-            get a sequence of @idents of those <attDef>s, except
-            ignore those that are in parent a <attList> that is an
-            alternation, and for which we have already recorded this
-            @ident. Thus if we see
+            get a sequence of @ns & @ident combinations of those
+            <attDef>s, except ignore those whose parent is an
+            <attList> that is an alternation, and for which we have
+            already recorded this @ident. Thus if we see
             <attList org="choice">
               <attDef ident="klaatu"/>
               <attDef ident="bodsworth"/>
@@ -51,7 +51,7 @@
             </attList>
             The sequence should be ('klaatu','bodsworth','rugglesby','').
         -->
-        <sch:let name="idents"
+        <sch:let name="nsidents"
           value="for $ad in $defs return
                    if ( $ad[
                           parent::tei:attList[ @org eq 'choice']
@@ -67,7 +67,7 @@
                    else normalize-space( if ($ad/@ns) then 'Q{'||$ad/@ns||'}'||$ad/@ident else $ad/@ident )
                  "/>
         <!-- get a sequence of any that occur 2+ times: -->
-        <sch:let name="dups" value="for $n in $idents return ( $idents[ . eq $n ][2] )"/>
+        <sch:let name="dups" value="for $a in $nsidents return ( $nsidents[ . eq $a ][2] )"/>
         <!-- remove any duplicates from the list of duplicates (-: -->
         <sch:let name="distinct_dups" value="distinct-values( $dups )"/>
         <!--
