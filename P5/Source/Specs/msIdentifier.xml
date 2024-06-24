@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="MSIDENTIFIER" ident="msIdentifier">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="msdescription" xml:id="MSIDENTIFIER" ident="msIdentifier">
   <gloss versionDate="2007-07-04" xml:lang="en">manuscript identifier</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">원고 확인소</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
   <gloss versionDate="2008-04-06" xml:lang="es">identificador del manuscrito</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">identifiant du manuscrit</gloss>
   <gloss versionDate="2007-11-06" xml:lang="it">identificatore del manoscritto</gloss>
-  <desc versionDate="2019-01-17" xml:lang="en" xml:id="msidentifier.desc">contains the information required to identify
-the manuscript or similar object being described.</desc>
+  <desc versionDate="2019-01-17" xml:lang="en" xml:id="msidentifier.desc">contains the information required to identify the manuscript or similar object being described.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">기술되고 있는 원고를 식별하기 위해 필요한 정보를 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含識別敘述中的手稿所需要的資訊。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">解説されている手書き資料を特定するために必要な情報を示す。</desc>
@@ -44,7 +37,11 @@ the manuscript or similar object being described.</desc>
   </content>
   <constraintSpec scheme="schematron" ident="msId_minimal">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="not(parent::tei:msPart) and (local-name(*[1])='idno' or local-name(*[1])='altIdentifier' or normalize-space(.)='')">An msIdentifier must contain either a repository or location.</report>
+      <sch:rule context="tei:msIdentifier">
+        <sch:report test="not( parent::tei:msPart )
+                          and
+                          ( child::*[1]/self::idno  or  child::*[1]/self::altIdentifier  or  normalize-space(.) eq '')">An msIdentifier must contain either a repository or location.</sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">

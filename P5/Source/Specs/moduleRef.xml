@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="MODULEREF" ident="moduleRef">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" xml:id="MODULEREF" ident="moduleRef">
   <gloss versionDate="2007-07-04" xml:lang="en">module reference</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">모듈 참조</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">referencia de módulo</gloss>
@@ -17,8 +11,7 @@ $Id$
   <desc versionDate="2007-12-20" xml:lang="ko">하나의 스키마로 통합된 모듈을 참조한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">參照一個被併入某一模型的模組。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">スキーマに組み入れられるモジュールを参照する。</desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">référence un module qui doit être incorporé dans
-                        un schéma.</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">référence un module qui doit être incorporé dans un schéma.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">indica un módulo que se ha de incluir al interno de un esquema.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">indica un modulo da includere all'interno di uno schema</desc>
   <classes>
@@ -26,38 +19,35 @@ $Id$
     <memberOf key="model.oddRef"/>
   </classes>
   <content>
-    
-      <elementRef key="content" minOccurs="0"/>
-    
+    <elementRef key="content" minOccurs="0"/>
   </content>
   <constraintSpec ident="modref" scheme="schematron">
     <constraint>
-      <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:moduleRef">
-        <report test="* and @key">
-Child elements of <name/> are only allowed when an external module is being loaded
-        </report>
-      </rule>
+      <sch:rule context="tei:moduleRef">
+        <sch:report test="* and @key">
+          Child elements of <sch:name/> are only allowed when an external module is being loaded
+        </sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>
     <attDef ident="prefix" usage="opt">
-      <desc versionDate="2011-09-21" xml:lang="en">specifies a default prefix which will be
-      prepended to all patterns from the imported module</desc>
+      <desc versionDate="2011-09-21" xml:lang="en">specifies a default prefix which will be prepended to all patterns from the imported module</desc>
       <datatype minOccurs="0" maxOccurs="1"><dataRef key="teidata.xmlName"/></datatype>
       <constraintSpec scheme="schematron" ident="not-same-prefix">
         <constraint>
-          <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:moduleRef">
-            <report test="//*[ not( generate-id(.) eq generate-id( current() ) ) ]/@prefix = @prefix">The prefix attribute
-	    of <name/> should not match that of any other
-	    element (it would defeat the purpose)</report>
-          </rule>
+          <sch:rule context="tei:moduleRef">
+            <sch:report test="//*[ not( generate-id(.) eq generate-id( current() ) ) ]/@prefix = @prefix">The prefix attribute
+            of <sch:name/> should not match that of any other
+            element (it would defeat the purpose)</sch:report>
+          </sch:rule>
         </constraint>
       </constraintSpec>
       <constraintSpec scheme="schematron" ident="not-except-and-include">
         <constraint>
-          <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:moduleRef">
-            <report test="@except and @include">It is an error to supply both the @include and @except attributes</report>
-          </rule>
+          <sch:rule context="tei:moduleRef">
+            <sch:report test="@except and @include">It is an error to supply both the @include and @except attributes</sch:report>
+          </sch:rule>
         </constraint>
       </constraintSpec>
       <remarks versionDate="2011-09-21" xml:lang="en">
@@ -75,8 +65,7 @@ specified module into the schema being defined.</desc>
         <datatype minOccurs="0" maxOccurs="unbounded"><dataRef key="teidata.xmlName"/></datatype>
       </attDef>
       <attDef ident="except">
-        <desc versionDate="2011-09-21" xml:lang="en">supplies a list of the elements which are not to be copied from the
-specified module into the schema being defined.</desc>
+        <desc versionDate="2011-09-21" xml:lang="en">supplies a list of the elements which are not to be copied from the specified module into the schema being defined.</desc>
         <datatype minOccurs="0" maxOccurs="unbounded"><dataRef key="teidata.xmlName"/></datatype>
       </attDef>
     </attList>
@@ -95,8 +84,7 @@ specified module into the schema being defined.</desc>
         <gloss versionDate="2007-11-06" xml:lang="it">URL</gloss>
         <desc versionDate="2007-01-01" xml:lang="en">refers to a non-TEI module of RELAX NG code by external location</desc>
         <desc versionDate="2008-04-06" xml:lang="es">se refiere a un módulo no-de-TEI del código de RELAX NG mediante una localización externa</desc>
-        <desc versionDate="2008-03-30" xml:lang="fr">fait référence à un module non TEI de code
-RELAX NG par une localisation externe.</desc>
+        <desc versionDate="2008-03-30" xml:lang="fr">fait référence à un module non TEI de code RELAX NG par une localisation externe.</desc>
         <desc versionDate="2007-11-06" xml:lang="it">indica la collocazione esterna di un modulo non TEI che utilizza il codice RELAX NG</desc>
         <datatype><dataRef key="teidata.pointer"/></datatype>
       </attDef>
@@ -121,7 +109,6 @@ RELAX NG par une localisation externe.</desc>
     <p>This includes all elements available  from  the linking module
     except for the <gi>link</gi> and <gi>linkGrp</gi> elements.</p>
   </exemplum>
-
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
       <moduleRef key="linking" include="linkGrp link"/>

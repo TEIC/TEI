@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="att.repeatable" type="atts" module="tagdocs">
   <desc versionDate="2021-08-22" xml:lang="en">provides attributes for the elements which define
@@ -20,12 +14,12 @@ $Id$
          <att>maxOccurs</att> is 1, when <att>maxOccurs</att> is not specified
          <att>minOccurs</att> must always be less than or equal to 1.</desc> -->
     <constraint>
-      <sch:rule context="*[ @minOccurs and @maxOccurs ]">
+      <sch:rule context="tei:*[ @minOccurs and @maxOccurs ]">
         <sch:let name="min" value="@minOccurs cast as xs:integer"/>
         <sch:let name="max" value="if ( normalize-space( @maxOccurs ) eq 'unbounded') then -1 else @maxOccurs cast as xs:integer"/>
         <sch:assert test="$max eq -1 or $max ge $min">@maxOccurs should be greater than or equal to @minOccurs</sch:assert>
       </sch:rule>
-      <sch:rule context="*[ @minOccurs and not( @maxOccurs ) ]">
+      <sch:rule context="tei:*[ @minOccurs and not( @maxOccurs ) ]">
         <sch:assert test="@minOccurs cast as xs:integer lt 2">When @maxOccurs is not specified, @minOccurs must be 0 or 1</sch:assert>
       </sch:rule>
     </constraint>

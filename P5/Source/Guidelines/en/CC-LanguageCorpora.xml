@@ -1,110 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details.
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="CC" n="23"><head>Language Corpora</head>
-
 <p>The term <term>language corpus</term> is used to mean a number of
-rather different things.  It may refer simply to any collection of
+rather different things. It may refer simply to any collection of
 linguistic data (for example, written, spoken, signed, or multimodal), although
 many practitioners prefer to reserve it for collections which have
 been organized or collected with a particular end in view, generally to
 characterize a particular state or variety of one or more languages.
 Because opinions as to the best method of achieving this goal differ,
-various subcategories of corpora have also been identified.  For our
+various subcategories of corpora have also been identified. For our
 purposes however, the distinguishing characteristic of a corpus is that
 its components have been selected or structured according to some
-conscious set of design criteria.
- </p>
+conscious set of design criteria.</p>
 <p>These design criteria may be very simple and undemanding, or very
-sophisticated.  A corpus may be intended to represent (in the
+sophisticated. A corpus may be intended to represent (in the
 statistical sense) a particular linguistic variety or sublanguage, or
 it may be intended to represent all aspects of some assumed
-<soCalled>core</soCalled> language.  A corpus may be made up of whole
-texts or of fragments or text samples.  It may be a
+<soCalled>core</soCalled> language. A corpus may be made up of whole
+texts or of fragments or text samples. It may be a
 <soCalled>closed</soCalled> corpus, or an <soCalled>open</soCalled> or
 <soCalled>monitor</soCalled> corpus, the composition of which may
-change over time.  However, since an open corpus is of necessity
+change over time. However, since an open corpus is of necessity
 finite at any particular point in time, the only likely effect of its
 expansibility from the encoding point of view may be some increased
 difficulty in maintaining consistent encoding practices (see further
 section <ptr target="#CCREC"/>). For simplicity, therefore, our
 discussion largely concerns ways of encoding closed corpora, regarded
-as single but composite texts.
- </p>
+as single but composite texts.</p>
 <p>Language corpora are regarded by these Guidelines as
 <term>composite texts</term> rather than <term>unitary texts</term>
-(on this distinction, see chapter <ptr target="#DS"/>).  This is
+(on this distinction, see chapter <ptr target="#DS"/>). This is
 because although each discrete sample of language in a corpus clearly
 has a claim to be considered as a text in its own right, it is also
 regarded as a subdivision of some larger object, if only for
-convenience of analysis.  Corpora share a number of characteristics
+convenience of analysis. Corpora share a number of characteristics
 with other types of composite texts, including anthologies and
-collections.  Most notably, different components of composite texts
+collections. Most notably, different components of composite texts
 may exhibit different structural properties (for example, some may be
 composed of verse, and others of prose), thus potentially requiring
-elements from different TEI modules.
- </p>
+elements from different TEI modules.</p>
 <p>Aside from these high-level structural differences, and possibly
 differences of scale, the encoding of language corpora and the
-encoding of individual texts present identical sets of problems.  Any
+encoding of individual texts present identical sets of problems. Any
 of the encoding techniques and elements presented in other chapters of
 these Guidelines may therefore prove relevant to some aspect of corpus
-encoding and may be used in corpora.  Therefore, we do not repeat here
+encoding and may be used in corpora. Therefore, we do not repeat here
 the discussion of such fundamental matters as the representation of
 multiple character sets (see chapter <ptr target="#CH"/>); nor do we
 attempt to summarize the variety of elements provided for encoding
 basic structural features such as quoted or highlighted phrases, 
 cross-references, lists, notes, editorial changes and reference systems (see
-chapter <ptr target="#CO"/>).  In addition to these general purpose
+chapter <ptr target="#CO"/>). In addition to these general purpose
 elements, these Guidelines offer a range of more specialized sets of
 tags which may be of use in certain specialized corpora, for example
 those consisting primarily of verse (chapter <ptr target="#VE"/>),
 drama (chapter <ptr target="#DR"/>), transcriptions of spoken text
-(chapter <ptr target="#TS"/>), etc.  Chapter <ptr target="#ST"/>
+(chapter <ptr target="#TS"/>), etc. Chapter <ptr target="#ST"/>
 should be reviewed for details of how these and other components of
 these Guidelines should be tailored to create a TEI customization 
-appropriate to a given application.  In sum, it should not be assumed 
+appropriate to a given application. In sum, it should not be assumed 
 that only the matters specifically addressed in this chapter are of
-importance for corpus creators.
- </p>
+importance for corpus creators.</p>
 <p>This chapter does however include some other material
 relevant to corpora and corpus-building, for which no other location
-appeared suitable.  It begins with a review of the distinction between
+appeared suitable. It begins with a review of the distinction between
 unitary and composite texts, and of the different methods provided by
 these Guidelines for representing composite texts of different kinds
-(section <ptr target="#CCDEF"/>).  Section <ptr target="#CCAH"/> describes a
+(section <ptr target="#CCDEF"/>). Section <ptr target="#CCAH"/> describes a
 set of additional header elements provided for the documentation of
 contextual information, of importance largely though not exclusively to
-language corpora.  This is the additional module for language corpora
-proper.  Section <ptr target="#CCAS"/> discusses a mechanism by which
+language corpora. This is the additional module for language corpora
+proper. Section <ptr target="#CCAS"/> discusses a mechanism by which
 individual parts of the TEI header may be associated with different
-parts of a TEI-conformant text.  Section <ptr target="#CCAN"/> reviews
+parts of a TEI-conformant text. Section <ptr target="#CCAN"/> reviews
 various methods of providing linguistic annotation in corpora, with some
 specific examples of relevance to current practice in corpus
-linguistics.  Finally, section <ptr target="#CCREC"/> provides some general
+linguistics. Finally, section <ptr target="#CCREC"/> provides some general
 recommendations about the use of these Guidelines in the building of
-large corpora.
-</p>
+large corpora.</p>
 <div type="div2" xml:id="CCDEF"><head>Varieties of Composite Text</head>
-
 <p>Both unitary and composite texts may be encoded using these
 Guidelines; composite texts, including corpora, will typically make
 use of the following tags for their top-level organization.
 <specList><specDesc key="teiCorpus"/><specDesc key="TEI"/><specDesc key="teiHeader"/><specDesc key="text"/><specDesc key="group"/></specList> Full descriptions of these may be found in
 chapter <ptr target="#HD"/> (for <gi>teiHeader</gi>), and chapter <ptr target="#DS"/> (for <gi>teiCorpus</gi>, <gi>TEI</gi>, <gi>text</gi>, and
 <gi>group</gi>); this section discusses their application to composite
-texts in particular.
- </p>
+texts in particular.</p>
 <p>In these Guidelines, the word <term>text</term> refers to any stretch
 of discourse, whether complete or incomplete, unitary or composite,
 which the encoder chooses (perhaps merely for purposes of analytic
-convenience) to regard as a unit.  The term <term>composite text</term>
+convenience) to regard as a unit. The term <term>composite text</term>
 refers to texts within which other texts appear; the following common
 cases may be distinguished:
 <list rend="bulleted">
@@ -115,15 +101,13 @@ in the form of collections or series of letters)</item>
 <item>otherwise unitary texts, within which one or more subordinate
 texts are embedded</item></list>
 The elements listed above may be combined to encode each of these
-varieties of composite text in different ways.
- </p>
+varieties of composite text in different ways.</p>
 <p>In corpora, the component samples are clearly distinct texts, but the
 systematic collection, standardized preparation, and common markup of
 the corpus often make it useful to treat the entire corpus as a unit,
-too.  Some corpora may become so well established as to be regarded as
+too. Some corpora may become so well established as to be regarded as
 texts in their own right; the Brown and LOB corpora are now close to
-achieving this status.
- </p>
+achieving this status.</p>
 <p>The <gi>teiCorpus</gi> element is intended for the encoding of
 language corpora, though it may also be useful in encoding newspapers,
 electronic anthologies, and other disparate collections of material.
@@ -138,109 +122,142 @@ comprising a <gi>teiHeader</gi> followed by one or more members of the
 has a corpus-level <gi>teiHeader</gi> element, in which the corpus as
 a whole, and encoding practices common to multiple samples may be
 described. The overall structure of a TEI-conformant corpus is thus:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND"><teiCorpus>
-  <teiHeader>
-  </teiHeader>
+  <teiHeader> <!-- ... --> </teiHeader>
   <TEI>
-    <teiHeader>  </teiHeader>
-    <text>  </text>
+    <teiHeader> <!-- ... --> </teiHeader>
+    <text> <!-- ... --> </text>
   </TEI>
   <TEI>
-    <teiHeader>  </teiHeader>
-    <text>  </text>
+    <teiHeader> <!-- ... --> </teiHeader>
+    <text> <!-- ... --> </text>
   </TEI>
 </teiCorpus></egXML>
 Or, alternatively:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND"><TEI>
-  <teiHeader>
-  </teiHeader>
+  <teiHeader> <!-- ... --> </teiHeader>
   <TEI>
-    <teiHeader>  </teiHeader>
-    <text>  </text>
+    <teiHeader> <!-- ... --> </teiHeader>
+    <text> <!-- ... --> </text>
   </TEI>
   <TEI>
-    <teiHeader>  </teiHeader>
-    <text>  </text>
+    <teiHeader> <!-- ... --> </teiHeader>
+    <text> <!-- ... --> </text>
   </TEI>
 </TEI></egXML></p>
 <p>Header information which relates to the whole corpus rather than to
 individual components of it should be factored out and included in the
-<gi>teiHeader</gi> element prefixed to the whole.  This two-level
+<gi>teiHeader</gi> element prefixed to the whole. This two-level
 structure allows for contextual information to be specified at the
-corpus level, at the individual text level, or at both.  Discussion of
+corpus level, at the individual text level, or at both. Discussion of
 the kinds of information which may thus be specified is provided
-below, in section <ptr target="#CCAH"/>, as well as in chapter <ptr target="#HD"/>.  Information of this type should in general be
+below, in section <ptr target="#CCAH"/>, as well as in chapter <ptr target="#HD"/>. Information of this type should in general be
 specified only once: a variety of methods are provided for associating
 it with individual components of a corpus, as further described in
-section <ptr target="#CCAS"/>.
- </p>
+section <ptr target="#CCAS"/>.</p>
 <p>In some cases, the design of a corpus is reflected in its internal
-structure.  For example, a corpus of newspaper extracts might be
+structure. For example, a corpus of newspaper extracts might be
 arranged to combine all stories of one type (reportage, editorial,
 reviews, etc.) into some higher-level grouping, possibly with sub-groups
-for date, region, etc.  The <gi>teiCorpus</gi> element provides no
+for date, region, etc. A <gi>teiCorpus</gi> element may occur
+directly inside a <gi>teiCorpus</gi> specifically to allow
 direct support for reflecting such internal corpus structure in the
-markup:  it treats the corpus as an undifferentiated series of
-components, each tagged <gi>TEI</gi>.</p>
-<p>If it is essential to reflect a single permanent organization of a
-corpus into sub- and sub-sub-corpora, then the corpus or the high-level
-subcorpora may be encoded as composite texts, using the <gi>group</gi>
-element described below and in section <ptr target="#DSGRP"/>.  The
-mechanisms for corpus characterization described in this chapter,
-however, are designed to reduce the need to do this.  Useful groupings
+markup. For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#NONE"><teiCorpus>
+  <teiHeader> <!-- metadata for entire corpus --> </teiHeader>
+  <teiCorpus>
+    <teiHeader> <!-- metadata for news sub-corpus --> </teiHeader>
+    <TEI>
+      <teiHeader> <!-- metadata for article #1 --> </teiHeader>
+      <text> <!-- transcription of article #1 --> </text>
+    </TEI>
+    <TEI>
+      <teiHeader> <!-- metadata for article #2 --> </teiHeader>
+      <text> <!-- transcription of article #2 --> </text>
+    </TEI>
+    <TEI>
+      <teiHeader> <!-- metadata for article #3 --> </teiHeader>
+      <text> <!-- transcription of article #3 --> </text>
+    </TEI>
+    <TEI>
+      <teiHeader> <!-- metadata for article #4 --> </teiHeader>
+      <text> <!-- transcription of article #4 --> </text>
+    </TEI>
+  </teiCorpus>
+  <teiCorpus>
+    <teiHeader> <!-- metadata for editorial sub-corpus --> </teiHeader>
+    <TEI>
+      <teiHeader> <!-- metadata for editorial #1 --> </teiHeader>
+      <text> <!-- transcription of editorial #1 --> </text>
+    </TEI>
+    <TEI>
+      <teiHeader> <!-- metadata for editorial #2 --> </teiHeader>
+      <text> <!-- transcription of editorial #2 --> </text>
+    </TEI>
+  </teiCorpus>
+  <teiCorpus>
+    <teiHeader> <!-- metadata for reviews --> </teiHeader>
+    <TEI>
+      <teiHeader> <!-- metadata for review #1 --> </teiHeader>
+      <text> <!-- transcription of review #1 --> </text>
+    </TEI>
+    <TEI>
+      <teiHeader> <!-- metadata for review #2 --> </teiHeader>
+      <text> <!-- transcription of review #2 --> </text>
+    </TEI>
+  </teiCorpus>
+</teiCorpus>
+</egXML></p>
+<p>Furthermore, useful groupings
 of components may easily be expressed using the text classification and
 identification elements described in section <ptr target="#CCAHTD"/>,
 and those for associating declarations with corpus components described
-in section <ptr target="#CCAS"/>.  These methods also allow several
+in section <ptr target="#CCAS"/>. These methods also allow several
 different methods of text grouping to co-exist, each to be used as
-needed at different times.  This helps minimize the danger of
+needed at different times. This helps minimize the danger of
 cross-classification and misclassification of samples, and helps
 improve the flexibility with which parts of a corpus may be
-characterized for different applications.
- </p>
+characterized for different applications.</p>
 <p>Anthologies and collections are often treated as texts in their own
-right, if only for historical reasons.  In conventional publishing, at
+right, if only for historical reasons. In conventional publishing, at
 least, anthologies are published as units, with single editorial
 responsibility and common front and back matter which may need to be
-included in their electronic encodings.  The texts collected in the
+included in their electronic encodings. The texts collected in the
 anthology, of course, may also need to be identifiable as distinct
-individual objects for study.
- </p>
+individual objects for study.</p>
 <p>Poem cycles, epistolary novels, and epistolary essays differ from
 anthologies in that they are often written as single works, by single
 authors, for single occasions; nevertheless, it can be useful to treat
 their constituent parts as individual texts, as well as the cycle
-itself.  Structurally, therefore, they may be treated in the same way
+itself. Structurally, therefore, they may be treated in the same way
 as anthologies: in both cases, the body of the text is composed
-largely of other texts.
- </p>
+largely of other texts.</p>
 <p>The <gi>group</gi> element is provided to simplify the encoding of
-collections, anthologies, and cyclic works; as noted above, the
-<gi>group</gi> element can also be used to record the potentially
-complex internal structure of language corpora.  For a full description,
-see chapter <ptr target="#DS"/>.
- </p>
+collections, anthologies, and cyclic works; the <gi>group</gi> element
+may also be used to record the potentially complex internal structure
+of language corpora. (For a full description, see chapter <ptr
+target="#DS"/>.) The choice between using <gi>group</gi> or nested
+<gi>teiCorpus</gi> elements is up to individual encoders, but in
+general when it is useful to associate a significant quantity of
+metadata with such a unit of text it is easier to use
+<gi>teiCorpus</gi>.</p>
 <p>Some composite texts, finally, are neither corpora, nor anthologies,
-nor cyclic works:  they are otherwise unitary texts within which other
-texts are embedded.  In general, they may be treated in the same way as
+nor cyclic works: they are otherwise unitary texts within which other
+texts are embedded. In general, they may be treated in the same way as
 unitary texts, using the normal <gi>TEI</gi> and
-<gi>body</gi> elements.  The embedded text itself may be encoded using
-the <gi>text</gi> element<!--, which may occur within quotations or between
-paragraphs or other chunk-level elements inside the sections of a larger
-text--><!-- JC: 2018-07-20 ... uh no it can't! -->.  For further discussion, see chapter <ptr target="#DS"/>.
- </p>
+<gi>body</gi> elements. The embedded text itself may be encoded using
+the <gi>text</gi> element. For further discussion, see chapter <ptr target="#DS"/>.</p>
 <p>All composite texts share the characteristic that their different
-component texts may be of structurally similar or dissimilar types.  If
-all  component texts may all be encoded using the same  module,
+component texts may be of structurally similar or dissimilar types. If
+all component texts may all be encoded using the same module,
 then no problem arises. If however they require
 different modules, then these must be included in the TEI customization. This
-process is described in more detail in section <ptr target="#STMA"/>.
-</p></div>
+process is described in more detail in section <ptr target="#STMA"/>.</p></div>
+
 <div type="div2" xml:id="CCAH"><head>Contextual Information</head>
 <p>Contextual information is of particular importance for collections
 or corpora composed of samples from a variety of different kinds of
-text. Examples of such contextual information include:  the age, sex,
+text. Examples of such contextual information include: the age, sex,
 and geographical origins of participants in a language interaction, or
 their socio-economic status; the cost and publication data of a
 newspaper; the topic, register or factuality of an extract from a
@@ -254,12 +271,12 @@ vector of social characteristics).</p>
 <p>Such contextual information is potentially of equal importance for
 unitary texts, and these Guidelines accordingly make no particular
 distinction between the kinds of information which should be gathered
-for unitary and for composite texts.  In either case, the information
+for unitary and for composite texts. In either case, the information
 should be recorded in the appropriate section of a TEI header, as
-described in chapter <ptr target="#HD"/>.  In the case of language corpora,
+described in chapter <ptr target="#HD"/>. In the case of language corpora,
 such information may be gathered together in the overall corpus header,
 or split across all the component texts of a corpus, in their individual
-headers, or divided between the two.  The association between an
+headers, or divided between the two. The association between an
 individual corpus text and the contextual information applicable to it
 may be made in a number of ways, as further discussed in section <ptr target="#CCAS"/> below.</p>
 <p>Chapter <ptr target="#HD"/>, which should be read in conjunction with
@@ -269,17 +286,17 @@ for example its bibliographic description and those of the source or
 sources from which it was derived (see section <ptr target="#HD2"/>);
 information about the encoding practices followed with the corpus, for
 example its design principles, editorial practices, reference system,
-etc.  (see section <ptr target="#HD5"/>); more detailed descriptive
+etc. (see section <ptr target="#HD5"/>); more detailed descriptive
 information about the creation and content of the corpus, such as the
 languages used within it and any descriptive classification system used
 (see section <ptr target="#HD4"/>); and version information documenting any
 changes made in the electronic text (see section <ptr target="#HD6"/>).</p>
 <p>In addition to the elements defined by chapter <ptr target="#HD"/>,
 several other elements can be used in the TEI header if the additional
-module defined by this chapter is invoked.  These additional tags make
+module defined by this chapter is invoked. These additional tags make
 it possible to characterize the social or other situation within which a
 language interaction takes place or is experienced, the physical setting
-of a language interaction, and the participants in it.  Though this
+of a language interaction, and the participants in it. Though this
 information may be relevant to, and provided for, unitary texts as well
 as for collections or corpora, it is more often recorded for the
 components of systematically developed corpora than for isolated texts,
@@ -289,7 +306,7 @@ corpora</q>.</p>
 <p>When the module defined in this chapter is included in a schema, a
 number of additional elements become available within the
 <gi>profileDesc</gi> element of the TEI header (discussed in section
-<ptr target="#HD4"/>).  <specList><specDesc key="textDesc"/><specDesc key="particDesc"/><specDesc key="settingDesc"/></specList> These
+<ptr target="#HD4"/>). <specList><specDesc key="textDesc"/><specDesc key="particDesc"/><specDesc key="settingDesc"/></specList> These
 elements, members of the <ident type="class">model.profileDescPart</ident>, are discussed in the
 remainder of the chapter.
 
@@ -343,9 +360,9 @@ remainder of the chapter.
 <p>The <gi>textDesc</gi> element provides a full description of the
 situation within which a text was produced or experienced, and thus
 characterizes it in a way relatively independent of any <foreign>a
-priori</foreign> theory of text-types.  It is provided as an alternative
+priori</foreign> theory of text-types. It is provided as an alternative
 or a supplement to the common use of descriptive taxonomies used to
-categorize texts, which is fully described in section <ptr target="#HD43"/>, and section <ptr target="#HD55"/>.  The description is
+categorize texts, which is fully described in section <ptr target="#HD43"/>, and section <ptr target="#HD55"/>. The description is
 organized as a set of values and optional prose descriptions for the
 following eight <term>situational parameters</term>, each represented by
 one of the following eight elements:
@@ -358,19 +375,18 @@ described in <ptr target="#MD"/>.</p>
 elements, supplied in the order specified. Except for the
 <gi>purpose</gi> element, which may be repeated to indicate multiple
 purposes, no element should appear more than once within a single text
-description.  Each element may be empty, or may contain a brief
+description. Each element may be empty, or may contain a brief
 qualification or more detailed description of the value expressed by
-its attributes.  It should be noted that some texts, in particular
+its attributes. It should be noted that some texts, in particular
 literary ones, may resist unambiguous classification in some of these
 dimensions; in such cases, the situational parameter in question
 should be given the content <q>not applicable</q> or an equivalent
-phrase.
-	</p>
+phrase.</p>
 <p>Texts may be described along many dimensions, according to many
-different taxonomies.  No generally accepted consensus as to how such
+different taxonomies. No generally accepted consensus as to how such
 taxonomies should be defined has yet emerged, despite the best efforts
 of many corpus linguists, text linguists, sociolinguists,
-rhetoricians, and literary theorists over the years.  Rather than
+rhetoricians, and literary theorists over the years. Rather than
 attempting the task of proposing a single taxonomy of
 <term>text-types</term> (or the equally impossible one of enumerating
 all those which have been proposed previously), the closed set of
@@ -380,7 +396,7 @@ individual texts, without insisting on a system of discrete high-level
 text-types. Such text-types may however be used in combination with
 the parameters proposed here, with the advantage that the internal
 structure of each such text-type can be specified in terms of the
-parameters proposed.  This approach has the following analytical
+parameters proposed. This approach has the following analytical
 advantages:<note place="bottom">Schemes similar to that proposed here were developed
 in the 1960s and 1970s by researchers such as Hymes, Halliday, and
 Crystal and Davy, but have rarely been implemented; one notable
@@ -394,30 +410,28 @@ contrast to discrete categories based on type or topic)</item>
 based on the particular parameters of interest to them</item>
 <item>it is equally applicable to spoken, written, or signed texts</item></list></p>
 <p>Two alternative approaches to the use of these parameters are
-supported by these Guidelines.  One is to use pre-existing taxonomies
+supported by these Guidelines. One is to use pre-existing taxonomies
 such as those used in subject classification or other types of text
 categorization.
 Such taxonomies may also be appropriate for the description of the
-topics addressed by particular texts.  Elements for this purpose are
+topics addressed by particular texts. Elements for this purpose are
 described in section <ptr target="#HD43"/>, and elements for defining or
-declaring such classification schemes in section <ptr target="#HD55"/>.  A
+declaring such classification schemes in section <ptr target="#HD55"/>. A
 second approach is to develop an application-specific set of
 <term>feature structures</term> and an associated <term>feature system
 declaration,</term> as described in
-chapters <ptr target="#FS"/> and <ptr target="#FD"/>.
-	</p>
+chapters <ptr target="#FS"/> and <ptr target="#FD"/>.</p>
 <p>Where the organizing principles of a corpus or collection so permit,
 it may be convenient to regard a particular set of values for the
 situational parameters listed in this section as forming a
 <term>text-type</term> in its own right; this may also be useful where
-the same set of values applies to several texts within a corpus.  In
+the same set of values applies to several texts within a corpus. In
 such a case, the set of text-types so defined should be regarded as a
-<term>taxonomy</term>.  The mechanisms described in section <ptr target="#HD55"/> may be used to define hierarchic taxonomies of such
+<term>taxonomy</term>. The mechanisms described in section <ptr target="#HD55"/> may be used to define hierarchic taxonomies of such
 text-types, provided that the <gi>catDesc</gi> component of the
 <gi>category</gi> element contains a <gi>textDesc</gi> element rather
-than a prose description.  Particular texts may then be associated with
-such definitions using the mechanisms described in sections <ptr target="#HD43"/>.
-	</p>
+than a prose description. Particular texts may then be associated with
+such definitions using the mechanisms described in sections <ptr target="#HD43"/>.</p>
 
 <p>Using these situational parameters, an informal domestic
 conversation might be characterized as follows:
@@ -590,7 +604,7 @@ parameters might be used to characterize a novel:
 <p>The <gi>particDesc</gi> element in the <gi>profileDesc</gi> element
 provides additional information about the participants in a spoken
 text or, where this is judged appropriate, the persons named or
-depicted in a written text.  When the detailed elements provided by
+depicted in a written text. When the detailed elements provided by
 the <ident type="module">namesdates</ident> module described in <ptr target="#ND"/> are included in a schema, this element can
 contain detailed demographic or descriptive information about
 individual speakers or groups of speakers, such as their names or
@@ -603,7 +617,7 @@ attribute.</p>
 <term>participant</term> are used throughout this section, it is
 intended that the same mechanisms may be used to characterize fictional
 personæ or <soCalled>voices</soCalled> within a written text, except
-where otherwise stated.  For the purposes of analysis of language usage,
+where otherwise stated. For the purposes of analysis of language usage,
 the information specified here should be equally applicable to
 written, spoken, or signed texts.</p>
 <p>The element <gi>particDesc</gi> contains a description of the
@@ -612,9 +626,8 @@ straightforward prose, possibly containing a list of names, encoded
 using the usual <gi>list</gi> and <gi>name</gi> elements, or
 alternatively using the more specific and detailed <gi>listPerson</gi>
 element provided by the <ident type="module">namesdates</ident> module
-described in <ptr target="#ND"/>.
-</p>
-<p>For example, a  participant in a recorded conversation might be
+described in <ptr target="#ND"/>.</p>
+<p>For example, a participant in a recorded conversation might be
 described informally as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><particDesc xml:id="p2">
 <p>Female informant, well-educated, born in Shropshire UK, 12 Jan
@@ -655,17 +668,16 @@ definitions for their speakers; see further section <ptr target="#DRSP"/>.</note
   </p>
 </particDesc></egXML>
 Here, the characters are simply listed without the detailed
-structure which use of the <gi>listPerson</gi> element permits.
-</p>
+structure which use of the <gi>listPerson</gi> element permits.</p>
 
 </div>
 <div type="div3" xml:id="CCAHSE">
 <head>The Setting Description</head> 
 <p>The <gi>settingDesc</gi> element is used to describe the setting or
-settings in which language interaction takes place.  It may contain a
+settings in which language interaction takes place. It may contain a
 prose description, analogous to a stage description at the start of a
 play, stating in broad terms the locale, or a more detailed
-description of a series of such settings.  </p>
+description of a series of such settings.</p>
 <p>Each distinct setting is described by means of a <gi>setting</gi>
 element. 
 <specList>
@@ -676,9 +688,9 @@ element.
 Individual settings may be associated with particular participants by
 means of the optional <att>who</att> attribute which this element
 inherits as a member of the <ident type="class">att.ascribed</ident>
-if, for example, participants are in different places.  This attribute
+if, for example, participants are in different places. This attribute
 identifies one or more individual participants or participant groups,
-as discussed earlier in section <ptr target="#CCAHPA"/>.  If this
+as discussed earlier in section <ptr target="#CCAHPA"/>. If this
 attribute is not specified, the setting details provided are assumed
 to apply to all participants represented in the language
 interaction. Note however that it is not possible to encode different
@@ -698,8 +710,7 @@ provide the following elements:
 </specList>
 Additional more specific naming elements such as <gi>orgName</gi> or
 <gi>persName</gi> may also be available if the
-<ident type="module">namesdates</ident> module is also included in the schema.
-</p>
+<ident type="module">namesdates</ident> module is also included in the schema.</p>
 <p>The following example demonstrates the kind of background information
 often required to support transcriptions of language interactions, first
 encoded as a simple prose narrative:
@@ -733,7 +744,7 @@ way:
       <activity>radio performance</activity>
    </setting>
 </settingDesc></egXML></p>
-<p>Again, a  more detailed encoding for  places is feasible if the
+<p>Again, a more detailed encoding for places is feasible if the
 <ident type="module">namesdates</ident> module is included in the
 schema. The above examples assume that only the
 general purpose <gi>name</gi> element supplied in the core module is
@@ -778,53 +789,47 @@ available.
 
 
 
-</specGrp>
-</p></div></div>
+</specGrp></p></div></div>
 <div type="div2" xml:id="CCAS"><head>Associating Contextual
 Information with a Text</head>
 <p>This section discusses the association of the contextual information
 held in the header with the individual elements making up a TEI text or
-corpus.  Contextual information is held in elements of various kinds
+corpus. Contextual information is held in elements of various kinds
 within the TEI header, as discussed elsewhere in this section and in
-chapter <ptr target="#HD"/>.  Here we consider what happens when different
+chapter <ptr target="#HD"/>. Here we consider what happens when different
 parts of a document need to be associated with different contextual
 information of the same type, for example when one part of a document
 uses a different encoding practice from another, or where one part
-relates to a different setting from another.  In such situations, there
-will be more than one instance of a header element of the relevant type.
- </p>
+relates to a different setting from another. In such situations, there
+will be more than one instance of a header element of the relevant type.</p>
 <p>The TEI scheme allow for the following possibilities:
 <list rend="bulleted">
 <item>A given element may appear in the corpus header only, in the
 header of one or more texts only, or in both places</item>
 <item>There may be multiple occurrences of certain elements in either
-the corpus or a text header.</item></list>
- </p>
+the corpus or a text header.</item></list></p>
 <p>To simplify the exposition, we deal with these two possibilities
 separately in what follows; however, they may be combined as
-desired.
- </p>
+desired.</p>
 <div type="div3" xml:id="CCAS1"><head>Combining Corpus and Text Headers</head>
 <p>A TEI-conformant document may have more than one header only in the
 case of a TEI corpus, which must have a header in its own right, as well
-as the obligatory header for each text.  Every element specified in a
+as the obligatory header for each text. Every element specified in a
 corpus-header is understood as if it appeared within every text header
-in the corpus.  An element specified in a text header but not in the
-corpus header supplements the specification for that text alone.  If any
+in the corpus. An element specified in a text header but not in the
+corpus header supplements the specification for that text alone. If any
 element is specified in both corpus and text headers, the corpus header
-element is over-ridden for that text alone.
- </p>
+element is over-ridden for that text alone.</p>
 <p>The <gi>titleStmt</gi> for a corpus text is understood to be
-prefixed by the <gi>titleStmt</gi> given in the corpus header.  All
+prefixed by the <gi>titleStmt</gi> given in the corpus header. All
 other optional elements of the <gi>fileDesc</gi> should be omitted from
-an individual corpus text header unless they  differ from those
-specified in the corpus header.  All other header elements behave
+an individual corpus text header unless they differ from those
+specified in the corpus header. All other header elements behave
 identically, in the manner documented below.
 This facility makes it possible to state once for all in the corpus
 header each piece of contextual information which is common to the whole
 of the corpus, while still allowing for individual texts to vary from
-this common denominator.
- </p>
+this common denominator.</p>
 <p>For example, the following schematic shows the structure of a corpus
 comprising three texts, the first and last of which share the same
 encoding description. The second one has its own encoding description.
@@ -881,7 +886,7 @@ part of a text header or the corpus header by means of a <att>decls</att> attrib
 that element. This linkage is used to over-ride the default
 association between declarations in the header and a corpus or corpus
 text. The only header elements which may be associated in this way are
-those which would not otherwise be meaningfully repeatable.  </p>
+those which would not otherwise be meaningfully repeatable.</p>
 <p>Declarable elements are all members of the class <ident type="class">att.declarable</ident>; the corresponding declaring
 elements are all members of the class <ident type="class">att.declaring</ident>.
 <specList>
@@ -932,7 +937,6 @@ elements are all members of the class <ident type="class">att.declaring</ident>.
 <specDesc key="textDesc"/>
 <specDesc key="xenoData"/>
 </specList>
-
 Each of the above elements is repeatable within a single
 header; that is, there may be more than one instance of any declarable
 element type at a given level. When this occurs, the following rules
@@ -942,11 +946,10 @@ than once:
 <item>each must bear a unique identifier</item>
 <item>when occurring within the same parent element, exactly one element must be
 specified as the default, by having a <att>default</att> attribute with the value "true".
-</item></list>
- </p>
+</item></list></p>
 <p>In the following example, an editorial declaration contains two
 possible <gi>correction</gi> policies, one identified as
-<val>CorPol1</val> and the other as <val>CorPol2</val>.  Since there
+<val>CorPol1</val> and the other as <val>CorPol2</val>. Since there
 are two, one of them (in this case <val>CorPol1</val>) should be
 specified as the default: <egXML xmlns="http://www.tei-c.org/ns/Examples"><editorialDecl>
    <correction xml:id="CorPol1" default="true">
@@ -961,7 +964,7 @@ specified as the default: <egXML xmlns="http://www.tei-c.org/ns/Examples"><edito
    </normalization>
 </editorialDecl></egXML> For texts associated with the header in which
 this declaration appears, correction method <val>CorPol1</val> will be
-assumed, unless they explicitly state otherwise.  Here is the
+assumed, unless they explicitly state otherwise. Here is the
 structure of a text in which a division states otherwise: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><text>
   <body>
     <div1 n="D1">  </div1>
@@ -970,8 +973,7 @@ structure of a text in which a division states otherwise: <egXML xmlns="http://w
   </body>
 </text></egXML> In this case, the contents of the divisions D1 and D3
 will both use correction policy <val>CorPol1</val>, and those of
-division D2 will use correction policy <val>CorPol2</val>.
- </p>
+division D2 will use correction policy <val>CorPol2</val>.</p>
 <p>The <att>decls</att> attribute is defined for any element which is a
 member of the class <term>declaring</term>. This includes the major
 structural elements <gi>text</gi>, <gi>group</gi>, and <gi>div</gi>, as
@@ -979,8 +981,7 @@ well as smaller structural units, down to the level of paragraphs in
 prose, individual utterances in spoken texts, and entries in
 dictionaries. However, TEI recommended practice is to limit the number
 of multiple declarable elements used by a document as far as possible,
-for simplicity and ease of processing.
- </p>
+for simplicity and ease of processing.</p>
 <p>The identifier or identifiers to which the <att>decls</att>
 attribute points must follow two further restrictions:
 <list rend="bulleted">
@@ -988,8 +989,7 @@ attribute points must follow two further restrictions:
 elements of the same type, only the children elements with <att>default</att>
 set to "true" are considered referenced.</item>
 <item>Each element specified, explicitly or implicitly, by the list of
-identifiers must be of a different kind.</item></list>
- </p>
+identifiers must be of a different kind.</item></list></p>
 <p>To demonstrate how these rules operate, we now expand our earlier
 example slightly:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -1013,24 +1013,22 @@ example slightly:
 </encodingDesc></egXML>
  </p>
 <p>This encoding description now has two editorial declarations,
-identified as <val>ED1</val> (the default) and <val>ED2</val>.  For texts not specifying
-otherwise, <val>ED1</val> will apply.  If <val>ED1</val> applies, correction method C1A and
+identified as <val>ED1</val> (the default) and <val>ED2</val>. For texts not specifying
+otherwise, <val>ED1</val> will apply. If <val>ED1</val> applies, correction method C1A and
 normalization method N1 apply, since these are the specified defaults
-within <val>ED1</val>.  In the same way, for a text specifying <att>decls</att> as
+within <val>ED1</val>. In the same way, for a text specifying <att>decls</att> as
 <q><val>#ED2</val></q>, correction C2A, 
  and normalization N2B will
-apply.
- </p>
-<p>A finer grained approach is also possible.  A text might specify
+apply.</p>
+<p>A finer grained approach is also possible. A text might specify
 <tag>text decls='#C2B #N2A'</tag>, 
  to <soCalled>mix and match</soCalled> declarations as
-required.  A tag such as <tag>text decls='#ED1 #ED2'</tag> would
+required. A tag such as <tag>text decls='#ED1 #ED2'</tag> would
 (obviously) be illegal, since it includes two elements of the same type;
 a tag such as <tag>text decls='#ED2 #C1A'</tag> is also illegal, since in
 this context <val>#ED2</val> is synonymous with the defaults for that
 editorial declaration, namely <val>#C2A #N2B</val>, resulting in a list
-that identifies two correction elements (C1A and C2A).
- </p></div>
+that identifies two correction elements (C1A and C2A).</p></div>
 <div type="div3" xml:id="CCAS3"><head>Summary</head>
 <p>The rules determining which of the declarable elements are applicable
 at any point may be summarized as follows:
@@ -1055,16 +1053,15 @@ given declarable element is semantically equivalent to selecting only
 those contained elements which are specified as defaults.</item>
 <item>An association made by one element applies by default
 to all of its descendants.
-	</item></list>
-</p></div></div>
+	</item></list></p></div></div>
 <div type="div2" xml:id="CCAN"><head>Linguistic Annotation of Corpora</head>
 <p>Language corpora often include analytic encodings or annotations,
-designed to support a variety of different views of language.  The
+designed to support a variety of different views of language. The
 present Guidelines do not advocate any particular approach to linguistic
 annotation (or <soCalled>tagging</soCalled>); instead a number of
 general analytic facilities are provided which support the
 representation of most forms of annotation in a standard and
-self-documenting manner.  Analytic annotation is of importance in many
+self-documenting manner. Analytic annotation is of importance in many
 fields, not only in corpus linguistics, and is therefore discussed in
 general terms elsewhere in the
 Guidelines.<note place="bottom">See in particular chapters
@@ -1077,53 +1074,49 @@ determined by an analysis of linguistic features of the text, excluding
 as borderline cases both the formal structural properties of the text
 (e.g. its division into chapters or paragraphs) and descriptive
 information about its context (the circumstances of its production, its
-genre, or medium).  The structural properties of any TEI-conformant text
+genre, or medium). The structural properties of any TEI-conformant text
 should be represented using the structural elements discussed elsewhere
-in these Guidelines, for example in  chapters <ptr target="#CO"/> and
+in these Guidelines, for example in chapters <ptr target="#CO"/> and
 <ptr target="#DS"/>.
 The contextual
 properties of a TEI text are fully documented in the TEI header, which
-is discussed in chapter <ptr target="#HD"/>, and in section <ptr target="#CCAH"/> of the present chapter.
- </p>
+is discussed in chapter <ptr target="#HD"/>, and in section <ptr target="#CCAH"/> of the present chapter.</p>
 <p>Other forms of linguistic annotation may be applied at a number of
-levels in a text.  A code (such as a word-class or part-of-speech
+levels in a text. A code (such as a word-class or part-of-speech
 code) may be associated with each word or token, or with groups of such
-tokens, which may be continuous, discontinuous, or nested.  A code may
+tokens, which may be continuous, discontinuous, or nested. A code may
 also be associated with relationships (such as cohesion) perceived as
-existing between distinct parts of a text.  The codes themselves may
+existing between distinct parts of a text. The codes themselves may
 stand for discrete non-decomposable categories, or they may represent
-highly articulated bundles of textual features.  Their function may be
+highly articulated bundles of textual features. Their function may be
 to place the annotated part of the text somewhere within a narrowly
 linguistic or discoursal domain of analysis, or within a more general
-semantic field, or any combination drawn from these and other domains.
- </p>
+semantic field, or any combination drawn from these and other domains.</p>
 <p>The manner by which such annotations are generated and attached to
-the text may be entirely automatic, entirely manual, or a mixture.  The
+the text may be entirely automatic, entirely manual, or a mixture. The
 ease and accuracy with which analysis may be automated may vary with the
-level at which the annotation is attached.  The method employed should
+level at which the annotation is attached. The method employed should
 be documented in the <gi>interpretation</gi> element within the encoding
-description of the TEI header, as described in section <ptr target="#HD53"/>.  Where different parts of a corpus have used different
+description of the TEI header, as described in section <ptr target="#HD53"/>. Where different parts of a corpus have used different
 annotation methods, the <att>decls</att> attribute should be used to
-indicate the fact, as further discussed in section <ptr target="#CCAS"/>.
- </p>
+indicate the fact, as further discussed in section <ptr target="#CCAS"/>.</p>
 <p>An extended example of one form of linguistic analysis commonly
-practised in corpus linguistics is given in section <ptr target="#AILA"/>.
-</p>
+practised in corpus linguistics is given in section <ptr target="#AILA"/>.</p>
 </div></div>
 <div type="div2" xml:id="CCREC"><head>Recommendations for the Encoding of Large Corpora</head>
 <p>These Guidelines include proposals for the identification and
 encoding of a far greater variety of textual features and
 characteristics than is likely to be either feasible or desirable in
-any one language corpus, however large and ambitious.  The reasoning
-behind this catholic approach is further discussed in chapter <ptr target="#AB"/>.  For most large-scale corpus projects, it will therefore
+any one language corpus, however large and ambitious. The reasoning
+behind this universal approach is further discussed in chapter <ptr target="#AB"/>.
+For most large-scale corpus projects, it will therefore
 be necessary to determine a subset of TEI recommended elements
 appropriate to the anticipated needs of the project, as further
 discussed in chapter <ptr target="#MD"/>; these mechanisms include
 the ability to exclude selected element types, add new element types,
-and change the names of existing elements.  A discussion of the
+and change the names of existing elements. A discussion of the
 implications of such changes for TEI conformance is provided in
-chapter <ptr target="#CF"/>.
- </p>
+chapter <ptr target="#CF"/>.</p>
 <p>Because of the high cost of identifying and encoding many textual
 features, and the difficulty in ensuring consistent practice across very
 large corpora, encoders may find it convenient to divide the set of
@@ -1142,8 +1135,7 @@ text.</item>
 <label>proscribed</label>
 <item>textual features in this category are deliberately not encoded; they may be
 transcribed as unmarked up text, or represented as <gi>gap</gi>
-elements, or silently omitted, as appropriate.</item></list>
-</p> 
+elements, or silently omitted, as appropriate.</item></list></p> 
 </div>
 <div>
   <head>Module for Language Corpora</head>
