@@ -11,13 +11,13 @@ jobs:
       contents: write
     steps:
       - name: Checkout TEI Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Generate JSON Spec list        
         uses: ./.github/actions/generate-spec-lists
 
       - name: Auto-commit Spec list  
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_user_name: ${{ github.actor }}
           commit_message: Re-generated spec lists.
