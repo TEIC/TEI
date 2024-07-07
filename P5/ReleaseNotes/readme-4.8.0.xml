@@ -36,10 +36,11 @@ See the file COPYING.txt for details
         of the issues resolved in the course of this release cycle may be found under the <ref
           target="https://github.com/TEIC/TEI/milestone/16?closed=1">4.8.0 milestone</ref>. Very
         special thanks to Michael Beißwenger and Harald Lüngen for their essential contributions to
-        the new computer-mediated communication chapter. Thanks also to several community contributors to 
-        TEI and Stylesheets issues that led to this release including: Benjamin W. Bohl, Lou Burnard, 
-        Martin Holmes, Dominique Meeùs, Bastian Politycki, Daniel Schwarz, Peter Stadler, Nicolas Vaughan, 
-      </p>
+        the new computer-mediated communication chapter. Many thanks also to many community
+        contributors to TEI and Stylesheets issues that led to this release, including: John
+        Bampton, Benjamin W. Bohl, Lou Burnard, Martin Holmes, Martin de la Iglesia, Dominique
+        Meeùs, Kiyonori Nagasaki, Bastian Politycki, Klaus Rettinghaus, Daniel Schwarz, Peter
+        Stadler, Christian Thomas, Conal Tuohy, and Nicolas Vaughan. </p>
       <p/>
       <p>The following changes are particularly worth highlighting in this release: <list>
           <head>New encoding features</head>
@@ -181,26 +182,50 @@ See the file COPYING.txt for details
           <item>Updating the Stylesheets from XSLT 2.0 to XSLT 3.0 (Stylesheets <ref
               target="https://github.com/TEIC/Stylesheets/issues/639">#639</ref>, <ref
               target="https://github.com/TEIC/Stylesheets/pull/649">PR #649</ref>, and <ref
-              target="https://github.com/TEIC/Stylesheets/pull/663">PR #663</ref>).</item>
-          <item>Correcting a bug that permitted any attributes to be copied from the
-              <gi>constraint</gi> element to a generated <code>sch:rule/@context</code> (Stylesheets
-              <ref target="https://github.com/TEIC/Stylesheets/issues/659">#659</ref> and <ref
-              target="https://github.com/TEIC/Stylesheets/pull/660/commits/275be31fc1f5c86061e33437d3d7885283e4aa7f"
-              >PR #660</ref>)</item>
-          <item>Solving a serious problem mentioned in several tickets (Stylesheets <ref
-              target="https://github.com/TEIC/Stylesheets/issues/645">#645</ref>, <ref
-              target="https://github.com/TEIC/Stylesheets/issues/678">#678</ref>, <ref
-              target="https://github.com/TEIC/Stylesheets/issues/680">#680</ref>) in which multiple
-              <gi>elementSpec</gi> sharing the same <att>ident</att> led to a build error in
-            odd2odd.xsl, solved with <ref target="https://github.com/TEIC/Stylesheets/pull/681"
-              >Stylesheets PR #681</ref>.</item>
-          <item>Identifying and solving a problem in ODD processing when an ODD attempts to replace,
-            change, or delete an attribute in the wrong class (e.g. in an outdated class after it
-            has been relocated to a different class), the processed ODD produces duplicate
-              <gi>attDef</gi> elements (Stylesheets <ref
-              target="https://github.com/TEIC/Stylesheets/issues/687">#687</ref> and PR <ref
-              target="https://github.com/TEIC/Stylesheets/pull/690">#690</ref>).</item>
+              target="https://github.com/TEIC/Stylesheets/pull/663">PR #663</ref>);</item>
+        <item>Identifying and solving a problem with in our testing of DOCX to TEI conversion 
+          when the Stylesheets version changes (Stylesheets 
+          <ref target="https://github.com/TEIC/Stylesheets/issues/646">#646</ref> and 
+          <ref target="https://github.com/TEIC/Stylesheets/pull/650">PR #650</ref>);</item>
+          <item>Correcting a bug in the common function.xsl that allowed a <q>sup</q> value of
+              <att>rend</att> to be treated the same as a <q>sub</q> value (Stylesheets <ref
+              target="https://github.com/TEIC/Stylesheets/issues/584">#584</ref> and <ref
+              target="https://github.com/TEIC/Stylesheets/pull/670">PR #670</ref>;</item>
+          <item>Updating the processing of non-TEI ODDs by looking for them in <gi>ident</gi> rather
+            than <gi>altIdent</gi> elements (Stylesheets <ref
+              target="https://github.com/TEIC/Stylesheets/issues/598">#598</ref> and <ref
+              target="https://github.com/TEIC/Stylesheets/pull/651">PR #651</ref>);</item>
 
+          <item>Identifying and solving several problems in ODD processing: <list>
+              <item>Ensuring that att.repeatable is properly processed on <gi>sequence</gi>,
+                  <gi>alternate</gi>, and <gi>anyElement</gi> (Stylesheets <ref
+                  target="https://github.com/TEIC/Stylesheets/issues/627">#627</ref> and <ref
+                  target="https://github.com/TEIC/Stylesheets/pull/633">PR #633</ref>);</item>
+              <item>Correcting a bug that permitted any attributes to be copied from the
+                  <gi>constraint</gi> element to a generated <code>sch:rule/@context</code>
+                (Stylesheets <ref target="https://github.com/TEIC/Stylesheets/issues/659">#659</ref>
+                and <ref
+                  target="https://github.com/TEIC/Stylesheets/pull/660/commits/275be31fc1f5c86061e33437d3d7885283e4aa7f"
+                  >PR #660</ref>);</item>
+              <item>Repairing another bug that caused an output <gi>constraintSpec</gi> to appear in
+                the wrong location in a constructed ODD (<ref
+                  target="https://github.com/TEIC/Stylesheets/pull/675">Stylesheets PR
+                #675</ref>);</item>
+              <item>Solving a serious problem mentioned in several tickets (Stylesheets <ref
+                  target="https://github.com/TEIC/Stylesheets/issues/645">#645</ref>, <ref
+                  target="https://github.com/TEIC/Stylesheets/issues/678">#678</ref>, <ref
+                  target="https://github.com/TEIC/Stylesheets/issues/680">#680</ref>) in which
+                multiple <gi>elementSpec</gi> sharing the same <att>ident</att> led to a build error
+                in odd2odd.xsl, solved with <ref
+                  target="https://github.com/TEIC/Stylesheets/pull/681">Stylesheets PR
+                #681</ref>;</item>
+              <item>Solving a problem when replacing, changing, or deleting an attribute marked with
+                the wrong class (e.g. in an outdated class after it has been relocated to a
+                different class), the processed ODD produces duplicate <gi>attDef</gi> elements
+                (Stylesheets <ref target="https://github.com/TEIC/Stylesheets/issues/687">#687</ref>
+                and PR <ref target="https://github.com/TEIC/Stylesheets/pull/690"
+                >#690</ref>).</item>
+            </list></item>
 
         </list>
       </p>
