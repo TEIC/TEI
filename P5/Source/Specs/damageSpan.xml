@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="transcr" ident="damageSpan">
   <gloss versionDate="2007-09-03" xml:lang="en">damaged span of text</gloss>
@@ -13,14 +7,11 @@ $Id$
   <gloss versionDate="2008-04-06" xml:lang="es">fragmento de texto dañado</gloss>
   <gloss versionDate="2008-03-30" xml:lang="fr">partie de texte endommagée</gloss>
   <gloss versionDate="2007-11-06" xml:lang="it">porzione di testo danneggiata</gloss>
-  <desc versionDate="2007-09-03" xml:lang="en">marks the beginning of a longer sequence of text which is
-  damaged in some way but still legible.</desc>
+  <desc versionDate="2007-09-03" xml:lang="en">marks the beginning of a longer sequence of text which is damaged in some way but still legible.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">어떤 방식으로 손상되었지만 여전히 읽을 수 있는 긴 텍스트 연쇄 시작부를 표시한다.</desc>
   <desc versionDate="2008-04-06" xml:lang="es">marca el inicio de una secuencia de texto larga dañada de alguna manera pero aún legible.</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">読める程度の損傷がある、一連のテキストの始点を示す。
-</desc>
-  <desc versionDate="2009-11-16" xml:lang="fr">marque le début d'une longue partie de texte,
-endommagée d'une manière quelconque mais toujours lisible.</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">読める程度の損傷がある、一連のテキストの始点を示す。</desc>
+  <desc versionDate="2009-11-16" xml:lang="fr">marque le début d'une longue partie de texte, endommagée d'une manière quelconque mais toujours lisible.</desc>
   <desc versionDate="2007-11-06" xml:lang="it">segnala l'inizio di una sequenza più estesa di testo danneggiata ma ancora leggibile</desc>
   <classes>
     <memberOf key="att.global"/>
@@ -32,13 +23,17 @@ endommagée d'une manière quelconque mais toujours lisible.</desc>
   <content><empty/></content>
   <constraintSpec ident="damageSpan-requires-spanTo" scheme="schematron">
     <constraint>
-      <sch:assert test="@spanTo">The @spanTo attribute of <sch:name/> is required.</sch:assert>
+      <sch:rule context="tei:damageSpan">
+        <sch:assert test="@spanTo">The @spanTo attribute of <sch:name/> is required.</sch:assert>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <!-- FC j'ai traduit ici la contrainte schematron -->
   <constraintSpec ident="damageSpan-requires-spanTo-fr" scheme="schematron" xml:lang="fr">
     <constraint>
-      <sch:assert test="@spanTo">L'attribut spanTo est requis.</sch:assert>
+      <sch:rule context="tei:damageSpan">
+        <sch:assert test="@spanTo">L'attribut spanTo est requis.</sch:assert>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">

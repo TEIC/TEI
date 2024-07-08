@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright TEI Consortium. Dual-licensed under CC-by and BSD2 licences See the file COPYING.txt for details $Date$ $Id$ -->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" ident="join">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="linking" ident="join">
   <gloss xml:lang="en" versionDate="2009-10-06">join</gloss>
   <gloss versionDate="2009-10-06" xml:lang="fr">jointure</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">identifies a possibly fragmented segment of text, by pointing at the possibly discontiguous elements which compose it.</desc>
@@ -16,20 +16,21 @@
     <memberOf key="att.pointing"/>
     <memberOf key="att.typed"/>
     <memberOf key="model.global.meta"/>
+    <memberOf key="att.cmc"/>
   </classes>
-  <content>
-    
-      <alternate minOccurs="0" maxOccurs="unbounded">
-        <classRef key="model.descLike"/>
-        <classRef key="model.certLike"/>
-      </alternate>
-    
+  <content>    
+    <alternate minOccurs="0" maxOccurs="unbounded">
+      <classRef key="model.descLike"/>
+      <classRef key="model.certLike"/>
+    </alternate>
   </content>
   <constraintSpec ident="joinTargets3" scheme="schematron">
     <constraint>
-      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="contains(@target,' ')">
-You must supply at least two values for @target on <name/>
-         </assert>
+      <sch:rule context="tei:join">
+        <sch:assert test="contains( normalize-space( @target ),'&#x20;')">
+          You must supply at least two values for @target on <sch:name/>
+        </sch:assert>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>

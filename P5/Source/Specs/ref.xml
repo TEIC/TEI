@@ -1,30 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Copyright TEI Consortium.
-    Dual-licensed under CC-by and BSD2 licences
-    See the file COPYING.txt for details
-    $Date$
-    $Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="ref">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="core" ident="ref">
   <gloss versionDate="2007-07-04" xml:lang="en">reference</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">참조</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
   <gloss versionDate="2008-04-06" xml:lang="es">referencia</gloss>
   <gloss versionDate="2009-01-06" xml:lang="fr">référence</gloss>
   <gloss versionDate="2007-11-06" xml:lang="it">riferimento</gloss>
-    <gloss versionDate="2016-11-25" xml:lang="de">Referenz</gloss>
+  <gloss versionDate="2016-11-25" xml:lang="de">Referenz</gloss>
   <desc versionDate="2006-01-11" xml:lang="en">defines a reference to another location, possibly modified by additional text or comment.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">부가적인 텍스트 또는 해설로 수정될 수 있는, 다른 위치로 참조를 정의한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">標明與其他位置互相參照的符號，或許包含附加的文字或註解。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">他の場所への参照を定義する。多くは、追加テキストまたはコメントを含む。</desc>
   <desc versionDate="2009-01-06" xml:lang="fr">définit une référence vers un autre emplacement, la référence étant éventuellement modifiée ou complétée par un texte ou un commentaire.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">define una referencia a otra localización, posiblemente
-    modificada por un texto o comentario adicional.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">definisce un riferimento ad un'altra posizione, può
-    essere modificata da un commento o testo ulteriore</desc>
-    <desc versionDate="2016-11-25" xml:lang="de">definiert einen externen oder internen Verweis, der auch durch einen zusätzlichen Text oder Kommentar ergänzt werden kann.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">define una referencia a otra localización, posiblemente modificada por un texto o comentario adicional.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">definisce un riferimento ad un'altra posizione, può essere modificata da un commento o testo ulteriore</desc>
+  <desc versionDate="2016-11-25" xml:lang="de">definiert einen externen oder internen Verweis, der auch durch einen zusätzlichen Text oder Kommentar ergänzt werden kann.</desc>
   <classes>
     <memberOf key="att.cReferencing"/>
     <memberOf key="att.declaring"/>
@@ -34,15 +26,16 @@
     <memberOf key="att.typed"/>
     <memberOf key="model.annotationPart.body"/>
     <memberOf key="model.ptrLike"/>
+    <memberOf key="att.cmc"/>
   </classes>
   <content>
     <macroRef key="macro.paraContent"/>
   </content>
   <constraintSpec scheme="schematron" ident="refAtts">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@target and @cRef">Only one of the
-	attributes @target' and @cRef' may be supplied on <name/>
-         </report>
+      <sch:rule context="tei:ref">
+        <sch:report test="@target and @cRef">Only one of the attributes @target' and @cRef' may be supplied on <sch:name/></sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
@@ -60,12 +53,12 @@
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">Cf. tout particulièrement 
     <ref cRef="B1/234">le vers 234 du Livre I</ref>
-      </egXML>
+    </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref target="http://www.natcorp.ox.ac.uk/Texts/A02.xml#s2"> 關於第二行，</ref> 請參考 <ref>下列
-        <term>慣用語</term>
-         </ref>.</egXML>
+    <term>慣用語</term>
+    </ref>.</egXML>
   </exemplum>
   <remarks versionDate="2005-10-13" xml:lang="en">
     <p>The <att>target</att> and <att>cRef</att> attributes are mutually exclusive.</p>
@@ -77,7 +70,7 @@
     <p> 属性<att>target</att>と<att>cRef</att>は、排他的に使用される。 </p>
   </remarks>
   <remarks xml:lang="de" versionDate="2016-11-25">
-      <p>Die <att>target</att> und <att>cRef</att>-Attribute schließen sich gegenseitig aus.</p>
+    <p>Die <att>target</att> und <att>cRef</att>-Attribute schließen sich gegenseitig aus.</p>
   </remarks>
   <listRef>
     <ptr target="#COXR"/>

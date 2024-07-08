@@ -1,40 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" type="atts" ident="att.identified">
-  <desc versionDate="2021-08-22" xml:lang="en">provides identifying attributes for elements which can be
-  subsequently referenced by means of a <att>key</att>
-  attribute.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko"><att>key</att> 속성에
-  의해 참조될 수 있는 요소의 속성을 제시한다.</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">可利用屬性
-  <att>key</att>來參照的元素</desc>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" type="atts" ident="att.identified">
+  <desc versionDate="2021-08-22" xml:lang="en">provides identifying attributes for elements which can be subsequently referenced by means of a <att>key</att> attribute.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko"><att>key</att> 속성에 의해 참조될 수 있는 요소의 속성을 제시한다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">可利用屬性 <att>key</att>來參照的元素</desc>
   <desc versionDate="2022-05-09" xml:lang="ja">後で<att>key</att>属性によって参照されうる要素を指定する属性を示す。</desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">fournit les attributs
-  pour des éléments référençables au moyen d'un attribut
-  <att>key</att>.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">elementos a los que se
-  puede hacer referencia a través del atributo <att>key</att>.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">elementi ai quali si
-  può fare riferimento tramite l'attributo <att>key</att>
-   </desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">fournit les attributs pour des éléments référençables au moyen d'un attribut <att>key</att>.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">elementos a los que se puede hacer referencia a través del atributo <att>key</att>.</desc> <desc versionDate="2007-01-21" xml:lang="it">elementi ai quali si può fare riferimento tramite l'attributo <att>key</att></desc>
   <classes>
     <memberOf key="att.combinable"/>
   </classes>
   <constraintSpec ident="spec-in-module" scheme="schematron">
     <constraint>
-      <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:elementSpec[@module]|tei:classSpec[@module]|tei:macroSpec[@module]">
-        <assert test="(not(ancestor::tei:schemaSpec | ancestor::tei:TEI | ancestor::tei:teiCorpus)) or (not(@module) or (not(//tei:moduleSpec) and not(//tei:moduleRef)) or (//tei:moduleSpec[@ident = current()/@module]) or (//tei:moduleRef[@key = current()/@module]))">
-        Specification <value-of select="@ident"/>: the value of the module attribute ("<value-of select="@module"/>") 
+      <sch:rule context="tei:elementSpec[@module]|tei:classSpec[@module]|tei:macroSpec[@module]">
+        <sch:assert test="(not(ancestor::tei:schemaSpec | ancestor::tei:TEI | ancestor::tei:teiCorpus)) or (not(@module) or (not(//tei:moduleSpec) and not(//tei:moduleRef)) or (//tei:moduleSpec[@ident = current()/@module]) or (//tei:moduleRef[@key = current()/@module]))">
+        Specification <sch:value-of select="@ident"/>: the value of the module attribute ("<sch:value-of select="@module"/>") 
 should correspond to an existing module, via a moduleSpec or
-      moduleRef</assert>
-      </rule>
+      moduleRef</sch:assert>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>
@@ -43,8 +27,7 @@ should correspond to an existing module, via a moduleSpec or
       <desc versionDate="2007-12-20" xml:lang="ko">이 요소가 참조된 확인소를 제공한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">提供被參照的元素的識別符號。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該要素を参照する識別子を示す。</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">fournit l'identifiant qui référence cet
-					élément.</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">fournit l'identifiant qui référence cet élément.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">proporciona el identificador utilizado para indicar un elemento.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica l'identificatore utilizzato per indicare l'elemento</desc>
       <datatype><dataRef key="teidata.name"/></datatype>
@@ -54,8 +37,7 @@ should correspond to an existing module, via a moduleSpec or
       <ident type="module">tei</ident> infrastructure module.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko"><ident type="module">tei</ident> 하부구조 모듈에서 이 대상이 미리 선언되어야 하는지를 설명한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">說明該元素集是否為全域元素集，並必須在核心中宣告。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該オブジェクトが、<ident type="module">TEI</ident>基盤モジュー
-      ルで事前に宣言されるべきかどうかを示す。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該オブジェクトが、<ident type="module">TEI</ident>基盤モジュー ルで事前に宣言されるべきかどうかを示す。</desc>
       <desc versionDate="2009-05-27" xml:lang="fr">précise si cet objet nécessite une prédéfinition dans le module d'infrastructure <ident type="module">tei</ident>.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">declara si la clase debe ser considerada global y por tanto definida en el módulo core</desc>
       <desc versionDate="2007-01-21" xml:lang="it">dichiara se la classe debba essere considerata globale e quindi definita nel modulo core</desc>
@@ -67,8 +49,7 @@ should correspond to an existing module, via a moduleSpec or
       <desc versionDate="2007-12-20" xml:lang="ko">이 대상이 정의되어야 하는 모듈명을 제시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">提供定義該元素的模組名稱。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該オブジェクトが定義されているモジュール名を示す。</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">fournit le nom du module dans lequel doit
-					être défini cet objet.</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">fournit le nom du module dans lequel doit être défini cet objet.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">proporciona el nombre del módulo en que el objeto debe ser definido.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il nome del modulo nel quale l'oggetto deve essere definito</desc>
       <datatype><dataRef key="teidata.xmlName"/></datatype>

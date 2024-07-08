@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Copyright TEI Consortium.
-    Dual-licensed under CC-by and BSD2 licences
-    See the file COPYING.txt for details
-    $Date$
-    $Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="ptr">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="core" ident="ptr">
   <gloss versionDate="2007-07-04" xml:lang="en">pointer</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">포인터</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -30,12 +24,14 @@
     <memberOf key="att.typed"/>
     <memberOf key="model.annotationPart.body"/>
     <memberOf key="model.ptrLike"/>
+    <memberOf key="att.cmc"/>
   </classes>
   <content><empty/></content>
   <constraintSpec scheme="schematron" ident="ptrAtts">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@target and @cRef">Only one of the
-attributes @target and @cRef may be supplied on <name/>.</report>
+      <sch:rule context="tei:ptr">
+        <sch:report test="@target and @cRef">Only one of the attributes @target and @cRef may be supplied on <sch:name/>.</sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="und">

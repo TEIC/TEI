@@ -1,72 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" module="analysis" ident="span">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="analysis" ident="span">
   <desc versionDate="2005-01-14" xml:lang="en">associates an interpretative annotation directly with a span of text.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">해석적 부호를 텍스트의 일정 부분과 직접적으로 연결시킨다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">將詮釋性註釋直接和一段文字段連結。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">テキスト部分に解釈的注釈を関連づける。</desc>
-  <desc versionDate="2009-02-13" xml:lang="fr">associe une interprétation sous forme d'annotation
-    directement à un passage donné dans un texte.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">asocia una anotación interpretativa directamente con un
-    periodo de texto.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">associa direttamente l'annotazione interpretativa ad una
-    prozione di testo</desc>
+  <desc versionDate="2009-02-13" xml:lang="fr">associe une interprétation sous forme d'annotation directement à un passage donné dans un texte.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">asocia una anotación interpretativa directamente con un periodo de texto.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">associa direttamente l'annotazione interpretativa ad una prozione di testo</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.interpLike"/>
     <memberOf key="att.pointing"/>
     <memberOf key="model.global.meta"/>
+    <memberOf key="att.cmc"/>
   </classes>
   <content>
     <macroRef key="macro.phraseSeq.limited"/>
   </content>
-  <constraintSpec ident="targetfrom" scheme="schematron">
+  <constraintSpec ident="target-from" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@from and @target">
-Only one of the attributes @target and @from may be supplied on <name/>
-      </report>
+      <sch:rule context="tei:span">
+        <sch:report test="@from and @target">
+          Only one of the attributes @target and @from may be supplied on <sch:name/>
+        </sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="targetto" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@to and @target">
-Only one of the attributes @target and @to may be supplied on <name/>
-         </report>
+      <sch:rule context="tei:span">
+        <sch:report test="@to and @target">
+          Only one of the attributes @target and @to may be supplied on <sch:name/>
+        </sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="tonotfrom" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@to and not(@from)">
-If @to is supplied on <name/>, @from must be supplied as well</report>
+      <sch:rule context="tei:span">
+        <sch:report test="@to and not(@from)">
+          If @to is supplied on <sch:name/>, @from must be supplied as well
+        </sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="tofrom" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="contains(normalize-space(@to),' ') or contains(normalize-space(@from),' ')">
-The attributes @to and @from on <name/> may each contain only a single value</report>
+      <sch:rule context="tei:span">
+        <sch:report test="contains(normalize-space(@to),' ') or contains(normalize-space(@from),' ')">
+          The attributes @to and @from on <sch:name/> may each contain only a single value
+        </sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>
     <attDef ident="from" usage="opt">
       <desc versionDate="2013-01-15" xml:lang="en">gives the identifier of the node which is the starting point of the span of text being annotated; if not accompanied by a <att>to</att> attribute, gives the identifier of the node of the entire span of text being annotated.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">현재 부호를 붙이는 단락의 처음을 명시함; <att>to</att> 속성과 같이 쓰이지 않으면
-        전체 문단을 명시함.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">현재 부호를 붙이는 단락의 처음을 명시함; <att>to</att> 속성과 같이 쓰이지 않으면 전체 문단을 명시함.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指出被註解段落的起點；若沒有使用屬性<att>to</att>，則指出全部段落。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該注釈対象の始点を示す。属性<att>to</att>がない場合は、対象全 体を示す。</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">précise le début du passage sur lequel porte
-        l'annotation ; s'il n'est pas accompagné d'un attribut <att>to</att>, désigne alors
-        l'intégralité du passage</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">especifica el principio del pasaje que se anota; si
-        no aparece con el atributo <att>to</att>, especifica el pasaje entero.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica l'inizio di un brano annotato; se non è
-        accompagnato dall'attributo <att>to</att> indica l'inero brano</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">précise le début du passage sur lequel porte l'annotation ; s'il n'est pas accompagné d'un attribut <att>to</att>, désigne alors l'intégralité du passage</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">especifica el principio del pasaje que se anota; si no aparece con el atributo <att>to</att>, especifica el pasaje entero.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica l'inizio di un brano annotato; se non è accompagnato dall'attributo <att>to</att> indica l'inero brano</desc>
       <datatype><dataRef key="teidata.pointer"/></datatype>
     </attDef>
     <attDef ident="to" usage="opt">

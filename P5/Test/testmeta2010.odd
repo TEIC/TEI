@@ -8,8 +8,8 @@
             <title>Testing new ODD features added spring 2010</title>
          </titleStmt>
          <publicationStmt>
-	   <p> </p>
-	 </publicationStmt>
+           <p> </p>
+         </publicationStmt>
          <sourceDesc>
             <p>authored from scratch</p>
          </sourceDesc>
@@ -20,27 +20,27 @@
        <p>First, define the very bare list of the elements we expect to see in
        the output schema. Just these elements, no more and no less.</p>
        <specGrp xml:id="Include">
-	 <elementRef key="TEI"/>
-	 <elementRef key="author"/>
-	 <elementRef key="back"/>
-	 <elementRef key="body"/>
-	 <elementRef key="div"/>
-	 <elementRef key="fileDesc"/>
-	 <elementRef key="publicationStmt"/>
-	 <elementRef key="front"/>
-	 <elementRef key="head"/>
-	 <elementRef key="item"/>
-	 <elementRef key="label"/>
-	 <elementRef key="list"/>
-	 <elementRef key="p"/>
-	 <elementRef key="hi"/>
-	 <elementRef key="sourceDesc"/>
-	 <elementRef key="revisionDesc"/>
-	 <elementRef key="change"/>
-	 <elementRef key="teiHeader"/>
-	 <elementRef key="text"/>
-	 <elementRef key="title"/>
-	 <elementRef key="titleStmt"/>
+         <elementRef key="TEI"/>
+         <elementRef key="author"/>
+         <elementRef key="back"/>
+         <elementRef key="body"/>
+         <elementRef key="div"/>
+         <elementRef key="fileDesc"/>
+         <elementRef key="publicationStmt"/>
+         <elementRef key="front"/>
+         <elementRef key="head"/>
+         <elementRef key="item"/>
+         <elementRef key="label"/>
+         <elementRef key="list"/>
+         <elementRef key="p"/>
+         <elementRef key="hi"/>
+         <elementRef key="sourceDesc"/>
+         <elementRef key="revisionDesc"/>
+         <elementRef key="change"/>
+         <elementRef key="teiHeader"/>
+         <elementRef key="text"/>
+         <elementRef key="title"/>
+         <elementRef key="titleStmt"/>
 
        </specGrp>
 
@@ -51,9 +51,10 @@
 	     <attDef ident="type" mode="change">
 	       <constraintSpec mode="add" ident="a1" scheme="schematron">
 		 <constraint>
-		   <sch:assert
-		       test="count(ancestor-or-self::tei:list[1]/tei:item)&lt;2">list
-		 too short </sch:assert></constraint>
+		   <sch:rule context="tei:list/@type">		   
+		     <sch:assert test="count( ancestor-or-self::tei:list[1]/tei:item ) lt 2">list too short </sch:assert>
+		   </sch:rule>
+		 </constraint>
 	       </constraintSpec>
 	       <valList type="closed" mode="replace">
 		 <valItem ident="enumerated"/>
@@ -103,93 +104,92 @@
 	     </attDef>
 	   </attList>
 	 </classSpec>
-
        </specGrp>
 
        <p>Now add an element in another namespace, implementing parts
        of TBX. The <gi>admin</gi> element has <gi>hi</gi> as its
        content model, but the TBX one and not the TEI one.</p>
        <specGrp xml:id="TBX">
-	 <elementSpec 
-	     prefix="tbx_"
-	     mode="add"
-	     ns="http://www.lisa.org/TBX-Specification.33.0.html"
-	     ident="admin">
-	   <desc xml:lang="en" versionDate="2014-01-12">Contains information of an administrative nature for the node (parent element)
-	   in question, such as the source of information, or the project or client for
-	   which it applies.</desc>
-	   <classes>
-	     <memberOf key="model.hiLike"/>
-	   </classes>
-	   <content autoPrefix="false">
-	     <rng:ref name="tei_hi"/>
-	   </content>
-	 </elementSpec>
-	 
-	 <elementSpec 
-	     prefix="tbx_"
-	     mode="add"
-	     ns="http://www.lisa.org/TBX-Specification.33.0.html"
-	     ident="hi">
-	   <desc xml:lang="en" versionDate="2014-01-12"> Highlights a segment of text and optionally points to another element.</desc>
-	   <content>
-	     <rng:text/>
-	   </content>
-	 </elementSpec>
+         <elementSpec 
+             prefix="tbx_"
+             mode="add"
+             ns="http://www.lisa.org/TBX-Specification.33.0.html"
+             ident="admin">
+           <desc xml:lang="en" versionDate="2014-01-12">Contains information of an administrative nature for the node (parent element)
+           in question, such as the source of information, or the project or client for
+           which it applies.</desc>
+           <classes>
+             <memberOf key="model.hiLike"/>
+           </classes>
+           <content autoPrefix="false">
+             <rng:ref name="tei_hi"/>
+           </content>
+         </elementSpec>
+         
+         <elementSpec 
+             prefix="tbx_"
+             mode="add"
+             ns="http://www.lisa.org/TBX-Specification.33.0.html"
+             ident="hi">
+           <desc xml:lang="en" versionDate="2014-01-12"> Highlights a segment of text and optionally points to another element.</desc>
+           <content>
+             <rng:text/>
+           </content>
+         </elementSpec>
        </specGrp>
        
        <p>The schema built using version 1.5 of TEI P5</p>
 
        <schemaSpec ident="testmeta2010_old1" prefix="tei_" start="TEI" source="http://www.tei-c.org/Vault/P5/1.5.0/xml/tei/odd/p5subset.xml">
-	 <moduleRef key="tei"/>
-	 <moduleRef key="figures" except="table row cell"/>
-	 <moduleRef key="namesdates" include="persName"/>
-	 <specGrpRef target="#Include"/>
-	 <specGrpRef target="#Changes"/>
+         <moduleRef key="tei"/>
+         <moduleRef key="figures" except="table row cell"/>
+         <moduleRef key="namesdates" include="persName"/>
+         <specGrpRef target="#Include"/>
+         <specGrpRef target="#Changes"/>
        </schemaSpec>
 
        <p>The schema build using a tei: URI </p>
        <schemaSpec ident="testmeta2010_old2" prefix="tei_" start="TEI" source="tei:1.5.0">
-	 <moduleRef key="tei"/>
-	 <moduleRef key="figures" except="table row cell"/>
-	 <moduleRef key="namesdates" include="persName"/>
-	 <specGrpRef target="#Include"/>
-	 <specGrpRef target="#Changes"/>
+         <moduleRef key="tei"/>
+         <moduleRef key="figures" except="table row cell"/>
+         <moduleRef key="namesdates" include="persName"/>
+         <specGrpRef target="#Include"/>
+         <specGrpRef target="#Changes"/>
        </schemaSpec>
        <p>Including attribute classes </p>
        <schemaSpec ident="testmeta2010_old3" prefix="tei_" start="TEI" source="http://www.tei-c.org/Vault/P5/1.5.0/xml/tei/odd/p5subset.xml">
-	 <moduleRef key="tei"/>
-	 <moduleRef key="figures" except="table row cell"/>
-	 <moduleRef key="namesdates" include="att.datable.iso persName"/>
-	 <specGrpRef target="#Include"/>
-	 <specGrpRef target="#Changes"/>
-	 <!-- <specGrpRef target="#TBX"/>-->
+         <moduleRef key="tei"/>
+         <moduleRef key="figures" except="table row cell"/>
+         <moduleRef key="namesdates" include="att.datable.iso persName"/>
+         <specGrpRef target="#Include"/>
+         <specGrpRef target="#Changes"/>
+         <!-- <specGrpRef target="#TBX"/>-->
        </schemaSpec>
 
 <!--
        <p>The schema build using the current release </p>
        <schemaSpec ident="testmeta2010_1" prefix="tei_" start="TEI" source="http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml">
-	 <moduleRef key="tei"/>
-	 <moduleRef key="figures" except="table row cell"/>
-	 <moduleRef key="namesdates" include="persName"/>
-	 <specGrpRef target="#Include"/>
-	 <specGrpRef target="#Changes"/>
+         <moduleRef key="tei"/>
+         <moduleRef key="figures" except="table row cell"/>
+         <moduleRef key="namesdates" include="persName"/>
+         <specGrpRef target="#Include"/>
+         <specGrpRef target="#Changes"/>
        </schemaSpec>
        <p>The schema build using the current release (TEI uri)</p>
        <schemaSpec ident="testmeta2010_2" prefix="tei_" start="TEI" source="tei:current">
-	 <moduleRef key="tei"/>
-	 <moduleRef key="figures" except="table row cell"  source="/usr/share/xml/tei/odd/p5subset.xml"/>
-	 <moduleRef key="namesdates" include="persName"/>
-	 <specGrpRef target="#Include"/>
-	 <specGrpRef target="#Changes"/>
+         <moduleRef key="tei"/>
+         <moduleRef key="figures" except="table row cell"  source="/usr/share/xml/tei/odd/p5subset.xml"/>
+         <moduleRef key="namesdates" include="persName"/>
+         <specGrpRef target="#Include"/>
+         <specGrpRef target="#Changes"/>
        </schemaSpec>
 -->
        <p>The schema build using defaults </p>
        <schemaSpec ident="testmeta2010_new3" start="TEI">
-	 <moduleRef key="tei"/>
-	 <moduleRef key="figures" except="table row cell" />
-	 <specGrpRef target="#Include"/>
-	 <specGrpRef target="#Changes"/>
+         <moduleRef key="tei"/>
+         <moduleRef key="figures" except="table row cell" />
+         <specGrpRef target="#Include"/>
+         <specGrpRef target="#Changes"/>
        </schemaSpec>
 
 

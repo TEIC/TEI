@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="citeStructure">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="citeStructure">
   <gloss versionDate="2020-02-03" xml:lang="en">citation structure</gloss>
   <desc versionDate="2020-02-03" xml:lang="en">declares a structure and method for citing the current document.</desc>
   <classes>
@@ -38,22 +32,22 @@ $Id$
         syntax defined in <ptr target="#XSLT3"/> which identifies a set of nodes which are 
         citable structural components. The expression may be absolute (beginning with <code>/</code>) or relative. 
         <att>match</att> on a <gi>citeStructure</gi> without a <gi>citeStructure</gi> parent must be an absolute XPath. If it is
-        relative, its context is set by the <att>match</att> of the parent <gi>citeStructure</gi>. </desc>
+        relative, its context is set by the <att>match</att> of the parent <gi>citeStructure</gi>.</desc>
       <datatype>
         <dataRef key="teidata.xpath"/>
       </datatype>
       <constraintSpec ident="citestructure-outer-match" scheme="schematron">
         <constraint>
-          <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:citeStructure[not(parent::tei:citeStructure)]">
-            <assert test="starts-with(@match,'/')">An XPath in @match on the outer <name/> must start with '/'.</assert>
-          </rule>
+          <sch:rule context="tei:citeStructure[not(parent::tei:citeStructure)]">
+            <sch:assert test="starts-with(@match,'/')">An XPath in @match on the outer <sch:name/> must start with '/'.</sch:assert>
+          </sch:rule>
         </constraint>
       </constraintSpec>
       <constraintSpec ident="citestructure-inner-match" scheme="schematron">
         <constraint>
-          <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:citeStructure[parent::tei:citeStructure]">
-            <assert test="not(starts-with(@match,'/'))">An XPath in @match must not start with '/' except on the outer <name/>.</assert>
-          </rule>
+          <sch:rule context="tei:citeStructure[parent::tei:citeStructure]">
+            <sch:assert test="not(starts-with(@match,'/'))">An XPath in @match must not start with '/' except on the outer <sch:name/>.</sch:assert>
+          </sch:rule>
         </constraint>
       </constraintSpec>
     </attDef>

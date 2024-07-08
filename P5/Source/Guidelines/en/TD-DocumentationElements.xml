@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details.
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <div xmlns="http://www.tei-c.org/ns/1.0"
      type="div1" xml:id="TD" n="27"
+     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
      xmlns:rng="http://relaxng.org/ns/structure/1.0"
      xmlns:xi="http://www.w3.org/2001/XInclude" >
   <head>Documentation Elements</head>
@@ -840,22 +835,25 @@ to mark any technical term, thus:
         current version of the Guidelines, constraint specifications expressed as Schematron rules have been
         added, as follows:
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <constraintSpec ident="reforkeyorname" scheme="schematron">
+          <constraintSpec ident="ref-or-key-or-name" scheme="schematron">
             <constraint>
-              <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="@ref or @key or @name">One of the
-                attributes 'name', 'ref' or 'key' must be supplied</assert>
+              <sch:rule context="tei:relation">
+                <sch:assert test="@ref or @key or @name">One of the attributes @name, @ref or @key must be supplied</sch:assert>
+              </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="activemutual" scheme="schematron">
+          <constraintSpec ident="active-mutual" scheme="schematron">
             <constraint>
-              <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@active and @mutual">Only one of the
-                attributes @active and @mutual may be supplied</report>
+              <sch:rule context="tei:relation">
+                <sch:report test="@active and @mutual">Only one of the attributes @active and @mutual may be supplied</sch:report>
+              </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="activepassive" scheme="schematron">
+          <constraintSpec ident="active-passive" scheme="schematron">
             <constraint>
-              <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@passive and not(@active)">the
-                attribute 'passive' may be supplied only if the attribute 'active' is supplied</report>
+              <sch:rule context="tei:relation">
+                <sch:report test="@passive and not(@active)">the attribute @passive may be supplied only if the attribute @active is supplied</sch:report>
+              </sch:rule>
             </constraint>
           </constraintSpec>
         </egXML>
@@ -868,11 +866,11 @@ to mark any technical term, thus:
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <constraintSpec ident="subclauses" scheme="schematron">
             <constraint>
-              <ns prefix="tei" uri="http://www.tei-c.org/ns/1.0" xmlns="http://purl.oclc.org/dsdl/schematron"/>
-              <rule context="tei:div" xmlns="http://purl.oclc.org/dsdl/schematron">
-                <report test="count( tei:div ) eq 1">if it contains any subdivisions, a
-                division must contain at least two of them</report>
-              </rule>
+              <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
+              <sch:rule context="tei:div">
+                <sch:report test="count( tei:div ) eq 1">if it contains any subdivisions, a
+                division must contain at least two of them</sch:report>
+              </sch:rule>
             </constraint>
           </constraintSpec>
         </egXML>
@@ -881,16 +879,16 @@ to mark any technical term, thus:
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <constraintSpec ident="introtitle" scheme="schematron">
             <constraint>
-              <assert xmlns="http://purl.oclc.org/dsdl/schematron"
-                test="tei:fileDesc/tei:titleStmt/tei:title[@type='introductory']"> an introductory component
-                of the title is expected </assert>
+              <sch:rule context="tei:title">
+                <sch:assert test="tei:fileDesc/tei:titleStmt/tei:title[@type='introductory']"> an introductory component of the title is expected</sch:assert>
+              </sch:rule>
             </constraint>
           </constraintSpec>
           <constraintSpec ident="maintitle" scheme="schematron">
             <constraint>
-              <assert xmlns="http://purl.oclc.org/dsdl/schematron"
-                test="tei:fileDesc/tei:titleStmt/tei:title[@type='main']"> a main title must be supplied
-              </assert>
+              <sch:rule context="tei:title">
+                <sch:assert test="tei:fileDesc/tei:titleStmt/tei:title[@type='main']"> a main title must be supplied</sch:assert>
+              </sch:rule>
             </constraint>
           </constraintSpec>
         </egXML>
@@ -902,13 +900,13 @@ to mark any technical term, thus:
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <constraintSpec ident="alt" scheme="schematron">
             <constraint>
-              <ns prefix="tei" uri="http://www.tei-c.org/ns/1.0" xmlns="http://purl.oclc.org/dsdl/schematron"/>
-              <pattern id="altTags" xmlns="http://purl.oclc.org/dsdl/schematron">
-                <rule context="tei:figure">
-                  <report test="not(tei:figDesc or tei:head)"> You should provide information in a figure from
-                    which we can construct an alt attribute in HTML </report>
-                </rule>
-              </pattern>
+              <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
+              <sch:pattern id="altTags">
+                <sch:rule context="tei:figure">
+                  <sch:report test="not(tei:figDesc or tei:head)"> You should provide information in a figure from
+                    which we can construct an alt attribute in HTML </sch:report>
+                </sch:rule>
+              </sch:pattern>
             </constraint>
           </constraintSpec>
         </egXML>
@@ -917,14 +915,14 @@ to mark any technical term, thus:
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <constraintSpec ident="tables" scheme="schematron">
             <constraint>
-              <ns prefix="tei" uri="http://www.tei-c.org/ns/1.0" xmlns="http://purl.oclc.org/dsdl/schematron"/>
-              <pattern id="Tables" xmlns="http://purl.oclc.org/dsdl/schematron">
-                <rule context="tei:table">
-                  <assert test="tei:head">A &lt;table> should have a caption, using a &lt;head>
-                    element</assert>
-                  <report test="parent::tei:body">Do not use tables to lay out the document body</report>
-                </rule>
-              </pattern>
+              <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
+              <sch:pattern id="Tables">
+                <sch:rule context="tei:table">
+                  <sch:assert test="tei:head">A &lt;table> should have a caption, using a &lt;head>
+                    element</sch:assert>
+                  <sch:report test="parent::tei:body">Do not use tables to lay out the document body</sch:report>
+                </sch:rule>
+              </sch:pattern>
             </constraint>
           </constraintSpec>
         </egXML>
@@ -1019,10 +1017,10 @@ to mark any technical term, thus:
             <dataFacet name="minInclusive" value="-360.0"/>
             </dataRef></egXML>   
         Note that restrictions are either expressed with <att>restriction</att> or <gi>dataFacet</gi>, never both.</p>
-	<p>A datatype may be used to constrain the textual content of
-	an element, rather than the value of an attribute. But because
-	they are intended for use in defining ranges of attribute
-	values, datatypes may not contain elements or attributes.</p>
+        <p>A datatype may be used to constrain the textual content of
+        an element, rather than the value of an attribute. But because
+        they are intended for use in defining ranges of attribute
+        values, datatypes may not contain elements or attributes.</p>
         <p>The attributes <att>minOccurs</att> and
         <att>maxOccurs</att> are available for the case where an
         attribute may take more than one value of the type
@@ -1030,21 +1028,21 @@ to mark any technical term, thus:
         the <gi>layout</gi> element can have one or two non-negative
         integers as its value:
           <egXML xmlns="http://www.tei-c.org/ns/Examples">
-	    <attDef ident="columns">
-	      <gloss xml:lang="en" versionDate="2007-06-12">columns</gloss>
-	      <desc versionDate="2005-01-14" xml:lang="en">specifies the number of columns per page</desc>
-	      <datatype minOccurs="1" maxOccurs="2">
-		<dataRef key="teidata.count"/>
-	      </datatype>
-	      <remarks xml:lang="en" versionDate="2017-07-09">
-		<p>If a single number is given, all pages referenced
-		have this number of columns. If two numbers are given,
-		the number of columns per page varies between the
-		values supplied. Where <att>columns</att> is omitted
-		the number is assumed to be <val>1</val>.</p>
-	      </remarks>
-	    </attDef>
-	  </egXML>
+            <attDef ident="columns">
+              <gloss xml:lang="en" versionDate="2007-06-12">columns</gloss>
+              <desc versionDate="2005-01-14" xml:lang="en">specifies the number of columns per page</desc>
+              <datatype minOccurs="1" maxOccurs="2">
+                <dataRef key="teidata.count"/>
+              </datatype>
+              <remarks xml:lang="en" versionDate="2017-07-09">
+                <p>If a single number is given, all pages referenced
+                have this number of columns. If two numbers are given,
+                the number of columns per page varies between the
+                values supplied. Where <att>columns</att> is omitted
+                the number is assumed to be <val>1</val>.</p>
+              </remarks>
+            </attDef>
+          </egXML>
            indicating that the <att>target</att> attribute may take any number of values, each being of the
           same datatype, namely the TEI data specification <ident>teidata.pointer</ident>. As is usual in XML,
           multiple values for a single attribute are separated by one or more white space characters. Hence,
@@ -1075,7 +1073,9 @@ to mark any technical term, thus:
               <datatype><dataRef key="teidata.count"/></datatype>
               <constraintSpec ident="lessThan150" scheme="schematron">
                 <constraint>
-                  <report xmlns="http://purl.oclc.org/dsdl/schematron" test=". >= 150"> age at death must be an integer less than 150 </report>
+                  <sch:rule context="@ageAtDeath">
+                    <sch:assert test=". le 150">age at death must be an integer less than 150</sch:assert>
+                  </sch:rule>
                 </constraint>
               </constraintSpec>
             </attDef>

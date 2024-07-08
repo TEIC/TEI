@@ -1,3 +1,5 @@
+The @generatedBy attribute is for use within a &lt;post&gt; element. (ancestor-or-self::tei:post)
+The @generatedBy attribute is for use within a &lt;post&gt; element. (ancestor-or-self::tei:post)
 The abbr element should not be categorized in detail with @subtype unless also categorized in general with @type (@type)
 The div element should not be categorized in detail with @subtype unless also categorized in general with @type (@type)
 
@@ -12,8 +14,6 @@ The element indicated by @spanTo (notMeaningful) must follow the current element
  @calendar indicates one or more
               systems or calendars to which the date represented by the content of this element belongs,
               but this date element has no textual content. (string-length( normalize-space(.) ) gt 0)
- 
-            lists inside paragraphs not supported  (tei:list)
  @calendar indicates one or more
                         systems or calendars to which the date represented by the content of this element belongs,
                         but this date element has no textual content. (string-length( normalize-space(.) ) gt 0)
@@ -33,8 +33,7 @@ The content of a "gloss" list should include a sequence of one or more pairs of 
  @calendar indicates one or more
                         systems or calendars to which the date represented by the content of this element belongs,
                         but this date element has no textual content. (string-length( normalize-space(.) ) gt 0)
-An lg element
-        must contain at least one child l, lg, or gap element. (count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0)
+An lg element must contain at least one child l, lg, or gap element. (count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0)
  @calendar indicates one or more
                         systems or calendars to which the date represented by the content of this element belongs,
                         but this date element has no textual content. (string-length( normalize-space(.) ) gt 0)
@@ -51,7 +50,8 @@ An lg element
                         systems or calendars to which the date represented by the content of this element belongs,
                         but this date element has no textual content. (string-length( normalize-space(.) ) gt 0)
 
-On quotation, either the @marks attribute should be used, or a paragraph of description provided (not(@marks) and not (tei:p))
+          On quotation, either the @marks attribute should be used, or a paragraph of description provided
+         (not( @marks ) and not( tei:p ))
  @calendar indicates one or more
                         systems or calendars to which the date represented by the content of this element belongs,
                         but this date element has no textual content. (string-length( normalize-space(.) ) gt 0)
@@ -70,25 +70,16 @@ On quotation, either the @marks attribute should be used, or a paragraph of desc
  @calendar indicates one or more
                         systems or calendars to which the date represented by the content of this element belongs,
                         but this date element has no textual content. (string-length( normalize-space(.) ) gt 0)
+You may not nest one s element within another: use seg instead (tei:s)
 
-              divs of type 'canon' may contain only one 'canonText'
-             (@type='canon' and count (tei:div[@type='canonText']) &gt;1)
-
-              divs of type 'canon' may not be nested
-             (@type='canon' and parent::tei:div/@type='canon')
-
-              divs of type 'canon' may not be nested within 'register'
-             (@type='canon' and parent::tei:div/@type='register')
-You may not nest one s element within
-      another: use seg instead (tei:s)
-
-Only one of the attributes @target and @from may be supplied on span
+          Only one of the attributes @target and @from may be supplied on span
           (@from and @target)
 
-Only one of the attributes @target and @to may be supplied on span
+          Only one of the attributes @target and @to may be supplied on span
           (@to and @target)
 
-If @to is supplied on span, @from must be supplied as well (@to and not(@from))
+          If @to is supplied on span, @from must be supplied as well
+         (@to and not(@from))
 
               The @location value "external" is inconsistent with the
               parallel-segmentation method of apparatus markup. (@location eq 'external' and @method eq 'parallel-segmentation')
@@ -172,6 +163,7 @@ In the context of tagset documentation, the listRef element must not self-nest. 
 In the context of tagset documentation, each ptr or ref element inside a listRef must have a target attribute with only 1 pointer as its value. (@target and not( matches( @target,'\s') ))
 In the context of tagset documentation, each ptr or ref element inside a listRef must have a target attribute with only 1 pointer as its value. (@target and not( matches( @target,'\s') ))
               
-The @new attribute should always be supplied; use the special value
-"normal" to indicate that the feature concerned ceases to be
-remarkable at this point. (@new / warning)
+          The @new attribute should always be supplied; use the special value
+          "normal" to indicate that the feature concerned ceases to be
+          remarkable at this point.
+         (@new / warning)

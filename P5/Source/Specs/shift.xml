@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="spoken" ident="shift">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="spoken" ident="shift">
   <gloss xml:lang="en" versionDate="2009-04-17">shift</gloss>
   <gloss xml:lang="fr" versionDate="2009-04-17">changement</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">marks the point at which some paralinguistic feature of a series of
@@ -23,20 +17,23 @@ utterances by any one speaker changes.</desc>
     <memberOf key="att.global"/>
     <memberOf key="model.global.spoken"/>
     <memberOf key="att.ascribed"/>
+    <memberOf key="att.cmc"/>
   </classes>
   <content><empty/></content>
   <constraintSpec ident="shiftNew" scheme="schematron">
     <constraint>
-      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="@new" role="warning">              
-The @new attribute should always be supplied; use the special value
-"normal" to indicate that the feature concerned ceases to be
-remarkable at this point.</assert>
+      <sch:rule context="tei:shift">
+        <sch:assert test="@new" role="warning">              
+          The @new attribute should always be supplied; use the special value
+          "normal" to indicate that the feature concerned ceases to be
+          remarkable at this point.
+        </sch:assert>
+      </sch:rule>       
     </constraint>
   </constraintSpec>
   <attList>
     <attDef ident="feature" usage="opt">
-      <desc versionDate="2005-01-14" xml:lang="en">a
-paralinguistic feature.</desc>
+      <desc versionDate="2005-01-14" xml:lang="en">a paralinguistic feature.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">준언어적 자질</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">附屬語言特性</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">発話(パラ言語)素性。</desc>
@@ -106,8 +103,7 @@ paralinguistic feature.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">명시된 준언어적 자질의 새로운 상태를 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">說明改變後的附屬語言特性狀況。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">発話(パラ言語)素性の、新しい状態を示す。</desc>
-      <desc versionDate="2009-04-17" xml:lang="fr">précise le nouvel état de la
-					caractéristique paralinguistique en question.</desc>
+      <desc versionDate="2009-04-17" xml:lang="fr">précise le nouvel état de la caractéristique paralinguistique en question.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica el nuevo estado del fenómeno paralingüístico especificado.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica il nuovo stato del fenomeno paralinguistico specificato</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
@@ -119,7 +115,7 @@ paralinguistic feature.</desc>
       </remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
         <p>Si aucune valeur n'est spécifiée, on suppose que le trait concerné cesse
-                        d'être remarquable. La valeur <q>normal</q> a le même effet.</p>
+          d'être remarquable. La valeur <q>normal</q> a le même effet.</p>
       </remarks>
       <remarks xml:lang="ja" versionDate="2008-04-05">
         <p>
@@ -129,13 +125,12 @@ paralinguistic feature.</desc>
       </remarks>
     </attDef>
   </attList>
- 
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <u who="#LB"><shift feature="loud" new="f"/>Elizabeth</u>
       <u who="#EB">Yes</u>
       <u who="#LB"><shift feature="loud" new="normal"/>Come and try this 
-	<pause/><shift feature="loud" new="ff"/>come on</u>
+        <pause/><shift feature="loud" new="ff"/>come on</u>
       <!-- ... -->
       <listPerson type="speakers">
         <person xml:id="LB"/>

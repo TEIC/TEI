@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
   <teiHeader>
     <fileDesc>
       <titleStmt>
@@ -3483,13 +3483,18 @@ live without God in the world, and only mind earthly things.
                 <attDef ident="target" mode="change">
                   <constraintSpec ident="validtarget" scheme="schematron">
                     <constraint>
-                      <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:*[@target]">
-                        <let name="results"
-                          value="for $t in  tokenize(normalize-space(@target),'\s+') return starts-with($t,'#') and not(id(substring($t,2)))"/>
-                        <report test="some $x in $results  satisfies $x"> Error: Every local pointer
-                          in "<value-of select="@target"/>" must point to an ID in this document
-                            (<value-of select="$results"/>)</report>
-                      </rule>
+                      <sch:rule context="tei:*[@target]">
+			<!-- If & when we are confident the processor
+			     will be an XPath 3+ processor the
+			     “tokenize(normalize-space(@target),'\s+')”
+			     below could be shortened to just
+			     “tokenize(@target)”. —Syd, 2024-04-12 -->
+                        <sch:let name="results"
+                          value="for $t in tokenize(normalize-space(@target),'\s+') return starts-with($t,'#') and not(id(substring($t,2)))"/>
+                        <sch:report test="some $x in $results satisfies $x"> Error: Every local pointer
+                          in "<sch:value-of select="@target"/>" must point to an ID in this document
+                            (<sch:value-of select="$results"/>)</sch:report>
+                      </sch:rule>
                     </constraint>
                   </constraintSpec>
                 </attDef>
@@ -3498,24 +3503,28 @@ live without God in the world, and only mind earthly things.
             <classSpec type="atts" ident="att.global.rendition" mode="change">
               <constraintSpec ident="renditionpointer" scheme="schematron">
                 <constraint>
-                  <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:*[@rendition]">
-                    <let name="results"
-                      value="for $val in tokenize(normalize-space(@rendition),'\s+') return starts-with($val,'simple:')        or        (starts-with($val,'#')        and        //tei:rendition[@xml:id=substring($val,2)])"/>
-                    <assert test="every $x in $results satisfies $x"> Error: Each of the rendition
-                      values in "<value-of select="@rendition"/>" must point to a local ID or to a
-                      token in the Simple scheme (<value-of select="$results"/>)</assert>
-                  </rule>
+                  <sch:rule context="tei:*[@rendition]">
+                    <sch:let name="results"
+                      value="for $val in tokenize(normalize-space(@rendition),'\s+') return starts-with($val,'simple:')
+                             or
+                             (starts-with($val,'#')
+                             and
+                             //tei:rendition[@xml:id=substring($val,2)])"/>
+                    <sch:assert test="every $x in $results satisfies $x"> Error: Each of the rendition
+                      values in "<sch:value-of select="@rendition"/>" must point to a local ID or to a
+                      token in the Simple scheme (<sch:value-of select="$results"/>)</sch:assert>
+                  </sch:rule>
                 </constraint>
               </constraintSpec>
               <constraintSpec ident="corresppointer" scheme="schematron">
                 <constraint>
-                  <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:*[@corresp]">
-                    <let name="results"
+                  <sch:rule context="tei:*[@corresp]">
+                    <sch:let name="results"
                       value="for $t in tokenize(normalize-space(@corresp),'\s+') return starts-with($t,'#') and not(id(substring($t,2)))"/>
-                    <report test="some $x in $results  satisfies $x"> Error: Every local pointer in
-                        "<value-of select="@corresp"/>" must point to an ID in this document
-                        (<value-of select="$results"/>)</report>
-                  </rule>
+                    <sch:report test="some $x in $results  satisfies $x"> Error: Every local pointer in
+                        "<sch:value-of select="@corresp"/>" must point to an ID in this document
+                        (<sch:value-of select="$results"/>)</sch:report>
+                  </sch:rule>
                 </constraint>
               </constraintSpec>
               <!-- remove unused attributes @rend and @style; constrain values for @rendition -->
@@ -3993,9 +4002,11 @@ live without God in the world, and only mind earthly things.
             <elementSpec ident="bibl" mode="change">
               <constraintSpec mode="add" ident="noEmptyBibl" scheme="schematron">
                 <constraint>
-                  <assert xmlns="http://purl.oclc.org/dsdl/schematron"
-                    test="child::* or child::text()[normalize-space()]" role="ERROR"> Element
-                    "<name/>" may not be empty. </assert>
+		   <sch:rule context="tei:bibl">		   		  
+                     <sch:assert test="child::* or child::text()[normalize-space()]" role="ERROR">
+		       Element "<sch:name/>" may not be empty.
+		     </sch:assert>
+		   </sch:rule>
                 </constraint>
               </constraintSpec>
               <model predicate="parent::listBibl" behaviour="listItem"/>
@@ -4107,18 +4118,17 @@ live without God in the world, and only mind earthly things.
               </model>
             </elementSpec>
             <elementSpec ident="choice" mode="change">
-              <constraintSpec ident="choiceSize" scheme="schematron" mode="add">
-                <constraint>
-                  <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="count(*) &gt; 1"
-                    role="ERROR"> Element "<name/>" must have at least two child elements.</assert>
-                </constraint>
-              </constraintSpec>
               <constraintSpec ident="choiceContent" scheme="schematron" mode="add">
                 <constraint>
-                  <assert xmlns="http://purl.oclc.org/dsdl/schematron"
-                    test="(tei:corr or tei:sic or tei:expan or     tei:abbr or tei:reg or tei:orig) and ((tei:corr and tei:sic) or (tei:expan     and tei:abbr) or (tei:reg and tei:orig))"
-                    role="ERROR"> Element "<name/>" must have corresponding corr/sic, expand/abbr,
-                    reg/orig </assert>
+		  <sch:rule context="tei:choice">
+		    <sch:assert test="( tei:corr and tei:sic )
+                                      or
+                                      ( tei:expan and tei:abbr )
+                                      or
+                                      ( tei:reg and tei:orig )" role="ERROR">
+                      Element "<sch:name/>" must have corresponding corr/sic, expand/abbr, reg/orig
+		    </sch:assert>
+		  </sch:rule>
                 </constraint>
               </constraintSpec>
               <model output="plain" predicate="sic and corr" behaviour="inline">
@@ -5082,22 +5092,18 @@ live without God in the world, and only mind earthly things.
 
             </elementSpec>
             <elementSpec ident="text" mode="change">
-              <constraintSpec xmlns="http://www.tei-c.org/ns/1.0"
-                xmlns:XSL="http://www.w3.org/1999/XSL/Transform" ident="headeronlyelement"
-                scheme="schematron">
+              <constraintSpec ident="headeronlyelement" scheme="schematron">
                 <constraint>
-                  <!-- <rule xmlns="http://purl.oclc.org/dsdl/schematron"
+                  <!-- <sch:rule
                     context="tei:att | tei:biblFull | tei:biblStruct | tei:change | tei:charDecl | tei:charProp | tei:editor
                     | tei:editorialDecl | tei:email | tei:encodingDesc | tei:extent | tei:fileDesc | tei:gi | tei:glyph | tei:glyphName | 
                     tei:idno | tei:imprint | tei:keywords | tei:licence | tei:listChange | tei:listPerson | tei:localName | tei:monogr | 
                     tei:msDesc | tei:msIdentifier | tei:person | tei:physDesc | tei:profileDesc | tei:publicationStmt | tei:relatedItem | 
                     tei:repository | tei:resp | tei:respStmt | tei:sourceDesc | tei:tag | tei:teiHeader | tei:term | tei:textClass | tei:textDesc 
                     | tei:titleStmt | tei:typeDesc | tei:val | tei:value">-->
-                  <rule xmlns="http://purl.oclc.org/dsdl/schematron"
-                    context="tei:term | tei:biblFull ">
-                    <report test="ancestor::tei:text">Error: The element <name/> is not permitted
-                      outside the header</report>
-                  </rule>
+                  <sch:rule context="tei:term | tei:biblFull">
+                    <sch:report test="ancestor::tei:text">Error: The element <sch:name/> is not permitted outside the header</sch:report>
+                  </sch:rule>
                 </constraint>
               </constraintSpec>
               <model behaviour="body">

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI P5 version 4.8.0 and Stylesheets version 7.57.0 release notes</title>
+      </titleStmt>
+      <editionStmt>
+        <edition>
+          <date when="2024-07-08">Monday, 8 July 2024</date>
+        </edition>
+      </editionStmt>
+      <publicationStmt>
+        <authority>The Text Encoding Initiative</authority>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Created retrospectively from ChangeLog and GitHub trackers</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>Release 4.8.0 is codenamed <q>The Six Degrees
+        Release</q>.<!-- A reference to <ref target="https://en.wikipedia.org/wiki/Six_Degrees_of_Kevin_Bacon">The Six Degrees of Kevin
+      Bacon</ref>, as release day is Mr. Bacon’s 66th birthday. --></p>
+      <p>This release introduces new features and resolves a number of issues raised by the TEI
+        community. The majority of these changes and corrections are a consequence of feature
+        requests or bugs reported by the TEI community using the GitHub tracking system. A full list
+        of the issues resolved in the course of this release cycle may be found under the <ref
+          target="https://github.com/TEIC/TEI/milestone/16?closed=1">4.8.0 milestone</ref>. Very
+        special thanks to Michael Beißwenger and Harald Lüngen for their essential contributions to
+        the new computer-mediated communication chapter. Many thanks also to the community
+        contributors who reported issues, sent bug fixes, and helped with the drafting that led
+        to this release, including: John Bampton, Benjamin W. Bohl, Lou Burnard, Martin Holmes,
+        Martin de la Iglesia, Jessica Lu, Dominique Meeùs, Kiyonori Nagasaki, Bastian Politycki,
+        Klaus Rettinghaus, Daniel Schwarz, Peter Stadler, Christian Thomas, Conal Tuohy, and Nicolas
+        Vaughan. </p>
+      <p/>
+      <p>The following changes are particularly worth highlighting in this release: <list>
+          <head>New encoding features</head>
+          <item>A <ref target="https://tei-c.org/Vault/P5/4.8.0/doc/tei-p5-doc/en/html/CMC.html">new
+              chapter on computer-mediated communication (CMC)</ref> provides guidelines for
+            structuring texts and corpora in TEI that encode the data and metadata of interactive
+            posts from various media platforms (<ref
+              target="https://github.com/TEIC/TEI/issues/1955">#1955</ref> and <ref
+              target="https://github.com/TEIC/TEI/pull/2537">PR #2537</ref>). The chapter introduces
+            a new <gi>post</gi> element to encode a contribution to a CMC interaction, and with it: <list>
+              <item>two new attribute classes <name type="class">att.cmc</name> and <name
+                  type="class">att.indentation</name>, of which <gi>post</gi> is a member.</item>
+              <item>The following new attributes are specific to <gi>post</gi>: <list>
+                  <item><att>modality</att> to document whether a post is written or spoken,</item>
+                  <item><att>replyTo</att> to indicate a previous post to which a post replies or
+                    refers,</item>
+                  <item><att>generatedBy</att> (a member of <name type="class">att.cmc</name>) with
+                    suggested values <val>human</val>, <val>template</val>, <val>system</val>,
+                      <val>bot</val>, and <val>unspecified</val> to indicate how content in a post
+                    is generated.</item>
+                </list></item>
+              <item>The <gi>post</gi> element is also a member of <name type="class"
+                  >att.global</name>, <name type="class">att.ascribed</name>, <name type="class"
+                  >att.datable</name>, <name type="class">att.timed</name>, <name type="class"
+                  >att.fragmentable</name>, <name type="class">att.docStatus</name>, <name
+                  type="class">att.typed</name>, and <name type="class">att.canonical</name> giving
+                it access to many attributes to identify agents responsible for posts, indicate
+                their timing, and categorize them.</item>
+              <item>A new attribute, <att>indentLevel</att>, is not restricted to CMC but provided
+                in the class <name type="class">att.indentation</name> to describe indentation of
+                text content in a source, for example to mark a post’s level of indentation in a
+                discussion thread.</item>
+            </list>
+          </item>
+        </list>
+        <list>
+          <head>Changes to content models</head>
+          <item>With this release, <gi>quote</gi> is now a member of <name type="class"
+              >model.biblPart</name>, permitting it to be used within <gi>bibl</gi> (<ref
+              target="https://github.com/TEIC/TEI/issues/2544">#2544</ref> and <ref
+              target="https://github.com/TEIC/TEI/pull/2557">PR #2557</ref>).</item>
+          <item>The Guidelines now deprecate the use of <gi>superEntry</gi> and <gi>re</gi> elements
+            as superfluous since the <gi>entry</gi> element may now self-nest (<ref
+              target="https://github.com/TEIC/TEI/issues/2488">#2488</ref>, <ref
+              target="https://github.com/TEIC/TEI/issues/2487">#2487</ref>, <ref
+              target="https://github.com/TEIC/TEI/pull/2532">PR #2532</ref>, and <ref
+              target="https://github.com/TEIC/TEI/pull/2521">#2521</ref>).</item>
+          <item>The <gi>event</gi> element is now more efficiently modeled using <name type="class"
+              >model.eventLike</name> with no changes to its content. (<ref
+              target="https://github.com/TEIC/TEI/issues/2524">#2524</ref> and <ref
+              target="https://github.com/TEIC/TEI/pull/2525">PR #2525</ref>). </item>
+          <item>To improve gaiji descriptions, the <att>scheme</att> attribute was added to <name
+              type="class">att.gaijiProp</name>, and <gi>mapping</gi>, <gi>localProp</gi>
+            <gi>unicodeProp</gi>, and <gi>unihanProp</gi> were added to <name type="class"
+              >att.datable</name>. (<ref target="https://github.com/TEIC/TEI/issues/2132"
+              >#2132</ref> and <ref target="https://github.com/TEIC/TEI/pull/2511">PR
+            #2511</ref>).</item>
+          <item>The datatype <name type="datatype">teidata.probability</name> was previously defined
+            too broadly as <code>xsd:double</code>, and has now been constrained to a value between
+            0 and 1 (<ref target="https://github.com/TEIC/TEI/issues/2518">#2518</ref> and <ref
+              target="https://github.com/TEIC/TEI/pull/2519">PR #2519</ref>).</item>
+        </list>
+        <!--  <list>
+          <head>Changes to classes</head>
+          <item/>
+      
+        </list>-->
+      </p>
+      <p>The following changes introduced with this release could invalidate ODD customizations in
+        TEI projects. Those maintaining ODD customizations of the TEI should be aware of the
+        following changes, and may need to adapt their ODD files accordingly. <list>
+          <head>ODD-breaking changes and deprecation</head>
+          <item>Following a deprecation period that has now ended, the <gi>content</gi> element,
+            which declares the content model of an element being specified in an ODD, now requires
+            exactly one and only one child element. If several RELAX NG elements are desired, they
+            must now be wrapped in an <gi scheme="RELAX_NG">rng:div</gi> (<ref
+              target="https://github.com/TEIC/TEI/issues/2381">#2381</ref> and <ref
+              target="https://github.com/TEIC/TEI/pull/2409">PR #2409</ref>).</item>
+          <item>In order to avoid ambiguity, Schematron constraints in ODDs must now include an
+              <gi scheme="Schematron">sch:rule</gi> element with a <att>context</att> attribute, and the
+            Guidelines have been updated to reflect this change (<ref
+              target="https://github.com/TEIC/TEI/issues/2510">#2510</ref> and <ref
+              target="https://github.com/TEIC/TEI/pull/2513">PR #2513</ref>).</item>
+        </list>
+      </p>
+      <p>
+        <list>
+          <head>Improvements of prose and examples</head>
+          <item>The definition of <gi>surface</gi> has been updated to reflect the context of
+            embedded transcription (<ref target="https://github.com/TEIC/TEI/issues/2476"
+              >#2476</ref>).</item>
+          <item>The description of <gi>teiCorpus</gi> has been updated in the language corpora
+            chapter (<ref target="https://github.com/TEIC/TEI/issues/2445">#2445</ref> and <ref
+              target="https://github.com/TEIC/TEI/pull/2503">PR #2503</ref>).</item>
+          <item>Examples of <gi>geo</gi> elements no longer include a comma to separate
+            geocoordinates to better align with the prose of the Guidelines (<ref
+              target="https://github.com/TEIC/TEI/issues/2560">#2560</ref>).</item>
+          <item>Schematron constraints were simplified to remove redundancies in the simplePrint ODD
+              (<ref target="https://github.com/TEIC/TEI/pull/2540">PR #2540</ref>).</item>
+        </list>
+        <!-- 
+          <list>
+          <head>Documentation</head>
+          <item/>
+        </list> 
+        -->
+        <list>
+          <head>Housekeeping</head>
+          <item>The HTML Guidelines pages have been updated to output the current standard HTML 5
+            doctype (<ref target="https://github.com/TEIC/TEI/issues/2508">#2508</ref>).</item>
+          <item>For Guidelines processing, we have removed unnecessary <att>mode</att> attributes
+            with the value <val>add</val> from the element specifications, since all content is
+            simply added to the Guidelines with no other mode possible (<ref
+              target="https://github.com/TEIC/TEI/issues/2498">#2498</ref> and <ref
+              target="https://github.com/TEIC/TEI/pull/2520">#2520</ref>).</item>
+          <item>The copyright notice in XML comments at the top of the Guidelines XML files has been
+            simplified (<ref target="https://github.com/TEIC/TEI/issues/2514">#2514</ref> and <ref
+              target="https://github.com/TEIC/TEI/pull/2526">PR #2526</ref>).</item>
+          <item>Superfluous namespace declarations have been removed from Guidelines datatype
+            specification files (<ref target="https://github.com/TEIC/TEI/pull/2522">PR
+            #2522</ref>).</item>
+        </list>
+      </p>
+
+      <p>In addition, many improvements have been made to the XSLT stylesheets (which provide
+        processing of TEI ODD files for <ref target="https://romabeta.tei-c.org/">Roma</ref> and
+          <ref target="https://teigarage.tei-c.org/">TEIGarage</ref> as well as other TEI
+        conversions). The Stylesheets are maintained separately from the Guidelines at <ref
+          target="https://github.com/TEIC/Stylesheets">https://github.com/TEIC/Stylesheets</ref>. A
+        full list of the issues resolved in the course of this release cycle may be found under the
+          <ref target="https://github.com/TEIC/Stylesheets/milestone/15?closed=1">7.57.0
+          milestone</ref>.</p>
+
+      <p>Highlights of this release follow.<list>
+          <item>Updating the Stylesheets from XSLT 2.0 to XSLT 3.0 (Stylesheets <ref
+              target="https://github.com/TEIC/Stylesheets/issues/639">#639</ref>, <ref
+              target="https://github.com/TEIC/Stylesheets/pull/649">PR #649</ref>, and <ref
+              target="https://github.com/TEIC/Stylesheets/pull/663">PR #663</ref>).</item>
+          <item>Identifying and solving a problem in our testing of DOCX to TEI conversion when
+            the Stylesheets version changes (Stylesheets <ref
+              target="https://github.com/TEIC/Stylesheets/issues/646">#646</ref> and <ref
+              target="https://github.com/TEIC/Stylesheets/pull/650">PR #650</ref>).</item>
+          <item>Correcting a bug in the common function.xsl that caused a <val>sup</val> value of
+              <att>rend</att> to be treated the same as a <val>sub</val> value (Stylesheets <ref
+              target="https://github.com/TEIC/Stylesheets/issues/584">#584</ref> and <ref
+              target="https://github.com/TEIC/Stylesheets/pull/670">PR #670</ref>.</item>
+          <item>Identifying and solving several problems in ODD processing: <list>
+              <item>Repairs to our transform scripts (Stylesheets <ref
+                  target="https://github.com/TEIC/Stylesheets/issues/652">#652</ref> and <ref
+                  target="https://github.com/TEIC/Stylesheets/pull/653">PR #653</ref>);</item>
+              <item>Ensuring that att.repeatable is properly processed on <gi>sequence</gi>,
+                  <gi>alternate</gi>, and <gi>anyElement</gi> (Stylesheets <ref
+                  target="https://github.com/TEIC/Stylesheets/issues/627">#627</ref> and <ref
+                  target="https://github.com/TEIC/Stylesheets/pull/633">PR #633</ref>);</item>
+              <item>Correcting a bug that caused attributes to be copied from a <gi>constraint</gi>
+                element to the corresponding generated <gi scheme="Schematron">sch:rule</gi> element
+                (Stylesheets <ref target="https://github.com/TEIC/Stylesheets/issues/659">#659</ref>
+                and <ref
+                  target="https://github.com/TEIC/Stylesheets/pull/660/commits/275be31fc1f5c86061e33437d3d7885283e4aa7f"
+                  >PR #660</ref>);</item>
+              <item>Repairing another bug that caused an output <gi>constraintSpec</gi> to appear in
+                the wrong location in a constructed ODD (Stylesheets <ref
+                  target="https://github.com/TEIC/Stylesheets/issues/319">#319</ref> and <ref
+                  target="https://github.com/TEIC/Stylesheets/pull/675">PR #675</ref>);</item>
+              <item>Solving a serious problem mentioned in several tickets (Stylesheets <ref
+                  target="https://github.com/TEIC/Stylesheets/issues/645">#645</ref>, <ref
+                  target="https://github.com/TEIC/Stylesheets/issues/678">#678</ref>, <ref
+                  target="https://github.com/TEIC/Stylesheets/issues/680">#680</ref>) in which
+                multiple <gi>elementSpec</gi> elements sharing the same <att>ident</att> value led
+                to a build error in odd2odd.xsl, solved with <ref
+                  target="https://github.com/TEIC/Stylesheets/pull/681">Stylesheets PR
+                #681</ref>;</item>
+              <item>Solving a problem when replacing, changing, or deleting an attribute marked with
+                the wrong class (e.g. in an outdated class after it has been relocated to a
+                different class), in which the processed ODD produced duplicate <gi>attDef</gi>
+                elements (Stylesheets <ref target="https://github.com/TEIC/Stylesheets/issues/687"
+                  >#687</ref> and PR <ref target="https://github.com/TEIC/Stylesheets/pull/690"
+                  >#690</ref>).</item>
+            </list></item>
+        </list>
+      </p>
+    </body>
+  </text>
+</TEI>

@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" ident="s">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="analysis" ident="s">
   <gloss versionDate="2005-01-14" xml:lang="en">s-unit</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">s-단위</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">句子單元</gloss>
@@ -29,17 +23,20 @@ $Id$
     <memberOf key="att.segLike"/>
     <memberOf key="att.typed"/>
     <memberOf key="att.notated"/>
+    <memberOf key="att.cmc"/>
   </classes>
   <content>
-<!--   NOTE: MDH reversing horrible change to content model mandated by Council in 
-    https://sourceforge.net/p/tei/bugs/578/ == https://github.com/TEIC/TEI/issues/1193, and 
-    replacing original macro.phraseSet content model. -->
+    <!-- NOTE: MDH reversing horrible change to content model mandated
+         by Council in https://sourceforge.net/p/tei/bugs/578/ ==
+         https://github.com/TEIC/TEI/issues/1193, and replacing
+         original macro.phraseSet content model. -->
     <macroRef key="macro.phraseSeq"/> 
   </content>
   <constraintSpec ident="noNestedS" scheme="schematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="tei:s">You may not nest one s element within
-      another: use seg instead</report>
+      <sch:rule context="tei:s">
+        <sch:report test="tei:s">You may not nest one s element within another: use seg instead</sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">

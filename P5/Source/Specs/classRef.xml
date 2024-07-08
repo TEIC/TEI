@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Copyright TEI Consortium.
-    Dual-licensed under CC-by and BSD2 licences
-    See the file COPYING.txt for details
-    $Date$
-    $Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" ident="classRef">
   <desc versionDate="2010-07-06" xml:lang="en">points to the specification for an attribute or model class which is to be included in a schema</desc>
+  <desc versionDate="2024-02-28" xml:lang="ja">スキーマに含まれる属性クラスあるいはモデルクラスの仕様を指し示す。</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.repeatable"/>
@@ -20,33 +15,39 @@
     <attDef ident="key" usage="req">
       <desc versionDate="2010-07-06" xml:lang="en">the identifier used for the required class within the
         source indicated.</desc>
+      <desc versionDate="2024-02-28" xml:lang="ja">指示されたソースの中の要求されたクラスに対して使用される識別子。</desc>
       <datatype><dataRef key="teidata.xmlName"/></datatype>
     </attDef>
     <attDef ident="expand" usage="opt">
       <desc versionDate="2013-11-21" xml:lang="en">indicates how references
       to this class within a content model should be interpreted.</desc>
+      <desc versionDate="2024-02-28" xml:lang="ja">内容モデル内でこのクラスへの参照がどのように解釈されるべきなのかを示す。</desc>
       <valList type="closed">
         <valItem ident="alternation">
           <desc versionDate="2013-11-21" xml:lang="en">any one member of the class may appear</desc>
+          <desc versionDate="2024-02-24" xml:lang="ja">クラスのいずれかのメンバーが出現し得る。</desc>
         </valItem>
         <valItem ident="sequence">
           <desc versionDate="2013-11-21" xml:lang="en">a single occurrence
           of all members of the class may appear in sequence</desc>
+          <desc versionDate="2024-02-28" xml:lang="ja">クラスのすべてのメンバーが順に1回ずつ出現し得る。</desc>
         </valItem>
         <valItem ident="sequenceOptional">
           <desc versionDate="2013-11-21" xml:lang="en">a single occurrence of
           one or more members
-          of the class may appear in sequence
-          </desc>
+          of the class may appear in sequence</desc>
+          <desc versionDate="2024-02-28" xml:lang="ja">クラスの1つ以上のメンバーが順に1回ずつ出現し得る。</desc>
         </valItem>
         <valItem ident="sequenceOptionalRepeatable">
           <desc versionDate="2013-11-21" xml:lang="en">one or more
           occurrences of one or more members of the class
-          may appear in sequence. </desc>
+          may appear in sequence.</desc>
+          <desc versionDate="2024-02-28" xml:lang="ja">クラスの1つまたは複数のメンバーが1回以上、順に出現し得る。</desc>
         </valItem>
         <valItem ident="sequenceRepeatable">
           <desc versionDate="2013-11-21" xml:lang="en">one or more
           occurrences of all members of the class may appear in sequence</desc>
+          <desc versionDate="2024-02-28" xml:lang="ja">クラスのすべてのメンバーが1回以上、順に出現し得る。</desc>
         </valItem>
       </valList>
       <remarks xml:lang="en" versionDate="2013-11-20">
@@ -63,14 +64,20 @@
 	<code>(a+,b+,c+)</code> when it has the value
 	<val>sequenceRepeatable</val>.</p>
       </remarks>
+      <remarks versionDate="2024-02-28" xml:lang="ja"><p>クラスのメンバーが <val>a</val>、<val>b</val>そして<val>c</val>であるとして、
+        <att>expand</att>の値が<val>alternation</val>ならば、内容モデル内の該当クラスへの参照は，<val>a|b|c</val>への参照として理解される。
+        また、<att>expand</att>の値が<val>sequence</val>ならば、<val>a,b,c</val>への，<val>sequenceOptional</val>ならば<val>(a?,b?,c?)</val>への、
+        <val>sequenceOptionalRepeatable</val>ならば<val>(a*,b*,c*)</val>への、そして<val>sequenceRepeatable</val>ならば<val>(a+,b+,c+)</val>への参照としてそれぞれ理解される。</p></remarks>
     </attDef>
     <attList org="choice">
       <attDef ident="include">
         <desc versionDate="2011-09-21" xml:lang="en">supplies a list of class members which are to be included in the schema being defined.</desc>
+        <desc versionDate="2024-02-28" xml:lang="ja">定義されているスキーマに含まれるクラスメンバーのリスト。</desc>
         <datatype minOccurs="0" maxOccurs="unbounded"><dataRef key="teidata.xmlName"/></datatype>
       </attDef>
       <attDef ident="except">
         <desc versionDate="2011-09-21" xml:lang="en">supplies a list of class members which are to be excluded from the schema being defined.</desc>
+        <desc versionDate="2024-02-28" xml:lang="ja">定義されているスキーマから除外するクラスメンバーのリスト。</desc>
         <datatype minOccurs="0" maxOccurs="unbounded"><dataRef key="teidata.xmlName"/></datatype>
       </attDef>     
     </attList>
@@ -92,6 +99,12 @@
     <att>ident</att> attribute on the <gi>classSpec</gi> element in
     which they are declared. All TEI class names are unique; attribute
     class names conventionally begin with the letters <code>att.</code>.
+    </p>
+  </remarks>
+  <remarks versionDate="2024-02-28" xml:lang="ja">
+    <p>
+      属性クラスとモデルクラスは、それらが宣言された<gi>classSpec</gi>の要素において<att>ident</att>属性の値として指定された名前により、識別される。
+      TEI内のすべての名前は一意である。属性クラス名は通常<code>att.</code>という文字ではじまる。
     </p>
   </remarks>
   <listRef>

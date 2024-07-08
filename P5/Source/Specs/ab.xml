@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
-  Copyright TEI Consortium. 
-  Dual-licensed under CC-by and BSD2 licences 
-  See the file COPYING.txt for details. 
-  $Date$ 
-  $Id$
-  -->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="linking" ident="ab">
   <gloss versionDate="2005-01-14" xml:lang="en">anonymous block</gloss>
@@ -19,7 +13,7 @@
   <desc versionDate="2007-12-20" xml:lang="ko">의미적 부담 없이, 문단과 유사한 구 또는 상호층위 요소에 대한 익명 전달체로 기능하는 임의적 성분-층위 단위를 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含文件中任何隨機組合性層次的單元，匿名收容類似一個段落、但不包含段落語義的字詞或中間層元素。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">任意の部分的テキスト単位を示す。特定の意味はなくとも、段落に相当する、 句レベル・挿入レベルの単位として無名単位になる。</desc>
-  <desc versionDate="2009-10-05" xml:lang="fr">contient une unité de texte quelconque, de niveau "composant", faisant office de contenant anonyme pour une expression ou des éléments de niveau intermédiaire, analogue à un paragraphe mais sans sa portée sémantique.</desc>
+  <desc versionDate="2009-10-05" xml:lang="fr">contient une unité de texte quelconque, de niveau <q>composant</q>, faisant office de contenant anonyme pour une expression ou des éléments de niveau intermédiaire, analogue à un paragraphe mais sans sa portée sémantique.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene cualquier unidad textual a nivel de componente que actua como un contenedor anónimo de sintagmas o de elementos de internivel similares al párrafo pero sin la carga semántica de este último.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene una qualsiasi unità testuale a livello di componente che funge da contenitore anonimo di sintagmi o elementi interlivello simili al paragrafo ma senza il bagaglio semantico di quest'ultimo</desc>
   <classes>
@@ -29,15 +23,18 @@
     <memberOf key="att.declaring"/>
     <memberOf key="att.fragmentable"/>
     <memberOf key="att.written"/>
+    <memberOf key="att.cmc"/>
   </classes>
   <content>
     <macroRef key="macro.abContent"/>
   </content>
   <constraintSpec ident="abstractModel-structure-ab-in-l-or-lg" scheme="schematron">
     <constraint>
-      <sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )">
-        Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.
-      </sch:report>
+      <sch:rule context="tei:ab">
+        <sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )">
+          Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.
+        </sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
