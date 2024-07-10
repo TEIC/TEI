@@ -681,7 +681,8 @@ to mark any technical term, thus:
       replacement for the content of the <gi>choice</gi> element, one
       and only one of the element pairs <gi>sic</gi> and
       <gi>corr</gi>, <gi>orig</gi> and <gi>reg</gi>, or
-      <gi>abbr</gi> and <gi>expan</gi> is allowed.
+      <gi>abbr</gi> and <gi>expan</gi> is allowed, in each case only
+      in the order specified.
       <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#NONE">
         <content>
           <alternate>
@@ -700,11 +701,41 @@ to mark any technical term, thus:
           </alternate>
         </content>
       </egXML>
-      In the above example, the alternation of element pairs must be encoded in the order specified (i.e. <gi>sic</gi> and then <gi>corr</gi>). This next example, which might
-        be imagined as a clean replacement for the content of the <gi>person</gi>
-        element, declares that the element must contain one <gi>persName</gi> element,
-        either both <gi>birth</gi> and <gi>death</gi> elements (in that order) or a single
-        <gi>floruit</gi> element, and one <gi>note</gi> element in any order:
+      In the above example, the alternation of element pairs must be
+      encoded in the order specified (i.e. <gi>sic</gi> and then
+      <gi>corr</gi>). In the next example, which also might be
+      imagined as a clean replacement for the content of the
+      <gi>choice</gi> element, this restriction is removed. That is,
+      one and only one of the element pairs <gi>sic</gi> and
+      <gi>corr</gi>, <gi>orig</gi> and <gi>reg</gi>, or <gi>abbr</gi>
+      and <gi>expan</gi> is allowed, but in each case the members
+      of the pair may occur in either order.
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#NONE">
+        <content>
+          <alternate>
+            <interleave>
+              <elementRef key="sic"/>
+              <elementRef key="corr"/>
+            </interleave>
+            <interleave>
+              <elementRef key="orig"/>
+              <elementRef key="reg"/>
+            </interleave>
+            <interleave>
+              <elementRef key="abbr"/>
+              <elementRef key="expan"/>
+            </interleave>
+          </alternate>
+        </content>
+      </egXML>
+      </p>
+      <p>This next example, which might be imagined as a
+      clean replacement for the content of the <gi>person</gi>
+      element, declares that the element must contain one
+      <gi>persName</gi> element, either both <gi>birth</gi> and
+      <gi>death</gi> elements (in that order) or a single
+      <gi>floruit</gi> element, and one <gi>note</gi> element in any
+      order:
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#NONE">
           <content>
             <interleave>
