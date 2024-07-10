@@ -183,8 +183,10 @@ $Id$
               if you really want a newline at the end, follow it with U+00A0.
             </desc>
             <constraint>
-              <sch:report test="matches( .//text()[last()], '&#x0A;\s*$')">trailing newline not allowed</sch:report>
-              <sch:report test="matches( .//text()[1],      '^\s*&#x0A;')">leading newline not allowed</sch:report>
+	      <sch:rule context="tei:eg">
+		<sch:report test="matches( .//text()[last()], '&#x0A;\s*$')">trailing newline not allowed</sch:report>
+		<sch:report test="matches( .//text()[1],      '^\s*&#x0A;')">leading newline not allowed</sch:report>
+	      </sch:rule>
             </constraint>
           </constraintSpec>
         </elementSpec>
@@ -625,10 +627,12 @@ $Id$
           <attList>
             <attDef ident="module" mode="replace">
               <valList type="closed" mode="add">
+		<!-- I daresay this should be a generated list —Syd, 2022-04-24 -->
                 <valItem ident="tei"/>
                 <valItem ident="core"/>
                 <valItem ident="analysis"/>
                 <valItem ident="certainty"/>
+                <valItem ident="cmc"/>
                 <valItem ident="corpus"/>
                 <valItem ident="dictionaries"/>
                 <valItem ident="drama"/>
@@ -714,9 +718,9 @@ $Id$
         <elementSpec mode="change" ident="TEI">
           <constraintSpec ident="must-have-attglobal" scheme="schematron" mode="add">
             <constraint>
-              <rule context="tei:elementSpec[not(@mode)]" xmlns="http://purl.oclc.org/dsdl/schematron">
-                <assert test="tei:classes/tei:memberOf[@key='att.global']">Error: TEI element <value-of select="@ident"/> must be member of att.global class</assert>
-              </rule>
+              <sch:rule context="tei:elementSpec[not(@mode)]">
+                <sch:assert test="tei:classes/tei:memberOf[@key='att.global']">Error: TEI element <sch:value-of select="@ident"/> must be member of att.global class</sch:assert>
+              </sch:rule>
             </constraint>
           </constraintSpec>
         </elementSpec>
@@ -724,14 +728,14 @@ $Id$
         <elementSpec ident="remarks" mode="change">          
           <constraintSpec ident="only-one-remark-per-lang" scheme="schematron" mode="add">
             <constraint>
-              <rule context="tei:remarks[@xml:lang]" xmlns="http://purl.oclc.org/dsdl/schematron">
-                <let name="langVal" value="@xml:lang"/>
-                <assert test="not(following-sibling::tei:remarks[@xml:lang=$langVal])">
-                  Error: There should only be one <value-of select="@ident"/> element per 
-                  language. Merge the contents of multiple <value-of select="@ident"/> elements
+              <sch:rule context="tei:remarks[@xml:lang]">
+                <sch:let name="langVal" value="@xml:lang"/>
+                <sch:assert test="not(following-sibling::tei:remarks[@xml:lang=$langVal])">
+                  Error: There should only be one <sch:value-of select="@ident"/> element per 
+                  language. Merge the contents of multiple <sch:value-of select="@ident"/> elements
                   using separate p elements.
-                </assert>
-              </rule>
+                </sch:assert>
+              </sch:rule>
             </constraint>
           </constraintSpec>
         </elementSpec>
@@ -740,7 +744,9 @@ $Id$
 	<elementSpec ident="altIdent" module="tagdocs" mode="change">
 	  <constraintSpec scheme="schematron" ident="restricted-altIdent-placement">
 	    <constraint>
-	      <sch:assert test="parent::tei:elementSpec|parent::tei:attDef|parent::tei:valItem">The &lt;altIdent> element should only be used as a child of &lt;elementSpec>, &lt;attDef>, or &lt;valItem>.</sch:assert>
+	      <sch:rule context="tei:altIdent">
+		<sch:assert test="parent::tei:elementSpec|parent::tei:attDef|parent::tei:valItem">The &lt;altIdent> element should only be used as a child of &lt;elementSpec>, &lt;attDef>, or &lt;valItem>.</sch:assert>
+	      </sch:rule>
 	    </constraint>
 	  </constraintSpec>
 	</elementSpec>
