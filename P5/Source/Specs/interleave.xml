@@ -23,18 +23,31 @@
       <content>
         <interleave>
           <elementRef key="persName"/>
-          <elementRef key="note" minOccurs="0"/>
           <alternate minOccurs="0">
               <elementRef key="placeName"/>
               <elementRef key="location"/>
           </alternate>
+          <elementRef key="note" minOccurs="0"/>
         </interleave>
       </content>
     </egXML>
     <p>This example describes a content model that consists of a
-    mandatory <gi>persName</gi> element, an optional <gi>note</gi>
-    element, and, optionally, one and only one of <gi>placeName</gi>
-    or <gi>location</gi> in any order.</p>
+    mandatory <gi>persName</gi> element, zero or one of either
+    <gi>placeName</gi> or <gi>location</gi>, and an optional
+    <gi>note</gi> element, in any order.</p>
+    <!-- <p>To express this content model in the DTD language one might use
+    <eg xml:space="preserve"><![CDATA[ (   persName
+ | ( persName, note )
+ | ( persName, ( placeName | location ) ) 
+ | ( note, persName )
+ | ( ( placeName | location ), persName )
+ | ( persName, note, ( placeName | location ) )
+ | ( persName, ( placeName | location ), note )
+ | ( note, persName, ( placeName | location ) )
+ | ( note, ( placeName | location ), persName )
+ | ( ( placeName | location ), note, persName )
+ | ( ( placeName | location ), persName, note )
+ )]]></eg></p> -->
   </exemplum>
   <listRef>
     <ptr target="#DEFCON" type="div2"/>
