@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0"
      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-    
      xmlns:xi="http://www.w3.org/2001/XInclude"
      xmlns:s="http://www.ascc.net/xml/schematron"
      xml:lang="en"
@@ -3454,8 +3453,11 @@ which should be supported by a more detailed description using the
           <elementSpec ident="date" mode="change" module="core">
             <constraintSpec scheme="schematron" ident="dates">
               <constraint>
-                <sch:assert test="@when or (@notAfter and @notBefore) or    (@from and @to)">
-                You must provide either @when or @to/@from, or @notAfter/@notBefore.</sch:assert>
+		<sch:rule context="tei:date">
+                  <sch:assert test="@when  or  (@notAfter and @notBefore)  or  (@from and @to)">
+                    You must provide either @when or @to/@from, or @notAfter/@notBefore.
+		  </sch:assert>
+		</sch:rule>
               </constraint>
             </constraintSpec>
           </elementSpec>

@@ -53,30 +53,34 @@
 
   <xsl:variable name="revisionDesc">
     <revisionDesc>
+      <change who="#sbauman.emt" when="2024-04-12">
+	Added <gi>sch:rule</gi> elements PRN to avoid new warning
+	about contextless Schematron.
+      </change>
       <change who="#sbauman.emt" when="2023-06-06">
-	<list>
-	  <item>Remove the <ident>altIdent-only-NCName</ident>
-	  constraint, as it is no longer needed — the content of
-	  <gi>altIdent</gi> in P5 is now just <ident>xs:NCName</ident>.</item>
+        <list>
+          <item>Remove the <ident>altIdent-only-NCName</ident>
+          constraint, as it is no longer needed — the content of
+          <gi>altIdent</gi> in P5 is now just <ident>xs:NCName</ident>.</item>
           <item>update to use version 4.6.0 of P5</item>
-	  <item>Per <ref
-	  target="https://github.com/TEIC/TEI/issues/2285">TEI ticket
-	  #2285</ref> disallow <gi>altIdent</gi> as a direct child of
-	  <gi>classSpec</gi>, <gi>constraintSpec</gi>,
-	  <gi>dataSpec</gi>, <gi>macroSpec</gi>; thus leaving it as
-	  only available as a child of <gi>attDef</gi>,
-	  <gi>elementSpec</gi>, and <gi>valItem</gi>. In order to do
-	  this, remove <gi>altIdent</gi> from <name
-	  type="class">model.identSynonyms</name> (leaving that class
-	  with only <gi>gloss</gi> and <gi>equiv</gi>, i.e. the same
-	  as <name type="class">model.identEquiv</name>, sigh) and add
-	  it back to <gi>attDef</gi> and <gi>valItem</gi>.</item>
-	</list>
+          <item>Per <ref
+          target="https://github.com/TEIC/TEI/issues/2285">TEI ticket
+          #2285</ref> disallow <gi>altIdent</gi> as a direct child of
+          <gi>classSpec</gi>, <gi>constraintSpec</gi>,
+          <gi>dataSpec</gi>, <gi>macroSpec</gi>; thus leaving it as
+          only available as a child of <gi>attDef</gi>,
+          <gi>elementSpec</gi>, and <gi>valItem</gi>. In order to do
+          this, remove <gi>altIdent</gi> from <name
+          type="class">model.identSynonyms</name> (leaving that class
+          with only <gi>gloss</gi> and <gi>equiv</gi>, i.e. the same
+          as <name type="class">model.identEquiv</name>, sigh) and add
+          it back to <gi>attDef</gi> and <gi>valItem</gi>.</item>
+        </list>
       </change>
       <change who="#sbauman.emt" when="2023-04-04">
-	We will soon not allow more than 1 child of <gi>content</gi>,
-	so updated the content model of <gi>schemaSpec</gi> to have
-	only 1 child (in this case, <gi>sequence</gi>).
+        We will soon not allow more than 1 child of <gi>content</gi>,
+        so updated the content model of <gi>schemaSpec</gi> to have
+        only 1 child (in this case, <gi>sequence</gi>).
       </change>
       <change who="#sbauman.emt" when="2022-06-25">
         Since <ref
@@ -196,15 +200,15 @@
         </list>
       </change>
       <change who="#sbauman.emt" when="2015-06-19">
-	Fix bug in <name>only-1-per</name> contraint (which was added
-	674 days ago — why did this bug last even 1 day?)
+        Fix bug in <name>only-1-per</name> contraint (which was added
+        674 days ago — why did this bug last even 1 day?)
       </change>
       <change who="#sbauman.emt" when="2015-01-24">
-	Changes for <soCalled>Pure ODD</soCalled>:
-	<list>
+        Changes for <soCalled>Pure ODD</soCalled>:
+        <list>
           <item>constrain content of <gi>content</gi></item>
           <item>delete <ident type="class">att.global.rendition</ident> and <ident
-	  type="class" >att.global.responsibility</ident></item>
+          type="class" >att.global.responsibility</ident></item>
           <item>delete <att>allowText</att> (as I think TEI has decided to go with
           <gi>textNode</gi> instead)</item>
           <item>require <att>key</att> of <gi>elementRef</gi></item>
@@ -214,8 +218,8 @@
       </list>
       </change>
       <change who="#sbauman.emt" when="2015-01-23">
-	Changes for <soCalled>Pure ODD</soCalled>:
-	<list>
+        Changes for <soCalled>Pure ODD</soCalled>:
+        <list>
           <item>constrain <att>key</att> of <gi>classRef</gi>, <gi>elementRef</gi>, and
           <gi>macroRef</gi></item>
           <item>constrain <att>include</att> and <att>except</att> of <gi>classRef</gi>, also
@@ -235,9 +239,9 @@
         </list>
       </change>
       <change who="#sbauman.emt" when="2013-08-14">
-	Add constraint <name>only-1-per</name>, which warns user iff
-	there are more than 1 <gi>elementSpec</gi> with the same
-	<att>ident</att>
+        Add constraint <name>only-1-per</name>, which warns user iff
+        there are more than 1 <gi>elementSpec</gi> with the same
+        <att>ident</att>
       </change>
       <change who="#sbauman.emt" when="2013-05-09">
         <list>
@@ -262,11 +266,11 @@
         </list>
       </change>
       <change who="#sbauman.emt" when="2013-03-09">
-	Added <gi>sch:pattern</gi> to list of elements allowed inside
-	<gi>constraint</gi>.
+        Added <gi>sch:pattern</gi> to list of elements allowed inside
+        <gi>constraint</gi>.
       </change>
       <change who="#sbauman.emt" when="2012-06-17">
-	Remove the new <gi>notatedMusic</gi> and <gi>gb</gi> elments.
+        Remove the new <gi>notatedMusic</gi> and <gi>gb</gi> elments.
       </change>
       <change who="#sbauman.emt" when="2011-09-20">
         <list>
@@ -277,7 +281,7 @@
         </list>
       </change>
       <change who="#sbauman.emt" when="2011-09-05">
-	Test that required elements are not removed.
+        Test that required elements are not removed.
       </change>
       <change who="#sbauman.emt" when="2011-09-04">
         <list>
@@ -288,8 +292,8 @@
         </list>
       </change>
       <change who="#sbauman.emt" when="2011-09">
-	Beefed up prose, then corrections per Julia, including
-	changing name of language (and thus <att>prefix</att>).
+        Beefed up prose, then corrections per Julia, including
+        changing name of language (and thus <att>prefix</att>).
       </change>
       <change who="#sbauman.emt" when="2011-09-01">
         <list>
@@ -313,18 +317,18 @@
         </list>
       </change>
       <change who="#sbauman.emt" when="2011-08-29">
-	Constrain <att>ident</att> of <gi>classSpec</gi>.
+        Constrain <att>ident</att> of <gi>classSpec</gi>.
       </change>
       <change who="#sbauman.emt" when="2011-08-27">
-	During workshop:
-	<list>
+        During workshop:
+        <list>
           <item>constrain <att>start</att> of <gi>schemaSpec</gi></item>
           <item>constrain <att>key</att> of <gi>elmentRef</gi></item>
           <item>improve remakrs of <gi>constraint</gi> so that it correctly reflects that we
           only permit ISO Schematron</item>
           <item>constrain content of <gi>altIdent</gi>, unless it is a child of
           <gi>valItem</gi></item>
-	</list>
+        </list>
       </change>
       <change who="#sbauman.emt" when="2011-08-25">
         <list>
@@ -746,28 +750,37 @@
 
               <elementSpec module="tagdocs" ident="schemaSpec" mode="change">
                 <content>
-		  <sequence>
+                  <sequence>
                     <elementRef key="gloss" minOccurs="0" maxOccurs="1"/>
                     <elementRef key="desc"  minOccurs="1" maxOccurs="1"/>
                     <alternate minOccurs="0" maxOccurs="unbounded">
                       <classRef key="model.oddRef"/>
                       <classRef key="model.oddDecl"/>
                     </alternate>
-		  </sequence>
+                  </sequence>
                 </content>
                 <constraintSpec scheme="schematron" ident="required-modules">
                   <gloss>required modules</gloss>
                   <constraint>
-                    <sch:assert test="
-                      ( tei:moduleRef[ @key eq 'tei'] or tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'tei'] ] )                      
-                      and
-                      ( tei:moduleRef[ @key eq 'core'] or tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'core'] ] )                      
-                      and
-                      ( tei:moduleRef[ @key eq 'header'] or tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'header'] ] )                      
-                      and
-                      ( tei:moduleRef[ @key eq 'textstructure'] or tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'textstructure'] ] )                      
-                      "> missing one or more of the required modules (tei, core, header,
-                      textstructure). </sch:assert>
+                    <sch:rule context="tei:schemaSpec">
+                      <sch:assert test="
+                        ( tei:moduleRef[ @key eq 'tei']
+                          or
+                          tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'tei'] ] )                      
+                        and
+                          ( tei:moduleRef[ @key eq 'core']
+                          or
+                          tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'core'] ] )                      
+                        and
+                          ( tei:moduleRef[ @key eq 'header']
+                          or
+                          tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'header'] ] )                      
+                        and
+                          ( tei:moduleRef[ @key eq 'textstructure']
+                          or
+                          tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'textstructure'] ] )                      
+                      "> missing one or more of the required modules (tei, core, header, textstructure). </sch:assert>
+                    </sch:rule>
                   </constraint>
                 </constraintSpec>
                 <constraintSpec scheme="schematron" ident="no-outside-specs">
@@ -1122,25 +1135,25 @@
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="attDef" mode="change">
-		<xsl:comment> adding altIdent to content model because it was removed from model.identSynonyms </xsl:comment>
-		<content>
-		  <sequence>      
-		    <alternate minOccurs="0" maxOccurs="unbounded">
-		      <elementRef key="altIdent"/>
-		      <classRef key="model.identSynonyms"/>
-		      <classRef key="model.descLike"/>
-		    </alternate>
-		    <elementRef key="datatype" minOccurs="0"/>
-		    <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
-		    <elementRef key="defaultVal" minOccurs="0"/>
-		    <alternate minOccurs="0">
-		      <elementRef key="valList"/>     
-		      <elementRef key="valDesc" minOccurs="1" maxOccurs="unbounded"/>
-		    </alternate>
-		    <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
-		    <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
-		  </sequence>
-		</content>
+                <xsl:comment> adding altIdent to content model because it was removed from model.identSynonyms </xsl:comment>
+                <content>
+                  <sequence>      
+                    <alternate minOccurs="0" maxOccurs="unbounded">
+                      <elementRef key="altIdent"/>
+                      <classRef key="model.identSynonyms"/>
+                      <classRef key="model.descLike"/>
+                    </alternate>
+                    <elementRef key="datatype" minOccurs="0"/>
+                    <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
+                    <elementRef key="defaultVal" minOccurs="0"/>
+                    <alternate minOccurs="0">
+                      <elementRef key="valList"/>     
+                      <elementRef key="valDesc" minOccurs="1" maxOccurs="unbounded"/>
+                    </alternate>
+                    <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
+                    <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
+                  </sequence>
+                </content>
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="valList" mode="change">
@@ -1150,25 +1163,25 @@
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="valItem" mode="change">
-		<xsl:comment> adding altIdent to content model because it was removed from model.identSynonyms </xsl:comment>
-		<content>
-		  <sequence>
-		    <alternate minOccurs="0" maxOccurs="unbounded">
-		      <classRef key="model.identSynonyms"/>
-		      <elementRef key="altIdent"/>
-		    </alternate>
-		    <sequence minOccurs="0">
-		      <classRef key="model.descLike" minOccurs="1" maxOccurs="unbounded"/>
-		      <sequence minOccurs="0" maxOccurs="unbounded">
-			<classRef key="model.identSynonyms" minOccurs="1" maxOccurs="1"/>
-			<classRef key="model.descLike" minOccurs="0" maxOccurs="unbounded"/>
-		      </sequence>
-		      <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
-		    </sequence>
-		    <elementRef key="paramList" minOccurs="0" maxOccurs="1"/>
-		  </sequence>
-		</content>
-	      </elementSpec>
+                <xsl:comment> adding altIdent to content model because it was removed from model.identSynonyms </xsl:comment>
+                <content>
+                  <sequence>
+                    <alternate minOccurs="0" maxOccurs="unbounded">
+                      <classRef key="model.identSynonyms"/>
+                      <elementRef key="altIdent"/>
+                    </alternate>
+                    <sequence minOccurs="0">
+                      <classRef key="model.descLike" minOccurs="1" maxOccurs="unbounded"/>
+                      <sequence minOccurs="0" maxOccurs="unbounded">
+                        <classRef key="model.identSynonyms" minOccurs="1" maxOccurs="1"/>
+                        <classRef key="model.descLike" minOccurs="0" maxOccurs="unbounded"/>
+                      </sequence>
+                      <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
+                    </sequence>
+                    <elementRef key="paramList" minOccurs="0" maxOccurs="1"/>
+                  </sequence>
+                </content>
+              </elementSpec>
 
               <elementSpec module="tagdocs" ident="memberOf" mode="change">
                 <attList>
@@ -1204,43 +1217,48 @@
                 </content>
                 <constraintSpec scheme="schematron" ident="module-except-when-add">
                   <constraint>
-                    <sch:assert test="@mode">in a customization ODD, the mode= attribute of
-                      ＜elementSpec＞ should be specified</sch:assert>
-                    <sch:report
-                      test="not( @module )  and  not( @mode='add')"
-                      >the module= attribute of ＜elementSpec＞ must be specified anytime the mode= is
-                      not 'add'</sch:report>
+                    <sch:rule context="tei:elementSpec">
+                      <sch:assert test="@mode">
+                        in a customization ODD, the mode= attribute of ＜elementSpec＞ should be specified
+                      </sch:assert>
+                      <sch:report test="not( @module )  and  not( @mode='add')">
+                        the module= attribute of ＜elementSpec＞ must be specified anytime the mode= is not 'add'
+                      </sch:report>
+                    </sch:rule>
                   </constraint>
                 </constraintSpec>
                 <constraintSpec scheme="schematron" ident="only-1-per">
                   <constraint>
-                    <sch:report test=
-                      "//tei:elementSpec[ @ident eq current()/@ident  and  not( . is current() ) ]"
+                    <sch:rule context="tei:elementSpec">
+                      <sch:report test="//tei:elementSpec[ @ident eq current()/@ident  and  not( . is current() ) ]"
                       >Current ODD processors will not correctly handle more than one ＜elementSpec＞ with the same @ident</sch:report>
+                    </sch:rule>
                   </constraint>
                 </constraintSpec>
                 <constraintSpec scheme="schematron" ident="dont-delete-required">
                   <constraint>
-                    <sch:report test="@mode='delete' and @ident='TEI'">Removing ＜TEI＞ from your
-                      schema guarantees it is not TEI conformant</sch:report>
-                    <sch:report test="@mode='delete' and @ident='teiHeader'">Removing ＜teiHeader＞
-                      from your schema guarantees it is not TEI conformant</sch:report>
-                    <sch:report test="@mode='delete' and @ident='fileDesc'">Removing ＜fileDesc＞ from
-                      your schema guarantees it is not TEI conformant</sch:report>
-                    <sch:report test="@mode='delete' and @ident='titleStmt'">Removing ＜titleStmt＞
-                      from your schema guarantees it is not TEI conformant</sch:report>
-                    <sch:report test="@mode='delete' and @ident='title'">Removing ＜title＞ from your
-                      schema guarantees it is not TEI conformant</sch:report>
-                    <sch:report test="@mode='delete' and @ident='publicationStmt'">Removing
-                      ＜publicationStmt＞ from your schema guarantees it is not TEI
-                      conformant</sch:report>
-                    <sch:report test="@mode='delete' and @ident='sourceDesc'">Removing ＜sourceDesc＞
-                      from your schema guarantees it is not TEI conformant</sch:report>
+                    <sch:rule context="tei:elementSpec">
+                      <sch:report test="@mode='delete' and @ident='TEI'">Removing ＜TEI＞ from your
+                        schema guarantees it is not TEI conformant</sch:report>
+                      <sch:report test="@mode='delete' and @ident='teiHeader'">Removing ＜teiHeader＞
+                        from your schema guarantees it is not TEI conformant</sch:report>
+                      <sch:report test="@mode='delete' and @ident='fileDesc'">Removing ＜fileDesc＞ from
+                        your schema guarantees it is not TEI conformant</sch:report>
+                      <sch:report test="@mode='delete' and @ident='titleStmt'">Removing ＜titleStmt＞
+                        from your schema guarantees it is not TEI conformant</sch:report>
+                      <sch:report test="@mode='delete' and @ident='title'">Removing ＜title＞ from your
+                        schema guarantees it is not TEI conformant</sch:report>
+                      <sch:report test="@mode='delete' and @ident='publicationStmt'">Removing
+                        ＜publicationStmt＞ from your schema guarantees it is not TEI
+                        conformant</sch:report>
+                      <sch:report test="@mode='delete' and @ident='sourceDesc'">Removing ＜sourceDesc＞
+                        from your schema guarantees it is not TEI conformant</sch:report>
+		    </sch:rule>
                   </constraint>
                 </constraintSpec>
                 <constraintSpec scheme="schematron" ident="content_when_adding">
                   <constraint>
-                    <sch:rule context="tei:elementSpec[@mode = ('add','replace')]">
+                    <sch:rule context="tei:elementSpec[ @mode = ('add','replace') ]">
                       <sch:assert test="tei:content">When adding a new element (whether replacing an old one or not), a content model must be specified; but this ＜elementSpec＞ does not have a ＜content＞ child.</sch:assert>
                     </sch:rule>
                   </constraint>
@@ -1362,9 +1380,9 @@
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="altIdent" mode="change">
-		<classes>
-		  <memberOf key="model.identSynonyms" mode="delete"/>
-		</classes>
+                <classes>
+                  <memberOf key="model.identSynonyms" mode="delete"/>
+                </classes>
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="gi" mode="change">
@@ -1514,17 +1532,16 @@
                   <attDef ident="xml:id" mode="change" ns="http://www.w3.org/XML/1998/namespace">
                     <constraintSpec scheme="schematron" ident="unique_xmlIDs">
                       <constraint>
-                        <sch:let name="myID" value="normalize-space(.)"/>
-                        <sch:report test="../(ancestor::*|preceding::*)/@xml:id[ normalize-space(.) eq $myID ]"
-                          >The @xml:id "<sch:value-of select="."
-                          />" on ＜<sch:value-of select="name(..)"
-                          />＞ duplicates an @xml:id found earlier in the document</sch:report>
+			<sch:rule context="@xml:id">
+                          <sch:let name="myID" value="normalize-space(.)"/>
+                          <sch:report test="../(ancestor::*|preceding::*)/@xml:id[ normalize-space(.) eq $myID ]"
+                            >The @xml:id "<sch:value-of select="."/>" on ＜<sch:value-of select="name(..)"/>＞ duplicates an @xml:id found earlier in the document</sch:report>
+			</sch:rule>
                       </constraint>
                     </constraintSpec>
                   </attDef>
                 </attList>
               </classSpec>
-
 
               <classSpec ident="model.entryPart.top" module="tei" mode="delete" type="model"/>
               <classSpec ident="model.msItemPart" module="tei" mode="delete" type="model"/>

@@ -60,11 +60,18 @@
       <div>
         <head>A Test Schema</head>
         <p>Here is the introduction to your document</p>
+        <specGrp xml:id="limit_attrs_on_elementRef">
+          <elementRef key="p" minOccurs="2" maxOccurs="4">
+            <!-- Should be flagged as an error: @m[ia][nx]Occurs not allowed here -->
+          </elementRef>
+          <elementRef key="charName" source="tei:3.5.0"/>
+        </specGrp>
         <p>Here is the schema:</p>
         <schemaSpec ident="detest" start="TEI">
           <moduleRef key="header"/>
           <moduleRef key="core"/>
           <moduleRef key="tei"/>
+	  <moduleRef key="cmc"/>
           <moduleRef key="textstructure"/>
           <moduleRef key="analysis"/>
           <moduleRef key="textcrit"/>
@@ -533,6 +540,23 @@
                 <ptr type="valid" target="#ptr_OK_but_nested_listRef_NOT_valid"/>
               </listRef>
             </listRef>
+          </elementSpec>
+
+          <specGrpRef target="#limit_attrs_on_elementRef"/>
+          <elementSpec ident="test_elementRef_attr_constraints" mode="add">
+            <desc xml:lang="en" versionDate="2024-05-02">yet another completely spurious element made up for testing purposes only</desc>
+            <classes>
+              <memberOf key="att.global"/>
+              <memberOf key="model.pPart.data"/>
+            </classes>
+            <content>
+              <alternate>
+                <elementRef key="idno" source="tei:3.5.0">
+                  <!-- Should be flagged as an error: @source not allowed here -->
+                </elementRef>
+                <elementRef key="num" minOccurs="2" maxOccurs="5"/>
+              </alternate>
+            </content>
           </elementSpec>
 
         </schemaSpec>
