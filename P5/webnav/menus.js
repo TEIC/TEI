@@ -34,6 +34,6 @@ function setSearch(target) {
   }
 }
 const lang = window.location.pathname.replace(/.*\/([^\/]+)\/html.*/, "$1");
-fetch("https://dev.tei-c.org/data/menus.json")
+fetch("https://tei-c.org/data/menus.json")
   .then(response => response.json())
   .then(data => document.querySelector("#TEIMenu>ul").innerHTML = list(data, lang));
