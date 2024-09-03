@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<dataSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" ident="teidata.version.calendar">
+  <desc versionDate="2024-05-21" xml:lang="en">defines the range of values which may be used as a calendar-based version number per <ptr target="#BIB_calVer"/>.</desc>
+  <content>
+    <alternate>
+      <!--
+          CalVer components expressed as W3C regular expressions:
+          YYYY = [0-9]{4}
+          YY   = [1-9][0-9][0-9]?[0-9]?
+          0Y   = (: mis defined on specification page? :) (: unused on spec page :)
+          MM   = 1[012]?|2-9
+          0M   = 0[1-9]|1[0-2]
+          WW   = 1-9|[1-4][0-9]|5[0-3] (: unused on spec page :)
+          0W   = 0[1-9]|[2-4][0-9]|5[0-3] (: unused on spec page :)
+          DD   = 1-9|[12][0-9]|3[01]
+          0D   = 0[1-9]|[12][0-9]|3[01]
+      -->
+      <!-- ISO 8601 YYYY, YYYY-MM, YYYY-MM-DD, YYYYY-MM-DDTHH, YYYYY-MM-DDTHH:MM, YYYYY-MM-DDTHH:MM:SS, or YYYYY-MM-DDTHH:MM:SS.FRAC  -->
+      <dataRef name="string" restriction="[0-9]{4}(-[0-9]{2}(-[0-9]{2}(T[0-9]{2}(:[0-9]{2}([0-9]{2}(\.([1-9][0-9]*))?)?)?)?)?)?"/>
+      <!-- Ubuntu = YY.0M.MICRO -->
+      <dataRef name="string" restriction="[1-9][0-9][0-9]?[0-9]?\.(0[1-9]|1[0-2])(\.[1-9][0-9]*)?"/>
+      <!-- Twisted = YY.MM.MICRO -->
+      <dataRef name="string" restriction="[1-9][0-9][0-9]?[0-9]?\.(1[012]?|[2-9])(\.[1-9][0-9]*)?"/>
+      <!-- youtube-dl = YYYY.0M.0D -->
+      <dataRef name="string" restriction="[0-9]{4}\.0[1-9]|1[0-2]\.0[1-9]|[12][0-9]|3[01]"/>
+      <!-- The IANA/Olson timezone database = YYYY[a-z]+ -->
+      <dataRef name="string" restriction="[0-9]{4}[a-z]+"/>
+      <!-- Teradata = YY.MM.MINOR.MICRO -->
+      <dataRef name="string" restriction="[1-9][0-9][0-9]?[0-9]?\.(1[012]?|2-9)\.([1-9][0-9]*).([1-9][0-9]*)"/>
+      <!-- boltons = YY.MINOR.MICRO -->
+      <dataRef name="string" restriction="[1-9][0-9][0-9]?[0-9]?\.([1-9][0-9]*).([1-9][0-9]*)"/>
+      <!-- certifi = YYYY.MM.DD -->
+      <dataRef name="string" restriction="[0-9]{4}\.(1[012]?|2-9)\.(1-9|[12][0-9]|3[01])"/>
+      <!-- fusefs-ntfs = YYYY.MM.DD_MICRO -->
+      <dataRef name="string" restriction="[0-9]{4}\.(1[012]?|2-9)\.(1-9|[12][0-9]|3[01])_([1-9][0-9]*)"/>
+      <!-- LibreOffice = YY.MM -->
+      <dataRef name="string" restriction="[1-9][0-9][0-9]?[0-9]?\.(1[012]?|2-9)"/>
+      <!-- OpenSCAD = YYYY.0M -->
+      <dataRef name="string" restriction="[0-9]{4}\.(0[1-9]|1[0-2])"/>
+      <!-- pip = YY.MINOR.MICRO -->
+      <dataRef name="string" restriction="[1-9][0-9][0-9]?[0-9]?\.([1-9][0-9]*)\.([1-9][0-9]*)"/>
+      <!-- PyCharm = YYYY.MINOR.MICRO -->
+      <dataRef name="string" restriction="[0-9]{4}\.([1-9][0-9]*)\.([1-9][0-9]*)"/>
+      <!-- Stripe’s API = YYYY-MM-DD -->
+      <dataRef name="string" restriction="[0-9]{4}\.(1[012]?|2-9)\.(1-9|[12][0-9]|3[01])"/>
+      <!-- Unity = YYYY.MINOR.MICRO -->
+      <dataRef name="string" restriction="[0-9]{4}\.([1-9][0-9]*)\.([1-9][0-9]*)"/>
+    </alternate>
+  </content>
+  <remarks versionDate="2012-06-17" xml:lang="en">
+    <p>Values of this datatype should follow the rules established by
+    the <ref target="#BIB_calVer">Calendar Versioning</ref>
+    convention, as of 2024-05-21.</p>
+  </remarks>
+</dataSpec>
