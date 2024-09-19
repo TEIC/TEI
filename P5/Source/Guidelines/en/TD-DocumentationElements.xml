@@ -837,8 +837,9 @@ to mark any technical term, thus:
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <constraintSpec ident="ref-or-key-or-name" scheme="schematron">
             <constraint>
+              <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
               <sch:rule context="tei:relation">
-                <sch:assert test="@ref or @key or @name">One of the attributes @name, @ref or @key must be supplied</sch:assert>
+                <sch:assert test="@ref or @key or @name">One of the attributes @name, @ref, or @key must be supplied</sch:assert>
               </sch:rule>
             </constraint>
           </constraintSpec>
@@ -858,15 +859,17 @@ to mark any technical term, thus:
           </constraintSpec>
         </egXML>
       </p>
-      <p>The constraints in the preceding example all related to attributes in the empty namespace, and the
-        Schematron rules did not therefore need to define a TEI namespace prefix. The Schematron language <gi
-          scheme="Schematron">ns</gi> element should be used to do this when a constraint needs to refer to a
-        TEI element, as in the following example, which models the constraint that a TEI <gi>div</gi> must
-        contain either no subdivisions or at least two of them:
+      <p>Note that the <q>tei:</q> prefix needs to be bound to the TEI
+      namespace using the Schematron language <gi
+      scheme="Schematron">ns</gi> element, but typically this only
+      needs to be done once. The following two examples are written
+      presuming that the namespace binding for <q>tei:</q> has occured
+      elsewhere. The first example models the constraint that a TEI
+      <gi>div</gi> must contain either no subdivisions or at least two
+      of them:
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <constraintSpec ident="subclauses" scheme="schematron">
             <constraint>
-              <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
               <sch:rule context="tei:div">
                 <sch:report test="count( tei:div ) eq 1">if it contains any subdivisions, a
                 division must contain at least two of them</sch:report>
@@ -874,19 +877,21 @@ to mark any technical term, thus:
             </constraint>
           </constraintSpec>
         </egXML>
-         Schematron rules are also useful where an application needs to enforce rules on attribute values, as
-        in the following examples which check that various types of <gi>title</gi> are provided:
+      The second example demonstrates that Schematron rules are also useful
+      where an application needs to enforce rules on attribute values,
+      in this case checking that various types of <gi>title</gi> are provided
+      in the TEI header:
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <constraintSpec ident="introtitle" scheme="schematron">
             <constraint>
-              <sch:rule context="tei:title">
+              <sch:rule context="tei:teiHeader">
                 <sch:assert test="tei:fileDesc/tei:titleStmt/tei:title[@type='introductory']"> an introductory component of the title is expected</sch:assert>
               </sch:rule>
             </constraint>
           </constraintSpec>
           <constraintSpec ident="maintitle" scheme="schematron">
             <constraint>
-              <sch:rule context="tei:title">
+              <sch:rule context="tei:teiHeader">
                 <sch:assert test="tei:fileDesc/tei:titleStmt/tei:title[@type='main']"> a main title must be supplied</sch:assert>
               </sch:rule>
             </constraint>
@@ -903,8 +908,8 @@ to mark any technical term, thus:
               <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
               <sch:pattern id="altTags">
                 <sch:rule context="tei:figure">
-                  <sch:report test="not(tei:figDesc or tei:head)"> You should provide information in a figure from
-                    which we can construct an alt attribute in HTML </sch:report>
+                  <sch:assert test="tei:figDesc or tei:head"> You should provide information in a figure from
+                    which we can construct an alt attribute in HTML </sch:assert>
                 </sch:rule>
               </sch:pattern>
             </constraint>
@@ -918,9 +923,8 @@ to mark any technical term, thus:
               <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
               <sch:pattern id="Tables">
                 <sch:rule context="tei:table">
-                  <sch:assert test="tei:head">A &lt;table> should have a caption, using a &lt;head>
-                    element</sch:assert>
-                  <sch:report test="parent::tei:body">Do not use tables to lay out the document body</sch:report>
+                  <sch:assert test="tei:head">A &lt;table> should have a caption, using a &lt;head> element</sch:assert>
+		  <sch:report test="parent::tei:body">Do not use tables to lay out the document body</sch:report>
                 </sch:rule>
               </sch:pattern>
             </constraint>
@@ -943,12 +947,13 @@ to mark any technical term, thus:
         customization that (among other things) adds and explains this
         value for use in validating their customization file. Thus
         using schemes other than those provided for by the TEI
-        (currently <val>schematron</val> and <val>isoschematron</val>)
-        may require somewhat more effort when creating a customization
-        file. Such private schemes will generally be even more
-        problematic on implementation of the constraints themselves,
-        as it may require siginficant programming work. The TEI only
-        provides this capability for the suggested values.</p>
+        (currently only <val>schematron</val>) may require somewhat
+        more effort when creating a customization file. Such private
+        schemes will generally be even more problematic on
+        implementation of the constraints themselves, as it may
+        require significant programming work. The TEI only provides
+        this capability for the suggested value
+        (<val>schematron</val>).</p>
     </div>
     <div type="div3" xml:id="TDATT">
       <head>Attribute List Specification</head>
