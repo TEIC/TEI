@@ -18,6 +18,22 @@
       <anyElement/>             <!-- typically <sch:ns> elements -->
     </sequence>
   </content>
+  <constraintSpec scheme="schematron" ident="one-constraintDecl-per-scheme">
+    <!-- Note: the “not a descendant of <egXML>” predicate on the
+         XPath defining $schemes is required for the P5 build process,
+         not for normal users. (In P5 build validity of <egXML>s are
+         tested by changing their namespace to TEI, so the tei: prefix
+         is not sufficient.) —Syd, 2024-09-19 -->
+    <constraint>
+      <sch:rule context="/*[ count( //tei:constraintDecl ) gt 1 ]">
+	<sch:let name="schemes" value="//tei:constraintDecl[ not(ancestor::*[local-name(.) eq 'egXML'] ) ]/@scheme"/>
+	<sch:let name="disctinct_schemes" value="distinct-values( $schemes )"/>
+	<sch:assert test="count( $schemes ) eq count( $disctinct_schemes )">
+          Each &lt;constraintDecl> element should have a @scheme attribute that is distinct from that of all the other &lt;constraintDecl>s.
+	</sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="scheme" usage="req">
       <desc versionDate="2023-03-09" xml:lang="en">supplies the name of the language to which the declarations herein apply</desc>
@@ -75,6 +91,6 @@
     </egXML>
   </exemplum>
   <listRef>
-    <ptr target="#?????"/>
+    <ptr target="#TDTAGCONS"/>
   </listRef>
 </elementSpec>
