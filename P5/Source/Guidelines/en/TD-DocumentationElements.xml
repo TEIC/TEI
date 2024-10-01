@@ -931,6 +931,22 @@ to mark any technical term, thus:
           </constraintSpec>
         </egXML>
       </p>
+      <p>Schematron schemas can use a variety of query languages for its expressions, such as XSLT or XQuery.
+        To declare which query language binding is in use, you may add a <gi>constraintDecl</gi> to 
+        <gi>encodingDesc</gi> or <gi>schemaSpec</gi>.
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/constraintDecl.xml"/>  
+        <specList><specDesc key="constraintDecl" atts="scheme queryBinding"/></specList>
+      </p>
+      <p>This element can also be used to provide additional declarations pertaining to formal constraints
+      expressed <gi>constraintSpec</gi> elements, such as the declaration of a namespace and its prefix.</p>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <encodingDesc>
+            <p>Some information about the encoding</p>
+            <constraintDecl scheme="schematron" queryBinding="xslt3">
+              <sch:ns prefix="wwp" uri="http://www.wwp.northeastern.edu/ns/textbase"/>
+            </constraintDecl>
+          </encodingDesc>
+        </egXML>
       <p>Constraints can be expressed using any convenient language.
       The following example uses a pattern matching language called
       SPITBOL to express the requirement that title and author should
