@@ -15,7 +15,7 @@
         <classRef key="model.identEquiv"/>
         <classRef key="model.descLike"/>
       </alternate>
-      <anyElement/>             <!-- typically <sch:ns> elements -->
+      <anyElement minOccurs="0" maxOccurs="unbounded"/>             <!-- typically <sch:ns> elements -->
     </sequence>
   </content>
   <constraintSpec scheme="schematron" ident="one-constraintDecl-per-scheme">
@@ -26,11 +26,11 @@
          is not sufficient.) —Syd, 2024-09-19 -->
     <constraint>
       <sch:rule context="/*[ count( //tei:constraintDecl ) gt 1 ]">
-	<sch:let name="schemes" value="//tei:constraintDecl[ not(ancestor::*[local-name(.) eq 'egXML'] ) ]/@scheme"/>
-	<sch:let name="disctinct_schemes" value="distinct-values( $schemes )"/>
-	<sch:assert test="count( $schemes ) eq count( $disctinct_schemes )">
+        <sch:let name="schemes" value="//tei:constraintDecl[ not(ancestor::*[local-name(.) eq 'egXML'] ) ]/@scheme"/>
+        <sch:let name="disctinct_schemes" value="distinct-values( $schemes )"/>
+        <sch:assert test="count( $schemes ) eq count( $disctinct_schemes )">
           Each &lt;constraintDecl> element should have a @scheme attribute that is distinct from that of all the other &lt;constraintDecl>s.
-	</sch:assert>
+        </sch:assert>
       </sch:rule>
     </constraint>
   </constraintSpec>
