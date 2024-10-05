@@ -82,7 +82,7 @@ html-web.stamp:  check.stamp p5.xml  Utilities/guidelines.xsl.model
 	@# for each language, create a subdirectory and pre-populate it with CSS, source, and web navigation stuff
 	for i in $(ALLLANGUAGES) ;do \
 		mkdir -p Guidelines-web/$$i/html; \
-		cp odd.css guidelines.css guidelines-print.css Guidelines-web/$$i/html; \
+		cp odd.css guidelines.css guidelines-print.css teic.css Guidelines-web/$$i/html; \
 		(cd Source/Guidelines/${INPUTLANGUAGE}; tar --exclude .svn -c -f - Images) | (cd Guidelines-web/$$i/html; tar xf - );\
 		(cd webnav; tar --exclude .svn -c -f - .) | (cd Guidelines-web/$$i/html; tar xf - ); \
 	done
@@ -96,7 +96,7 @@ html-web.stamp:  check.stamp p5.xml  Utilities/guidelines.xsl.model
 	@# use `ant` to run the lovely ANT file we just generated
 	${ANT} -lib Utilities/lib/jing.jar:Utilities/lib/${SAXONJAR} -f buildweb.xml -DgoogleAnalytics=${GOOGLEANALYTICS}
 	@# clean up after ourselves
-	rm -f buildweb.xml Utilities/teic-index.xml
+	rm -f buildweb.xml
 	@# let future `make`s know we been there, done that
 	touch html-web.stamp
 
