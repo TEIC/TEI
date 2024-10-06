@@ -19,7 +19,7 @@
      do more sophisticated things. -->
   
     <xsl:param name="p5version"></xsl:param>
-  <xsl:variable name="ignore" select="if (matches($p5version, '[a-z]+$')) then '((readme-\d\.\d\.\d\.html$)|(Guidelines\.mobi)|(tei-c\.org/$)|(google\.com/search))' else '((Guidelines\.mobi)|(tei-c\.org/$)|(google\.com/search))'"/>
+  <xsl:variable name="ignore" select="if (matches($p5version, '[a-z]+$')) then '((readme-\d\.\d\.\d\.html$)|(tei-c\.org/$)|(google\.com/search))' else '((tei-c\.org/$)|(google\.com/search))'"/>
     
     <xsl:template match="/">
         <xsl:text>Broken external links:&#x0a;&#x0a;</xsl:text>
