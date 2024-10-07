@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" ident="interleave">
+  <desc versionDate="2024-03-16" xml:lang="en">indicates that the constructs referenced by its children occur in any order (i.e. are interleaved)</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="model.contentPart"/>
+    <memberOf key="att.repeatable"/>
+  </classes>
+  <content>
+    <classRef key="model.contentPart" maxOccurs="unbounded"/>
+  </content>
+  <constraintSpec ident="interleavechilden" scheme="schematron">
+    <constraint>
+      <sch:rule context="tei:interleave">
+        <sch:assert test="count(*) gt 1">The interleave element must have at least two child elements</sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#UND">
+      <content>
+        <interleave>
+          <elementRef key="persName"/>
+          <alternate minOccurs="0">
+              <elementRef key="placeName"/>
+              <elementRef key="location"/>
+          </alternate>
+          <elementRef key="note" minOccurs="0"/>
+        </interleave>
+      </content>
+    </egXML>
+    <p>This example describes a content model that consists of a
+    mandatory <gi>persName</gi> element, zero or one of either
+    <gi>placeName</gi> or <gi>location</gi>, and an optional
+    <gi>note</gi> element, in any order.</p>
+    <!-- <p>To express this content model in the DTD language one might use
+    <eg xml:space="preserve"><![CDATA[ (   persName
+ | ( persName, note )
+ | ( persName, ( placeName | location ) ) 
+ | ( note, persName )
+ | ( ( placeName | location ), persName )
+ | ( persName, note, ( placeName | location ) )
+ | ( persName, ( placeName | location ), note )
+ | ( note, persName, ( placeName | location ) )
+ | ( note, ( placeName | location ), persName )
+ | ( ( placeName | location ), note, persName )
+ | ( ( placeName | location ), persName, note )
+ )]]></eg></p> -->
+  </exemplum>
+  <remarks xml:lang="en" versionDate="2024-07-20">
+    <p>If a TEI description of an XML markup language (often referred
+    to as an <q>ODD</q>) makes use of this element, current processing
+    software will not be able to generate a DTD from it. For this reason
+    TEI P5 itself does not make use of <gi>interleave</gi> internally.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#DEFCON" type="div2"/>
+  </listRef>
+</elementSpec>

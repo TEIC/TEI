@@ -62,7 +62,7 @@ $Id$
             <!-- We attempted to enforce this with an abstract
                  pattern, but found that oNVDL does not support
                  abstract patterns. Thus, at least for now, just use
-                 a bulky, straightfoward, ineligant, but easier to
+                 a bulky, straightfoward, inelegant, but easier to
                  process pattern. -->
             <sch:pattern id="en-gloss-if-any">
               <sch:rule context="  tei:elementSpec[tei:gloss]
@@ -162,7 +162,7 @@ $Id$
           <!-- 
                This definition of <teix:egXML> overrides that of P5 which, for
                some reason I don't grok, does not allow a <teix:egXML> descendant.
-               —Syd, 2018-06-13
+                —Syd, 2018-06-13
           -->
           <content>
             <alternate minOccurs="1" maxOccurs="unbounded">
@@ -183,10 +183,10 @@ $Id$
               if you really want a newline at the end, follow it with U+00A0.
             </desc>
             <constraint>
-	      <sch:rule context="tei:eg">
-		<sch:report test="matches( .//text()[last()], '&#x0A;\s*$')">trailing newline not allowed</sch:report>
-		<sch:report test="matches( .//text()[1],      '^\s*&#x0A;')">leading newline not allowed</sch:report>
-	      </sch:rule>
+              <sch:rule context="tei:eg">
+                <sch:report test="matches( .//text()[last()], '&#x0A;\s*$')">trailing newline not allowed</sch:report>
+                <sch:report test="matches( .//text()[1],      '^\s*&#x0A;')">leading newline not allowed</sch:report>
+              </sch:rule>
             </constraint>
           </constraintSpec>
         </elementSpec>
@@ -627,7 +627,7 @@ $Id$
           <attList>
             <attDef ident="module" mode="replace">
               <valList type="closed" mode="add">
-		<!-- I daresay this should be a generated list —Syd, 2022-04-24 -->
+                <!-- I daresay this should be a generated list —Syd, 2022-04-24 -->
                 <valItem ident="tei"/>
                 <valItem ident="core"/>
                 <valItem ident="analysis"/>
@@ -680,6 +680,20 @@ $Id$
               </valList>
             </attDef>
           </attList>
+        </elementSpec>
+
+        <!--
+            Use of <interleave> in a content model means that our
+            Stylesheets cannot generate a DTD from that ODD, and it
+            would be very difficult to impossible to do so. Thus
+            although vanilla P5 alows for <interleave> to occur inside
+            <alternatio>, <content>, or <sequence>, we are not
+            allowing ourselves to use it within P5 at all.
+        -->
+        <elementSpec module="tagdocs" ident="interleave" mode="change">
+          <classes>
+            <memberOf key="att.repeatable" mode="delete"/>
+          </classes>
         </elementSpec>
 
         <elementSpec ident="content" mode="change" module="tagdocs">
@@ -740,16 +754,16 @@ $Id$
           </constraintSpec>
         </elementSpec>
 
-	<!-- Per TEI ticket #2285, restrict where <altIdent> can go in GLs. -->
-	<elementSpec ident="altIdent" module="tagdocs" mode="change">
-	  <constraintSpec scheme="schematron" ident="restricted-altIdent-placement">
-	    <constraint>
-	      <sch:rule context="tei:altIdent">
-		<sch:assert test="parent::tei:elementSpec|parent::tei:attDef|parent::tei:valItem">The &lt;altIdent> element should only be used as a child of &lt;elementSpec>, &lt;attDef>, or &lt;valItem>.</sch:assert>
-	      </sch:rule>
-	    </constraint>
-	  </constraintSpec>
-	</elementSpec>
+        <!-- Per TEI ticket #2285, restrict where <altIdent> can go in GLs. -->
+        <elementSpec ident="altIdent" module="tagdocs" mode="change">
+          <constraintSpec scheme="schematron" ident="restricted-altIdent-placement">
+            <constraint>
+              <sch:rule context="tei:altIdent">
+                <sch:assert test="parent::tei:elementSpec|parent::tei:attDef|parent::tei:valItem">The &lt;altIdent> element should only be used as a child of &lt;elementSpec>, &lt;attDef>, or &lt;valItem>.</sch:assert>
+              </sch:rule>
+            </constraint>
+          </constraintSpec>
+        </elementSpec>
         
         <dataSpec ident="teidata.temporal.working" mode="change">
           <constraintSpec ident="not_in_future" scheme="schematron">
