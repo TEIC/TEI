@@ -90,12 +90,12 @@ uncertain whether to mark <q>Essex</q> as a place name or a personal
 name, since both might be plausible in the given context:
 <q rend="display">Elizabeth went to Essex. She had always liked Essex.</q>
 Using <gi>note</gi>, the uncertainty here may be recorded quite simply:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName>Elizabeth</persName> went to <placeName>Essex</placeName>. She had always liked <placeName>Essex</placeName>.<note type="certainty" resp="#MSM">It is not
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECENO-egXML-tv"><persName>Elizabeth</persName> went to <placeName>Essex</placeName>. She had always liked <placeName>Essex</placeName>.<note type="certainty" resp="#MSM">It is not
 clear here whether <mentioned>Essex</mentioned>
 refers to the place or to the nobleman. -MSM</note></egXML></p>
 <p>Using the normal mechanisms, the note may be associated
 unambiguously with specific elements of the text, thus:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName>Elizabeth</persName> went to <placeName xml:id="CE-p1a">Essex</placeName>.
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECENO-egXML-ms"><persName>Elizabeth</persName> went to <placeName xml:id="CE-p1a">Essex</placeName>.
 She had always liked <placeName xml:id="CE-p1b">Essex</placeName>.<note type="certainty" resp="#MSM" target="#CE-p1a #CE-p1b">It
 is not clear here whether <mentioned>Essex</mentioned>
 refers to the place or to the nobleman. If the latter,
@@ -117,7 +117,7 @@ attribute to identify the element in question, and the <att>locus</att>
 attribute to indicate which aspect of the markup we are uncertain about
 (in this case, whether we have used the correct <q>name</q> for the
 element used to mark it):
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to 
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECECE-egXML-uc">Elizabeth went to 
 <placeName xml:id="CE-pl1">Essex</placeName>.
 <!-- ... elsewhere in the document ... -->
 <certainty target="#CE-pl1" locus="name"><desc>possibly not a placename</desc></certainty></egXML>
@@ -132,7 +132,7 @@ way, that <q>Essex</q> really is  a place name here. The
 <att>degree</att> attribute is used to indicate the degree of
 confidence associated with the <gi>certainty</gi> element, expressed as a
 number between 0 and 1:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECECE-egXML-no" source="#UND">
 <!-- ... -->
 <certainty target="#CE-pl1" locus="name" degree="0.6"/></egXML>
 This expresses the point of view that there is a 60 percent chance of <q>Essex</q>
@@ -142,7 +142,7 @@ two probabilities independently. Both elements indicate the same location in the
 text, but the second provides an alternative choice of name
 identifier (in this case <gi>persName</gi>), which is given as the
 value of the <att>assertedValue</att> attribute:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECECE-egXML-wi">
 <!-- ... -->
 <certainty target="#CE-pl1" locus="name" degree="0.6">
    <desc>probably a placename, but possibly not</desc></certainty>
@@ -152,7 +152,7 @@ value of the <att>assertedValue</att> attribute:
 <p>In the simplest case, it is also possible to place the
 <gi>certainty</gi> element within the element concerned:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to 
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECECE-egXML-kf">Elizabeth went to 
 <placeName>Essex
 <certainty locus="name" degree="0.6"/></placeName>.</egXML>
 When  no  <att>target</att>  is specified, by default the proposed
@@ -171,7 +171,7 @@ feel) no chance at all that the first occurrence refers to the county
 and the second
 to the earl.  We can express this by using the <att>given</att>
 attribute to list the identifiers of <gi>certainty</gi> elements.
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to <placeName xml:id="CE-PL1">Essex</placeName>.
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CEconcon-egXML-lf">Elizabeth went to <placeName xml:id="CE-PL1">Essex</placeName>.
 She had always liked <placeName xml:id="CE-PL2">Essex</placeName>.
 <!-- ... -->
 <!-- 60% chance that P1 is a placename,
@@ -204,7 +204,7 @@ place name actually in question is <q>Old Saybrook</q> rather than
 is much more likely (say, 90 percent certain) that the name is <q>Saybrook</q>.
 Hence there is uncertainty about the correct location for the markup
 as well as about which markup to use.  This state of affairs can be expressed using the <gi>certainty</gi> element thus:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Ernest went to <anchor xml:id="CE-a1"/> old <persName xml:id="CE-p2">Saybrook</persName>.
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CEconcon-egXML-dx">Ernest went to <anchor xml:id="CE-a1"/> old <persName xml:id="CE-p2">Saybrook</persName>.
 <certainty xml:id="cert1" target="#CE-p2" locus="name" degree="0.6"/>
 <certainty target="#CE-p2" locus="start" given="#cert1" degree="0.9"/>
 <certainty xml:id="cert2" target="#CE-p2" locus="name" assertedValue="placeName" degree="0.4"/>
@@ -220,7 +220,7 @@ point for the element.</p>
 <p>Multiplying the numeric values out, this markup may be interpreted as
 assigning specific probabilities to three different ways of
 marking up the sentence:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Ernest went to old <persName>Saybrook</persName>.    (0.6 * 0.9, or 0.54)
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CEconcon-egXML-pv">Ernest went to old <persName>Saybrook</persName>.    (0.6 * 0.9, or 0.54)
 Ernest went to old <placeName>Saybrook</placeName>.  (0.4 * 0.5, or 0.20)
 Ernest went to <placeName>old Saybrook</placeName>.  (0.4 * 0.5, or 0.20)</egXML>
 The probabilities do not add up to 1.00 because the markup indicates
@@ -242,7 +242,7 @@ example, we wish to indicate a low degree of confidence
 that the <gi>persName</gi> elements used throughout the whole document
 have been correctly applied:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECECE-egXML-rq" source="#UND">
 <certainty locus="name" degree="0.3" match="//persName"/>
 </egXML>
 
@@ -252,7 +252,7 @@ element. However, in this case the XPath supplied as the value for
 <att>match</att> returns a set of all the <gi>persName</gi> elements
 in the document, independent of the current context. By contrast, in
 the following example
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECECE-egXML-wd">
 <div><p>[...]</p></div>
 <div>
 <certainty locus="name" degree="0.3" match=".//persName"/>
@@ -264,7 +264,7 @@ Similarly, we may indicate that we have more
 confidence in the <gi>persName</gi> tagging within those <gi>div</gi>
 elements which have a <att>type</att> value of <code>checked</code>:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECECE-egXML-qe" source="#UND">
 <certainty locus="name" degree="0.7" match="//div[@type='checked']//persName"/>
 </egXML>
 
@@ -285,7 +285,7 @@ application using the <att>given</att> attribute mentioned above.
 <p>When the <att>match</att> attribute is processed, the namespace bindings in
 force are those in effect at that point in the document. 
 For example, 
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECECE-egXML-zx" source="#UND">
 <div xmlns:my="http://www.example.org/ns/nonTEI">
 <!-- ... -->
 <certainty match=".//my:*" locus="value" degree="0.9"/>
@@ -304,10 +304,10 @@ element itself, or on one of its ancestor elements.</p>
 by assigning to <att>locus</att> the value
 <mentioned>value</mentioned>.  For example, if the source is
 hard to read and so the transcription is uncertain:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">I have a <emph xml:id="CE-p3">bun</emph>.
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECECE-egXML-bm">I have a <emph xml:id="CE-p3">bun</emph>.
 <certainty target="#CE-p3" locus="value" degree="0.5"/></egXML></p>
 <p>Degrees of confidence in the proper expansion of abbreviations may
-also be expressed, as in the following example:<egXML xmlns="http://www.tei-c.org/ns/Examples">You will want to use
+also be expressed, as in the following example:<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECECE-egXML-dj">You will want to use
 <choice><expan xml:id="CE-e1">Standard
 Generalized Markup Language</expan>
 <expan xml:id="CE-e40">Some Grandiose Methodology for Losers</expan>
@@ -320,7 +320,7 @@ alternative value for whatever aspect of the markup is in doubt:  an
 alternative name, or the identifier of an alternative starting or
 ending point, as already shown, an alternative attribute value, or
 alternative element content, as in this example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">I have a <emph xml:id="CE-P3">bun</emph>.
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECECE-egXML-sv">I have a <emph xml:id="CE-P3">bun</emph>.
 <certainty target="#CE-P3" locus="value" assertedValue="gun" degree="0.8"> 
   <desc>a gun makes more sense in a holdup</desc></certainty></egXML>
   Since attribute values have no internal substructure, the
@@ -365,10 +365,10 @@ indicate that the value of  an attribute on some specific element  is
 uncertain. In this case, the <att>locus</att> attribute
 takes the value <val>value</val>. For example, supposing there is only a 50 percent chance that the question was spoken by
 participant A:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u xml:id="CE-u1" who="#A">Have you heard the election results?</u>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECECE-egXML-we"><u xml:id="CE-u1" who="#A">Have you heard the election results?</u>
 <certainty target="#CE-u1" match="@who" locus="value" degree="0.5"/></egXML> or, equivalently and without the
 need to define a target,
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#A">Have you heard the election results?<certainty match="@who" locus="value" degree="0.5"/></u>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECECE-egXML-ai"><u who="#A">Have you heard the election results?<certainty match="@who" locus="value" degree="0.5"/></u>
 </egXML> 
 
 </p>
@@ -378,14 +378,14 @@ provide a powerful mechanism which can be used to indicate precision for a
 large number of assertions throughout an encoded document in an
 economical way. Some further
 examples follow:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECECE-egXML-og" source="#UND">
 <certainty match="//p" locus="location" degree="0.2"/>
 </egXML>
 This encoding indicates that there is only a 0.2 certainty that the
 boundaries of all <gi>p</gi> elements in the document have been correctly
 identified.</p>
 <p>
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECECE-egXML-an" source="#UND">
 <certainty target="#a101" match="p" locus="location" degree="0.2"/>
 </egXML>
 This encoding indicates that there is only a 0.2 certainty that the
@@ -394,7 +394,7 @@ boundaries of the <gi>p</gi> elements contained by the element with
 identified.</p>
 <p>
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECECE-egXML-wv">
 <persName resp="#LB">Essex
 <certainty match="@resp" locus="value" degree="0.2"/>
 </persName></egXML>
@@ -403,21 +403,21 @@ value for the <att>resp</att> attribute on the given <gi>persName</gi>
 element
 is correct.</p>
 <p>
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECECE-egXML-qo" source="#UND">
 <certainty match="//*/@resp" locus="value" degree="0.2"/>
 </egXML>
 This encoding indicates that there is only a 0.2 certainty that any
 value for the <att>resp</att> attribute is correct, wherever it
 appears in the document.</p>
 
-<p><egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+<p><egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECECE-egXML-ic" source="#UND">
 <certainty target="#dd001" match="@resp" locus="value" degree="0.2"/>
 </egXML>
 This encoding indicates that there is only a 0.2 certainty that the
 value for the <att>resp</att> attribute of the element indicated by
 the pointer <val>#dd001</val> is correct</p>
 
-<p><egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+<p><egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CECECE-egXML-as" source="#UND">
 <certainty match="//*[@resp='#LB']" locus="value" degree="0.2"/>
 </egXML>
 This encoding indicates that there is only a 0.2 certainty that the
@@ -480,13 +480,13 @@ values were introduced. For example, if we know that a date falls between
 1930 and 1935, without being certain exactly where, this fact may be
 encoded using attributes <att>notBefore</att> and
 <att>notAfter</att>, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CEPREC-egXML-bb">
 <date notBefore="1930" notAfter="1935">Early in the 1930s</date>...</egXML>
 Equally, if we know that every page of a
 manuscript has a width of at least 10 cm but no more than 30, we can
 use the attributes <att>atLeast</att> and <att>atMost</att>, as in the
 following examples:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CEPREC-egXML-yf" source="#UND">
 <width atLeast="10" atMost="30" unit="cm" scope="all"/></egXML>
 </p>
 <p>Suppose however that the precision with which the value
@@ -501,7 +501,7 @@ earliest possible date.</p>
 attributes concerned and attach different levels of precision to them,
 using a similar mechanism as that provided for the <gi>certainty</gi>
 element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CEPREC-egXML-px">
 <date xml:id="d001" notBefore="0014" notAfter="0064">About 50
 years after the death of Augustus</date>
 <precision target="#d001" match="@notAfter" precision="low"/>
@@ -514,7 +514,7 @@ precision about the dating of either end of a historical period. For example,
  latest dates, etc. (see section
  <ptr target="#NDATTSda"/>); the precision of these attribute values
  may be indicated in exactly the same way. For example, 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CEPREC-egXML-pg">
 <residence from="1857-03-01" notAfter="1857-04-30">From the 1st of March to
 some time in April of 1857.
 <precision match="@notAfter" precision="medium"/></residence>
@@ -523,7 +523,7 @@ some time in April of 1857.
 <p>It may also be useful to indicate that the precisions given for 
 minimum and maximum quanta differ. For example, to indicate that all
 pages measure at least 10 cm wide, and at most <emph>about</emph> 30:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CEPREC-egXML-ix" source="#UND">
 <width xml:id="w00t" atLeast="10" atMost="30" unit="cm" scope="all"/>
 <precision target="#w00t" match="@atMost" precision="low"/>
 </egXML>
@@ -536,7 +536,7 @@ number of characters per line in a typescript. If in addition we wish
 to record the standard deviation for the values summarized by that
 average, this would require an additional <gi>precision</gi> element,
 as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CEPREC-egXML-ms" source="#UND">
 <dim xml:id="dim1" type="avgLineLength" unit="chars" quantity="62.4"/>
 <precision target="#dim1" stdDeviation="4"/>
 </egXML>
@@ -569,7 +569,7 @@ indicates that RC is responsible for transcribing an
 illegible word, and that PMWR is responsible for identifying that word
 as a proper noun, i.e. deciding to mark it with the <gi>persName</gi>
 element at the location indicated:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Ernest went to old
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CERESP-egXML-vu">Ernest went to old
 <persName xml:id="CE-p5" rend="it">Saybrook</persName>.
 <!-- ... -->
 <respons target="#CE-p5" locus="value" resp="#RC"/>
@@ -580,7 +580,7 @@ element at the location indicated:
 </list></egXML></p>
 <p>Similarly, in the following example, we indicate that RC is
 responsible for proposing the value of the <att>rend</att> attribute:  
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CERESP-egXML-aw" source="#UND">
       <respons target="#CE-p5" match="@rend" locus="value" resp="#RC"/>
     </egXML>
 </p>
