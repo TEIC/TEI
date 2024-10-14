@@ -13,10 +13,10 @@
   <desc versionDate="2007-01-21" xml:lang="it">identifica un segmento o frammento di testo puntando ad eventuali elementi non contigui che lo compongono</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.cmc"/>
     <memberOf key="att.pointing"/>
     <memberOf key="att.typed"/>
     <memberOf key="model.global.meta"/>
-    <memberOf key="att.cmc"/>
   </classes>
   <content>    
     <alternate minOccurs="0" maxOccurs="unbounded">
@@ -27,7 +27,7 @@
   <constraintSpec ident="joinTargets3" scheme="schematron">
     <constraint>
       <sch:rule context="tei:join">
-        <sch:assert test="contains( normalize-space( @target ),'&#x20;')">
+        <sch:assert test="contains( normalize-space( @target ),' ')">
           You must supply at least two values for @target on <sch:name/>
         </sch:assert>
       </sch:rule>
