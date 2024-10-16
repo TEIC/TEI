@@ -41,8 +41,12 @@
 
     <!-- TEI examples -->
     <namespace ns="http://www.tei-c.org/ns/Examples">
+      <!-- Validate <teix:egXML> against examples schema … -->
       <validate schema="p5odds-examples.rng" useMode="nested">
+        <!-- … using the jing -f switch … -->
         <option name="http://www.thaiopensource.com/validate/feasible"/>
+        <!-- … except allow *anything* inside <teix:constraintDecl>. -->
+        <context path="constraintDecl" useMode="ANY"/>
       </validate>
       <attach useMode="allow"/>
     </namespace>
@@ -103,7 +107,9 @@
   <mode name="tei">
     <namespace ns="http://www.tei-c.org/ns/1.0">
       <validate schema="p5odds.isosch" useMode="nested"/>
-      <validate schema="p5odds.rng" useMode="nested"/>
+      <validate schema="p5odds.rng" useMode="nested">
+        <context path="constraintDecl" useMode="ANY"/>
+      </validate>
     </namespace>
   </mode>
 
@@ -113,4 +119,10 @@
     </anyNamespace>
   </mode>
 
+  <mode name="ANY">
+    <anyNamespace>
+      <allow/>
+    </anyNamespace>
+  </mode>
+  
 </rules>
