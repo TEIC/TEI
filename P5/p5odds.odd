@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
-See the file COPYING.txt for details
-$Date$
-$Id$
--->
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0"
@@ -183,10 +177,10 @@ $Id$
               if you really want a newline at the end, follow it with U+00A0.
             </desc>
             <constraint>
-	      <sch:rule context="tei:eg">
-		<sch:report test="matches( .//text()[last()], '&#x0A;\s*$')">trailing newline not allowed</sch:report>
-		<sch:report test="matches( .//text()[1],      '^\s*&#x0A;')">leading newline not allowed</sch:report>
-	      </sch:rule>
+              <sch:rule context="tei:eg">
+                <sch:report test="matches( .//text()[last()], '&#x0A;\s*$')">trailing newline not allowed</sch:report>
+                <sch:report test="matches( .//text()[1],      '^\s*&#x0A;')">leading newline not allowed</sch:report>
+              </sch:rule>
             </constraint>
           </constraintSpec>
         </elementSpec>
@@ -295,8 +289,10 @@ $Id$
               <valList type="closed">
                 <valItem ident="imaginary"/>
                 <valItem ident="extreme">
-                  <gloss versionDate="2013-10-30" xml:lang="en">Extreme conference
-                  proceedings markup</gloss>
+                  <gloss versionDate="2013-10-30" xml:lang="en">Extreme conference proceedings markup</gloss>
+                </valItem>
+                <valItem ident="balisage">
+                  <gloss versionDate="2024-10-11" xml:lang="en">Balisage proceedings markup</gloss>
                 </valItem>
                 <valItem ident="DBK">
                   <gloss versionDate="2013-10-30" xml:lang="en">Docbook</gloss>
@@ -627,7 +623,7 @@ $Id$
           <attList>
             <attDef ident="module" mode="replace">
               <valList type="closed" mode="add">
-		<!-- I daresay this should be a generated list —Syd, 2022-04-24 -->
+                <!-- I daresay this should be a generated list —Syd, 2022-04-24 -->
                 <valItem ident="tei"/>
                 <valItem ident="core"/>
                 <valItem ident="analysis"/>
@@ -680,6 +676,24 @@ $Id$
               </valList>
             </attDef>
           </attList>
+        </elementSpec>
+
+        <elementSpec ident="classes" mode="change" module="tagdocs">
+          <constraintSpec mode="add" scheme="schematron" ident="order_of_membership">
+            <desc>Added per <ref target="https://github.com/TEIC/TEI/issues/2463">#2463</ref>.</desc>
+            <constraint>
+              <sch:rule context="tei:classes">
+                <sch:let name="keys_as_specified" value="tei:memberOf/@key"/>
+                <sch:let name="keys_in_order"
+                         value="if ( $keys_as_specified = 'att.global' )
+                                then ( 'att.global', sort( $keys_as_specified )[. ne 'att.global'] )
+                                else sort( $keys_as_specified )" />
+                <sch:assert test="string-join( $keys_as_specified ) eq string-join( $keys_in_order )">
+                  class membership (in this case of <sch:value-of select="ancestor::*[@ident][1]/@ident"/>) should be specified in sorted order, except att.global goes first.
+                </sch:assert>
+              </sch:rule>
+            </constraint>
+          </constraintSpec>
         </elementSpec>
 
         <elementSpec ident="content" mode="change" module="tagdocs">
@@ -740,16 +754,16 @@ $Id$
           </constraintSpec>
         </elementSpec>
 
-	<!-- Per TEI ticket #2285, restrict where <altIdent> can go in GLs. -->
-	<elementSpec ident="altIdent" module="tagdocs" mode="change">
-	  <constraintSpec scheme="schematron" ident="restricted-altIdent-placement">
-	    <constraint>
-	      <sch:rule context="tei:altIdent">
-		<sch:assert test="parent::tei:elementSpec|parent::tei:attDef|parent::tei:valItem">The &lt;altIdent> element should only be used as a child of &lt;elementSpec>, &lt;attDef>, or &lt;valItem>.</sch:assert>
-	      </sch:rule>
-	    </constraint>
-	  </constraintSpec>
-	</elementSpec>
+        <!-- Per TEI ticket #2285, restrict where <altIdent> can go in GLs. -->
+        <elementSpec ident="altIdent" module="tagdocs" mode="change">
+          <constraintSpec scheme="schematron" ident="restricted-altIdent-placement">
+            <constraint>
+              <sch:rule context="tei:altIdent">
+                <sch:assert test="parent::tei:elementSpec|parent::tei:attDef|parent::tei:valItem">The &lt;altIdent> element should only be used as a child of &lt;elementSpec>, &lt;attDef>, or &lt;valItem>.</sch:assert>
+              </sch:rule>
+            </constraint>
+          </constraintSpec>
+        </elementSpec>
         
         <dataSpec ident="teidata.temporal.working" mode="change">
           <constraintSpec ident="not_in_future" scheme="schematron">

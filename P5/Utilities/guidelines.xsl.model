@@ -114,9 +114,8 @@
   <xsl:param name="homeLabel">TEI P5 Guidelines</xsl:param>
   <xsl:param name="homeWords">TEI P5</xsl:param>
   <xsl:param name="institution">Text Encoding Initiative</xsl:param>
+  <xsl:param name="linkPanel">false</xsl:param>
   <xsl:param name="outputDir">Guidelines</xsl:param>
-  <xsl:param name="parentURL">https://tei-c.org/about/</xsl:param>
-  <xsl:param name="parentWords">TEI Consortium</xsl:param>
   <xsl:param name="cssFile">guidelines.css</xsl:param>
   <xsl:param name="cssSecondaryFile">odd.css</xsl:param>
   <xsl:param name="cssPrintFile">guidelines-print.css</xsl:param>
@@ -125,26 +124,6 @@
   <xsl:param name="verboseSpecDesc">false</xsl:param>
 
   <xsl:template match="/">
-    
-    <xsl:result-document
-      html-version="{$htmlVersion}"
-      normalization-form="{$normalizationForm}"
-      encoding="{$outputEncoding}"
-      method="{$outputMethod}"
-      omit-xml-declaration="{$omitXMLDeclaration}"
-      href="{$outputDir}/index-toc.html">
-      <html>
-        <head>
-          <title>TEI P5: Guidelines for Electronic Text and Interchange</title>
-          <meta http-equiv="Refresh" content="3; url=index.html" />
-        </head>
-        <body>
-          <p>The TEI Guidelines Table of Contents has been moved to <a href="index.html">index.html</a>.</p>
-          <p>If you are not redirected after a few seconds, please click on the
-          link above.</p>
-        </body>
-      </html>
-    </xsl:result-document>
 
     <xsl:result-document
       html-version="{$htmlVersion}"
@@ -179,7 +158,6 @@
             <xsl:with-param name="title"
                             select="string-join(tei:generateTitle(.),'')"/>
           </xsl:call-template>
-          <xsl:call-template name="includeJavascript"/>
           <xsl:call-template name="javascriptHook"/>
         </head>
         <body id="TOP">
@@ -640,14 +618,11 @@
   <xsl:template match="divGen[@type='toc']"/>
 
   <xsl:template name="javascriptHook">
-    <script type="text/javascript" src="jquery-3.5.1.min.js"/>
-    <script type="text/javascript" src="columnlist.js"/>
+    <script type="text/javascript" src="jquery-3.7.0.min.js"/>
     <script type="text/javascript" src="popupFootnotes.js"/>
     <xsl:comment>CAMPAIGN JS</xsl:comment>
     <script type="text/javascript">
         $(function() {
-         $('ul.attrefs-class').columnizeList({cols:3,width:30,unit:'%'});
-         $('ul.attrefs-element').columnizeList({cols:3,width:30,unit:'%'});
          $(".displayRelaxButton").click(function() {
            $(this).parent().find('.RNG_XML').toggle();
            $(this).parent().find('.RNG_Compact').toggle();
@@ -660,73 +635,47 @@
     </script>
     <script type="text/javascript">
       $(function() {
-        $('.outOfDateTranslation').append(`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" aria-label="{tei:i18n('translationOutOfDate')}" viewBox="0 0 16 16" style="position:absolute; top:2px; right:2px; color:red">
-        <title><xsl:sequence select="tei:i18n('translationOutOfDate')"/></title>
-        <path d="M6.146 7.146a.5.5 0 0 1 .708 0L8 8.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 9l1.147 1.146a.5.5 0 0 1-.708.708L8 9.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 9 6.146 7.854a.5.5 0 0 1 0-.708z"/>
-        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-      </svg>`);
+        const location = window.location.pathname.replace(/.*\/ref-(.*).html/, '$1.xml');
+  $('.outOfDateTranslation').append('<a href="https://translate.tei-c.org/translate.html?edit=' + location + '"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" aria-label="{tei:i18n('translationOutOfDate')}" viewBox="0 0 16 16" style="position:absolute; top:2px; right:2px; color:red"><title><xsl:sequence select="tei:i18n('translationOutOfDate')"/></title>' + 
+  `<path d="M6.146 7.146a.5.5 0 0 1 .708 0L8 8.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 9l1.147 1.146a.5.5 0 0 1-.708.708L8 9.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 9 6.146 7.854a.5.5 0 0 1 0-.708z"/>
+  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/></svg></a>`);
       });
     </script>
-    <xsl:if test="not($googleAnalytics='')">
-            <script src="menus.js"></script>
-    </xsl:if>
+    <script src="https://tei-c.org/js/main.js"></script>
 
     <xsl:call-template name="jsForOdds"/>
 
   </xsl:template>
   
-<xsl:template name="bodyHook">
-  <div id="container">
-    <header id="banner">
-      <a href="https://tei-c.org"><img src="Images/banner.jpg"
-           alt="Text Encoding Initiative logo and banner"/></a>
-                 <nav role="navigation"></nav>
-    </header>
-  </div>
-  
-  <xsl:if test="not($googleAnalytics='')">    
-    <div id="searchbox" style="float:left;">
-      <form
-          action="https://www.google.com/search"
-          method="get">
-        <fieldset>
-          <input
-              style="color:#225588;"
-              value=""
-              maxlength="255"
-              size="20" name="q"
-              type="text"
-              />&#160;<select
-              name="sitesearch">
-          <option
-              value="http://www.tei-c.org/">Entire site</option>
-          <option
-              value="http://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/"
-              selected="selected">P5 Guidelines
-          <xsl:choose>
-            <xsl:when test="$documentationLanguage='en'"> — English</xsl:when>
-            <xsl:when test="$documentationLanguage='de'"> — Deutsch</xsl:when>
-            <xsl:when test="$documentationLanguage='es'"> — Español</xsl:when>
-            <xsl:when test="$documentationLanguage='it'"> — Italiano</xsl:when>
-            <xsl:when test="$documentationLanguage='fr'"> — Français</xsl:when>
-            <xsl:when test="$documentationLanguage='ja'"> — 日本語</xsl:when>
-            <xsl:when test="$documentationLanguage='ko'"> — 한국어</xsl:when>
-            <xsl:when test="$documentationLanguage='zh-TW'"> — 中文</xsl:when>
-          </xsl:choose>
-          </option>
-          <option value="http://www.tei-c.org/Guidelines/P4/html/">P4 Guidelines</option>
-          </select>&#160;<input style="font-size:100%; font-weight:bold;
-          color:#FFFFFF; background-color:#225588; height: 2em;"
-          value="Search" type="submit" />
-        </fieldset>
-      </form>
+  <xsl:template name="bodyHook">
+    <div id="container">
+      <xsl:if test="not($googleAnalytics='')">
+        <xsl:copy-of select="doc('nav.html')"/>
+      </xsl:if>
     </div>
-    </xsl:if>
-  <div class="mainhead">
-    <h1>TEI: <xsl:sequence select="tei:i18n('GuidelinesTEI')"/></h1>
-    <p><xsl:value-of select="/TEI/teiHeader/fileDesc/editionStmt/edition"/></p>
-  </div>
-</xsl:template>
+    
+    <div class="mainhead">
+      <h1>TEI: <xsl:sequence select="tei:i18n('GuidelinesTEI')"/></h1>
+      <p><xsl:value-of select="/TEI/teiHeader/fileDesc/editionStmt/edition"/></p>
+    </div>
+  </xsl:template>
+
+  <xsl:template name="bodyEndHook">
+    <div class="container">
+      <footer class="py-3 my-4">
+        <ul class="nav justify-content-center border-top pb-3 mb-3">
+          <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
+          <li class="nav-item"><a href="/about/code-of-conduct/" class="nav-link px-2 text-body-secondary">Code of Conduct</a></li>
+          <li class="nav-item"><a href="/about/contact/" class="nav-link px-2 text-body-secondary">Contact Us</a></li>
+        </ul>
+        <p class="text-center text-body-secondary">
+          <img src="emblem_color_dark.png" alt="TEI Emblem" width="40"/> © 2023 TEI Consortium — Hosted by <a href="https://www.huma-num.fr/" class="text-body-secondary">
+            <img src="logo-petit-hn-rvb-1.png" alt="Hosted by Huma-Num" width="50"/>
+          </a>
+        </p>
+      </footer>
+    </div>
+  </xsl:template>
 
   <xsl:template name="calculateFigureNumber">
     <xsl:choose>
