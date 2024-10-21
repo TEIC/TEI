@@ -52,7 +52,7 @@
     <p>The <att>datcat</att> attribute relates the feature <hi rend="italic">name</hi> (i.e., the key) to the data
       category <q>part of speech</q>, while the attribute <att>valueDatcat</att> relates the feature <hi rend="italic">value</hi> to the data category <term>common noun</term>. Both these data categories
       should be defined in an external and preferably open reference taxonomy or ontology.</p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DATCAT-egXML-lh"> xmlns="http://www.tei-c.org/ns/Examples" xml:id="DATCAT-egXML-xk">
       <fs>
         <f name="POS" datcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3">
           <symbol valueDatcat="http://hdl.handle.net/11459/CCR_C-1256_7ec6083c-23d4-224d-6f94-eecbe6861545" value="NN"/>
@@ -85,7 +85,7 @@
       only reference them, implicitly or directly, from feature structure markup. The following
       example is much more concise than the one above and relies on the concepts of feature structure declaration and
       feature value library, discussed in chapter <ptr target="#FS"/>.
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DATCAT-egXML-px">
         <fs>
           <f name="POS" fVal="#commonNoun"/>
           <!-- ... -->
@@ -101,7 +101,7 @@
       (most of them omitted). At the same time, this example shows one way of encoding a 
       <term>tagset</term>, i.e., an established inventory of values of (in the case at hand)
       morphosyntactic categories.
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DATCAT-egXML-fo">
         <fvLib n="POS values">
           <symbol xml:id="commonNoun" value="NN" datcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3"/>
           <symbol xml:id="properNoun" value="NP" datcat="http://hdl.handle.net/11459/CCR_C-1371_fbebd9ec-a7f4-9a36-d6e9-88ee16b944ae"/>
@@ -120,7 +120,7 @@
     <p>In the context of dictionaries designed with semantic interoperability in mind, the following
       example ensures that the <gi>pos</gi> element is interpreted as the same information container
       as in the case of the example of <tag>f name="POS"</tag> above.</p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DATCAT-egXML-zo">
       <gramGrp>
         <pos datcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3" valueDatcat="http://hdl.handle.net/11459/CCR_C-1256_7ec6083c-23d4-224d-6f94-eecbe6861545">NN</pos>
       </gramGrp>
@@ -130,7 +130,8 @@
       place within the project), rather than being repeated inside every entry. For the container
       elements, this can be achieved at the level of <gi>tagUsage</gi>, although here, the <att>valueDatcat</att> attribute should be used, because it is not the 
       <gi>tagUsage</gi> element that is associated with the relevant data category, but rather the element <gi>pos</gi> (or <gi>case</gi>, etc.) that is described by 
-      <gi>tagUsage</gi>: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <gi>tagUsage</gi>:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DATCAT-egXML-zp">
         <tagsDecl partial="true">
           <!-- ... -->
           <namespace name="http://www.tei-c.org/ns/1.0">
@@ -142,7 +143,7 @@
       </egXML>
     </p>
     <p>Another possibility is to shorten the URIs by means of the <gi>prefixDef</gi> mechanism, as illustrated below:
-      <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DATCAT-egXML-kf" valid="feasible">
         <listPrefixDef>
           <prefixDef ident="ccr" matchPattern="pos" replacementPattern="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3"/>
           <prefixDef ident="ccr" matchPattern="adj" replacementPattern="http://hdl.handle.net/11459/CCR_C-1230_23653c21-fca1-edf8-fd7c-3df2d6499157"/>
@@ -181,7 +182,7 @@
         <gi>taxonomy</gi> element itself), whereas these same <gi>category</gi> and
         <gi>taxonomy</gi> elements use <ident type="class">att.datcat</ident> attributes to
       reference the original taxonomy or ontology.</p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DATCAT-egXML-zy">
       <encodingDesc>
         <!-- ... -->
         <classDecl>
@@ -223,7 +224,7 @@
       declarations, and is analogous to the <att>targetLang</att> attribute of the
         <ident>att.pointing</ident> class, in that it describes the object that is being referenced,
       rather than the referencing object.</p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DATCAT-egXML-hm">
       <fDecl name="POS" targetDatcat="http://hdl.handle.net/11459/CCR_C-396_5a972b93-2294-ab5c-a541-7c344c5f26c3">
         <fDescr>part of speech (morphosyntactic category)</fDescr>
         <vRange>
@@ -245,8 +246,9 @@
     <p>The <ident type="class">att.datcat</ident> attributes can be used for any sort of taxonomies.
       The example below illustrates their usefulness for describing usage domain labels in
       dictionaries on the example of the <title level="m">Diccionario da Lingua Portugueza</title> by
-      António de Morais Silva, retro-digitised in the <ref target="https://mordigital.fcsh.unl.pt/en/homepage/">MORDigital project</ref>.</p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+      António de Morais Silva, retro-digitised in the
+      <ref target="https://mordigital.fcsh.unl.pt/en/homepage/">MORDigital project</ref>.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DATCAT-egXML-qf" valid="feasible">
       
       <!--  in the dictionary header    -->
       
