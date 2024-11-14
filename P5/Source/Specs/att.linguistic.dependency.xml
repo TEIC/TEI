@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" xml:id="ATTLINGDEP" type="atts" ident="att.linguistic.dependency">
+  <desc versionDate="2024-11-13" xml:lang="en">provides attributes for annotating dependency relationships between word-level elements.</desc>
+  <classes/>
+  <attList>
+    <attDef ident="head" usage="opt">
+      <gloss versionDate="2024-11-13" xml:lang="en">head</gloss>
+      
+      <desc versionDate="2024-11-13" xml:lang="en">provides the normalized/standardized form of information present in the source text in a non-normalized form.</desc>
+      <datatype><dataRef key="teidata.text"/></datatype>
+      <exemplum xml:lang="en">
+        <p>(description)</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ATTLINGDEP-egXML-head1">
+          <p>
+            <w n="1" lemma="I" pos="PRON" msd="Case=Nom|Number=Sing|Person=1" head="2" deprel="nsubj">I</w>
+            <w n="2" lemma="have" pos="VERB" msd="Case=Nom|Number=Sing|Person=1" head="2" deprel="nsubj">have</w>
+            <w n="3." lemma="no" pos="DET" msd="Case=Nom|Number=Sing|Person=1" head="2" deprel="nsubj">no</w>
+            <w n="4" lemma="clue" pos="NOUN" msd="Case=Nom|Number=Sing|Person=1" head="2" deprel="nsubj">clue</w>
+            <w n="5" lemma="." pos="PUNCT" msd="Case=Nom|Number=Sing|Person=1" head="2" deprel="nsubj">.</w>
+         </p>
+        </egXML>
+      </exemplum>
+      
+      <!-- 
+      
+1   I       I       PRON    PRP   Case=Nom|Number=Sing|Person=1     2   nsubj   _   _
+2   have    have    VERB    VBP   Number=Sing|Person=1|Tense=Pres   0   root    _   _
+3   no      no      DET     DT    PronType=Neg                      4   det     _   _
+4   clue    clue    NOUN    NN    Number=Sing                       2   obj     _   SpaceAfter=No
+5   .       .       PUNCT   .     _                                 2   punct   _   _
+      
+      -->
+      
+      
+    </attDef>
+    
+    <attDef ident="deprel" usage="opt">
+      <gloss versionDate="2024-11-13" xml:lang="en">dependency relation</gloss>
+      <desc versionDate="2024-11-13" xml:lang="en">provides a label that classifies the relationship
+        between the context segment and the segment, at which the "dependency arrow" points
+        (identified by the attribute <att>head</att>). If the value of <att>head</att> is
+          <val>0</val>, then the value of <att>deprel</att> must be <val>root</val>.</desc>
+      <datatype><dataRef key="teidata.text"/></datatype>
+
+    </attDef>
+
+  </attList>
+ 
+</classSpec>
