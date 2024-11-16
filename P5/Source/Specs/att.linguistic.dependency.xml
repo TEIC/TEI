@@ -77,12 +77,6 @@
             </row>
           </table>
         </ab>
-        <p>
-          <figure xml:id="AILADEP-figure-rs-spec">
-            <graphic width="450px" url="file://../Guidelines/en/Images/UD_Ihadnoclue_let-rug-nl.png"/>
-            <head>Dependency diagram for the sentence "I had no clue", visualised from the CoNLL-U format by the <ref target="https://github.com/rug-compling/conllu-viewer">conllu-viewer</ref> tool.</head>
-          </figure>
-        </p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ATTLINGDEP-egXML-head1">
           <p>
             <w n="1" lemma="I" pos="PRON" msd="Case=Nom|Number=Sing|Person=1" head="2" deprel="nsubj">I</w>
@@ -104,6 +98,44 @@
       
       -->
       
+      
+      
+<!--   
+ 
+        <p>
+          <figure xml:id="AILADEP-figure-rs-spec">
+            <graphic width="450px" url="file://../Guidelines/en/Images/UD_Ihadnoclue_let-rug-nl.png"/>
+            <head>Dependency diagram for the sentence "I had no clue", visualised from the CoNLL-U format by the <ref target="https://github.com/rug-compling/conllu-viewer">conllu-viewer</ref> tool.</head>
+          </figure>
+        </p>
+ 
+        
+      
+      BUILD: Check validity with special-purpose XSL code, looking for bad links etc
+ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -q -lib Utilities/lib/saxon10he.jar -f antbuilder.xml -DXSL=/var/jenkins_home/jobs/Stylesheets-dev/lastSuccessful/archive/dist/xml/tei/stylesheet validators
+     [echo] Run Schematron script (normal part of Guidelines)
+     [echo] Run Schematron script (Examples in Guidelines marked as valid)
+     [echo] Run ad hoc XSLT validators
+
+BUILD SUCCESSFUL
+Total time: 36 seconds
+<Messages>
+   <WARNING>Schematron warning: 
+                 [Test: true()] Location: /TEI[1]/text[1]/body[1]/div[10]/div[2]/div[1]/p[4]/specGrp[1]/elementSpec[1]/exemplum[1]/egXML[namespace-uri()='http://www.tei-c.org/ns/Examples'][1]/superEntry[namespace-uri()='http://www.tei-c.org/ns/Examples'][1]</WARNING>
+   <WARNING>Schematron warning: 
+                 [Test: true()] Location: /TEI[1]/text[1]/body[1]/div[10]/div[2]/div[1]/p[4]/specGrp[1]/elementSpec[1]/exemplum[2]/egXML[namespace-uri()='http://www.tei-c.org/ns/Examples'][1]/superEntry[namespace-uri()='http://www.tei-c.org/ns/Examples'][1]</WARNING>
+   <WARNING>Schematron warning: 
+                 [Test: true()] Location: /TEI[1]/text[1]/body[1]/div[10]/div[2]/div[1]/p[4]/specGrp[1]/elementSpec[1]/exemplum[3]/egXML[namespace-uri()='http://www.tei-c.org/ns/Examples'][1]/superEntry[namespace-uri()='http://www.tei-c.org/ns/Examples'][1]</WARNING>
+</Messages>
+(grep -q "<ERROR>" ValidatorLog.xml;if [ $? -ne 1 ] ; then echo "Oh dear me. ERROR found";diff ValidatorLog.xml expected-results/ValidatorLog.xml;false; fi)
+sh graphics.sh
+
+ERROR FILE DOES NOT EXIST: ../Guidelines/en/Images/UD_Ihadnoclue_let-rug-nl.png
+
+make: *** [Makefile:180: valid] Error 1
+Build step 'Execute shell' marked build as failure
+      
+      -->
       
     </attDef>
     
