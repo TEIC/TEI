@@ -6,13 +6,17 @@
   <classes/>
   <attList>
     <attDef ident="head" usage="opt">
-      <gloss versionDate="2024-11-13" xml:lang="en">head</gloss>
-      
-      <desc versionDate="2024-11-13" xml:lang="en">provides the normalized/standardized form of information present in the source text in a non-normalized form.</desc>
+      <gloss versionDate="2024-11-13" xml:lang="en">head of a dependency</gloss>
+      <desc versionDate="2024-11-13" xml:lang="en">points at the dependency head of the given
+        word-level element (builds an arc from the current node to the node identified by the index,
+        i.e., the value of the attribute <att>n</att>); the value <val>0</val> is special and
+        indicates the starting node of the dependency graph; relations pointing at <val>0</val> have
+        to be labeled as <val>root</val>.</desc>
       <datatype><dataRef key="teidata.text"/></datatype>
       <exemplum xml:lang="en">
         <p>(description)</p>
         <ab>
+<!--  this is probably a failed attempt - it may be better to try some kind of raw display, perhaps each previously tabulated line styled as monospace  -->
           <table rows="5" cols="10" style="text-align:left; font-family:monospace">
             <row>
               <cell>1</cell>
@@ -26,7 +30,7 @@
               <cell>_</cell>
               <cell>_</cell>
             </row>
-            <row>
+            <row style="margin-left:2em">
               <cell>2</cell>
               <cell>had</cell>
               <cell>have</cell>
@@ -38,7 +42,7 @@
               <cell>_</cell>
               <cell>_</cell>
             </row>
-            <row>
+            <row style="margin-left:2em">
               <cell>3</cell>
               <cell>no</cell>
               <cell>no</cell>
@@ -50,8 +54,7 @@
               <cell>_</cell>
               <cell>_</cell>
             </row>
-
-            <row>
+            <row style="margin-left:2em">
               <cell>4</cell>
               <cell>clue</cell>
               <cell>clue</cell>
@@ -63,7 +66,7 @@
               <cell>_</cell>
               <cell>SpaceAfter=No</cell>
             </row>
-            <row>
+            <row style="margin-left:2em">
               <cell>5</cell>
               <cell>.</cell>
               <cell>.</cell>
@@ -80,8 +83,8 @@
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ATTLINGDEP-egXML-head1">
           <p>
             <w n="1" lemma="I" pos="PRON" msd="Case=Nom|Number=Sing|Person=1" head="2" deprel="nsubj">I</w>
-            <w n="2" lemma="have" pos="VERB" msd="Case=Nom|Number=Sing|Person=1" head="2" deprel="nsubj">have</w>
-            <w n="3." lemma="no" pos="DET" msd="PronType=Neg" head="2" deprel="nsubj">no</w>
+            <w n="2" lemma="have" pos="VERB" msd="Number=Sing|Person=1|Tense=Past" head="0" deprel="nsubj">had</w>
+            <w n="3." lemma="no" pos="DET" msd="PronType=Neg" head="4" deprel="det">no</w>
             <w n="4" lemma="clue" pos="NOUN" msd="Number=Sing" head="2" deprel="nsubj">clue</w>
             <w n="5" lemma="." pos="PUNCT" msd="_" head="2" deprel="nsubj" join="left">.</w>
          </p>
