@@ -7,14 +7,16 @@
   <attList>
     <attDef ident="head" usage="opt">
       <gloss versionDate="2024-11-13" xml:lang="en">head of a dependency</gloss>
-      <desc versionDate="2024-11-13" xml:lang="en">points at the dependency head of the given
-        word-level element (builds an arc from the current node to the node identified by the index,
-        i.e., the value of the attribute <att>n</att>); the value <val>0</val> is special and
-        indicates the starting node of the dependency graph; relations pointing at <val>0</val> have
-        to be labeled as <val>root</val>.</desc>
+      <desc versionDate="2024-11-13" xml:lang="en">encodes a dependency relation between the element
+        bearing this attribute and the element having the attribute value as its index (i.e., as the
+        value of its attribute <att>n</att>). In a dependency graph, the node represented by the
+        former element is said to be the <term>dependent</term> and the node represented by the
+        latter is said to be its <term>head</term>. By convention, the value <val>0</val> indicates
+        that the element bearing this attribute is the root of the dependency graph.</desc>
       <datatype><dataRef key="teidata.text"/></datatype>
       <exemplum xml:lang="en">
-        <p>Universal Dependencies analysis of the sentence <q>I had no clue.</q>, provided below in the plain text, column-based CoNNL-U format.</p>
+        <p>Universal Dependencies analysis of the sentence <q>I had no clue.</q>, provided below in the plain text, column-based CoNNL-U format.
+        </p>
         
 <p style="font-family:monospace" xml:space="preserve"># text = I had no clue.</p>
 <p style="font-family:monospace" xml:space="preserve">1   I       I       PRON    PRP   Case=Nom|Number=Sing|Person=1     2   nsubj   _   _</p>
@@ -23,7 +25,10 @@
 <p style="font-family:monospace" xml:space="preserve">4   clue    clue    NOUN    NN    Number=Sing                       2   obj     _   SpaceAfter=No</p>
 <p style="font-family:monospace" xml:space="preserve">5   .       .       PUNCT   .     _                                 2   punct   _   _</p>
         
-        <p>Above is a sequence of <gi>p</gi> elements. Below is a table, which can surely be nicely styled, eventually, but which nearly completely obfuscates the information.</p>
+        <p>Above is a sequence of <gi>p</gi> elements. Below is a table, which can surely be nicely
+          styled, eventually, but which nearly completely obfuscates the information when it comes
+          to editing the source.
+        </p>
         <ab>
           <!--  this is probably a failed attempt - it may be better to try some kind of raw display, perhaps each previously tabulated line styled as monospace  -->
           <table rows="5" cols="10" style="text-align:left;font-family:monospace;margin-left:2em">
@@ -89,7 +94,7 @@
             </row>
           </table>
         </ab>
-        
+        <p> </p>
         <p>Above is a table, and below is an <gi>eg</gi> element, which sets the <att>xml:space</att> attribute to <val>preserve</val>.</p>
         <p>
 <eg xml:space="preserve"># text = I had no clue.
@@ -176,10 +181,10 @@ Build step 'Execute shell' marked build as failure
     
     <attDef ident="deprel" usage="opt">
       <gloss versionDate="2024-11-13" xml:lang="en">dependency relation</gloss>
-      <desc versionDate="2024-11-13" xml:lang="en">provides a label that classifies the relationship
-        between the context segment and the segment, at which the "dependency arrow" points
-        (identified by the attribute <att>head</att>). If the value of <att>head</att> is
-          <val>0</val>, then the value of <att>deprel</att> must be <val>root</val>.</desc>
+      <desc versionDate="2024-11-13" xml:lang="en">provides a classifying label for the dependency
+        relation between the element bearing this attribute and the element identified by the
+        attribute <att>head</att>. If the value of <att>head</att> is <val>0</val>, then, by
+        convention, the value of <att>deprel</att> should be <val>root</val>.</desc>
       <datatype><dataRef key="teidata.text"/></datatype>
     </attDef>
     
