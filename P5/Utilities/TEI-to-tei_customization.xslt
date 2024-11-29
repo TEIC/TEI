@@ -436,7 +436,7 @@
   <!-- others -->
   <!-- ****** -->
   <xsl:template name="element-is-in-module">
-    <constraintSpec scheme="schematron" ident="element-is-in-module">
+    <constraintSpec scheme="schematron" ident="element-is-in-module" xml:lang="en">
       <constraint>
         <xsl:for-each select="//moduleSpec/@ident">
           <xsl:variable name="this" select="."/>
@@ -723,7 +723,7 @@
               <xsl:comment> allow tables, figures, and formulæ </xsl:comment>
               <moduleRef key="figures" except="notatedMusic"/>
               
-              <constraintSpec scheme="schematron" ident="mode-child-sanity">
+              <constraintSpec scheme="schematron" ident="mode-child-sanity" xml:lang="en">
                 <constraint>
                   <sch:rule context="*[ @mode eq 'delete' ]">
                     <sch:report test="child::*">The specification element ＜<sch:name/>＞ has both a
@@ -759,7 +759,7 @@
                     </alternate>
                   </sequence>
                 </content>
-                <constraintSpec scheme="schematron" ident="required-modules">
+                <constraintSpec scheme="schematron" ident="required-modules" xml:lang="en">
                   <gloss>required modules</gloss>
                   <constraint>
                     <sch:rule context="tei:schemaSpec">
@@ -783,7 +783,7 @@
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="schematron" ident="no-outside-specs">
+                <constraintSpec scheme="schematron" ident="no-outside-specs" xml:lang="en">
                   <desc>A <tag>*Spec</tag> element should either be within <gi>schemaSpec</gi>,
                     or be in a <gi>specGrp</gi> referred to by a <gi>specGrpRef</gi> wihin
                     <gi>schemaSpec</gi>.</desc>
@@ -800,7 +800,7 @@
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="schematron" ident="only-one-schemaSpec">
+                <constraintSpec scheme="schematron" ident="only-one-schemaSpec" xml:lang="en">
                   <desc>TEI permits <gi>schemaSpec</gi> as a
                   repeatable child of a variety of elements (including
                   <gi>front</gi>, <gi>body</gi>, <gi>back</gi>,
@@ -861,7 +861,7 @@
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="moduleRef" mode="change">
-                <constraintSpec scheme="schematron" ident="if-url-then-prefix">
+                <constraintSpec scheme="schematron" ident="if-url-then-prefix" xml:lang="en">
                   <desc>This is not strictly necessary. The TEI patterns have a default prefix (the
                     value of <att>ident</att> of <gi>schemaSpec</gi>), so if only one external
                     module is imported, it does not need a prefix — there will not be any collisions
@@ -876,7 +876,7 @@
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="schematron" ident="no-duplicate-modules">
+                <constraintSpec scheme="schematron" ident="no-duplicate-modules" xml:lang="en">
                   <constraint>
                     <sch:rule context="tei:moduleRef[ @key ]">
                       <sch:let name="mykey" value="@key"/>
@@ -886,7 +886,7 @@
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="schematron" ident="need-required">
+                <constraintSpec scheme="schematron" ident="need-required" xml:lang="en">
                   <constraint>
                     <sch:rule context="tei:moduleRef[ @except ]">
                       <sch:let name="exceptions" value="tokenize( @except, '\s+' )"/>
@@ -915,7 +915,7 @@
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
-                    <constraintSpec scheme="schematron" ident="include-required">
+                    <constraintSpec scheme="schematron" ident="include-required" xml:lang="en">
                       <constraint>
                         <sch:rule context="tei:moduleRef[ @key eq 'textstructure' and @include ]">
                           <sch:let name="inclusions" value="tokenize( @include, '\s+' )"/>
@@ -1215,7 +1215,7 @@
                     <elementRef key="listRef"        minOccurs="0" maxOccurs="unbounded"/>
                   </sequence>
                 </content>
-                <constraintSpec scheme="schematron" ident="module-except-when-add">
+                <constraintSpec scheme="schematron" ident="module-except-when-add" xml:lang="en">
                   <constraint>
                     <sch:rule context="tei:elementSpec">
                       <sch:assert test="@mode">
@@ -1227,7 +1227,7 @@
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="schematron" ident="only-1-per">
+                <constraintSpec scheme="schematron" ident="only-1-per" xml:lang="en">
                   <constraint>
                     <sch:rule context="tei:elementSpec">
                       <sch:report test="//tei:elementSpec[ @ident eq current()/@ident  and  not( . is current() ) ]"
@@ -1235,7 +1235,7 @@
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="schematron" ident="dont-delete-required">
+                <constraintSpec scheme="schematron" ident="dont-delete-required" xml:lang="en">
                   <constraint>
                     <sch:rule context="tei:elementSpec">
                       <sch:report test="@mode='delete' and @ident='TEI'">Removing ＜TEI＞ from your
@@ -1256,21 +1256,21 @@
 		    </sch:rule>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="schematron" ident="content_when_adding">
+                <constraintSpec scheme="schematron" ident="content_when_adding" xml:lang="en">
                   <constraint>
                     <sch:rule context="tei:elementSpec[ @mode = ('add','replace') ]">
                       <sch:assert test="tei:content">When adding a new element (whether replacing an old one or not), a content model must be specified; but this ＜elementSpec＞ does not have a ＜content＞ child.</sch:assert>
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="schematron" ident="empty_when_deleting">
+                <constraintSpec scheme="schematron" ident="empty_when_deleting" xml:lang="en">
                   <constraint>
                     <sch:rule context="tei:elementSpec[ @mode eq 'delete']">
                       <sch:report test="*">When used to delete an element from your schema, the ＜elementSpec＞ should be empty</sch:report>
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="schematron" ident="add_implies_ns">
+                <constraintSpec scheme="schematron" ident="add_implies_ns" xml:lang="en">
                   <constraint>
                     <sch:rule context="tei:elementSpec[ @mode eq 'add'  or  not( @mode ) ]">
                       <sch:assert test="ancestor-or-self::*/@ns">When used to add an element, ＜elementSpec＞ (or its ancestor ＜schemaSpec＞) should have an @ns attribute.</sch:assert>
@@ -1530,7 +1530,7 @@
               <classSpec ident="att.global" module="tei" mode="change" type="atts">
                 <attList>
                   <attDef ident="xml:id" mode="change" ns="http://www.w3.org/XML/1998/namespace">
-                    <constraintSpec scheme="schematron" ident="unique_xmlIDs">
+                    <constraintSpec scheme="schematron" ident="unique_xmlIDs" xml:lang="en">
                       <constraint>
 			<sch:rule context="@xml:id">
                           <sch:let name="myID" value="normalize-space(.)"/>
@@ -1550,7 +1550,7 @@
               <classSpec ident="att.global.rendition" module="tei" mode="delete" type="atts"/>
               <classSpec ident="att.global.responsibility" module="tei" mode="delete" type="atts"/>
 
-              <constraintSpec scheme="schematron" ident="tei-source">
+              <constraintSpec scheme="schematron" ident="tei-source" xml:lang="en">
                 <desc>Constrains the <att>source</att> attribute of
                 various tagset documentation elements to those values
                 recommended by TEI</desc>

@@ -23,7 +23,7 @@
       <elementRef key="constraint" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </content>
-  <constraintSpec scheme="schematron" ident="empty-based-on-mode">
+  <constraintSpec scheme="schematron" ident="empty-based-on-mode" xml:lang="en">
     <!-- 
          This constraint specification is much like the
          "child-constraint-based-on-mode" for <elementSpec>, which
@@ -42,7 +42,7 @@
       </sch:rule>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="sch_no_more" scheme="schematron">
+  <constraintSpec ident="sch_no_more" scheme="schematron" xml:lang="en">
     <desc versionDate="2018-07-06" xml:lang="en">Relationship between scheme attribute and contents: Schematron 1.x</desc>
     <constraint>
       <sch:rule context="tei:constraintSpec">
@@ -53,7 +53,7 @@
       </sch:rule>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="isosch" scheme="schematron">
+  <constraintSpec ident="isosch" scheme="schematron" xml:lang="en">
     <desc versionDate="2018-07-06" xml:lang="en">Relationship between scheme attribute and contents: ISO Schematron</desc>
     <constraint>
       <sch:rule context="tei:constraintSpec[ @mode = ('add','replace') or not( @mode ) ]">
@@ -63,7 +63,7 @@
       </sch:rule>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="context-required" scheme="schematron" type="deprecationWarning" validUntil="2025-03-15">
+  <constraintSpec ident="context-required" scheme="schematron" type="deprecationWarning" validUntil="2025-03-15" xml:lang="en">
     <desc type="deprecationInfo" versionDate="2024-03-15" xml:lang="en">
       The use of ISO Schematron <gi>sch:assert</gi> and
       <gi>sch:report</gi> elements without a parent <gi>sch:rule</gi>
@@ -80,11 +80,11 @@
       <sch:rule context="tei:constraintSpec[ @scheme eq 'schematron']/tei:constraint[ .//sch:assert | .//sch:report ]">
         <sch:let name="assertsHaveContext" value="for $a in .//sch:assert return exists( $a/ancestor::sch:rule/@context )"/>
         <sch:let name="reportsHaveContext" value="for $r in .//sch:report return exists( $r/ancestor::sch:rule/@context )"/>
-        <sch:report test="( $assertsHaveContext, $reportsHaveContext ) = false()" role="warning">The use of an &lt;sch:assert> or &lt;sch:report> that does not have a context (i.e., does not have an ancestor &lt;sch:rule> with a @context attribute) in an ISO Schematron constraint specification is deprecated, and will become invalid after 2025-03-15.</sch:report>
+        <sch:report test="( $assertsHaveContext, $reportsHaveContext ) = false()" role="warning">The use of an &lt;sch:assert&gt; or &lt;sch:report&gt; that does not have a context (i.e., does not have an ancestor &lt;sch:rule&gt; with a @context attribute) in an ISO Schematron constraint specification is deprecated, and will become invalid after 2025-03-15.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="unique-constraintSpec-ident" scheme="schematron">
+  <constraintSpec ident="unique-constraintSpec-ident" scheme="schematron" xml:lang="en">
     <constraint>
       <sch:rule context="tei:constraintSpec[ @mode eq 'add' or not( @mode ) ]">
         <sch:let name="myIdent" value="normalize-space(@ident)"/>
@@ -106,10 +106,10 @@
       <desc versionDate="2009-06-10" xml:lang="en">supplies the name of the language in which the constraints are defined</desc>
       <desc versionDate="2024-02-28" xml:lang="ja">制約を定義する言語名を示す。</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <constraintSpec scheme="schematron" ident="usage_based_on_mode">
+      <constraintSpec scheme="schematron" ident="usage_based_on_mode" xml:lang="en">
         <constraint>
           <sch:rule context="tei:constraintSpec[ @mode = ('add','replace')  or  not( @mode ) ]">
-            <sch:assert test="@scheme">The @scheme attribute of &lt;constraintSpec> is required when the @mode is <sch:value-of select="if (@mode) then concat('&quot;',@mode,'&quot;') else 'not specified'"/>.</sch:assert>
+            <sch:assert test="@scheme">The @scheme attribute of &lt;constraintSpec&gt; is required when the @mode is <sch:value-of select="if (@mode) then concat('&quot;',@mode,'&quot;') else 'not specified'"/> (here on "<sch:value-of select="@ident"/>")</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>

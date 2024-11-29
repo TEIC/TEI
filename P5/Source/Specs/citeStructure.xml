@@ -36,14 +36,14 @@
       <datatype>
         <dataRef key="teidata.xpath"/>
       </datatype>
-      <constraintSpec ident="citestructure-outer-match" scheme="schematron">
+      <constraintSpec ident="citestructure-outer-match" scheme="schematron" xml:lang="en">
         <constraint>
           <sch:rule context="tei:citeStructure[not(parent::tei:citeStructure)]">
             <sch:assert test="starts-with(@match,'/')">An XPath in @match on the outer <sch:name/> must start with '/'.</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
-      <constraintSpec ident="citestructure-inner-match" scheme="schematron">
+      <constraintSpec ident="citestructure-inner-match" scheme="schematron" xml:lang="en">
         <constraint>
           <sch:rule context="tei:citeStructure[parent::tei:citeStructure]">
             <sch:assert test="not(starts-with(@match,'/'))">An XPath in @match must not start with '/' except on the outer <sch:name/>.</sch:assert>

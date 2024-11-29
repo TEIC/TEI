@@ -17,6 +17,9 @@
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
+      <change when="2024-10-29" who="#sbauman.emt">
+	Added <att>xml:lang</att> to every <gi>constraintSpec</gi>
+      </change>
       <change when="2023-08-06" who="#sbauman.emt">
         Add the <name>add_missing_scheme</name> and
         <name>replace_missing_scheme</name> tests for
@@ -82,7 +85,7 @@
           <moduleRef key="spoken"/>
           <moduleRef key="figures"/>
           <elementSpec ident="p" mode="change">
-            <constraintSpec mode="add" ident="c1" scheme="schematron">
+            <constraintSpec mode="add" ident="c1" scheme="schematron" xml:lang="en">
               <constraint>
                 <sch:rule context="p">
                   <sch:report test="tei:list"> 
@@ -91,11 +94,12 @@
                 </sch:rule>
               </constraint>
             </constraintSpec>
-            <constraintSpec mode="add" ident="c2" scheme="schematron">
+            <constraintSpec mode="add" ident="c2" scheme="schematron" xml:lang="en">
               <constraint>
                 <sch:rule context="tei:p|tei:q">
                   <sch:report test="contains(@rend,' ')"> 
-                multi-valued rend is not supported </sch:report>
+                    multi-valued rend is not supported
+		  </sch:report>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -169,7 +173,7 @@
             </attList>
           </elementSpec>
           <elementSpec ident="div" mode="change">
-            <constraintSpec mode="add" ident="canondiv" scheme="schematron">
+            <constraintSpec mode="add" ident="canondiv" scheme="schematron" xml:lang="en">
               <constraint>
                 <sch:rule context="div">
                   <sch:report test="@type eq 'canon'  and  parent::tei:div/@type eq 'canon'">
@@ -456,21 +460,21 @@
             <content>
               <rng:ref name="macro.phraseSeq"/>
             </content>
-            <constraintSpec ident="add_missing_scheme">
+            <constraintSpec ident="add_missing_scheme" xml:lang="en">
               <desc>This <gi>constraintSpec</gi> is invalid because it is
               missing <att>scheme</att> in <val>add</val> mode.</desc>
               <constraint>
                 <sch:report test="false()">This rule never fires.</sch:report>
               </constraint>
             </constraintSpec>
-            <constraintSpec ident="replace_missing_scheme" mode="replace">
+            <constraintSpec ident="replace_missing_scheme" mode="replace" xml:lang="en">
               <desc>This <gi>constraintSpec</gi> is invalid because it is
               missing <att>scheme</att> in <val>replace</val> mode.</desc>
               <constraint>
                 <sch:report test="false()">This rule never fires.</sch:report>
               </constraint>
             </constraintSpec>
-            <constraintSpec ident="test_contextless_report" scheme="schematron">
+            <constraintSpec ident="test_contextless_report" scheme="schematron" xml:lang="en">
               <desc>This <gi>constraintSpec</gi> is invalid because it
               has an <gi>sch:report</gi> that does not have a context
               (i.e., does not have a <tag>sch:rule
@@ -488,7 +492,7 @@
                 *   content-language = whether ../* are Schematron 1.x ("schematron") or ISO Schematron elements
                 *   expected-result = OK, deprecated, or error
             -->
-            <constraintSpec scheme="schematron" ident="schematron_isoschematron_OK">
+            <constraintSpec scheme="schematron" ident="schematron_isoschematron_OK" xml:lang="en">
               <!-- This should *not* raise an error, as ISO Schematron
                    is allowed inside constraintSpec/schematron -->
               <constraint>
@@ -497,7 +501,7 @@
                 </sch:rule>
               </constraint>
             </constraintSpec>
-            <constraintSpec scheme="isoschematron" ident="isoschematron_isoschematron_error">
+            <constraintSpec scheme="isoschematron" ident="isoschematron_isoschematron_error" xml:lang="en">
               <!-- This should raise an error now, as "isoschematron"
                    is no longer allowed. -->
               <constraint>
@@ -509,7 +513,7 @@
           </elementSpec>
 
           <elementSpec ident="relation" mode="change">
-            <constraintSpec ident="activepassive" mode="delete" scheme="schematron"/>
+            <constraintSpec ident="activepassive" mode="delete" scheme="schematron" xml:lang="en"/>
           </elementSpec>
 
           <elementSpec ident="abbr" mode="change">

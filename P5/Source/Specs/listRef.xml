@@ -28,14 +28,14 @@
       <classRef key="model.ptrLike" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
   </content>
- <constraintSpec ident="TagDocsNestinglistRef" scheme="schematron">
+ <constraintSpec ident="TagDocsNestinglistRef" scheme="schematron" xml:lang="en">
     <constraint>
       <sch:rule context="( tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp )/tei:listRef">
         <sch:report test="tei:listRef">In the context of tagset documentation, the listRef element must not self-nest.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="TagDocslistRefChildren" scheme="schematron">
+  <constraintSpec ident="TagDocslistRefChildren" scheme="schematron" xml:lang="en">
     <constraint>
       <sch:rule context="( tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp )/tei:listRef/tei:ptr | ( tei:classSpec | tei:dataSpec | tei:elementSpec | tei:macroSpec | tei:moduleSpec | tei:schemaSpec | tei:specGrp )/tei:listRef/tei:ref">
         <sch:assert test="@target and not( matches( @target,'\s') )">In the context of tagset documentation, each ptr or ref element inside a listRef must have a target attribute with only 1 pointer as its value.</sch:assert>
