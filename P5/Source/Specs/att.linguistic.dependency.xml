@@ -14,7 +14,7 @@
         latter is said to be its <term>head</term>. By convention, the value <val>0</val> indicates
         that the element bearing this attribute is the root of the dependency graph.</desc>
       <datatype><dataRef key="teidata.text"/></datatype>
-      <!--<exemplum xml:lang="en">
+      <exemplum xml:lang="en">
         <p>Universal Dependencies analysis of the sentence <q>I had no clue.</q>, provided below in the plain text, column-based CoNNL-U format.</p>
         <p>
 <eg xml:space="preserve"># text = I had no clue.
@@ -24,7 +24,40 @@
 4   clue    clue    NOUN    NN    Number=Sing                       2   obj     _   SpaceAfter=No
 5   .       .       PUNCT   .     _                                 2   punct   _   _</eg></p>
         
-        <p>What follows is the proposed TEI encoding. We also need a table that explains the serialisation, from the <ref target="https://github.com/LingSIG/TEI/issues/6">LingSIG issues</ref>.</p>
+        <p>Above, each segment of the source text (in the second column from the left) is provided
+          with various types of annotations, sorted across the particular columns. The implicit column labels 
+          are listed below, with an example taken from the second line of the source example, i.e., with the 
+          annotations of the segment <mentioned>had</mentioned>.</p>
+        <p>
+          <eg xml:space="preserve">
+ID  FORM    LEMMA   UPOS    XPOS  FEATS                             HEAD  DEPREL  DEPS  MISC
+2   had     have    VERB    VBP   Number=Sing|Person=1|Tense=Past   0     root    _     _
+          </eg>
+          
+        </p>
+        <p>The meanings of the particular column labels are as follows (quoted after the <ref
+            target="https://universaldependencies.org/format.html">UD documentation</ref>): <list>
+            <item>ID: Word index, integer starting at 1 for each new sentence; may be a range for
+              multiword tokens; may be a decimal number for empty nodes (decimal numbers can be
+              lower than 1 but must be greater than 0).</item>
+            <item>FORM: Word form or punctuation symbol.</item>
+            <item>LEMMA: Lemma or stem of word form.</item>
+            <item>UPOS: Universal part-of-speech tag.</item>
+            <item>XPOS: Optional language-specific (or treebank-specific) part-of-speech /
+              morphological tag; underscore if not available.</item>
+            <item>FEATS: List of morphological features from the universal feature inventory or from
+              a defined language-specific extension; underscore if not available.</item>
+            <item>HEAD: Head of the current word, which is either a value of ID or zero (0).</item>
+            <item>DEPREL: Universal dependency relation to the HEAD (root iff HEAD = 0) or a defined
+              language-specific subtype of one.</item>
+            <item>DEPS: Enhanced dependency graph in the form of a list of head-deprel pairs.</item>
+            <item>MISC: Any other annotation.</item>
+          </list>
+        </p>
+
+        <p>What follows is the proposed TEI encoding. The table below shows the relationships
+          between the particular columns of the CoNNL-U and the elements of the TEI
+          serialisation.</p>
 
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ATTLINGDEP-egXML-head1">
           <p>
@@ -36,8 +69,9 @@
           </p>
         </egXML>
         
+        <p>Note that the example above skips part of the information provided by the original source, namely the content of the XPOS column.</p>
 
-      </exemplum>-->
+      </exemplum>
       
       
       
