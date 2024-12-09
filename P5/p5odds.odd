@@ -44,12 +44,12 @@
         <moduleRef url="Exemplars/mathml2-main.rng"/>
         <moduleRef url="Exemplars/relaxng.rng"/>
 
-	<elementSpec module="tagdocs" ident="constraintSpec" mode="change">
-	  <attList>
-	    <attDef mode="change" ident="xml:lang" usage="req"/>
-	  </attList>
-	</elementSpec>
-	
+        <elementSpec module="tagdocs" ident="constraintSpec" mode="change">
+          <attList>
+            <attDef mode="change" ident="xml:lang" usage="req"/>
+          </attList>
+        </elementSpec>
+        
         <constraintSpec scheme="schematron" ident="when_glosses_English_required">
           <desc>Per <ref
           target="https://github.com/TEIC/TEI/issues/2037">ticket
@@ -184,8 +184,8 @@
             </desc>
             <constraint>
               <sch:rule context="tei:eg">
-                <sch:report test="matches( .//text()[last()], '&#x0A;\s*$')">trailing newline not allowed</sch:report>
-                <sch:report test="matches( .//text()[1],      '^\s*&#x0A;')">leading newline not allowed</sch:report>
+                <sch:report test="matches( string(.), '&#x0A;\s*$')">trailing newline not allowed</sch:report>
+                <sch:report test="matches( string(.), '^\s*&#x0A;')">leading newline not allowed</sch:report>
               </sch:rule>
             </constraint>
           </constraintSpec>
@@ -676,8 +676,15 @@
                 <valItem ident="ISBN">
                   <gloss versionDate="2013-10-30" xml:lang="en">International Standard Book Number</gloss>
                 </valItem>
-                <valItem ident="url">
-                  <gloss versionDate="2013-10-30" xml:lang="en">any form of web address</gloss>
+                <valItem ident="URI">
+                  <gloss versionDate="2024-12-04" xml:lang="en">Uniform Resource Identifier</gloss>
+		  <desc versionDate="2013-10-30" xml:lang="en">any form of web address (that is, a URL or a URN)</desc>
+                </valItem>
+                <valItem ident="URL">
+                  <gloss versionDate="2024-12-04" xml:lang="en">Uniform Resource Locator</gloss>
+                </valItem>
+                <valItem ident="URN">
+                  <gloss versionDate="2024-12-04" xml:lang="en">Uniform Resource Name</gloss>
                 </valItem>
               </valList>
             </attDef>
