@@ -2,13 +2,11 @@
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" predeclare="true" xml:id="GBLSRC" module="tei" type="atts" ident="att.global.source">
-  <desc versionDate="2021-08-22" xml:lang="en">provides attributes used by elements to point to an
-    external source.</desc>
+  <desc versionDate="2021-08-22" xml:lang="en">provides attributes used by elements to point to an external source.</desc>
   <desc versionDate="2019-09-18" xml:lang="ja">外部ソースを参照する要素によって用いられる属性を示す。</desc>
   <attList>
     <attDef ident="source" usage="opt">
-      <desc versionDate="2010-05-09" xml:lang="en">specifies the source from which some aspect of
-        this element is drawn.</desc>
+      <desc versionDate="2010-05-09" xml:lang="en">specifies the source from which some aspect of this element is drawn.</desc>
       <desc versionDate="2019-09-18" xml:lang="ja">この要素の何らかの側面を示すソースを指定する。</desc>
       <datatype maxOccurs="unbounded">
         <dataRef key="teidata.pointer"/>
@@ -17,14 +15,14 @@
         <constraint>
           <sch:rule context="tei:*[@source]">
             <sch:let name="srcs" value="tokenize( normalize-space(@source),'&#x20;')"/>
-            <sch:report test="( self::tei:classRef
-              | self::tei:dataRef
-              | self::tei:elementRef
-              | self::tei:macroRef
-              | self::tei:moduleRef
-              | self::tei:schemaSpec )
-              and
-              $srcs[2]">
+            <sch:report test="(   self::tei:classRef
+                                | self::tei:dataRef
+                                | self::tei:elementRef
+                                | self::tei:macroRef
+                                | self::tei:moduleRef
+                                | self::tei:schemaSpec )
+                                  and
+                                  $srcs[2]">
               When used on a schema description element (like
               <sch:value-of select="name(.)"/>), the @source attribute
               should have only 1 value. (This one has <sch:value-of
