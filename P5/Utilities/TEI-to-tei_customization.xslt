@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0" exclude-result-prefixes="#all"
+<xsl:stylesheet version="3.0"
   xpath-default-namespace="http://www.tei-c.org/ns/1.0"
   xmlns="http://www.tei-c.org/ns/1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -7,11 +7,24 @@
   xmlns:tei="http://www.tei-c.org/ns/1.0"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:sch="http://purl.oclc.org/dsdl/schematron"  
+  xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+  xmlns:teix="http://www.tei-c.org/ns/Examples"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:mml="http://www.w3.org/1998/Math/MathML"
+  xmlns:mods="http://www.loc.gov/mods/v3"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
   >
 
-  <xsl:variable name="myName" select="'TEI-to-tei_customization.xslt'"/>
-  <xsl:variable name="version" select="'0.9.0b'"/>
+  <!--
+    WARNING: The namespaces bindings on the root <xsl:stylesheet> element, above,
+    are interogated and used as the possible <sch:ns> children in the content
+    model of <constraintDecl>. So even if it is not used as a namespace in this
+    program, remove at your user’s risk.
+  -->
+  
+  <xsl:variable name="myName" select="tokenize( static-base-uri(), '/')[last()]"/>
+  <xsl:variable name="version" select="'1.10.0'"/>
   <xsl:param name="versionDate" select="format-date(current-date(),'[Y]-[M01]-[D01]')"/>
 
   <!--
@@ -38,6 +51,8 @@
   -->
   <!--
       *********************** CHANGE LOG for XSLT changes *********************** 
+      2024-09-20 by Syd:
+        * Switch to XSLT 3.0
       2017-11-05 by Syd: Harumph. Found that our output is not valid against
         p5odds.rng because ident/@type is not allowed to be "test", so I removed
         the attribute.
@@ -53,9 +68,16 @@
 
   <xsl:variable name="revisionDesc">
     <revisionDesc>
+      <change who="#sbauman.emt" when="2024-09-20">
+        Add capability for new <gi>constraintDecl</gi> element:
+        * Require <att>scheme</att>
+        * Require a <tag type="empty">sch:ns prefix="tei" uri=""</tag> child
+        * Create pop-up set of other <gi>sch:ns</gi> elements to insert
+        * Require other children be in Schematron namespace
+      </change>
       <change who="#sbauman.emt" when="2024-04-12">
-	Added <gi>sch:rule</gi> elements PRN to avoid new warning
-	about contextless Schematron.
+        Added <gi>sch:rule</gi> elements PRN to avoid new warning
+        about contextless Schematron.
       </change>
       <change who="#sbauman.emt" when="2023-06-06">
         <list>
@@ -600,45 +622,45 @@
             perfectly reasonable to have in your ODD.</p>
             <div>
               <head>Background</head>
-            <p>The TEI ODD language was designed both for the creation
-            and customization of the <title>TEI Guidelines</title>,
-            and also for the creation (and perhaps customization) of
-            other, non-TEI, markup languages. Thus the TEI ODD
-            langauge is, by default, much more flexible than needed
-            for writing TEI customization ODDs. For example, the
-            Guidelines define the <att>key</att> attribute of the
-            <gi>moduleRef</gi> element as any XML name (without a
-            namespace prefix, i.e. an <code>xsd:NCName</code>), even
-            though the only possible values when used to customize TEI
-            are the 20 or so module names defined in the <title>TEI
-            Guidelines</title>.</p>
-            <p>Of course, when using Roma<note>The canonical
-            installation of Roma is available at <ref
-            target="http://www.tei-c.org/Roma/">the TEI-C site</ref>,
-            but it is an open source tool available on <ref
-            target="https://github.com/TEIC/Roma">GitHub</ref>, which
-            may be installed on any GNU/Linux system.</note>, a
-            web-based front-end editor for ODD files, this is not a
-            problem. The web form gives the user only the appropriate
-            TEI values to choose from. However, when editing ODD files
-            by hand, and thus when teaching TEI customization, it is
-            much more efficient to catch errors like mis-spelled
-            module names before handing the ODD file to an ODD
-            processor (e.g. the aforementioned <name
-            type="program">Roma</name> or <ref
-            target="https://github.com/TEIC/Stylesheets/blob/dev/bin/teitorelaxng">teitorelaxng</ref>).</p>
-            <p>Thus the Women Writers Project has developed this TEI
-            customization for the purpose of having a schema to use
-            that deliberately makes it easier to write a TEI
-            customization, at the expense of the complete flexibility
-            ODD provides.</p>
-            <p>This schema permits a valid document to use a variety
-            of elements as the root element. This is for debugging and
-            file maintenance convenience. As always, any conforming
-            TEI ODD must have either <gi>TEI</gi> or
-            <gi>teiCorpus</gi> as the root element.</p>
-            <p>REMINDER: This language is not canonical &#x2014; it is
-            intended to be helpful, not definitive</p>
+              <p>The TEI ODD language was designed both for the creation
+              and customization of the <title>TEI Guidelines</title>,
+              and also for the creation (and perhaps customization) of
+              other, non-TEI, markup languages. Thus the TEI ODD
+              langauge is, by default, much more flexible than needed
+              for writing TEI customization ODDs. For example, the
+              Guidelines define the <att>key</att> attribute of the
+              <gi>moduleRef</gi> element as any XML name (without a
+              namespace prefix, i.e. an <code>xsd:NCName</code>), even
+              though the only possible values when used to customize TEI
+              are the 20 or so module names defined in the <title>TEI
+              Guidelines</title>.</p>
+              <p>Of course, when using Roma<note>The canonical
+              installation of Roma is available at <ref
+              target="http://www.tei-c.org/Roma/">the TEI-C site</ref>,
+              but it is an open source tool available on <ref
+              target="https://github.com/TEIC/Roma">GitHub</ref>, which
+              may be installed on any GNU/Linux system.</note>, a
+              web-based front-end editor for ODD files, this is not a
+              problem. The web form gives the user only the appropriate
+              TEI values to choose from. However, when editing ODD files
+              by hand, and thus when teaching TEI customization, it is
+              much more efficient to catch errors like mis-spelled
+              module names before handing the ODD file to an ODD
+              processor (e.g. the aforementioned <name
+              type="program">Roma</name> or <ref
+              target="https://github.com/TEIC/Stylesheets/blob/dev/bin/teitorelaxng">teitorelaxng</ref>).</p>
+              <p>Thus the Women Writers Project has developed this TEI
+              customization for the purpose of having a schema to use
+              that deliberately makes it easier to write a TEI
+              customization, at the expense of the complete flexibility
+              ODD provides.</p>
+              <p>This schema permits a valid document to use a variety
+              of elements as the root element. This is for debugging and
+              file maintenance convenience. As always, any conforming
+              TEI ODD must have either <gi>TEI</gi> or
+              <gi>teiCorpus</gi> as the root element.</p>
+              <p>REMINDER: This language is not canonical &#x2014; it is
+              intended to be helpful, not definitive</p>
             </div>
           </div>
           
@@ -753,6 +775,7 @@
                   <sequence>
                     <elementRef key="gloss" minOccurs="0" maxOccurs="1"/>
                     <elementRef key="desc"  minOccurs="1" maxOccurs="1"/>
+                    <elementRef key="constraintDecl" minOccurs="0" maxOccurs="1"/>
                     <alternate minOccurs="0" maxOccurs="unbounded">
                       <classRef key="model.oddRef"/>
                       <classRef key="model.oddDecl"/>
@@ -860,6 +883,79 @@
                 </remarks>
               </elementSpec>
 
+              <xsl:comment>
+                ** The following set of &lt;elementSpec> elements exists to allow us to
+                ** refer to them from within the content model for &lt;constraintDecl>.
+                ** This allows for completion assistance from XML tools such as oXygen.
+                ** To change the set of &lt;sch:ns> elements that are defined, change
+                ** the set of namespaces bound to the root &lt;xsl:stylesheet> of this
+                ** XSLT program.
+              </xsl:comment>
+              <xsl:for-each select="document( static-base-uri() )/*/namespace::*">
+                <xsl:variable name="ident" select="'ns_for_'||name(.)"/>
+                <xsl:if test="not( name(.) = ('','xml') )">
+                  <elementSpec ns="http://purl.oclc.org/dsdl/schematron" ident="{$ident}" mode="add">
+                    <altIdent>ns</altIdent>
+                    <content><empty/></content>
+                    <attList>
+                      <attDef ident="prefix" usage="req">
+                        <datatype minOccurs="1" maxOccurs="1">
+                          <dataRef key="teidata.enumerated"/>
+                        </datatype>
+                        <valList type="closed">
+                          <valItem ident="{name(.)}"/>
+                        </valList>
+                      </attDef>
+                      <attDef ident="uri" usage="req">
+                        <datatype minOccurs="1" maxOccurs="1">
+                          <dataRef key="teidata.enumerated"/>
+                        </datatype>
+                        <valList type="closed">
+                          <valItem ident="{.}"/>
+                        </valList>
+                      </attDef>
+                    </attList>
+                  </elementSpec>
+                </xsl:if>
+              </xsl:for-each>
+              
+              <elementSpec module="tagdocs" ident="constraintDecl" mode="change">
+                <content>
+                  <sequence>
+                    <alternate minOccurs="0" maxOccurs="unbounded">
+                      <classRef key="model.identEquiv"/>
+                      <classRef key="model.descLike"/>
+                    </alternate>
+                    <elementRef key="ns_for_tei" minOccurs="1" maxOccurs="1"/>
+                    <alternate minOccurs="0" maxOccurs="unbounded">
+                      <xsl:for-each select="document( static-base-uri() )/*/namespace::*">
+                        <xsl:if test="not( name(.) = ('','tei','xml') )">
+                          <xsl:variable name="key" select="'ns_for_'||name(.)"/>
+                          <elementRef key="{$key}" minOccurs="1" maxOccurs="1"/>
+                        </xsl:if>
+                      </xsl:for-each>
+                    </alternate>
+                    <anyElement require="http://purl.oclc.org/dsdl/schematron"/>
+                  </sequence>
+                </content>
+                <attList>
+                  <attDef ident="scheme" usage="req" mode="change">
+                    <valList type="closed">
+                      <valItem ident="schematron">
+                        <gloss versionDate="2016-09-27" xml:lang="en">ISO Schematron</gloss>
+                      </valItem>
+                    </valList>
+                  </attDef>
+                </attList>
+                <remarks xml:lang="en" versionDate="{$versionDate}">
+                  <p>The tei_customization version of <gi>constraintDecl</gi> is more strict
+                    than the vanilla TEI version: it <emph>requires</emph> that the <att>scheme</att>
+                    be <val>schematron</val> and that the contents be only Schematron elements, the
+                    first of which <emph>must</emph> be <tag type="empty">sch:ns prefix="tei" uri=""</tag>.
+                  </p>
+                </remarks>
+              </elementSpec>
+              
               <elementSpec module="tagdocs" ident="moduleRef" mode="change">
                 <constraintSpec scheme="schematron" ident="if-url-then-prefix" xml:lang="en">
                   <desc>This is not strictly necessary. The TEI patterns have a default prefix (the
@@ -1253,7 +1349,7 @@
                         conformant</sch:report>
                       <sch:report test="@mode='delete' and @ident='sourceDesc'">Removing ＜sourceDesc＞
                         from your schema guarantees it is not TEI conformant</sch:report>
-		    </sch:rule>
+                    </sch:rule>
                   </constraint>
                 </constraintSpec>
                 <constraintSpec scheme="schematron" ident="content_when_adding" xml:lang="en">
@@ -1317,7 +1413,7 @@
                 <remarks xml:lang="en" versionDate="{$versionDate}">
                   <p>For our purposes, constraints must be expressed in ISO Schematron. (TEI permits
                     others, including non-XML expressions, although there is no processing of
-                    anything other ISO Schematron.)</p>
+                    anything other than ISO Schematron.)</p>
                 </remarks>
               </elementSpec>
 
@@ -1532,11 +1628,11 @@
                   <attDef ident="xml:id" mode="change" ns="http://www.w3.org/XML/1998/namespace">
                     <constraintSpec scheme="schematron" ident="unique_xmlIDs" xml:lang="en">
                       <constraint>
-			<sch:rule context="@xml:id">
+                        <sch:rule context="@xml:id">
                           <sch:let name="myID" value="normalize-space(.)"/>
                           <sch:report test="../(ancestor::*|preceding::*)/@xml:id[ normalize-space(.) eq $myID ]"
                             >The @xml:id "<sch:value-of select="."/>" on ＜<sch:value-of select="name(..)"/>＞ duplicates an @xml:id found earlier in the document</sch:report>
-			</sch:rule>
+                        </sch:rule>
                       </constraint>
                     </constraintSpec>
                   </attDef>

@@ -134,7 +134,8 @@ an XML Document Type Declaration.</item-->
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="TDphraseEA-egXML-jl" source="#SELF">
           <div>
             <head>Element and Attribute Descriptions</head>
-            <p>Within the body of a document using this module, the … the brief prose descriptions these provide for elements and attributes.
+            <p>Within the body of a document using this module, the following elements may be used to reference parts of the specification elements
+discussed in section <ptr target="#TDcrystals"/>, in particular the brief prose descriptions these provide for elements and attributes.
               <specList>
                 <specDesc key="specList"/>
                 <specDesc key="specDesc" atts="atts"/>
@@ -812,12 +813,12 @@ to mark any technical term, thus:
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="TDTAGCONS-egXML-ah">
           <constraintSpec ident="ref-or-key-or-name" scheme="schematron">
             <constraint>
-              <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
               <sch:rule context="tei:relation">
                 <sch:assert test="@ref or @key or @name">One of the attributes @name, @ref, or @key must be supplied</sch:assert>
               </sch:rule>
             </constraint>
           </constraintSpec>
+
           <constraintSpec ident="active-mutual" scheme="schematron">
             <constraint>
               <sch:rule context="tei:relation">
@@ -825,6 +826,7 @@ to mark any technical term, thus:
               </sch:rule>
             </constraint>
           </constraintSpec>
+
           <constraintSpec ident="active-passive" scheme="schematron">
             <constraint>
               <sch:rule context="tei:relation">
@@ -835,18 +837,50 @@ to mark any technical term, thus:
         </egXML>
       </p>
       <p>Note that the <q>tei:</q> prefix needs to be bound to the TEI
-      namespace using the Schematron language <gi scheme="Schematron">ns</gi> element, but typically this only
-      needs to be done once. The following two examples are written
-      presuming that the namespace binding for <q>tei:</q> has occured
-      elsewhere. The first example models the constraint that a TEI
-      <gi>div</gi> must contain either no subdivisions or at least two
-      of them:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="TDTAGCONS-egXML-yr">
+      namespace using the Schematron language <gi
+      scheme="Schematron">ns</gi> element. This can be done using the
+      <gi>constraintDecl</gi> element, which may appear in either the
+      <gi>encodingDesc</gi> or <gi>schemaSpec</gi> element. A
+      <gi>constraintDecl</gi> contains declarations specific to all
+      the <gi>constraintSpec</gi> elements in the current TEI document
+      whose <att>scheme</att> matches that of the
+      <gi>constraintDecl</gi>.
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+	  <constraintDecl scheme="schematron" queryBinding="xslt3">
+	    <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
+	    <sch:ns prefix="xi" uri="http://www.w3.org/2001/XInclude"/>
+	    <sch:let name="edition" value="substring-before( /*/tei:teiHeader//tei:editionStmt/tei:edition/@n, '.')"/>
+	    <sch:let name="uses_old_encoding" value="$edition cast as xs:integer lt 3"/>
+      	  </constraintDecl>
+	</egXML>
+      In this example the Schematron query language binding is set (to
+      <val>xslt3</val>) for use by a Schematron processor, two
+      namespace prefixes are bound to namespace URIs for later use within
+      <gi>constraint</gi> elements, and the
+      <code>$uses_old_encoding</code> variable is set (to either
+      <code>true()</code> or <code>false()</code>) so that Schematron
+      assertions elsewhere in the TEI document can easily test whether
+      the edition number of the document being checked is 3 or more. (Presumably
+      in this project there are minor encoding differences between the older
+      and newer editions which do not merit an entirely different
+      schema, but do merit the occasional different constraint.)</p>
+      <p>The following two examples are written presuming that the
+      <gi>constraintDecl</gi> above is in force, that is that the
+      Schematron processor will use an <val>xslt3</val> binding, that
+      <q>tei:</q> is bound to the TEI namespace, that <q>xi:</q> is
+      bound to the XInclude namespace, and that the the variable
+      <code>$uses_old_encoding</code> is defined as a boolean. The
+      first example models the constraint that a TEI <gi>div</gi> must
+      contain either no subdivisions or at least two of them, with the
+      added complication that larger subdivisions are provided as
+      separate <name>sect<emph>NN</emph>.xml</name> files read in
+      using XInclude:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <constraintSpec ident="subclauses" scheme="schematron">
             <constraint>
               <sch:rule context="tei:div">
-                <sch:report test="count( tei:div ) eq 1">if it contains any subdivisions, a
-                division must contain at least two of them</sch:report>
+                <sch:report test="count( tei:div | xi:include[ contains( @href, 'sect') ] ) eq 1">if it contains any
+		subdivisions, a division must contain at least two of them</sch:report>
               </sch:rule>
             </constraint>
           </constraintSpec>
@@ -865,8 +899,11 @@ to mark any technical term, thus:
           </constraintSpec>
           <constraintSpec ident="maintitle" scheme="schematron">
             <constraint>
-              <sch:rule context="tei:teiHeader">
-                <sch:assert test="tei:fileDesc/tei:titleStmt/tei:title[@type='main']"> a main title must be supplied</sch:assert>
+              <sch:rule context="tei:teiHeader[ $uses_old_encoding ]">
+                <sch:assert test="tei:fileDesc/tei:titleStmt/tei:title[@type eq 'main']"> a main title must be supplied</sch:assert>
+              </sch:rule>
+              <sch:rule context="tei:teiHeader[ not( $uses_old_encoding ) ]">
+                <sch:assert test="tei:fileDesc/tei:titleStmt/tei:title[ not( @type eq 'sub' ) ]"> a main title must be supplied</sch:assert>
               </sch:rule>
             </constraint>
           </constraintSpec>
@@ -879,7 +916,6 @@ to mark any technical term, thus:
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="TDTAGCONS-egXML-wn">
           <constraintSpec ident="alt" scheme="schematron">
             <constraint>
-              <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
               <sch:pattern id="altTags">
                 <sch:rule context="tei:figure">
                   <sch:assert test="tei:figDesc or tei:head"> You should provide information in a figure from
@@ -894,7 +930,6 @@ to mark any technical term, thus:
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="TDTAGCONS-egXML-ym">
           <constraintSpec ident="tables" scheme="schematron">
             <constraint>
-              <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
               <sch:pattern id="Tables">
                 <sch:rule context="tei:table">
                   <sch:assert test="tei:head">A &lt;table&gt; should have a caption, using a &lt;head&gt; element</sch:assert>
@@ -1809,6 +1844,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.contentPart.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/sequence.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/alternate.xml"/>
+      <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/constraintDecl.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/constraint.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/constraintSpec.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/attList.xml"/>
