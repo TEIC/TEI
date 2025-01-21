@@ -329,7 +329,7 @@ problem for text encoders. Suppose, for example, that we wish to
 investigate a diachronic English corpus for occurrences of
 <mentioned>tea-pot</mentioned> and <mentioned>teapot</mentioned>, to
 find evidence for the point at which this compound becomes
-lexicalized. Any case where the word is hyphenated across a linebreak,
+lexicalized. Any case where the word is hyphenated across a line division,
 like this: <eg xml:space="preserve"><![CDATA[tea-
 pot]]></eg> is
 ambiguous: there is no simple way of deciding which of the two
@@ -381,11 +381,11 @@ whitespace. </p>
 
 <p> The <gi>lb</gi>, <gi>pb</gi>, and <gi>cb</gi> elements are notable
 exceptions to this general rule, since their function is precisely to
-represent (or replace) line, page, or column breaks, which, as noted
+represent (or replace) line, page, or column beginnings, which, as noted
 above, are generally considered to be equivalent to whitespace. These
 elements provide a more reliable way of preserving the lineation,
-pagination, etc of a source document, since the encoder should not
-assume that (untagged) line breaks etc. in an XML source file will
+pagination, etc. of a source document, since the encoder should not
+assume that (untagged) line beginnings etc. in an XML source file will
 necessarily be preserved. </p>
 
 <p>To control the intended tokenization, the encoder may use the
@@ -2696,7 +2696,7 @@ appropriate value for the <att>rend</att> attribute. Suggested values
   for <att>rend</att> include:
   <list rend="bulleted">
     <item><term>bulleted</term> (items preceded by bullets or similar markings)</item>
-    <item><term>inline</term> (items rendered within continuous prose, with no linebreaks)</item>
+    <item><term>inline</term> (items rendered within continuous prose, with no line divisions)</item>
     <item><term>numbered</term> (items preceded by numbers or letters)</item>
     <item><term>simple</term> (items rendered as blocks, but with no bullet or number)</item>
   </list>
@@ -3492,11 +3492,11 @@ section <ptr target="#CORS6"/> and in section <ptr target="#SACR"/>.
 <p>When a text has no pre-existing associated reference system of any
 kind, these Guidelines recommend as a minimum that at least the page
 boundaries of the source text be marked using one of the methods
-outlined in this section.  Retaining page breaks in the markup is also
+outlined in this section.  Retaining page boundaries in the markup is also
 recommended for texts which have a detailed reference system of their
-own. Line breaks in prose texts may be, but need not be, tagged.<note place="bottom">Many encoders find it convenient to retain the line
-breaks of the original during data entry, to simplify proofreading,
-but this may be done without inserting a tag for each line break of
+own. Line divisions in prose texts may be, but need not be, encoded.<note place="bottom">Many encoders find it convenient to retain the line
+  divisions of the original during data entry, to simplify proofreading,
+  but this may be done without inserting an element for the beginning of each line in
 the original.</note></p>
 <div type="div3" xml:id="CORS1"><head>Using the <att>xml:id</att> and <att>n</att> Attributes</head>
 <p>When traditional reference schemes represent a hierarchical
@@ -3900,7 +3900,7 @@ treated as a single word, a tagging such as the following is recommended:
   <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="CORS5-egXML-hq" source="#NONE">
 ...sed imp<lb break="no"/>erator dixit...
 </egXML>
-Where hyphenation appears before a line or page break, the encoder may
+  Where hyphenation appears at the end of a topographic line, a column, or a page, the encoder may
 or may not choose to record the fact, either explicitly using an
 appropriate Unicode character, or descriptively for example by means
 of the <att>rend</att> attribute; see further <ptr target="#COPU-2"/>.</p>
@@ -4201,6 +4201,17 @@ encoding of short-form references such as <mentioned>Baxter,
 1983</mentioned> is not as <gi>bibl</gi> elements but as
 cross-references to such elements; see section <ptr target="#COBIXR"/>
 below.  </p> 
+<p>
+  Bibliographic references encoded with <gi>bibl</gi>, <gi>biblFull</gi>, or <gi>biblStruct</gi> may link to another, possibly more detailed, bibliographic reference to the same resource using either the attribute <att>ref</att> or <att>key</att> defined in <ident type="class">att.canonical</ident>. The <att>ref</att> attribute performs this linking function using a URI that may point either within or outside the TEI document, as shown in the following example:
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="COBITY-egXML-bibref" source="#NONE">
+    <bibl ref="https://search.worldcat.org/title/song-of-achilles/oclc/911117343"><title>The song of Achilles</title> by <author>Madeline Miller</author>.</bibl>
+  </egXML>
+  The <att>key</att> attribute, on the other hand, associates a bibliographical reference with an external or project-defined identifier as demonstrated here:
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="COBITY-egXML-bibkey" source="#NONE">
+    <bibl key="Homer_Iliad.16">Book 16 of <author>Homer</author>'s <title>Iliad</title>.</bibl>
+  </egXML>
+  These attributes should not be used for encoding bibliographic pointers (short-form citations); for that purpose, see section <ptr target="#COBIXR"/> below.
+</p>
 <p>In cases where the encoder wishes to impose more structure on the
 bibliographic information, for example to make sure it conforms to a
 particular stylesheet or retrieval processor, the <gi>biblStruct</gi>
@@ -5476,8 +5487,8 @@ following example:
   normalize bibliographic references: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="COBIXR-egXML-cc" source="#NONE">Nelson claims (<ref target="#NEL80">Nelson [1980]</ref> pages 13–37)
     ...</egXML> 
   If it is desired to capture additional information like this in a short-form
-  reference, then <gi>bibl</gi> may be used with the <att>corresp</att> attribute pointing to
-  the full bibliographic reference: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="COBIXR-egXML-hi" source="#NONE">Nelson claims (<bibl corresp="#NEL80">Nelson [1980] pages <biblScope unit="page" from="13" to="37">13–37</biblScope></bibl>) ...</egXML>
+  reference, then <gi>bibl</gi> may be used with the <att>ref</att> attribute pointing to
+  the full bibliographic reference: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="COBIXR-egXML-hi" source="#NONE">Nelson claims (<bibl ref="#NEL80">Nelson [1980] pages <biblScope unit="page" from="13" to="37">13–37</biblScope></bibl>) ...</egXML>
 </p>
 <p>The <gi>ref</gi> element may also be used to provide a reference to a copy of the bibliographic item itself, particularly if this is available online, as in the following example: 
   <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="COBIXR-egXML-ad" source="#NONE">
@@ -5645,13 +5656,13 @@ metrical rather than typographic lines.  In some modern or free verse,
 it may be hard to decide whether the typographic line is to be
 regarded as a verse line or not, but the distinction is quite clear
 for verse following regular metrical patterns. Where a metrical line is
-interrupted by a typographic line break, the encoder may choose to
-ignore the fact entirely or to use the empty <gi>lb</gi> (line break)
+interrupted by the start of a new typographic line, the encoder may choose to
+ignore the fact entirely or to use the empty <gi>lb</gi> (line beginning)
 element discussed in <ptr target="#CORS"/>.  By convention, the start
 of a metrical line implies the start of a typographic line; hence
 there is no need to introduce an <gi>lb</gi> tag at the start of every
 <gi>l</gi> element, but only at places where a new typographic line
-starts  within a metrical line, as in the following example:
+starts within a metrical line, as in the following example:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="COVE-egXML-vm" source="#CO-eg-06">
 <l>Of Mans First Disobedience, and<lb/> the Fruit</l>
@@ -5664,14 +5675,13 @@ starts  within a metrical line, as in the following example:
 In the original copy text, the presence of an ornamental capital at
 the start of the poem means that the measure is not wide enough to
 print the first four lines on four lines; instead each metrical line occupies
-two typographic lines, with a break at the point indicated. Note that
+two typographic lines, with the second beginning at the point indicated. Note that
 this encoding makes no attempt to preserve information about the
 whitespace or indentation associated with either kind of line; if regarded
 as essential, this information would be recorded using the
 <att>rend</att> or <att>rendition</att> attributes discussed in <ptr target="#STGA"/>. </p>
   <p>The <gi>l</gi> element should not be used to represent typographic
-lines in non-verse materials: if the line-breaking points in a prose
-text are considered important for analysis, they should be marked with
+    lines in non-verse materials: if the lineation of a prose text is considered important for analysis, the beginning of each line should be marked with
 the <gi>lb</gi> element. Alternatively, a neutral segmentation element
 such as <gi>seg</gi> or <gi>ab</gi> may be used; see further
 discussion of these elements in chapter <ptr target="#SA"/>. The

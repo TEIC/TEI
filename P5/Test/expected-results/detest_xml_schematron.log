@@ -1,9 +1,6 @@
 The @generatedBy attribute is for use within a &lt;post&gt; element. (ancestor-or-self::tei:post)
 The @generatedBy attribute is for use within a &lt;post&gt; element. (ancestor-or-self::tei:post)
- The element indicated by @spanTo (#ds2) must follow the current element delSpan
-          (id(substring(@spanTo,2)) and following::*[@xml:id=substring(current()/@spanTo,2)])
- The element indicated by @spanTo (notMeaningful) must follow the current element delSpan
-          (id(substring(@spanTo,2)) and following::*[@xml:id=substring(current()/@spanTo,2)])
+ The element indicated by @spanTo (#ds2) must follow the current delSpan element (id( substring( @spanTo, 2 ) ) &gt;&gt; .)
  @schemeVersion can only be used if @scheme is specified. (@scheme and not(@scheme = 'free'))
 The abbr element should not be categorized in detail with @subtype unless also categorized in general with @type (@type)
 The div element should not be categorized in detail with @subtype unless also categorized in general with @type (@type)
@@ -41,3 +38,4 @@ In the context of tagset documentation, the listRef element must not self-nest. 
 In the context of tagset documentation, each ptr or ref element inside a listRef must have a target attribute with only 1 pointer as its value. (@target and not( matches( @target,'\s') ))
 In the context of tagset documentation, each ptr or ref element inside a listRef must have a target attribute with only 1 pointer as its value. (@target and not( matches( @target,'\s') ))
  The @new attribute should always be supplied; use the special value "normal" to indicate that the feature concerned ceases to be remarkable at this point. (@new / warning)
+ Abstract model violation: Metrical lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText. (ancestor::tei:floatingText | parent::tei:figure | parent::tei:note)

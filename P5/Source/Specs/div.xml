@@ -65,12 +65,12 @@
       </sequence>
     </sequence>
   </content>
-  <constraintSpec ident="abstractModel-structure-div-in-l-or-lg" scheme="schematron" xml:lang="en">
+  <constraintSpec ident="abstractModel-structure-div-in-l" scheme="schematron" xml:lang="en">
     <constraint>
-      <sch:rule context="tei:div">
-        <sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not(ancestor::tei:floatingText)">
-          Abstract model violation: Lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
-        </sch:report>
+      <sch:rule context="tei:l//tei:div">
+        <sch:assert test="ancestor::tei:floatingText">
+          Abstract model violation: Metrical lines may not contain higher-level structural elements such as div, unless div is a descendant of floatingText.
+        </sch:assert>
       </sch:rule>
     </constraint>
   </constraintSpec>
