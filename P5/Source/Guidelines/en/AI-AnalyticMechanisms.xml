@@ -1204,16 +1204,19 @@ sake of readability).
       <term>CoNLL-U</term>:
       <eg xml:space="preserve">1	They	they	PRON	_	_	2	nsubj	_	_
 2	buy	buy	VERB	_	_	0	root	_	_
-3	books	book	NOUN	_	_	2	obj	_	_
+3	books	book	NOUN	_	_	2	obj	_	SpaceAfter=No
 4	.	.	PUNCT	_	_	2	punct	_	_</eg>
       In this example, the first column gives a numerical, one-based, node index
       of the tokens in the current sentence, the second column a token of a word
       form or a symbol, the third column the corresponding lemma, the forth
       column a UD part-of-speech tag, the seventh column the node index of the
       syntactic head of the current token, and the eighth column a label of the
-      type of the dependency relation between the token and its head. (Empty
-      columns are marked with <code>_</code>.) Note that, by convention, the
-      index for the (unrepresented) root node is 0.</p>
+      type of the dependency relation between the token and its head. The very
+      last, tenth, column can be used for miscellaneous information, such as
+      whether or not there is space to add after the token when joining them.
+      Empty columns are marked with <code>_</code>. Note that, by convention,
+      the index for the unrepresented, <soCalled>virtual</soCalled> root node
+      is 0.</p>
     <p>A graphical rendition of this example is given below in terms of an
       annotated dependency graph.</p>
     <p><graphic width="300px" url="Images/dependency1.png"/></p>
@@ -1233,7 +1236,7 @@ sake of readability).
         <s n="0">
           <w n="1" head="2" deprel="nsubj" pos="PRON" lemma="they">They</w>
           <w n="2" head="0" deprel="root" pos="VERB" lemma="buy">buy</w>
-          <w n="3" head="2" deprel="obj" pos="NOUN" lemma="book">books</w>
+          <w n="3" head="2" deprel="obj" pos="NOUN" lemma="book" join="right">books</w>
           <pc n="4" head="2" deprel="punct" pos="PUNCT" lemma=".">.</pc>
         </s>
       </egXML>
@@ -1245,22 +1248,28 @@ sake of readability).
       index of their syntactic head. Labels for the types of the dependency
       relation are provided as the value of the <att>deprel</att> attributes on
       <gi>w</gi> and <gi>pc</gi> elements. Part-of-speech tags and lemmas are
-      given as values of <att>pos</att> and <att>lemma</att> attributes.</p>
+      given as values of <att>pos</att> and <att>lemma</att> attributes. Last,
+      but not least, the <att>join</att> attribute can be used for information
+      on whether a token is adjacent to the tokens on its left-hand or
+      right-hand side when joining them.</p>
 
     <p>A more complex example in the CoNLL-U format is given below:<note
       place="bottom">The example is taken from the documentation of the CoNLL-U
-      format at <ptr target="https://universaldependencies.org/format.html"/>.</note>
+      format at <ptr target="https://universaldependencies.org/format.html"/>,
+      with the addition of <code>SpaceAfter=No</code> <!-- in the fifth row -->
+      on the last column for miscellaneous information.</note>
       <eg xml:space="preserve">1	They	they	PRON	PRP	Case=Nom|Number=Plur	2	nsubj	2:nsubj|4:nsubj	_
 2	buy	buy	VERB	VBP	Number=Plur|Person=3|Tense=Pres	0	root	0:root	_
 3	and	and	CCONJ	CC	_	4	cc	4:cc	_
 4	sell	sell	VERB	VBP	Number=Plur|Person=3|Tense=Pres	2	conj	0:root|2:conj	_
-5	books	book	NOUN	NNS	Number=Plur	2	obj	2:obj|4:obj	_
+5	books	book	NOUN	NNS	Number=Plur	2	obj	2:obj|4:obj	SpaceAfter=No
 6	.	.	PUNCT	.	_	2	punct	2:punct	_</eg>
       In this grammatical annnotation of a sentence with coordination ellipsis,
-      there are additional columns. The fifth column provides a concurrent
-      part-of-speech tagging using a non-UD tagset. The sixth column adds a
-      pipe-separated list of morphosyntactic features. The ninth column encodes
-      an extended dependency structure with additional dependency relations.</p>
+      there are additional non-empty columns. The fifth column provides a
+      concurrent part-of-speech tagging using a non-UD tagset. The sixth column
+      adds a pipe-separated list of morphosyntactic features. And the ninth
+      column encodes an extended dependency structure with additional dependency
+      relations.</p>
     <p>As can be seen from the graphical rendition of this example below, there
       are dependent nodes with multiple arcs, pointing to more than one head
       node.</p>
@@ -1273,7 +1282,7 @@ sake of readability).
           <w n="2" head="0" deprel="root" pos="VERB VBP" msd="Number=Plur|Person=3|Tense=Pres" lemma="buy">buy</w>
           <w n="3" head="4" deprel="cc" pos="CCONJ CC" lemma="and">and</w>
           <w n="4" head="2 0" deprel="conj root" pos="VERB VBP" msd="Number=Plur|Person=3|Tense=Pres" lemma="sell">sell</w>
-          <w n="5" head="2 4" deprel="obj obj" pos="NOUN NNS" msd="Number=Plur" lemma="book">books</w>
+          <w n="5" head="2 4" deprel="obj obj" pos="NOUN NNS" msd="Number=Plur" lemma="book" join="right">books</w>
           <pc n="6" head="2" deprel="punct" pos="PUNCT ." lemma=".">.</pc>
         </s>
       </egXML>
