@@ -1189,115 +1189,159 @@ sake of readability).
   </egXML></p>
 </div>
 
-  <div type="div3" xml:id="AILADEP"><head>Syntactic dependency relations
-    between word-level elements</head>
-    <p>For the purpose of encoding grammatical annotations of syntactic
-      dependency relations between word-level elements, the Guidelines provide
-      attributes that belong to the
-      <ident type="class">att.linguistic.dependency</ident> class:
-      <specList>
-        <specDesc key="att.linguistic.dependency" atts="head deprel"/>
-      </specList></p>
-    <p>In the widely used Universal Dependencies (UD) framework, grammatical
-      annotations of syntactic dependency relations, parts of speech, lemmas
-      etc. are usually represented in a plain-text, column-based format called
-      <term>CoNLL-U</term>:
-      <eg xml:space="preserve">1	They	they	PRON	_	_	2	nsubj	_	_
+<div type="div3" xml:id="AILADEP">
+<head>Syntactic dependency relations between word-level elements</head>
+<p>For the purpose of encoding linguistic annotations of syntactic dependency
+relations between word-level elements, the Guidelines provide attributes that
+belong to the <ident type="class">att.linguistic.dependency</ident> class:
+<specList>
+<specDesc key="att.linguistic.dependency" atts="head deprel"/>
+</specList></p>
+<p>Syntactic dependency relations such as <soCalled>subject</soCalled> or
+<soCalled>object</soCalled> between words and other tokens are usually
+represented as dependency graphs. A simple example for such a graph is given
+below.
+<figure>
+<graphic width="200px" url="Images/dependency1.png"/>
+</figure>
+In this graph, each node is labelled with one token of the sentence
+<mentioned>They buy books.</mentioned> The nodes are connected by arcs labelled
+with the type of the dependency relation (<mentioned>nsubj</mentioned>,
+<mentioned>obj</mentioned>, <mentioned>punct</mentioned>).<note
+place="bottom">The labels for types of dependency relations are taken from the
+Universal Dependencies (UD) inventory (cf. <ptr
+target="https://universaldependencies.org/u/dep/index.html"/>).</note> Each arc
+connects a <term>dependent</term> node and a <term>head</term> node. In the case
+of the arc labelled with <mentioned>obj</mentioned> and connecting the nodes
+labelled with the tokens <mentioned>books</mentioned> and
+<mentioned>buy</mentioned>, for instance, the former node is said to be the
+dependent node and the latter its head node.</p>
+<p>An equivalent rendition of this graph is given below, where the direction of
+the arrowless arcs is implicitly given by the vertical dimension. For
+convenience, the horizontal positions of the nodes are made explicit in terms of
+numerical, one-based, node indices.
+<figure>
+<graphic width="200px" url="Images/dependency2.png"/>
+</figure>
+As it is implied from this rendition, the node with index 2 (labelled with
+<mentioned>buy</mentioned>) is the <term>root</term> of the dependency graph:
+from this node, every other node in the graph can be reached on a path of arcs
+by following them from top to bottom.</p>
+<p>Using the global <att>n</att> attribute and the attributes <att>head</att>
+and <att>deprel</att> defined by the <ident
+type="class">att.linguistic.dependency</ident> class, the dependency relations
+in the above example can be encoded in TEI XML as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<s>
+  <w n="1" head="2" deprel="nsubj">They</w>
+  <w n="2">buy</w>
+  <w n="3" head="2" deprel="obj">books</w>
+  <pc n="4" head="2" deprel="punct">.</pc>
+</s>
+</egXML>
+Here, <att>n</att> attributes represent the node indices of the tokens marked
+up with <gi>w</gi> and <gi>pc</gi> elements. Dependency relations are encoded by
+means of <att>head</att> attributes of the <gi>w</gi> and <gi>pc</gi> elements
+in terms of the node index of their head node. Labels for types of dependency
+relations are provided as the value of <att>deprel</att> attributes on
+<gi>w</gi> and <gi>pc</gi> elements.</p>
+<p>A widely used notation for annotations of dependency relations and other
+linguistic information is the plain-text, column-based <term>CoNLL-U</term>
+format. A CoNLL-U representation of the example at hand in the Universal
+Dependencies (UD) framework is given below:
+<eg xml:space="preserve">1	They	they	PRON	_	_	2	nsubj	_	_
 2	buy	buy	VERB	_	_	0	root	_	_
 3	books	book	NOUN	_	_	2	obj	_	SpaceAfter=No
 4	.	.	PUNCT	_	_	2	punct	_	_</eg>
-      In this example, the first column gives a numerical, one-based, node index
-      of the tokens in the current sentence, the second column a token of a word
-      form or a symbol, the third column the corresponding lemma, the forth
-      column a UD part-of-speech tag, the seventh column the node index of the
-      syntactic head of the current token, and the eighth column a label of the
-      type of the dependency relation between the token and its head. The very
-      last, tenth, column can be used for miscellaneous information, such as
-      whether or not there is space to add after the token when joining them.
-      Empty columns are marked with <code>_</code>. Note that, by convention,
-      the index for the unrepresented, <soCalled>virtual</soCalled>, root node
-      is 0.</p>
-    <p>A graphical rendition of this example is given below in terms of an
-      annotated dependency graph.</p>
-    <p><graphic width="300px" url="Images/dependency1.png"/></p>
-    <p>In this directed graph, the labelled arcs each connect a
-      <term>dependent</term> node and its <term>head</term> node. The arc labels
-      indicate the type of the dependency relation. A somewhat special relation
-      is the root relation, which serves to explicitly mark that the verb
-      functions as the root of the dependency structure. For convenience, each
-      node is annotated with its node index and – except for the
-      <soCalled>virtual</soCalled> root node – with tokens, lemmas, and
-      part-of-speech tags.</p>
-    <p>Using the attributes defined by the
-      <ident type="class">att.linguistic</ident> and
-      <ident type="class">att.linguistic.dependency</ident> classes, the
-      above example can be encoded as follows:
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <s>
-          <w n="1" head="2" deprel="nsubj" pos="PRON" lemma="they">They</w>
-          <w n="2" head="0" deprel="root" pos="VERB" lemma="buy">buy</w>
-          <w n="3" head="2" deprel="obj" pos="NOUN" lemma="book" join="right">books</w>
-          <pc n="4" head="2" deprel="punct" pos="PUNCT" lemma=".">.</pc>
-        </s>
-      </egXML>
-      Here, the <att>n</att> attribute represents the node index of the
-      tokens marked up with <gi>w</gi> and <gi>pc</gi> elements; the
-      index <val>0</val> for the <soCalled>virtual</soCalled> root node is left
-      implicit. Dependency relations are encoded by means of <att>head</att>
-      attributes of <gi>w</gi> and <gi>pc</gi> elements in terms of the node
-      index of their syntactic head. Labels for the types of the dependency
-      relation are provided as the value of the <att>deprel</att> attributes on
-      <gi>w</gi> and <gi>pc</gi> elements. Part-of-speech tags and lemmas are
-      given as values of <att>pos</att> and <att>lemma</att> attributes. Last,
-      but not least, the <att>join</att> attribute can be used for information
-      on whether a token is adjacent to the tokens on its left-hand or
-      right-hand side when joining them.</p>
-
-    <p>A more complex example in the CoNLL-U format is given below:<note
-      place="bottom">The example is taken from the documentation of the CoNLL-U
-      format at <ptr target="https://universaldependencies.org/format.html"/>,
-      with the addition of <code>SpaceAfter=No</code> <!-- in the fifth row -->
-      on the last column for miscellaneous information.</note>
-      <eg xml:space="preserve">1	They	they	PRON	PRP	Case=Nom|Number=Plur	2	nsubj	2:nsubj|4:nsubj	_
+The first column gives the node index of the tokens in the current sentence, the
+second column the tokens themselves, the third column the corresponding lemma,
+the forth column a UD part-of-speech tag, the seventh column the node index of
+the syntactic head of the current token, and the eighth column a label of the
+type of the dependency relation between the token and its head. The very last,
+tenth, column can be used for miscellaneous information, such as whether or not
+there is space to add after the token when joining them. Empty columns are
+marked with <code>_</code>. Note that by convention, the implicit root
+<mentioned>buy</mentioned> with node index 2 is explicitly marked by the
+dependency relation <mentioned>root</mentioned>, pointing to an unrepresented,
+<soCalled>virtual</soCalled>, root node with node index 0.</p>
+<p>This <soCalled>virtual</soCalled> root node is made explicit in the
+corresponding dependency graph below.
+<figure>
+<graphic width="300px" url="Images/dependency3.png"/>
+</figure>
+Here, the node with node index 2 and label <mentioned>buy</mentioned> is
+connected to an unlabelled node with node index 0 via an arc labelled with
+<mentioned>root</mentioned>. Except for the <soCalled>virtual</soCalled> root
+node, each node is, in addition, annotated with lemmas and part-of-speech
+tags.</p>
+<p>In order to encode the linguistic annotation from the above CoNLL-U example,
+the attributes <att>pos</att>, <att>lemma</att>, and <att>join</att> defined by
+the <ident type="class">att.linguistic</ident> class can be used together with
+the <att>n</att>, <att>head</att>, and <att>deprel</att> attributes:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<s>
+  <w n="1" head="2" deprel="nsubj" pos="PRON" lemma="they">They</w>
+  <w n="2" head="0" deprel="root" pos="VERB" lemma="buy">buy</w>
+  <w n="3" head="2" deprel="obj" pos="NOUN" lemma="book" join="right">books</w>
+  <pc n="4" head="2" deprel="punct" pos="PUNCT" lemma=".">.</pc>
+</s>
+</egXML>
+As in the previous example, <att>n</att> attributes represent the node indices of
+the tokens marked up with <gi>w</gi> and <gi>pc</gi> elements; the index
+<val>0</val> for the <soCalled>virtual</soCalled> root node is left implicit.
+Dependency relations are again encoded by means of <att>head</att> and
+<att>deprel</att> attributes of the <gi>w</gi> and <gi>pc</gi> elements. Note
+that the <gi>w</gi> element with the token <mentioned>buy</mentioned> in its
+content now also has <att>head</att> and <att>deprel</att> attributes.
+Part-of-speech tags and lemmas are given as values of <att>pos</att> and
+<att>lemma</att> attributes. Last, but not least, the <att>join</att> attribute
+can be used for information on whether a token is adjacent to the tokens on its
+left-hand or right-hand side when joining them.</p>
+<p>A more complex example in the CoNLL-U format is given below:<note
+place="bottom">This example is taken from the documentation of the CoNLL-U
+format at <ptr target="https://universaldependencies.org/format.html"/>, with
+the addition of <code>SpaceAfter=No</code> <!-- in the fifth row --> on the last
+column for miscellaneous information.</note>
+<eg xml:space="preserve">1	They	they	PRON	PRP	Case=Nom|Number=Plur	2	nsubj	2:nsubj|4:nsubj	_
 2	buy	buy	VERB	VBP	Number=Plur|Person=3|Tense=Pres	0	root	0:root	_
 3	and	and	CCONJ	CC	_	4	cc	4:cc	_
 4	sell	sell	VERB	VBP	Number=Plur|Person=3|Tense=Pres	2	conj	0:root|2:conj	_
 5	books	book	NOUN	NNS	Number=Plur	2	obj	2:obj|4:obj	SpaceAfter=No
 6	.	.	PUNCT	.	_	2	punct	2:punct	_</eg>
-      In this grammatical annnotation of a sentence with coordination ellipsis,
-      there are additional non-empty columns. The fifth column provides a
-      concurrent part-of-speech tagging using a non-UD tagset. The sixth column
-      adds a pipe-separated list of morphosyntactic features. And the ninth
-      column encodes an extended dependency structure with additional dependency
-      relations.</p>
-    <p>As can be seen from the graphical rendition of this example below, there
-      are dependent nodes with multiple arcs, pointing to more than one head
-      node.</p>
-    <p><graphic width="600px" url="Images/dependency2.png"/></p>
-    <p>For convenience, those additional arcs are rendered as curves.</p>
-    <p>The above example may be encoded as follows:
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <s>
-          <w n="1" head="2 4" deprel="nsubj nsubj" pos="PRON PRP" msd="Case=Nom|Number=Plur" lemma="they">They</w>
-          <w n="2" head="0" deprel="root" pos="VERB VBP" msd="Number=Plur|Person=3|Tense=Pres" lemma="buy">buy</w>
-          <w n="3" head="4" deprel="cc" pos="CCONJ CC" lemma="and">and</w>
-          <w n="4" head="2 0" deprel="conj root" pos="VERB VBP" msd="Number=Plur|Person=3|Tense=Pres" lemma="sell">sell</w>
-          <w n="5" head="2 4" deprel="obj obj" pos="NOUN NNS" msd="Number=Plur" lemma="book" join="right">books</w>
-          <pc n="6" head="2" deprel="punct" pos="PUNCT ." lemma=".">.</pc>
-        </s>
-      </egXML>
-      The extended dependency structure with additional dependency relations is
-      represented by whitespace-separated list values of the <att>head</att> and
-      <att>deprel</att> attributes. The verb form <mentioned>sell</mentioned>
-      with node index 4, for instance, has <val>2 0</val> as its <att>head</att>
-      value and <val>conj root</val> as its <att>deprel</att> value, to be
-      interpreted as being both the dependent node of a conjunct relation to the
-      node with index 2 (the verb form <mentioned>buy</mentioned>) as well as
-      the dependent node of a root relation to the <soCalled>virtual</soCalled>
-      root node with index 0. Similarly, concurrent part-of-speech tags are
-      given as list values of the <att>pos</att> attribute. The <att>msd</att>
-      is used to encode the morphosyntactic features.</p>
-  </div>
+In this linguistic annnotation of the sentence <mentioned>They buy and sell
+books.</mentioned> with coordination ellipsis, there are additional non-empty
+columns. The fifth column provides a concurrent part-of-speech tagging using a
+non-UD tagset. The sixth column adds a pipe-separated list of morphosyntactic
+features. And the ninth column encodes an enhanced dependency graph with
+additional dependency relations.</p>
+<p>As can be seen from the graphic rendition below, there are dependent nodes
+with multiple arcs, pointing to more than one head node. For convenience, those
+additional arcs are rendered with arrowheads.
+<figure>
+<graphic width="600px" url="Images/dependency4.png"/>
+</figure>
+The above example may be encoded in TEI XML as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<s>
+  <w n="1" head="2 4" deprel="nsubj nsubj" pos="PRON PRP" msd="Case=Nom|Number=Plur" lemma="they">They</w>
+  <w n="2" head="0" deprel="root" pos="VERB VBP" msd="Number=Plur|Person=3|Tense=Pres" lemma="buy">buy</w>
+  <w n="3" head="4" deprel="cc" pos="CCONJ CC" lemma="and">and</w>
+  <w n="4" head="2 0" deprel="conj root" pos="VERB VBP" msd="Number=Plur|Person=3|Tense=Pres" lemma="sell">sell</w>
+  <w n="5" head="2 4" deprel="obj obj" pos="NOUN NNS" msd="Number=Plur" lemma="book" join="right">books</w>
+  <pc n="6" head="2" deprel="punct" pos="PUNCT ." lemma=".">.</pc>
+</s>
+</egXML>
+The enhanced dependency graph with additional dependency relations is
+represented by whitespace-separated list values of the <att>head</att> and
+<att>deprel</att> attributes. The verb form <mentioned>sell</mentioned> with
+node index 4, for instance, has <val>2 0</val> as its <att>head</att> value and
+<val>conj root</val> as its <att>deprel</att> value, to be interpreted as being
+both the dependent node of a conjunct relation to the node with index 2 (the
+verb form <mentioned>buy</mentioned>) as well as the dependent node of a root
+relation to the <soCalled>virtual</soCalled> root node with index 0. Concurrent
+part-of-speech tags are given as list values of <att>pos</att> attributes, and
+<att>msd</att> attributes are used to encode the morphosyntactic UD features.</p>
+</div>
 
 <div type="div3" xml:id="AILASP"><head>Spoken Text</head>
 <p>The mechanisms proposed in this chapter may also be used to encode
