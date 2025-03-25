@@ -218,13 +218,11 @@
             <div class="main-content">
               <xsl:call-template name="startDivHook"/>
               <h3>
-                <xsl:sequence select="tei:i18n('Example')"/>
+                <xsl:sequence select="tei:i18n('Example')||': '"/>
                 <a href="ref-{$me}.html">
-                <xsl:text>: &lt;</xsl:text>
-                <xsl:value-of select="$me"/>
-                <xsl:text>&gt; </xsl:text>
+                  <xsl:value-of select="'&lt;'||$me||'&gt;'"/>
                 </a>
-                <xsl:sequence select="tei:makeGloss(.,$langs)"/>
+                <xsl:sequence select="string-join( '&#x20;', tei:makeGloss(.,$langs) )"/>
               </h3>
               <p>These search results reproduce every example of the
               use of <xsl:text>&lt;</xsl:text>

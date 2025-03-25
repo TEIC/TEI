@@ -23,16 +23,12 @@
   </classes>
   <content>
     <alternate>
-      
         <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
-      
-      
         <alternate minOccurs="0" maxOccurs="unbounded">
           <classRef key="model.personPart"/>
           <classRef key="model.global"/>
-          <elementRef key="ptr"/>
+          <classRef key="model.ptrLike"/>
         </alternate>
-      
     </alternate>
   </content>
   <attList>
@@ -45,14 +41,13 @@
       <desc versionDate="2007-05-04" xml:lang="es">establece el rol o la clasificación primaria de una persona.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">stabilisce il ruolo o la classificazione primaria di una persona</desc>
       <datatype maxOccurs="unbounded"><dataRef key="teidata.enumerated"/></datatype>
-<remarks versionDate="2013-12-21" xml:lang="en">
+      <remarks versionDate="2013-12-21" xml:lang="en">
         <p>Values for this attribute may be locally defined by a
 	project, using arbitrary keywords such as <val>artist</val>,
 	<val>employer</val>, <val>author</val>, <val>relative</val>, or
 	<val>servant</val>, each of which should be associated with a
 	definition. Such local definitions will typically be provided by a
-	<gi>valList</gi> element in the project schema
-specification.</p></remarks>
+	<gi>valList</gi> element in the project schema specification.</p></remarks>
     </attDef>
     <attDef ident="sex" usage="opt">
       <desc versionDate="2005-12-14" xml:lang="en">specifies the sex of the person.</desc>
@@ -83,14 +78,13 @@ specification.</p></remarks>
       <desc versionDate="2007-05-04" xml:lang="es">especifica un intervalo de edad para una persona.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la fascia di età di una persona</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-<remarks versionDate="2013-12-21" xml:lang="en">
+      <remarks versionDate="2013-12-21" xml:lang="en">
         <p>Values for this attribute may be locally defined by a
 	project, using arbitrary keywords such as <val>infant</val>,
 	<val>child</val>, <val>teen</val>, <val>adult</val>, or
 	<val>senior</val>, each of which should be associated with a
 	definition. Such local definitions will typically be provided by a
-	<gi>valList</gi> element in the project schema
-specification.</p></remarks>
+	<gi>valList</gi> element in the project schema specification.</p></remarks>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
@@ -167,6 +161,28 @@ specification.</p></remarks>
       <person xml:id="ariel" gender="U">
         <persName>Ariel</persName>
         <note>Character in <title level="m">The Tempest</title>.</note>
+      </person>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <p>This example demonstrates the use of a <gi>ref</gi> element to provide more information about a person.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-person-egxml-dr">
+      <person age="G2" role="author" xml:id="W0212" sex="F">
+        <birth when="1787"/>
+        <death when="1855"/>
+        <persName type="main">Mitford, Mary Russell (1787–1855)</persName>
+        <persName resp="#Nicoll">MITFORD, MARY RUSSELL</persName>
+        <listBibl type="lacyTitles">
+          <desc>Lacy's Acting Editions</desc>
+          <bibl><ref target="lacy:L1280">Foscari</ref></bibl>
+          <bibl><ref target="lacy:L1337">Rienzi</ref></bibl>
+        </listBibl>
+        <listRef type="seeAlso">
+          <ref target="https://www.victorianresearch.org/atcl/show_author.php?aid=1386">ATCL</ref>
+          <ref target="https://doi.org/10.1093/ref:odnb/18859">ODNB</ref>
+          <ref target="https://en.wikipedia.org/wiki/Mary_Russell_Mitford">Wikipedia</ref>
+          <ref target="https://digitalmitford.org">Digital Mitford</ref>
+        </listRef>
       </person>
     </egXML>
   </exemplum>
