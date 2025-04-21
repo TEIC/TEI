@@ -218,13 +218,11 @@
             <div class="main-content">
               <xsl:call-template name="startDivHook"/>
               <h3>
-                <xsl:sequence select="tei:i18n('Example')"/>
+                <xsl:sequence select="tei:i18n('Example')||': '"/>
                 <a href="ref-{$me}.html">
-                <xsl:text>: &lt;</xsl:text>
-                <xsl:value-of select="$me"/>
-                <xsl:text>&gt; </xsl:text>
+                  <xsl:value-of select="'&lt;'||$me||'&gt;'"/>
                 </a>
-                <xsl:sequence select="tei:makeGloss(.,$langs)"/>
+                <xsl:sequence select="string-join( '&#x20;', tei:makeGloss(.,$langs) )"/>
               </h3>
               <p>These search results reproduce every example of the
               use of <xsl:text>&lt;</xsl:text>
@@ -591,22 +589,19 @@
         </div>
         
         <div class="col_right">
-                
-                
                 <div>
                         <h3>TEI sourcecode</h3>
                         <ul>
                           <li>
-                            <a href="https://tei-c.org/guidelines/p5/using-the-tei-github-repository/">Getting and Using the TEI Sources.</a>
+                            <a href="https://github.com/TEIC/TEI">TEI GitHub Repository</a>
                           </li>
-                                <li>
-                                  <a href="https://github.com/TEIC/TEI">TEI GitHub Repository</a>
-                                </li>
-                                <li>
-                                        <a href="https://github.com/TEIC/TEI/issues">Bug Reports, Feature Requests, etc.</a>
-                                </li>
+                          <li>
+                            <a href="https://github.com/TEIC/TEI/blob/dev/Documents/Git-README.md">Notes on using Git to edit the Guidelines.</a>
+                          </li>
+                          <li>
+                            <a href="https://github.com/TEIC/TEI/issues">Bug Reports, Feature Requests, etc.</a>
+                          </li>
                         </ul>
-                        
                 </div>
         </div>
     

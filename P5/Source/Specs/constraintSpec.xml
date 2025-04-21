@@ -3,11 +3,9 @@
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" xml:id="gi-constraintSpec" ident="constraintSpec">
   <gloss versionDate="2009-06-10" xml:lang="en">constraint on schema</gloss>
-
   <gloss versionDate="2024-02-28" xml:lang="ja">スキーマの制約</gloss>
   <desc versionDate="2017-06-24" xml:lang="en">contains a formal constraint, typically expressed in a rule-based schema language, to which a construct must conform in order to be considered valid</desc>
-  <desc versionDate="2024-02-28" xml:lang="ja">〔データの〕構造が妥当であるために満たしていなければならない形式的な制約。
-    通常は規則ベースのスキーマ言語で表現される。</desc>
+  <desc versionDate="2024-02-28" xml:lang="ja">〔データの〕構造が妥当であるために満たしていなければならない形式的な制約。 通常は規則ベースのスキーマ言語で表現される。</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.identified"/>
@@ -63,24 +61,22 @@
       </sch:rule>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="context-required" scheme="schematron" type="deprecationWarning" validUntil="2025-04-15" xml:lang="en">
-    <desc type="deprecationInfo" versionDate="2024-03-15" xml:lang="en">
-      The use of ISO Schematron <gi>sch:assert</gi> and
-      <gi>sch:report</gi> elements without a parent <gi>sch:rule</gi>
-      with a <att>context</att> attribute is deprecated — it will be
-      an error after 2025-03-15.</desc>
-    <!-- It is somewhat easier and clearer to use
+  <constraintSpec ident="context-required" scheme="schematron" xml:lang="en">
+    <!-- Note: This constraint also fires on some cases of <constraintDecl>. -->
+    <!-- It would be somewhat easier and clearer to use
          "tei:constraintSpec[ @scheme eq 'schematron']//( sch:assert | sch:report )"
-         as the context and then test for "ancestor::sch:rule/@context".
+         as the context, and then test for "ancestor::sch:rule/@context".
          But if we did that, then a user who had multiple
          <sch:assert>s and <sch:report>s in a single contextless
          constraint would get multiple messages. This way she only
          gets one message. -->
     <constraint>
-      <sch:rule context="tei:constraintSpec[ @scheme eq 'schematron']/tei:constraint[ .//sch:assert | .//sch:report ]">
+      <sch:rule context="(tei:constraintSpec|tei:constraintDecl)[ @scheme eq 'schematron'][ .//sch:assert | .//sch:report ]">
         <sch:let name="assertsHaveContext" value="for $a in .//sch:assert return exists( $a/ancestor::sch:rule/@context )"/>
         <sch:let name="reportsHaveContext" value="for $r in .//sch:report return exists( $r/ancestor::sch:rule/@context )"/>
-        <sch:report test="( $assertsHaveContext, $reportsHaveContext ) = false()" role="warning">The use of an &lt;sch:assert&gt; or &lt;sch:report&gt; that does not have a context (i.e., does not have an ancestor &lt;sch:rule&gt; with a @context attribute) in an ISO Schematron constraint specification is deprecated, and will become invalid after 2025-03-15.</sch:report>
+        <sch:report test="( $assertsHaveContext, $reportsHaveContext ) = false()">An &lt;sch:assert&gt; or &lt;sch:report&gt;
+          element must be a descendant of an &lt;sch:rule&gt; that has a @context; one or more inside this
+          <sch:value-of select="local-name(.)"/> are not.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
