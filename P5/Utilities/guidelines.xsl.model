@@ -14,7 +14,10 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:map="http://www.w3.org/2005/xpath-functions/map"
+  xmlns:array="http://www.w3.org/2005/xpath-functions/array"
+  >
 
   <xsl:import href="http://www.tei-c.org/release/xml/tei/stylesheet/odds/odd2html.xsl"/>
   <xsl:import href="http://www.tei-c.org/release/xml/tei/stylesheet/odds/guidelines.xsl"/>
@@ -122,6 +125,11 @@
   <xsl:param name="teiWeb"></xsl:param>
   <xsl:param name="divOffset">2</xsl:param>
   <xsl:param name="verboseSpecDesc">false</xsl:param>
+  
+  <xsl:param name="subsetVersionsFile">ident-to-version.json</xsl:param>
+  
+  <xsl:variable name="IDENT_TO_VERSION_MAP" select="json-doc($subsetVersionsFile)" as="map(xs:string, array(xs:string+))"/>
+  
 
   <xsl:template match="/">
 
@@ -366,17 +374,17 @@
       test="not(parent::div) or not(local-name(preceding::*[1])='head')">
       <div>
         <xsl:choose>
-        <xsl:when test="not(parent::div) and child::div">
-          <xsl:attribute name="class">
-            <xsl:text>miniTOC miniTOC_left</xsl:text>
-          </xsl:attribute>
-          <xsl:call-template name="subtoc"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:attribute name="class">
-            <xsl:text>miniTOC miniTOC_right</xsl:text>
-          </xsl:attribute>
-        </xsl:otherwise>
+          <xsl:when test="not(parent::div) and child::div">
+            <xsl:attribute name="class">
+              <xsl:text>miniTOC miniTOC_left</xsl:text>
+            </xsl:attribute>
+            <xsl:call-template name="subtoc"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:attribute name="class">
+              <xsl:text>miniTOC miniTOC_right</xsl:text>
+            </xsl:attribute>
+          </xsl:otherwise>
         </xsl:choose>
         <ul class="subtoc">
           <li class="subtoc"><xsl:call-template name="previousLink"/></li>
@@ -384,53 +392,57 @@
           <li class="subtoc"><a class="navigation" href="index.html">
           <xsl:sequence select="tei:i18n('homeWord')"/>
           </a> </li>
-          <xsl:choose>
+          <xsl:if test="self::elementSpec or 
+                        self::classSpec[@type='model'] or
+                        self::classSpec[@type='atts'] or
+                        self::macroSpec">
+            <xsl:choose>
               <xsl:when test="self::elementSpec">
                 <li class="subtoc">
-                <a class="navigation" href="REF-ELEMENTS.html">
-                  <xsl:call-template name="showHead">
-                    <xsl:with-param name="ID">
-                      <xsl:text>REF-ELEMENTS</xsl:text>
-                    </xsl:with-param>
-                  </xsl:call-template>
-                </a>
+                  <a class="navigation" href="REF-ELEMENTS.html">
+                    <xsl:call-template name="showHead">
+                      <xsl:with-param name="ID">
+                        <xsl:text>REF-ELEMENTS</xsl:text>
+                      </xsl:with-param>
+                    </xsl:call-template>
+                  </a>
                 </li>
-            </xsl:when>
+              </xsl:when>
               <xsl:when test="self::classSpec[@type='model']">
                 <li class="subtoc">
-                <a class="navigation" href="REF-CLASSES-MODEL.html">
-                  <xsl:call-template name="showHead">
-                    <xsl:with-param name="ID">
-                      <xsl:text>REF-CLASSES-MODEL</xsl:text>
-                    </xsl:with-param>
-                  </xsl:call-template>
-                </a>
+                  <a class="navigation" href="REF-CLASSES-MODEL.html">
+                    <xsl:call-template name="showHead">
+                      <xsl:with-param name="ID">
+                        <xsl:text>REF-CLASSES-MODEL</xsl:text>
+                      </xsl:with-param>
+                    </xsl:call-template>
+                  </a>
                 </li>
-            </xsl:when>
+              </xsl:when>
               <xsl:when test="self::classSpec[@type='atts']">
                 <li class="subtoc">
-                <a class="navigation" href="REF-CLASSES-ATTS.html">
-                <xsl:call-template name="showHead">
-                  <xsl:with-param name="ID">
-                    <xsl:text>REF-CLASSES-ATTS</xsl:text>
-                  </xsl:with-param>
-                </xsl:call-template>
-                </a>
+                  <a class="navigation" href="REF-CLASSES-ATTS.html">
+                    <xsl:call-template name="showHead">
+                      <xsl:with-param name="ID">
+                        <xsl:text>REF-CLASSES-ATTS</xsl:text>
+                      </xsl:with-param>
+                    </xsl:call-template>
+                  </a>
                 </li>
-            </xsl:when>
+              </xsl:when>
               <xsl:when test="self::macroSpec">
                 <li class="subtoc">
-                <a class="navigation" href="REF-MACROS.html">
-                  <xsl:call-template name="showHead">
-                    <xsl:with-param name="ID">
-                      <xsl:text>REF-MACROS</xsl:text>
-                    </xsl:with-param>
-                  </xsl:call-template>
-                </a>
+                  <a class="navigation" href="REF-MACROS.html">
+                    <xsl:call-template name="showHead">
+                      <xsl:with-param name="ID">
+                        <xsl:text>REF-MACROS</xsl:text>
+                      </xsl:with-param>
+                    </xsl:call-template>
+                  </a>
                 </li>
-            </xsl:when>
-            <xsl:otherwise>
-              <!--
+              </xsl:when>
+              <xsl:otherwise>
+                <!--
               <xsl:for-each select="ancestor::div">
                 <div>
                   <xsl:attribute name="style">
@@ -452,9 +464,9 @@
                 </div>
               </xsl:for-each>
               -->
-            </xsl:otherwise>
-          </xsl:choose>
-
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:if>
         </ul>
       </div>
     </xsl:if>
@@ -681,10 +693,35 @@
       <p><xsl:value-of select="/TEI/teiHeader/fileDesc/editionStmt/edition"/></p>
     </div>
   </xsl:template>
+  
+  <xsl:template name="preGuidelinesFooterAddressHook">
+    <xsl:if test="@ident and (self::elementSpec or self::classSpec or self::moduleSpec or self::macroSpec)">
+      <xsl:variable name="ident" select="@ident" as="xs:string"/>
+      <xsl:if test="map:contains($IDENT_TO_VERSION_MAP, $ident)">
+       <div class="container">
+         <details class="previousVersions">
+           <summary>[Previous Versions]</summary>
+           <ul>
+             <xsl:for-each select="array:flatten($IDENT_TO_VERSION_MAP($ident))">
+               <xsl:sort select="." order="descending"/>
+               <xsl:variable name="version" select="." as="xs:string"/>
+               <li>
+                 <a href="https://www.tei-c.org/Vault/P5/{$version}/doc/tei-p5-doc/{$lang}/html/ref-{$ident}.html">
+                   <xsl:value-of select="$version"/>
+                 </a>
+               </li>
+             </xsl:for-each>
+           </ul>
+         </details>
+       </div>  
+        <hr/>
+      </xsl:if>
+    </xsl:if>
+  </xsl:template>
 
-  <xsl:template name="bodyEndHook">
+  <xsl:template name="bodyEndHook">   
     <div class="container">
-      <footer class="py-3 my-4">
+      <footer class="py-3{if (self::elementSpec) then 'my-2' else 'my-4'}">
         <ul class="nav justify-content-center border-top pb-3 mb-3">
           <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
           <li class="nav-item"><a href="/about/code-of-conduct/" class="nav-link px-2 text-body-secondary">Code of Conduct</a></li>
