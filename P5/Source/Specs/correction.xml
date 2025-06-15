@@ -28,10 +28,15 @@
     <memberOf key="model.editorialDeclPart"/>
   </classes>
   <content>
-    
-      <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
-    
+    <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>    
   </content>
+  <constraintSpec ident="correction-is-declarable" scheme="schematron" xml:lang="en">
+    <constraint>
+      <sch:pattern is-a="declarable">
+        <sch:param name="tde" value="tei:correction"/>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="status" usage="opt">
       <desc versionDate="2005-01-14" xml:lang="en">indicates the degree of correction applied to the text.</desc>

@@ -31,14 +31,21 @@
   </classes>
   <content>
     <alternate>
-        <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
-        <alternate minOccurs="1" maxOccurs="unbounded">
-          <classRef key="model.biblLike"/>
-          <classRef key="model.sourceDescPart"/>
-          <classRef key="model.listLike"/>
-        </alternate>
+      <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
+      <alternate minOccurs="1" maxOccurs="unbounded">
+        <classRef key="model.biblLike"/>
+        <classRef key="model.sourceDescPart"/>
+        <classRef key="model.listLike"/>
+      </alternate>
     </alternate>
   </content>
+  <constraintSpec ident="sourceDesc-is-declarable" scheme="schematron" xml:lang="en">
+    <constraint>
+      <sch:pattern is-a="declarable">
+        <sch:param name="tde" value="tei:sourceDesc"/>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-sourceDesc-egXML-ea">
       <sourceDesc>

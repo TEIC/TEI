@@ -12,6 +12,25 @@
       <att>decls</att>.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos para los elementos contenidos en el encabezado que pueden ser seleccionados autónomamente mediante el atributo <att>decls</att> adecuado.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">individua attributi per gli elementi contenuti nell'intestazione che possono essere selezionati autonomamente grazie all'apposito attributo <att>decls</att></desc>
+  <constraintSpec ident="att-declarable" scheme="schematron" xml:lang="en">
+    <constraint>
+      <sch:pattern id="declarable" abstract="true">
+        <!-- parameter 'tde' is for "this declarable element (type)" -->
+        <sch:rule context="$tde[ ancestor::tei:teiHeader
+                                 and
+                                 following-sibling::$tde
+                                 and
+                                 not( preceding-sibling::$tde ) ]">
+          <sch:report test="../child::$tde[ not( @xml:id ) ]">
+            When there is more than one <sch:name/>, each must have an @xml:id
+          </sch:report>
+          <sch:assert test="count( ../child::$tde[ normalize-space( @default ) = ('1','true') ] ) eq 1">
+            When there is more than one <sch:name/>, one and only one must have a @default of 'true'.
+          </sch:assert>
+        </sch:rule>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="default" usage="opt">
       <desc versionDate="2005-10-10" xml:lang="en">indicates whether or not this element is selected by default when
@@ -61,7 +80,7 @@ il est sélectionné si son parent a été choisi</desc>
   <remarks versionDate="2007-06-12" xml:lang="fr">
     <p>Les règles régissant l'association d'éléments déclarables avec des parties
                 individuelles d'un texte TEI sont entièrement définies
-		au chap1itre <ptr target="#CCAS"/>. Un seul élément
+                au chap1itre <ptr target="#CCAS"/>. Un seul élément
                 d'un type particulier peut avoir un attribut <att>default</att> avec une valeur
                     <val>true</val>.</p>
   </remarks>
