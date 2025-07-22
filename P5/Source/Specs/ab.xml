@@ -28,12 +28,12 @@
   <content>
     <macroRef key="macro.abContent"/>
   </content>
-  <constraintSpec ident="abstractModel-structure-ab-in-l-or-lg" scheme="schematron" xml:lang="en">
+  <constraintSpec ident="abstractModel-structure-ab-in-l" scheme="schematron" xml:lang="en">
     <constraint>
-      <sch:rule context="tei:ab">
-        <sch:report test="(ancestor::tei:l or ancestor::tei:lg) and not( ancestor::tei:floatingText |parent::tei:figure |parent::tei:note )">
-          Abstract model violation: Lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.
-        </sch:report>
+      <sch:rule context="tei:l//tei:ab">
+        <sch:assert test="ancestor::tei:floatingText | parent::tei:figure | parent::tei:note">
+          Abstract model violation: Metrical lines may not contain higher-level divisions such as p or ab, unless ab is a child of figure or note, or is a descendant of floatingText.
+        </sch:assert>
       </sch:rule>
     </constraint>
   </constraintSpec>

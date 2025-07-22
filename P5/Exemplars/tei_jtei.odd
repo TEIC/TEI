@@ -3035,18 +3035,16 @@
           </constraintSpec>
           <constraintSpec ident="jtei.sch-variables" scheme="schematron" xml:lang="zxx">
             <constraint>
-              <sch:pattern>
-                <xsl:key name="idrefs" match="@target[starts-with(normalize-space(.), '#')]|@rendition[starts-with(normalize-space(.), '#')]" use="for $i in tokenize(., '\s+') return substring-after($i, '#')"/>
-                <sch:let name="double.quotes" value="'[&quot;“”]'"/>
-                <sch:let name="apos.typographic" value="'[‘’]'"/>
-                <sch:let name="apos.straight" value="''''"/>
-                <sch:let name="quotes" value="concat('[', $apos.straight, '&quot;]')"/>
-                <sch:let name="div.types.front" value="('abstract', 'acknowledgements', 'authorNotes', 'editorNotes', 'corrections', 'dedication')"/>
-                <!-- http://www.tei-c.org/release/doc/tei-p5-doc/VERSION produces 
-                     429 "Too Many Requests" errors -->
-                <sch:let name="tei.version.url" value="'https://jenkins.tei-c.org/job/TEIP5/lastStableBuild/artifact/P5/release/doc/tei-p5-doc/VERSION'"/>
-                <sch:let name="tei.version" value="if (unparsed-text-available($tei.version.url)) then normalize-space(unparsed-text($tei.version.url)) else ()"/>
-              </sch:pattern>
+              <xsl:key name="idrefs" match="@target[starts-with(normalize-space(.), '#')]|@rendition[starts-with(normalize-space(.), '#')]" use="for $i in tokenize(., '\s+') return substring-after($i, '#')"/>
+              <sch:let name="double.quotes" value="'[&quot;“”]'"/>
+              <sch:let name="apos.typographic" value="'[‘’]'"/>
+              <sch:let name="apos.straight" value="''''"/>
+              <sch:let name="quotes" value="concat('[', $apos.straight, '&quot;]')"/>
+              <sch:let name="div.types.front" value="('abstract', 'acknowledgements', 'authorNotes', 'editorNotes', 'corrections', 'dedication')"/>
+              <!-- http://www.tei-c.org/release/doc/tei-p5-doc/VERSION produces 
+                   429 "Too Many Requests" errors -->
+              <sch:let name="tei.version.url" value="'https://jenkins.tei-c.org/job/TEIP5/lastStableBuild/artifact/P5/release/doc/tei-p5-doc/VERSION'"/>
+              <sch:let name="tei.version" value="if (unparsed-text-available($tei.version.url)) then normalize-space(unparsed-text($tei.version.url)) else ()"/>
             </constraint>
           </constraintSpec>
           <elementSpec ident="tag" module="tagdocs" mode="change">

@@ -218,13 +218,11 @@
             <div class="main-content">
               <xsl:call-template name="startDivHook"/>
               <h3>
-                <xsl:sequence select="tei:i18n('Example')"/>
+                <xsl:sequence select="tei:i18n('Example')||': '"/>
                 <a href="ref-{$me}.html">
-                <xsl:text>: &lt;</xsl:text>
-                <xsl:value-of select="$me"/>
-                <xsl:text>&gt; </xsl:text>
+                  <xsl:value-of select="'&lt;'||$me||'&gt;'"/>
                 </a>
-                <xsl:sequence select="tei:makeGloss(.,$langs)"/>
+                <xsl:sequence select="string-join( '&#x20;', tei:makeGloss(.,$langs) )"/>
               </h3>
               <p>These search results reproduce every example of the
               use of <xsl:text>&lt;</xsl:text>
@@ -518,13 +516,6 @@
                                 alt="ePub version for mobile devices."
                                 title="ePub version for mobile devices."/>
                 </a>
-                <a href="../../en/Guidelines.mobi" class="ebookLink">
-                        <img src="icons/e-book-icons/mdh_mobi_doc_32x32.png" width="32" height="32" 
-                                alt="Mobi version (for Kindle)."
-                                title="Mobi version (for Kindle)."/>
-                </a>
-                
-                
         </p>
         
         <div class="col_left">
@@ -591,22 +582,19 @@
         </div>
         
         <div class="col_right">
-                
-                
                 <div>
                         <h3>TEI sourcecode</h3>
                         <ul>
                           <li>
-                            <a href="https://tei-c.org/guidelines/p5/using-the-tei-github-repository/">Getting and Using the TEI Sources.</a>
+                            <a href="https://github.com/TEIC/TEI">TEI GitHub Repository</a>
                           </li>
-                                <li>
-                                  <a href="https://github.com/TEIC/TEI">TEI GitHub Repository</a>
-                                </li>
-                                <li>
-                                        <a href="https://github.com/TEIC/TEI/issues">Bug Reports, Feature Requests, etc.</a>
-                                </li>
+                          <li>
+                            <a href="https://github.com/TEIC/TEI/blob/dev/Documents/Git-README.md">Notes on using Git to edit the Guidelines.</a>
+                          </li>
+                          <li>
+                            <a href="https://github.com/TEIC/TEI/issues">Bug Reports, Feature Requests, etc.</a>
+                          </li>
                         </ul>
-                        
                 </div>
         </div>
     
@@ -618,27 +606,77 @@
   <xsl:template match="divGen[@type='toc']"/>
 
   <xsl:template name="javascriptHook">
-    <script type="text/javascript" src="jquery-3.7.0.min.js"/>
     <script type="text/javascript" src="popupFootnotes.js"/>
     <xsl:comment>CAMPAIGN JS</xsl:comment>
     <script type="text/javascript">
-        $(function() {
-         $(".displayRelaxButton").click(function() {
-           $(this).parent().find('.RNG_XML').toggle();
-           $(this).parent().find('.RNG_Compact').toggle();
-         });
-         $(".tocTree .showhide").click(function() {
-          $(this).find(".tocShow,.tocHide").toggle();
-          $(this).parent().find("ul.continuedtoc").toggle();
-          });
+      document.addEventListener("DOMContentLoaded", function() {
+      var relaxBtns = document.querySelectorAll(".displayRelaxButton");
+      if (relaxBtns) {
+        relaxBtns.forEach(function(btn) {
+          btn.onclick = function() {
+            var rngs = btn.parentElement.querySelectorAll('.RNG_XML');
+            var rncs = btn.parentElement.querySelectorAll('.RNG_Compact');
+            if (rngs) {
+              rngs.forEach(function(rng) {
+                rng.style.display = getComputedStyle(rng).display === "none" ? "block" : "none";
+              })
+            }
+            if (rncs) {
+              rncs.forEach(function(rnc) {
+                rnc.style.display = getComputedStyle(rnc).display === "none" ? "block" : "none";
+              })
+            }
+          }
         })
+      }
+      var showHides = document.querySelectorAll(".tocTree .showhide");
+      if (showHides) {
+        showHides.forEach(function(btn) {
+          btn.onclick = function() {
+            btn.querySelectorAll(".tocShow,.tocHide").forEach(function(toc) {
+              toc.style.display = getComputedStyle(toc).display === "none" ? "inline" : "none";
+            })
+            btn.parentElement.querySelectorAll("ul.continuedtoc").forEach(function(ul) {
+              ul.style.display = getComputedStyle(ul).display === "none" ? "block" : "none";
+            })
+          }
+        })
+      }
+    })
     </script>
     <script type="text/javascript">
-      $(function() {
+      document.addEventListener("DOMContentLoaded", function() {
         const location = window.location.pathname.replace(/.*\/ref-(.*).html/, '$1.xml');
-  $('.outOfDateTranslation').append('<a href="https://translate.tei-c.org/translate.html?edit=' + location + '"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" aria-label="{tei:i18n('translationOutOfDate')}" viewBox="0 0 16 16" style="position:absolute; top:2px; right:2px; color:red"><title><xsl:sequence select="tei:i18n('translationOutOfDate')"/></title>' + 
-  `<path d="M6.146 7.146a.5.5 0 0 1 .708 0L8 8.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 9l1.147 1.146a.5.5 0 0 1-.708.708L8 9.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 9 6.146 7.854a.5.5 0 0 1 0-.708z"/>
-  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/></svg></a>`);
+        const outDateTr = document.querySelector('.outOfDateTranslation')
+        if (outDateTr) {
+          const link = document.createElement('a');
+          link.href = `https://translate.tei-c.org/translate.html?edit=${location}`;
+          
+          const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+          svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+          svg.setAttribute("width", "16");
+          svg.setAttribute("height", "16");
+          svg.setAttribute("fill", "currentColor");
+          svg.setAttribute("aria-label", "Translation out of date.");
+          svg.setAttribute("viewBox", "0 0 16 16");
+          svg.setAttribute("style", "position:absolute; top:2px; right:2px; color:red");
+          
+          const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
+          title.textContent = "Translation out of date.";
+          svg.appendChild(title);
+          
+          const path1 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          path1.setAttribute("d", "M6.146 7.146a.5.5 0 0 1 .708 0L8 8.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 9l1.147 1.146a.5.5 0 0 1-.708.708L8 9.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 9 6.146 7.854a.5.5 0 0 1 0-.708z");
+          
+          const path2 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          path2.setAttribute("d", "M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z");
+          
+          svg.appendChild(path1);
+          svg.appendChild(path2);
+          
+          link.appendChild(svg);
+          outDateTr.appendChild(link);
+        }
       });
     </script>
     <script src="https://tei-c.org/js/main.js"></script>
@@ -669,7 +707,7 @@
           <li class="nav-item"><a href="/about/contact/" class="nav-link px-2 text-body-secondary">Contact Us</a></li>
         </ul>
         <p class="text-center text-body-secondary">
-          <img src="emblem_color_dark.png" alt="TEI Emblem" width="40"/> © 2023 TEI Consortium — Hosted by <a href="https://www.huma-num.fr/" class="text-body-secondary">
+          <img src="emblem_color_dark.png" alt="TEI Emblem" width="40"/> © 2025 TEI Consortium — Hosted by <a href="https://www.huma-num.fr/" class="text-body-secondary">
             <img src="logo-petit-hn-rvb-1.png" alt="Hosted by Huma-Num" width="50"/>
           </a>
         </p>

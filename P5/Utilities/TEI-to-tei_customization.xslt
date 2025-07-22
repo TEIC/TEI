@@ -744,6 +744,10 @@
               <moduleRef key="namesdates" include="persName placeName orgName"/>
               <xsl:comment> allow tables, figures, and formulæ </xsl:comment>
               <moduleRef key="figures" except="notatedMusic"/>
+
+              <constraintDecl scheme="schematron" queryBinding="xslt2">
+                <sch:ns prefix="teix" uri="http://www.tei-c.org/ns/Examples"/>
+              </constraintDecl>
               
               <constraintSpec scheme="schematron" ident="mode-child-sanity" xml:lang="en">
                 <constraint>

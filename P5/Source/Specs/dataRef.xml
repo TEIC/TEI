@@ -4,6 +4,7 @@
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" xml:id="gi-dataRef" ident="dataRef">
   <desc versionDate="2010-05-14" xml:lang="en">identifies the datatype of an attribute value, either by referencing an item in an externally defined datatype library, or by
     pointing to a TEI-defined data specification</desc>
+  <desc versionDate="2024-09-02" xml:lang="ja">外部で定義されたデータ型ライブラリ内の項目を参照するか、もしくはTEIにより定義されたデータ仕様を指し示すことで、属性値のデータ型を識別する</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.contentPart"/>
@@ -33,21 +34,25 @@
     <attList org="choice">
       <attDef ident="key">
         <desc versionDate="2010-05-14" xml:lang="en">the identifier used for this datatype specification</desc>
+        <desc versionDate="2024-09-02" xml:lang="ja">このデータ型仕様に使われる識別子</desc>
         <datatype><dataRef key="teidata.xmlName"/></datatype>
       </attDef>
       <attDef ident="name">
         <desc versionDate="2010-05-14" xml:lang="en">the name of a datatype in the list provided by 
         <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref></desc>
+        <desc versionDate="2024-09-02" xml:lang="ja"><ref target="#XSD2">XML Schemas: Part 2: Datatypes</ref>で提供されているリスト内のデータ型の名前</desc>
         <datatype><dataRef key="teidata.xmlName"/></datatype>
       </attDef>
       <attDef ident="ref">
         <desc versionDate="2010-05-14" xml:lang="en">a pointer to a datatype defined in some datatype library</desc>
+        <desc versionDate="2024-09-02" xml:lang="ja">あるデータ型ライブラリ内で定義されたデータ型へのポインタ</desc>
         <datatype><dataRef key="teidata.pointer"/></datatype>
       </attDef>
     </attList>
     <attDef ident="restriction">
       <desc versionDate="2012-12-04" xml:lang="en">supplies a string representing a regular expression providing additional constraints 
       on the strings used to represent values of this datatype</desc>
+      <desc versionDate="2024-09-02" xml:lang="ja">このデータ型の値を表すために使用される文字列に追加の制約を加える正規表現を表す文字列を提供する</desc>
      <datatype><dataRef key="teidata.pattern"/></datatype>
    </attDef>
   </attList>
@@ -81,6 +86,7 @@
     <p>Only one of the attributes <att>key</att>, <att>name</att>, and <att>ref</att> may be used on any given instance of <gi>dataRef</gi>.</p>
     <p>Neither a <att>restriction</att> attribute nor a <gi>dataFacet</gi> child element may be used unless the <gi>dataRef</gi> refers to a datatype from the specification <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref> with a <att>name</att> attribute.</p>
   </remarks>
+  <remarks versionDate="2024-09-02" xml:lang="ja"><p> <att>key</att>, <att>name</att>, <att>ref</att>の内どれか一つの属性のみを使用することができる</p></remarks>
   <listRef>
     <ptr target="#TD-datatypes"/>
   </listRef>

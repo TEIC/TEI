@@ -30,13 +30,18 @@ a public broadcast.</desc>
     <memberOf key="att.typed"/>
   </classes>
   <content>
-   
     <alternate minOccurs="0" maxOccurs="unbounded">
-        <classRef key="model.recordingPart"/>
+      <classRef key="model.recordingPart"/>
         <classRef key="model.pLike"/>
-      </alternate>
-   
+    </alternate>
   </content>
+  <constraintSpec ident="recording-is-declarable" scheme="schematron" xml:lang="en">
+    <constraint>
+      <sch:pattern is-a="declarable">
+        <sch:param name="tde" value="tei:recording"/>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="type" mode="change" usage="opt">
       <desc versionDate="2005-01-14" xml:lang="en">the kind of recording.</desc>
