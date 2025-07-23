@@ -10,18 +10,17 @@
     <memberOf key="model.contentPart"/>
   </classes>
   <content>
-    <alternate minOccurs="1" maxOccurs="unbounded">
-      <elementRef key="valList"/>
-      <classRef key="model.contentPart"/>
+    <alternate minOccurs="1" maxOccurs="1">
+      <sequence minOccurs="1" maxOccurs="1">
+        <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>
+        <elementRef key="valList" minOccurs="0" maxOccurs="1"/>
+      </sequence>
+      <sequence minOccurs="1" maxOccurs="1">
+        <elementRef key="valList" minOccurs="1" maxOccurs="1"/>
+        <classRef key="model.contentPart" minOccurs="0" maxOccurs="unbounded"/>
+      </sequence>
     </alternate>
   </content>
-  <constraintSpec ident="alternatechilden" scheme="schematron" xml:lang="en">
-    <constraint>
-      <sch:rule context="tei:alternate">
-        <sch:assert test="count(*) gt 1">The alternate element must have at least two child elements</sch:assert>
-      </sch:rule>
-    </constraint>
-  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-alternate-egXML-eg" xml:lang="en" source="#UND"><content>
       <alternate>
