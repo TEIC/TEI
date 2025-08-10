@@ -10,20 +10,70 @@
     <memberOf key="model.contentPart"/>
   </classes>
   <content>
+    <!--
+        What we would like to have is
+          <interleave>
+            <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>
+            <alternate>
+              <classRef key="model.contentPart" minOccurs="1" maxOccurs="1"/>
+              <elementRef key="valList" minOccurs="0" maxOccurs="1">
+            </alternate>
+          </interleave>
+        OR, equivalently,
+          ( model.contentPart+ & ( model.contentPart | valList? ) )
+        but
+        a) that is not valid in RELAX NG, anyway (because
+           model.contentPart is a member of an interleave
+           more than once); and
+        b) even if it were it probably could not be converted to DTD (or to XSD?)
+           due to ambiguity.   
+
+        So the following mildly complex content model does the same
+        thing without use of <interleave> and in an unambiguous way.
+        (Thus it can be converted to a valid DTD.)
+        Here is a briefly annotated version of the ODD content model
+        that follows, expressed using the RELAX NG compact syntax
+        instead:
+        (
+          ( valList, model.contentPart+ )        # starts with <valList>
+          |                                      # (and is followed by %contentPart;s)
+          (                                      # OR
+            model.contentPart,                   # starts with %contentPart;
+            (                                    #   which is followed by
+              valList                            #     <valList>
+              |                                  #     or
+              ( model.contentPart+, valList? )   #     more %contentPart;s and maybe a <valList>
+            )
+          )
+        )
+    -->
     <alternate minOccurs="1" maxOccurs="1">
+      <!--
+          Two possible sets of children: my content either starts with
+          <valList> or with a member of model.contentPart.
+      -->
       <sequence minOccurs="1" maxOccurs="1">
-        <classRef key="model.contentPart" minOccurs="1" maxOccurs="1"/>
-	<alternate minOccurs="1" maxOccurs="1">
-	  <sequence minOccurs="1" maxOccurs="1">
-            <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>	  
-	    <elementRef key="valList" minOccurs="0" maxOccurs="1"/>
-	  </sequence>
-	  <elementRef key="valList" minOccurs="1" maxOccurs="1"/>
-	</alternate>
+        <!-- Content starts with <valList> is simple: a single
+             <valList> followed by one or more members of
+             model.contentPart: -->
+        <elementRef key="valList" minOccurs="1" maxOccurs="1"/>
+        <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>
       </sequence>
       <sequence minOccurs="1" maxOccurs="1">
-	<elementRef key="valList" minOccurs="1" maxOccurs="1"/>
-        <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>
+        <!-- Content starts with a member of model.contentPart is not
+             as simple: after the single initial member of
+             model.contentPart we could either have just a <valList>
+             (for a total of 2 children) or we could have an
+             additional one or more members of model.contentPart,
+             optionally followed by a <valList>. -->
+        <classRef key="model.contentPart" minOccurs="1" maxOccurs="1"/>
+        <alternate minOccurs="1" maxOccurs="1">
+          <elementRef key="valList" minOccurs="1" maxOccurs="1"/>
+          <sequence minOccurs="1" maxOccurs="1">
+            <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>       
+            <elementRef key="valList" minOccurs="0" maxOccurs="1"/>
+          </sequence>
+        </alternate>
       </sequence>
     </alternate>
   </content>
