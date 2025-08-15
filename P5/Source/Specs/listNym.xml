@@ -22,26 +22,33 @@
     <memberOf key="att.typed"/>
     <memberOf key="model.listLike"/>
   </classes>
-<content>
- <sequence>
-   <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
-   <elementRef key="desc" minOccurs="0" maxOccurs="unbounded"/>
-   <alternate minOccurs="0" maxOccurs="unbounded">
-     <elementRef key="relation" minOccurs="1" maxOccurs="1"/>
-     <elementRef key="listRelation" minOccurs="1" maxOccurs="1"/>
-   </alternate>
-   <sequence minOccurs="1" maxOccurs="unbounded">
-     <alternate minOccurs="1" maxOccurs="unbounded">
-       <elementRef key="nym" minOccurs="1" maxOccurs="1"/>
-       <elementRef key="listNym" minOccurs="1" maxOccurs="1"/>
-     </alternate>
-     <alternate minOccurs="0" maxOccurs="unbounded">
-       <elementRef key="relation" minOccurs="1" maxOccurs="1"/>
-       <elementRef key="listRelation" minOccurs="1" maxOccurs="1"/>
-     </alternate>
-   </sequence>
- </sequence>
-</content>
+  <content>
+    <sequence>
+      <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      <elementRef key="desc" minOccurs="0" maxOccurs="unbounded"/>
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <elementRef key="relation" minOccurs="1" maxOccurs="1"/>
+        <elementRef key="listRelation" minOccurs="1" maxOccurs="1"/>
+      </alternate>
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <alternate minOccurs="1" maxOccurs="unbounded">
+          <elementRef key="nym" minOccurs="1" maxOccurs="1"/>
+          <elementRef key="listNym" minOccurs="1" maxOccurs="1"/>
+        </alternate>
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <elementRef key="relation" minOccurs="1" maxOccurs="1"/>
+          <elementRef key="listRelation" minOccurs="1" maxOccurs="1"/>
+        </alternate>
+      </sequence>
+    </sequence>
+  </content>
+  <constraintSpec ident="listNym-is-declarable" scheme="schematron" xml:lang="en">
+    <constraint>
+      <sch:pattern is-a="declarable">
+        <sch:param name="tde" value="tei:listNym"/>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-listNym-egXML-xn">
       <listNym type="floral">

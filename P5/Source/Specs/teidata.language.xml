@@ -6,7 +6,7 @@
     language and writing system.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">인간의 언어와 문자 체계의 특별한 조합을 식별하는 속성 값 범위를 정의한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍標明人類語言與寫作系統的特殊結合</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">自然言語を示す属性値の範囲を定義する。</desc>
+  <desc versionDate="2024-07-01" xml:lang="ja">自然言語と表記体系の組合せを示す表現を値域とする属性値を定義する。</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">définit la gamme des
   valeurs d'attributs exprimant 
     une combinaison particulière du langage humain avec un système d'écriture.</desc>
@@ -112,76 +112,43 @@
       <p>The W3C Internationalization Activity has published a useful introduction to BCP 47, <ref target="https://www.w3.org/International/articles/language-tags/Overview.en.php">Language
         tags in HTML and XML</ref>.</p>
   </remarks>
-  <remarks versionDate="2008-04-05" xml:lang="ja">
-      <p> 当該属性値は、 <ref target="https://tools.ietf.org/html/bcp47">BCP 47</ref>
-      で定義されている言語<soCalled>タグ</soCalled>になる。 現行のBCPには、RFC4646とRFC4647の内容が含まれている。
-      今後は、他のIETF文書も採用されるかもしれない。 </p>
-    <p> BCP 47にある<soCalled>言語タグ</soCalled>は、ハイフン (<mentioned>-</mentioned>、U+002D)で区切られた一連の
-        <term>下位タグ</term>から構成されている。下位タグは、以下の順番 らなる。下位タグは、初めの1つは必須で、あとは選択的である。
-      variantとextensionは複数回、他は1回のみ出現出現する。この下位タグ のグループは繰り返し可能である。 <list type="gloss">
-            <label>language</label>
-            <item> IANAの言語コード。この殆どは、該当言語が既にあれば、ISO 639の2文字 (以下、この場合の文字はラテン文字)言語コードと同じである。利用可能
-          な言語下位タグのリストは <ptr target="https://www.iana.org/assignments/language-subtag-registry"/>
-          にある。言語コードは、小文字で書かれることが推奨されている。 </item>
-            <label>script</label>
-            <item> ISO 15924による文字を示すコード。4文字から構成され、冒頭文字は大文 字で、残り3文字は小文字で書かれることが推奨されている。このコード
-          は、ユニコードコンソーシアムで管理され、 <ptr target="https://unicode.org/iso15924/iso15924-codes.html"/>か
-          ら入手することができる。IETFでは、不要であれば当該コードを省略する ことを推奨している。 </item>
-            <label>region</label>
-            <item> ISO 3166またはUN M.49による国または地域コード。このコードはIANAに 登録されている(但し全てではない。例えば、UNコードには経済圏や、 ISO
-          3166の2文字コードで既に登録されているところは含まれていない)。 ISOコードは、2文字から構成され、大文字で書かれることが推奨されてい る。このコードは、 <ptr target="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/index.html"/>にある。 またUNコードは、3文字から構成されている。このコードは、 <ptr target="http://unstats.un.org/unsd/methods/m49/m49.htm"/>にあ る。 </item>
-            <label>variant</label>
-            <item> IANAにある登録値。このコードは、<quote> 他の下位タグでは対応できない、追加的であるがよく知られている、ある言語
-            や方言の種類を示すために使用される</quote>。 <!-- RFC 4646, sect  2.2.5 -->
-        </item>
-            <label>extension</label>
-            <item> いち文字、ハイフン、追加下位タグの順番で、拡張情報が示される。 これは、BCP 47が将来拡張された時のためある。現時点ではそのような 拡張はない。 </item>
-            <label>private use</label>
-            <item>
-               <mentioned>x</mentioned>Xで始まる(すなわち、<code>x-</code>)下位タ
-          グで示される拡張情報は、関連する団体間で決められた範囲の意味を持つ。 このコードは大文字で書かれるべきである。これは、RFC4646aで使われて
-          いるタグとの相互運用性を保つためである。 このタグを使用してTEI準拠の文書を作成するには、要素 <gi>language</gi>をTEIヘダー中に記述しなければならない。
-        </item>
-         </list>
-      </p>
-      <p> 上記記述形式には、2つの例外がある。ひとつは、ここにある言語タグは、 <ref target="https://www.iana.org/assignments/language-subtag-registry">
-      IANA</ref>にある統語規則に違反しているものがある。 これはIANAでは昔の規定を<soCalled>継承している</soCalled>からであ る。 </p>
-      <p> ふたつめは、言語タグを、下位タグprivateだけで構成することができる ことである。<code>x-</code>で始まるタグの内容は、IETFにある規定に
-      も当該TEIガイドラインにある規定にも従う必要はない。他の言語タグと 同様に、このタグを使用した場合には、TEIヘダーにある要素
-      <gi>language</gi>にこのタグを記述しなければならない。 </p>
-      <p> 言語コードには、以下のようなものがある。 <list type="gloss">
-            <label>
-               <val>sn</val>
-            </label>
-            <item>ショナ語</item>
-            <label>
-               <val>zh-TW</val>
-            </label>
-            <item>中国語、台湾</item>
-            <label>
-               <val>zh-Hant-HK</val>
-            </label>
-            <item>中国語、繁体字、香港</item>
-            <label>
-               <val>en-SL</val>
-            </label>
-            <item>英語、シエラレオネ共和国</item>
-            <label>
-               <val>pl</val>
-            </label>
-            <item>ポーランド語</item>
-            <label>
-               <val>es-MX</val>
-            </label>
-            <item>スペイン語、メキシコ</item>
-            <label>
-               <val>es-419</val>
-            </label>
-            <item>スペイン語、ラテンアメリカ</item>
-         </list>
-      </p>
-      <p> W3Cの国際化活動では、BCP 47の解説を以下に用意している。 <ref target="https://www.w3.org/International/articles/language-tags/Overview.en.php">
-        HTMLとXMLで使用される言語タグ</ref>。</p>
+  <remarks versionDate="2024-07-01" xml:lang="ja">
+    <p>当該属性値は、<ref target="https://tools.ietf.org/html/bcp47">BCP 47</ref>で定義されている言語<soCalled>タグ</soCalled>である。
+      BCP 47は、RFC 5646とRFC 4647からなる。将来的に、その他のIETF文書が現状における最良の慣行としての地位を受け継ぐかもしれない。</p>
+    <p>BCP 47における<soCalled>言語タグ</soCalled>とは、ハイフン (<mentioned>-</mentioned>, U+002D)で区切られた一連の<term>下位タグ</term>と呼ばれる構成要素からなっている。
+    下位タグは、以下の順番に並べられる。
+    下位タグは、初めの1つ以外は必須でない。もし存在するときは、それぞれの下位タグは、繰返し可能な4番目と5番目の構成要素（変種と拡張）をのぞき、1度までしか用いられない。<list type="gloss"><label>言語</label><item>IANAに登録された、言語に対するコード。
+      これは、当該言語が既にISO 639の2文字言語コードにあれば、ほとんどのばあい、それと同一である。
+      利用可能な言語下位タグのリストは<ptr target="https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry"></ptr>にある。
+      言語コードは、小文字で書くことが推奨されている。</item>
+      <label>用字系</label><item>ISO 15924による用字系を示すコード。
+        4文字から構成され、先頭の文字は大文字で、残りの3文字は小文字で書くことが推奨されている。
+        公式なコードのリストは、ユニコードコンソーシアムが管理しており、 <ptr target="https://unicode.org/iso15924/iso15924-codes.html"></ptr>から入手することができる。
+        IETFでは、不要であれば当該コードを省略することを推奨している。</item>
+      <label>地域</label><item>IANAに登録されたISO 3166の国名コードまたはUN M.49による地域コード (但し全てが〔IANAに〕登録されてはいない。例えば、UNコードのうち、経済圏やISO 3166の2文字コードが存在するものは含まれない)。
+        このうち前者は、2文字から構成され、大文字で書かれることが推奨されている。このコードのリストは、 <ptr target="https://www.iso.org/obp/ui/#search/code/"></ptr> にあり、確認できる。
+        後者は、数字3桁から構成されている。このコードは、 <ptr target="https://unstats.un.org/unsd/methodology/m49/"></ptr>にある。</item>
+      <label>変種</label><item>IANAに登録された変種。
+        このコードは、<quote rend="quoted">他の下位タグでは対応できない、その他のよく知られている言語や方言として定義される変種を示すために使用される</quote>。</item>
+      <label>拡張</label><item>拡張は、英字1文字、ハイフン、後続する（1つ以上の）下位タグの形式からなる。
+        これは、BCP 47が将来拡張された時のためにある。執筆時点ではそのような拡張はない。〔2024年時点ではuとtの2つの拡張が存在する。〕 </item>
+      <label>私用</label><item>拡張の先頭の下位タグが<mentioned>x</mentioned>1文字である (すなわち、<code>x-</code>で始まる) ものは、関係者間で取り決めがある場合のみ意味を持つ。 
+        このコードは十分に注意して使用しなければならない。これは、RFC 4646を使用する目的である相互運用性を損なうからである。〔現在ではRFC 4646は廃止され、RFC 5646を使用すべきである。〕 
+        文書内で私用タグを使う場合、TEIに準拠するためには<gi>language</gi>要素をTEIヘッダー中に記述しなければならない。</item></list></p>
+    <p>上記記述形式には、2つの例外がある。
+    ひとつは、<ref target="http://www.iana.org/assignments/language-subtag-registry">IANAレジストリ</ref>にある言語タグには、上述の形式に違反しているが有効なものがある。これはIANAでは以前の形式では許容されていた<soCalled>歴史的例外</soCalled>だからである。 </p>
+    <p>ふたつめは、言語タグ全体を私用タグにすることができる。
+    <code>x-</code>で始まるタグの内容は、IETFにある他の規定にも当該TEIガイドラインにある規定にも従う必要はない。
+    私用タグを含む言語タグと同様に、その言語をTEIヘッダーにある<gi>language</gi>要素に記述しなければならない。 </p>
+    <p>言語コードには、以下のようなものがある。
+    <list type="gloss"><label><val>sn</val></label><item>ショナ語</item>
+      <label><val>zh-TW</val></label><item>中国語（台湾）</item>
+      <label><val>zh-Hant-HK</val></label><item>繁体字中国語（香港）</item>
+      <label><val>en-SL</val></label><item>英語（シエラレオネ）</item>
+      <label><val>pl</val></label><item>ポーランド語</item>
+      <label><val>es-MX</val></label><item>スペイン語（メキシコ）</item>
+      <label><val>es-419</val></label><item>スペイン語（ラテンアメリカ）</item></list></p><p>
+    W3Cの国際化活動では、BCP 47の解説 <ref target="http://www.w3.org/International/articles/language-tags/Overview.en.php">「HTMLとXMLで使用される言語タグ」</ref>を以下に用意している。</p>
   </remarks>
   <remarks versionDate="2009-10-06" xml:lang="fr">
       <p>Les valeurs pour cet attribut sont les <soCalled>étiquettes</soCalled> de langue définies

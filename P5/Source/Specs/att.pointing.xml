@@ -6,7 +6,7 @@
   to other elements by means of one or more URI references.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">하나 이상의 URI 참조를 통해서 다른 요소를 가리키는 모든 요소에 의해 사용된 속성 집합을 정의한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">定義一組與其他元素相連結的所有元素皆使用的屬性，連結是使用ㄧ個或多個統一資源識別符 (URI) 參照。</desc>
-  <desc versionDate="2023-09-27" xml:lang="ja">一つ以上のURIにより他の要素を指示するすべての要素に使用される属性のセットを作成する示す。</desc>
+  <desc versionDate="2024-08-08" xml:lang="ja">すべての、一つ以上のURIを参照することで別の要素を指示する要素で使用できる属性のセットを示す。</desc>
   <desc versionDate="2016-02-15" xml:lang="fr">fournit un ensemble d'attributs utilisés par tous les éléments qui pointent vers d'autres éléments au moyen d'une ou de plusieurs références URI.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">define un conjunto de atributos usados por todos los elementos que señalan a otros elementos a través de uno o más URI.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">definisce un insieme di attributi usati da tutti gli elementi che puntano ad altri elementi tramite uno o più URI</desc>
@@ -14,7 +14,8 @@
     <attDef ident="targetLang" usage="opt">
       <desc versionDate="2012-06-16" xml:lang="en">specifies the language of the content to be found at the destination referenced by <att>target</att>, using a <soCalled>language tag</soCalled> generated
         according to <ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>.</desc>
-      <desc versionDate="2023-09-27" xml:lang="ja"><ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>に従って生成された<soCalled>言語タグ</soCalled>を使用することで、<att>target</att>の参照先にあるコンテンツの言語を特定する。</desc>
+      <desc versionDate="2023-09-27" xml:lang="ja">
+        <ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>に従って生成された<soCalled>言語タグ</soCalled>を使用することで、<att>target</att>の参照先にあるコンテンツの言語を特定する。</desc>
       <datatype><dataRef key="teidata.language"/></datatype>
       <constraintSpec ident="targetLang" scheme="schematron" xml:lang="en">
         <constraint>
@@ -45,16 +46,17 @@
       <choice><abbr>IETF</abbr><expan>Internet Engineering Task
       Force</expan></choice> definitions.</p></remarks>
       
-      <remarks versionDate="2023-09-27" xml:lang="ja"><p>
-        値はBCP 47に準拠している必要がある。 (<val>x-</val>で始まっていたり、<val>-x-</val>を含むような記述のように)値がプライベートに使用されるコードの場合、自身の<att>ident</att>属性に対応する値をもった<gi>language</gi>要素は、TEIのヘッダーにおいてその値を記述しなくてはならない。そうした（非公式なコードの）記述はあるいは公式なコードにオプションとして取り入れられることもあるが、公式なコードは<choice><abbr>IETF</abbr><expan>Internet Engineering Task Force</expan></choice> （インターネット技術特別調査委員会）の定義に準拠したものでなくてはならない。</p></remarks>
+      <remarks versionDate="2024-08-08" xml:lang="ja"><p>
+        値はBCP 47に準拠している必要がある。言語コードが<val>x-</val>で始まっていたり、<val>-x-</val>を含んでいたりする私的利用の値である場合、TEIヘッダーにおいて、そのコードを<att>ident</att>属性の値として持った<gi>language</gi>要素を記述しなければならない。私的利用にあたらないコードの記述をしてもよいが、<choice><abbr>IETF</abbr><expan>Internet Engineering Task Force</expan></choice>の定義に準拠したものでなくてはならない。
+      </p></remarks>
       
     </attDef>
     <attDef ident="target" usage="opt">
       <desc versionDate="2010-05-02" xml:lang="en">specifies the destination of the reference by supplying one or more URI References.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">하나 혹은 다수의 URI 참조를 제시하여 참조의 목적지를 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">用一個或多個統一資源識別符參照 (URI References) 來說明參照所指位置。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">1つまたは複数のURI参照を指名することで、参照先を指定する。</desc>
-      <desc versionDate="2009-01-06" xml:lang="fr">précise la cible de la référence en donnant une ou plusieurs références URI.</desc>
+      <desc versionDate="2024-08-08" xml:lang="ja">一つ以上のURI参照を与えることで、参照先を指定する。</desc>
+      <desc versionDate="2009-01-06" xml:lang="fr">précise la cible de la référence en donnant une ou plusieurs références URI</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica la destinación de una referencia
         proporcionando una o más referencias URI.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica la destinazione di un riferimento, fornendo
@@ -69,8 +71,8 @@
         n’est autorisé à l'intérieur d'un URI. Si un espace est requis dans un URI, il
         faut le représenter avec une séquence d'échappement, comme par exemple 
         <code>TEI%20Consortium</code>.</p></remarks>
-      <remarks versionDate="2023-09-27" xml:lang="ja"><p>
-      空白で区切られた1つもしくはそれ以上の構文的に有効なURI参照。空白はURIを区切るために使用されるため、各URI中において空白を使用することはできない。URIに空白文字が必要な場合は、たとえば<code> TEI％20Consortium </code>と言ったような通常の方法でエスケープする必要がある。
+      <remarks versionDate="2024-08-08" xml:lang="ja"><p>
+        空白で区切られた一つ以上の構文的に有効なURI参照。空白は複数のURIを区別するために使用されるので、それぞれのURI中において空白を使用することはできない。URI中で空白文字が必要な場合は、たとえば<code>TEI％20Consortium</code>と言ったような通常の方法でエスケープする必要がある。
       </p></remarks>
     </attDef>
     <attDef ident="evaluate" usage="opt">
