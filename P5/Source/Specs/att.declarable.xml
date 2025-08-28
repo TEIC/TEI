@@ -12,25 +12,35 @@
       <att>decls</att>.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos para los elementos contenidos en el encabezado que pueden ser seleccionados autónomamente mediante el atributo <att>decls</att> adecuado.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">individua attributi per gli elementi contenuti nell'intestazione che possono essere selezionati autonomamente grazie all'apposito attributo <att>decls</att></desc>
-  <constraintSpec ident="att-declarable" scheme="schematron" xml:lang="en">
-    <constraint>
-      <sch:pattern id="declarable" abstract="true">
-        <!-- parameter 'tde' is for "this declarable element (type)" -->
-        <sch:rule context="$tde[ ancestor::tei:teiHeader
-                                 and
-                                 following-sibling::$tde
-                                 and
-                                 not( preceding-sibling::$tde ) ]">
-          <sch:report test="../child::$tde[ not( @xml:id ) ]">
-            When there is more than one <sch:name/>, each must have an @xml:id
-          </sch:report>
-          <sch:assert test="count( ../child::$tde[ normalize-space( @default ) = ('1','true') ] ) eq 1">
-            When there is more than one <sch:name/>, one and only one must have a @default of 'true'.
-          </sch:assert>
-        </sch:rule>
-      </sch:pattern>
-    </constraint>
-  </constraintSpec>
+  <!-- BEGIN patch for #2750: -->
+  <!--
+      This entire block (a single <constraintSpec> element) commented
+      out 2025-08-26 in response to issue #2750. Whether it will be
+      deleted, modified and returned to action, or put back on the
+      front lines unmodified will be decided in the future. For now it
+      is being removed because it flags constructs as erroneous that
+      Council feels a reasonable user would expect to be valid.
+  -->
+  <!-- <constraintSpec ident="att-declarable" scheme="schematron" xml:lang="en"> -->
+  <!--   <constraint> -->
+  <!--     <sch:pattern id="declarable" abstract="true"> -->
+  <!--       <!-\- parameter 'tde' is for "this declarable element (type)" -\-> -->
+  <!--       <sch:rule context="$tde[ ancestor::tei:teiHeader -->
+  <!--                                and -->
+  <!--                                following-sibling::$tde -->
+  <!--                                and -->
+  <!--                                not( preceding-sibling::$tde ) ]"> -->
+  <!--         <sch:report test="../child::$tde[ not( @xml:id ) ]"> -->
+  <!--           When there is more than one <sch:name/>, each must have an @xml:id -->
+  <!--         </sch:report> -->
+  <!--         <sch:assert test="count( ../child::$tde[ normalize-space( @default ) = ('1','true') ] ) eq 1"> -->
+  <!--           When there is more than one <sch:name/>, one and only one must have a @default of 'true'. -->
+  <!--         </sch:assert> -->
+  <!--       </sch:rule> -->
+  <!--     </sch:pattern> -->
+  <!--   </constraint> -->
+  <!-- </constraintSpec> -->
+  <!-- END patch for #2750 -->
   <attList>
     <attDef ident="default" usage="opt">
       <desc versionDate="2005-10-10" xml:lang="en">indicates whether or not this element is selected by default when
