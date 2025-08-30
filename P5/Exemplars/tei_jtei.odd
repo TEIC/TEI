@@ -1875,6 +1875,23 @@
       </div>
       <div>
         <schemaSpec ident="tei_jtei" start="TEI" defaultExceptions="http://www.tei-c.org/ns/1.0 eg:egXML">
+	  <constraintDecl scheme="schematron">
+            <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
+            <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
+            <sch:ns prefix="xs" uri="http://www.w3.org/2001/XMLSchema"/>
+            <sch:ns prefix="xsl" uri="http://www.w3.org/1999/XSL/Transform"/>
+            <sch:ns prefix="eg" uri="http://www.tei-c.org/ns/Examples"/>
+            <xsl:key name="idrefs" match="@target[starts-with(normalize-space(.), '#')]|@rendition[starts-with(normalize-space(.), '#')]" use="for $i in tokenize(., '\s+') return substring-after($i, '#')"/>
+            <sch:let name="double.quotes" value="'[&quot;“”]'"/>
+            <sch:let name="apos.typographic" value="'[‘’]'"/>
+            <sch:let name="apos.straight" value="''''"/>
+            <sch:let name="quotes" value="concat('[', $apos.straight, '&quot;]')"/>
+            <sch:let name="div.types.front" value="('abstract', 'acknowledgements', 'authorNotes', 'editorNotes', 'corrections', 'dedication')"/>
+            <!-- http://www.tei-c.org/release/doc/tei-p5-doc/VERSION produces 
+                 429 "Too Many Requests" errors -->
+            <sch:let name="tei.version.url" value="'https://jenkins.tei-c.org/job/TEIP5/lastStableBuild/artifact/P5/release/doc/tei-p5-doc/VERSION'"/>
+            <sch:let name="tei.version" value="if (unparsed-text-available($tei.version.url)) then normalize-space(unparsed-text($tei.version.url)) else ()"/>
+	  </constraintDecl>
           <moduleRef key="tei"/>
           <moduleRef key="core"
             include="abbr author bibl biblScope cit date desc editor email emph foreign gap graphic head hi item label lb list listBibl mentioned name note num p pubPlace publisher q quote ptr ref resp respStmt series soCalled term title"/>
@@ -3023,30 +3040,7 @@
               </constraint>
             </constraintSpec>
           </elementSpec>
-          
-          <constraintSpec ident="jtei.sch-ns" scheme="schematron" xml:lang="zxx">
-            <constraint>
-              <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
-              <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
-              <sch:ns prefix="xs" uri="http://www.w3.org/2001/XMLSchema"/>
-              <sch:ns prefix="xsl" uri="http://www.w3.org/1999/XSL/Transform"/>
-              <sch:ns prefix="eg" uri="http://www.tei-c.org/ns/Examples"/>
-            </constraint>
-          </constraintSpec>
-          <constraintSpec ident="jtei.sch-variables" scheme="schematron" xml:lang="zxx">
-            <constraint>
-              <xsl:key name="idrefs" match="@target[starts-with(normalize-space(.), '#')]|@rendition[starts-with(normalize-space(.), '#')]" use="for $i in tokenize(., '\s+') return substring-after($i, '#')"/>
-              <sch:let name="double.quotes" value="'[&quot;“”]'"/>
-              <sch:let name="apos.typographic" value="'[‘’]'"/>
-              <sch:let name="apos.straight" value="''''"/>
-              <sch:let name="quotes" value="concat('[', $apos.straight, '&quot;]')"/>
-              <sch:let name="div.types.front" value="('abstract', 'acknowledgements', 'authorNotes', 'editorNotes', 'corrections', 'dedication')"/>
-              <!-- http://www.tei-c.org/release/doc/tei-p5-doc/VERSION produces 
-                   429 "Too Many Requests" errors -->
-              <sch:let name="tei.version.url" value="'https://jenkins.tei-c.org/job/TEIP5/lastStableBuild/artifact/P5/release/doc/tei-p5-doc/VERSION'"/>
-              <sch:let name="tei.version" value="if (unparsed-text-available($tei.version.url)) then normalize-space(unparsed-text($tei.version.url)) else ()"/>
-            </constraint>
-          </constraintSpec>
+
           <elementSpec ident="tag" module="tagdocs" mode="change">
             <constraintSpec ident="jtei.sch-tag" scheme="schematron" xml:lang="en">
               <constraint>

@@ -180,33 +180,107 @@ place where <q>three-D</q> would appear). </p>
 
 <p>A dictionary with no internal divisions might thus have a structure
 like the following; an outer <gi>entry</gi> element with a
-<att>type</att> attribute value of <val>wordFamily</val> is shown
+<att>type</att> attribute value of <val>homograph</val> is shown
 grouping two homograph entries.
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DIBO-egXML-fg" xml:lang="und">
   <body>
     <entry>
       <form>
-	<orth>manifestation</orth> <!-- demonstration -->
+        <orth>manifestation</orth> <!-- demonstration -->
       </form>
     </entry>
     <entry>
       <form>
-	<orth>émeute</orth> <!-- riot -->
+        <orth>émeute</orth> <!-- riot -->
       </form>
     </entry>
-    <entry type="wordFamily">
-      <entry type="hom" n="1">
-	<form>
-	  <orth>grève</orth> <!-- strike -->
-	</form>
+    <entry type="homograph">
+      <entry n="1">
+        <form>
+          <orth>grève</orth> <!-- strike -->
+        </form>
       </entry>
-      <entry type="hom" n="2">
-	<form>
-	  <orth>grève</orth> <!-- shore -->
-	</form>
+      <entry n="2">
+        <form>
+          <orth>grève</orth> <!-- shore -->
+        </form>
       </entry>
     </entry>
   </body>
+</egXML>
+The following example demonstrates a possible encoding of a
+traditional root-based dictionary, which starts with the root as the
+main headword followed by full-fledged lexicographic entries of
+derived headwords.
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DIBO-egXML-fh" xml:lang="ar" source="#DIBO-egXML-lex0">
+  <entry type="wordFamily" xml:lang="ar" xml:id="syj">
+    <form type="root">
+      <orth>سيج</orth>
+    </form>
+    <pc>:</pc>
+    <!-- To fence (verb) -->
+    <entry type="mainEntry" xml:id="syj1">
+     <form type="lemma">
+       <orth>سيّج</orth>
+     </form>
+     <sense xml:id="syj1_sense1">
+       <cit type="example">
+         <quote>الكرم</quote>
+       </cit>
+       <pc>:</pc>
+       <def>جعل له سياجا</def>
+     </sense>
+     <pc>٠</pc>
+    </entry>
+    <!-- A fence (noun) -->
+    <entry type="mainEntry" xml:id="syj2">
+      <form type="lemma">
+        <orth>السياج</orth>
+      </form>
+      <form type="inflected">
+        <gramGrp>
+          <gram type="number" value="plural">ج</gram>
+        </gramGrp>
+        <form type="variant">
+          <orth>سيَاجات</orth>
+        </form>
+        <lbl>و</lbl>
+        <form type="variant">
+          <orth>أسْوِجة</orth>
+        </form>
+        <lbl>و</lbl>
+        <form type="variant">
+          <orth>أَسْوِجة</orth>
+        </form>
+        <lbl>و</lbl>
+        <form type="variant">
+          <orth>سُوج</orth>
+        </form>
+      </form>
+      <pc>:</pc>
+      <sense xml:id="syj2_sense1">
+        <def>الحائط</def>
+      </sense>
+      <pc>||</pc>
+      <sense xml:id="syj2_sense2">
+        <def>ما أُحيط بهِ على شيءٍ كالكرم و النخل</def>
+      </sense>
+    </entry>
+    <pc>٠</pc>
+    <!-- A kind of fish -->
+    <entry type="mainEntry" xml:id="syj3">
+      <form type="lemma">
+        <orth>السيْجان</orth>
+      </form>
+      <pc>(</pc>
+      <usg type="domain" value="animal">ح</usg>
+      <pc>)</pc>
+      <pc>:</pc>
+      <sense xml:id="syj3_sense1">
+        <def>نوع من السمك</def>
+      </sense>
+    </entry>
+  </entry>
 </egXML>
 </p>
 
@@ -325,8 +399,8 @@ treated as entries, optionally grouped in an outer <gi>entry</gi> element:
     </entry>
     <entry n="2" type="hom">
       <sense n="1">
-	<sense n="a"> <!-- ... --> </sense>
-	<sense n="b"> <!-- ... --> </sense>
+        <sense n="a"> <!-- ... --> </sense>
+        <sense n="b"> <!-- ... --> </sense>
       </sense>
       <sense n="2"> <!-- ... --> </sense>
       <sense n="3"> <!-- ... --> </sense>

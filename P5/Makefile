@@ -104,7 +104,7 @@ teiwebsiteguidelines:
 	@echo BUILD: make HTML version of Guidelines just for TEI web site
 	rm -rf teiwebsiteguidelines.zip
 	rm -f html-web.stamp
-	make html-web ALLLANGUAGES="en es de ja ko fr it zh-TW" GOOGLEANALYTICS=UA-4372657-1
+	make html-web ALLLANGUAGES="en es de ja ko fr it zh-TW" GOOGLEANALYTICS=true
 	(cd Guidelines-web; zip -r -q ../teiwebsiteguidelines.zip . )
 
 epub: Guidelines.epub
