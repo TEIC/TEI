@@ -31,21 +31,174 @@
     <memberOf key="model.divPart"/>
   </classes>
   <content>
-        <alternate minOccurs="1" maxOccurs="unbounded">
-          <classRef key="model.global"/>
-          <elementRef key="speaker"/>
-          <elementRef key="lg"/>
-          <classRef key="model.lLike"/>
-          <classRef key="model.pLike"/>
-          <classRef key="model.listLike"/>
-          <classRef key="model.stageLike"/>
-          <classRef key="model.attributable"/>
-          <elementRef key="q"/>
-        </alternate>
-      <!--  <alternate>
-          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          <elementRef key="q"/>
-        </alternate>-->
+    <!-- In RELAX NG compact syntax: -->
+    <!-- 
+   (
+      model.global*,
+      ( 
+         (
+            ( model.stageLike, model.global* )+,
+            (
+               ( ( speaker, model.global* ), ( spPart_con, model.global* )+ )
+             |
+               ( ( spPart_sans, model.global*), ( spPart_con, model.global )* )
+            )
+         )
+       |
+         ( ( speaker, model.global* ), ( spPart_con, model.global* )+ )
+       |
+         ( ( spPart_sans, model.global* ), ( spPart_con, model.global* )* )
+      )
+   )
+    -->
+    <!--
+	Where:
+spPart_sans = ( lg | model.lLike | model.pLike | model.listLike | model.attributable | q )
+spPart_con  = ( spPart_sans | model.stageLike )
+    -->
+    <!-- However, since this (4.10.2) is just a patch release, we are
+         not making new classes or macros to make this simpler. We
+         should do that next regular release, though, IMHO. Thus below
+         this you will find the same content model but using macros,
+         just to make updating easier. —Syd, 2025-09-02 -->
+    <sequence>
+      <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+      <alternate>
+	<sequence>
+	  <sequence minOccurs="1" maxOccurs="unbounded">
+	    <classRef key="model.stageLike" minOccurs="1" maxOccurs="1"/>
+	    <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	  </sequence>
+	  <alternate>
+	    <sequence>
+	      <elementRef key="speaker" minOccurs="1" maxOccurs="1"/>
+	      <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	      <sequence minOccurs="1" maxOccurs="unbounded">
+		<alternate minOccurs="1" maxOccurs="1">
+		  <elementRef key="lg"/>
+		  <classRef key="model.lLike"/>
+		  <classRef key="model.pLike"/>
+		  <classRef key="model.listLike"/>
+		  <classRef key="model.attributable"/>
+		  <elementRef key="q"/>
+		  <classRef key="model.stageLike"/>
+		</alternate>
+		<classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	      </sequence>
+	    </sequence>
+	    <sequence>
+	      <alternate minOccurs="1" maxOccurs="1">
+		<elementRef key="lg"/>
+		<classRef key="model.lLike"/>
+		<classRef key="model.pLike"/>
+		<classRef key="model.listLike"/>
+		<classRef key="model.attributable"/>
+		<elementRef key="q"/>
+	      </alternate>
+	      <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	      <sequence minOccurs="0" maxOccurs="unbounded">
+		<alternate minOccurs="1" maxOccurs="1">
+		  <elementRef key="lg"/>
+		  <classRef key="model.lLike"/>
+		  <classRef key="model.pLike"/>
+		  <classRef key="model.listLike"/>
+		  <classRef key="model.attributable"/>
+		  <elementRef key="q"/>
+		  <classRef key="model.stageLike"/>
+		</alternate>
+	        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	      </sequence>
+	    </sequence>
+	  </alternate>
+	</sequence>
+	<sequence>
+	  <elementRef key="speaker" minOccurs="1" maxOccurs="1"/>
+	  <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	  <sequence minOccurs="1" maxOccurs="unbounded">
+	    <alternate minOccurs="1" maxOccurs="1">
+	      <elementRef key="lg"/>
+	      <classRef key="model.lLike"/>
+	      <classRef key="model.pLike"/>
+	      <classRef key="model.listLike"/>
+	      <classRef key="model.attributable"/>
+	      <elementRef key="q"/>
+	      <classRef key="model.stageLike"/>
+	    </alternate>
+	    <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	  </sequence>
+	</sequence>
+	<sequence>
+	  <alternate minOccurs="1" maxOccurs="1">
+	    <elementRef key="lg"/>
+	    <classRef key="model.lLike"/>
+	    <classRef key="model.pLike"/>
+	    <classRef key="model.listLike"/>
+	    <classRef key="model.attributable"/>
+	    <elementRef key="q"/>
+	  </alternate>
+	  <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	  <sequence minOccurs="0" maxOccurs="unbounded">
+	    <alternate minOccurs="1" maxOccurs="1">
+	      <elementRef key="lg"/>
+	      <classRef key="model.lLike"/>
+	      <classRef key="model.pLike"/>
+	      <classRef key="model.listLike"/>
+	      <classRef key="model.attributable"/>
+	      <elementRef key="q"/>
+	      <classRef key="model.stageLike"/>
+	    </alternate>
+	    <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	  </sequence>
+	</sequence>
+      </alternate>
+    </sequence>
+    <!-- 
+    <sequence>
+      <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+      <alternate>
+	<sequence>
+	  <sequence minOccurs="1" maxOccurs="unbounded">
+	    <classRef key="model.stageLike" minOccurs="1" maxOccurs="1"/>
+	    <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	  </sequence>
+	  <alternate>
+	    <sequence>
+	      <elementRef key="speaker" minOccurs="1" maxOccurs="1"/>
+	      <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	      <sequence minOccurs="1" maxOccurs="unbounded">
+		<macroRef key="spPart_con"/>
+		<classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	      </sequence>
+	    </sequence>
+	    <sequence>
+	      <macroRef key="spPart_sans"/>
+	      <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	      <sequence minOccurs="0" maxOccurs="unbounded">
+		<macroRef key="spPart_con"/>
+	        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	      </sequence>
+	    </sequence>
+	  </alternate>
+	</sequence>
+	<sequence>
+	  <elementRef key="speaker" minOccurs="1" maxOccurs="1"/>
+	  <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	  <sequence minOccurs="1" maxOccurs="unbounded">
+	    <macroRef key="spPart_con"/>
+	    <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	  </sequence>
+	</sequence>
+	<sequence>
+	  <macroRef key="spPart_sans"/>
+	  <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	  <sequence minOccurs="0" maxOccurs="unbounded">
+	    <macroRef key="spPart_con"/>
+	    <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+	  </sequence>
+	</sequence>
+      </alternate>
+    </sequence>
+    -->
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-sp-egXML-vc" source="#CODR-eg-296">
