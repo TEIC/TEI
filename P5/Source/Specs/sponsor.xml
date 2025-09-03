@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
-<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="sponsor">
-  <gloss xml:lang="en" versionDate="2007-06-12">sponsor</gloss>
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" xml:id="gi-sponsor" ident="sponsor">
+  <gloss versionDate="2007-06-12" xml:lang="en">sponsor</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">commanditaire</gloss>
   <gloss versionDate="2016-11-17" xml:lang="de">Förderer</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">specifies the name of a sponsoring organization or institution.</desc>
-  <desc versionDate="2009-01-05" xml:lang="fr">indique le nom d’une institution ou d’un organisme
-    partenaires.</desc>
+  <desc versionDate="2009-01-05" xml:lang="fr">indique le nom d’une institution ou d’un organisme partenaires.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">후원 조직 또는 기관의 이름을 명시한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">標明贊助的組織或機構名稱。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">支援を行う組織や団体の名前を示す。</desc>
     <desc versionDate="2016-11-17" xml:lang="de">gibt den Namen einer Organisation oder Institution an, die als Förderer auftritt.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">especifica el nombre de la organización o institución
-    responsable.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">indica il nome di un'organizzazione o istituzzione
-    finanziatrice.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">especifica el nombre de la organización o institución responsable.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">indica il nome di un'organizzazione o istituzzione finanziatrice.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.canonical"/>
@@ -24,53 +22,20 @@
   <content>
     <macroRef key="macro.phraseSeq.limited"/>
   </content>
-  <attList>
-    <attDef ident="calendar" usage="opt" validUntil="2024-11-11">
-        <desc type="deprecationInfo" versionDate="2023-05-11" xml:lang="en">The <att>calendar</att> attribute will be removed from this element
-            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar</att> attribute
-            (unlike <att>datingMethod</att> defined in
-            <ident type="class">att.datable.custom</ident>) defines the calendar system of the date
-            in the original material defined by the parent element, <emph>not</emph> the calendar to
-            which the date is normalized.</desc>
-        <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the
-            date represented by the content of this element belongs.</desc>
-        <desc versionDate="2007-12-20" xml:lang="ko">날짜 표현 시스템 또는 달력 표시 형식을 표시한다.</desc>
-        <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該日期表示所使用的曆法計算系統。</desc>
-        <desc xml:lang="ja" versionDate="2019-02-03">この要素を含むコンテントにおける日付の暦やシステムを示す。</desc>
-        <desc versionDate="2009-01-06" xml:lang="fr">indique le système ou le calendrier auquel
-            appartient la date exprimée dans le contenu de l'élément.</desc>
-        <desc versionDate="2007-05-04" xml:lang="es">indica el sistema o calendario en que se muestra
-            una fecha.</desc>
-        <desc versionDate="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data
-            appartiene.</desc>
-        <datatype minOccurs="1" maxOccurs="unbounded">
-            <dataRef key="teidata.pointer"/>
-        </datatype>
-        <constraintSpec scheme="schematron" ident="calendar-check-sponsor">
-            <constraint>
-                <sch:rule context="tei:*[@calendar]">
-                    <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
-                        systems or calendars to which the date represented by the content of this element belongs,
-                        but this <sch:name/> element has no textual content.</sch:assert>
-                </sch:rule>
-            </constraint>
-        </constraintSpec>
-    </attDef>
-  </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-sponsor-egXML-nr">
       <sponsor>Association for Computers and the Humanities</sponsor>
       <sponsor>Association for Computational Linguistics</sponsor>
       <sponsor ref="http://www.allc.org/">Association for Literary and Linguistic Computing</sponsor>
     </egXML>
   </exemplum>
   <exemplum versionDate="2010-02-26" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-sponsor-egXML-ga">
       <sponsor>Centre national de la recherche scientifique</sponsor>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-sponsor-egXML-vv">
       <sponsor>香港影評人協會</sponsor>
       <sponsor>香港教育專業人員協會</sponsor>
       <sponsor>香港青年協會</sponsor>
@@ -81,21 +46,21 @@
         <term>funders</term> (see element <gi>funder</gi>), who provide the funding but do not necessarily take intellectual
       responsibility.</p>
   </remarks>
-  <remarks xml:lang="fr" versionDate="2007-06-12">
+  <remarks versionDate="2007-06-12" xml:lang="fr">
     <p>Les commanditaires apportent leur caution intellectuelle à un projet ; ils doivent être
       distingués des <term>financeurs</term>, qui  apportent de financement mais n'ont pas
       nécessairement une responsabilité intellectuelle.</p>
   </remarks>
-  <remarks xml:lang="es" versionDate="2008-04-06">
+  <remarks versionDate="2008-04-06" xml:lang="es">
     <p>Los patrocinadores dan su autoridad intelectual a un proyecto; deben ser distinguidos de los
         <term>proveedores de fondos</term>, que proporcionan la financiación pero no asumen
       necesariamente la responsabilidad intelectual.</p>
   </remarks>
-  <remarks xml:lang="ja" versionDate="2008-04-05">
+  <remarks versionDate="2008-04-05" xml:lang="ja">
     <p> 支援者は、プロジェクトに知的な責任を持つ。支援者は<term>資金提供者 </term>と区別されるべきである。資金提供者は、資金を提供するが、必 ずしも知的な責任を持つとは限らない。
     </p>
   </remarks>
-  <remarks xml:lang="de" versionDate="2016-11-17">
+  <remarks versionDate="2016-11-17" xml:lang="de">
       <p>
           Förderer übernehmen die inhaltliche Verantwortung für ein Projekt. Sie sind zu unterscheiden von 
           <term>Geldgebern</term> (siehe <gi>funder</gi>-Element), die nicht notwendigerweise die inhaltliche Verantwortung oder Betreuung übernehmen.

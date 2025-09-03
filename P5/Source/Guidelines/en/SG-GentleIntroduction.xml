@@ -229,7 +229,7 @@ forth. And for certain types of analysis (most notably textual
 criticism) the physical appearance of one particular printed or
 manuscript source may be of importance:  paradoxically, one may wish to
 use descriptive markup to describe presentational features such as
-typeface, line breaks, use of whitespace and so forth.</p>
+typeface, original topographic lineation, use of whitespace, and so forth.</p>
 
 <p>These textual structures overlap with one another in complex and
 unpredictable ways. Particularly when dealing with texts as
@@ -280,7 +280,7 @@ off element occurrences within the running text, in rather the
 same way as different types of parentheses or quotation marks are used
 in conventional punctuation. For example, a quotation element in a
 text might be tagged as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">... Rosalind's 
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SG131-egXML-av">... Rosalind's 
 remarks <quote>This is the silliest stuff that ere I heard 
 of!</quote> clearly indicate ...</egXML>
 
@@ -320,7 +320,7 @@ composed. In XML terms, our <term>document type</term> is the
 <term>stanza</term>, each stanza having embedded within it a number of
 <term>line</term> elements. Fully marked up, a text conforming to
 this model might appear as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" valid="false" source="#SG132-neg-1">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SG132-egXML-mc" xml:lang="en" valid="false" source="#SG132-neg-1">
 <anthology xmlns="">
   <poem>
     <heading>The SICK ROSE</heading>
@@ -346,7 +346,7 @@ document.<note place="bottom">The element names here have been chosen for
 clarity of exposition; there is, however, a TEI element corresponding to
 each<!--, so that this example may be regarded as TEI-conformable in the
 sense that this term is defined in <ptr target="#CF"/>-->.</note> It will, however, serve as an introduction to the basic notions of XML.
-Whitespace and line breaks have been added to the example for the
+  Whitespace and line divisions have been added to the example for the
 sake of visual clarity only; they have no particular significance in the
 XML encoding itself. Also, the line
 <eg><![CDATA[<!-- more poems go here   -->]]></eg>
@@ -693,7 +693,7 @@ ancestor at one end and many children (mostly the elements containing
 simple text) at the other. For example, we could represent an anthology
 containing two poems, the first of which contains two four-line
 stanzas and the second a single stanza,  by a tree structure like the following figure:</p>
-  <figure><graphic width="80%" url="Images/xmlFlowChart.png" mimeType="image/png"/></figure>
+  <figure xml:id="SG152-figure-jf"><graphic width="80%" url="Images/xmlFlowChart.png" mimeType="image/png"/></figure>
 <!--2019-12-28 (ebb): Temporarily (I hope) replacing xmlFlowChart.svg with a png made from a screen shot, until we can support SVG images in epub3 build tests. -->
 <!-- 2019-12-26 (ebb): Replaced the fuzzy png graphic that was here with an SVG made from XSLT (Images/xml-to-svg-flowchart.xsl) over a source XML (Images/poems.xml) that mirrors the example here.  -->
  <!-- 2019-12-14 Revised graphic to better correspond with example and XML hierarchy (JL) -->
@@ -705,7 +705,7 @@ and elsewhere on the Web: good beginners' tutorials include <ptr target="http://
 available in several languages.</note> XPath gives us a
 non-graphical way of referring to any part of an XML document: for
 example, we might refer to the last line of Blake's poem as
-<code>/anthology/poem[1]/stanza[2]/line[4]</code>. The square brackets
+<code><![CDATA[/anthology/poem[1]/stanza[2]/line[4]]]></code>. The square brackets
 here indicate a numerical selection: we are talking about the fourth
 line in the second stanza of the first poem in the anthology. If we
 left out all the square-bracketted selections, the corresponding XPath
@@ -789,9 +789,9 @@ whitespace (blank, newline, or tab) character. The value part
 must always be given inside matching quotation marks, either single or
 double<note place="bottom">In the unlikely event that both kinds of quotation marks are needed within the
 quoted string, either or both can also be presented in escaped form, using the
-predefined character entities <code>&amp;apos;</code> or <code>&amp;quot;</code></note>.</p>
+predefined character entities <code><![CDATA[&apos;]]></code> or <code><![CDATA[&quot;]]></code></note>.</p>
 <p>For example: 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SG16-egXML-pf">
   <poem xmlns="" xml:id="Poem1" status="draft"> ... </poem>
 </egXML>
 Here attribute values are being specified for two attributes
@@ -928,7 +928,7 @@ the parser may safely ignore the lack of one in those that do not.
 Only poems to which we intend to refer need use this attribute; for
 each such poem we should now include in its start-tag some unique
 identifier, for example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" valid="false">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SG-id-egXML-gy" xml:lang="en" valid="false">
 <poem xmlns="" xml:id="Rose"> ... </poem>
 
 <poem xmlns="" xml:id="P40"> ... </poem>
@@ -959,7 +959,7 @@ attribute pattern, it must be supplied on each occurrence—a
 <p>With these declarations in force, we can now encode a reference to
 the poem whose <att>xml:id</att> attribute specifies that its
 identifier is <val>Rose</val> as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" valid="false">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SG-id-egXML-wi" xml:lang="en" valid="false">
 Blake's poem on the sick rose 
 <poemRef xmlns="" target="#Rose"/> ...</egXML>
 <!--
@@ -994,7 +994,7 @@ with a <att>target</att> attribute of datatype URI:
 <eg xml:space="preserve"><![CDATA[graphic_p = element graphic {att.url, empty} att.url =
 attribute url {anyURI}]]></eg> With these additions to the schema, we
 can now represent the location of the illustration within our text
-like this: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" valid="false" source="#UND"><poem xmlns=""><graphic url="http://en.wikisource.org/wiki/Image:Blake_sick_rose.jpg"/>
+like this: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SG-id-egXML-qv" xml:lang="en" valid="false" source="#UND"><poem xmlns=""><graphic url="http://en.wikisource.org/wiki/Image:Blake_sick_rose.jpg"/>
 </poem></egXML> By providing a location from which a reproduction of
 the required image can be downloaded, this encoding makes it possible
 for appropriate software able to display the image as well as record
@@ -1003,9 +1003,9 @@ its existence. </p>
 same way as elements, and can therefore be accessed using XPath. For
 example, to refer to all the poems in our anthology whose
 <att>status</att> attribute has the value <val>draft</val>, we might
-use an XPath such as <code>/anthology/poem[@status='draft']</code>. To
+use an XPath such as <code><![CDATA[/anthology/poem[@status='draft']]]></code>. To
 find the headings of all such poems, we would use the XPath
-<code>/anthology/poem[@status='draft']/heading</code>. </p>
+<code><![CDATA[/anthology/poem[@status='draft']/heading]]></code>. </p>
 </div>
 </div>
 
@@ -1058,9 +1058,9 @@ within an XML document as the Unicode character with hexadecimal value
 <num value="233">00E9</num>. If such a document is being prepared on (or
 exported to) a system using a different character set in which this
 character is not available, it may instead be represented by the
-character reference <code>&amp;#x00E9;</code> (the <code>x</code> indicating
+character reference <code><![CDATA[&#x00E9;]]></code> (the <code>x</code> indicating
 that what follows is a hexadecimal value) or
-<code>&amp;#0233;</code> (its decimal equivalent). References of this type do not need
+<code><![CDATA[&#0233;]]></code> (its decimal equivalent). References of this type do not need
 to be predefined, since the underlying character encoding for XML is
 always the same.</p>
 
@@ -1071,7 +1071,7 @@ by means of a construct known as an <term>entity
 declaration</term>. A reference to a named character entity always
 takes the form of an ampersand, followed by the name, followed by a
 semicolon. For example an XML document containing the string
-<q>T&amp;C</q> might be encoded as <code>T&amp;amp;C</code>. </p>
+<q>T&amp;C</q> might be encoded as <code><![CDATA[T&amp;C]]></code>. </p>
 
 <p>There is a small set of such character
 entity references that do not have to be declared because they form
@@ -1099,23 +1099,24 @@ eacute "&#xe9;">]]></eg> or, using decimal notation:
 substitution</term> purposes, where the same text needs to be repeated
 uniformly throughout a text. For example, if a declaration such as
 <eg><![CDATA[<!ENTITY TEI "Text Encoding Initiative">]]></eg> is included with a document,
-then references such as <code>&amp;TEI;</code> may be used within it,
+then references such as <code><![CDATA[&TEI;]]></code> may be used within it,
 each of which will be expanded in the same way and replaced by the
 string <q>Text Encoding Initiative</q> before the text is validated.</p>
-
-
 </div>
+
 <div type="div3" xml:id="SGname"><head>Namespaces</head>
 
-<p>A valid XML document necessarily specifies the schema in which its
-constituent elements are defined. However, a well-formed XML document
-is not required to specify its schema (indeed, it may not even have a
-schema). It would still be useful to indicate that the element names used
-in it have some defined provenance. Furthermore, it might be desirable
-to include in a document elements that are defined (possibly
-differently) in different schemas. A cabinet-maker's schema might well
-define an element called <gi scheme="imaginary">table</gi> with very different
-characteristics from those of a documentalist's.</p>
+<p>A valid XML document necessarily specifies or implies some schema
+within which its constituent elements are defined and rules about
+their usage are given: this is a part of what it means to be
+<q>valid</q>. By contrast, a well formed XML document is not required
+to specify a schema at all. Nonetheless, it may well be useful to
+indicate that the element names used in it have some defined
+provenance. It might also be desirable to include in a document
+elements that are defined (possibly differently) in different
+schemas. A cabinet-maker's schema might well define an element called
+<gi scheme="imaginary">table</gi> with very different characteristics
+from those of a documentalist's.</p>
 <p>The concept of <term>namespace</term> was introduced into the XML
 language as a means of addressing these and related problems. If the
 markup of an XML document is thought of as an expression in some
@@ -1157,7 +1158,7 @@ use the <soCalled>null</soCalled> namespace. Alternatively, the root element of 
 document may supply a default namespace, understood to apply to all elements which have no namespace prefix. This is the function of the
 <att scheme="XML">xmlns</att> attribute which provides a
 unique name for the default namespace, in the form of a URI:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" valid="false" source="#UND">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SGname-egXML-zm" xml:lang="en" valid="false" source="#UND">
 <anthology xmlns="">
 <!-- anthology markup elements here -->
 </anthology>
@@ -1165,7 +1166,7 @@ unique name for the default namespace, in the form of a URI:
 In exactly the same way, on the root element for each part of our
 document which uses the SVG language, we might introduce the SVG
 namespace name:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" valid="false" source="#UND">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SGname-egXML-bg" xml:lang="en" valid="false" source="#UND">
 <anthology xmlns="">
 <!-- anthology markup elements here -->
    <svg xmlns="http://www.w3.org/2000/svg">
@@ -1183,7 +1184,7 @@ name with the namespace it defines. This is very useful if we want to
 mingle elements from different namespaces within the same document,
 since the prefix can be attached to any element, overriding the
 implicit namespace for itself (but not its children):
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" valid="false" source="#UND">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SGname-egXML-ni" xml:lang="en" valid="false" source="#UND">
 <anthology xmlns="" xmlns:svg="http://www.w3.org/2000/svg">
   <!-- anthology markup elements here -->
    <svg:svg>
@@ -1199,7 +1200,7 @@ identify those that are relevant, and validate them appropriately. To
 extend our example further, we might decide to add a linguistic
 analysis to each of the poems, using a set of elements such as <gi scheme="imaginary">aux</gi>, <gi scheme="imaginary">adj</gi>, etc.,
 derived from some pre-existing XML vocabulary for linguistic analysis.
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" valid="false">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SGname-egXML-hn" xml:lang="en" valid="false">
 <anthology xmlns="" xmlns:gram="http://www.gram.org" xmlns:svg="http://www.w3.org/2000/svg">
     <!-- anthology markup elements here -->
    <svg:svg>
@@ -1222,8 +1223,8 @@ take special action if characters with a syntactic meaning in XML
 (such as the left angle bracket or ampersand) are to be used in a
 document to stand for themselves, rather than to signal the start of a
 tag or an entity reference respectively. The predefined entities
-<code>&amp;amp;</code>, <code>&amp;lt;</code>, and
-<code>&amp;gt;</code> provide one method of dealing with this problem,
+<code><![CDATA[&amp;]]></code>, <code><![CDATA[&lt;]]></code>, and
+<code><![CDATA[&gt;]]></code> provide one method of dealing with this problem,
 if the number of occurrences of such things is small. Other methods
 may be considered when the number is large, as in an XML document like
 the present Guidelines, which contains hundreds of examples of XML
@@ -1255,15 +1256,15 @@ only so that it can be clearly distinguished from the
 structure of the document. As suggested above, one common example is
 the need, when processing an XML document for printed output, to
 include a suggestion that the formatting processor might use to
-determine where to begin a new page of output. Page-breaking decisions
-are usually best made by the formatting engine alone, but there will
+determine where to begin a new page of output. It is generally best
+to leave pagination of the output to the formatting engine alone, but there will
 always be occasions when it may be necessary to override these. An XML
 processing instruction inserted into the document is one very simple
 and effective way of doing this without interfering with other aspects
 of the markup.</p>
 <p>Here is an example XML processing instruction: <eg><![CDATA[<?tex
-\newpage ?>]]></eg> It begins with <code>&lt;?</code> and ends with
-<code>?&gt;</code>. In between are two strings separated by a space:
+\newpage ?>]]></eg> It begins with <code><![CDATA[<?]]></code> and ends with
+<code><![CDATA[?>]]></code>. In between are two strings separated by a space:
 the first is the name of some processor (<code>tex</code> in the above
 example) and the second is some data intended for the use of that
 processor (in this case, the instruction to start a new page). The
@@ -1271,7 +1272,7 @@ only constraint placed by XML on the strings is that the first one
 must be a valid XML name other than <code>XML</code>,
 <code>Xml</code>, or <code>xml</code>, etc. The second string can be
 any arbitrary sequence of characters, not including the closing
-character-sequence <code>?&gt;</code>.</p>
+character-sequence <code><![CDATA[?>]]></code>.</p>
 </div>
 </div>
 
@@ -1331,7 +1332,7 @@ two named entities it defines to those already predefined for
 XML. Before the document instance itself is validated, any references
 to these entities will be expanded to the character string
 given. Thus, wherever in the document instance the string
-<code>&amp;legalese;</code> appears, it will be replaced by the
+<code><![CDATA[&legalese;]]></code> appears, it will be replaced by the
 formulation above. This makes life a little easier for those
 keyboarding our anthology.<note place="bottom">And, indeed, for those
 responsible for deciding the licensing conditions if they change their

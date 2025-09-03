@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
-<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="principal">
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" xml:id="gi-principal" ident="principal">
   <gloss versionDate="2005-01-14" xml:lang="en">principal researcher</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">chercheur principal</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">책임 연구자</gloss>
@@ -14,8 +15,7 @@ creation of an electronic text.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">전자 텍스트 생성에 대한 책임을 지는 책임 연구자의 이름을 제시한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供負責電子文件製作的主導研究者的姓名。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">電子テキストの生成に責任のある中心的な研究者の名前を示す。</desc>
-    <desc versionDate="2016-11-17" xml:lang="de">gibt den Namen des Projektleiters an, der für die Erstellung eines 
-        elektronischen Textes verantwortlich ist.</desc>
+  <desc versionDate="2016-11-17" xml:lang="de">gibt den Namen des Projektleiters an, der für die Erstellung eines elektronischen Textes verantwortlich ist.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona el nombre del investigador principal de la creación de un texto electrónico.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">fornisce il nome del ricercatore principale responsabile della creazione di un documento elettronico.</desc>
   <classes>
@@ -27,51 +27,18 @@ creation of an electronic text.</desc>
   <content>
     <macroRef key="macro.phraseSeq.limited"/>
   </content>
-  <attList>
-    <attDef ident="calendar" usage="opt" validUntil="2024-11-11">
-        <desc type="deprecationInfo" versionDate="2023-05-11" xml:lang="en">The <att>calendar</att> attribute will be removed from this element
-            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar</att> attribute
-            (unlike <att>datingMethod</att> defined in
-            <ident type="class">att.datable.custom</ident>) defines the calendar system of the date
-            in the original material defined by the parent element, <emph>not</emph> the calendar to
-            which the date is normalized.</desc>
-        <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the
-            date represented by the content of this element belongs.</desc>
-        <desc versionDate="2007-12-20" xml:lang="ko">날짜 표현 시스템 또는 달력 표시 형식을 표시한다.</desc>
-        <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該日期表示所使用的曆法計算系統。</desc>
-        <desc xml:lang="ja" versionDate="2019-02-03">この要素を含むコンテントにおける日付の暦やシステムを示す。</desc>
-        <desc versionDate="2009-01-06" xml:lang="fr">indique le système ou le calendrier auquel
-            appartient la date exprimée dans le contenu de l'élément.</desc>
-        <desc versionDate="2007-05-04" xml:lang="es">indica el sistema o calendario en que se muestra
-            una fecha.</desc>
-        <desc versionDate="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data
-            appartiene.</desc>
-        <datatype minOccurs="1" maxOccurs="unbounded">
-            <dataRef key="teidata.pointer"/>
-        </datatype>
-        <constraintSpec scheme="schematron" ident="calendar-check-principal">
-            <constraint>
-                <sch:rule context="tei:*[@calendar]">
-                    <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
-                        systems or calendars to which the date represented by the content of this element belongs,
-                        but this <sch:name/> element has no textual content.</sch:assert>
-                </sch:rule>
-            </constraint>
-        </constraintSpec>
-    </attDef>
-  </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-principal-egXML-ft">
       <principal ref="http://viaf.org/viaf/105517912">Gary Taylor</principal>
     </egXML>
   </exemplum>
   <exemplum versionDate="2010-02-26" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Sanctoral-ee">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-principal-egXML-qm" source="#fr-ex-Sanctoral-ee">
       <principal xml:id="fr_AEU-2">Anne-Élisabeth Urfels-Capot</principal>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-principal-egXML-yz">
       <principal>蔡元培</principal>
     </egXML>
   </exemplum>

@@ -1,85 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
-<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="core" ident="title">
-  <gloss xml:lang="en" versionDate="2007-06-12">title</gloss>
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="core" xml:id="gi-title" ident="title">
+  <gloss versionDate="2007-06-12" xml:lang="en">title</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">titre</gloss>
   <gloss versionDate="2017-06-04" xml:lang="de">Titel</gloss>
   <desc versionDate="2008-10-25" xml:lang="en">contains a title for any kind of work.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">다양한 종류의 작업에 대한 전체 제목을 제공한다.</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">包含任何種類作品的完整題名
-                    <!--,不論是文章、書籍、期刊或叢書，其他替代題名或副題名也包含在內-->。</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">包含任何種類作品的完整題名 <!--,不論是文章、書籍、期刊或叢書，其他替代題名或副題名也包含在內-->。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">作品の完全なタイトルを示す。</desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">contient le titre complet d'une oeuvre quelconque</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">contiene el título completo de una obra de
-                    cualquier tipo.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">contiene il titolo completo di una qualsiaisi                    opera.</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">contient le titre complet d'une oeuvre quelconque.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">contiene el título completo de una obra de cualquier tipo.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">contiene il titolo completo di una qualsiaisi opera.</desc>
   <desc versionDate="2017-06-04" xml:lang="de">beinhaltet einen Titel eines beliebigen Werks.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.canonical"/>
+    <memberOf key="att.cmc"/>
+    <memberOf key="att.datable"/>
     <memberOf key="att.typed"/>
     <memberOf key="model.emphLike"/>
     <memberOf key="model.msQuoteLike"/>
-    <memberOf key="att.canonical"/>
-    <memberOf key="att.datable"/>
   </classes>
   <content>
     <macroRef key="macro.paraContent"/>
   </content>
   <attList>
-      <attDef ident="calendar" usage="opt" validUntil="2024-11-11">
-        <desc type="deprecationInfo" versionDate="2023-05-11" xml:lang="en">The <att>calendar</att> attribute will be removed from this element
-            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar</att> attribute
-            (unlike <att>datingMethod</att> defined in
-            <ident type="class">att.datable.custom</ident>) defines the calendar system of the date
-            in the original material defined by the parent element, <emph>not</emph> the calendar to
-            which the date is normalized.</desc>
-        <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the
-            date represented by the content of this element belongs.</desc>
-        <desc versionDate="2007-12-20" xml:lang="ko">날짜 표현 시스템 또는 달력 표시 형식을 표시한다.</desc>
-        <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該日期表示所使用的曆法計算系統。</desc>
-        <desc xml:lang="ja" versionDate="2019-02-03">この要素を含むコンテントにおける日付の暦やシステムを示す。</desc>
-        <desc versionDate="2009-01-06" xml:lang="fr">indique le système ou le calendrier auquel
-            appartient la date exprimée dans le contenu de l'élément.</desc>
-        <desc versionDate="2007-05-04" xml:lang="es">indica el sistema o calendario en que se muestra
-            una fecha.</desc>
-        <desc versionDate="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data
-            appartiene.</desc>
-        <datatype minOccurs="1" maxOccurs="unbounded">
-            <dataRef key="teidata.pointer"/>
-        </datatype>
-        <constraintSpec scheme="schematron" ident="calendar-check-title">
-            <constraint>
-                <sch:rule context="tei:*[@calendar]">
-                    <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
-                        systems or calendars to which the date represented by the content of this element belongs,
-                        but this <sch:name/> element has no textual content.</sch:assert>
-                </sch:rule>
-            </constraint>
-        </constraintSpec>
-    </attDef>
-
-  
-      <attDef ident="level" usage="opt">
-      <desc versionDate="2005-03-05" xml:lang="en">indicates the bibliographic level for a title, that is, whether
-                                        it identifies an article, book, journal, series, or
-                                        unpublished material.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">제목에 대한 서지적 층위를 나타내어, 논문, 책,
-                                        학술지, 총서, 미간행의 여부를 식별한다.</desc>
+    <attDef ident="level" usage="opt">
+      <desc versionDate="2005-03-05" xml:lang="en">indicates the bibliographic level for a title, that is, whether it identifies an article, book, journal, series, or unpublished material.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">제목에 대한 서지적 층위를 나타내어, 논문, 책, 학술지, 총서, 미간행의 여부를 식별한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指出題名的書目層次，即該題名之所指可以是文章、書籍、期刊、叢書或未出版的項目。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">タイトルの書誌情報のレベルを示す。例えば、論文、書籍、雑誌、叢書、 非刊行物など。</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">indique le niveau
-                                        bibliographique d'un titre, c'est-à-dire si ce titre
-                                        identifie un article, un livre, une revue, une collection,
-                                        ou un document non publié</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">indica el tipo bibliográfico
-                                        para un título, si este se identifica como un artículo,
-                                        libro, revista, colección o material inédito.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica il livello
-                                        bibliografico di un titolo, ovvero se indentifica un
-                                        articolo, un libro, una rivista, una collana, o materiale
-                                        non pubblicato.</desc>
-      <desc versionDate="2017-06-04" xml:lang="de">gibt den bibliografischen Typ eines Titels an, d.h. ob er einen Artikel, ein Buch, eine
-        Zeitschrift, eine Reihe oder unpubliziertes Material bezeichnet.</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">indique le niveau bibliographique d'un titre, c'est-à-dire si ce titre identifie un article, un livre, une revue, une collection, ou un document non publié</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">indica el tipo bibliográfico para un título, si este se identifica como un artículo, libro, revista, colección o material inédito.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica il livello bibliografico di un titolo, ovvero se indentifica un articolo, un libro, una rivista, una collana, o materiale non pubblicato.</desc>
+      <desc versionDate="2017-06-04" xml:lang="de">gibt den bibliografischen Typ eines Titels an, d.h. ob er einen Artikel, ein Buch, eine Zeitschrift, eine Reihe oder unpubliziertes Material bezeichnet.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="closed">
         <valItem ident="a">
@@ -89,27 +44,14 @@
           <gloss versionDate="2007-11-06" xml:lang="it">analitico</gloss>
           <gloss versionDate="2007-05-04" xml:lang="es">analítico</gloss>
           <gloss versionDate="2017-06-04" xml:lang="de">unselbständig</gloss>
-          <desc versionDate="2013-04-29" xml:lang="en">the title applies to an analytic item, such as an
-	  article, poem, or other work published as part of a larger item.</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">분석적 제목(보다
-                                                  큰 항목의 일부로 출판된 논문, 시, 또는 기타 항목)</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">分析層題名
-                                                  (文章、詩、或其他隸屬於一個較大作品的項目)</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">título
-                                                  analítico (de artículo, de poema, o de
-                                                  otro elemento publicado como parte de un
-                                                  elemento más grande)</desc>
+          <desc versionDate="2013-04-29" xml:lang="en">the title applies to an analytic item, such as an article, poem, or other work published as part of a larger item.</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">분석적 제목(보다 큰 항목의 일부로 출판된 논문, 시, 또는 기타 항목)</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">分析層題名 (文章、詩、或其他隸屬於一個較大作品的項目)</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">título analítico (de artículo, de poema, o de otro elemento publicado como parte de un elemento más grande)</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">分析的タイトル(例えば、論文や詩など、大きめの刊行物の部分と なるもの)。</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">titre
-                                                  analytique (article, poème ou autre,
-                                                  publié comme partie d'un ensemble plus
-                                                  grand)</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">titolo
-                                                  analitico (articolo, poesia o altra
-                                                  unità bibliografica pubblicata come
-                                                  parte di un'unità più grande)</desc>
-          <desc versionDate="2017-06-04" xml:lang="de">der Titel gehört zu einer unselbständigen Publikation, wie einem Artikel, Gedicht oder
-            einem anderen Werk, das als Teil einer umfangreicheren Einheit publiziert wurde.</desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">titre analytique (article, poème ou autre, publié comme partie d'un ensemble plus grand)</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">titolo analitico (articolo, poesia o altra unità bibliografica pubblicata come parte di un'unità più grande)</desc>
+          <desc versionDate="2017-06-04" xml:lang="de">der Titel gehört zu einer unselbständigen Publikation, wie einem Artikel, Gedicht oder einem anderen Werk, das als Teil einer umfangreicheren Einheit publiziert wurde.</desc>
         </valItem>
         <valItem ident="m">
           <gloss versionDate="2007-07-04" xml:lang="en">monographic</gloss>
@@ -118,54 +60,29 @@
           <gloss versionDate="2007-11-06" xml:lang="it">monografico</gloss>
           <gloss versionDate="2007-05-04" xml:lang="es">monográfico</gloss>
           <gloss versionDate="2017-06-04" xml:lang="de">Monografie</gloss>
-          <desc versionDate="2013-04-29" xml:lang="en">the title applies to a monograph such as a book or
-          other item considered to be a distinct publication, including single
-          volumes of multi-volume works</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">단행본 제목(여러
-                                                  권 중 한 권으로 출판된 경우를 포함하여, 독립된 항목으로 출판된 책,
-                                                  모음집, 또는 기타 항목)</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">專題層題名
-                                                  (書、選集、或其他獨立出版的項目，包含多冊作品的其中一冊)</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">título
-                                                  monográfico (libro, colección, u otro
-                                                  elemento publicado como elemento
-                                                  distinto, incluído los volúmenes
-                                                  individuales de trabajos multivolúmenes)</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">単行物のタイトル(例えば、書籍や叢書など、複数の巻に別れる作
-                                                  品のうちのひとつや、独立してある出版物)。</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">titre de
-                                                  monographie (livre, ensemble ou autre,
-                                                  publié comme un document distinct, y
-                                                  compris les volumes isolés d'ouvrages en
-                                                  plusieurs volumes)</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">titolo
-                                                  della monografia (libro, raccolta o
-                                                  altra unità bibliografica pubblicata
-                                                  indipendentemente, inculso il singolo
-                                                  volume di opere a più volumi)</desc>
-          <desc versionDate="2017-06-04" xml:lang="de">der Titel bezieht sich auf Monografien wie z.B. ein Bücher oder andere selbständige
-            Publikationen, also auch auf einzelne Bände in einem mehrbändigen Werk.</desc>
+          <desc versionDate="2013-04-29" xml:lang="en">the title applies to a monograph such as a book or other item considered to be a distinct publication, including single volumes of multi-volume works</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">단행본 제목(여러 권 중 한 권으로 출판된 경우를 포함하여, 독립된 항목으로 출판된 책, 모음집, 또는 기타 항목)</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">專題層題名 (書、選集、或其他獨立出版的項目，包含多冊作品的其中一冊)</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">título monográfico (libro, colección, u otro elemento publicado como elemento distinto, incluído los volúmenes individuales de trabajos multivolúmenes)</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">単行物のタイトル(例えば、書籍や叢書など、複数の巻に別れる作 品のうちのひとつや、独立してある出版物)。</desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">titre de monographie (livre, ensemble ou autre, publié comme un document distinct, y compris les volumes isolés d'ouvrages en plusieurs volumes)</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">titolo della monografia (libro, raccolta o altra unità bibliografica pubblicata indipendentemente, inculso il singolo volume di opere a più volumi)</desc>
+          <desc versionDate="2017-06-04" xml:lang="de">der Titel bezieht sich auf Monografien wie z.B. ein Bücher oder andere selbständige Publikationen, also auch auf einzelne Bände in einem mehrbändigen Werk.</desc>
         </valItem>
         <valItem ident="j">
           <gloss versionDate="2007-07-04" xml:lang="en">journal</gloss>
           <gloss versionDate="2007-12-20" xml:lang="ko">학술지</gloss>
           <gloss versionDate="2007-11-06" xml:lang="it">rivista</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">título
-                                                  de revista.</gloss>
+          <gloss versionDate="2007-05-04" xml:lang="es">título de revista.</gloss>
           <gloss versionDate="2017-06-04" xml:lang="de">Zeitschrift</gloss>
-          <desc versionDate="2013-04-29" xml:lang="en">the title applies to any serial or periodical
-	  publication such as a journal, magazine, or newspaper</desc>
+          <desc versionDate="2013-04-29" xml:lang="en">the title applies to any serial or periodical publication such as a journal, magazine, or newspaper</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">학술지 제목</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">期刊層題名</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">título de
-                                                  diario, periódico o revista</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">título de diario, periódico o revista</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">雑誌のタイトル。</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">titre de
-                                                  revue</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">titolo di
-                                                  rivista</desc>
-          <desc versionDate="2017-06-04" xml:lang="de">der Titel bezieht sich auf jede Art fortlaufender oder periodischer Veröffentlichungen wie
-            z. B. Zeitschriften, Magazine oder Zeitungen.</desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">titre de revue</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">titolo di rivista</desc>
+          <desc versionDate="2017-06-04" xml:lang="de">der Titel bezieht sich auf jede Art fortlaufender oder periodischer Veröffentlichungen wie z. B. Zeitschriften, Magazine oder Zeitungen.</desc>
         </valItem>
         <valItem ident="s">
           <gloss versionDate="2007-07-04" xml:lang="en">series</gloss>
@@ -174,43 +91,27 @@
           <gloss versionDate="2007-11-06" xml:lang="it">serie</gloss>
           <gloss versionDate="2007-05-04" xml:lang="es">series</gloss>
           <gloss versionDate="2017-06-04" xml:lang="de">Reihe</gloss>
-          <desc versionDate="2013-04-29" xml:lang="en">the title applies to a series of otherwise distinct
-	  publications such as a collection</desc>
+          <desc versionDate="2013-04-29" xml:lang="en">the title applies to a series of otherwise distinct publications such as a collection</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">연간물 제목</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">叢書層題名</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">título de
-                                                  serie</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">título de serie</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">叢書のタイトル。</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">titre de
-                                                  publication en série</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">titolo di
-                                                  collana</desc>
-          <desc versionDate="2017-06-04" xml:lang="de">der Titel bezeichnet eine Reihe von ansonsten selbständig publizierten Veröffentlichungen,
-            wie z. B. eine Buchreihe.</desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">titre de publication en série</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">titolo di collana</desc>
+          <desc versionDate="2017-06-04" xml:lang="de">der Titel bezeichnet eine Reihe von ansonsten selbständig publizierten Veröffentlichungen, wie z. B. eine Buchreihe.</desc>
         </valItem>
         <valItem ident="u">
           <gloss versionDate="2007-07-04" xml:lang="en">unpublished</gloss>
           <gloss versionDate="2017-06-04" xml:lang="de">unveröffentlicht</gloss>
           <gloss versionDate="2007-12-20" xml:lang="ko">미간행</gloss>
-          <desc versionDate="2013-04-29" xml:lang="en">the title applies to any unpublished material (including
-                                                  theses and dissertations unless
-                                                  published by a commercial press)</desc>
+          <desc versionDate="2013-04-29" xml:lang="en">the title applies to any unpublished material (including theses and dissertations unless published by a commercial press)</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">미간행물(출판사에서 출판되지 않은 석박사 논문을 포함하여)의 제목</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">未出版的項目題名 (包括未經商業刊物發表的專題論文)</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">título de
-                                                  un material inédito (incluidas tesis y
-                                                  disertaciones que no sean publicadas por
-                                                  una editorial comercial)</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">título de un material inédito (incluidas tesis y disertaciones que no sean publicadas por una editorial comercial)</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">非刊行物のタイトル(未刊の学位論文など)。</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">titre de
-                                                  matéria non publié (thèses et
-                                                  dissertations comprises, à l'exception
-                                                  de leurs éditions commerciales)</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">titolo di
-                                                  materiale non pubblicato (incluse tesi
-                                                  non pubblicate da case editrici)</desc>
-          <desc versionDate="2017-06-04" xml:lang="de">der Titel bezieht sich auf unveröffentliches Material (incl. universitäre
-            Qualifikationsarbeiten, soweit sie nicht von einem Verlag veröffentlicht worden sind).</desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">titre de matéria non publié (thèses et dissertations comprises, à l'exception de leurs éditions commerciales)</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">titolo di materiale non pubblicato (incluse tesi non pubblicate da case editrici)</desc>
+          <desc versionDate="2017-06-04" xml:lang="de">der Titel bezieht sich auf unveröffentliches Material (incl. universitäre Qualifikationsarbeiten, soweit sie nicht von einem Verlag veröffentlicht worden sind).</desc>
         </valItem>
       </valList>
       <remarks versionDate="2009-05-23" xml:lang="en">
@@ -221,41 +122,38 @@
         element of level <q>s</q>. For this reason, the
         <att>level</att> attribute is not required in contexts where
         its value can be unambiguously inferred. Where it is supplied
-	in such contexts,
+        in such contexts,
         its value should not contradict the value implied by its
-	parent element. 
-	<!--, the <att>level</att>, if given, must
+        parent element. 
+        <!--, the <att>level</att>, if given, must
         be<q>a</q>; if it appears directly enclosed within a
         <gi>monogr</gi> element, <att>level</att> must be <q>m</q>,
         <q>j</q>, or <q>u</q>; when <gi>title</gi> is directly
         enclosed by ,<att>level</att> must be . If it appears within a
         <gi>msItem</gi>, the <att>level</att> attribute should not be
         supplied.-->
-	</p>
+        </p>
       </remarks>
-      <remarks xml:lang="fr" versionDate="2007-06-12">
+      <remarks versionDate="2007-06-12" xml:lang="fr">
         <p>Si le titre apparaît comme fils de l'élément
-<gi>analytic</gi>, l'attribut <att>level</att>,
-s'il est renseigné, doit avoir la valeur <q>a</q>
-; si le titre apparaît comme fils de l'élément
-<gi>monogr</gi>, l'attribut
-<att>level</att> doit avoir la valeur <q>m</q>,
-<q>j</q> ou <q>u</q> ; si le titre
-apparaît comme fils de l'élément <gi>series</gi>,
-l'attribut <att>level</att> doit avoir la valeur
-<q>s</q>. Si le titre apparaît dans
-l'élément <gi>msItem</gi>, l'attribut level ne
-doit pas être utilisé.</p>
+        <gi>analytic</gi>, l'attribut <att>level</att>, s'il est
+        renseigné, doit avoir la valeur <q>a</q> ; si le titre
+        apparaît comme fils de l'élément <gi>monogr</gi>, l'attribut
+        <att>level</att> doit avoir la valeur <q>m</q>, <q>j</q> ou
+        <q>u</q> ; si le titre apparaît comme fils de l'élément
+        <gi>series</gi>, l'attribut <att>level</att> doit avoir la
+        valeur <q>s</q>. Si le titre apparaît dans l'élément
+        <gi>msItem</gi>, l'attribut level ne doit pas être
+        utilisé.</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
+      <remarks versionDate="2008-04-05" xml:lang="ja">
         <p> タイトルが要素<gi>analytic</gi>中にある場合、属性
-<att>level</att>があれば、値は必ず<q>a</q>となる。
-タイトルが要素<gi>monogr</gi>中にある場合、属性
-          <att>level</att>の値は、必ず<q>m</q>、<q>j</q>、<q>u</q>のいず
-れかになる。要素<gi>title</gi>が要素<gi>series</gi>中にある場
-合、属性<att>level</att>の値は必ず<q>s</q>となる。タイトルが要
-素<gi>msItem</gi>中にある場合、当該属性値は付与されない。
-                                        </p>
+        <att>level</att>があれば、値は必ず<q>a</q>となる。タイトルが要
+        素<gi>monogr</gi>中にある場合、属性<att>level</att>の値は、必
+        ず<q>m</q>、<q>j</q>、<q>u</q>のいずれかになる。要素
+        <gi>title</gi>が要素<gi>series</gi>中にある場合、属性
+        <att>level</att>の値は必ず<q>s</q>となる。タイトルが要素
+        <gi>msItem</gi>中にある場合、当該属性値は付与されない。</p>
       </remarks>
       <remarks versionDate="2017-06-04" xml:lang="de">
         <p>Der Typ eines Titels wird manchmal durch seinen Kontext bestimmt: wenn ein Titel z. B.
@@ -272,12 +170,9 @@ doit pas être utilisé.</p>
       <desc versionDate="2007-12-20" xml:lang="ko">어떤 편의적 유형에 따른 제목 분류</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">用合適的分類方法將題名分類。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該タイトルを分類する。</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">caractérise le titre selon
-                                        une typologie adaptée.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">clasifica el título de
-                                        acuerdo con alguna tipología funcional.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">classifica il titolo seguendo
-                                        una tipologia conveniente.</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">caractérise le titre selon une typologie adaptée.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">clasifica el título de acuerdo con alguna tipología funcional.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">classifica il titolo seguendo una tipologia conveniente.</desc>
       <desc versionDate="2017-06-04" xml:lang="de">klassifiziert den Titel entsprechend einer geeigneten Typologie.</desc> 
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="open">
@@ -285,26 +180,21 @@ doit pas être utilisé.</p>
           <desc versionDate="2007-06-27" xml:lang="en">main title</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">(주)제목</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">主要題名</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">título
-principal</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">título principal</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">主タイトル。</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">titre
-principal</desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">titre principal</desc>
           <desc versionDate="2007-01-21" xml:lang="it">titolo</desc>
           <desc versionDate="2017-06-04" xml:lang="de">Haupttitel</desc>
-          
         </valItem>
         <valItem ident="sub">
           <gloss versionDate="2007-07-04" xml:lang="en">subordinate</gloss>
           <gloss versionDate="2007-12-20" xml:lang="ko">부</gloss>
-          <gloss versionDate="2007-06-12" xml:lang="fr">titre de
-niveau inférieur, titre de partie</gloss>
+          <gloss versionDate="2007-06-12" xml:lang="fr">titre de niveau inférieur, titre de partie</gloss>
           <gloss versionDate="2007-11-06" xml:lang="it">subordinato</gloss>
           <gloss versionDate="2007-05-04" xml:lang="es">subtítulo, título de una parte</gloss>
           <gloss versionDate="2017-06-04" xml:lang="de">untergeordnet</gloss>
           <desc versionDate="2007-06-27" xml:lang="en">subtitle, title of part</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">부분의 제목인
-부제목</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">부분의 제목인 부제목</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">副題名、部分題名</desc>
           <desc versionDate="2008-04-06" xml:lang="es">subtítulo, título de una parte</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">副タイトル、部分タイトル。</desc>
@@ -315,70 +205,43 @@ niveau inférieur, titre de partie</gloss>
         <valItem ident="alt">
           <gloss versionDate="2007-07-04" xml:lang="en">alternate</gloss>
           <gloss versionDate="2007-12-20" xml:lang="ko">이명</gloss>
-          <gloss versionDate="2007-06-12" xml:lang="fr">titre
-alternatif, souvent dans une autre
-langue, par lequel l'oeuvre est
-également connu</gloss>
+          <gloss versionDate="2007-06-12" xml:lang="fr">titre alternatif, souvent dans une autre langue, par lequel l'oeuvre est également connu</gloss>
           <gloss versionDate="2007-11-06" xml:lang="it">alternativo</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">título
-alternativo, a menudo en otra lengua por
-la cual la obra es también conocida.</gloss>
+          <gloss versionDate="2007-05-04" xml:lang="es">título alternativo, a menudo en otra lengua por la cual la obra es también conocida.</gloss>
           <gloss versionDate="2017-06-04" xml:lang="de">alternativ</gloss>
-          <desc versionDate="2007-06-27" xml:lang="en">alternate title, often in another language,
-by which the work is also known</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">다른 언어에서
-알려진 작품의 다른 이름</desc>
+          <desc versionDate="2007-06-27" xml:lang="en">alternate title, often in another language, by which the work is also known</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">다른 언어에서 알려진 작품의 다른 이름</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">替代題名，通常以該作品著名的另一種語言呈現</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">título
-alternativo, a menudo en otro idioma,
-por el cual el trabajo también es
-conocido</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">別タイトル。多くは他言語によるタイトル。当該作品は、このタイ
-トルで知られている。</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">autre
-titre, souvent exprimé dans une autre
-langue, par lequel l'ouvrage est aussi
-connu</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">titolo
-alternativo, spesso in altra lingua, con
-il quale è anche conosciuta
-l'opera</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">título alternativo, a menudo en otro idioma, por el cual el trabajo también es conocido</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">別タイトル。多くは他言語によるタイトル。当該作品は、このタイ トルで知られている。</desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">autre titre, souvent exprimé dans une autre langue, par lequel l'ouvrage est aussi connu</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">titolo alternativo, spesso in altra lingua, con il quale è anche conosciuta l'opera</desc>
           <desc versionDate="2017-06-04" xml:lang="de">alternativer Titel, oft in einer anderen Sprache, unter dem das Werk auch bekannt ist.</desc>
         </valItem>
         <valItem ident="short">
           <desc versionDate="2007-06-27" xml:lang="en">abbreviated form of title</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">제목의 축약형</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">題名的縮寫形式</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">forma
-abreviada del título</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">forma abreviada del título</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">タイトルの省略形。</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">forme
-abrégée du titre</desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">forme abrégée du titre</desc>
           <desc versionDate="2007-01-21" xml:lang="it">abbreviazione del titolo</desc>
           <desc versionDate="2017-06-04" xml:lang="de">Kurztitel</desc>
         </valItem>
         <valItem ident="desc">
           <gloss versionDate="2007-07-04" xml:lang="en">descriptive</gloss>
           <gloss versionDate="2007-12-20" xml:lang="ko">기술적</gloss>
-          <gloss versionDate="2007-06-12" xml:lang="fr">paraphrase descriptive de l'oeuvre
-ayant les fonctions d'un titre</gloss>
+          <gloss versionDate="2007-06-12" xml:lang="fr">paraphrase descriptive de l'oeuvre ayant les fonctions d'un titre</gloss>
           <gloss versionDate="2007-11-06" xml:lang="it">descrittivo</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">paráfrasis descriptiva que funciona
-como el título de una obra.</gloss>
+          <gloss versionDate="2007-05-04" xml:lang="es">paráfrasis descriptiva que funciona como el título de una obra.</gloss>
           <gloss versionDate="2017-06-04" xml:lang="de">beschreibend</gloss>
-          <desc versionDate="2007-06-27" xml:lang="en">descriptive paraphrase of the work
-functioning as a title</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">제목으로 기능하는
-작품의 기술적 바꿔쓰기</desc>
+          <desc versionDate="2007-06-27" xml:lang="en">descriptive paraphrase of the work functioning as a title</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">제목으로 기능하는 작품의 기술적 바꿔쓰기</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">該作品的描述性改述，可作為題名</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">paráfrasis descriptiva del trabajo que
-funciona como título</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">paráfrasis descriptiva del trabajo que funciona como título</desc>
           <desc versionDate="2008-04-05" xml:lang="ja">タイトルのように当該作品を解説する言い換え。</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">paraphrase descriptive de l'oeuvre
-fonctionnant comme un titre</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">parafrasi
-descrittiva dell'opera che funge da
-titolo</desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">paraphrase descriptive de l'oeuvre fonctionnant comme un titre</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">parafrasi descrittiva dell'opera che funge da titolo</desc>
           <desc versionDate="2017-06-04" xml:lang="de">Umschreibung des Werks, die als Titel fungiert.</desc>
         </valItem>
       </valList>
@@ -390,20 +253,19 @@ titolo</desc>
         any parallel titles, may be enclosed within a single
         <gi>title</gi> element.</p>
       </remarks>
-      <remarks xml:lang="fr" versionDate="2007-06-12">
+      <remarks versionDate="2007-06-12" xml:lang="fr">
         <p>Cet attribut est utile pour analyser les titres et les
-traiter en fonction de leur type ; lorsqu'un tel
-traitement spécifique n'est pas nécessaire, il
-n'est pas utile de donner une telle analyse, et le
-titre entier, sous-titres et titres parallèles
-inclus, peuvent être encodés dans un élément
-<gi>title</gi>.</p>
+        traiter en fonction de leur type ; lorsqu'un tel traitement
+        spécifique n'est pas nécessaire, il n'est pas utile de donner
+        une telle analyse, et le titre entier, sous-titres et titres
+        parallèles inclus, peuvent être encodés dans un élément
+        <gi>title</gi>.</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
-        <p> 当該属性は、タイトルを分析し、処理する際に使用されるものである。
-このような処理を必要としない場合、タイトルを分析する必要はなく、
-副タイトルなどは全て要素<gi>title</gi>の中に入れてしまうことが
-できる。 </p>
+      <remarks versionDate="2008-04-05" xml:lang="ja">
+        <p> 当該属性は、タイトルを分析し、処理する際に使用されるもので
+        ある。このような処理を必要としない場合、タイトルを分析する必要
+        はなく、副タイトルなどは全て要素<gi>title</gi>の中に入れてしま
+        うことができる。 </p>
       </remarks>
       <remarks versionDate="2017-06-04" xml:lang="de">
         <p>Dieses Attribut wird bereitgestellt, um die Analyse und die Verarbeitung von Titeln auf
@@ -415,68 +277,68 @@ inclus, peuvent être encodés dans un élément
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-title-egXML-sd">
       <title>Information Technology and the Research Process: Proceedings of
                                         a conference held at Cranfield Institute of Technology, UK,
                                         18–21 July 1989</title>
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-title-egXML-vc">
       <title>La vie mode d'emploi. Romans.</title>
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Maingeneau_Analyser">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-title-egXML-hz" source="#fr-ex-Maingeneau_Analyser">
       <title>Analyser les textes de communication</title>
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-title-egXML-ox">
       <title>Mélanges de linguistique française et de philologie et littérature médiévales
           offerts à Monsieur Paul Imbs.</title>
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Melanges_Imbs">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-title-egXML-ul" source="#fr-ex-Melanges_Imbs">
       <title>Les fleurs du Mal de Charles Baudelaire : une édition électronique</title>
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Belloc_Neons">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-title-egXML-qp" source="#fr-ex-Belloc_Neons">
       <p>quand il rentre de ses chantiers de maçonnerie il dit rien, il pose son cul sur une
           chaise, toujours au même endroit, et il lit <title>l'Humanité.</title>
          </p>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-title-egXML-sr">
       <title>毛語錄</title>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-title-egXML-pb">
       <title>嚐書：視界與舌尖之外</title>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-title-egXML-ix">
       <title> 蒼天有淚—無語問蒼天，台北，1997年12月1日。</title>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-title-egXML-xw">
       <title>大般若波羅蜜多經：OCR辨識版本</title>
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-title-egXML-uj">
       <title>Hardy's Tess of the D'Urbervilles: a machine readable
                               edition</title>
     </egXML>
   </exemplum>
   <exemplum xml:lang="mul">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-title-egXML-aq">
       <title type="full">
         <title type="main">Synthèse</title>
         <title type="sub">an international journal for

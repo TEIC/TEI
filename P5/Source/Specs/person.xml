@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="person">
-  <gloss xml:lang="en" versionDate="2008-12-09">person</gloss>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" xml:id="gi-person" ident="person">
+  <gloss versionDate="2008-12-09" xml:lang="en">person</gloss>
   <gloss versionDate="2008-12-09" xml:lang="fr">personne</gloss>
   <desc versionDate="2005-12-14" xml:lang="en">provides information about an identifiable individual, for example a participant in a language interaction, or a person referred to in a
         historical source.</desc>
@@ -18,21 +18,17 @@
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.editLike"/>
-    <memberOf key="model.personLike"/>
     <memberOf key="att.sortable"/>
+    <memberOf key="model.personLike"/>
   </classes>
   <content>
     <alternate>
-      
         <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
-      
-      
         <alternate minOccurs="0" maxOccurs="unbounded">
           <classRef key="model.personPart"/>
           <classRef key="model.global"/>
-          <elementRef key="ptr"/>
+          <classRef key="model.ptrLike"/>
         </alternate>
-      
     </alternate>
   </content>
   <attList>
@@ -45,14 +41,13 @@
       <desc versionDate="2007-05-04" xml:lang="es">establece el rol o la clasificación primaria de una persona.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">stabilisce il ruolo o la classificazione primaria di una persona</desc>
       <datatype maxOccurs="unbounded"><dataRef key="teidata.enumerated"/></datatype>
-<remarks versionDate="2013-12-21" xml:lang="en">
+      <remarks versionDate="2013-12-21" xml:lang="en">
         <p>Values for this attribute may be locally defined by a
 	project, using arbitrary keywords such as <val>artist</val>,
 	<val>employer</val>, <val>author</val>, <val>relative</val>, or
 	<val>servant</val>, each of which should be associated with a
 	definition. Such local definitions will typically be provided by a
-	<gi>valList</gi> element in the project schema
-specification.</p></remarks>
+	<gi>valList</gi> element in the project schema specification.</p></remarks>
     </attDef>
     <attDef ident="sex" usage="opt">
       <desc versionDate="2005-12-14" xml:lang="en">specifies the sex of the person.</desc>
@@ -83,18 +78,17 @@ specification.</p></remarks>
       <desc versionDate="2007-05-04" xml:lang="es">especifica un intervalo de edad para una persona.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la fascia di età di una persona</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-<remarks versionDate="2013-12-21" xml:lang="en">
+      <remarks versionDate="2013-12-21" xml:lang="en">
         <p>Values for this attribute may be locally defined by a
 	project, using arbitrary keywords such as <val>infant</val>,
 	<val>child</val>, <val>teen</val>, <val>adult</val>, or
 	<val>senior</val>, each of which should be associated with a
 	definition. Such local definitions will typically be provided by a
-	<gi>valList</gi> element in the project schema
-specification.</p></remarks>
+	<gi>valList</gi> element in the project schema specification.</p></remarks>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-person-egXML-gr">
       <person sex="F" age="adult">
         <p>Female respondent, well-educated, born in Shropshire UK, 12 Jan 1950, of unknown occupation. Speaks French fluently. Socio-Economic
           status B2.</p>
@@ -102,7 +96,7 @@ specification.</p></remarks>
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-person-egXML-il">
       <person sex="intersex" role="god" age="immortal">
         <persName>Hermaphroditos</persName>
         <persName xml:lang="grc">Ἑρμαφρόδιτος</persName>
@@ -110,7 +104,7 @@ specification.</p></remarks>
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-person-egXML-wh">
       <person sex="F" age="adult">
         <p>Personne interrogée, de sexe féminin, instruite, née à Shropshire, au ROYAUME-UNI le 12
             Janvier 1950, d'occupation inconnue. Parle le français couramment. Statut
@@ -119,7 +113,7 @@ specification.</p></remarks>
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-person-egXML-xa">
       <person xml:id="fr_Ovi01" sex="M" role="poet">
         <persName xml:lang="en">Ovid</persName>
         <persName xml:lang="la">Publius Ovidius Naso</persName>
@@ -131,14 +125,14 @@ specification.</p></remarks>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-person-egXML-pf">
       <person sex="F" age="adult">
         <p>女性被告。1950年1月12日生於西藏，受過良好教育，職業不明。能說流利漢語，中產階級。</p>
       </person>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-person-egXML-jr">
       <person xml:id="zh-tw_Ovi01" sex="M" role="poet">
         <persName xml:lang="en">Ovid</persName>
         <persName xml:lang="zh-TW">奧維德</persName>
@@ -150,7 +144,7 @@ specification.</p></remarks>
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-person-egXML-ej">
       <person xml:id="Ovi01" sex="M" role="poet">
         <persName xml:lang="en">Ovid</persName>
         <persName xml:lang="la">Publius Ovidius Naso</persName>
@@ -163,10 +157,32 @@ specification.</p></remarks>
   </exemplum>
   <exemplum xml:lang="en" source="#vcard">
     <p>The following exemplifies an adaptation of the vCard standard to indicate an unknown gender for a fictional character.</p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-person-egXML-np">
       <person xml:id="ariel" gender="U">
         <persName>Ariel</persName>
         <note>Character in <title level="m">The Tempest</title>.</note>
+      </person>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <p>This example demonstrates the use of a <gi>ref</gi> element to provide more information about a person.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-person-egxml-dr">
+      <person age="G2" role="author" xml:id="W0212" sex="F">
+        <birth when="1787"/>
+        <death when="1855"/>
+        <persName type="main">Mitford, Mary Russell (1787–1855)</persName>
+        <persName resp="#Nicoll">MITFORD, MARY RUSSELL</persName>
+        <listBibl type="lacyTitles">
+          <desc>Lacy's Acting Editions</desc>
+          <bibl><ref target="lacy:L1280">Foscari</ref></bibl>
+          <bibl><ref target="lacy:L1337">Rienzi</ref></bibl>
+        </listBibl>
+        <listRef type="seeAlso">
+          <ref target="https://www.victorianresearch.org/atcl/show_author.php?aid=1386">ATCL</ref>
+          <ref target="https://doi.org/10.1093/ref:odnb/18859">ODNB</ref>
+          <ref target="https://en.wikipedia.org/wiki/Mary_Russell_Mitford">Wikipedia</ref>
+          <ref target="https://digitalmitford.org">Digital Mitford</ref>
+        </listRef>
       </person>
     </egXML>
   </exemplum>
@@ -178,7 +194,7 @@ specification.</p></remarks>
     <p rend="dataDesc">Peut contenir soit une description en prose organisée en paragraphes, soit une suite d'éléments spécifiques relatifs à la
             démographie extraits de la classe <ident type="class">model.personPart</ident>.</p>
   </remarks>
-  <remarks xml:lang="ja" versionDate="2008-04-05">
+  <remarks versionDate="2008-04-05" xml:lang="ja">
     <p rend="dataDesc"> 段落による散文の解説、またはクラス <ident type="class">model.personPart</ident>にある一連の人口統計要 素を含むかもしれない。 </p>
   </remarks>
   <listRef>

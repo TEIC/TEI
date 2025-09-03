@@ -1,71 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
-<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="msdescription" xml:id="BINDING" ident="binding">
-  <gloss xml:lang="en" versionDate="2007-06-12">binding</gloss>
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="msdescription" xml:id="BINDING" ident="binding">
+  <gloss versionDate="2007-06-12" xml:lang="en">binding</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">reliure</gloss>
-  <desc versionDate="2019-01-17" xml:lang="en" xml:id="binding.desc">contains a description of one binding, i.e. type of covering, boards,
-    etc. applied to a manuscript or other object.</desc>
+  <desc versionDate="2019-01-17" xml:lang="en" xml:id="binding.desc">contains a description of one binding, i.e. type of covering, boards, etc. applied to a manuscript or other object.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">하나의 제본에 대한 기술을 포함한다. 즉, 원고에 적용된 커버, 표지 등의 유형</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">一個裝訂的描述，例如使用於該手稿的封面類型、封面等。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">1つの装訂に関する情報を示す。例えば、手書き資料でいうカバーの種類、 表紙など。</desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">contient la description d'une reliure, i.e. du type de
-    couverture, d'ais, etc., rencontrés.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">contiene la descripción de una encuadernación, p.ej. tipo
-    de cubiertas, tablas, etc. presentes en un manuscrito.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">contiene la descrizione di una legatura, cioè del tipo di
-    copertine, tavole, ecc. utilizzate per il manoscritto</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">contient la description d'une reliure, i.e. du type de couverture, d'ais, etc., rencontrés.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">contiene la descripción de una encuadernación, p.ej. tipo de cubiertas, tablas, etc. presentes en un manuscrito.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">contiene la descrizione di una legatura, cioè del tipo di copertine, tavole, ecc. utilizzate per il manoscritto</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.datable"/>
   </classes>
   <content>
-    
-      <alternate minOccurs="1" maxOccurs="unbounded">
-        <classRef key="model.pLike"/>
-        <elementRef key="condition"/>
-        <elementRef key="decoNote"/>
-      </alternate>
-    
+    <alternate minOccurs="1" maxOccurs="unbounded">
+      <classRef key="model.pLike"/>
+      <elementRef key="condition"/>
+      <elementRef key="decoNote"/>
+    </alternate>
   </content>
   <attList>
-      <attDef ident="calendar" usage="opt" validUntil="2024-11-11">
-        <desc type="deprecationInfo" versionDate="2023-05-11" xml:lang="en">The <att>calendar</att> attribute will be removed from this element
-            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar</att> attribute
-            (unlike <att>datingMethod</att> defined in
-            <ident type="class">att.datable.custom</ident>) defines the calendar system of the date
-            in the original material defined by the parent element, <emph>not</emph> the calendar to
-            which the date is normalized.</desc>
-        <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the
-            date represented by the content of this element belongs.</desc>
-        <desc versionDate="2007-12-20" xml:lang="ko">날짜 표현 시스템 또는 달력 표시 형식을 표시한다.</desc>
-        <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該日期表示所使用的曆法計算系統。</desc>
-        <desc xml:lang="ja" versionDate="2019-02-03">この要素を含むコンテントにおける日付の暦やシステムを示す。</desc>
-        <desc versionDate="2009-01-06" xml:lang="fr">indique le système ou le calendrier auquel
-            appartient la date exprimée dans le contenu de l'élément.</desc>
-        <desc versionDate="2007-05-04" xml:lang="es">indica el sistema o calendario en que se muestra
-            una fecha.</desc>
-        <desc versionDate="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data
-            appartiene.</desc>
-        <datatype minOccurs="1" maxOccurs="unbounded">
-            <dataRef key="teidata.pointer"/>
-        </datatype>
-        <constraintSpec scheme="schematron" ident="calendar-check-binding">
-            <constraint>
-                <sch:rule context="tei:*[@calendar]">
-                    <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
-                        systems or calendars to which the date represented by the content of this element belongs,
-                        but this <sch:name/> element has no textual content.</sch:assert>
-                </sch:rule>
-            </constraint>
-        </constraintSpec>
-    </attDef>
-
-  
-      <attDef ident="contemporary">
-      <gloss xml:lang="en" versionDate="2007-06-12">contemporary</gloss>
+    <attDef ident="contemporary">
+      <gloss versionDate="2007-06-12" xml:lang="en">contemporary</gloss>
       <gloss versionDate="2007-06-12" xml:lang="fr">contemporaine</gloss>
       <desc versionDate="2005-01-14" xml:lang="en">specifies whether or not the binding is contemporary with the majority of its
-        contents</desc>
+        contents.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">제본이 텍스트의 대부분 내용과 동시에 이루어졌는가의 여부를 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">說明裝訂和其大部分內容是否出於同一時期。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該装訂が、当該内容の大部分と同年代のものかどうかを示す。</desc>
@@ -81,19 +43,19 @@
           contents; the value <val>false</val> that it is not. The value <val>unknown</val> should
           be used when the date of either binding or manuscript is unknown</p>
       </remarks>
-      <remarks xml:lang="fr" versionDate="2007-06-12">
+      <remarks versionDate="2007-06-12" xml:lang="fr">
         <p>La valeur <val>true</val> indique que la reliure est contemporaine de son contenu ; la
           valeur <val>false</val> qu'elle ne l'est pas. La valeur <val>unknown</val> est employée
           quand la date de la reliure ou du manuscrit est inconnue.</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
+      <remarks versionDate="2008-04-05" xml:lang="ja">
         <p> 属性値<val>true</val>は、当該装訂が、当該内容と同時代のもの であることを示す。属性値<val>false</val>は、そうでないことを示
             す。属性値<val>unknown</val>は、当該装訂や手書き資料の年代が不 明の場合に使用されるべきである。 </p>
       </remarks>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="BINDING-egXML-wk">
       <binding contemporary="true">
         <p>Contemporary blind stamped leather over wooden boards with evidence of a fore edge clasp
           closing to the back cover.</p>
@@ -101,7 +63,7 @@
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-BnF-Reliures">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="BINDING-egXML-ov" source="#fr-ex-BnF-Reliures">
       <binding contemporary="true">
         <p><index indexName="typo_reliure"><term>Reliure à la grecque, sur ais</term></index><index indexName="typo_decor"><term>Décor de rinceaux</term></index> Reliure à la grecque en <material>maroquin</material> orange</p>
         <decoNote type="plats"> aux armes de Henri II dorées sur une pièce de maroquin olive
@@ -138,7 +100,7 @@
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-BnF-Reliures">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="BINDING-egXML-tw" source="#fr-ex-BnF-Reliures">
       <bindingDesc>
         <binding contemporary="true">
           <p><index indexName="typo_reliure"><term>Reliure à décor</term></index><index indexName="typo_decor"><term>Compartiments espacés</term></index> Reliure en <material>maroquin</material> rouge sombre</p>
@@ -169,14 +131,14 @@
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="BINDING-egXML-iq">
       <binding contemporary="true">
         <p>使用與內容物同時代的皮革包覆木版，背面有以前緣扣子扣住的跡象。</p>
       </binding>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="BINDING-egXML-tx">
       <bindingDesc>
         <binding contemporary="false">
           <p> 使用與書寫的貝葉非同時代的樹條捆住</p>
@@ -188,7 +150,7 @@
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="BINDING-egXML-zj">
       <bindingDesc>
         <binding contemporary="false">
           <p>Quarter bound by the Phillipps' binder, Bretherton, with his sticker on the front

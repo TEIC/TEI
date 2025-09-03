@@ -1,36 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" ident="pc">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" xml:id="gi-pc" ident="pc">
   <gloss versionDate="2009-06-10" xml:lang="en">punctuation character</gloss>
   <gloss versionDate="2017-06-19" xml:lang="de">Interpunktionszeichen</gloss>
-  <desc versionDate="2012-12-27" xml:lang="en">contains a character or string of characters regarded as constituting a
-  single punctuation mark.</desc>
+  <desc versionDate="2012-12-27" xml:lang="en">contains a character or string of characters regarded as constituting a single punctuation mark.</desc>
   <desc xml:lang="fr" versionDate="2007-06-12">contient un caractère ou une chaîne de caractères  considérés comme un signe de ponctuation unique.</desc>
-  <desc versionDate="2017-06-19" xml:lang="de">enthält ein Zeichen oder eine Zeichenkette, die ein einzelnes Interpunktionszeichen
-    repräsentiert.</desc>
+  <desc versionDate="2017-06-19" xml:lang="de">enthält ein Zeichen oder eine Zeichenkette, die ein einzelnes Interpunktionszeichen repräsentiert.</desc>
   <classes>
     <memberOf key="att.global"/>
-    <memberOf key="model.segLike"/>
-    <memberOf key="model.linePart"/>
+    <memberOf key="att.cmc"/>
+    <memberOf key="att.linguistic"/>
     <memberOf key="att.segLike"/>
     <memberOf key="att.typed"/>
-    <memberOf key="att.linguistic"/>
+    <memberOf key="model.linePart"/>
+    <memberOf key="model.segLike"/>
   </classes>
   <content>
-    
-      <alternate minOccurs="0" maxOccurs="unbounded">
-        <textNode/>
-        <classRef key="model.gLike"/>
-        <elementRef key="c"/>
-        <classRef key="model.pPart.edit"/>
-      </alternate>
-    
+    <alternate minOccurs="0" maxOccurs="unbounded">
+      <textNode/>
+      <classRef key="model.gLike"/>
+      <elementRef key="c"/>
+      <classRef key="model.pPart.edit"/>
+    </alternate>
   </content>
   <attList>
     <attDef ident="force" usage="opt">
       <desc versionDate="2009-06-18" xml:lang="en">indicates the extent to which this punctuation mark
-      conventionally separates words or phrases</desc>
+      conventionally separates words or phrases.</desc>
       <desc versionDate="2017-06-19" xml:lang="de">gibt an, in welchem Maß das betreffende Interpunktionszeichen Wörter oder Phrasen gewöhnlich
         voneinander trennt.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
@@ -62,7 +59,7 @@
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-pc-egXML-rb">
       <phr>
         <w>do</w>
         <w>you</w>
@@ -75,7 +72,7 @@
   <exemplum xml:lang="en">
     <p>Example encoding of the German sentence <mentioned>Wir fahren in den Urlaub.</mentioned>, encoded with attributes from 
       <ident type="class">att.linguistic</ident> discussed in section <ptr target="#AILALW"/>.</p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-pc-egXML-kx">
       <s>
         <w pos="PPER" msd="1.Pl.*.Nom">Wir</w>
         <w pos="VVFIN" msd="1.Pl.Pres.Ind">fahren</w>
@@ -90,10 +87,9 @@
     <ptr target="#AIPC"/>
     <ptr target="#AILALW"/>
   </listRef>
-</elementSpec><!--
-attribute force { data.word }?,
-attribute unit { data.word }?,
-attribute direction { "before" | "after" | "unknown" |
-"inapplicable" }?,
-</p>
+</elementSpec>
+<!--
+  attribute force { data.word }?,
+  attribute unit { data.word }?,
+  attribute direction { "before" | "after" | "unknown" | "inapplicable" }?,
 -->

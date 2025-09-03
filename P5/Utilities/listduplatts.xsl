@@ -1,5 +1,5 @@
 <xsl:stylesheet 
-  version="2.0"
+  version="3.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
   xmlns:tei="http://www.tei-c.org/ns/1.0"
   xmlns:teix="http://www.tei-c.org/ns/Examples"
@@ -19,7 +19,7 @@
   <!-- g) add a *tiny* bit more CSS to make a bit more readable -->
   <!-- f) add metadata in footer -->
   
-  <xsl:output method="html" indent="yes" encoding="utf-8"/>
+  <xsl:output method="xhtml" indent="yes" encoding="UTF-8"/>
   
   <xsl:variable name="doc" select="/"/>
   

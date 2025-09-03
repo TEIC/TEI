@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0" exclude-result-prefixes="#all"
+<xsl:stylesheet version="3.0"
   xpath-default-namespace="http://www.tei-c.org/ns/1.0"
   xmlns="http://www.tei-c.org/ns/1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -7,11 +7,24 @@
   xmlns:tei="http://www.tei-c.org/ns/1.0"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:sch="http://purl.oclc.org/dsdl/schematron"  
+  xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+  xmlns:teix="http://www.tei-c.org/ns/Examples"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:mml="http://www.w3.org/1998/Math/MathML"
+  xmlns:mods="http://www.loc.gov/mods/v3"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
   >
 
-  <xsl:variable name="myName" select="'TEI-to-tei_customization.xslt'"/>
-  <xsl:variable name="version" select="'0.9.0b'"/>
+  <!--
+    WARNING: The namespaces bindings on the root <xsl:stylesheet> element, above,
+    are interogated and used as the possible <sch:ns> children in the content
+    model of <constraintDecl>. So even if it is not used as a namespace in this
+    program, remove at your user’s risk.
+  -->
+  
+  <xsl:variable name="myName" select="tokenize( static-base-uri(), '/')[last()]"/>
+  <xsl:variable name="version" select="'1.10.0'"/>
   <xsl:param name="versionDate" select="format-date(current-date(),'[Y]-[M01]-[D01]')"/>
 
   <!--
@@ -38,6 +51,8 @@
   -->
   <!--
       *********************** CHANGE LOG for XSLT changes *********************** 
+      2024-09-20 by Syd:
+        * Switch to XSLT 3.0
       2017-11-05 by Syd: Harumph. Found that our output is not valid against
         p5odds.rng because ident/@type is not allowed to be "test", so I removed
         the attribute.
@@ -53,34 +68,41 @@
 
   <xsl:variable name="revisionDesc">
     <revisionDesc>
+      <change who="#sbauman.emt" when="2024-09-20">
+        Add capability for new <gi>constraintDecl</gi> element:
+        * Require <att>scheme</att>
+        * Require a <tag type="empty">sch:ns prefix="tei" uri=""</tag> child
+        * Create pop-up set of other <gi>sch:ns</gi> elements to insert
+        * Require other children be in Schematron namespace
+      </change>
       <change who="#sbauman.emt" when="2024-04-12">
-	Added <gi>sch:rule</gi> elements PRN to avoid new warning
-	about contextless Schematron.
+        Added <gi>sch:rule</gi> elements PRN to avoid new warning
+        about contextless Schematron.
       </change>
       <change who="#sbauman.emt" when="2023-06-06">
-	<list>
-	  <item>Remove the <ident>altIdent-only-NCName</ident>
-	  constraint, as it is no longer needed — the content of
-	  <gi>altIdent</gi> in P5 is now just <ident>xs:NCName</ident>.</item>
+        <list>
+          <item>Remove the <ident>altIdent-only-NCName</ident>
+          constraint, as it is no longer needed — the content of
+          <gi>altIdent</gi> in P5 is now just <ident>xs:NCName</ident>.</item>
           <item>update to use version 4.6.0 of P5</item>
-	  <item>Per <ref
-	  target="https://github.com/TEIC/TEI/issues/2285">TEI ticket
-	  #2285</ref> disallow <gi>altIdent</gi> as a direct child of
-	  <gi>classSpec</gi>, <gi>constraintSpec</gi>,
-	  <gi>dataSpec</gi>, <gi>macroSpec</gi>; thus leaving it as
-	  only available as a child of <gi>attDef</gi>,
-	  <gi>elementSpec</gi>, and <gi>valItem</gi>. In order to do
-	  this, remove <gi>altIdent</gi> from <name
-	  type="class">model.identSynonyms</name> (leaving that class
-	  with only <gi>gloss</gi> and <gi>equiv</gi>, i.e. the same
-	  as <name type="class">model.identEquiv</name>, sigh) and add
-	  it back to <gi>attDef</gi> and <gi>valItem</gi>.</item>
-	</list>
+          <item>Per <ref
+          target="https://github.com/TEIC/TEI/issues/2285">TEI ticket
+          #2285</ref> disallow <gi>altIdent</gi> as a direct child of
+          <gi>classSpec</gi>, <gi>constraintSpec</gi>,
+          <gi>dataSpec</gi>, <gi>macroSpec</gi>; thus leaving it as
+          only available as a child of <gi>attDef</gi>,
+          <gi>elementSpec</gi>, and <gi>valItem</gi>. In order to do
+          this, remove <gi>altIdent</gi> from <name
+          type="class">model.identSynonyms</name> (leaving that class
+          with only <gi>gloss</gi> and <gi>equiv</gi>, i.e. the same
+          as <name type="class">model.identEquiv</name>, sigh) and add
+          it back to <gi>attDef</gi> and <gi>valItem</gi>.</item>
+        </list>
       </change>
       <change who="#sbauman.emt" when="2023-04-04">
-	We will soon not allow more than 1 child of <gi>content</gi>,
-	so updated the content model of <gi>schemaSpec</gi> to have
-	only 1 child (in this case, <gi>sequence</gi>).
+        We will soon not allow more than 1 child of <gi>content</gi>,
+        so updated the content model of <gi>schemaSpec</gi> to have
+        only 1 child (in this case, <gi>sequence</gi>).
       </change>
       <change who="#sbauman.emt" when="2022-06-25">
         Since <ref
@@ -200,15 +222,15 @@
         </list>
       </change>
       <change who="#sbauman.emt" when="2015-06-19">
-	Fix bug in <name>only-1-per</name> contraint (which was added
-	674 days ago — why did this bug last even 1 day?)
+        Fix bug in <name>only-1-per</name> contraint (which was added
+        674 days ago — why did this bug last even 1 day?)
       </change>
       <change who="#sbauman.emt" when="2015-01-24">
-	Changes for <soCalled>Pure ODD</soCalled>:
-	<list>
+        Changes for <soCalled>Pure ODD</soCalled>:
+        <list>
           <item>constrain content of <gi>content</gi></item>
           <item>delete <ident type="class">att.global.rendition</ident> and <ident
-	  type="class" >att.global.responsibility</ident></item>
+          type="class" >att.global.responsibility</ident></item>
           <item>delete <att>allowText</att> (as I think TEI has decided to go with
           <gi>textNode</gi> instead)</item>
           <item>require <att>key</att> of <gi>elementRef</gi></item>
@@ -218,8 +240,8 @@
       </list>
       </change>
       <change who="#sbauman.emt" when="2015-01-23">
-	Changes for <soCalled>Pure ODD</soCalled>:
-	<list>
+        Changes for <soCalled>Pure ODD</soCalled>:
+        <list>
           <item>constrain <att>key</att> of <gi>classRef</gi>, <gi>elementRef</gi>, and
           <gi>macroRef</gi></item>
           <item>constrain <att>include</att> and <att>except</att> of <gi>classRef</gi>, also
@@ -239,9 +261,9 @@
         </list>
       </change>
       <change who="#sbauman.emt" when="2013-08-14">
-	Add constraint <name>only-1-per</name>, which warns user iff
-	there are more than 1 <gi>elementSpec</gi> with the same
-	<att>ident</att>
+        Add constraint <name>only-1-per</name>, which warns user iff
+        there are more than 1 <gi>elementSpec</gi> with the same
+        <att>ident</att>
       </change>
       <change who="#sbauman.emt" when="2013-05-09">
         <list>
@@ -266,11 +288,11 @@
         </list>
       </change>
       <change who="#sbauman.emt" when="2013-03-09">
-	Added <gi>sch:pattern</gi> to list of elements allowed inside
-	<gi>constraint</gi>.
+        Added <gi>sch:pattern</gi> to list of elements allowed inside
+        <gi>constraint</gi>.
       </change>
       <change who="#sbauman.emt" when="2012-06-17">
-	Remove the new <gi>notatedMusic</gi> and <gi>gb</gi> elments.
+        Remove the new <gi>notatedMusic</gi> and <gi>gb</gi> elments.
       </change>
       <change who="#sbauman.emt" when="2011-09-20">
         <list>
@@ -281,7 +303,7 @@
         </list>
       </change>
       <change who="#sbauman.emt" when="2011-09-05">
-	Test that required elements are not removed.
+        Test that required elements are not removed.
       </change>
       <change who="#sbauman.emt" when="2011-09-04">
         <list>
@@ -292,8 +314,8 @@
         </list>
       </change>
       <change who="#sbauman.emt" when="2011-09">
-	Beefed up prose, then corrections per Julia, including
-	changing name of language (and thus <att>prefix</att>).
+        Beefed up prose, then corrections per Julia, including
+        changing name of language (and thus <att>prefix</att>).
       </change>
       <change who="#sbauman.emt" when="2011-09-01">
         <list>
@@ -317,18 +339,18 @@
         </list>
       </change>
       <change who="#sbauman.emt" when="2011-08-29">
-	Constrain <att>ident</att> of <gi>classSpec</gi>.
+        Constrain <att>ident</att> of <gi>classSpec</gi>.
       </change>
       <change who="#sbauman.emt" when="2011-08-27">
-	During workshop:
-	<list>
+        During workshop:
+        <list>
           <item>constrain <att>start</att> of <gi>schemaSpec</gi></item>
           <item>constrain <att>key</att> of <gi>elmentRef</gi></item>
           <item>improve remakrs of <gi>constraint</gi> so that it correctly reflects that we
           only permit ISO Schematron</item>
           <item>constrain content of <gi>altIdent</gi>, unless it is a child of
           <gi>valItem</gi></item>
-	</list>
+        </list>
       </change>
       <change who="#sbauman.emt" when="2011-08-25">
         <list>
@@ -436,7 +458,7 @@
   <!-- others -->
   <!-- ****** -->
   <xsl:template name="element-is-in-module">
-    <constraintSpec scheme="schematron" ident="element-is-in-module">
+    <constraintSpec scheme="schematron" ident="element-is-in-module" xml:lang="en">
       <constraint>
         <xsl:for-each select="//moduleSpec/@ident">
           <xsl:variable name="this" select="."/>
@@ -600,45 +622,45 @@
             perfectly reasonable to have in your ODD.</p>
             <div>
               <head>Background</head>
-            <p>The TEI ODD language was designed both for the creation
-            and customization of the <title>TEI Guidelines</title>,
-            and also for the creation (and perhaps customization) of
-            other, non-TEI, markup languages. Thus the TEI ODD
-            langauge is, by default, much more flexible than needed
-            for writing TEI customization ODDs. For example, the
-            Guidelines define the <att>key</att> attribute of the
-            <gi>moduleRef</gi> element as any XML name (without a
-            namespace prefix, i.e. an <code>xsd:NCName</code>), even
-            though the only possible values when used to customize TEI
-            are the 20 or so module names defined in the <title>TEI
-            Guidelines</title>.</p>
-            <p>Of course, when using Roma<note>The canonical
-            installation of Roma is available at <ref
-            target="http://www.tei-c.org/Roma/">the TEI-C site</ref>,
-            but it is an open source tool available on <ref
-            target="https://github.com/TEIC/Roma">GitHub</ref>, which
-            may be installed on any GNU/Linux system.</note>, a
-            web-based front-end editor for ODD files, this is not a
-            problem. The web form gives the user only the appropriate
-            TEI values to choose from. However, when editing ODD files
-            by hand, and thus when teaching TEI customization, it is
-            much more efficient to catch errors like mis-spelled
-            module names before handing the ODD file to an ODD
-            processor (e.g. the aforementioned <name
-            type="program">Roma</name> or <ref
-            target="https://github.com/TEIC/Stylesheets/blob/dev/bin/teitorelaxng">teitorelaxng</ref>).</p>
-            <p>Thus the Women Writers Project has developed this TEI
-            customization for the purpose of having a schema to use
-            that deliberately makes it easier to write a TEI
-            customization, at the expense of the complete flexibility
-            ODD provides.</p>
-            <p>This schema permits a valid document to use a variety
-            of elements as the root element. This is for debugging and
-            file maintenance convenience. As always, any conforming
-            TEI ODD must have either <gi>TEI</gi> or
-            <gi>teiCorpus</gi> as the root element.</p>
-            <p>REMINDER: This language is not canonical &#x2014; it is
-            intended to be helpful, not definitive</p>
+              <p>The TEI ODD language was designed both for the creation
+              and customization of the <title>TEI Guidelines</title>,
+              and also for the creation (and perhaps customization) of
+              other, non-TEI, markup languages. Thus the TEI ODD
+              langauge is, by default, much more flexible than needed
+              for writing TEI customization ODDs. For example, the
+              Guidelines define the <att>key</att> attribute of the
+              <gi>moduleRef</gi> element as any XML name (without a
+              namespace prefix, i.e. an <code>xsd:NCName</code>), even
+              though the only possible values when used to customize TEI
+              are the 20 or so module names defined in the <title>TEI
+              Guidelines</title>.</p>
+              <p>Of course, when using Roma<note>The canonical
+              installation of Roma is available at <ref
+              target="http://www.tei-c.org/Roma/">the TEI-C site</ref>,
+              but it is an open source tool available on <ref
+              target="https://github.com/TEIC/Roma">GitHub</ref>, which
+              may be installed on any GNU/Linux system.</note>, a
+              web-based front-end editor for ODD files, this is not a
+              problem. The web form gives the user only the appropriate
+              TEI values to choose from. However, when editing ODD files
+              by hand, and thus when teaching TEI customization, it is
+              much more efficient to catch errors like mis-spelled
+              module names before handing the ODD file to an ODD
+              processor (e.g. the aforementioned <name
+              type="program">Roma</name> or <ref
+              target="https://github.com/TEIC/Stylesheets/blob/dev/bin/teitorelaxng">teitorelaxng</ref>).</p>
+              <p>Thus the Women Writers Project has developed this TEI
+              customization for the purpose of having a schema to use
+              that deliberately makes it easier to write a TEI
+              customization, at the expense of the complete flexibility
+              ODD provides.</p>
+              <p>This schema permits a valid document to use a variety
+              of elements as the root element. This is for debugging and
+              file maintenance convenience. As always, any conforming
+              TEI ODD must have either <gi>TEI</gi> or
+              <gi>teiCorpus</gi> as the root element.</p>
+              <p>REMINDER: This language is not canonical &#x2014; it is
+              intended to be helpful, not definitive</p>
             </div>
           </div>
           
@@ -722,8 +744,12 @@
               <moduleRef key="namesdates" include="persName placeName orgName"/>
               <xsl:comment> allow tables, figures, and formulæ </xsl:comment>
               <moduleRef key="figures" except="notatedMusic"/>
+
+              <constraintDecl scheme="schematron" queryBinding="xslt2">
+                <sch:ns prefix="teix" uri="http://www.tei-c.org/ns/Examples"/>
+              </constraintDecl>
               
-              <constraintSpec scheme="schematron" ident="mode-child-sanity">
+              <constraintSpec scheme="schematron" ident="mode-child-sanity" xml:lang="en">
                 <constraint>
                   <sch:rule context="*[ @mode eq 'delete' ]">
                     <sch:report test="child::*">The specification element ＜<sch:name/>＞ has both a
@@ -750,32 +776,41 @@
 
               <elementSpec module="tagdocs" ident="schemaSpec" mode="change">
                 <content>
-		  <sequence>
+                  <sequence>
                     <elementRef key="gloss" minOccurs="0" maxOccurs="1"/>
                     <elementRef key="desc"  minOccurs="1" maxOccurs="1"/>
+                    <elementRef key="constraintDecl" minOccurs="0" maxOccurs="1"/>
                     <alternate minOccurs="0" maxOccurs="unbounded">
                       <classRef key="model.oddRef"/>
                       <classRef key="model.oddDecl"/>
                     </alternate>
-		  </sequence>
+                  </sequence>
                 </content>
-                <constraintSpec scheme="schematron" ident="required-modules">
+                <constraintSpec scheme="schematron" ident="required-modules" xml:lang="en">
                   <gloss>required modules</gloss>
                   <constraint>
-		    <sch:rule context="tei:schemaSpec">
+                    <sch:rule context="tei:schemaSpec">
                       <sch:assert test="
-                        ( tei:moduleRef[ @key eq 'tei'] or tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'tei'] ] )                      
+                        ( tei:moduleRef[ @key eq 'tei']
+                          or
+                          tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'tei'] ] )                      
                         and
-                        ( tei:moduleRef[ @key eq 'core'] or tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'core'] ] )                      
+                          ( tei:moduleRef[ @key eq 'core']
+                          or
+                          tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'core'] ] )                      
                         and
-                        ( tei:moduleRef[ @key eq 'header'] or tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'header'] ] )                      
+                          ( tei:moduleRef[ @key eq 'header']
+                          or
+                          tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'header'] ] )                      
                         and
-                        ( tei:moduleRef[ @key eq 'textstructure'] or tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'textstructure'] ] )                      
-                        ">missing one or more of the required modules (tei, core, header, textstructure).</sch:assert>
-		    </sch:rule>
+                          ( tei:moduleRef[ @key eq 'textstructure']
+                          or
+                          tei:specGrpRef[ id( substring-after( normalize-space( @target ), '#') )/tei:moduleRef[ @key eq 'textstructure'] ] )                      
+                      "> missing one or more of the required modules (tei, core, header, textstructure). </sch:assert>
+                    </sch:rule>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="schematron" ident="no-outside-specs">
+                <constraintSpec scheme="schematron" ident="no-outside-specs" xml:lang="en">
                   <desc>A <tag>*Spec</tag> element should either be within <gi>schemaSpec</gi>,
                     or be in a <gi>specGrp</gi> referred to by a <gi>specGrpRef</gi> wihin
                     <gi>schemaSpec</gi>.</desc>
@@ -792,7 +827,7 @@
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="schematron" ident="only-one-schemaSpec">
+                <constraintSpec scheme="schematron" ident="only-one-schemaSpec" xml:lang="en">
                   <desc>TEI permits <gi>schemaSpec</gi> as a
                   repeatable child of a variety of elements (including
                   <gi>front</gi>, <gi>body</gi>, <gi>back</gi>,
@@ -852,8 +887,81 @@
                 </remarks>
               </elementSpec>
 
+              <xsl:comment>
+                ** The following set of &lt;elementSpec> elements exists to allow us to
+                ** refer to them from within the content model for &lt;constraintDecl>.
+                ** This allows for completion assistance from XML tools such as oXygen.
+                ** To change the set of &lt;sch:ns> elements that are defined, change
+                ** the set of namespaces bound to the root &lt;xsl:stylesheet> of this
+                ** XSLT program.
+              </xsl:comment>
+              <xsl:for-each select="document( static-base-uri() )/*/namespace::*">
+                <xsl:variable name="ident" select="'ns_for_'||name(.)"/>
+                <xsl:if test="not( name(.) = ('','xml') )">
+                  <elementSpec ns="http://purl.oclc.org/dsdl/schematron" ident="{$ident}" mode="add">
+                    <altIdent>ns</altIdent>
+                    <content><empty/></content>
+                    <attList>
+                      <attDef ident="prefix" usage="req">
+                        <datatype minOccurs="1" maxOccurs="1">
+                          <dataRef key="teidata.enumerated"/>
+                        </datatype>
+                        <valList type="closed">
+                          <valItem ident="{name(.)}"/>
+                        </valList>
+                      </attDef>
+                      <attDef ident="uri" usage="req">
+                        <datatype minOccurs="1" maxOccurs="1">
+                          <dataRef key="teidata.enumerated"/>
+                        </datatype>
+                        <valList type="closed">
+                          <valItem ident="{.}"/>
+                        </valList>
+                      </attDef>
+                    </attList>
+                  </elementSpec>
+                </xsl:if>
+              </xsl:for-each>
+              
+              <elementSpec module="tagdocs" ident="constraintDecl" mode="change">
+                <content>
+                  <sequence>
+                    <alternate minOccurs="0" maxOccurs="unbounded">
+                      <classRef key="model.identEquiv"/>
+                      <classRef key="model.descLike"/>
+                    </alternate>
+                    <elementRef key="ns_for_tei" minOccurs="1" maxOccurs="1"/>
+                    <alternate minOccurs="0" maxOccurs="unbounded">
+                      <xsl:for-each select="document( static-base-uri() )/*/namespace::*">
+                        <xsl:if test="not( name(.) = ('','tei','xml') )">
+                          <xsl:variable name="key" select="'ns_for_'||name(.)"/>
+                          <elementRef key="{$key}" minOccurs="1" maxOccurs="1"/>
+                        </xsl:if>
+                      </xsl:for-each>
+                    </alternate>
+                    <anyElement require="http://purl.oclc.org/dsdl/schematron"/>
+                  </sequence>
+                </content>
+                <attList>
+                  <attDef ident="scheme" usage="req" mode="change">
+                    <valList type="closed">
+                      <valItem ident="schematron">
+                        <gloss versionDate="2016-09-27" xml:lang="en">ISO Schematron</gloss>
+                      </valItem>
+                    </valList>
+                  </attDef>
+                </attList>
+                <remarks xml:lang="en" versionDate="{$versionDate}">
+                  <p>The tei_customization version of <gi>constraintDecl</gi> is more strict
+                    than the vanilla TEI version: it <emph>requires</emph> that the <att>scheme</att>
+                    be <val>schematron</val> and that the contents be only Schematron elements, the
+                    first of which <emph>must</emph> be <tag type="empty">sch:ns prefix="tei" uri=""</tag>.
+                  </p>
+                </remarks>
+              </elementSpec>
+              
               <elementSpec module="tagdocs" ident="moduleRef" mode="change">
-                <constraintSpec scheme="schematron" ident="if-url-then-prefix">
+                <constraintSpec scheme="schematron" ident="if-url-then-prefix" xml:lang="en">
                   <desc>This is not strictly necessary. The TEI patterns have a default prefix (the
                     value of <att>ident</att> of <gi>schemaSpec</gi>), so if only one external
                     module is imported, it does not need a prefix — there will not be any collisions
@@ -868,7 +976,7 @@
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="schematron" ident="no-duplicate-modules">
+                <constraintSpec scheme="schematron" ident="no-duplicate-modules" xml:lang="en">
                   <constraint>
                     <sch:rule context="tei:moduleRef[ @key ]">
                       <sch:let name="mykey" value="@key"/>
@@ -878,7 +986,7 @@
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="schematron" ident="need-required">
+                <constraintSpec scheme="schematron" ident="need-required" xml:lang="en">
                   <constraint>
                     <sch:rule context="tei:moduleRef[ @except ]">
                       <sch:let name="exceptions" value="tokenize( @except, '\s+' )"/>
@@ -907,7 +1015,7 @@
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
-                    <constraintSpec scheme="schematron" ident="include-required">
+                    <constraintSpec scheme="schematron" ident="include-required" xml:lang="en">
                       <constraint>
                         <sch:rule context="tei:moduleRef[ @key eq 'textstructure' and @include ]">
                           <sch:let name="inclusions" value="tokenize( @include, '\s+' )"/>
@@ -1127,25 +1235,25 @@
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="attDef" mode="change">
-		<xsl:comment> adding altIdent to content model because it was removed from model.identSynonyms </xsl:comment>
-		<content>
-		  <sequence>      
-		    <alternate minOccurs="0" maxOccurs="unbounded">
-		      <elementRef key="altIdent"/>
-		      <classRef key="model.identSynonyms"/>
-		      <classRef key="model.descLike"/>
-		    </alternate>
-		    <elementRef key="datatype" minOccurs="0"/>
-		    <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
-		    <elementRef key="defaultVal" minOccurs="0"/>
-		    <alternate minOccurs="0">
-		      <elementRef key="valList"/>     
-		      <elementRef key="valDesc" minOccurs="1" maxOccurs="unbounded"/>
-		    </alternate>
-		    <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
-		    <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
-		  </sequence>
-		</content>
+                <xsl:comment> adding altIdent to content model because it was removed from model.identSynonyms </xsl:comment>
+                <content>
+                  <sequence>      
+                    <alternate minOccurs="0" maxOccurs="unbounded">
+                      <elementRef key="altIdent"/>
+                      <classRef key="model.identSynonyms"/>
+                      <classRef key="model.descLike"/>
+                    </alternate>
+                    <elementRef key="datatype" minOccurs="0"/>
+                    <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
+                    <elementRef key="defaultVal" minOccurs="0"/>
+                    <alternate minOccurs="0">
+                      <elementRef key="valList"/>     
+                      <elementRef key="valDesc" minOccurs="1" maxOccurs="unbounded"/>
+                    </alternate>
+                    <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
+                    <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
+                  </sequence>
+                </content>
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="valList" mode="change">
@@ -1155,25 +1263,25 @@
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="valItem" mode="change">
-		<xsl:comment> adding altIdent to content model because it was removed from model.identSynonyms </xsl:comment>
-		<content>
-		  <sequence>
-		    <alternate minOccurs="0" maxOccurs="unbounded">
-		      <classRef key="model.identSynonyms"/>
-		      <elementRef key="altIdent"/>
-		    </alternate>
-		    <sequence minOccurs="0">
-		      <classRef key="model.descLike" minOccurs="1" maxOccurs="unbounded"/>
-		      <sequence minOccurs="0" maxOccurs="unbounded">
-			<classRef key="model.identSynonyms" minOccurs="1" maxOccurs="1"/>
-			<classRef key="model.descLike" minOccurs="0" maxOccurs="unbounded"/>
-		      </sequence>
-		      <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
-		    </sequence>
-		    <elementRef key="paramList" minOccurs="0" maxOccurs="1"/>
-		  </sequence>
-		</content>
-	      </elementSpec>
+                <xsl:comment> adding altIdent to content model because it was removed from model.identSynonyms </xsl:comment>
+                <content>
+                  <sequence>
+                    <alternate minOccurs="0" maxOccurs="unbounded">
+                      <classRef key="model.identSynonyms"/>
+                      <elementRef key="altIdent"/>
+                    </alternate>
+                    <sequence minOccurs="0">
+                      <classRef key="model.descLike" minOccurs="1" maxOccurs="unbounded"/>
+                      <sequence minOccurs="0" maxOccurs="unbounded">
+                        <classRef key="model.identSynonyms" minOccurs="1" maxOccurs="1"/>
+                        <classRef key="model.descLike" minOccurs="0" maxOccurs="unbounded"/>
+                      </sequence>
+                      <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
+                    </sequence>
+                    <elementRef key="paramList" minOccurs="0" maxOccurs="1"/>
+                  </sequence>
+                </content>
+              </elementSpec>
 
               <elementSpec module="tagdocs" ident="memberOf" mode="change">
                 <attList>
@@ -1207,30 +1315,29 @@
                     <elementRef key="listRef"        minOccurs="0" maxOccurs="unbounded"/>
                   </sequence>
                 </content>
-                <constraintSpec scheme="schematron" ident="module-except-when-add">
+                <constraintSpec scheme="schematron" ident="module-except-when-add" xml:lang="en">
                   <constraint>
-		   <sch:rule context="tei:elementSpec">
-                     <sch:assert test="@mode">
-		       in a customization ODD, the mode= attribute of ＜elementSpec＞ should be specified
-		     </sch:assert>
-                     <sch:report test="not( @module )  and  not( @mode='add')" >
-		       the module= attribute of ＜elementSpec＞ must be specified anytime the mode= is not 'add'
-		     </sch:report>
-		   </sch:rule>
+                    <sch:rule context="tei:elementSpec">
+                      <sch:assert test="@mode">
+                        in a customization ODD, the mode= attribute of ＜elementSpec＞ should be specified
+                      </sch:assert>
+                      <sch:report test="not( @module )  and  not( @mode='add')">
+                        the module= attribute of ＜elementSpec＞ must be specified anytime the mode= is not 'add'
+                      </sch:report>
+                    </sch:rule>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="schematron" ident="only-1-per">
+                <constraintSpec scheme="schematron" ident="only-1-per" xml:lang="en">
                   <constraint>
-		   <sch:rule context="tei:elementSpec">
-                     <sch:report test="//tei:elementSpec[ @ident eq current()/@ident  and  not( . is current() ) ]" >
-		       Current ODD processors will not correctly handle more than one ＜elementSpec＞ with the same @ident
-		     </sch:report>
-		   </sch:rule>
+                    <sch:rule context="tei:elementSpec">
+                      <sch:report test="//tei:elementSpec[ @ident eq current()/@ident  and  not( . is current() ) ]"
+                      >Current ODD processors will not correctly handle more than one ＜elementSpec＞ with the same @ident</sch:report>
+                    </sch:rule>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="schematron" ident="dont-delete-required">
+                <constraintSpec scheme="schematron" ident="dont-delete-required" xml:lang="en">
                   <constraint>
-		    <sch:rule context="tei:elementSpec">
+                    <sch:rule context="tei:elementSpec">
                       <sch:report test="@mode='delete' and @ident='TEI'">Removing ＜TEI＞ from your
                         schema guarantees it is not TEI conformant</sch:report>
                       <sch:report test="@mode='delete' and @ident='teiHeader'">Removing ＜teiHeader＞
@@ -1246,24 +1353,24 @@
                         conformant</sch:report>
                       <sch:report test="@mode='delete' and @ident='sourceDesc'">Removing ＜sourceDesc＞
                         from your schema guarantees it is not TEI conformant</sch:report>
-		    </sch:rule>
+                    </sch:rule>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="schematron" ident="content_when_adding">
+                <constraintSpec scheme="schematron" ident="content_when_adding" xml:lang="en">
                   <constraint>
-                    <sch:rule context="tei:elementSpec[@mode = ('add','replace')]">
+                    <sch:rule context="tei:elementSpec[ @mode = ('add','replace') ]">
                       <sch:assert test="tei:content">When adding a new element (whether replacing an old one or not), a content model must be specified; but this ＜elementSpec＞ does not have a ＜content＞ child.</sch:assert>
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="schematron" ident="empty_when_deleting">
+                <constraintSpec scheme="schematron" ident="empty_when_deleting" xml:lang="en">
                   <constraint>
                     <sch:rule context="tei:elementSpec[ @mode eq 'delete']">
                       <sch:report test="*">When used to delete an element from your schema, the ＜elementSpec＞ should be empty</sch:report>
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
-                <constraintSpec scheme="schematron" ident="add_implies_ns">
+                <constraintSpec scheme="schematron" ident="add_implies_ns" xml:lang="en">
                   <constraint>
                     <sch:rule context="tei:elementSpec[ @mode eq 'add'  or  not( @mode ) ]">
                       <sch:assert test="ancestor-or-self::*/@ns">When used to add an element, ＜elementSpec＞ (or its ancestor ＜schemaSpec＞) should have an @ns attribute.</sch:assert>
@@ -1310,7 +1417,7 @@
                 <remarks xml:lang="en" versionDate="{$versionDate}">
                   <p>For our purposes, constraints must be expressed in ISO Schematron. (TEI permits
                     others, including non-XML expressions, although there is no processing of
-                    anything other ISO Schematron.)</p>
+                    anything other than ISO Schematron.)</p>
                 </remarks>
               </elementSpec>
 
@@ -1373,9 +1480,9 @@
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="altIdent" mode="change">
-		<classes>
-		  <memberOf key="model.identSynonyms" mode="delete"/>
-		</classes>
+                <classes>
+                  <memberOf key="model.identSynonyms" mode="delete"/>
+                </classes>
               </elementSpec>
 
               <elementSpec module="tagdocs" ident="gi" mode="change">
@@ -1523,15 +1630,13 @@
               <classSpec ident="att.global" module="tei" mode="change" type="atts">
                 <attList>
                   <attDef ident="xml:id" mode="change" ns="http://www.w3.org/XML/1998/namespace">
-                    <constraintSpec scheme="schematron" ident="unique_xmlIDs">
+                    <constraintSpec scheme="schematron" ident="unique_xmlIDs" xml:lang="en">
                       <constraint>
-			<sch:rule context="@xml:id">
+                        <sch:rule context="@xml:id">
                           <sch:let name="myID" value="normalize-space(.)"/>
                           <sch:report test="../(ancestor::*|preceding::*)/@xml:id[ normalize-space(.) eq $myID ]"
-                            >The @xml:id "<sch:value-of select="."
-                            />" on ＜<sch:value-of select="name(..)"
-                            />＞ duplicates an @xml:id found earlier in the document</sch:report>
-			</sch:rule>
+                            >The @xml:id "<sch:value-of select="."/>" on ＜<sch:value-of select="name(..)"/>＞ duplicates an @xml:id found earlier in the document</sch:report>
+                        </sch:rule>
                       </constraint>
                     </constraintSpec>
                   </attDef>
@@ -1545,7 +1650,7 @@
               <classSpec ident="att.global.rendition" module="tei" mode="delete" type="atts"/>
               <classSpec ident="att.global.responsibility" module="tei" mode="delete" type="atts"/>
 
-              <constraintSpec scheme="schematron" ident="tei-source">
+              <constraintSpec scheme="schematron" ident="tei-source" xml:lang="en">
                 <desc>Constrains the <att>source</att> attribute of
                 various tagset documentation elements to those values
                 recommended by TEI</desc>

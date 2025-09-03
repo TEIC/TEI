@@ -1,100 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
-<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="namesdates" ident="persName">
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="namesdates" xml:id="gi-persName" ident="persName">
   <gloss versionDate="2005-01-14" xml:lang="en">personal name</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">개인 이름</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">個人名稱</gloss>
   <gloss versionDate="2008-12-09" xml:lang="fr">nom de personne</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">nombre propio de persona</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">nome proprio di persona</gloss>
-  <desc versionDate="2012-03-13" xml:lang="en">contains a proper noun or proper-noun phrase referring to a
-  person, possibly including one or more of
-  the person's forenames, surnames, honorifics, added names, etc.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">개인의 이름, 성, 존칭어, 추가 명 등의 하나 또는 전부를 사용하여 개인을 지칭하는, 고유명사 또는
-    고유명사구를 포함한다.</desc>
+  <desc versionDate="2012-03-13" xml:lang="en">contains a proper noun or proper-noun phrase referring to a person, possibly including one or more of the person's forenames, surnames, honorifics, added names, etc.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">개인의 이름, 성, 존칭어, 추가 명 등의 하나 또는 전부를 사용하여 개인을 지칭하는, 고유명사 또는 고유명사구를 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含一個人名，可能是任何或全部屬於該人物的名字、姓氏、敬稱、或附加名等。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">人物の固有名詞を示す。例えば、名、姓、敬称、追加名など。</desc>
-  <desc versionDate="2008-12-09" xml:lang="fr">contient un nom propre ou une expression nominale se
-    référant à une personne, pouvant inclure tout ou partie de ses prénoms, noms de famille, titres
-    honorifiques, noms ajoutés, etc.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">contiene un nombre propio o un sintagma identificable
-    como un nombre propio, que se refiere a una persona y puede incluir cualquier o todos los
-    nombres de pila, apellidos, títulos honoríficos, o nombres añadidos de la persona en cuestión.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">contiene un nome proprio o un sintagma identificabile
-    come nome proprio, che si riferisce a una persona e può includere qualsiasi o tutti i prenomi,
-    cognomi, titoli onorifici, o nomi aggiunti della persona in questione</desc>
+  <desc versionDate="2008-12-09" xml:lang="fr">contient un nom propre ou une expression nominale se référant à une personne, pouvant inclure tout ou partie de ses prénoms, noms de famille, titres honorifiques, noms ajoutés, etc.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">contiene un nombre propio o un sintagma identificable como un nombre propio, que se refiere a una persona y puede incluir cualquier o todos los nombres de pila, apellidos, títulos honoríficos, o nombres añadidos de la persona en cuestión.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">contiene un nome proprio o un sintagma identificabile come nome proprio, che si riferisce a una persona e può includere qualsiasi o tutti i prenomi, cognomi, titoli onorifici, o nomi aggiunti della persona in questione</desc>
   <classes>
     <memberOf key="att.global"/>
-    <memberOf key="model.persStateLike"/>
-    <memberOf key="model.nameLike.agent"/>
+    <memberOf key="att.cmc"/>
     <memberOf key="att.datable"/>
     <memberOf key="att.editLike"/>
     <memberOf key="att.personal"/>
     <memberOf key="att.typed"/>
+    <memberOf key="model.nameLike.agent"/>
+    <memberOf key="model.persStateLike"/>
   </classes>
   <content>
     <macroRef key="macro.phraseSeq"/>
   </content>
-  <attList>
-    <attDef ident="calendar" usage="opt" validUntil="2024-11-11">
-        <desc type="deprecationInfo" versionDate="2023-05-11" xml:lang="en">The <att>calendar</att> attribute will be removed from this element
-            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar</att> attribute
-            (unlike <att>datingMethod</att> defined in
-            <ident type="class">att.datable.custom</ident>) defines the calendar system of the date
-            in the original material defined by the parent element, <emph>not</emph> the calendar to
-            which the date is normalized.</desc>
-        <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the
-            date represented by the content of this element belongs.</desc>
-        <desc versionDate="2007-12-20" xml:lang="ko">날짜 표현 시스템 또는 달력 표시 형식을 표시한다.</desc>
-        <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該日期表示所使用的曆法計算系統。</desc>
-        <desc xml:lang="ja" versionDate="2019-02-03">この要素を含むコンテントにおける日付の暦やシステムを示す。</desc>
-        <desc versionDate="2009-01-06" xml:lang="fr">indique le système ou le calendrier auquel
-            appartient la date exprimée dans le contenu de l'élément.</desc>
-        <desc versionDate="2007-05-04" xml:lang="es">indica el sistema o calendario en que se muestra
-            una fecha.</desc>
-        <desc versionDate="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data
-            appartiene.</desc>
-        <datatype minOccurs="1" maxOccurs="unbounded">
-            <dataRef key="teidata.pointer"/>
-        </datatype>
-        <constraintSpec scheme="schematron" ident="calendar-check-persName">
-            <constraint>
-                <sch:rule context="tei:*[@calendar]">
-                    <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
-                        systems or calendars to which the date represented by the content of this element belongs,
-                        but this <sch:name/> element has no textual content.</sch:assert>
-                </sch:rule>
-            </constraint>
-        </constraintSpec>
-    </attDef>
-  </attList>
-
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-persName-egXML-mq">
       <persName><forename>Edward</forename><forename>George</forename><surname type="linked">Bulwer-Lytton</surname>, <roleName>Baron Lytton of
         <placeName>Knebworth</placeName>
             </roleName></persName>
     </egXML>
   </exemplum>
   <exemplum versionDate="2017-06-23" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-persName-egXML-lm">
       <persName> <surname>Poncet</surname> <forename>Olivier</forename> <roleName>professeur d'archivistique et diplomatique moderne</roleName> </persName>
     </egXML>
   </exemplum>
   <exemplum versionDate="2017-06-23" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-persName-egXML-fl">
   <persName> <forename>Joseph</forename> <addName type="stagename">Le Pétomane</addName> <surname>Pujol</surname> </persName> 
    </egXML>
   </exemplum>
   <exemplum versionDate="2017-06-23" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-persName-egXML-ud">
       <persName> <forename>Catherine</forename> <genName>II</genName>, <addName type="epithet"> la Grande</addName>, <roleName>impératrice de Russie</roleName> </persName>
     </egXML>
   </exemplum>
   
   
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-persName-egXML-bm">
       <persName><forename>夏爾</forename><forename>皮耶</forename><surname>波特萊爾</surname>，<roleName><placeName>法國</placeName>象徵派詩人         </roleName>
          </persName>
     </egXML>

@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="transcr" ident="delSpan">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="transcr" xml:id="gi-delSpan" ident="delSpan">
   <gloss versionDate="2005-01-14" xml:lang="en">deleted span of text</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">텍스트의 삭제 구간</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">刪除的文字段</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">partie de texte supprimée</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">fragmento de texto omitido</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">porzione di testo cancellata</gloss>
+  <gloss versionDate="2024-08-12" xml:lang="ja">削除されたテキストの区間</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">marks the beginning of a longer sequence of text deleted, marked as deleted, or otherwise signaled as superfluous or spurious by an author, scribe, annotator, or corrector.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">작가, 필기사, 주석자 또는 교정자에 의해 삭제되었다고 표시되었거나, 잉여적으로 추가되거나 위조된 것으로 표시된 긴 연쇄의 텍스트 시작부를 표시한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">標記一較長連續性文字之開端，該文字由作者、抄寫者、註解者、或更正者刪除、標上刪除記號、或者標明為多餘或偽造。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">著者・筆写者・注釈者・校正者により、削除または削除として符号化または 余分なものまたは間違いとして示されている、長めのテキスト部分の始点を 示す。</desc>
+  <desc versionDate="2024-08-12" xml:lang="ja">著者・筆写者・注釈者・校正者により、削除されたり、削除符号を与えられたり、あるいはその他の余分なものまたは誤りとして示されたりしている、長めのテキスト部分の始点を示す。</desc>
   <desc versionDate="2009-11-16" xml:lang="fr">marque le début d'une longue partie de texte supprimée, signalée comme supprimée ou bien signalée comme superflue ou fausse par un auteur, un copiste, un annotateur ou un correcteur.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">señala el inicio de un fragmento largo de texto omitido, o marcado como cancelado o como supérfluo o espurio, por un autor, un transcriptor, un comentarista o un corrector.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">segnala l'inizio di una porzione di testo più lunga cancellata, indicata come cancellata, o indicata come superflua o spuria da un autore, un trascrittore, un annotatore o un correttore</desc>
   <classes>
     <memberOf key="att.global"/>
-    <memberOf key="model.global.edit"/>
+    <memberOf key="att.dimensions"/>
+    <memberOf key="att.spanning"/>
     <memberOf key="att.transcriptional"/>
     <memberOf key="att.typed"/>
-    <memberOf key="att.spanning"/>
-    <memberOf key="att.dimensions"/>
+    <memberOf key="model.global.edit"/>
   </classes>
   <content><empty/></content>
-  <constraintSpec ident="delSpan-requires-spanTo" scheme="schematron">
+  <constraintSpec ident="delSpan-requires-spanTo" scheme="schematron" xml:lang="en">
     <constraint>
       <sch:rule context="tei:delSpan">
         <sch:assert test="@spanTo">The @spanTo attribute of <sch:name/> is required.</sch:assert>
@@ -40,7 +41,7 @@
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-delSpan-egXML-wl">
       <p>Paragraph partially deleted.  This is the undeleted
 portion <delSpan spanTo="#a23"/>and this the deleted
 portion of the paragraph.</p>
@@ -52,7 +53,7 @@ the resumption <anchor xml:id="a23"/> of the text. ...</p>
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-delSpan-egXML-bd">
       <p>Paragraph partially deleted. This is the undeleted portion <delSpan spanTo="#fr_a23"/>and
           this the deleted portion of the paragraph.</p>
       <p>Paragraph deleted together with adjacent material.</p>
@@ -62,7 +63,7 @@ the resumption <anchor xml:id="a23"/> of the text. ...</p>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-delSpan-egXML-fw">
       <p>此段部份刪除。這裡是保留的， <delSpan spanTo="#zh-tw_a23"/>而此為刪除的部份。</p>
       <p>此段落以及與它相關的資料一同被刪除。</p>
       <p>第二個完全刪除的段落。</p>
@@ -89,7 +90,7 @@ the resumption <anchor xml:id="a23"/> of the text. ...</p>
     by editors or encoders. In these cases, either the <gi>corr</gi>
     tag or the <gi>gap</gi> tag should be used.</p>
   </remarks>
-  <remarks xml:lang="fr" versionDate="2009-11-16">
+  <remarks versionDate="2009-11-16" xml:lang="fr">
     <p>Le début et la fin de la partie de texte supprimée doivent être marqués : le début, par
                 l'élément <gi>delSpan</gi>, la fin par la cible de l'attribut <att>spanTo</att>.</p>
     <p>Le texte supprimé doit être au moins partiellement lisible, afin que l'encodeur soit
@@ -98,7 +99,7 @@ the resumption <anchor xml:id="a23"/> of the text. ...</p>
                 vaut mieux utiliser la balise <gi>gap</gi> avec un attribut <att>reason</att> dont la valeur indique la raison pour laquelle la transcription du texte supprimé est impossible. S'il n'est pas entièrement lisible, l'élément <gi>unclear</gi> doit être utilisé pour signaler les parties du texte qui ne peuvent pas être lues avec certitude. Voir plus loin les sections <ptr target="#PHOM"/> et, à propos de l'association étroite qui existe entre  <gi>delSpan</gi> et les éléments <gi>gap</gi>, <gi>damage</gi>, <gi>unclear</gi> et <gi>supplied</gi>, la section <ptr target="#PHCOMB"/>.</p>
     <p>La balise <gi>delSpan</gi> ne doit pas être utilisée pour des suppressions opérées par des éditeurs scientifiques ou des encodeurs. Dans ces cas, on emploiera soit la balise <gi>corr</gi>, soit la balise <gi>gap</gi>.</p>
   </remarks>
-  <remarks xml:lang="ja" versionDate="2008-04-05">
+  <remarks versionDate="2008-04-05" xml:lang="ja">
     <p>
     当該削除部分の始点を終点の両方が示されなければならない。始点は要素
     <gi>delSpan</gi>によって、終点は属性<att>spanTo</att>により示され

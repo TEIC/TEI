@@ -1,47 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" type="atts" ident="att.predicate">
-    <desc versionDate="2021-02-10" xml:lang="en">provides attributes for filtering 
-        by an XPath predicate expression.</desc>
-    <attList>
-        <attDef ident="predicate" usage="opt">
-            <desc versionDate="2021-02-10" xml:lang="en">the condition under which the element 
-                bearing this attribute applies, given as an XPath predicate expression.</desc>
-            <datatype>
-                <dataRef key="teidata.xpath"/>
-            </datatype>
-            <remarks versionDate="2021-02-12" xml:lang="en">
-                <p>The XPath predicate expression given as the value of the <att>predicate</att> 
-                    attribute has to be provided <emph>without</emph> wrapping square brackets.</p>
-            </remarks>
-        </attDef>
-    </attList>
-    <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
-            <model predicate="parent::person"
-                behaviour="inline">
-                <desc versionDate="2015-08-21"
-                    xml:lang="en">If it is a child of a person element, treat as
-                    inline</desc>
-            </model>
-        </egXML>
-    </exemplum>
-    <exemplum xml:lang="en">
-        <p>The following example declares that the <gi>name</gi> element can be mapped to, or is equivalent to, the external 
-            concepts of <q>PERSON</q> and <q>PLACE</q> depending on the <q>XPath</q> expression given in <att>predicate</att></p>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
-            <elementSpec ident="name" mode="change">
-                <equiv name="PERSON" predicate="@type eq 'person'"
-                    uri="http://www.example.com/entities/person"/>
-                <equiv name="PLACE" predicate="@type eq 'place'"
-                    uri="http://www.example.com/entities/place"/>
-            </elementSpec>
-        </egXML>
-    </exemplum>
-    <listRef>
-        <ptr target="#TDcrystalsCE"/>
-        <ptr target="#TDPMPM"/>
-        <ptr target="#TDPMIP"/>
-    </listRef>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" type="atts" xml:id="class-attr-predicate" ident="att.predicate">
+  <desc versionDate="2021-02-10" xml:lang="en">provides attributes for filtering by an XPath predicate expression.</desc>
+  <attList>
+    <attDef ident="predicate" usage="opt">
+      <desc versionDate="2021-02-10" xml:lang="en">the condition under which the element bearing this attribute applies, given as an XPath predicate expression.</desc>
+      <datatype>
+        <dataRef key="teidata.xpath"/>
+      </datatype>
+      <remarks versionDate="2021-02-12" xml:lang="en">
+        <p>The XPath predicate expression given as the value of the <att>predicate</att> 
+        attribute has to be provided <emph>without</emph> wrapping square brackets.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="class-attr-predicate-egXML-ar" source="#NONE">
+      <model predicate="parent::person" behaviour="inline">
+        <desc versionDate="2015-08-21" xml:lang="en">If it is a child of a person element, treat as inline</desc>
+      </model>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <p>The following example declares that the <gi>name</gi> element can be mapped to, or is equivalent to, the external 
+    concepts of <q>PERSON</q> and <q>PLACE</q> depending on the <q>XPath</q> expression given in <att>predicate</att></p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="class-attr-predicate-egXML-zy" source="#NONE">
+      <elementSpec ident="name" mode="change">
+        <equiv name="PERSON" predicate="@type eq 'person'" uri="http://www.example.com/entities/person"/>
+        <equiv name="PLACE" predicate="@type eq 'place'" uri="http://www.example.com/entities/place"/>
+      </elementSpec>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#TDcrystalsCE"/>
+    <ptr target="#TDPMPM"/>
+    <ptr target="#TDPMIP"/>
+  </listRef>
 </classSpec>

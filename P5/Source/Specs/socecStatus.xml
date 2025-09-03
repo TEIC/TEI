@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
-<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="namesdates" ident="socecStatus">
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="namesdates" xml:id="gi-socecStatus" ident="socecStatus">
   <gloss versionDate="2005-01-14" xml:lang="en">socio-economic status</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">statut socio-économique</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">사회-경제적 지위</gloss>
@@ -16,50 +17,17 @@
   <desc versionDate="2007-01-21" xml:lang="it">contiene una descrizione informale della condizione socio-economica percepita di una persona</desc>
   <classes>
     <memberOf key="att.global"/>
-    <memberOf key="model.persStateLike"/>
     <memberOf key="att.datable"/>
     <memberOf key="att.editLike"/>
     <memberOf key="att.naming"/>
     <memberOf key="att.typed"/>
+    <memberOf key="model.persStateLike"/>
   </classes>
   <content>
     <macroRef key="macro.phraseSeq"/>
   </content>
   <attList>
-      <attDef ident="calendar" usage="opt" validUntil="2024-11-11">
-        <desc type="deprecationInfo" versionDate="2023-05-11" xml:lang="en">The <att>calendar</att> attribute will be removed from this element
-            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar</att> attribute
-            (unlike <att>datingMethod</att> defined in
-            <ident type="class">att.datable.custom</ident>) defines the calendar system of the date
-            in the original material defined by the parent element, <emph>not</emph> the calendar to
-            which the date is normalized.</desc>
-        <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the
-            date represented by the content of this element belongs.</desc>
-        <desc versionDate="2007-12-20" xml:lang="ko">날짜 표현 시스템 또는 달력 표시 형식을 표시한다.</desc>
-        <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該日期表示所使用的曆法計算系統。</desc>
-        <desc xml:lang="ja" versionDate="2019-02-03">この要素を含むコンテントにおける日付の暦やシステムを示す。</desc>
-        <desc versionDate="2009-01-06" xml:lang="fr">indique le système ou le calendrier auquel
-            appartient la date exprimée dans le contenu de l'élément.</desc>
-        <desc versionDate="2007-05-04" xml:lang="es">indica el sistema o calendario en que se muestra
-            una fecha.</desc>
-        <desc versionDate="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data
-            appartiene.</desc>
-        <datatype minOccurs="1" maxOccurs="unbounded">
-            <dataRef key="teidata.pointer"/>
-        </datatype>
-        <constraintSpec scheme="schematron" ident="calendar-check-socecStatus">
-            <constraint>
-                <sch:rule context="tei:*[@calendar]">
-                    <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
-                        systems or calendars to which the date represented by the content of this element belongs,
-                        but this <sch:name/> element has no textual content.</sch:assert>
-                </sch:rule>
-            </constraint>
-        </constraintSpec>
-    </attDef>
-
-  
-      <attDef ident="scheme" usage="opt">
+    <attDef ident="scheme" usage="opt">
       <desc versionDate="2013-12-06" xml:lang="en">identifies the classification system or taxonomy in use, for example by pointing to a locally-defined <gi>taxonomy</gi> element or by supplying a URI for an externally-defined system.</desc>
       <desc versionDate="2009-03-19" xml:lang="fr">identifie le système de classification ou la taxinomie utilisés.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">사용 중인 분류 체계 또는 분류법을 식별한다.</desc>
@@ -79,8 +47,7 @@
       <desc versionDate="2007-05-04" xml:lang="es">identifica un código relativo a la condición socio-económica definido en el sistema de
                 clasificación o taxonomía establecidos por el attributo <att>source</att>.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">corrisponde a un codice relativo alla condizione socio-economica definito nel sistema di
-                classificazione o tassonomia stabiliti dall'attributo <att>source</att>
-         </desc>
+                classificazione o tassonomia stabiliti dall'attributo <att>source</att></desc>
       <datatype><dataRef key="teidata.pointer"/></datatype>
     </attDef>
     <attDef ident="type" usage="opt" mode="change">
@@ -97,28 +64,28 @@
     </attDef>
   </attList>
   <exemplum xml:lang="und">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-socecStatus-egXML-ne" source="#UND">
       <socecStatus scheme="#rg" code="#ab1"/>
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-socecStatus-egXML-jg" source="#UND">
       <socecStatus scheme="#fr_rg" code="#ab1"/>
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-socecStatus-egXML-sn">
       <socecStatus>Code 17 dans la PCS ( Professions et catégories
         socioprofessionnelles)</socecStatus>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-socecStatus-egXML-qa">
       <socecStatus>印度教種姓制度下的賤民階級</socecStatus>
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-socecStatus-egXML-th">
       <socecStatus>Status AB1 in the RG Classification scheme</socecStatus>
     </egXML>
   </exemplum>
@@ -126,11 +93,11 @@
     <p>The content of this element may be used as an alternative to the more formal specification made possible by its attributes; it may also be
             used to supplement the formal specification with commentary or clarification.</p>
   </remarks>
-  <remarks xml:lang="fr" versionDate="2007-06-12">
+  <remarks versionDate="2007-06-12" xml:lang="fr">
     <p>Le contenu de cet élément peut être utilisé à la place d'une caractérisation plus formelle que ses attributs permettent ; il peut aussi
             être utilisé pour compléter cette caractérisation formelle par un commentaire ou une explication.</p>
   </remarks>
-  <remarks xml:lang="ja" versionDate="2008-04-05">
+  <remarks versionDate="2008-04-05" xml:lang="ja">
     <p> 当該要素の内容は、より形式的な定義の代わりに使用されるかもしれない。 または、そのような定義を補うものとして使用されるかもしれない。 </p>
   </remarks>
   <listRef>

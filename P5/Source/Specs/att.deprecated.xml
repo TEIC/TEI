@@ -20,7 +20,7 @@
         -->
         <dataRef name="date"/>
       </datatype>
-      <constraintSpec scheme="schematron" ident="deprecation-two-month-warning">
+      <constraintSpec scheme="schematron" ident="deprecation-two-month-warning" xml:lang="en">
         <constraint>
           <sch:rule context="tei:*[@validUntil]">
             <sch:let name="advance_warning_period" value="current-date() + xs:dayTimeDuration('P60D')"/>
@@ -33,7 +33,7 @@
           </sch:rule>
         </constraint>
       </constraintSpec>
-      <constraintSpec scheme="schematron" ident="deprecation-should-be-explained">
+      <constraintSpec scheme="schematron" ident="deprecation-should-be-explained" xml:lang="en">
         <constraint>
           <sch:rule context="tei:*[@validUntil][ not( self::tei:valDesc | self::tei:valList | self::tei:defaultVal | self::tei:remarks )]">
             <sch:assert test="child::tei:desc[ @type eq 'deprecationInfo']">

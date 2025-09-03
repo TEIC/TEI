@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="namesdates" ident="listPerson">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="namesdates" xml:id="gi-listPerson" ident="listPerson">
   <gloss versionDate="2007-07-04" xml:lang="en">list of persons</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">개인 목록</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">lista de personas</gloss>
@@ -28,9 +28,10 @@
     partecipanti a un'interazione verbale o le persone identificate da una fonte storica</desc>  
   <classes>
     <memberOf key="att.global"/>
-    <memberOf key="att.typed"/>
+    <memberOf key="att.cmc"/>
     <memberOf key="att.declarable"/>
     <memberOf key="att.sortable"/>
+    <memberOf key="att.typed"/>
     <memberOf key="model.listLike"/>
     <memberOf key="model.orgPart"/>
   </classes>
@@ -54,8 +55,15 @@
       </sequence>
     </sequence>
   </content>
+  <constraintSpec ident="listPerson-is-declarable" scheme="schematron" xml:lang="en">
+    <constraint>
+      <sch:pattern is-a="declarable">
+        <sch:param name="tde" value="tei:listPerson"/>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-listPerson-egXML-xg" source="#UND">
       <listPerson type="respondents">
         <personGrp xml:id="PXXX"/>
         <person xml:id="P1234" sex="2" age="mid"/>
@@ -67,7 +75,7 @@
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-listPerson-egXML-yy" source="#UND">
       <listPerson type="respondents">
         <personGrp xml:id="fr_PXXX"/>
         <person xml:id="fr_P1234" sex="2" age="mid"/>
@@ -86,7 +94,7 @@
     <p rend="dataDesc"> L'attribut type peut être utilisé pour établir des listes par type de
       personne si cela présente un intérêt.</p>
   </remarks>
-  <remarks xml:lang="ja" versionDate="2008-04-05">
+  <remarks versionDate="2008-04-05" xml:lang="ja">
     <p rend="dataDesc"> 属性typeは、特別な種類の人物を区別するために使われるかもしれない。 </p>
   </remarks>
   <listRef>

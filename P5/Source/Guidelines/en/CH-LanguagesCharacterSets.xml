@@ -77,11 +77,10 @@ processes, the identifier for the language must be constructed as in
 BCP 47 comprises two Internet Engineering Task Force documents,
 referred to separately as RFC 5646 and RFC 4647; over time, other IETF
 documents may succeed these as the best current practice.</note>. This
-<emph rend="bold">same</emph> identifier has to be used to identify
+<emph>same</emph> identifier has to be used to identify
 the corresponding <gi>language</gi> element in the TEI header, if one
 is present.</p>
-<p>The first part of BCP 47 is called <ref
-target="#CH-BIBL-4"><title>Tags for Identifying
+<p>The first part of BCP 47 is called <ref target="#CH-BIBL-4"><title>Tags for Identifying
 Languages</title></ref>, and proposes the following mechanism for
 constructing an identifier (tag) for languages as administered by the
 Internet Assigned Numbers Authority (IANA). The tag is assembled from
@@ -90,13 +89,10 @@ It gives the language (possibly further identified with a
 sublanguage), a script, and a region for the language, each possibly
 followed by a variant subtag.</p>
 <p>The authoritative list of registered subtags is maintained by IANA
-and is available at <ptr
-target="https://www.iana.org/assignments/language-subtag-registry"/>.
+and is available at <ptr target="https://www.iana.org/assignments/language-subtag-registry"/>.
 For a good general overview of the construction of language tags, see
-<ptr
-target="https://www.w3.org/International/articles/language-tags/"/>,
-and for a practical step-by-step guide, see <ptr
-target="https://www.w3.org/International/questions/qa-choosing-language-tags.en.php"/>.</p>
+<ptr target="https://www.w3.org/International/articles/language-tags/"/>,
+and for a practical step-by-step guide, see <ptr target="https://www.w3.org/International/questions/qa-choosing-language-tags.en.php"/>.</p>
 <p>In addition to the list of registered subtags, BCP 47 provides
 extensions that can be employed by private convention. The constructs
 provided can thus be used to generate identifiers for any language,
@@ -121,8 +117,7 @@ mechanism for doing so has been defined.</p>
 <p>The scope of the language identification extends to the whole
 subtree of the document anchored at the element that carries the
 <att>xml:lang</att> attribute, including all elements and those
-attributes, if any, where a language might apply.<note
-place="bottom">This excludes all attributes where a non-textual
+attributes, if any, where a language might apply.<note place="bottom">This excludes all attributes where a non-textual
 datatype has been specified, for example tokens, boolean values,
 dates, and predefined value lists.</note></p></div>
   
@@ -232,9 +227,9 @@ dates, and predefined value lists.</note></p></div>
     storey</soCalled> version (as in <ref target="#fig1">figure
     1</ref> in the examples from Umpush, or URW Bookman L Demi Bold).
     We say that the single and double-storey symbols both represent
-    one and the same the same <emph rend="bold">abstract
-    character</emph> <mentioned>a</mentioned> using two different
-    <emph rend="bold">glyphs</emph>. Similarly, an uppercase
+    one and the same the same <term>abstract
+    character</term> <mentioned>a</mentioned> using two different
+    <term>glyphs</term>. Similarly, an uppercase
     <mentioned>A</mentioned> in a serif typeface has additional
     strokes that are absent from the same letter when printed using a
     sans-serif typeface, so that once again we have differing glyphs
@@ -336,8 +331,7 @@ dates, and predefined value lists.</note></p></div>
    letter or symbol is a character or a glyphic variant. The Unicode 
    Consortium and an ISO work group (ISO/IEC JTC1
    SC2/WG2) have developed a detailed model of the relationship
-   between characters and glyphs. This model, presented in <ref
-     target="https://www.unicode.org/reports/tr17/">Unicode Technical
+   between characters and glyphs. This model, presented in <ref target="https://www.unicode.org/reports/tr17/">Unicode Technical
      Report 17: Character Encoding Model</ref>, is the underpinning
    of much standards work since, including the current chapter.</p>
    <p>The model makes explicit the distinction between two different
@@ -397,9 +391,9 @@ dates, and predefined value lists.</note></p></div>
     range of the Unicode specification. In those rare situations where there is
     difficulty entering the specific character you want, or some problem representing
     it on the system you are working in, <term>Numeric Character References</term>
-    (NCRs) should be used. These take the general form <code>&amp;#D;</code> where 
+    (NCRs) should be used. These take the general form <code><![CDATA[&#D;]]></code> where 
     <code>D</code> is an integer representing the code point of the character in 
-    base 10, or <code>&amp;#xH;</code>, where <code>H</code> is the code point in
+    base 10, or <code><![CDATA[&#xH;]]></code>, where <code>H</code> is the code point in
     hexadecimal notation. Every XML processor is capable of recognising NCRs and 
     replacing them with the required code point value without needing access to 
     any additional data. The disadvantage of NCRs as a means of entering, 
@@ -407,8 +401,7 @@ dates, and predefined value lists.</note></p></div>
     anything but <soCalled>readable</soCalled> and it is all too easy
     for the wrong character to be entered in error and retained undetected. 
     Where characters are not defined in Unicode, these Guidelines provide advice
-    on the strategies available for handling their representation in <ref 
-      target="#WD">Chapter 25 Representation of non-standard Characters and 
+    on the strategies available for handling their representation in <ref target="#WD">Chapter 25 Representation of non-standard Characters and 
     Glyphs</ref>. </p>
   </div>
   <div type="div3" xml:id="D4-45a">
@@ -417,7 +410,7 @@ dates, and predefined value lists.</note></p></div>
    depends largely on the purpose, external requirements, local
    equipment and so forth, it is thus outside the scope of coverage
    for these Guidelines. </p>
-   <p>It might however nevertheless be helpful to put some of the
+   <p>It might nevertheless be helpful to put some of the
    terminology used for the rendering process in the context of the
    discussion of this chapter.  As was mentioned above, Unicode
    encodes abstract characters, not specific glyphs.  For any
@@ -428,12 +421,12 @@ dates, and predefined value lists.</note></p></div>
    and which areas have to be left blank.  If we want to print a character
    from the Latin script, besides the selection of
    the overall glyph shape, this process also requires that a
-   specific weight of the font has been selected, a specific size
+   specific weight and size of the font has been selected,
    and to what degree the shape should be slanted.  Beyond
    individual characters, the overall typesetting process also
-   follows specific rules of how to calculate the distance between
-   characters, how much whitespace occurs between words, at which
-   points line breaks might occur and so forth.  </p>
+   follows specific rules for calculating the distance between
+   characters, for determining how much whitespace occurs between any two words, and how long each line should be (and thus at which
+   points a new line begins), and so forth.  </p>
    <p>If we concern ourselves only with the rendering process of the
    characters themselves, leaving out all these other parameters, we
    will realize that of all the information required for this process, only a small
@@ -656,12 +649,12 @@ dates, and predefined value lists.</note></p></div>
     encodings, and the way characters which under ISO-8859-n use
     all eight bits are encoded in UTF-8 is significantly different,
     giving rise to puzzling errors. Abstract characters that have a
-    <emph rend="italic">single</emph> byte code point where the
+    <emph>single</emph> byte code point where the
     highest bit is set (that is, they have a decimal numeric
     representation between 129 and 255) are encoded in ISO-8859-n
-    as a <emph rend="italic">single</emph> byte with the same value
+    as a <emph>single</emph> byte with the same value
     as the code point. But in UTF-8 code-point values inside that
-    range are expressed as a <emph rend="italic">two</emph> byte
+    range are expressed as a <emph>two</emph> byte
     sequence. That is to say, the abstract character in question is
     no longer represented in the file or in memory by the same number
     as its code-point value: it is <hi>transformed</hi> (hence the T in

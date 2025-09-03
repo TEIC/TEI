@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="normalization">
-  <gloss xml:lang="en" versionDate="2009-01-05">normalization</gloss>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" xml:id="gi-normalization" ident="normalization">
+  <gloss versionDate="2009-01-05" xml:lang="en">normalization</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">normalisation</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">indicates the extent of normalization or regularization of the original source carried out in converting it to electronic form.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">indique l'extension de la normalisation ou de la régularisation effectuée sur le texte source dans sa conversion vers sa forme électronique.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">전자 형식으로 변환할 때 수행된 원본 텍스트의 표준화 또는 규칙화의 정도를 표시한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">指出來源文件轉換成電子文本時規格化或標準化的程度。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">元資料が電子形式に変換される施される正規化の程度を示す。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">元資料が電子形式に変換される際に施される正規化の程度を示す。</desc>
   <desc versionDate="2006-10-18" xml:lang="de">gibt an, in welchem Ausmaß das Original bei der
     Umwandlung in elektronische Form normalisiert und vereinheitlicht wurde.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">indica el grado de normalización o de regularización
@@ -23,6 +23,13 @@
   <content>
     <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
   </content>
+  <constraintSpec ident="normalization-is-declarable" scheme="schematron" xml:lang="en">
+    <constraint>
+      <sch:pattern is-a="declarable">
+        <sch:param name="tde" value="tei:normalization"/>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
   <attList>
     <!--
 <attDef ident="source" usage="opt">
@@ -82,7 +89,7 @@
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-normalization-egXML-vt">
       <editorialDecl>
         <normalization method="markup">
           <p>Where both upper- and lower-case i, j, u, v, and vv have been normalized, to modern
@@ -102,7 +109,7 @@
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Acad">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-normalization-egXML-vq" source="#fr-ex-Acad">
       <editorialDecl>
         <normalization method="markup">
           <p>Là où les majuscules et les minuscules i, j, u, v et vv ont été normalisées selon la
@@ -123,7 +130,7 @@
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-normalization-egXML-xt">
       <editorialDecl>
         <normalization method="markup">
           <p>當大寫與小寫的 i, j, u, v, 以及vv已經標準化，符合二十世紀現代印刷術，<gi>choice</gi>元素就用來包含 <gi>orig</gi> 還有
