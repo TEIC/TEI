@@ -13,10 +13,88 @@
   <content><empty/></content>
   <attList>
     <attDef ident="key" usage="req">
-      <desc versionDate="2010-07-06" xml:lang="en">the identifier used for the required class within the
-        source indicated.</desc>
+      <desc versionDate="2010-07-06" xml:lang="en">the identifier used for the required class within the source indicated.</desc>
       <desc versionDate="2024-02-28" xml:lang="ja">指示されたソースの中の要求されたクラスに対して使用される識別子。</desc>
       <datatype><dataRef key="teidata.xmlName"/></datatype>
+    </attDef>
+    <attDef ident="membersOccur" usage="opt">
+      <gloss versionDate="2025-09-10" xml:lang="en">class members occur</gloss>
+      <desc versionDate="2025-09-10" xml:lang="en">indicates the optionality and repeatability of each member of the class at the point of reference</desc>
+      <datatype minOccurs="1" maxOccurs="1">
+        <dataRef key="data.enumerated"/>
+      </datatype>
+      <defaultVal>single</defaultVal>
+      <valList type="closed">
+        <valItem ident="single">
+          <gloss versionDate="2025-09-10" xml:lang="en">single</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">each class member occurs without repitiion or optionality</desc>
+        </valItem>
+        <valItem ident="one">
+          <gloss versionDate="2025-09-10" xml:lang="en">one</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">same as <val>single</val></desc>
+        </valItem>        
+        <!-- valItem ident="1"> could be restored if & when we no longer support DTDs
+          <gloss versionDate="2025-09-10" xml:lang="en">digit one</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">same as <val>single</val></desc>
+        </valItem -->        
+        <valItem ident="repeatable">
+          <gloss versionDate="2025-09-10" xml:lang="en">repeatable</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">each class member occurs as repeatable, but not optional</desc>
+        </valItem>
+        <valItem ident="oneOrMore">
+          <gloss versionDate="2025-09-10" xml:lang="en">one or more</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">same as <val>repeatable</val></desc>
+        </valItem>        
+        <!-- valItem ident="+"> could be restored if & when we no longer support DTDs
+          <gloss versionDate="2025-09-10" xml:lang="en">plus sign</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">same as <val>repeatable</val></desc>
+        </valItem -->        
+        <valItem ident="optional">
+          <gloss versionDate="2025-09-10" xml:lang="en">optional</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">each class member occurs as optional, but not repeatable</desc>
+        </valItem>
+        <valItem ident="zeroOrOne">
+          <gloss versionDate="2025-09-10" xml:lang="en">zero or one</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">same as <val>optional</val></desc>
+        </valItem>        
+        <!-- valItem ident="?"> could be restored if & when we no longer support DTDs
+          <gloss versionDate="2025-09-10" xml:lang="en">question mark</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">same as <val>optional</val></desc>
+        </valItem -->        
+        <valItem ident="optionalRepatable">
+          <gloss versionDate="2025-09-10" xml:lang="en">optional</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">each class member occurs as optional, but not repeatable</desc>
+        </valItem>
+        <valItem ident="zeroOrMore">
+          <gloss versionDate="2025-09-10" xml:lang="en">zero or more</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">same as <val>optionalRepeatable</val></desc>
+        </valItem>
+        <!-- valItem ident="*"> could be restored if & when we no longer support DTDs
+          <gloss versionDate="2025-09-10" xml:lang="en">asterisk</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">same as <val>optionalRepeatable</val></desc>
+        </valItem -->        
+      </valList>
+      <remarks versionDate="2025-09-10" xml:lang="en">
+        <p>Note that in the common case of <tag>classRef require="one"
+        minOccurs="0" maxOccurs="unbounded"</tag> the value of
+        <att>membersOccur</att> is essentially irrelevant. (It changes
+        the pattern that is used to validate elements, but not which
+        sets of elements would be considered valid vs. invalid.)</p>
+      </remarks>
+    </attDef>
+    <attDef ident="require">
+      <gloss versionDate="2025-09-10" xml:lang="en">require</gloss>
+      <desc versionDate="2025-09-10" xml:lang="en">indicates whether one member or all members of the class are required at this point in the content model</desc>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
+      <defaultVal>one</defaultVal>
+      <valList type="closed">
+        <valItem ident="all">
+          <desc versionDate="2025-09-10" xml:lang="en">all</desc>
+        </valItem>
+        <valItem ident="one">
+          <desc versionDate="2025-09-10" xml:lang="en">one</desc>
+        </valItem>
+      </valList>
     </attDef>
     <attDef ident="expand" usage="opt" validUntil="2027-03-02">
       <desc type="deprecationInfo" versionDate="2024-04-13" xml:lang="en">
@@ -56,18 +134,18 @@
         </valItem>
       </valList>
       <remarks versionDate="2013-11-20" xml:lang="en">
-	<!-- Encoding (and whitespace) updated 2019-07-07 w/ no change to text -->
-	<p>If the members of the class are <ident>a</ident>,
-	<ident>b</ident> and <ident>c</ident>, then a reference to the
-	class within a content model is understood as being a
-	reference to <code>a|b|c</code> when <att>expand</att> is
-	omitted or has the value <val>alternation</val>; to
-	<code>a,b,c</code> when it has the value <val>sequence</val>;
-	to <code>(a?,b?,c?)</code> when it has the value
-	<val>sequenceOptional</val>; to <code>(a*,b*,c*)</code> when
-	it has the value <val>sequenceOptionalRepeatable</val>; or to
-	<code>(a+,b+,c+)</code> when it has the value
-	<val>sequenceRepeatable</val>.</p>
+        <!-- Encoding (and whitespace) updated 2019-07-07 w/ no change to text -->
+        <p>If the members of the class are <ident>a</ident>,
+        <ident>b</ident> and <ident>c</ident>, then a reference to the
+        class within a content model is understood as being a
+        reference to <code>a|b|c</code> when <att>expand</att> is
+        omitted or has the value <val>alternation</val>; to
+        <code>a,b,c</code> when it has the value <val>sequence</val>;
+        to <code>(a?,b?,c?)</code> when it has the value
+        <val>sequenceOptional</val>; to <code>(a*,b*,c*)</code> when
+        it has the value <val>sequenceOptionalRepeatable</val>; or to
+        <code>(a+,b+,c+)</code> when it has the value
+        <val>sequenceRepeatable</val>.</p>
       </remarks>
       <remarks versionDate="2024-02-28" xml:lang="ja"><p>クラスのメンバーが <val>a</val>、<val>b</val>そして<val>c</val>であるとして、
         <att>expand</att>の値が<val>alternation</val>ならば、内容モデル内の該当クラスへの参照は，<val>a|b|c</val>への参照として理解される。
