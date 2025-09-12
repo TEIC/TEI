@@ -75,32 +75,44 @@
         </valItem -->        
       </valList>
       <remarks versionDate="2025-09-10" xml:lang="en">
-        <p>Note that in the common case of <tag>classRef require="one"
+        <p>Note that in the common case of <tag>classRef org="choice"
         minOccurs="0" maxOccurs="unbounded"</tag> the value of
         <att>membersOccur</att> is essentially irrelevant. (It changes
         the pattern that is used to validate elements, but not which
         sets of elements would be considered valid vs. invalid.)</p>
       </remarks>
     </attDef>
-    <attDef ident="require">
-      <gloss versionDate="2025-09-10" xml:lang="en">require</gloss>
-      <desc versionDate="2025-09-10" xml:lang="en">indicates whether one member or all members of the class are required at this point in the content model</desc>
+    <attDef ident="org">
+      <gloss versionDate="2025-09-11" xml:lang="en">organization</gloss>
+      <desc versionDate="2025-09-11" xml:lang="en">indicates whether one member or all members of the class are referenced at this point in the content model</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <defaultVal>one</defaultVal>
+      <defaultVal>choice</defaultVal>
       <valList type="closed">
-        <valItem ident="all">
-          <desc versionDate="2025-09-10" xml:lang="en">all</desc>
+        <valItem ident="group">
+          <gloss versionDate="2025-09-11" xml:lang="en">grouped</gloss>
+	  <desc versionDate="2025-09-11" xml:lang="en">all members of the class are required</desc>
         </valItem>
-        <valItem ident="one">
-          <desc versionDate="2025-09-10" xml:lang="en">one</desc>
+        <valItem ident="choice">
+          <gloss versionDate="2025-09-11" xml:lang="en">choice</gloss>
+	  <desc versionDate="2025-09-11" xml:lang="en">only one member of the class is required</desc>
         </valItem>
       </valList>
     </attDef>
     <attDef ident="expand" usage="opt" validUntil="2027-03-02">
       <desc type="deprecationInfo" versionDate="2024-04-13" xml:lang="en">
-        Since classes are meant to be an unordered data structure, the <att>expand</att> attribute will no longer be supported.
-        Class members will be considered to be in alternation. To impose a sequence it will be necessary use <gi>elementRef</gi> with 
-        references to the individual elements.
+        Since classes are meant to be an unordered data structure, the
+        <att>expand</att> attribute will no longer be supported. The
+        <att>org</att> and <att>membersOccur</att> attributes replace
+        the functionality of <att>expand</att> other than construction
+        of a sequence, and also permit class members to be
+        interleaved.
+	<!-- 
+        Class members will be considered to be either in alternation
+	or interleaved depending on the value of <att>org</att>; to
+        impose a sequence it will be necessary use <gi>elementRef</gi>
+        with references to the individual elements. The <att>membersOccur</att>
+	attribute indicates whether the members of the class are
+	optional or repeatable. -->
       </desc>
       <desc versionDate="2013-11-21" xml:lang="en">indicates how references
       to this class within a content model should be interpreted.</desc>
@@ -136,7 +148,7 @@
       <remarks versionDate="2013-11-20" xml:lang="en">
         <!-- Encoding (and whitespace) updated 2019-07-07 w/ no change to text -->
         <p>If the members of the class are <ident>a</ident>,
-        <ident>b</ident> and <ident>c</ident>, then a reference to the
+        <ident>b</ident>, and <ident>c</ident>, then a reference to the
         class within a content model is understood as being a
         reference to <code>a|b|c</code> when <att>expand</att> is
         omitted or has the value <val>alternation</val>; to
