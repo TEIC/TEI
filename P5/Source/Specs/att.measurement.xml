@@ -10,13 +10,6 @@
       régularisée ou normalisée.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos que representen una medición regularizada o normalizada.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">assegna degli attributi che rappresentano una misurazione regolarizzata o normalizzata</desc>
-  <constraintSpec ident="att-measurement-unitRef" scheme="schematron" xml:lang="en">
-    <constraint>
-      <sch:rule context="tei:*[@unitRef]">
-        <sch:report test="@unit" role="info">The @unit attribute may be unnecessary when @unitRef is present.</sch:report>
-      </sch:rule>
-    </constraint>
-  </constraintSpec>
   <attList>
     <attDef ident="unit" usage="opt">
       <gloss versionDate="2009-05-28" xml:lang="en">unit</gloss>
@@ -434,11 +427,11 @@
       </remarks>
     </attDef>
   </attList>
-  <remarks versionDate="2020-02-10" xml:lang="en">
+  <remarks versionDate="2025-09-15" xml:lang="en">
     <p>This attribute class provides a triplet of attributes that may
     be used either to regularize the values of the measurement being
     encoded, or to normalize them with respect to a standard
-    measurement system.  
+    measurement system.
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="MEASUREMENT-egXML-it"><l><!-- regularization:-->
 So weren't you gonna buy <measure quantity="0.5" unit="gal" commodity="ice cream">half 
@@ -457,6 +450,11 @@ a gallon</measure>, baby?</l></egXML>
       symbol for an SI unit (see further <ptr target="http://www.bipm.org/en/publications/si-brochure/"/>; <ptr target="http://physics.nist.gov/cuu/Units/"/>). However, encoders
       may also specify measurements using informally defined units such
       as <val>lines</val> or <val>characters</val>.</p>
+    <p>These guidelines provide no semantic basis or suggested
+      precedence when both <att>unit</att> and <att>unitRef</att> are
+      provided. For this reason simultaneous use of both is not
+      recommended unless documentation explaining the use is provided,
+      probably in an ODD customization, for interchange.</p>
   </remarks>
   <remarks versionDate="2007-06-12" xml:lang="fr">
     <p> Cette classe d'attributs fournit un ensemble de trois attributs qui peuvent être
