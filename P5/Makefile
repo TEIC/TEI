@@ -104,7 +104,7 @@ teiwebsiteguidelines:
 	@echo BUILD: make HTML version of Guidelines just for TEI web site
 	rm -rf teiwebsiteguidelines.zip
 	rm -f html-web.stamp
-	make html-web ALLLANGUAGES="en es de ja ko fr it zh-TW" GOOGLEANALYTICS=UA-4372657-1
+	make html-web ALLLANGUAGES="en es de ja ko fr it zh-TW" GOOGLEANALYTICS=true
 	(cd Guidelines-web; zip -r -q ../teiwebsiteguidelines.zip . )
 
 epub: Guidelines.epub
@@ -118,13 +118,6 @@ Guidelines.epub: check.stamp p5.xml
 epub3: check.stamp p5.xml
 	${ANT}  -f ${XSL}/epub3/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=tei -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines.epub -Dcoverimage=`pwd`/Utilities/cover.jpg
 	java -jar Utilities/epubcheck3.jar Guidelines.epub
-
-mobi:  Guidelines.mobi
-
-Guidelines.mobi: check.stamp p5.xml
-	${ANT}  -f ${XSL}/epub/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=teikindle -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines-kindle.epub -Dcoverimage=`pwd`/Utilities/cover.jpg
-	-export PATH=/usr/share/kindlegen:$$PATH ; command -v  kindlegen && kindlegen Guidelines-kindle.epub -o Guidelines.mobi
-	rm Guidelines-kindle.epub
 
 fonttest:
 	-xelatex --interaction=batchmode Utilities/fonttest
@@ -278,9 +271,7 @@ dist-doc.stamp:  check.stamp p5.xml
 	make pdf
 	@echo BUILD: make ePub and Kindle version of Guidelines
 	make epub
-	make mobi
 	cp Guidelines.pdf Guidelines.epub release/tei-p5-doc/share/doc/tei-p5-doc/en
-	-test -f Guidelines.mobi  && cp Guidelines.mobi release/tei-p5-doc/share/doc/tei-p5-doc/en
 	touch dist-doc.stamp
 
 dist-test.stamp: check.stamp p5.xml

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI P5 version 4.10.0 and Stylesheets version 7.59.0 release notes</title>
+      </titleStmt>
+      <editionStmt>
+        <edition>
+          <date when="2025-08-15">Friday, 15 August 2025</date>
+        </edition>
+      </editionStmt>
+      <publicationStmt>
+        <authority>The Text Encoding Initiative</authority>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Created retrospectively from ChangeLog and GitHub trackers</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>Release 4.10.0 is codenamed <q>The Olinguito Release</q>.
+        <!--celebrating the discovery of the olinguito in South America, announced by the Smithsonian on 15 August 2013 <ptr target="https://www.si.edu/stories/olinguito-discovery"/>. --></p>
+      <p>This release introduces new features and resolves a number of issues raised by the TEI
+        community. The majority of these changes and corrections are a consequence of feature
+        requests or bugs reported by the TEI community using the GitHub tracking system. A full list
+        of the issues resolved in the course of this release cycle may be found under the <ref
+          target="https://github.com/TEIC/TEI/milestone/20?closed=1">4.10.0 milestone</ref>. Many
+        thanks to the community contributors who reported issues, sent bug fixes, and helped with
+        the drafting that led to this release, including: GitHub user a1ix2, John Bampton, Piotr
+        Bański, Lou Burnard, Hugh Cayless, Ash Clark, Tomaž Erjavec, Jan Jokisch, David Maus, 
+        Natsuko Nakagawa, Matija Ogrin, Klaus Rettinghaus, and GitHub user rvdb.</p>
+      <p>The following changes are particularly worth highlighting in this release: 
+        <!--<list>
+          <head>New encoding features</head>
+        </list>-->
+        <list>
+          <head>Changes to content models</head>
+          <item>The <gi>facsimile</gi> element is now permitted to self-nest 
+            to represent relationships among collections of manuscripts.
+            (<ref target="https://github.com/TEIC/TEI/issues/2565">#2565</ref> and 
+            <ref target="https://github.com/TEIC/TEI/pull/2654">PR #2654</ref>).</item>
+          <item>The <gi>byline</gi> element has been added to <gi>closer</gi> 
+            (<ref target="https://github.com/TEIC/TEI/issues/2658">#2658</ref>
+            and <ref target="https://github.com/TEIC/TEI/pull/2735">PR #2735</ref>).</item>
+          <item>The content models of <gi>place</gi>, <gi>event</gi>, <gi>person</gi>, and <gi>org</gi> 
+            now include <gi>ref</gi> in addition to <gi>ptr</gi> 
+            (<ref target="https://github.com/TEIC/TEI/issues/2651">#2651</ref> and 
+            <ref target="https://github.com/TEIC/TEI/pull/2689">PR #2689</ref>).
+          </item>
+          <item>The content model of <gi>sp</gi> has changed to allow elements in <name type="class">model.stageLike</name> (which includes <gi>stage</gi> 
+            as well as <gi>camera</gi>, <gi>caption</gi>, <gi>move</gi>, <gi>sound</gi>, <gi>stage</gi>, <gi>tech</gi>, 
+            and <gi>view</gi>) to be set prior to <gi>speaker</gi> 
+            (<ref target="https://github.com/TEIC/TEI/issues/2642">#2642</ref> and <ref target="https://github.com/TEIC/TEI/pull/2698">PR #2698</ref>).</item>
+          <item>The value of the <att>rotate</att> attribute has been changed from <name type="datatype">teidata.count</name> 
+            to <name type="datatype">teidata.numeric</name> in order to permit negative and non-integer values 
+            (<ref target="https://github.com/TEIC/TEI/issues/2637">#2637</ref> 
+            and <ref target="https://github.com/TEIC/TEI/pull/2638">PR #2638</ref>).</item>
+        </list>
+        <!--<list>
+          <head>Changes to classes</head>
+         <item></item>
+        </list>-->
+        <list>
+          <head>Changes to the build process for publishing the Guidelines</head>
+          <item>With this release, the Guidelines are no longer served in the outdated and proprietary Kindle .mobi format,
+            since they can be read in the EPUB format in the Kindle application
+            (<ref target="https://github.com/TEIC/TEI/issues/2574">#2574</ref> 
+            and <ref target="https://github.com/TEIC/TEI/pull/2600">PR #2600</ref>). </item>
+          <item>We have updated the Guidelines build process
+            to apply <ref target="https://codeberg.org/SchXslt/schxslt/src/branch/main">SchXslt</ref>, 
+            which implements Schematron validation with XSLT (<ref target="https://github.com/TEIC/TEI/pull/2509">PR #2509</ref>).
+          </item>
+        </list>
+      </p>
+      <p>The following change introduced with this release could invalidate ODD customizations in
+        TEI projects. Those maintaining ODD customizations of the TEI should be aware of the
+        following change, and may need to adapt their ODD files accordingly. 
+        <list>
+          <head>ODD-breaking change and deprecation</head>
+          <item>Writers of Schematron in ODD customizations will find that Schematron assert and report tests must be
+            established within a rule with a <att>context</att> attribute. A missing context was previously deprecated with a warning, but
+            now generates an error (<ref target="https://github.com/TEIC/TEI/pull/2680">PR #2680</ref>).</item>
+        </list>
+      </p>
+      <p>
+        <list>
+          <head>Improvements of prose and examples</head>
+          <item>The <ref target="https://tei-c.org/Vault/P5/4.10.0/doc/tei-p5-doc/en/html/dedication.html">Dedication</ref> and the
+            <ref target="https://tei-c.org/Vault/P5/4.10.0/doc/tei-p5-doc/en/html/FM1.html">Preface and Acknowledgments</ref> 
+            have been significantly revised with this release. The dedication now includes
+            our founding editor of the TEI consortium and Guidelines, C. Michael Sperberg-McQueen (1954-2024), and
+            provides  <q>about</q> links for each person listed. The Preface and Acknowledgments are now updated for the first
+            time since the launch of P5 in 2007, and they now list TEI Board members who have served over the past two decades 
+            (<ref target="https://github.com/TEIC/TEI/issues/2741">#2741</ref>, <ref target="https://github.com/TEIC/TEI/issues/2284">#2284</ref>, 
+            <ref target="https://github.com/TEIC/TEI/issues/2688">#2688</ref>, and <ref target="https://github.com/TEIC/TEI/pull/2743">PR #2743</ref>).</item>
+          <item>This release provides a revision and a new example of dictionary encoding adapted from the TEI Lex-0 specification 
+            (<ref target="https://github.com/TEIC/TEI/issues/2718">#2718</ref> and <ref target="https://github.com/TEIC/TEI/pull/2746">PR #2746</ref>).</item>
+          <item>An example in Core Tags for Drama has been revised to replace <gi>p</gi> with <gi>ab</gi> as 
+            better suited to encode a passage without asserting whether the passage is either prose or verse 
+            (<ref target="https://github.com/TEIC/TEI/issues/2719">#2719</ref> and 
+            <ref target="https://github.com/TEIC/TEI/pull/2731">PR #2731</ref>).</item>
+          <item>XPath examples were corrected in Chapter 3 (<ref target="https://github.com/TEIC/TEI/issues/2690">#2690</ref>).</item>
+          <item>This release revises an existing dictionary example to help clarify the difference between
+            <att>ed</att> and <att>edRef</att> 
+            (<ref target="https://github.com/TEIC/TEI/issues/2653">#2653</ref> and 
+            <ref target="https://github.com/TEIC/TEI/pull/2730">PR #2730</ref>).</item>
+          <item>The definition of <att>ident</att> on <gi>remarks</gi> has been modified from <name type="datatype">teidata.text</name> to 
+            <name type="datatype">teidata.name</name> and its description had been revised 
+            (<ref target="https://github.com/TEIC/TEI/issues/2681">#2681</ref> 
+            and <ref target="https://github.com/TEIC/TEI/pull/2682">PR #2682</ref>).</item>
+          <item>Many element specifications have been revised to list reference locations indicating
+            where they are mentioned in the Guidelines (<ref target="https://github.com/TEIC/TEI/issues/2652">#2652</ref>
+            and <ref target="https://github.com/TEIC/TEI/pull/2722">PR #2722</ref>).</item>
+          <item>German translations have been added to glosses and descriptions of global attributes
+            (<ref target="https://github.com/TEIC/TEI/pull/2674">PR #2674</ref>).
+          </item>
+          <item>Attribute descriptions in multiple languages have been harmonised for consistency 
+            (<ref target="https://github.com/TEIC/TEI/issues/2663">#2663</ref> and 
+            <ref target="https://github.com/TEIC/TEI/pull/2694">PR #2695</ref>).</item>
+        </list>
+     
+          <list>
+          <head>Documentation</head>
+            <item>Improvements to TEI Council Working Papers (TCW) 22 and 31 (Documentation 
+              <ref target="https://github.com/TEIC/Documentation/pull/18">PR #18</ref> and
+              <ref target="https://github.com/TEIC/Documentation/pull/19">PR #19</ref>).</item>
+        </list> 
+        <list>
+          <head>Housekeeping</head>
+         <item>The encoding of <gi>list</gi> elements in the Guidelines has been revised to  
+           apply the <att>rend</att> attribute consistently for ordered lists 
+           (<ref target="https://github.com/TEIC/TEI/issues/2683">#2683</ref> and 
+           <ref target="https://github.com/TEIC/TEI/pull/2693">PR #2693</ref>).</item>
+          <item>Broken links have been repaired  (<ref target="https://github.com/TEIC/TEI/pull/2673">PR #2673</ref> and 
+            <ref target="https://github.com/TEIC/TEI/pull/2679">PR #2679</ref>).</item>
+          <item>Improvements in the JavaScript handling of pop-up notes 
+            (<ref target="https://github.com/TEIC/TEI/pull/2692">PR #2692</ref>).</item>
+        </list>
+      </p>
+     <!-- STYLESHEETS-->
+      <p>In addition, many improvements have been made to the XSLT stylesheets (which provide
+        processing of TEI ODD files for <ref target="https://romabeta.tei-c.org/">Roma</ref> and
+          <ref target="https://teigarage.tei-c.org/">TEIGarage</ref> as well as other TEI
+        conversions). The Stylesheets are maintained separately from the Guidelines at <ref
+          target="https://github.com/TEIC/Stylesheets">https://github.com/TEIC/Stylesheets</ref>. A
+        full list of the issues resolved in the course of this release cycle may be found under the
+        <ref target="https://github.com/TEIC/Stylesheets/milestone/18?closed=1">7.59.0
+          milestone</ref>.</p>
+
+      <p>Highlights of this release follow.<list>
+          <item>Repairs to teitohtml.xsl to ensure the <att>type</att> of <gi>ab</gi> 
+            is output as the value of an HTML <att>class</att> 
+            (Stylesheets <ref target="https://github.com/TEIC/Stylesheets/issues/723">723</ref> and
+            <ref target="https://github.com/TEIC/Stylesheets/pull/724">PR #724</ref>).</item>
+          <item>The transformtei bin file can now process filenames with spaces (Stylesheets 
+            <ref target="https://github.com/TEIC/Stylesheets/pull/738">PR #738</ref>).</item>
+          <item>Improved processing of Schematron in ODD processing 
+            (Stylesheets <ref target="https://github.com/TEIC/Stylesheets/pull/731">PR #731</ref>,
+            <ref target="https://github.com/TEIC/Stylesheets/issues/749">#749</ref>, 
+            <ref target="https://github.com/TEIC/Stylesheets/issues/750">#750</ref>,
+            <ref target="https://github.com/TEIC/Stylesheets/pull/751">PR #751</ref>, and
+            <ref target="https://github.com/TEIC/Stylesheets/pull/762">PR #762</ref>). </item>
+          <item>Repairs of broken links pointing to information about deprecation warnings 
+            (Stylesheets <ref target="https://github.com/TEIC/Stylesheets/issues/694">#694</ref> and
+            <ref target="https://github.com/TEIC/Stylesheets/pull/747">PR #747</ref>).</item>
+          <item>Improvements in the Stylesheets test suite (Stylesheets 
+            <ref target="https://github.com/TEIC/Stylesheets/issues/728">#728</ref>,
+            <ref target="https://github.com/TEIC/Stylesheets/issues/755">#755</ref>, and 
+            <ref target="https://github.com/TEIC/Stylesheets/pull/756">PR #756</ref>).</item>
+          <item>Emendations of broken links in the Stylesheets README (Stylesheets 
+            <ref target="https://github.com/TEIC/Stylesheets/issues/703">#703</ref> and 
+            <ref target="https://github.com/TEIC/Stylesheets/pull/710">PR #710</ref>)</item>
+          <item>Modification of odd.css to modify the styling of new attribute lists in HTML ODD documentation
+            (Stylesheets <ref target="https://github.com/TEIC/Stylesheets/issues/657">#657</ref> and
+            <ref target="https://github.com/TEIC/Stylesheets/pull/682">PR #682</ref>).
+          </item>
+        </list>
+      </p>
+    </body>
+  </text>
+</TEI>

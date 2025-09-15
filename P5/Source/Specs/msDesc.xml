@@ -47,13 +47,13 @@
       </alternate>
     </sequence>
   </content>
-  <constraintSpec scheme="schematron" ident="one_ms_singleton_max">
+  <constraintSpec scheme="schematron" ident="one_ms_singleton_max" xml:lang="en">
     <constraint>
       <sch:rule context="tei:msContents|tei:physDesc|tei:history|tei:additional">
         <!-- Note: This rule applies to <msContents>, <physDesc>,
              <history>, and <additional> wherever they occur. Luckily
              they are only allowed in places where they are
-             constrained to 0 or 1 occurence. If that changes someday,
+             constrained to 0 or 1 occurrence. If that changes someday,
              this constraint may will likely need to be updated,
              too. -->
         <!-- Also worth noting that
@@ -62,7 +62,7 @@
              concrete rules in the individual <elementSpec>s; and
              b) I did not test for the existence of "../*[name(.) eq
              $gi][2]" because then an error would be generated for
-             each of the multiple occurences of $gi. -->
+             each of the multiple occurrences of $gi. -->
         <sch:let name="gi" value="name(.)"/>
         <sch:report test="preceding-sibling::*[ name(.) eq $gi ]
                           and
@@ -73,7 +73,7 @@
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="MSDESC-egXML-cr">
       <msDesc>
         <msIdentifier>
           <settlement>Oxford</settlement>
@@ -100,7 +100,7 @@
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-BnF-Reliures">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="MSDESC-egXML-cc" source="#fr-ex-BnF-Reliures">
       <msDesc>
         <msIdentifier>
           <country>France</country>
@@ -216,7 +216,7 @@
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="MSDESC-egXML-hu">
       <msDesc>
         <msIdentifier>
           <settlement>台北</settlement>

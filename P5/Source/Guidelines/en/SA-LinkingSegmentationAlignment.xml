@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="SA" n="14" xmlns:xi="http://www.w3.org/2001/XInclude">
+<div xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" type="div1" xml:id="SA" n="14">
   <head>Linking, Segmentation, and Alignment</head>
   
 <p>This chapter discusses a number of ways in which encoders may
@@ -45,8 +45,7 @@ provides for the following common requirements:
     with interpretations or analyses of their significance (section
     <ptr target="#SAAN"/>);</item>
     <item>to group together elements used to provide stand-off
-    annotation, including contextual information (section <ptr
-    target="#SASOstdf"/>).</item>
+    annotation, including contextual information (section <ptr target="#SASOstdf"/>).</item>
   </list></p>
 <p>These facilities all use the same set of techniques based on the
 W3C XPointer framework (<ptr target="#XPTRFMWK"/>) This provides a
@@ -120,11 +119,11 @@ the value of the <att>xml:id</att> attribute of the other. What
 the <gi>link</gi> element accomplishes is the handling of double
 connection by means of a single element. Thus, in the following
 encoding:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><ptr xml:id="sa-p1" target="#sa-p2"/><ptr xml:id="sa-p2" target="#sa-p1"/></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAPTL-egXML-zk" xml:lang="und" source="#UND"><ptr xml:id="sa-p1" target="#sa-p2"/><ptr xml:id="sa-p2" target="#sa-p1"/></egXML>
 <val>sa-p1</val> points to <val>sa-p2</val>, and <val>sa-p2</val>
 points to <val>sa-p1</val>. This is logically
 equivalent to the more compact encoding:
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><link target="#sa-p1 #sa-p2"/></egXML></p>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAPTL-egXML-ov" xml:lang="und" source="#UND"><link target="#sa-p1 #sa-p2"/></egXML></p>
 <p>As noted elsewhere, the <att>target</att> <!-- and
 <att>targets</att> attributes--> attribute may take as value one or
 more URI reference. In the simplest case, each such reference will
@@ -158,13 +157,13 @@ Allusions to the most excellent of the Moderns.</q> In the
 source text, the text of the poem shares the page with two sets
 of notes, one headed <q>Remarks</q> and the other
 <q>Imitations</q>.</note>
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul" source="#SAPTEG-eg-3"><l>(Diff'rent our parties, but with equal grace</l>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAPTEG-egXML-vw" xml:lang="mul" source="#SAPTEG-eg-3"><l>(Diff'rent our parties, but with equal grace</l>
 <l>The Goddess smiles on Whig and Tory race,</l>
 <l><note type="imitation" place="bottom">    
-    <bibl>Virg. &#xC6;n. 10.</bibl>
+    <bibl>Virg. Æn. 10.</bibl>
     <quote>
 <l>Tros Rutulusve fuat; nullo discrimine habebo.</l>
-<l>&#x2014;&#x2014; Rex Jupiter omnibus idem.</l>
+<l>—— Rex Jupiter omnibus idem.</l>
     </quote>
   </note>'Tis the same rope at sev'ral ends they twist,</l>
 <l>To Dulness, Ridpath is as dear as Mist)</l></egXML>
@@ -184,16 +183,16 @@ that.</p>
 <p>Firstly, a <gi>ptr</gi> element might be placed at an
 appropriate point within the text to link it with the
 annotation:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul" source="#SAPTEG-eg-3"><l>(Diff'rent our parties, but with equal grace</l>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAPTEG-egXML-ft" xml:lang="mul" source="#SAPTEG-eg-3"><l>(Diff'rent our parties, but with equal grace</l>
 <l>The Goddess smiles on Whig and Tory race,
    <ptr rend="unmarked" target="#note3.284"/></l>
 <l>'Tis the same rope at sev'ral ends they twist,</l>
 <l>To Dulness, Ridpath is as dear as Mist)</l>
 <note xml:id="note3.284" type="imitation" place="bottom">    
-   <bibl>Virg. &#xC6;n. 10.</bibl>
+   <bibl>Virg. Æn. 10.</bibl>
    <quote>
 <l>Tros Rutulusve fuat; nullo discrimine habebo.</l>
-<l>&#x2014;&#x2014; Rex Jupiter omnibus idem.</l>
+<l>—— Rex Jupiter omnibus idem.</l>
    </quote>
 </note></egXML>
 <!-- Pope, Dunciad (1729) III.284 -->
@@ -206,7 +205,7 @@ in the text to signal the existence of the annotation, the
 <gi>note</gi> element can be used to point at its associated
 text, provided that an <att>xml:id</att> attribute has been
 supplied for the associated text:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SAPTEG-eg-3"><l xml:id="L3.283">(Diff'rent our parties, but with equal grace</l>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAPTEG-egXML-rs" source="#SAPTEG-eg-3"><l xml:id="L3.283">(Diff'rent our parties, but with equal grace</l>
 <l xml:id="L3.284">The Goddess smiles on Whig and Tory race,</l>
 <l xml:id="L3.285">'Tis the same rope at sev'ral ends they twist,</l>
 <l xml:id="L3.286">To Dulness, Ridpath is as dear as Mist)</l>
@@ -219,17 +218,17 @@ annotating; this could be encoded using a <gi>ref</gi>
 element, which bears a <att>target</att> attribute of its own
 and contains a (slightly misquoted) extract from the text marked
 as a <gi>quote</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul" source="#SAPTEG-eg-3"><note type="imitation" place="bottom" target="#L3.284">    
-   <ref rend="sc" target="#L3.284">Verse 283&#x2013;84.
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAPTEG-egXML-vt" xml:lang="mul" source="#SAPTEG-eg-3"><note type="imitation" place="bottom" target="#L3.284">    
+   <ref rend="sc" target="#L3.284">Verse 283–84.
  <quote>
-   <l>&#x2014;&#x2014;. With equal grace</l>
+   <l>——. With equal grace</l>
    <l>Our Goddess smiles on Whig and Tory race.</l>
 </quote>
    </ref>
-   <bibl>Virg. &#xC6;n. 10.</bibl>
+   <bibl>Virg. Æn. 10.</bibl>
    <quote>    
 <l>Tros Rutulusve fuat; nullo discrimine habebo.</l>
-<l>&#x2014;&#x2014; Rex Jupiter omnibus idem. </l>
+<l>—— Rex Jupiter omnibus idem. </l>
    </quote>
 </note></egXML>
 <!-- Pope, Dunciad (1729) III.284 --></p>
@@ -248,17 +247,17 @@ well as for the verse lines, and use a <gi>link</gi> element to
 associate the two. Note that the <gi>ptr</gi> element and the
 <att>target</att> attribute on the <gi>note</gi> may now be dispensed
 with:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul" source="#SAPTEG-eg-3">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAPTEG-egXML-sv" xml:lang="mul" source="#SAPTEG-eg-3">
 <note xml:id="n3.284" type="imitation" place="bottom">    
-   <ref rend="sc" target="#L3.284">Verse 283&#x2013;84.
+   <ref rend="sc" target="#L3.284">Verse 283–84.
 <quote>
-   <l>&#x2014;&#x2014;. With equal grace</l>
+   <l>——. With equal grace</l>
    <l>Our Goddess smiles on Whig and Tory race.</l>
 </quote></ref>
-   <bibl>Virg. &#xC6;n. 10.</bibl>
+   <bibl>Virg. Æn. 10.</bibl>
    <quote>
 <l>Tros Rutulusve fuat; nullo discrimine habebo.</l>
-<l>&#x2014;&#x2014; Rex Jupiter omnibus idem. </l>
+<l>—— Rex Jupiter omnibus idem. </l>
    </quote>
 </note>
 <link target="#n3.284 #L3.284"/></egXML>
@@ -268,10 +267,10 @@ here bears the identifier of the note followed by that of the
 verse line.  We could also allocate an
 identifier to the reference within the note and encode the
 association between it and the verse line in the same way:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SAPTEG-eg-3"><note type="imitation" place="bottom">    
-   <ref rend="sc" xml:id="r3.284" target="#L3.284">Verse 283&#x2013;84.
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAPTEG-egXML-wf" source="#SAPTEG-eg-3"><note type="imitation" place="bottom">    
+   <ref rend="sc" xml:id="r3.284" target="#L3.284">Verse 283–84.
 <quote>
-   <l>&#x2014;&#x2014;. With equal grace</l>
+   <l>——. With equal grace</l>
    <l>Our Goddess smiles on Whig and Tory race.</l>
 </quote></ref>
    <!-- ... -->
@@ -281,7 +280,7 @@ association between it and the verse line in the same way:
 <!-- Pope, Dunciad (1729) III.284 -->
 Indeed, the two <gi>link</gi>s could be combined into one, as
 follows:
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><link target="#n3.284 #r3.284 #L3.284"/></egXML></p>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAPTEG-egXML-gb" xml:lang="und" source="#UND"><link target="#n3.284 #r3.284 #L3.284"/></egXML></p>
     </div>
     <div type="div3" xml:id="SAPTLG">
 <head>Groups of Links</head>
@@ -320,7 +319,7 @@ To continue our previous example, this text contains many other
 notes of a kind similar to the one shown above. Here are a few
 more of the lines to which annotations have to be attached,
 followed by the annotations themselves:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul"><l xml:id="L2.79">A place there is, betwixt earth, air and seas</l>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAPTLG-egXML-dv" xml:lang="mul"><l xml:id="L2.79">A place there is, betwixt earth, air and seas</l>
 <l xml:id="L2.80">Where from Ambrosia, Jove retires for ease.</l>
 <!-- ... -->
 <l xml:id="L2.88">Sign'd with that Ichor which from Gods distills.</l>
@@ -329,7 +328,7 @@ followed by the annotations themselves:
    <bibl>Ovid Met. 12.</bibl>
    <quote xml:lang="la">  
 <l>Orbe locus media est, inter terrasq; fretumq;</l>
-<l>C&#x153;lestesq; plagas &#x2014;</l>
+<l>Cœlestesq; plagas —</l>
    </quote>
 </note>
 <note xml:id="n2.88" place="bottom" anchored="false">
@@ -339,7 +338,7 @@ To avoid having
 to repeat the specification of <att>type</att> as <val>imitation</val> on each <gi>note</gi>,
 we may specify it once for all on a <gi>linkGrp</gi> element
 containing all links of this type.
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAPTLG-egXML-fs" xml:lang="und" source="#UND">
 <linkGrp type="imitation">
    <link target="#n2.79 #L2.79"/>
    <link target="#n2.88 #L2.88"/>
@@ -357,7 +356,7 @@ have as its value the identifiers of the <gi>body</gi> and the
 <gi>back</gi>, to enable an application to verify that the link
 targets are in fact contained by appropriate elements, or to
 limit its search space:
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAPTLG-egXML-xp" xml:lang="und" source="#UND">
   <!-- ... -->
   <linkGrp type="imitation" domains="#dunciad #dunnotes">
     <link target="#n2.79 #L2.79"/>
@@ -390,7 +389,7 @@ example, we might think of the note as containing the <term rend="noindex">sourc
 as containing the <term rend="noindex">goal</term> of the
 imitation. Accordingly, we can specify the <gi>linkGrp</gi> in
 the preceding example thus:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><linkGrp type="imitation" domains="#dunciad #dunnotes" targFunc="source goal">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAPTLG-egXML-dw" source="#UND"><linkGrp type="imitation" domains="#dunciad #dunnotes" targFunc="source goal">
    <link target="#n2.79 #L2.79"/>
    <link target="#n2.88 #L2.88"/>
    <!-- ... -->
@@ -420,7 +419,7 @@ using for example the <gi>lg</gi> element defined in section <ptr target="#COVE"
 element discussed in section <ptr target="#SAAG"/>.</p>
 <p>A third possibility would be to use an
 <soCalled>intermediate pointer</soCalled> as follows:
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAPTIP-egXML-bi" xml:lang="und" source="#UND">
 <ptr xml:id="L3.283-284" target="#L3.283 #L3.284"/></egXML>
 When the <att>target</att> attribute of a <gi>ptr</gi> or
 <gi>ref</gi> element specifies more than one element, the
@@ -430,7 +429,7 @@ is however the task of a processing application, and cannot be
 defined simply by the markup). The <att>xml:id</att> attribute
 of the <gi>ptr</gi> then provides an identifier which can be linked to the
 <gi>note</gi> and <gi>ref</gi> elements:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><link evaluate="all" target="#n3.284 #r3.284 #L3.283-284"/></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAPTIP-egXML-de" source="#UND"><link evaluate="all" target="#n3.284 #r3.284 #L3.283-284"/></egXML>
 <!-- Pope, Dunciad (1729) III.284 --></p>
 <p>The <val>all</val> value of <att>evaluate</att> is used on the
 <gi>link</gi> element to specify that any pointer encountered as
@@ -498,7 +497,7 @@ by concatenation of path segments, beginning at the top of the
 hierarchy and proceeding down to the context node.</p>
 <p>The following example demonstrates an absolute URI reference
 that points to a remote document: 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">The current base URI in force is as defined in the
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAUR-egXML-xr">The current base URI in force is as defined in the
  W3C <ref target="https://www.w3.org/TR/xmlbase/">XML
  Base</ref> recommendation.</egXML></p>
 <p>This example points explicitly to a location on the Web,
@@ -506,11 +505,11 @@ accessible via HTTP<!--, the web Protocol-->. Suppose however that we wish
 to access a document stored locally in a file. Again we will
 supply an absolute URI reference, but this time using a
 different protocol:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">This Debian package is distributed under the terms
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAUR-egXML-rl">This Debian package is distributed under the terms
  of the <ref target="file:///usr/share/common-licenses/GPL-2">GNU General Public License</ref>.</egXML></p>
 <p>In the  following example, we use a relative URI reference
 to point to a local document: 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><figure rend="float fullpage">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAUR-egXML-px"><figure rend="float fullpage">
   <graphic url="Images/compic.png"/>
   <figDesc>The figure shows the page from the <title>Orbis
   pictus</title> of Comenius which is discussed in the text.</figDesc>
@@ -527,7 +526,7 @@ document.
 URI by setting a new value for <att>xml:base</att>. The resource
 required is then identified by means of a relative URI:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="chap" xml:base="http://classics.mit.edu/">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAUR-egXML-dm"><div type="chap" xml:base="http://classics.mit.edu/">
   <head>On Ancient Persian Manners</head>
   <p>In the very first story of <ref target="Sadi/gulistan.2.i.html"><title>The Gulistan of
   Sa'di</title></ref>,
@@ -547,7 +546,7 @@ flexible and consistent method for creating shorthand links.
 <p>A <term>shorthand pointer</term>, in which the URI consists only of
 <code>#</code> followed by the value of an <att>xml:id</att> acts as a
 pointer to the element in the current document with that <att>xml:id</att>, 
-as in the following example.  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SA-eg-01"><div type="section" xml:id="sect106"><!-- ... --></div>
+as in the following example.  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SABN-egXML-gn" source="#SA-eg-01"><div type="section" xml:id="sect106"><!-- ... --></div>
 <div type="section" n="107" xml:id="sect107">
   <head>Limitations on exclusive rights: Fair use</head>
   <p>Notwithstanding the provisions of
@@ -559,7 +558,7 @@ as in the following example.  <egXML xmlns="http://www.tei-c.org/ns/Examples" so
   scholarship, or research, is not an infringement of copyright.
   In determining whether the use made of a work in any particular
   case is a fair use the factors to be considered shall
-  include &#x2014;&#xA0;
+  include — 
   <list rend="bulleted">
     <item n="(1)">the purpose and character of the use, including
     whether such use is of a commercial nature or is for nonprofit
@@ -620,14 +619,14 @@ chapter and elsewhere in these Guidelines. </p>
       
       <p>If you want to link a <gi>name</gi> in the <ident type="file">novel.xml</ident> file to a <gi>person</gi> in the <ident type="file">personography.xml</ident> file, the link will look like this:
         
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAPU-egXML-oi">
           <name ref="../../references/people/personography.xml#fred">Fred</name>
         </egXML>
         
         If there are many names to tag in a single paragraph, the XML encoding will be congested, and such lengthy links are prone to typographical error. In addition, if the project organization is changed, every relative link will have to be found and altered.</p>
       
       <p>One way to deal with this is to use what is often referred to as a "magic token". You could make such links using the <att>key</att> attribute:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAPU-egXML-xj">
           <name key="fred">Fred</name>
         </egXML>
         
@@ -635,7 +634,7 @@ chapter and elsewhere in these Guidelines. </p>
       
       <p>A more robust alternative is to use a <term>private URI scheme</term>. This is a method of constructing a simple, key-like token which functions as a <ident type="datatype">teidata.pointer</ident>, and can therefore be used as the value of any attribute which has that datatype, such as <att>ref</att> and <att>target</att>. Such a scheme consists of a prefix with a colon, and then a value. You might, for example, use the prefix <val>psn</val> (for "person"), and structure your name tags like this:
         
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAPU-egXML-da">
           <name ref="psn:fred">Fred</name>
         </egXML>
         
@@ -652,7 +651,7 @@ chapter and elsewhere in these Guidelines. </p>
         
         <p>This is how you might document a private URI scheme using the <val>psn:</val> prefix:
         
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAPU-egXML-vd">
           <listPrefixDef>
             <prefixDef ident="psn" matchPattern="([a-z]+)" replacementPattern="../../references/people/personography.xml#$1">
               <p>
@@ -670,7 +669,7 @@ chapter and elsewhere in these Guidelines. </p>
       
       <p>For any given prefix, it may be useful to supply more than one expansion. For instance, in addition to pointing at the <gi>person</gi> element in the personography file, it might also be useful to point to an external source which is available on the network, representing the same information in a different way. So there might be a second <gi>prefixDef</gi> like this:
         
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAPU-egXML-mu">
           <prefixDef ident="psn" matchPattern="([a-z]+)" replacementPattern="http://www.example.com/personography.html#$1">
             <p>
               Private URIs with the prefix "psn" can be converted to point 
@@ -829,8 +828,7 @@ scheme.</p>
   scheme because they represent extracted values rather than locations in the source
   document. Because the schemes below involve starting at a node and navigating from there,
   and because attribute nodes have no intrinsic order, XPath expressions that address
-  attribute nodes should be avoided in schemes other than <name type="xpscheme"
-    >xpath()</name>. </p>
+  attribute nodes should be avoided in schemes other than <name type="xpscheme">xpath()</name>. </p>
 <p>The example below, and all subsequent examples in this section refer 
 to the following TEI fragment:
 <!-- Ostrakon from Trimithis (O.Trim 1, 1)  http://papyri.info/ddbdp/o.trim;1;1 -->
@@ -847,7 +845,7 @@ to the following TEI fragment:
 </p>
 <p>A TEI Pointer that referenced the <gi>reg</gi> element in the 
 <code>choice</code> in line 1 of the example might look like:
-<lb/><code>#xpath(//lb[@n='1']/following-sibling::choice[1]/reg)</code>. 
+<lb/><code><![CDATA[#xpath(//lb[@n='1']/following-sibling::choice[1]/reg)]]></code>. 
   Note that XPath values must be assumed to start from the document root. They cannot be relative 
   to the element bearing the attribute that uses the pointer because TEI Pointers are URIs. Care
   should be taken to ensure that XPaths used in TEI Pointers match only a single node, unless
@@ -882,10 +880,10 @@ which is either an XPATH as defined above or an
 IDREF, the value of an <att>xml:id</att>
 occurring in the document addressed by the base URI in effect
 for the pointer.</p>
-<p>Example: the pointer <code>#left(//supplied[1])</code>
+<p>Example: the pointer <code><![CDATA[#left(//supplied[1])]]></code>
 indicates the point between the first <code>lb</code> and the first
 <code>supplied</code> in the <ref target="#SATSXP-ex">example</ref> above.</p>
-<p>Example: <code>#left(//gap[1])</code> indicates the point immediately before
+<p>Example: <code><![CDATA[#left(//gap[1])]]></code> indicates the point immediately before
 the first <code>gap</code> element in line two and the string <code>si</code>.</p>
 <p>Example: <code>#left(line1)</code> indicates the point immediately before
 the <tag>lb n="1"</tag> element.</p></div>
@@ -895,7 +893,7 @@ the <tag>lb n="1"</tag> element.</p></div>
   <p><code>Point right( IDREF | XPATH )</code></p>
 <p>The <name type="xpscheme">right()</name> scheme locates the
 point immediately following the node addressed by its argument.</p>
-<p>Example: the pointer <code>#right(//lb[@n='3'])</code> 
+<p>Example: the pointer <code><![CDATA[#right(//lb[@n='3'])]]></code> 
 indicates the point between the third <code>lb</code> and the 
 <code><![CDATA[<unclear>s</unclear>]]></code> element
 in the <ref target="#SATSXP-ex">example</ref>.</p>
@@ -913,7 +911,7 @@ position immediately before the first character in either the first
 text node descendant of the node addressed in the first parameter or the 
 first following text node, if the addressed element contains 
 no text node descendants.</p>
-<p>Example: <code>#string-index(//lb[@n='2'],1)</code> indicates the point
+<p>Example: <code><![CDATA[#string-index(//lb[@n='2'],1)]]></code> indicates the point
 between the <q>s</q> and the <q>i</q> in the word <q>si</q> in line 2.</p>
 <p><hi rend="bold">Note</hi>: The OFFSET parameter (and similarly the 
 LENGTH parameter found below in the <name type="xpscheme">string-range()</name>
@@ -922,8 +920,8 @@ depend on the Normalization Form in use (see
 <ref target="https://unicode.org/reports/tr15/">UNICODE NORMALIZATION 
 FORMS</ref>). A letter followed by a combining diacritic counts as two 
 characters, but the same diacritic precombined with a letter would count 
-as a single character. Compare, for example, &#xE9; (U+0060 
-followed by U+0301) and &#xE9; (>U+00E9). These are 
+as a single character. Compare, for example, é (U+0060 
+followed by U+0301) and é (&gt;U+00E9). These are 
 equivalent, and a conversion between Normalization Forms C and D will 
 transform one into the other. This specification does not mandate a 
 particular Normalization Form (see <ptr target="#D4-46-2"/>), but 
@@ -934,7 +932,7 @@ counting.</p>
 
 <div type="div4" xml:id="SATSRN">
 <head>range()</head>
-  <p><code>Sequence range( POINTER, POINTER[, POINTER, POINTER ...])</code></p>
+  <p><code><![CDATA[Sequence range( POINTER, POINTER[, POINTER, POINTER ...])]]></code></p>
 <p>The <name type="xpscheme">range()</name> scheme takes as parameters one 
 or more pairs of POINTERs, which are each members of the set IDREF,
 XPATH, <name type="xpscheme">left()</name>, 
@@ -951,19 +949,19 @@ then that element is not part of the sequence.</p>
 non-contiguous nodes. For example, a range() might select text beginning 
 before an <gi>app</gi>, encompassing the content of a single <gi>rdg</gi> 
 and continuing after the <gi>app</gi>.</p>
-<p>Example: <code>#range(left(//lb[@n='3']),left(//lb[@n='4']))</code> indicates 
+<p>Example: <code><![CDATA[#range(left(//lb[@n='3']),left(//lb[@n='4']))]]></code> indicates 
 the whole of <ref target="#SATSXP-ex">line 3</ref> from the 
 <code><![CDATA[<lb n="3"/>]]></code> to the point right before the 
 following <code><![CDATA[<lb n="4"/>]]></code>.</p>
-<p>Example: <code>#range(right(//lb[@n='3']),string-index(//lb[@n='3'],15))</code>
+<p>Example: <code><![CDATA[#range(right(//lb[@n='3']),string-index(//lb[@n='3'],15))]]></code>
   indicates the sequence <code><![CDATA[<unclear>s</unclear>emp<unclear>er</unclear> in mente]]></code> (an element, a text node, another element, and a partial text node).</p>
-<p>Example: <code>#range(string-index(//lb[@n='3'],7),string-index(//lb[@n='3'],10),string-index(//lb[@n='3'],15),string-index(//lb[@n='3'],21))</code> indicates
+<p>Example: <code><![CDATA[#range(string-index(//lb[@n='3'],7),string-index(//lb[@n='3'],10),string-index(//lb[@n='3'],15),string-index(//lb[@n='3'],21))]]></code> indicates
 the non-contiguous sequence <q>in mentem</q>.</p>
 </div>
 
 <div type="div4" xml:id="SATSSR">
 <head>string-range()</head>
-  <p><code>Sequence string-range(IDREF | XPATH, OFFSET, LENGTH[, OFFSET, LENGTH ...])</code></p>
+  <p><code><![CDATA[Sequence string-range(IDREF | XPATH, OFFSET, LENGTH[, OFFSET, LENGTH ...])]]></code></p>
 <p>The string-range() scheme
 locates a sequence based on character positions in a text stream relative 
 to the node identified by the first parameter. The location of the 
@@ -982,19 +980,19 @@ invisible to it. For example, if an empty tag like <gi>lb</gi> is
 encountered while processing a string-range(), it will be included in
 the resulting sequence, but the LENGTH count will not increment when
 it is captured.</p>
-<p>Example: <code>#string-range(//lb[@n='5'],0,27)</code> indicates 
+<p>Example: <code><![CDATA[#string-range(//lb[@n='5'],0,27)]]></code> indicates 
 the whole of <ref target="#SATSXP-ex">line 5</ref> from the text immediately 
 following the <code>lb</code> to the point right before the closing 
 <code>ab</code> tag.</p>
-<p>Example: <code>#string-range(//lb[@n='3'],7,8)</code>
+<p>Example: <code><![CDATA[#string-range(//lb[@n='3'],7,8)]]></code>
 indicates the sequence <q>in mente</q>.</p>
-<p>Example: <code>#string-range(//lb[@n='3'],7,3,15,6)</code> indicates
+<p>Example: <code><![CDATA[#string-range(//lb[@n='3'],7,3,15,6)]]></code> indicates
 the non-contiguous sequence <q>in mentem</q>.</p>
 </div>
   
 <div type="div4" xml:id="SATSMA">
 <head>match()</head>
-  <p><code>Sequence match(IDREF | XPATH, 'REGEX' [, INDEX])</code></p>
+  <p><code><![CDATA[Sequence match(IDREF | XPATH, 'REGEX' [, INDEX])]]></code></p>
 <p>The match scheme locates a sequence based on matching the REGEX parameter
 against a text stream relative to the reference node identified by the first 
 parameter. REGEX is a regular expression as defined by 
@@ -1022,10 +1020,10 @@ first match in the text stream will be used to resolve the <code>match()</code>.
 <p>Like <code>string-range()</code>, <code>match()</code> may capture elements 
 in the indicated sequence, even though they are ignored for purposes of evaluating 
 the match.</p>
-<p>Example: <code>#match(//lb[@n='5'],'opto.*valeas')</code> indicates the sequence
+<p>Example: <code><![CDATA[#match(//lb[@n='5'],'opto.*valeas')]]></code> indicates the sequence
 <code><![CDATA[opto u<unclear>t</unclear> bene valeas]]></code> in 
 <ref target="#SATSXP-ex">line 5</ref>.</p>
-<p>Example: <code>#match(//lb[@n='3'],'semper')</code> would indicate the 
+<p>Example: <code><![CDATA[#match(//lb[@n='3'],'semper')]]></code> would indicate the 
 word <q>semper</q>, but would not capture the <code>unclear</code> elements
 in <code><![CDATA[<unclear>s</unclear>emp<unclear>er</unclear>]]></code>, just 
 their text children.</p>
@@ -1062,10 +1060,10 @@ mapping between (for example) <q>the book called
 corresponds with it. This is provided by the  <gi>refsDecl</gi> element <!--(which is a member of class
 <ident type="class">att.declaring</ident>)--> in the TEI header,
 which contains an algorithm for translating a canonical reference string
-(like <val>Matt 5:7</val>) into a URI such as <code>#xpath(//div[@n='Matt']/div[5]/div[7])</code>. The
+(like <val>Matt 5:7</val>) into a URI such as <code><![CDATA[#xpath(//div[@n='Matt']/div[5]/div[7])]]></code>. The
 <gi>refsDecl</gi> element is described in section <ptr target="#HD54"/>; the following example is discussed in more
   detail below in section <ptr target="#SACRWE"/>. An alternative and less verbose method is described in section <ptr target="#SACRCS"/>.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl xml:id="biblical">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SACR-egXML-na"><refsDecl xml:id="biblical">
    <cRefPattern matchPattern="(.+) (.+):(.+)" replacementPattern="#xpath(//div[@n='$1']/div[@n='$2']/div[@n='$3]')">
     <p>This pointer pattern extracts and references the <q>book,</q>
 <q>chapter,</q> and <q>verse</q> parts of a biblical reference.</p>
@@ -1145,25 +1143,25 @@ to <code>$</code> during processing.</p>
   substring would be <q>Matt</q>, the second <q>5</q>, and the
   third <q>7</q>. The application would then apply these
   substrings to the pattern
-  <code>#xpath(//div[@n='$1']/div[$2]/div[$3])</code>, producing
-  <code>#xpath(//div[@n='Matt']/div[5]/div[7])</code>.
+  <code><![CDATA[#xpath(//div[@n='$1']/div[$2]/div[$3])]]></code>, producing
+  <code><![CDATA[#xpath(//div[@n='Matt']/div[5]/div[7])]]></code>.
   </p>
   <p>If, however, the input string had been <q>Matt 5</q>, the
   first regular expression would not have matched. The
-  application would have then tried the second, <code>(.+)
-  (.+)</code>, producing a successful match, and the matched
+  application would have then tried the second, <code><![CDATA[(.+)
+  (.+)]]></code>, producing a successful match, and the matched
   substrings <q>Matt</q> and <q>5</q>. It would then have
   substituted those matched substrings into the pattern
-  <code>#xpath(//div[@n='$1']/div[$2])</code> to produce a
+  <code><![CDATA[#xpath(//div[@n='$1']/div[$2])]]></code> to produce a
   fragment identifier indicating the referenced element.</p>
   <p>If the input string had been <q>Matt</q>, neither the first
     nor the second regular expressions would have successfully
     matched. The application would have then tried the third,
     <code>(.+)</code>, producing the matched substring <q>Matt</q>,
     and the URI Reference
-    <code>#xpath(//div[@n='Matt'])</code>.</p>
+    <code><![CDATA[#xpath(//div[@n='Matt'])]]></code>.</p>
   <p>a <gi>cRefPattern</gi> should not reference more matched substrings. For example:
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><cRefPattern matchPattern="(.+) (.+):(.+)" replacementPattern="//div[@n='$1']/div[$2]/div[$3]/p[$4]"/></egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SACRWE-egXML-gp" xml:lang="und" source="#UND"><cRefPattern matchPattern="(.+) (.+):(.+)" replacementPattern="//div[@n='$1']/div[$2]/div[$3]/p[$4]"/></egXML>
     is faulty, since only three matched
     substrings would have been produced, but a fourth (<code>$4</code>) was
     referenced.</p>
@@ -1173,7 +1171,7 @@ to <code>$</code> during processing.</p>
   <p>In the above example, the value of <att>cRef</att> was used
   to generate a Fragment Identifier. An absolute URI could be generated
   directly, as in the following example.
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SACRex-egXML-cd" xml:lang="und">
     <refsDecl xml:id="USC">
 <cRefPattern matchPattern="([0-9][0-9])\s*U\.?S\.?C\.?\s*[Cc](h(\.|ap(ter|\.)?)?)?\s*([1-9][0-9]*)" replacementPattern="http://uscode.house.gov/download/pls/$1C$5.txt">
   <p>Matches most standard references to particular
@@ -1216,7 +1214,7 @@ to <code>$</code> during processing.</p>
            describes a single step in a reference, such as <q>Matt</q>, and may nest to handle multi-part references.
         </p>
         <p>The equivalent structure to the set of <gi>cRefPattern</gi>s in <ptr target="#SACRWE"/> would be:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SACRCS-egXML-kb">
           <refsDecl xml:id="biblical2">
             <citeStructure unit="book" match="//body/div" use="@n">
               <citeStructure unit="chapter" match="div" use="@n" delim=" ">
@@ -1245,8 +1243,8 @@ to <code>$</code> during processing.</p>
               context of the previously matched node, if any. Start with the outer <gi>citeStructure</gi> 
               and move to the next child <tag>citeStructure</tag> for each step in the sequence. For 
               example, for the first <tag>citeStructure</tag>, we could construct an XPath 
-              <code>//div[@n='Matt']</code>. The full XPath after the reference <val>Matt 5:7</val> is resolved will be 
-              <code>//div[@n='Matt']/div[@n='5']/div[@n='7']</code>.</item>
+              <code><![CDATA[//div[@n='Matt']]]></code>. The full XPath after the reference <val>Matt 5:7</val> is resolved will be 
+              <code><![CDATA[//div[@n='Matt']/div[@n='5']/div[@n='7']]]></code>.</item>
           </list>
           One advantage <gi>citeStructure</gi> has is that it can be used to <emph>generate</emph> canonical 
           references, using the declared citation structure to query the text structure. This means it is 
@@ -1257,7 +1255,7 @@ to <code>$</code> during processing.</p>
           document sections they identify, using the <gi>citeData</gi> element. For example, if a TEI document 
           is divided into chapters with a <gi>div</gi> per chapter and those chapters have titles, contained in
           <gi>head</gi> elements, then we might declare a citation structure for the document thus:
-          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SACRCS-egXML-fl">
             <citeStructure unit="chapter" match="/TEI/text/body/div" use="position()" delim="ch. ">
               <citeData property="http://purl.org/dc/terms/title" use="head"/>
             </citeStructure>
@@ -1326,7 +1324,7 @@ The elements <gi>ab</gi>, and <gi>seg</gi> are members of
     easily be done with the help of the <gi>anchor</gi> element, as
     follows:
     <!-- Vladimir Nabokov, Pnin, 1953, p14 of 1967 Avon pb reprinting -->
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#PNIN1">English language. Except for not very<anchor xml:id="eng1"/>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASE-egXML-ls" source="#PNIN1">English language. Except for not very<anchor xml:id="eng1"/>
 English at all at the time<anchor xml:id="eng2"/>
 English was still full of flaws<anchor xml:id="eng3"/>
 English. This was revised by young<anchor xml:id="eng4"/></egXML>
@@ -1356,7 +1354,7 @@ passim)</item></list></p>
 
 <p>In the following simple example, the <gi>seg</gi> element simply
 delimits the extent of a stutter, a textual feature for which no
-element is provided in these Guidelines.  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SASE-eg-32"><q>Don't say <q><seg type="stutter">I-I-I</seg>'m afraid,</q> Melvin, just say <q>I'm
+element is provided in these Guidelines.  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASE-egXML-gn" source="#SASE-eg-32"><q>Don't say <q><seg type="stutter">I-I-I</seg>'m afraid,</q> Melvin, just say <q>I'm
 afraid.</q></q></egXML>
 <!-- David Shields, Dead Languages, 1990, p10 -->
 The <gi>seg</gi> element is particularly useful for the markup
@@ -1365,7 +1363,7 @@ that may be the output of an automatic parsing system. This
 example also demonstrates the use of the <att>xml:id</att>
 attribute to carry an identifier which other parts of a document
 may use to point to, or align with:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SASE-eg-33">  <seg xml:id="bl0034" type="sentence">  
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASE-egXML-yq" source="#SASE-eg-33">  <seg xml:id="bl0034" type="sentence">  
     <seg xml:id="bl0034.1" type="phrase">Literate and illiterate speech</seg>
     <seg xml:id="bl0034.2" type="phrase">in a language like English</seg>
     <seg xml:id="bl0034.3" type="phrase">are plainly different.</seg>
@@ -1379,7 +1377,7 @@ following example, where the <att>type</att> and
 categorize each word of the sentence (the <att>xml:id</att>
 attributes have been removed to reduce the complexity of the
 example):
-<egXML xmlns="http://www.tei-c.org/ns/Examples">  <seg type="sentence" subtype="declarative">  
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASE-egXML-rm">  <seg type="sentence" subtype="declarative">  
     <seg type="phrase" subtype="noun">    
 <seg type="word" subtype="adjective">Literate</seg>
 <seg type="word" subtype="conjunction">and</seg>
@@ -1411,7 +1409,7 @@ and <term>characters</term>, which may be felt preferable to the
 more generic approach typified by use of the <gi>seg</gi>
 element. Using these, the first phrase above might be encoded
 simply as
-<egXML xmlns="http://www.tei-c.org/ns/Examples">  <phr type="noun">    
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASE-egXML-vy">  <phr type="noun">    
     <w type="adjective">Literate</w>
     <w type="conjunction">and</w>
     <w type="adjective">illiterate</w>
@@ -1434,7 +1432,7 @@ mark both features within s-units and segments composed of
 s-units, as in the following example:<note place="bottom">See
 section <ptr target="#AISP"/>, where the text from which this
 fragment is taken is analyzed.</note>
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#AI-eg-01"><seg xml:id="s1s3" type="narrative_unit">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASE-egXML-bh" source="#AI-eg-01"><seg xml:id="s1s3" type="narrative_unit">
   <s xml:id="s1">Sigmund, the <seg type="patronymic">son of Volsung</seg>,
  was a king in Frankish country.</s>
   <s xml:id="s2">Sinfiotli was the eldest of his sons.</s>
@@ -1447,13 +1445,13 @@ sentences only if the sentences are not themselves tagged. The
 first of the following two encodings is legal, but the second is
 not.
 <!-- Made up example -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Give me <seg type="phrase">a dozen. Or two or three.</seg></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASE-egXML-yt">Give me <seg type="phrase">a dozen. Or two or three.</seg></egXML>
 <eg xml:space="preserve"><![CDATA[<!-- Illegal! -->
 <s>Give me <seg type="phrase">a dozen.</s>
 <s>Or two or three.</s></seg>]]></eg></p>
 <p>The <att>part</att> attribute may be used as one simple
 method of overcoming this restriction:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><s>Give me <seg type="phrase" part="I">a dozen.</seg></s>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASE-egXML-yl"><s>Give me <seg type="phrase" part="I">a dozen.</seg></s>
 <s><seg part="F">Or two or three.</seg></s></egXML>
 Another solution is to use the <gi>join</gi> element discussed
 in section <ptr target="#SAAG"/>; this requires that each of the
@@ -1488,8 +1486,8 @@ set of them is enclosed in a <gi>choice</gi> element. </p>
 <p>For example, if one were writing dual-platform instructions for
 installation of software, it might be useful to use <gi>seg</gi>
 to record platform-specific pieces of mutually exclusive text.
-<egXML xmlns="http://www.tei-c.org/ns/Examples">&#x2026;pressing <choice><seg type="platform" subtype="Mac">option</seg>
-<seg type="platform" subtype="PC">alt</seg></choice>-f will &#x2026;</egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASE-egXML-hw">…pressing <choice><seg type="platform" subtype="Mac">option</seg>
+<seg type="platform" subtype="PC">alt</seg></choice>-f will …</egXML></p>
 <p>Elsewhere in this chapter we provide a number of examples
 where  the <gi>seg</gi> element is used simply to provide an
 element to which an identifier may be attached, for example so
@@ -1507,7 +1505,7 @@ way.</p>
 text that does not naturally belong in a paragraph. The text of an
 epitaph, for example, may not be paragraph-like, but still requires
 a container:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASE-egXML-yu">
 <ab style="text-align: center;">
   <lb/>SACRED 
   <lb/>to the memory of
@@ -1524,7 +1522,7 @@ a container:
 Encoders may also prefer to treat other types of short documents, such as receipts, in this way.</p>
 <p>The <gi>ab</gi> element may also be used, for
 example, to tag the canonical verse divisions of Biblical texts:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SASE-eg-40"><div1 n="Gen" type="book">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASE-egXML-db" source="#SASE-eg-40"><div1 n="Gen" type="book">
   <head>The First Book of Moses, Called</head>
   <head type="main">Genesis</head>
   <div2 n="1" type="chapter">
@@ -1546,12 +1544,12 @@ an alternative to the <gi>p</gi> element; it may
 <emph>not</emph> be used within paragraphs. The <gi>seg</gi>
 element, by contrast, may appear only within and not between
 paragraphs (or anonymous block elements).
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de" source="#SASE-eg-41"><div1 n="Gen" type="book">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASE-egXML-lx" xml:lang="de" source="#SASE-eg-41"><div1 n="Gen" type="book">
   <head>Das Erste Buch Mose.</head>
   <div2 n="1" type="chapter">
     <p>
 <seg n="1">Am Anfang schuff Gott Himel vnd Erden.</seg>
-<seg n="2">Vnd die Erde war w&#xFC;st vnd leer / vnd es war
+<seg n="2">Vnd die Erde war wüst vnd leer / vnd es war
   finster auff der Tieffe / Vnd der Geist Gottes schwebet auff
   dem Wasser.</seg></p>
     <p>
@@ -1568,7 +1566,7 @@ speeches when it is not clear whether the speech is to be
 regarded as prose or verse. If, for example, an encoder does not
 wish to express an opinion as to whether the opening lines of
 Shakespeare's <title>The Tempest</title> are to be regarded as
-prose or as verse, they might be tagged as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#CODR-eg-295"><div1 n="I" type="act">
+prose or as verse, they might be tagged as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASE-egXML-yj" source="#CODR-eg-295"><div1 n="I" type="act">
   <div2 n="1" type="scene">
     <head rend="italic">Actus primus, Scena prima.</head>
     <stage rend="italic" type="setting"> A tempestuous noise of 
@@ -1647,7 +1645,7 @@ providing a <att>synch</att> attribute on one of each of the pairs of
 synchronous anchors. As noted in the example given above (section <ptr target="#SACSAL"/>), correspondence, and hence synchrony, is a
 symmetric relation; therefore the attribute need only be specified on
 one of the pairs of synchronous anchors.
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SA-eg-02">    <div xml:id="BNC-d1" type="convers">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASYNC-egXML-zp" source="#SA-eg-02">    <div xml:id="BNC-d1" type="convers">
 <u xml:id="u2b" who="#b">
   The first time in twenty five years,
   we've cooked Christmas <unclear> for a blooming great
@@ -1668,7 +1666,7 @@ one of the pairs of synchronous anchors.
 <gi>linkGrp</gi> elements to make the temporal alignment explicit. A <gi>back</gi>
 element has been used to enclose the <gi>linkGrp</gi> element, but the links
 may be located anywhere the encoder finds convenient:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><back>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASYNC-egXML-jc" source="#UND"><back>
     <linkGrp xml:id="lg1" domains="#BNC-d1 #BNC-d1" targFunc="speaker.a speaker.b" type="synchronous_alignment">
 <link xml:id="L1" target="#t1a #t1b"/>
 <link xml:id="L2" target="#t2a #t2b"/>
@@ -1688,13 +1686,13 @@ between stretches of speech as well as between points. When complete
 utterances are synchronous, for example, if one person says
 <mentioned>What?</mentioned> and another <mentioned>No!</mentioned> at the same time,
 that can be represented without <gi>anchor</gi> elements as follows.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u synch="#u02" xml:id="u01" who="#a">What?</u>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASYNC-egXML-mm"><u synch="#u02" xml:id="u01" who="#a">What?</u>
 <u xml:id="u02" who="#b">No!</u></egXML></p>
 <p>A simple way of expressing <term>overlap</term> (where one speaker
 starts speaking before another has finished) is thus to use the
 <gi>seg</gi> element to encode the overlapping portions of speech. For
 example,
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#a"> So you're <unclear synch="#u-b1"/> </u>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASYNC-egXML-vr"><u who="#a"> So you're <unclear synch="#u-b1"/> </u>
 <u who="#b"><seg xml:id="u-b1"> It will be </seg> nice in a way, but,
      <seg synch="#u-a3"> be strange. </seg> </u>
 <u who="#a"><seg xml:id="u-a3"> Yeah </seg>, yeah, cos it,
@@ -1738,7 +1736,7 @@ course, specify its position in time absolutely. If the origin of a
 timeline is unknown, then this attribute may be omitted.</p>
 <p>The following <gi>timeline</gi> might be used to accompany the marked
 up conversation shown in the preceding section:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><timeline xml:id="tL1" origin="#w0" unit="ms">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASYMP-egXML-ub" source="#UND"><timeline xml:id="tL1" origin="#w0" unit="ms">
    <when xml:id="w0" absolute="11:30:00"/>
    <when xml:id="w1" interval="unknown" since="#w0"/>
    <when xml:id="w2" interval="100" since="#w1"/>
@@ -1750,7 +1748,7 @@ up conversation shown in the preceding section:
 The information in this <gi>timeline</gi> could now be linked to the
 information in the <gi>linkGrp</gi> which provides the temporal
 alignment (synchronization) for the text, as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><linkGrp type="temporal_specification" domains="#lg1 #tL1" targFunc="synch.points when">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASYMP-egXML-rq" source="#UND"><linkGrp type="temporal_specification" domains="#lg1 #tL1" targFunc="synch.points when">
    <link target="#L1 #w1"/>
    <link target="#L2 #w2"/>
    <link target="#L3 #w3"/>
@@ -1762,7 +1760,7 @@ alignment (synchronization) for the text, as follows:
 synchronization of anchors with each other, and the other marking their
 alignment with points on the time line) it would be better to link the
 <gi>when</gi> elements with the synchronous points directly:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><linkGrp type="temporal_specification" domains="#BNC-d1 #BNC-d1 #tL1" targFunc="speaker.a speaker.b when">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASYMP-egXML-ce" source="#UND"><linkGrp type="temporal_specification" domains="#BNC-d1 #BNC-d1 #tL1" targFunc="speaker.a speaker.b when">
    <link target="#t1a #t1b #w1"/>
    <link target="#t2a #t2b #w2"/>
    <link target="#t3a #t3b #w3"/>
@@ -1778,7 +1776,7 @@ available, and an XML file that assigns identifiers to the various
 temporal spans of sound is available. For example, the following
 Synchronized Multimedia Integration Language (SMIL, pronounced
 "smile") fragment:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" valid="false" source="#UND">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASYMP-egXML-tk" xml:lang="und" valid="false" source="#UND">
 <audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" xml:id="au1" begin="05.2s"/>
 <audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" xml:id="au2" begin="05.7s"/>
 <audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" xml:id="au3" begin="05.9s"/>
@@ -1830,7 +1828,7 @@ special purpose elements are proposed in section <ptr target="#SASY"/>.</p>
   used, if no other element is available.</p>
   <p>The use of the <att>corresp</att> attribute with spans of
   content is illustrated by the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SACS1-eg-48"><title xml:id="SHIRLEY">Shirley</title>, which made
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SACS1-egXML-is" source="#SACS1-eg-48"><title xml:id="SHIRLEY">Shirley</title>, which made
 its Friday night debut only a month ago, was
 not listed on <name xml:id="NBC">NBC</name>'s new schedule,
 although <seg corresp="#NBC" xml:id="NETWORK">the network</seg>
@@ -1861,7 +1859,7 @@ and provides functionality more similar to that of the  <gi>link</gi> and <gi>li
   indicate more precisely what kind of correspondence is
   intended as in the following retagging of the preceding
   example.
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en"><title xml:id="shirley">Shirley</title>, which made
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SACS1-egXML-vu" xml:lang="en"><title xml:id="shirley">Shirley</title>, which made
 its Friday night debut only a month ago, was not
 listed on <name xml:id="nbc">NBC</name>'s new schedule,
 although <seg xml:id="network">the network</seg> says
@@ -1873,7 +1871,7 @@ although <seg xml:id="network">the network</seg> says
 <p>In the following example, we use the same mechanism to
 express a correspondence amongst the anchors introduced following the
 fifth word after <mentioned>English</mentioned> in a text:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SACS1-egXML-xp" xml:lang="en">
 English language. Except for not very<anchor xml:id="en1"/>
 <!-- ... -->
 English at all at the time<anchor xml:id="en2"/>
@@ -1926,7 +1924,7 @@ English. This was revised by young<anchor xml:id="en4"/>
     using a free-standing <gi>linkGrp</gi> element.</p>
     <p>We present first a solution using <gi>anchor</gi>
     elements bearing only <att>corresp</att> attributes:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul" source="#SA-BIBL-1"><div xml:lang="en" type="subsection">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SACSAL-egXML-mj" xml:lang="mul" source="#SA-BIBL-1"><div xml:lang="en" type="subsection">
 <p><anchor corresp="#fa1" xml:id="ea1"/>According to our survey, 1988
 sales of mineral water and soft drinks were much higher than in 1987,
 reflecting the growing popularity of these products. Cola drink
@@ -1940,20 +1938,20 @@ April 1, 1988. Specifically, it contains more stringent requirements
 regarding quality consistency and purity guarantees.</p>
 </div>
 <div xml:lang="fr" type="subsection">
-<p><anchor corresp="#ea1" xml:id="fa1"/>Quant aux eaux min&#xE9;rales
+<p><anchor corresp="#ea1" xml:id="fa1"/>Quant aux eaux minérales
 et aux limonades, elles rencontrent toujours plus d'adeptes. En effet,
-notre sondage fait ressortir des ventes nettement sup&#xE9;rieures
-&#xE0; celles de 1987, pour les boissons &#xE0; base de cola
+notre sondage fait ressortir des ventes nettement supérieures
+à celles de 1987, pour les boissons à base de cola
 notamment. <anchor corresp="#ea2" xml:id="fa2"/>La progression des
-chiffres d'affaires r&#xE9;sulte en grande partie de l'accroissement
+chiffres d'affaires résulte en grande partie de l'accroissement
 du volume des ventes. <anchor corresp="#ea3" xml:id="fa3"/>L'emploi et
-les investissements ont &#xE9;galement augment&#xE9;.
-<anchor corresp="#ea4" xml:id="fa4"/>La nouvelle ordonnance f&#xE9;d&#xE9;rale
-sur les denr&#xE9;es alimentaires concernant entre autres les eaux
-min&#xE9;rales, entr&#xE9;e en vigueur le 1er avril 1988 apr&#xE8;s
-une p&#xE9;riode transitoire de deux ans, exige surtout une plus
-grande constance dans la qualit&#xE9; et une garantie de la
-puret&#xE9;.</p>
+les investissements ont également augmenté.
+<anchor corresp="#ea4" xml:id="fa4"/>La nouvelle ordonnance fédérale
+sur les denrées alimentaires concernant entre autres les eaux
+minérales, entrée en vigueur le 1er avril 1988 après
+une période transitoire de deux ans, exige surtout une plus
+grande constance dans la qualité et une garantie de la
+pureté.</p>
 </div></egXML></p>
   <p>There is no requirement that the <att>corresp</att>
   attribute be specified in both English and French texts, since
@@ -1969,7 +1967,7 @@ puret&#xE9;.</p>
   <p>We now present the same passage using the alternative
   <gi>linkGrp</gi> mechanism and marking explicitly the segments
   which have been aligned:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul"><div xml:id="div-e" xml:lang="en" type="subsection">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SACSAL-egXML-dn" xml:lang="mul"><div xml:id="div-e" xml:lang="en" type="subsection">
   <p>
     <seg xml:id="e_1">According to our survey, 1988 sales of mineral
 water and soft drinks were much higher than in 1987,
@@ -1987,22 +1985,22 @@ guarantees.</seg></p>
 </div>
 <div xml:id="div-f" xml:lang="fr" type="subsection">
   <p>
-    <seg xml:id="f_1">Quant aux eaux min&#xE9;rales et aux limonades,
+    <seg xml:id="f_1">Quant aux eaux minérales et aux limonades,
 elles rencontrent toujours plus d'adeptes. En effet, notre
 sondage fait ressortir des ventes nettement
-sup&#xE9;rieures &#xE0; celles de 1987, pour les
-boissons &#xE0; base de cola notamment.</seg>
+supérieures à celles de 1987, pour les
+boissons à base de cola notamment.</seg>
     <seg xml:id="f_2">La progression des chiffres d'affaires
-r&#xE9;sulte en grande partie de l'accroissement du volume
+résulte en grande partie de l'accroissement du volume
 des ventes.</seg>
     <seg xml:id="f_3">L'emploi et les investissements ont
-&#xE9;galement augment&#xE9;.</seg>
-    <seg xml:id="f_4">La nouvelle ordonnance f&#xE9;d&#xE9;rale sur
-les denr&#xE9;es alimentaires concernant entre autres les
-eaux min&#xE9;rales, entr&#xE9;e en vigueur le 1er avril
-1988 apr&#xE8;s une p&#xE9;riode transitoire de deux
+également augmenté.</seg>
+    <seg xml:id="f_4">La nouvelle ordonnance fédérale sur
+les denrées alimentaires concernant entre autres les
+eaux minérales, entrée en vigueur le 1er avril
+1988 après une période transitoire de deux
 ans, exige surtout une plus grande constance dans la
-qualit&#xE9; et une garantie de la puret&#xE9;.</seg></p>
+qualité et une garantie de la pureté.</seg></p>
 </div>
 <linkGrp type="alignment" domains="#div-e #div-f">
   <link target="#e_1 #f_1"/>
@@ -2014,7 +2012,7 @@ qualit&#xE9; et une garantie de la puret&#xE9;.</seg></p>
 orthographic sentences in both languages independently of the alignment:
 the first translation pair in this example might be marked up as
 follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul"><div xml:id="english" xml:lang="en" type="subsection">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SACSAL-egXML-ub" xml:lang="mul"><div xml:id="english" xml:lang="en" type="subsection">
   <ab xml:id="english1">  
     <s>According to our survey, 1988 sales of mineral water and soft
 drinks were much higher than in 1987, reflecting the growing popularity
@@ -2025,10 +2023,10 @@ growth rates.</s>
 </div>
 <div xml:id="french" xml:lang="fr" type="subsection">
   <ab xml:id="french1">  
-    <s xml:id="fs1">Quant aux eaux min&#xE9;rales et aux limonades, elles
+    <s xml:id="fs1">Quant aux eaux minérales et aux limonades, elles
 rencontrent toujours plus d'adeptes.</s>
     <s xml:id="fs2">En effet, notre sondage fait ressortir des ventes nettement
-sup&#xE9;rieures &#xE0; celles de 1987, pour les boissons &#xE0;
+supérieures à celles de 1987, pour les boissons à
 base de cola notamment.</s>
   </ab>
 </div></egXML>
@@ -2063,7 +2061,7 @@ have been encoded as distinct <gi>div</gi> elements. Identifiers have
 been attached to each typographic line, but no other encoding added, to
 simplify the example.
 <!-- S tag changed to SEG -DTL  -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul" source="#SA-BIBL-2"><div xml:id="e98" xml:lang="en" type="lesson">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SACSXA-egXML-pq" xml:lang="mul" source="#SA-BIBL-2"><div xml:id="e98" xml:lang="en" type="lesson">
    <head>The Study</head>
    <p>
 <seg xml:id="e9801">The Study</seg>
@@ -2076,7 +2074,7 @@ simplify the example.
 <seg xml:id="e9808">Books,</seg></p>
 </div>
 <div xml:id="l98" xml:lang="la" type="lesson">
-   <head>Mus&#xE9;um</head>
+   <head>Muséum</head>
    <p>
 <seg xml:id="l9801">Museum</seg>
 <seg xml:id="l9802">est locus</seg>
@@ -2097,7 +2095,7 @@ simple way of doing this using the TEI-defined markup for alignment of
 facsimiles. In the present chapter we demonstrate a more powerful
 means of aligning arbitrary polygons and points, which uses the XML notation SVG (see <ref target="#SVG-11">SVG</ref>). This provides appropriate facilities for both these
 requirements:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" valid="false" source="#UND">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SACSXA-egXML-kq" xml:lang="und" valid="false" source="#UND">
   <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <image xlink:href="p1764.png" width="597" height="897" id="p981"/>
   <rect id="p982" x="75" y="75" width="25" height="10"/>
@@ -2144,7 +2142,7 @@ kind might be represented by using the <gi>gloss</gi> and <gi>term</gi>
 mechanism described in section <ptr target="#COHTG"/>. The third kind of
 alignment might be represented using pointers embedded within the
 texts, for example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SACSXA-egXML-nl" xml:lang="en">
 <!--... -->
 <seg xml:id="xe9803">where a <ref n="2" target="#xp982">Student</ref>,</seg>
 <seg xml:id="xl9803">ubi <ref n="2" target="#xp982">Studiosus</ref>,</seg>
@@ -2155,7 +2153,7 @@ We choose however to use
 the <gi>link</gi> element, since this provides a more efficient way of
 representing the three-way alignment between English, Latin, and picture
 without redundancy.
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><linkGrp type="alignment">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SACSXA-egXML-vt" xml:lang="und" source="#UND"><linkGrp type="alignment">
    <link target="#xe9801 #xl9801 #xp981"/>
    <link target="#xe9802 #xl9802"/>
    <link target="#xe9803 #xl9803 #xp982"/>
@@ -2188,7 +2186,7 @@ various pointer schemes discussed in this chapter may be used, not
 simply those which rely on the existence of an <att>xml:id</att>
 attribute. Suppose our example had been
 more lightly tagged, as follows:
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul" source="#SA-BIBL-2">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SACSXA-egXML-rz" xml:lang="mul" source="#SA-BIBL-2">
     <div xml:id="E98" xml:lang="en" type="lesson">
       <head>The Study</head>
       <ab>The Study</ab>
@@ -2196,7 +2194,7 @@ more lightly tagged, as follows:
       <ab>where a Student,</ab>
     </div>
     <div xml:id="L98" xml:lang="la" type="lesson">
-      <head>Mus&#xE9;um</head>
+      <head>Muséum</head>
       <ab>Museum</ab>
       <ab>est locus</ab>
       <ab>ubi Studiosus,</ab>
@@ -2204,7 +2202,7 @@ more lightly tagged, as follows:
   </egXML></p>
 <p>To express the same alignment mentioned above, we could use an
 XPath expression to identify the required <gi>ab</gi> elements:
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SACSXA-egXML-qc" xml:lang="und" source="#UND">
     <linkGrp type="alignment">
       <link target="#xpath(//div[@xml:id='L98']/ab[1]) #xpath(//div[@xml:id='E98']/ab[1])"/>
       <link target="#xpath(//div[@xml:id='L98']/ab[2]) #xpath(//div[@xml:id='E98']/ab[2])"/>
@@ -2213,7 +2211,7 @@ In the absence of any markup around individual substrings of
 the element content, the string-range pointer scheme discussed in <ptr target="#SATSSR"/> may also be helpful: for example, to indicate that the words
 <mentioned>Studies</mentioned> and <mentioned>Studiis</mentioned>
 correspond, we might express the link between them as follows:
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SACSXA-egXML-qd" xml:lang="und" source="#UND">
 <link target="#string-range(e9806,16,7) #string-range(l9806,0,7)"/></egXML></p>
 
 </div></div>
@@ -2239,7 +2237,7 @@ text is identical to others, for analytical purposes, or (especially if
 the elements have lengthy content) to obviate the need to repeat the
 content. For example, consider the repetition of the <gi>date</gi>
 element in the following material:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SA-eg-03"><p>In small clumsy letters he wrote:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAIE-egXML-ib" source="#SA-eg-03"><p>In small clumsy letters he wrote:
 <q rend="centered italic"><date xml:id="d840404">April 4th,
 1984</date>.</q></p>
 <p>He sat back. A sense of complete helplessness had
@@ -2253,7 +2251,7 @@ Suppose now that we wish to encode the fact that the second
 <gi>date</gi> element above has identical content to the first. The
 <att>sameAs</att> attribute is provided for this purpose. Using it, we
 could recode the last line of the above example as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><date sameAs="#d840404">April 4th,
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAIE-egXML-dr"><date sameAs="#d840404">April 4th,
 1984</date>
 Last night to the flicks ... </egXML></p>
 <p>The <att>sameAs</att> attribute may be used to document the fact
@@ -2276,7 +2274,7 @@ repeated. The effect of this attribute is thus to create a
 <term>virtual copy</term> of the element indicated. Using this
 attribute, the repeated date in the first example above could be
 recoded as follows:
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><date rend="italic" copyOf="#d840404"/></egXML></p>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAIE-egXML-oi" xml:lang="und" source="#UND"><date rend="italic" copyOf="#d840404"/></egXML></p>
 <p>An application program should replace whatever is the actual content
 of an element bearing a <att>copyOf</att> attribute with the content of
 the element specified by it. If the content of the element specified
@@ -2291,9 +2289,9 @@ the content of the targetted element.</p>
 attribute may be used in conjunction with the <gi>seg</gi> element to
 highlight the differences between almost identical repetitions:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COVE-eg-284"><sp><speaker>Mikado</speaker>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAIE-egXML-yl" source="#COVE-eg-284"><sp><speaker>Mikado</speaker>
    <l>My <seg xml:id="Mik-L1s">object all sublime</seg></l>
-   <l>I shall <seg xml:id="Mik-L2s">achieve in time</seg>&#x2014;</l>
+   <l>I shall <seg xml:id="Mik-L2s">achieve in time</seg>—</l>
    <l xml:id="Mik-L3">To let <seg xml:id="L3s">the punishment fit the crime</seg>,</l>
    <l xml:id="Mik-l4"><seg copyOf="#Mik-L3s"/>;</l>
    <l xml:id="Mik-l5">And make each pris'ner pent</l>
@@ -2340,7 +2338,7 @@ attributes of that class; for the list, see section <ptr target="#SAPT"/>.</p>
 <p>Here is the material on which we base our first illustration of the
 use of these mechanisms. Our problem is to represent the s-units
 identified below as <val>qs3</val> and <val>qs4</val> as a single (but discontinuous) whole:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SAAG-eg-72"><q><s xml:id="qs2">Monsieur Paul, after he has taken equal
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAG-egXML-et" source="#SAAG-eg-72"><q><s xml:id="qs2">Monsieur Paul, after he has taken equal
 parts of goose breast and the finest pork, and
 broken a certain number of egg yolks into them,
 and ground them <emph>very</emph>, very fine,
@@ -2348,11 +2346,11 @@ cooks all with seasoning for some three hours.</s>
    <s xml:id="qs3">
 <emph>But</emph>,</s> </q>
 <s xml:id="ps2">she pushed her face nearer, and looked with
-   ferocious gloating at the p&#xE2;t&#xE9;
+   ferocious gloating at the pâté
    inside me, her eyes like X rays,</s>
 <q>
    <s xml:id="qs4">he never stops stirring it!</s>
-   <s xml:id="qs5">Figure to yourself the work of it &#x2014;</s>
+   <s xml:id="qs5">Figure to yourself the work of it —</s>
    <s xml:id="qs6">stir, stir, never stopping!</s>
 </q></egXML>
 <!-- M.F.K. Fisher, I was really very hungry, As They Were, p43  -->
@@ -2367,7 +2365,7 @@ link the s-units with identifiers <val>qs3</val> and <val>qs4</val>, either sing
   <s xml:id="qs4" prev="#qs3">he never stops stirring it!</s>]]></eg>
 Double linking of the two s-units, as illustrated by the last of these
 encodings, is equivalent to specifying a <gi>link</gi> element:
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><link type="join" target="#qs3 #qs4"/></egXML></p>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAG-egXML-wt" xml:lang="und" source="#UND"><link type="join" target="#qs3 #qs4"/></egXML></p>
 <p>Such a <gi>link</gi> element must carry a <att>type</att>
 attribute with a value of <val>join</val> to specify that the link is
 to be understood as joining its targets into a single aggregate.</p>
@@ -2384,12 +2382,12 @@ contextually legal.
 <specList><specDesc key="join" atts="result "/><specDesc key="joinGrp" atts="result"/></specList>
 To conclude the above example, we now use a <gi>join</gi> element to
 represent the virtual sentence formed by the aggregation of <val>s1</val> and <val>s2</val>:
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><join target="#qs3 #qs4" result="s"/></egXML>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAG-egXML-cw" xml:lang="und" source="#UND"><join target="#qs3 #qs4" result="s"/></egXML>
 As a further example, consider the following list of authors' names.
 The object of the <gi>join</gi> element here is to provide another
 list, composed of those authors from the larger list who happen to
 come from Heidelberg:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><list>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAG-egXML-gq"><list>
 <head>Authors</head>
    <item xml:id="a_uf">Figge, Udo </item>
    <item xml:id="a_ch">Heibach, Christiane </item>
@@ -2404,7 +2402,7 @@ come from Heidelberg:
 reconstruct a text cited in fragments presented out of order. The poem
 being remembered (an unusual translation of a well-known poem by Basho)
 runs <q>When the old pond / gets a new frog, / it's a new pond.</q></p>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAG-egXML-fg">
 <sp><speaker>Hughie</speaker>
   <p>How does it go?
   <q>
@@ -2444,7 +2442,7 @@ represented by its contents are legal. Thus if we had created many
 together, and require that their components are all contained by an
 element with the identifier <val>MFKFhungry</val> as
 follows:
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><joinGrp domains="#mfkfhungry #mfkfhungry" result="s">
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAG-egXML-sh" xml:lang="und" source="#UND"><joinGrp domains="#mfkfhungry #mfkfhungry" result="s">
    <join target="#qs3 #qs4"/>
    <join target="#qs5 #qs6"/>
 </joinGrp>
@@ -2474,7 +2472,7 @@ each voice as the target for these pointers.) Note also that we add
 <att>xml:id</att> attributes to each distinct speech fragment, which
 we can then use to link the material
 spoken by each voice:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SA-eg-04"><text xml:id="zuitxt">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAG-egXML-ht" source="#SA-eg-04"><text xml:id="zuitxt">
    <body>
 <p><name xml:id="zuigan">Zui-Gan</name> called out to himself every day,
    <q next="#zuiq2" xml:id="zuiq1" who="#zuigan"><name xml:id="master">Master</name>.</q></p>
@@ -2493,7 +2491,7 @@ spoken by each voice:
 </text></egXML></p>
 <p>However, by using the <gi>join</gi> element, we can directly
 represent the complete speech attributed to each voice:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><joinGrp result="q">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAG-egXML-qz"><joinGrp result="q">
    <join target="#zuiq1 #zuiq2 #zuiq4 #zuiq7">
     <desc>what Zui-Gan said</desc></join>
    <join target="#zuiq3 #zuiq5 #zuiq6"> 
@@ -2513,7 +2511,7 @@ using any of the methods described in section <ptr target="#SATS"/>.
 The <att>xml:id</att> attributes of
 <emph>these</emph> elements may now be specified by the
 <att>target</att> attribute on the <gi>join</gi> elements.
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SA-eg-04"><text>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAG-egXML-dm" source="#SA-eg-04"><text>
  <body>
 <!-- five div1 elements -->
 <div1>
@@ -2592,7 +2590,7 @@ spoken text, we encounter an utterance that we can understand either as
 the beach today.</mentioned> We can represent the exclusive alternation of
 these two possibilities by means of the <att>exclude</att> attribute as
 follows.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="interview">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAT-egXML-nx"><div type="interview">
   <u exclude="#we.sun1" xml:id="we.fun1">We had fun at the beach today.</u>
   <u exclude="#we.fun1" xml:id="we.sun1">We had sun at the beach today.</u>
 </div></egXML></p>
@@ -2604,7 +2602,7 @@ preserve the fact that there was uncertainty in the original
 transcription by retaining the alternants, and assigning the
 <val>we.fun</val> value to the <att>select</att> attribute value on the <gi>div</gi> element that
 encompasses the alternants, as in:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div select="#we.fun2" type="interview">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAT-egXML-si"><div select="#we.fun2" type="interview">
    <u exclude="#we.sun2" xml:id="we.fun2">We had fun at the beach
    today.</u>
    <u exclude="#we.fun2" xml:id="we.sun2">We had sun at the beach today.</u>
@@ -2616,13 +2614,13 @@ exclusive, as in:<note place="bottom">See section <ptr target="#AILC"/> for disc
 <gi>w</gi> and <gi>c</gi> tags that can be used in the following
 examples instead of the <tag>seg type="word"</tag> and <tag>seg
 type="character"</tag> tags.</note>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="interview">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAT-egXML-gp"><div type="interview">
   <u select="#fun3">We had
     <seg exclude="#sun3" xml:id="fun3" type="word">fun</seg>
     <seg exclude="#fun3" xml:id="sun3" type="word">sun</seg>
     at the beach today.</u>
 </div></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="interview">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAT-egXML-hs"><div type="interview">
   <u>We had
     <seg select="#id-f" type="word">
 <seg exclude="#id-s" xml:id="id-f" type="character">f</seg>
@@ -2635,7 +2633,7 @@ in the utterance is <mentioned>We</mentioned> or <mentioned>Lee</mentioned>, but
 certain that if it is <mentioned>Lee</mentioned>, then the other uncertain word
 is definitely <mentioned>fun</mentioned> and not <mentioned>sun</mentioned>. The three
 utterances that are in mutual exclusion can be encoded as follows.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="interview">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAT-egXML-js"><div type="interview">
   <!-- ... -->
   <u exclude="#we.sun4 #lee.fun4" xml:id="we.fun4">We had fun at the beach today.</u>
   <u exclude="#we.fun4 #lee.fun4" xml:id="we.sun4">We had sun at the beach today.</u>
@@ -2645,7 +2643,7 @@ utterances that are in mutual exclusion can be encoded as follows.
 <p>The preceding example can also be encoded with <att>exclude</att>
 attributes on the word segments <mentioned>We</mentioned>, <mentioned>Lee</mentioned>,
 <mentioned>fun</mentioned>, and <mentioned>sun</mentioned>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAT-egXML-gx"><u>
   <seg exclude="#lee" xml:id="we" type="word">We</seg>
   <seg exclude="#we #sun" xml:id="lee" type="word">Lee</seg>
   had
@@ -2655,7 +2653,7 @@ attributes on the word segments <mentioned>We</mentioned>, <mentioned>Lee</menti
 <p>The value of the <att>select</att> attribute is defined as a list of
 identifiers; hence it can also be used to
 narrow down the range of alternants, as in:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div select="#we.fun5 #lee.fun5" type="interview">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAT-egXML-eg"><div select="#we.fun5 #lee.fun5" type="interview">
   <u exclude="#we.sun5 #lee.fun5" xml:id="we.fun5">We had fun at the beach today.</u>
   <u exclude="#we.fun5 #lee.fun5" xml:id="we.sun5">We had sun at the beach today.</u>
   <u exclude="#we.fun5 #we.sun5" xml:id="lee.fun5">Lee had fun at the beach today.</u>
@@ -2663,7 +2661,7 @@ narrow down the range of alternants, as in:
 This is interpreted to mean that either the first or the third
 <gi>u</gi> element tag appears, and is thus equivalent to just the alternation
 of those two tags:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="interview">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAT-egXML-qp"><div type="interview">
   <u exclude="#lee.fun6" xml:id="we.fun6">We had fun at the beach
   today.</u>
   <u exclude="#we.fun6" xml:id="lee.fun6">Lee had fun at the beach today.</u>
@@ -2675,7 +2673,7 @@ example, the occurrence of the word <mentioned>May</mentioned> in the s-unit
 other information, either as a person's name or as a date. The
 uncertainty can be rendered as follows, using the <att>exclude</att>
 attribute.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><s>Let's go to
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAT-egXML-ga"><s>Let's go to
 <name exclude="#mayn" xml:id="mayd">May</name>
    <date copyOf="#mayd" exclude="#mayd" xml:id="mayn"/>.</s></egXML></p>
 <p>Note the use of the <att>copyOf</att> attribute discussed in
@@ -2693,7 +2691,7 @@ document, or as the first <gi>div2</gi> of the second <gi>div1</gi>.
 One solution would be to record the <gi>div2</gi> in its entirety in the
 first of these positions, and a virtual copy of it in the second, and
 mark them as excluding each other as follows:
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><body>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAT-egXML-eo" xml:lang="und" source="#UND"><body>
   <div1 xml:id="C1">
     <div2 xml:id="C1S3" exclude="#C2S1">
     </div2>
@@ -2711,7 +2709,7 @@ first example in this section can be recoded by removing the
 placed the <gi>link</gi> next to the elements that represent the
 alternants. It could also have been placed elsewhere in the document,
 perhaps within a <gi>linkGrp</gi>. </note>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="interview">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAT-egXML-hf"><div type="interview">
   <u xml:id="we.had.fun">We had fun at the beach today.</u>
   <u xml:id="we.had.sun">We had sun at the beach today.</u>
   <link type="exclusiveAlternation" target="#we.had.fun #we.had.sun"/>
@@ -2721,10 +2719,10 @@ it a member of the class <ident type="class">att.pointing</ident>, and
 assigning it a <att>mode</att> attribute, which can have either of the
 values <val>excl</val> (for exclusive) or <val>incl</val> (for
 inclusive). Then the following equivalence holds:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><alt target="#a #b" mode="excl"/></egXML> = 
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><link target="#a #b" type="exclusive_alternation"/></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAT-egXML-xl" source="#UND"><alt target="#a #b" mode="excl"/></egXML> = 
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAT-egXML-hu" source="#UND"><link target="#a #b" type="exclusive_alternation"/></egXML></p>
 <p>The preceding <gi>link</gi> element may therefore be recoded as the
-  following <gi>alt</gi> element. <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><alt target="#we.had.fun #we.had.sun" mode="excl"/></egXML></p>
+  following <gi>alt</gi> element. <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAT-egXML-xw" xml:lang="und" source="#UND"><alt target="#we.had.fun #we.had.sun" mode="excl"/></egXML></p>
 <p>Another attribute that is defined specifically for the <gi>alt</gi>
 element is <att>weights</att>, which is to be used if one wishes to assign
 <term>probabilistic weights</term> to the targets (alternants). Its
@@ -2737,12 +2735,12 @@ the weights must sum to 1.0.</p>
 <p>Suppose in the preceding example that it is equiprobable whether
 <mentioned>fun</mentioned> or <mentioned>sun</mentioned> appears. Then
 the <gi>alt</gi> element that represents the alternation may be stated
-as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND"><alt target="#we.fun #we.had.sun" mode="excl" weights="0.5 0.5"/></egXML></p>
+as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAT-egXML-dq" xml:lang="und" source="#UND"><alt target="#we.fun #we.had.sun" mode="excl" weights="0.5 0.5"/></egXML></p>
 <p>The assignment of a weight of 1.0 to one target (and weights of 0
 to all the others) is equivalent to selecting that target. Thus the
 following encoding is equivalent to the second example at the beginning
 of this section.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u xml:id="we.fun">We had fun at the beach today.</u>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAT-egXML-we"><u xml:id="we.fun">We had fun at the beach today.</u>
 <u xml:id="we.sun">We had sun at the beach today.</u>
 <alt target="#we.fun #we.sun" mode="excl" weights="1 0"/>
 </egXML>
@@ -2795,7 +2793,7 @@ of this section.
   <!-- ]]> -->
   <!-- </eg> -->
 The sum of the weights for <tag>alt mode="incl"</tag> tags ranges from 0% to
-(100 &#xD7; <code>k</code>)%, where <code>k</code> is the number of targets. If the sum is 0%, then
+(100 × <code>k</code>)%, where <code>k</code> is the number of targets. If the sum is 0%, then
 the alternation is equivalent to exclusive alternation; if the sum is
 (100 x k)%, then all of the alternants must appear, and the situation is
 better encoded without an <gi>alt</gi> tag.</p>
@@ -2823,7 +2821,7 @@ probability that <mentioned>fun</mentioned> occurs is 50% and that
 <mentioned>Lee</mentioned> occurs is 60%. This situation can be
 encoded as follows.
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAT-egXML-qn"><u>
   <seg exclude="#lee2" xml:id="we2" type="word">We</seg>
   <seg exclude="#we2" xml:id="lee2" type="word">Lee</seg>
   had
@@ -2868,7 +2866,7 @@ contains <mentioned>Dimaggio's</mentioned> is 10%, and each of the others is
 45%. This can be encoded, with an <gi>altGrp</gi> element containing a
 combination of exclusive and inclusive <gi>alt</gi> elements, as follows.
 <!-- Bloody Mary, from Rogers & Hammerstein, South Pacific -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div xml:id="bm" type="song">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SAAT-egXML-mq"><div xml:id="bm" type="song">
   <l>Her skin is tender as
     <seg xml:id="dm">Dimaggio's</seg>
     <seg xml:id="lt">a leather</seg>
@@ -3057,7 +3055,7 @@ or end of a selected range will be included as wrappers for those of
 their children that are completely or partially selected by the
 range. For example, given the following source document:
  
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASOso-egXML-ya" xml:lang="en">
   <body>
   <p xml:id="par1">home, <emph>home</emph> on Brokeback Mountain.</p>
   <p xml:id="par2">That was the <emph>song</emph> that I sang</p>
@@ -3121,7 +3119,7 @@ The semantics of XInclude require the creation of well-formed XML results even t
 	  <gi>xi:include</gi> element that contains an XPointer
 	  pointing to the desired content.</p>
 	<p>For instance the following portion of a TEI document:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#VEST-eg-1"><text>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASOso-egXML-zk" source="#VEST-eg-1"><text>
    <body>
 <head>1755</head>
 <l>To make a prairie it takes a clover and one bee,</l>
@@ -3216,7 +3214,7 @@ If bees are few.\n
 	  document:
 	  <lb/>	<!-- inappropriate kludge -->
 	  <label rend="it">Source.xhtml</label>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASOfr-egXML-pz">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <body>
   <div>To make a prairie it takes a <a href="clover.gif">clover</a>
@@ -3291,7 +3289,7 @@ will only select the text of the poem, with no markup inside.</p>
       associated resource may appear as children of the same <gi>TEI</gi> element. The example below
       has a transcription with <gi>placeName</gi> elements in the text linked to a list of <gi>place</gi> elements in the
       <gi>standOff</gi> section.
-      <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASOstdf-egXML-ij" valid="feasible">
         <TEI>
           <teiHeader>
             <!-- ... -->
@@ -3327,8 +3325,7 @@ will only select the text of the poem, with no markup inside.</p>
                 <div type="textpart" n="1" xml:id="part1">
                   <head>Bellum Alexandrinum</head>
                   <p n="1" xml:id="p1">
-                    <seg n="1" xml:id="seg-1.1">Bello Alexandrino conflato <persName ref="#Caesar"
-                      >Caesar</persName>
+                    <seg n="1" xml:id="seg-1.1">Bello Alexandrino conflato <persName ref="#Caesar">Caesar</persName>
                       <app>
                         <lem><placeName ref="#Rhodus">Rhodo</placeName></lem>
                         <rdg wit="#S" ana="#orthographical">Ordo</rdg>
@@ -3336,8 +3333,7 @@ will only select the text of the poem, with no markup inside.</p>
                       <placeName ref="#Cilicia">Cilicia</placeName>que omnem classem arcessit; <app>
                         <lem><placeName ref="#Creta">Creta</placeName></lem>
                         <rdg wit="#S" ana="#orthographical">certa</rdg>
-                      </app> sagittarios, equites ab rege <orgName ref="#Nabataei"
-                        >Nabataeorum</orgName>
+                      </app> sagittarios, equites ab rege <orgName ref="#Nabataei">Nabataeorum</orgName>
                       <persName ref="#Malchus">Malcho</persName> euocat; tormenta undique conquiri et
                       frumentum mitti, auxilia adduci iubet.</seg>
                     <!-- ... -->
@@ -3384,7 +3380,7 @@ will only select the text of the poem, with no markup inside.</p>
       the <gi>standOff</gi> section). If the set of annotations were created in a process separate
       from the creation of the transcription and then imported into the transcription document, then
       wrapping them in a <gi>TEI</gi> element with its own <gi>teiHeader</gi> providing metadata for
-      the annotations might be advisable. <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+      the annotations might be advisable. <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="SASOann-egXML-if" valid="feasible">
         <TEI>
           <teiHeader>
             <fileDesc>
@@ -3486,8 +3482,8 @@ chapters<!-- , particularly in sections <ptr target="#AILA"/>, <ptr target="#FSF
     <desc xml:lang="fr" versionDate="2018-07-12">Liens, segmentation et alignement</desc>
     <desc xml:lang="zh-TW" versionDate="2020-12-20">連結、分割與隊列</desc>
     <desc xml:lang="it" versionDate="2018-07-12">Collegamento, segmentazione e allineamento</desc>
-    <desc xml:lang="pt" versionDate="2018-07-12">Liga&#xE7;&#xE3;o, segmenta&#xE7;&#xE3;o e alinhamento</desc>
-    <desc xml:lang="ja" versionDate="2018-07-12">&#x30EA;&#x30F3;&#x30AF;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;</desc>
+    <desc xml:lang="pt" versionDate="2018-07-12">Ligação, segmentação e alinhamento</desc>
+    <desc xml:lang="ja" versionDate="2018-07-12">リンクモジュール</desc>
   </moduleSpec>
   The selection and combination of modules to form a TEI schema is
   described in <ptr target="#STIN"/>.
