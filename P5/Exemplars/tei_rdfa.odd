@@ -4,8 +4,10 @@
     <fileDesc>
       <titleStmt>
         <title>TEI with RDFa</title>
+        <author>Helena Bermúdez Sabel</author>
         <author>Martina Scholger</author>
         <author>Peter Stadler</author>
+        
       </titleStmt>
       <publicationStmt>
         <publisher>TEI Consortium</publisher>
@@ -72,31 +74,28 @@
         <moduleRef key="iso-fs"/>
         <moduleRef key="nets"/>
         <moduleRef key="certainty"/>        
-        <moduleRef key="tagdocs" except="elementSpec moduleRef schemaSpec" />
+        <moduleRef key="tagdocs" include="att code eg egXML ident tag val" />
         <!-- 
-          From the tagdocs module we exclude the three elements that have
-         a `@prefix` attribute which is both defined locally on
-          elementSpec, moduleRef, and schemaSpec, as well as by our new 
-          class `att.global.analytic.rdfa`. We argue that these tagdocs elements
-          are not going to be used in the context where RDFa support is relevant
+          From the tagdocs module we exclude the *Ref and the *Spec elements. We argue that these tagdocs elements
+          are not going to be used in the context where RDFa support is relevant.
         -->
 
         <classSpec type="atts" ident="att.global.analytic.rdfa" mode="add">
           <desc xml:lang="en" versionDate="2020-07-01">provides additional global attributes for
-            embedding RDF following the RDFa Core 1.1 specification</desc>
+            embedding RDF following the <ref target="https://www.w3.org/TR/rdfa-core/">RDFa Core 1.1 specification</ref></desc>
           <attList>
             <attDef mode="add" ident="about">
               <gloss xml:lang="en" versionDate="2020-07-01">rdfa-about</gloss>
-              <desc xml:lang="en" versionDate="2020-07-01">a SafeCURIEorCURIEorIRI, used for stating
-                what the data is about (a 'subject' in RDF terminology)</desc>
+              <desc xml:lang="en" versionDate="2025-09-15">a <ref target="https://www.w3.org/TR/rdfa-core/#dfn-termorcurieorabsiri">SafeCURIEorCURIEorIRI</ref>, used for stating
+                what the data is about (a <term>subject</term> in RDF terminology)</desc>
               <datatype>
-                <dataRef key="teidata.enumerated"/>
+                <dataRef key="teidata.pointer"/>
               </datatype>
             </attDef>
             <attDef mode="add" ident="content">
               <gloss xml:lang="en" versionDate="2020-07-01">rdfa-content</gloss>
-              <desc xml:lang="en" versionDate="2020-07-01">a CDATA string, for supplying
-                machine-readable content for a literal (a 'literal object', in RDF
+              <desc xml:lang="en" versionDate="2025-09-15">a CDATA string, for supplying
+                machine-readable content for a literal (a <term>literal object</term>, in RDF
                 terminology)</desc>
               <datatype>
                 <dataRef key="teidata.text"/>
@@ -104,25 +103,16 @@
             </attDef>
             <attDef mode="add" ident="datatype">
               <gloss xml:lang="en" versionDate="2020-07-01">rdfa-datatype</gloss>
-              <desc xml:lang="en" versionDate="2020-07-01">a TERMorCURIEorAbsIRI representing a
+              <desc xml:lang="en" versionDate="2020-07-01">a <ref target="https://www.w3.org/TR/rdfa-core/#dfn-safecurieorcurieoriri">TERMorCURIEorAbsIRI</ref> representing a
                 datatype, to express the datatype of a literal</desc>
               <datatype>
-                <dataRef key="teidata.enumerated"/>
-              </datatype>
-            </attDef>
-            <attDef mode="add" ident="href">
-              <gloss xml:lang="en" versionDate="2020-07-01">rdfa-href</gloss>
-              <desc xml:lang="en" versionDate="2020-07-01">a traditionally navigable IRI for
-                expressing the partner resource of a relationship (a 'resource object', in RDF
-                terminology)</desc>
-              <datatype>
-                <dataRef key="teidata.enumerated"/>
+                <dataRef key="teidata.word"/>
               </datatype>
             </attDef>
             <attDef mode="add" ident="inlist">
               <gloss xml:lang="en" versionDate="2020-07-01">rdfa-inlist</gloss>
-              <desc xml:lang="en" versionDate="2020-07-01">An attribute used to indicate that the
-                object associated with a rel or property attribute on the same element is to be
+              <desc xml:lang="en" versionDate="2025-09-15">An attribute used to indicate that the
+                object associated with a <att>rel</att> or <att>property</att> attribute on the same element is to be
                 added to the list for that predicate. The value of this attribute MUST be ignored.
                 Presence of this attribute causes a list to be created if it does not already
                 exist.</desc>
@@ -135,70 +125,61 @@
               <desc xml:lang="en" versionDate="2020-07-01">a white space separated list of
                 prefix-name IRI pairs of the form NCName ':' ' '+ xsd:anyURI </desc>
               <datatype maxOccurs="unbounded">
-                <dataRef key="teidata.enumerated"/>
+                <dataRef key="teidata.prefix"/>
               </datatype>
             </attDef>
             <attDef mode="add" ident="property">
               <gloss xml:lang="en" versionDate="2020-07-01">rdfa-property</gloss>
-              <desc xml:lang="en" versionDate="2020-07-01">a white space separated list of
-                TERMorCURIEorAbsIRIs, used for expressing relationships between a subject and either
-                a resource object if given or some literal text (also a 'predicate')</desc>
+              <desc xml:lang="en" versionDate="2025-09-15">a white space separated list of
+                <ref target="https://www.w3.org/TR/rdfa-core/#dfn-termorcurieorabsiri">TERMorCURIEorAbsIRI</ref>s, used for expressing relationships between a subject and either
+                a resource object if given or some literal text (also a <term>predicate</term>)</desc>
               <datatype maxOccurs="unbounded">
-                <dataRef key="teidata.enumerated"/>
+                <dataRef key="teidata.pointer"/>
               </datatype>
             </attDef>
             <attDef mode="add" ident="rel">
               <gloss xml:lang="en" versionDate="2020-07-01">rdfa-rel</gloss>
-              <desc xml:lang="en" versionDate="2020-07-01">a white space separated list of
-                TERMorCURIEorAbsIRIs, used for expressing relationships between two resources
-                ('predicates' in RDF terminology)</desc>
+              <desc xml:lang="en" versionDate="2025-09-15">a white space separated list of
+                <ref target="https://www.w3.org/TR/rdfa-core/#dfn-termorcurieorabsiri">TERMorCURIEorAbsIRI</ref>s, used for expressing relationships between two resources
+                (<term>predicates</term> in RDF terminology)</desc>
               <datatype maxOccurs="unbounded">
-                <dataRef key="teidata.enumerated"/>
+                <dataRef key="teidata.pointer"/>
               </datatype>
             </attDef>
             <attDef mode="add" ident="resource">
               <gloss xml:lang="en" versionDate="2020-07-01">rdfa-resource</gloss>
-              <desc xml:lang="en" versionDate="2020-07-01">a SafeCURIEorCURIEorIRI for expressing
+              <desc xml:lang="en" versionDate="2025-09-15">a <ref target="https://www.w3.org/TR/rdfa-core/#dfn-safecurieorcurieoriri">SafeCURIEorCURIEorIRI</ref> for expressing
                 the partner resource of a relationship that is not intended to be navigable (e.g., a
-                'clickable' link) (also an 'object')</desc>
+                <term>clickable</term> link) (also an <term>object</term>)</desc>
               <datatype>
-                <dataRef key="teidata.enumerated"/>
+                <dataRef key="teidata.pointer"/>
               </datatype>
             </attDef>
             <attDef mode="add" ident="rev">
               <gloss xml:lang="en" versionDate="2020-07-01">rdfa-rev</gloss>
-              <desc xml:lang="en" versionDate="2020-07-01">a white space separated list of
-                TERMorCURIEorAbsIRIs, used for expressing reverse relationships between two
-                resources (also 'predicates')</desc>
+              <desc xml:lang="en" versionDate="2025-09-15">a white space separated list of
+                <ref target="https://www.w3.org/TR/rdfa-core/#dfn-termorcurieorabsiri">TERMorCURIEorAbsIRI</ref>s, used for expressing reverse relationships between two
+                resources (also <term>predicates</term>)</desc>
               <datatype maxOccurs="unbounded">
-                <dataRef key="teidata.enumerated"/>
-              </datatype>
-            </attDef>
-            <attDef mode="add" ident="src">
-              <gloss xml:lang="en" versionDate="2020-07-01">rdfa-src</gloss>
-              <desc xml:lang="en" versionDate="2020-07-01">an IRI for expressing the partner
-                resource of a relationship when the resource is embedded (also a 'resource
-                object')</desc>
-              <datatype>
-                <dataRef key="teidata.enumerated"/>
+                <dataRef key="teidata.pointer"/>
               </datatype>
             </attDef>
             <attDef mode="add" ident="typeof">
               <gloss xml:lang="en" versionDate="2020-07-01">rdfa-typeof</gloss>
               <desc xml:lang="en" versionDate="2020-07-01">a white space separated list of
-                TERMorCURIEorAbsIRIs that indicate the RDF type(s) to associate with a
+                <ref target="https://www.w3.org/TR/rdfa-core/#dfn-termorcurieorabsiri">TERMorCURIEorAbsIRI</ref>s that indicate the RDF type(s) to associate with a
                 subject</desc>
               <datatype maxOccurs="unbounded">
-                <dataRef key="teidata.enumerated"/>
+                <dataRef key="teidata.pointer"/>
               </datatype>
             </attDef>
             <attDef mode="add" ident="vocab">
               <gloss xml:lang="en" versionDate="2020-07-01">rdfa-vocab</gloss>
-              <desc xml:lang="en" versionDate="2020-07-01">an IRI that defines the mapping to use
-                when a TERM is referenced in an attribute value. See General Use of Terms in
-                Attributes and the section on Vocabulary Expansion.</desc>
+              <desc xml:lang="en" versionDate="2025-09-15">an IRI that defines the mapping to use
+                when a <ref target="https://www.w3.org/TR/rdfa-core/#dfn-term">TERM</ref> is referenced in an attribute value. See <ref target="https://www.w3.org/TR/rdfa-core/#s_terms">General Use of Terms in
+                  Attributes</ref> and the section on <ref target="https://www.w3.org/TR/rdfa-core/#s_vocab_expansion">Vocabulary Expansion</ref>.</desc>
               <datatype>
-                <dataRef key="teidata.enumerated"/>
+                <dataRef key="teidata.pointer"/>
               </datatype>
             </attDef>
           </attList>
@@ -215,8 +196,8 @@
         </classSpec>
         
         <elementSpec ident="citeData" mode="change">
-          <desc>We delete the attribute @property from this element (A URI indicating a property definition) so as avoid
-            a double definition with the same attribute in our new class att.global.analytic.rdfa</desc>
+          <desc>We delete the attribute <att>property</att> from this element within this customization, because in this specific context
+            the attribute <att>property</att> of the  new class <ident type="class">att.global.analytic.rdfa</ident> has the same function.</desc>
           <attList>
             <attDef ident="property" mode="delete"/>
           </attList>
