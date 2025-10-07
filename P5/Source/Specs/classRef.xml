@@ -6,19 +6,193 @@
   <desc versionDate="2024-02-28" xml:lang="ja">スキーマに含まれる属性クラスあるいはモデルクラスの仕様を指し示す。</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.organizable"/>
     <memberOf key="att.repeatable"/>
     <memberOf key="model.contentPart"/>
     <memberOf key="model.oddRef"/>
   </classes>
   <content><empty/></content>
+  <!--
+      There are three possible cases:
+      * <classRef> is a child of <schemaSpec>, may NOT have @org or @cardinality
+      * <classRef> is in a content model, may have @org or @cardinality
+      * <classRef> is in a <specGrp>; since <specGrpRef> is not
+        allowed in a content model, these also may NOT have @org
+        or @cardinality
+  -->
+  <constraintSpec ident="member_details_only_in_content_model" scheme="schematron" xml:lang="en">
+    <constraint>
+      <sch:rule context="tei:schemaSpec/tei:classRef | tei:specGrp/tei:classRef">
+        <sch:report test="@org or @cardinality">A reference to a
+        model class can only specify details of the organization,
+        optionality, or repeatability of the class members when it is
+        part of a content model (i.e., is a descendant of
+        &lt;content>, which this &lt;classRef> is not.</sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="key" usage="req">
-      <desc versionDate="2010-07-06" xml:lang="en">the identifier used for the required class within the
-        source indicated.</desc>
+      <desc versionDate="2010-07-06" xml:lang="en">the identifier used for the required class within the source indicated.</desc>
       <desc versionDate="2024-02-28" xml:lang="ja">指示されたソースの中の要求されたクラスに対して使用される識別子。</desc>
       <datatype><dataRef key="teidata.xmlName"/></datatype>
     </attDef>
-    <attDef ident="expand" usage="opt">
+    <attList org="choice">
+      <attDef ident="include">
+        <desc versionDate="2011-09-21" xml:lang="en">supplies a list of class members which are to be included in the schema being defined.</desc>
+        <desc versionDate="2024-02-28" xml:lang="ja">定義されているスキーマに含まれるクラスメンバーのリスト。</desc>
+        <datatype minOccurs="0" maxOccurs="unbounded"><dataRef key="teidata.xmlName"/></datatype>
+      </attDef>
+      <attDef ident="except">
+        <desc versionDate="2011-09-21" xml:lang="en">supplies a list of class members which are to be excluded from the schema being defined.</desc>
+        <desc versionDate="2024-02-28" xml:lang="ja">定義されているスキーマから除外するクラスメンバーのリスト。</desc>
+        <datatype minOccurs="0" maxOccurs="unbounded"><dataRef key="teidata.xmlName"/></datatype>
+      </attDef>     
+    </attList>
+    <attDef ident="cardinality" usage="opt">
+      <gloss versionDate="2025-09-10" xml:lang="en">class members occur</gloss>
+      <desc versionDate="2025-09-10" xml:lang="en">indicates the optionality and repeatability of each member of the class at the point of reference</desc>
+      <datatype minOccurs="1" maxOccurs="1">
+        <dataRef key="data.enumerated"/>
+      </datatype>
+      <defaultVal>one</defaultVal>
+      <valList type="closed">
+        <valItem ident="one">
+          <gloss versionDate="2025-09-10" xml:lang="en">one</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">each class member occurs without repetition or optionality</desc>
+        </valItem>        
+        <!-- valItem ident="single">
+          <gloss versionDate="2025-09-10" xml:lang="en">single</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">same as <val>one</val></desc>
+        </valItem>
+        <valItem ident="1">
+          <gloss versionDate="2025-09-10" xml:lang="en">digit one</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">same as <val>one</val></desc>
+        </valItem -->
+        <valItem ident="oneOrMore">
+          <gloss versionDate="2025-09-10" xml:lang="en">one or more</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">each class member occurs as repeatable, but not optional</desc>
+        </valItem>        
+        <!-- valItem ident="repeatable">
+          <gloss versionDate="2025-09-10" xml:lang="en">repeatable</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">same as <val>oneOrMore</val></desc>
+        </valItem>
+        <valItem ident="+"> could be restored if & when we no longer support DTDs
+          <gloss versionDate="2025-09-10" xml:lang="en">plus sign</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">same as <val>oneOrMore</val></desc>
+        </valItem -->        
+        <valItem ident="zeroOrOne">
+          <gloss versionDate="2025-09-10" xml:lang="en">zero or one</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">each class member occurs as optional, but not repeatable</desc>
+        </valItem>        
+        <!-- valItem ident="optional">
+          <gloss versionDate="2025-09-10" xml:lang="en">optional</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">same as <val>zeroOrOne</val></desc>
+        </valItem>
+        <valItem ident="?"> could be restored if & when we no longer support DTDs
+          <gloss versionDate="2025-09-10" xml:lang="en">question mark</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">same as <val>zeroOrOne</val></desc>
+        </valItem -->        
+        <valItem ident="zeroOrMore">
+          <gloss versionDate="2025-09-10" xml:lang="en">zero or more</gloss>
+          <desc versionDate="2025-09-15" xml:lang="en">each class member occurs as optional and repeatable</desc>
+        </valItem>
+        <!-- valItem ident="optionalRepatable">
+          <gloss versionDate="2025-09-10" xml:lang="en">optional</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">same as <val>zeroOrMore</val></desc>
+        </valItem>
+        <valItem ident="*"> could be restored if & when we no longer support DTDs
+          <gloss versionDate="2025-09-10" xml:lang="en">asterisk</gloss>
+          <desc versionDate="2025-09-10" xml:lang="en">same as <val>zeroOrMore</val></desc>
+        </valItem -->        
+      </valList>
+      <remarks versionDate="2025-09-10" xml:lang="en">
+	<!-- <p> -->
+	<!--   <lb/><code>α&#x2000;&amp;&#x2000;β&#x2000;&amp;&#x2000;γ</code> -->
+	<!--   <lb/><code>α&#x2001;&amp;&#x2001;β&#x2001;&amp;&#x2001;γ</code> -->
+	<!--   <lb/><code>α&#x2002;&amp;&#x2002;β&#x2002;&amp;&#x2002;γ</code> -->
+	<!--   <lb/><code>α&#x2003;&amp;&#x2003;β&#x2003;&amp;&#x2003;γ</code> -->
+	<!--   <lb/><code>α&#x2004;&amp;&#x2004;β&#x2004;&amp;&#x2004;γ</code> -->
+	<!--   <lb/><code>α&#x2005;&amp;&#x2005;β&#x2005;&amp;&#x2005;γ</code> -->
+	<!--   <lb/><code>α&#x2006;&amp;&#x2006;β&#x2006;&amp;&#x2006;γ</code> -->
+	<!--   <lb/><code>α&#x2007;&amp;&#x2007;β&#x2007;&amp;&#x2007;γ</code> -->
+	<!--   <lb/><code>α&#x2008;&amp;&#x2008;β&#x2008;&amp;&#x2008;γ</code> -->
+	<!--   <lb/><code>α&#x2009;&amp;&#x2009;β&#x2009;&amp;&#x2009;γ</code> -->
+	<!--   <lb/><code>α&#x200A;&amp;&#x200A;β&#x200A;&amp;&#x200A;γ</code> -->
+	<!-- </p> -->
+	<p>Given a class with members <ident>χ</ident>,
+	<ident>ψ</ident>, and <ident>ω</ident>, then a reference to
+	the class within a content model is understood as being a
+	reference to <code>χ|ψ|ω</code> (or
+	<code>χ&#x2009;&amp;&#x2009;ψ&#x2009;&amp;&#x2009;ω</code>, depending
+	on the value of <att>org</att>) when the value of
+	<att>cardinality</att> is <val>one</val> (the default); to
+	<code>χ?|ψ?|ω?</code> when its value is <val>zeroOrOne</val>;
+	to <code>χ+|ψ+|ω+</code> when its value is
+	<val>oneOrMore</val>; and to <code>χ*|ψ*|ω*</code> when its
+	value is <val>zeroOrMore</val>.</p>
+	<p>For me information on the use and meaning of alternation
+	(<code>|</code>) and interleaving (<code>&amp;</code>) see
+	<ptr target="#SG145"/>.</p>
+	<!-- Following para should be moved to #SG145 or thereabouts -->
+        <p>Note that in the common case of <tag>classRef org="choice"
+        minOccurs="0" maxOccurs="unbounded"</tag> the value of
+        <att>cardinality</att> is essentially irrelevant. (It changes
+        the pattern that is used to validate elements, but not which
+        sets of elements would be considered valid vs. invalid.)</p>
+      </remarks>
+    </attDef>
+    <attDef ident="org" mode="change">
+      <desc versionDate="2025-09-16" xml:lang="en">indicates whether one or all of the members of the referenced class are available</desc>
+      <defaultVal>choice</defaultVal>
+      <valList mode="replace" type="closed">
+	<valItem ident="choice">
+	  <desc versionDate="2025-09-15" xml:lang="en">The members of
+	  the referred class are available at this point in the content
+	  model in alternation with one another.</desc>
+	</valItem>
+	<valItem ident="interleave">
+	  <desc versionDate="2025-09-15" xml:lang="en">The members of
+	  the referred class are available at this point in the content
+	  model interleaved with one another.</desc>
+	</valItem>
+      </valList>
+      <remarks xml:lang="en" versionDate="2025-09-15">
+	<p>Given a class with members <ident>α</ident>,
+	<ident>β</ident>, and <ident>γ</ident>, then a reference to
+	the class within a content model is understood as being a
+	reference to <code>α|β|γ</code> when <att>org</att> is
+	<val>choice</val> (the default); and to
+	<code>α&#x2009;&amp;&#x2009;β&#x2009;&amp;&#x2009;γ</code>
+	when it has the value
+	<val>group</val>.</p>
+	<p>For more information on the use and meaning of alternation
+	(<code>|</code>) and interleaving (<code>&amp;</code>) see
+	<ptr target="#SG145"/>.</p>
+	<!-- Following para should be moved to #SG145 or thereabouts -->
+	<p>Note that the cardinality of each member of the class is
+	separately asserted by the <att>cardinality</att> attribute,
+	and the cardinality of the class reference as a whole is
+	separately asserted by the <att>minOccur</att> and
+	<att>maxOccurs</att> attributes.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="expand" usage="opt" validUntil="2027-03-02">
+      <desc type="deprecationInfo" versionDate="2024-04-13" xml:lang="en">
+        Since classes are meant to be an unordered data structure, the
+        <att>expand</att> attribute will no longer be supported. The
+        <att>org</att> and <att>cardinality</att> attributes replace
+        the functionality of <att>expand</att> other than construction
+        of a sequence, and also permit class members to be
+        interleaved.
+        <!-- 
+        Class members will be considered to be either in alternation
+        or interleaved depending on the value of <att>org</att>; to
+        impose a sequence it will be necessary use <gi>elementRef</gi>
+        with references to the individual elements. The <att>cardinality</att>
+        attribute indicates whether the members of the class are
+        optional or repeatable. -->
+      </desc>
       <desc versionDate="2013-11-21" xml:lang="en">indicates how references
       to this class within a content model should be interpreted.</desc>
       <desc versionDate="2024-02-28" xml:lang="ja">内容モデル内でこのクラスへの参照がどのように解釈されるべきなのかを示す。</desc>
@@ -51,36 +225,24 @@
         </valItem>
       </valList>
       <remarks versionDate="2013-11-20" xml:lang="en">
-	<!-- Encoding (and whitespace) updated 2019-07-07 w/ no change to text -->
-	<p>If the members of the class are <ident>a</ident>,
-	<ident>b</ident> and <ident>c</ident>, then a reference to the
-	class within a content model is understood as being a
-	reference to <code>a|b|c</code> when <att>expand</att> is
-	omitted or has the value <val>alternation</val>; to
-	<code>a,b,c</code> when it has the value <val>sequence</val>;
-	to <code>(a?,b?,c?)</code> when it has the value
-	<val>sequenceOptional</val>; to <code>(a*,b*,c*)</code> when
-	it has the value <val>sequenceOptionalRepeatable</val>; or to
-	<code>(a+,b+,c+)</code> when it has the value
-	<val>sequenceRepeatable</val>.</p>
+        <!-- Encoding (and whitespace) updated 2019-07-07 w/ no change to text -->
+        <p>If the members of the class are <ident>a</ident>,
+        <ident>b</ident>, and <ident>c</ident>, then a reference to the
+        class within a content model is understood as being a
+        reference to <code>a|b|c</code> when <att>expand</att> is
+        omitted or has the value <val>alternation</val>; to
+        <code>a,b,c</code> when it has the value <val>sequence</val>;
+        to <code>(a?,b?,c?)</code> when it has the value
+        <val>sequenceOptional</val>; to <code>(a*,b*,c*)</code> when
+        it has the value <val>sequenceOptionalRepeatable</val>; or to
+        <code>(a+,b+,c+)</code> when it has the value
+        <val>sequenceRepeatable</val>.</p>
       </remarks>
       <remarks versionDate="2024-02-28" xml:lang="ja"><p>クラスのメンバーが <val>a</val>、<val>b</val>そして<val>c</val>であるとして、
         <att>expand</att>の値が<val>alternation</val>ならば、内容モデル内の該当クラスへの参照は，<val>a|b|c</val>への参照として理解される。
         また、<att>expand</att>の値が<val>sequence</val>ならば、<val>a,b,c</val>への，<val>sequenceOptional</val>ならば<val>(a?,b?,c?)</val>への、
         <val>sequenceOptionalRepeatable</val>ならば<val>(a*,b*,c*)</val>への、そして<val>sequenceRepeatable</val>ならば<val>(a+,b+,c+)</val>への参照としてそれぞれ理解される。</p></remarks>
     </attDef>
-    <attList org="choice">
-      <attDef ident="include">
-        <desc versionDate="2011-09-21" xml:lang="en">supplies a list of class members which are to be included in the schema being defined.</desc>
-        <desc versionDate="2024-02-28" xml:lang="ja">定義されているスキーマに含まれるクラスメンバーのリスト。</desc>
-        <datatype minOccurs="0" maxOccurs="unbounded"><dataRef key="teidata.xmlName"/></datatype>
-      </attDef>
-      <attDef ident="except">
-        <desc versionDate="2011-09-21" xml:lang="en">supplies a list of class members which are to be excluded from the schema being defined.</desc>
-        <desc versionDate="2024-02-28" xml:lang="ja">定義されているスキーマから除外するクラスメンバーのリスト。</desc>
-        <datatype minOccurs="0" maxOccurs="unbounded"><dataRef key="teidata.xmlName"/></datatype>
-      </attDef>     
-    </attList>
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-classRef-egXML-uc" source="#UND">
