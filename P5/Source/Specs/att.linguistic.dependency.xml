@@ -4,23 +4,40 @@
 <!--Note the above PI substitution that enables us to use the added spec file. The original PI is below:
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>-->
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" xml:id="ATTLINGDEP" type="atts" ident="att.linguistic.dependency">
-  <desc versionDate="2025-02-21" xml:lang="en">provides attributes for annotating dependency relations between word-level elements.</desc>
+  <desc versionDate="2025-12-02" xml:lang="en">provides attributes for
+    annotating dependency relations between word-level elements.</desc>
   <classes/>
   <attList>
-    <attDef ident="head" usage="opt">
-      <gloss versionDate="2025-02-21" xml:lang="en">syntactic head of a dependency relation</gloss>
-      <desc versionDate="2025-02-21" xml:lang="en">encodes a syntactic
-        dependency relation between the element bearing this attribute and its
-        syntactic head, i.e. the element having the attribute value as the value of
-        its <att>n</att> attribute.</desc>
+    <attDef ident="depN" usage="opt">
+      <gloss versionDate="2025-12-02" xml:lang="en">token index</gloss>
+      <desc versionDate="2025-12-02" xml:lang="en">encodes the token index or index
+        range of a word-level element in a syntactic dependency relation.</desc>
       <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
+      <valDesc versionDate="2025-12-02" xml:lang="en">is by convention an
+        integer or a hyphen-separated range of integers.</valDesc>
     </attDef>
-    <attDef ident="deprel" usage="opt">
-      <gloss versionDate="2025-02-21" xml:lang="en">type of a dependency relation</gloss>
-      <desc versionDate="2025-02-21" xml:lang="en">provides a label for the type
-        of the syntactic dependency relation between the element bearing this
-        attribute and the element identified by its <att>head</att> attribute.</desc>
-      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
+    <attDef ident="depR" usage="opt">
+      <gloss versionDate="2025-12-02" xml:lang="en">syntactic dependency relation</gloss>
+      <desc versionDate="2025-12-02" xml:lang="en">encodes a dependency relation
+        between the element bearing this attribute and its syntactic head in
+        terms of a pair consisting of the head’s token index and <!-- a label
+        for --> the type of the dependency relation.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.text"/></datatype>
+      <valDesc versionDate="2025-12-02" xml:lang="en">should use a colon to
+        separate the head’s token index and <!-- the label for --> the type of
+        the dependency relation.</valDesc>
+    </attDef>
+    <attDef ident="depE" usage="opt">
+      <gloss versionDate="2025-12-02" xml:lang="en">enhanced syntactic dependency relations</gloss>
+      <desc versionDate="2025-12-02" xml:lang="en">encodes enhanced syntactic
+        dependency relations between the element bearing this attribute and its
+        syntactic heads in terms of a list of pairs each consisting of the
+        head’s token index and <!-- a label for --> the type of the dependency
+        relation.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.text"/></datatype>
+      <valDesc versionDate="2025-12-02" xml:lang="en">should use a colon to
+        separate the head’s token index and <!-- the label for --> the type of
+        the dependency relation, and a pipe symbol as a list-item separator.</valDesc>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
@@ -28,10 +45,10 @@
     books.</q>.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <s>
-        <w n="1" head="2" deprel="nsubj" pos="PRON" lemma="she">She</w>
-        <w n="2" head="0" deprel="root" pos="VERB" lemma="buy">buys</w>
-        <w n="3" head="2" deprel="obj" pos="NOUN" lemma="book" join="right">books</w>
-        <pc n="4" head="2" deprel="punct" pos="PUNCT" lemma=".">.</pc>
+        <w depN="1" depR="2:nsubj" pos="PRON" lemma="she">She</w>
+        <w depN="2" depR="0:root" pos="VERB" lemma="buy">buys</w>
+        <w depN="3" depR="2:obj" pos="NOUN" lemma="book" join="right">books</w>
+        <pc depN="4" depR="2:punct" pos="PUNCT" lemma=".">.</pc>
       </s>
     </egXML>
   </exemplum>
@@ -40,16 +57,30 @@
     and sells books.</q>.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <s>
-        <w n="1" head="2 4" deprel="nsubj nsubj" pos="PRON PRP" msd="Case=Nom|Gender=Fem|Number=Sing|Person=3|PronType=Prs" lemma="she">She</w>
-        <w n="2" head="0" deprel="root" pos="VERB VBZ" msd="Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin" lemma="buy">buys</w>
-        <w n="3" head="4" deprel="cc" pos="CCONJ CC" lemma="and">and</w>
-        <w n="4" head="2 0" deprel="conj root" pos="VERB VBZ" msd="Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin" lemma="sell">sells</w>
-        <w n="5" head="2 4" deprel="obj obj" pos="NOUN NNS" msd="Number=Plur" lemma="book" join="right">books</w>
-        <pc n="6" head="2" deprel="punct" pos="PUNCT ." lemma=".">.</pc>
+        <w depN="1" depR="2:nsubj" depE="2:nsubj|4:nsubj" pos="PRON PRP" msd="Case=Nom|Gender=Fem|Number=Sing|Person=3|PronType=Prs" lemma="she">She</w>
+        <w depN="2" depR="0:root" depE="0:root" pos="VERB VBZ" msd="Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin" lemma="buy">buys</w>
+        <w depN="3" depR="4:cc" depE="4:cc" pos="CCONJ CC" lemma="and">and</w>
+        <w depN="4" depR="2:conj" depE="0:root|2:conj" pos="VERB VBZ" msd="Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin" lemma="sell">sells</w>
+        <w depN="5" depR="2:obj" depE="2:obj|4:obj" pos="NOUN NNS" msd="Number=Plur" lemma="book" join="right">books</w>
+        <pc depN="6" depR="2:punct" depE="2:punct" pos="PUNCT ." lemma=".">.</pc>
       </s>
     </egXML>
   </exemplum>
-  <remarks xml:lang="en" versionDate="2025-03-13">
+  <exemplum xml:lang="en">
+    <p>Universal Dependency (UD) annotation of the German noun phrase <q
+    xml:lang="de">ein Hotel zum Wohlfühlen</q>.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <phr>
+        <w depN="1" depR="2:det" pos="DET" lemma="eine">ein</w>
+        <w depN="2" depR="0:root" pos="NOUN" lemma="Hotel">Hotel</w>
+        <w depN="3-4" type="surface">zum</w>
+        <w depN="3" depR="5:case" pos="ADP" lemma="zu">zu</w>
+        <w depN="4" depR="5:det" pos="DET" lemma="die">dem</w>
+        <w depN="5" depR="2:nmod" pos="NOUN" lemma="Wohlfühlen">Wohlfühlen</w>
+      </phr>
+    </egXML>
+  </exemplum>
+  <remarks xml:lang="en" versionDate="2025-12-02">
     <p>In the UD examples above, a <att>head</att> value of <val>0</val> by
       convention refers to an unrepresented, <soCalled>virtual</soCalled>, root
       node. The corresponding <att>deprel</att> value is <val>root</val>. (For
@@ -63,7 +94,7 @@
         </row>
         <row>
           <cell><code>ID</code></cell>
-          <cell><att>n</att></cell>
+          <cell><att>depN</att></cell>
           <cell><ident type="class">att.global</ident></cell>
         </row>
         <row>
@@ -93,17 +124,17 @@
         </row>
         <row>
           <cell><code>HEAD</code></cell>
-          <cell><att>head</att></cell>
+          <cell><att>depR</att>, part before <code>:</code></cell>
           <cell><ident type="class">att.linguistic.dependency</ident></cell>
         </row>
         <row>
           <cell><code>DEPREL</code></cell>
-          <cell><att>deprel</att></cell>
+          <cell><att>depR</att>, part after <code>:</code></cell>
           <cell><ident type="class">att.linguistic.dependency</ident></cell>
         </row>
         <row>
           <cell><code>DEPS</code></cell>
-          <cell>additional list items in <att>head</att> and <att>deprel</att></cell>
+          <cell><att>depE</att></cell>
           <cell><ident type="class">att.linguistic.dependency</ident></cell>
         </row>
         <row>
