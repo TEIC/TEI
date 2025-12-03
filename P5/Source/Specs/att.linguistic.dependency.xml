@@ -13,8 +13,9 @@
       <desc versionDate="2025-12-02" xml:lang="en">encodes the token index or index
         range of a word-level element in a syntactic dependency relation.</desc>
       <datatype><dataRef key="teidata.word"/></datatype>
-      <valDesc versionDate="2025-12-02" xml:lang="en">is by convention an
-        integer or a hyphen-separated range of integers.</valDesc>
+      <valDesc versionDate="2025-12-02" xml:lang="en">is usually an
+        integer or a hyphen-separated range of integers; in special cases one
+        can also use specific notations like <val>5.1</val>.</valDesc>
     </attDef>
     <attDef ident="depR" usage="opt">
       <gloss versionDate="2025-12-02" xml:lang="en">syntactic dependency relation</gloss>
@@ -63,6 +64,25 @@
         <w depN="4" depR="2:conj" depE="0:root|2:conj" pos="VERB VBZ" msd="Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin" lemma="sell">sells</w>
         <w depN="5" depR="2:obj" depE="2:obj|4:obj" pos="NOUN NNS" msd="Number=Plur" lemma="book" join="right">books</w>
         <pc depN="6" depR="2:punct" depE="2:punct" pos="PUNCT ." lemma=".">.</pc>
+      </s>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <p>Universal Dependency (UD) annotation of the English sentence
+      <mentioned>She likes coffee and he tea</mentioned> (featuring an empty
+      second occurrence of <mentioned>likes</mentioned>, with token index
+      <val>5.1</val>).<note>For the representation of empty nodes in UD, cf.
+      <ptr target="https://universaldependencies.org/format.html#words-tokens-and-empty-nodes"/>.</note></p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <s>
+        <w depN="1" depR="2:nsubj" pos="PRON" lemma="she">She</w>
+        <w depN="2" depR="0:root" pos="VERB" lemma="like">likes</w>
+        <w depN="3" depR="2:obj" pos="NOUN" lemma="coffee">coffee</w>
+        <w depN="4" depR="5.1:cc" pos="CCONJ" lemma="and">and</w>
+        <w depN="5" depR="5.1:nsubj" pos="PRON" lemma="he">he</w>
+        <w depN="5.1" depR="2:conj" pos="VERB" lemma="like">likes</w>
+        <w depN="6" depR="5.1:obj" pos="NOUN" lemma="tea" join="right">tea</w>
+        <pc depN="7" depR="5.1:punct" pos="PUNCT" lemma=".">.</pc>
       </s>
     </egXML>
   </exemplum>
