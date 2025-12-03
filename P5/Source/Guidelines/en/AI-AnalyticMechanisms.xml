@@ -1213,13 +1213,13 @@ inverse direction, the arcs correspond to the relation of <!-- direct -->
 syntactic subordination or <term>dependency</term>, holding between a
 <term>dependent</term> node and a <term>head</term> node each. Arcs, in turn,
 are labelled with the type of the dependency relation
-(<mentioned>nsubj</mentioned>, <mentioned>obj</mentioned>,
-<mentioned>punct</mentioned>).<note place="bottom">The labels for types of
+(<q>nsubj</q>, <q>obj</q>,
+<q>punct</q>).<note place="bottom">The labels for types of
 dependency relations are taken from the Universal Dependencies (UD) inventory
 (cf. <ptr target="https://universaldependencies.org/u/dep/index.html"/>).</note>
-In the case of the arc labelled with <mentioned>obj</mentioned> and connecting
+For instance, in the case of the arc labelled with <q>obj</q> and connecting
 the nodes labelled with the tokens <mentioned>buys</mentioned> and
-<mentioned>books</mentioned>, for instance, the latter node is said to be the
+<mentioned>books</mentioned>, the latter node is said to be the
 dependent node and the former its head node.</p>
 <p>An equivalent rendition of this graph is given below, where the direction of
 the arrowless arcs is implicitly given by the vertical dimension. For
@@ -1274,7 +1274,7 @@ corresponding dependency graph below.
 </figure>
 Here, the node with token index 2 and label <mentioned>buys</mentioned> is
 connected to an unlabelled node with token index 0 via an arc labelled with
-<mentioned>root</mentioned>. Except for the <soCalled>virtual</soCalled> root
+<q>root</q>. Except for the <soCalled>virtual</soCalled> root
 node, each node is, in addition, annotated with lemmas and part-of-speech
 tags.</p>
 <p>In order to encode the linguistic annotation from the above CoNLL-U example,
@@ -1312,7 +1312,7 @@ EWT</ref> corpus.</note>
 4	sells	sell	VERB	VBZ	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	2	conj	0:root|2:conj	_
 5	books	book	NOUN	NNS	Number=Plur	2	obj	2:obj|4:obj	SpaceAfter=No
 6	.	.	PUNCT	.	_	2	punct	2:punct	_</eg>
-In this linguistic annnotation of the sentence <mentioned>She buys and sells
+In this linguistic annotation of the sentence <mentioned>She buys and sells
 books.</mentioned> with coordination ellipsis, there are additional non-empty
 columns. The fifth column provides a concurrent part-of-speech tagging using a
 non-UD tagset. The sixth column adds a pipe-separated list of morphosyntactic
@@ -1323,8 +1323,12 @@ with multiple arcs, connecting them with more than one head node. For
 convenience, those additional arcs are rendered with arrowheads.
 <figure>
 <graphic width="600px" url="Images/dependency4.png"/>
-</figure>
-The above example may be encoded in TEI XML as follows:
+</figure></p>
+<p>The above representation makes an explicit claim that the pronoun
+<mentioned>she</mentioned> is the subject of both the verb <mentioned>buy</mentioned> and
+the verb <mentioned>sell</mentioned>, while the noun <mentioned>books</mentioned> acts as
+the object of both these verbs.</p>
+<p>The above example may be encoded in TEI XML as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <s>
   <w depN="1" depR="2:nsubj" depE="2:nsubj|4:nsubj" pos="PRON PRP" msd="Case=Nom|Gender=Fem|Number=Sing|Person=3|PronType=Prs" lemma="she">She</w>
@@ -1334,8 +1338,8 @@ The above example may be encoded in TEI XML as follows:
   <w depN="5" depR="2:obj" depE="2:obj|4:obj" pos="NOUN NNS" msd="Number=Plur" lemma="book" join="right">books</w>
   <pc depN="6" depR="2:punct" depE="2:punct" pos="PUNCT ." lemma=".">.</pc>
 </s>
-</egXML>
-As in the CoNLL-U format, the enhanced dependency graph <!-- with additional
+</egXML></p>
+<p>As in the CoNLL-U format, the enhanced dependency graph <!-- with additional
 dependency relations --> is represented by pipe-separated list values of
 <att>depE</att> attributes. The verb form <mentioned>sells</mentioned> with
 token index 4, for instance, has <val>0:root|2:conj</val> as its <att>depE</att>
