@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" ident="attDef">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" xml:id="gi-attDef" ident="attDef">
   <gloss versionDate="2005-01-14" xml:lang="en">attribute definition</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">속성 정의</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">屬性定義</gloss>
@@ -37,7 +37,7 @@
         <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
-  <constraintSpec ident="attDefContents" scheme="schematron">
+  <constraintSpec ident="attDefContents" scheme="schematron" xml:lang="en">
     <constraint>
       <sch:ns prefix="teix" uri="http://www.tei-c.org/ns/Examples"/>
       <sch:rule context="tei:attDef">
@@ -55,7 +55,7 @@
       </sch:rule>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="noDefault4Required" scheme="schematron">
+  <constraintSpec ident="noDefault4Required" scheme="schematron" xml:lang="en">
     <constraint>
       <sch:rule context="tei:attDef[@usage eq 'req']">
         <sch:report test="tei:defaultVal">Since the @<sch:value-of select="@ident"/> attribute is required, it will always be specified. Thus the default value (of "<sch:value-of select="normalize-space(tei:defaultVal)"/>") will never be used. Either change the definition of the attribute so it is not required ("rec" or "opt"), or remove the defaultVal element.</sch:report>
@@ -68,7 +68,7 @@
   <!-- made them separate for now to make debugging easier. After we're -->
   <!-- confident these work properly, could condense them to one. -->
   <!-- -Syd, 2015-03-29 -->
-  <constraintSpec ident="defaultIsInClosedList-twoOrMore" scheme="schematron">
+  <constraintSpec ident="defaultIsInClosedList-twoOrMore" scheme="schematron" xml:lang="en">
     <!-- The use of the '>' operator (expressed as "&gt;"), below, is
          not needed for comparison of a sequence, but seems to
          automatically handle a left hand operand that is an
@@ -86,7 +86,7 @@
       </sch:rule>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="defaultIsInClosedList-one" scheme="schematron">
+  <constraintSpec ident="defaultIsInClosedList-one" scheme="schematron" xml:lang="en">
     <constraint>
       <sch:rule context="tei:attDef[     tei:defaultVal
                                      and tei:valList[ @type eq 'closed']
@@ -123,7 +123,7 @@
           <gloss xml:lang="zh-TW" versionDate="2007-05-02">必備的</gloss>
         </valItem>
         <valItem ident="rec">
-          <gloss versionDate="2005-01-14" xml:lang="en">recommended </gloss>
+          <gloss versionDate="2005-01-14" xml:lang="en">recommended</gloss>
           <gloss xml:lang="zh-TW" versionDate="2007-05-02">推薦的</gloss>
           <gloss versionDate="2008-04-05" xml:lang="ja">推奨。</gloss>
           <gloss versionDate="2007-06-12" xml:lang="fr">recommandé</gloss>
@@ -131,7 +131,7 @@
           <gloss versionDate="2007-05-04" xml:lang="es">recomendado</gloss>
         </valItem>
         <valItem ident="opt">
-          <gloss versionDate="2005-01-14" xml:lang="en">optional </gloss>
+          <gloss versionDate="2005-01-14" xml:lang="en">optional</gloss>
           <gloss versionDate="2008-04-05" xml:lang="ja">選択的。</gloss>
           <gloss versionDate="2007-06-12" xml:lang="fr">facultatif</gloss>
           <gloss versionDate="2007-11-06" xml:lang="it">facoltativo</gloss>
@@ -142,7 +142,7 @@
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-attDef-egXML-yj">
       <attDef usage="rec" ident="type">
         <desc>specifies a name conventionally used for this level of subdivision, e.g.
         <val>act</val>, <val>volume</val>, <val>book</val>, <val>section</val>, <val>canto</val>,
@@ -154,7 +154,7 @@
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-attDef-egXML-dt">
       <attDef usage="rec" ident="type">
         <desc>spécifie un nom conventionnellement utilisé pour ce niveau de divisions , par ex.
         <val>acte</val>, <val>volume</val>, <val>livre</val>, <val>section</val>,
@@ -166,7 +166,7 @@
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-attDef-egXML-wv">
       <attDef usage="rec" ident="type">
         <desc>具體指定慣例上使用的分部名稱，例如：
         <val>幕</val>, <val>卷</val>, <val>冊</val>, <val>節</val>, <val>篇章</val>,

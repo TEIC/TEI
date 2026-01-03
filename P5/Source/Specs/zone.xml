@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" ident="zone" module="transcr">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" ident="zone" xml:id="gi-zone" module="transcr">
   <desc versionDate="2011-11-20" xml:lang="en">defines any two-dimensional area within a <gi>surface</gi>
 element.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko"><gi>surface</gi> 요소 내에 포함된 직사각형 영역을 정의한다.</desc>
@@ -10,14 +10,14 @@ element.</desc>
   <desc versionDate="2008-03-30" xml:lang="fr">définit une surface planaire de tout type par rapport à un élément <gi>surface</gi>.</desc>
   <desc versionDate="2007-11-06" xml:lang="it">definisce un'area bidimensionale contenuta all'interno di un elemento <gi>surface</gi></desc>
   <desc versionDate="2018-04-15" xml:lang="de">beschreibt eine beliebige zweidimensionale Fläche innerhalb eines
-    <gi>surface</gi>-Elements</desc>
+    <gi>surface</gi>-Elements.</desc>
   <classes>
-    <memberOf key="model.linePart"/>
-    <memberOf key="model.standOffPart"/>
     <memberOf key="att.global"/>
     <memberOf key="att.coordinated"/>
     <memberOf key="att.typed"/>
     <memberOf key="att.written"/>
+    <memberOf key="model.linePart"/>
+    <memberOf key="model.standOffPart"/>
   </classes>
   <content>
     <alternate minOccurs="0" maxOccurs="unbounded">
@@ -40,14 +40,13 @@ element.</desc>
       <desc versionDate="2018-04-15" xml:lang="de">gibt das Ausmaß der Drehung (im Uhrzeigersinn) dieser <gi>zone</gi> an.
         Als Bezugspunkt gilt dabei die natürliche Ausrichtung des <gi>surface</gi>-Elternelements, die entweder
         im <gi>msDesc</gi>-Element beschrieben ist oder durch die Koordinaten des <gi>surface</gi>-Elements selbst.
-        Die Drehung wird in Bogengrad angegeben. 
-      </desc>
-      <datatype minOccurs="1" maxOccurs="1"><dataRef key="teidata.count"/></datatype>
+        Die Drehung wird in Bogengrad angegeben.</desc>
+      <datatype minOccurs="1" maxOccurs="1"><dataRef key="teidata.numeric"/></datatype>
       <defaultVal>0</defaultVal>
     </attDef>
   </attList>
   <exemplum xml:lang="und">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-zone-egXML-nw" source="#UND">
       <surface ulx="14.54" uly="16.14" lrx="0" lry="0">
         <graphic url="stone.jpg"/>
         <zone points="4.6,6.3 5.25,5.85 6.2,6.6 8.19222,7.4125 9.89222,6.5875 10.9422,6.1375 11.4422,6.7125 8.21722,8.3125 6.2,7.65"/>
@@ -57,7 +56,7 @@ element.</desc>
 in section <ptr target="#PH-surfzone"/>.    </p>
   </exemplum>
   <exemplum xml:lang="und">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-zone-egXML-bw" source="#UND">
       <facsimile>
         <surface ulx="50" uly="20" lrx="400" lry="280">
           <zone ulx="0" uly="0" lrx="500" lry="321">
@@ -82,17 +81,17 @@ by its parent surface.</p>
     at the end of the sequence is optional. To encode an 
     unclosed path, use the <gi>path</gi> element.</p>
   </remarks>
-  <remarks xml:lang="fr" versionDate="2007-06-12">
+  <remarks versionDate="2007-06-12" xml:lang="fr">
     <p>La position de chaque zone pour une surface donnée est toujours définie par rapport au système de coordonnées défini pour cette surface. Tout élément graphique contenu par une zone se représente par toute la zone.</p>
   </remarks>
-  <remarks xml:lang="ja" versionDate="2008-04-05">
+  <remarks versionDate="2008-04-05" xml:lang="ja">
     <p>
 要素<gi>zone</gi>が表す場所は全て、左表システムを参照して定義される。
 当該要素<gi>zone</gi>に含まれる要素<gi>graphic</gi>は、当該要素
 <gi>zone</gi>が表す面全体を示す。
 </p>
   </remarks>
-  <remarks xml:lang="de" versionDate="2018-04-15">
+  <remarks versionDate="2018-04-15" xml:lang="de">
     <p>Die Position jeder <gi>zone</gi> einer <gi>surface</gi> ist
       immer durch Bezugnahme auf das Koordinatensystem dieser
       <gi>surface</gi> definiert. </p>

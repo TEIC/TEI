@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" ident="constraintSpec">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" xml:id="gi-constraintSpec" ident="constraintSpec">
   <gloss versionDate="2009-06-10" xml:lang="en">constraint on schema</gloss>
-
   <gloss versionDate="2024-02-28" xml:lang="ja">スキーマの制約</gloss>
   <desc versionDate="2017-06-24" xml:lang="en">contains a formal constraint, typically expressed in a rule-based schema language, to which a construct must conform in order to be considered valid</desc>
-  <desc versionDate="2024-02-28" xml:lang="ja">〔データの〕構造が妥当であるために満たしていなければならない形式的な制約。
-    通常は規則ベースのスキーマ言語で表現される。</desc>
+  <desc versionDate="2024-02-28" xml:lang="ja">〔データの〕構造が妥当であるために満たしていなければならない形式的な制約。 通常は規則ベースのスキーマ言語で表現される。</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.identified"/>
@@ -23,7 +21,7 @@
       <elementRef key="constraint" minOccurs="0" maxOccurs="1"/>
     </sequence>
   </content>
-  <constraintSpec scheme="schematron" ident="empty-based-on-mode">
+  <constraintSpec scheme="schematron" ident="empty-based-on-mode" xml:lang="en">
     <!-- 
          This constraint specification is much like the
          "child-constraint-based-on-mode" for <elementSpec>, which
@@ -42,8 +40,8 @@
       </sch:rule>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="sch_no_more" scheme="schematron">
-    <desc xml:lang="en" versionDate="2018-07-06">Relationship between scheme attribute and contents: Schematron 1.x</desc>
+  <constraintSpec ident="sch_no_more" scheme="schematron" xml:lang="en">
+    <desc versionDate="2018-07-06" xml:lang="en">Relationship between scheme attribute and contents: Schematron 1.x</desc>
     <constraint>
       <sch:rule context="tei:constraintSpec">
         <sch:report test="tei:constraint/sch1x:* and @scheme = ('isoschematron','schematron')">Rules
@@ -53,8 +51,8 @@
       </sch:rule>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="isosch" scheme="schematron">
-    <desc xml:lang="en" versionDate="2018-07-06">Relationship between scheme attribute and contents: ISO Schematron</desc>
+  <constraintSpec ident="isosch" scheme="schematron" xml:lang="en">
+    <desc versionDate="2018-07-06" xml:lang="en">Relationship between scheme attribute and contents: ISO Schematron</desc>
     <constraint>
       <sch:rule context="tei:constraintSpec[ @mode = ('add','replace') or not( @mode ) ]">
         <sch:report test="tei:constraint/sch:* and not( @scheme eq 'schematron')">Rules
@@ -63,28 +61,26 @@
       </sch:rule>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="context-required" scheme="schematron" type="deprecationWarning" validUntil="2025-03-15">
-    <desc type="deprecationInfo" xml:lang="en" versionDate="2024-03-15">
-      The use of ISO Schematron <gi>sch:assert</gi> and
-      <gi>sch:report</gi> elements without a parent <gi>sch:rule</gi>
-      with a <att>context</att> attribute is deprecated — it will be
-      an error after 2025-03-15.</desc>
-    <!-- It is somewhat easier and clearer to use
+  <constraintSpec ident="context-required" scheme="schematron" xml:lang="en">
+    <!-- Note: This constraint also fires on some cases of <constraintDecl>. -->
+    <!-- It would be somewhat easier and clearer to use
          "tei:constraintSpec[ @scheme eq 'schematron']//( sch:assert | sch:report )"
-         as the context and then test for "ancestor::sch:rule/@context".
+         as the context, and then test for "ancestor::sch:rule/@context".
          But if we did that, then a user who had multiple
          <sch:assert>s and <sch:report>s in a single contextless
          constraint would get multiple messages. This way she only
          gets one message. -->
     <constraint>
-      <sch:rule context="tei:constraintSpec[ @scheme eq 'schematron']/tei:constraint[ .//sch:assert | .//sch:report ]">
+      <sch:rule context="(tei:constraintSpec|tei:constraintDecl)[ @scheme eq 'schematron'][ .//sch:assert | .//sch:report ]">
         <sch:let name="assertsHaveContext" value="for $a in .//sch:assert return exists( $a/ancestor::sch:rule/@context )"/>
         <sch:let name="reportsHaveContext" value="for $r in .//sch:report return exists( $r/ancestor::sch:rule/@context )"/>
-        <sch:report test="( $assertsHaveContext, $reportsHaveContext ) = false()" role="warning">The use of an &lt;sch:assert> or &lt;sch:report> that does not have a context (i.e., does not have an ancestor &lt;sch:rule> with a @context attribute) in an ISO Schematron constraint specification is deprecated, and will become invalid after 2025-03-15.</sch:report>
+        <sch:report test="( $assertsHaveContext, $reportsHaveContext ) = false()">An &lt;sch:assert&gt; or &lt;sch:report&gt;
+          element must be a descendant of an &lt;sch:rule&gt; that has a @context; one or more inside this
+          <sch:value-of select="local-name(.)"/> are not.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="unique-constraintSpec-ident" scheme="schematron">
+  <constraintSpec ident="unique-constraintSpec-ident" scheme="schematron" xml:lang="en">
     <constraint>
       <sch:rule context="tei:constraintSpec[ @mode eq 'add' or not( @mode ) ]">
         <sch:let name="myIdent" value="normalize-space(@ident)"/>
@@ -106,10 +102,10 @@
       <desc versionDate="2009-06-10" xml:lang="en">supplies the name of the language in which the constraints are defined</desc>
       <desc versionDate="2024-02-28" xml:lang="ja">制約を定義する言語名を示す。</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <constraintSpec scheme="schematron" ident="usage_based_on_mode">
+      <constraintSpec scheme="schematron" ident="usage_based_on_mode" xml:lang="en">
         <constraint>
           <sch:rule context="tei:constraintSpec[ @mode = ('add','replace')  or  not( @mode ) ]">
-            <sch:assert test="@scheme">The @scheme attribute of &lt;constraintSpec> is required when the @mode is <sch:value-of select="if (@mode) then concat('&quot;',@mode,'&quot;') else 'not specified'"/>.</sch:assert>
+            <sch:assert test="@scheme">The @scheme attribute of &lt;constraintSpec&gt; is required when the @mode is <sch:value-of select="if (@mode) then concat('&quot;',@mode,'&quot;') else 'not specified'"/> (here on "<sch:value-of select="@ident"/>")</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
@@ -146,7 +142,7 @@
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="semi">
         <valItem ident="deprecationWarning">
-          <desc xml:lang="en" versionDate="2018-09-17">Indicates that
+          <desc versionDate="2018-09-17" xml:lang="en">Indicates that
           this constraint specification warns that some other
           construct in the schema is deprecated.</desc>
         </valItem>
@@ -157,7 +153,7 @@
     <p>This constraint uses Schematron to enforce the presence of the
     <att>spanTo</att> attribute (which comes from an attribute class)
     on the <gi>addSpan</gi> element: </p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-constraintSpec-egXML-kl">
       <constraintSpec ident="demo-c1" scheme="schematron">
         <desc>Enforce the presence of the <att>spanTo</att> attribute</desc>
         <constraint>
@@ -169,7 +165,7 @@
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-constraintSpec-egXML-ho">
       <constraintSpec ident="demo-c2" scheme="schematron">
         <desc>Implement an accessibility rule which says that pictures
         should have textual explanations</desc>
@@ -186,7 +182,7 @@
   <exemplum xml:lang="en">
     <p>This constraint uses SPITBOL (a language which is not
     expressed in XML) to check whether the title and author are identical: </p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-constraintSpec-egXML-qp">
       <constraintSpec ident="author_ne_title" scheme="SPITBOL">
         <constraint> 
 (output = leq(title,author)  "title and author cannot be the same")
@@ -194,7 +190,7 @@
       </constraintSpec>
     </egXML>
   </exemplum>
-  <remarks xml:lang="en" versionDate="2022-04-09">
+  <remarks versionDate="2022-04-09" xml:lang="en">
     <p>A child <gi>constraint</gi> is required when the
     <att>mode</att> attribute has the value <val>replace</val> or
     <val>add</val> (or is not specified, as <val>add</val> is the

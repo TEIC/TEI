@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="speaker">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="gi-speaker" ident="speaker">
   <gloss versionDate="2005-01-14" xml:lang="en"/>
   <gloss versionDate="2009-01-06" xml:lang="fr">locuteur</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">講者</gloss>
@@ -21,12 +21,14 @@
     Figuren in einem Dramentext oder -fragment.</desc>
   <classes>
     <memberOf key="att.global"/>
-  </classes>
+    <memberOf key="att.placement"/>
+    <memberOf key="att.written"/>
+    </classes>
   <content>
     <macroRef key="macro.phraseSeq"/>
   </content>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-speaker-egXML-fm">
       <sp who="#ni #rsa">
         <speaker>Nancy and Robert</speaker>
         <stage type="delivery">(speaking simultaneously)</stage>
@@ -39,7 +41,7 @@
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Koltes_Quai_Vol">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-speaker-egXML-ym" source="#fr-ex-Koltes_Quai_Vol">
       <sp who="ko">
         <speaker>Koch.</speaker>
         <p>Ne risquez rien du tout, Monique ; rentrez.</p>
@@ -70,7 +72,7 @@
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n23-24">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-speaker-egXML-nj" source="#biblzh-tw_n23-24">
       <sp who="#zh-tw_ni #zh-tw_rsa">
         <speaker>梁山伯與祝英台t</speaker>
         <stage type="演講或歌唱">（同時)</stage>
@@ -82,7 +84,7 @@
       </list>
     </egXML>
   </exemplum>
-  <remarks xml:lang="en" versionDate="2023-01-13">
+  <remarks versionDate="2023-01-13" xml:lang="en">
     <p>This element may be used to transcribe which character is
     speaking in a dramatic text as indicated by the source text; the
     <att>who</att> attribute of an <gi>sp</gi> element may be used to
@@ -90,7 +92,7 @@
     provides information about the character speaking. Either or both
     may be used.</p>
   </remarks>
-  <remarks xml:lang="fr" versionDate="2007-06-12">
+  <remarks versionDate="2007-06-12" xml:lang="fr">
     <p>Cet élément est utilisé pour indiquer quel personnage prend la parole dans une pièce de
             théâtre ; l'attribut <att>who</att> est utilisé pour pointer vers un autre élément qui fournit des
             informations sur ce personnage. L'un et ou l'autre peuvent être utilisés.</p>

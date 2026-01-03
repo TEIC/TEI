@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" ident="styleDefDecl">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="header" xml:id="gi-styleDefDecl" ident="styleDefDecl">
   <gloss versionDate="2012-10-06" xml:lang="en">style definition language declaration</gloss>
   <desc versionDate="2013-04-12" xml:lang="en">specifies the name of the formal language in which style or
   renditional information is supplied elsewhere in the document. The
   specific version of the scheme may also be supplied.</desc>
   <classes>
     <memberOf key="att.global"/>
-    <memberOf key="model.encodingDescPart"/>
     <memberOf key="att.declarable"/>
     <memberOf key="att.styleDef"/>
+    <memberOf key="model.encodingDescPart"/>
   </classes>
   <content>
-    
-      <classRef key="model.pLike" minOccurs="0" maxOccurs="unbounded"/>
-    
+    <classRef key="model.pLike" minOccurs="0" maxOccurs="unbounded"/>
   </content>
+  <constraintSpec ident="styleDefDecl-is-declarable" scheme="schematron" xml:lang="en">
+    <constraint>
+      <sch:pattern is-a="declarable">
+        <sch:param name="tde" value="tei:styleDefDecl"/>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-styleDefDecl-egXML-us">
       <styleDefDecl scheme="css" schemeVersion="2.1"/>
       <!-- ... -->
       <tagsDecl>

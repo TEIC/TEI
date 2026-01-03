@@ -46,7 +46,13 @@
   <xsl:template match="svrl:failed-assert|svrl:successful-report">
     <xsl:variable name="outGI">
       <xsl:choose>
-        <xsl:when test="@role='nonfatal'">WARNING</xsl:when>
+	<!-- We explicitly test for the 6 values oXygen provides in its
+	     “sample values include” list, plus the 1 other value that
+	     actually occurs in P5. -->
+	<xsl:when test="@role = ('info','information')">INFORMATION</xsl:when>
+	<xsl:when test="@role = ('warn','warning')"    >WARNING</xsl:when>
+	<xsl:when test="@role eq 'nonfatal'"           >WARNING</xsl:when>
+	<xsl:when test="@role = ('error','fatal')"     >ERROR</xsl:when>
         <xsl:otherwise>ERROR</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>

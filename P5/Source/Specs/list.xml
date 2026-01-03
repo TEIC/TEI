@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="list">
-  <gloss xml:lang="en" versionDate="2007-06-12">list</gloss>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="gi-list" ident="list">
+  <gloss versionDate="2007-06-12" xml:lang="en">list</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">liste</gloss>
   <gloss versionDate="2016-11-25" xml:lang="de">Liste</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains any sequence of items organized as a list.</desc>
@@ -17,6 +17,7 @@
     <desc versionDate="2016-11-25" xml:lang="de">enthält eine Reihe von Listenpunkten, die als Liste organisiert sind.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.cmc"/>
     <memberOf key="att.sortable"/>
     <memberOf key="att.typed"/>
     <memberOf key="model.listLike"/>
@@ -82,7 +83,7 @@
       
     </sequence>
   </content>
-  <constraintSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="gloss-list-must-have-labels" scheme="schematron">
+  <constraintSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="gloss-list-must-have-labels" scheme="schematron" xml:lang="en">
     <constraint>
       <sch:rule context="tei:list[@type='gloss']">
 	<sch:assert test="tei:label">The content of a "gloss" list should include a sequence of one or more pairs of a label element followed by an item element</sch:assert>
@@ -97,14 +98,14 @@
     -->
     
     <attDef ident="type" usage="opt" mode="change">
-      <gloss xml:lang="en" versionDate="2017-06-25">type</gloss>
+      <gloss versionDate="2017-06-25" xml:lang="en">type</gloss>
       <gloss versionDate="2017-06-25" xml:lang="de">Typ</gloss>
       <desc versionDate="2014-07-29" xml:lang="en">describes the nature of the items in the list.</desc>
       <desc versionDate="2016-11-25" xml:lang="de">beschreibt die Art der Listenpunkte.</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="semi">
         <valItem ident="gloss">
-          <gloss xml:lang="en" versionDate="2017-06-25">gloss</gloss>
+          <gloss versionDate="2017-06-25" xml:lang="en">gloss</gloss>
           <gloss versionDate="2017-06-25" xml:lang="de">Gloss</gloss>
           <desc versionDate="2016-11-25" xml:lang="en">each list item glosses some term or concept, which is given by a <gi>label</gi> element
             preceding the list item.</desc>
@@ -122,7 +123,7 @@
             <desc versionDate="2016-11-25" xml:lang="de">jeder Listenpunkt erläutert einen Begriff oder ein Konzept, das von einem voranstehenden <gi>label</gi>-Element genannt wird.</desc>
         </valItem>
         <valItem ident="index">
-          <gloss xml:lang="en" versionDate="2017-06-25">index</gloss>
+          <gloss versionDate="2017-06-25" xml:lang="en">index</gloss>
           <gloss versionDate="2017-06-25" xml:lang="de">Index</gloss>
           <desc versionDate="2014-05-04" xml:lang="en">each list item is an entry in an index such as the alphabetical topical index 
           at the back of a print volume.</desc>
@@ -130,7 +131,7 @@
                 Sachregister am Ende einer Druckausgabe.</desc>
         </valItem>
         <valItem ident="instructions">
-          <gloss xml:lang="en" versionDate="2017-06-25">instructions</gloss>
+          <gloss versionDate="2017-06-25" xml:lang="en">instructions</gloss>
           <gloss versionDate="2017-06-25" xml:lang="de">Arbeitsschritt</gloss>
           <desc versionDate="2014-05-04" xml:lang="en">each list item is a step in a sequence of instructions, as in a
             recipe.</desc>
@@ -138,7 +139,7 @@
                 wie z. B. in einem Rezept.</desc>
         </valItem>
         <valItem ident="litany">
-          <gloss xml:lang="en" versionDate="2017-06-25">litany</gloss>
+          <gloss versionDate="2017-06-25" xml:lang="en">litany</gloss>
           <gloss versionDate="2017-06-25" xml:lang="de">Litanei</gloss>
           <desc versionDate="2014-05-04" xml:lang="en">each list item is one of a sequence of petitions, supplications 
             or invocations, typically in a religious ritual.</desc>
@@ -146,7 +147,7 @@
                 üblicherweise in einem religiösen Ritual verwendet werden.</desc>
         </valItem>
         <valItem ident="syllogism">
-          <gloss xml:lang="en" versionDate="2017-06-25">syllogism</gloss>
+          <gloss versionDate="2017-06-25" xml:lang="en">syllogism</gloss>
           <gloss versionDate="2017-06-25" xml:lang="de">logischer Schluss</gloss>
           <desc versionDate="2014-05-04" xml:lang="en">each list item is part of an argument consisting of two or more propositions 
             and a final conclusion derived from them.</desc>
@@ -167,11 +168,11 @@
         <gi>label</gi> tags to be omitted from lists tagged <tag>list
         type="gloss"</tag>; this is however a semantic error.</p>
       </remarks>
-      <remarks xml:lang="fr" versionDate="2007-06-12">
+      <remarks versionDate="2007-06-12" xml:lang="fr">
         <p>La syntaxe formelle des déclarations d'élément permet d'omettre les étiquettes de balises
           des listes balisées par <tag>list type="gloss"</tag> mais c'est une erreur sémantique.</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
+      <remarks versionDate="2008-04-05" xml:lang="ja">
         <p> 当該要素の宣言では、要素<gi>label</gi>は、タグ<tag>list type="gloss"</tag>中で省略することができることになっているが、
           これは意味上のエラーになる。 </p>
       </remarks>
@@ -187,7 +188,7 @@
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-list-egXML-il">
       <list rend="numbered">
         <item>a butcher</item>
         <item>a baker</item>
@@ -198,7 +199,7 @@
     </egXML>
   </exemplum>
   <exemplum versionDate="2014-08-04" xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-list-egXML-fg">
       <list type="syllogism" rend="bulleted">
         <item>All Cretans are liars.</item>
         <item>Epimenides is a Cretan.</item>
@@ -207,7 +208,7 @@
     </egXML>
   </exemplum>
   <exemplum versionDate="2014-08-04" xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-list-egXML-im">
       <list type="litany" rend="simple">
         <item>God save us from drought.</item>
         <item>God save us from pestilence.</item>
@@ -217,7 +218,7 @@
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Perec-vie">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-list-egXML-ur" source="#fr-ex-Perec-vie">
       <list rend="bulleted">
         <item>Thé sans sucre et sans lait </item>
         <item>Un jus d'ananas</item>
@@ -232,7 +233,7 @@
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Perec-vie">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-list-egXML-bo" source="#fr-ex-Perec-vie">
       <div>
         <p> Selon des critères qui n'appartiennent qu'à lui, Rémi Plassaert a classé ses buvards
             en huit tas respectivement surmontés par :</p>
@@ -247,7 +248,7 @@
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Perec-vie">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-list-egXML-ta" source="#fr-ex-Perec-vie">
       <div>
         <p> [...] et tout autour, la longue cohorte de ses personnages, avec leur histoire, leur
             passé, leurs légendes :</p>
@@ -261,7 +262,7 @@
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-list-egXML-sl">
       <list rend="numbered">
         <item>一個屠夫</item>
         <item>一個糕點師父</item>
@@ -271,7 +272,7 @@
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n11">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-list-egXML-mj" source="#biblzh-tw_n11">
       <div1 type="section">
         <head>青年守則</head>
         <list rend="numbered">
@@ -286,7 +287,7 @@
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n12">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-list-egXML-sv" source="#biblzh-tw_n12">
       <p>我們二人謹定于2008年7月3日正午十二時，在台北舉行結婚典禮，寫下海誓山盟，終身遵守，在婚姻路上，共同經營，災難病情，互相扶持，永不分離。并就下列事項，立下承諾，即令滄海化為桑田，桑田再變為滄海，也要攜手共進，相親相愛，直到白頭。<list rend="simple"><item>我們宣誓：從結婚這一天開始，不但成為夫妻，互相敬愛，分擔對方的快樂和憂愁，也同時成為朋友，而且是諍友，互相勉勵，互相規勸，互相批評。</item><item>我們領悟：愉快的共同生活，全靠心靈溝通，所以，我們一定善用言語，不僅表達愛心、關心，也使彼此藉語言加深了解，一起成長。絕不粗聲叱責，絕不用肢體代替言語，絕不允許發生婚姻暴力。 </item><item>我們認知：家庭與事業是夫妻共同經營的果實，夫妻對家庭的貢獻等值，在家庭內或社會上，價值完全相同，社會工作薪俸無論多少，家務工作的薪俸都與其相同。</item><item>我們同意：將來我們有子女，管教上如果有不同的意見，甚至尖銳對立的意見，一定要克制自己，去請教專家，絕不把孩子當成實現自己希望的工具，也絕不用孩子來炫耀自己。 </item><item>我們認為：一夫一妻制，是社會安定的磐石，是孩子們成長最安全的溫床，我們喜愛并尊重這種制度，并用事實和行動，維護它的尊嚴。</item><item>我們警惕：婚姻生活并不多彩多姿，它不但平凡，而且瑣碎，如果不滋養珍惜，容易使生命憔悴，心靈粗俗，所以生活之中，我們一定保持適度的假期，與孩子一起長大。</item><item>我們謹記：我們孝敬自己的父母，也孝敬對方的父母，不僅是回報養育之恩，也是培養自己人格的完整，為我們的下一代立下榜樣。 </item><item>我們了解：我們將來會老，所以，我們從結婚這一天，就培養專業之外的其它藝朮興趣，如書、畫、音樂，使我們生命永遠充實燦爛。 </item></list>
          </p>
     </egXML>
@@ -294,7 +295,7 @@
   <exemplum xml:lang="en">
     <p>The following example treats the short numbered clauses of Anglo-Saxon legal codes as lists
       of items. The text is from an ordinance of King Athelstan (924–939):</p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-list-egXML-yr">
       <div1 type="section">
         <head>Athelstan's Ordinance</head>
         <list rend="numbered">
@@ -339,11 +340,11 @@
       two-level numbering of the clauses. The clauses could have been treated as a one-level list
       with irregular numbering, if desired.</p>
   </exemplum>
-  <exemplum xml:lang="de" versionDate="2017-06-25">
+  <exemplum versionDate="2017-06-25" xml:lang="de">
     <p>Das folgende Beispiel behandelt die kurzen nummerierten Klauseln von angelsächsischen
       Rechtstexten als Listen von <gi>item</gi>-Elementen. Der Text stammt aus einer Verordnung von
       König Athelstan (924-939):</p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-list-egXML-bx">
       <div1 type="section">
         <head>Athelstan's Ordinance</head>
         <list rend="numbered">
@@ -390,7 +391,7 @@
   </exemplum>
   
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-list-egXML-aw">
       <p>These decrees, most blessed Pope Hadrian, we propounded in the public council ... and they
         confirmed them in our hand in your stead with the sign of the Holy Cross, and afterwards
         inscribed with a careful pen on the paper of this page, affixing thus the sign of the Holy
@@ -411,16 +412,16 @@
       label and item pairs, the latter being optionally preceded by one or two specialized
     headings.</p>
   </remarks>
-  <remarks xml:lang="fr" versionDate="2007-06-12">
+  <remarks versionDate="2007-06-12" xml:lang="fr">
     <p rend="dataDesc">Peut contenir un titre facultatif suivi d'une succession d'items ou d'une
       succession de couples constitués d'une étiquette et d'un item, ce dernier type pouvant être
       précédé par un ou deux titres spécifiques.</p>
   </remarks>
-  <remarks xml:lang="ja" versionDate="2008-04-05">
+  <remarks versionDate="2008-04-05" xml:lang="ja">
     <p rend="dataDesc"> 一連の項目またはラベルと項目の組の前に、選択的にヘダーをとることが ある。一連のラベルと項目の組の場合、選択的に、ひとつ以上のヘダーが
       先行することがある。 </p>
   </remarks>
-  <remarks xml:lang="de" versionDate="2017-06-25">
+  <remarks versionDate="2017-06-25" xml:lang="de">
       <p>Die Liste kann mit einer Überschrift <gi>head</gi> beginnen. Sie kann auch aus Paaren von Labels und Beschreibungen bestehen, 
           sodass dann für jeden Teil spezielle Überschriften (<gi>headLabel</gi>, <gi>headItem</gi>) verwendet werden können.</p>
   </remarks>

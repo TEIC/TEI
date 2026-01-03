@@ -6,13 +6,41 @@
   may be independently selected by means of  the special purpose <att>decls</att> attribute.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">특별한 목적의 <att>decls</att> 속성을 통해서 독립적으로 선택될 수 있는 TEI 헤더의 요소에 대한 속성을 제공한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供屬性，用於TEI標頭內可單獨以特殊目的的屬性<att>decls</att>選出的元素。</desc>
-  <desc xml:lang="ja" versionDate="2019-05-20">特別な目的の<att>decls</att>属性を用いて独自に選択できるTEIヘッダー内の要素の属性を提供する。</desc>
+  <desc versionDate="2019-05-20" xml:lang="ja">特別な目的の<att>decls</att>属性を用いて独自に選択できるTEIヘッダー内の要素の属性を提供する。</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">fournit des attributs pour ces éléments de
       l'en-tête TEI qui peuvent être choisis indépendamment au moyen de l'attribut
       <att>decls</att>.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos para los elementos contenidos en el encabezado que pueden ser seleccionados autónomamente mediante el atributo <att>decls</att> adecuado.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">individua attributi per gli elementi contenuti nell'intestazione che possono essere selezionati autonomamente grazie all'apposito attributo <att>decls</att>
-   </desc>
+  <desc versionDate="2007-01-21" xml:lang="it">individua attributi per gli elementi contenuti nell'intestazione che possono essere selezionati autonomamente grazie all'apposito attributo <att>decls</att></desc>
+  <!-- BEGIN patch for #2750: -->
+  <!--
+      This entire block (a single <constraintSpec> element) commented
+      out 2025-08-26 in response to issue #2750. Whether it will be
+      deleted, modified and returned to action, or put back on the
+      front lines unmodified will be decided in the future. For now it
+      is being removed because it flags constructs as erroneous that
+      Council feels a reasonable user would expect to be valid.
+  -->
+  <!-- <constraintSpec ident="att-declarable" scheme="schematron" xml:lang="en"> -->
+  <!--   <constraint> -->
+  <!--     <sch:pattern id="declarable" abstract="true"> -->
+  <!--       <!-\- parameter 'tde' is for "this declarable element (type)" -\-> -->
+  <!--       <sch:rule context="$tde[ ancestor::tei:teiHeader -->
+  <!--                                and -->
+  <!--                                following-sibling::$tde -->
+  <!--                                and -->
+  <!--                                not( preceding-sibling::$tde ) ]"> -->
+  <!--         <sch:report test="../child::$tde[ not( @xml:id ) ]"> -->
+  <!--           When there is more than one <sch:name/>, each must have an @xml:id -->
+  <!--         </sch:report> -->
+  <!--         <sch:assert test="count( ../child::$tde[ normalize-space( @default ) = ('1','true') ] ) eq 1"> -->
+  <!--           When there is more than one <sch:name/>, one and only one must have a @default of 'true'. -->
+  <!--         </sch:assert> -->
+  <!--       </sch:rule> -->
+  <!--     </sch:pattern> -->
+  <!--   </constraint> -->
+  <!-- </constraintSpec> -->
+  <!-- END patch for #2750 -->
   <attList>
     <attDef ident="default" usage="opt">
       <desc versionDate="2005-10-10" xml:lang="en">indicates whether or not this element is selected by default when
@@ -20,8 +48,7 @@ its parent is selected.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">그 부모가 선택될 때 기본값으로 이 요소가 선택되었는지를 표시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">當父元素被選擇時，指出此元素是否會被選擇。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">親要素が選択された場合に、当該要素がデフォルトとして選択されるか
-      どうかを示す。
-	</desc>
+      どうかを示す。</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">indique si oui ou non cet élément est affecté par
           défaut quand son élément parent a été sélectionné.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica si el elemento es seleccionado automáticamente o no  cuando es seleccionado el padre</desc>
@@ -60,17 +87,17 @@ il est sélectionné si son parent a été choisi</desc>
     individual parts of a TEI text are fully defined in chapter <ptr target="#CCAS"/>. Only one element of a particular type may have a
     <att>default</att> attribute with a value of <val>true</val>.</p>
   </remarks>
-  <remarks xml:lang="fr" versionDate="2007-06-12">
+  <remarks versionDate="2007-06-12" xml:lang="fr">
     <p>Les règles régissant l'association d'éléments déclarables avec des parties
                 individuelles d'un texte TEI sont entièrement définies
-		au chap1itre <ptr target="#CCAS"/>. Un seul élément
+                au chap1itre <ptr target="#CCAS"/>. Un seul élément
                 d'un type particulier peut avoir un attribut <att>default</att> avec une valeur
                     <val>true</val>.</p>
   </remarks>
-  <remarks xml:lang="es" versionDate="2008-04-06">
+  <remarks versionDate="2008-04-06" xml:lang="es">
     <p>Las reglas que gobiernan la asociación de los elementos declarables con las partes individuales de un texto de TEI se definen completamente en el capítulo <ptr target="#CCAS"/>. Solamente un elemento de un tipo determinado puede tener algún atributo de <att>default</att> con un valor de <val>verdad</val>.</p>
   </remarks>
-  <remarks xml:lang="ja" versionDate="2008-04-05">
+  <remarks versionDate="2008-04-05" xml:lang="ja">
     <p>
     このような選択可能要素の関連性を決める規則は、
     <ptr target="#CCAS"/>において詳しく規定されている。

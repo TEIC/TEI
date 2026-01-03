@@ -2,29 +2,29 @@
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" predeclare="true" xml:id="GBLSRC" module="tei" type="atts" ident="att.global.source">
-  <desc versionDate="2021-08-22" xml:lang="en">provides attributes used by elements to point to an
-    external source.</desc>
+  <desc versionDate="2021-08-22" xml:lang="en">provides attributes used by elements to point to an external source.</desc>
   <desc versionDate="2019-09-18" xml:lang="ja">外部ソースを参照する要素によって用いられる属性を示す。</desc>
+  <desc versionDate="2025-02-06" xml:lang="de">stellt Attribute bereit, anhand derer die Elemente auf eine externe Quelle verweisen.</desc>
   <attList>
     <attDef ident="source" usage="opt">
-      <desc versionDate="2010-05-09" xml:lang="en">specifies the source from which some aspect of
-        this element is drawn.</desc>
+      <desc versionDate="2010-05-09" xml:lang="en">specifies the source from which some aspect of this element is drawn.</desc>
       <desc versionDate="2019-09-18" xml:lang="ja">この要素の何らかの側面を示すソースを指定する。</desc>
+      <desc versionDate="2025-02-06" xml:lang="de">gibt die Quelle an, aus der ein Bestandteil dieses Elements stammt.</desc>
       <datatype maxOccurs="unbounded">
         <dataRef key="teidata.pointer"/>
       </datatype>
-      <constraintSpec scheme="schematron" ident="only_1_ODD_source">
+      <constraintSpec scheme="schematron" ident="only_1_ODD_source" xml:lang="en">
         <constraint>
           <sch:rule context="tei:*[@source]">
             <sch:let name="srcs" value="tokenize( normalize-space(@source),'&#x20;')"/>
-            <sch:report test="( self::tei:classRef
-              | self::tei:dataRef
-              | self::tei:elementRef
-              | self::tei:macroRef
-              | self::tei:moduleRef
-              | self::tei:schemaSpec )
-              and
-              $srcs[2]">
+            <sch:report test="(   self::tei:classRef
+                                | self::tei:dataRef
+                                | self::tei:elementRef
+                                | self::tei:macroRef
+                                | self::tei:moduleRef
+                                | self::tei:schemaSpec )
+                                  and
+                                  $srcs[2]">
               When used on a schema description element (like
               <sch:value-of select="name(.)"/>), the @source attribute
               should have only 1 value. (This one has <sch:value-of
@@ -33,7 +33,7 @@
           </sch:rule>
         </constraint>
       </constraintSpec>
-      <remarks xml:lang="en" versionDate="2017-06-06">
+      <remarks versionDate="2017-06-06" xml:lang="en">
         <p>The <att>source</att> attribute points to an external
         source. When used on an element describing a schema component
         (<gi>classRef</gi>, <gi>dataRef</gi>, <gi>elementRef</gi>,
@@ -56,7 +56,7 @@
         <att>source</att> should have only one value; when used on
         other elements multiple values are permitted.</p>
       </remarks>
-        <remarks xml:lang="ja" versionDate="2022-05-09">
+        <remarks versionDate="2022-05-09" xml:lang="ja">
         <p><att>source</att> 属性は外部ソースを指し示す。<gi>schemaSpec</gi> 
           や <gi>moduleRef</gi> といったスキーマの構成要素を記述する要素で用いられた場合は、
           その定義しようとしているオブジェクトの構成要素の宣言が得られるソースを特定する。
@@ -68,7 +68,7 @@
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SOURCE-eg-01">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="GBLSRC-egXML-tz" source="#SOURCE-eg-01">
       <p><!-- ... --> As Willard McCarty (<bibl xml:id="mcc_2012">2012, p.2</bibl>) tells us, <quote source="#mcc_2012">‘Collaboration’ is a problematic and should be a contested
           term.</quote>
         <!-- ... -->
@@ -76,7 +76,7 @@
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="GBLSRC-egXML-te">
       <p>
         <!-- ... -->
         <quote source="#chicago_15_ed">Grammatical theories are in flux, and the more we learn, the
@@ -91,14 +91,14 @@
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="GBLSRC-egXML-fx" source="#UND">
       <elementRef key="p" source="tei:2.0.1"/>
     </egXML>
     <p>Include in the schema an element named <gi>p</gi> available from the TEI P5 2.0.1
       release.</p>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="GBLSRC-egXML-rt" source="#UND">
       <schemaSpec ident="myODD" source="mycompiledODD.xml">
         <!-- further declarations specifying the components required -->
       </schemaSpec>

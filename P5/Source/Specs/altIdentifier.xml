@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
-<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="msdescription" xml:id="ALTIDENTIFIER" ident="altIdentifier">
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="msdescription" xml:id="ALTIDENTIFIER" ident="altIdentifier">
   <gloss versionDate="2005-01-14" xml:lang="en">alternative identifier</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">대체 확인소</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">替換識別符碼</gloss>
@@ -19,10 +20,9 @@
   <desc versionDate="2007-01-21" xml:lang="it">contiene un identificatore strutturato alternativo o precedente utilizzato per un manoscritto, per esempio un precedente numero di catalogazione</desc>
   <classes>
     <memberOf key="att.global"/>
-    <memberOf key="att.typed"/>
     <memberOf key="att.datable"/>
+    <memberOf key="att.typed"/>
   </classes>
-
   <content>
     <sequence>
       <classRef key="model.placeNamePart" expand="sequenceOptional"/>    
@@ -33,41 +33,8 @@
       <elementRef key="note" minOccurs="0"/>
     </sequence>
   </content>
-  <attList>
-    <attDef ident="calendar" usage="opt" validUntil="2024-11-11">
-        <desc type="deprecationInfo" versionDate="2023-05-11" xml:lang="en">The <att>calendar</att> attribute will be removed from this element
-            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar</att> attribute
-            (unlike <att>datingMethod</att> defined in
-            <ident type="class">att.datable.custom</ident>) defines the calendar system of the date
-            in the original material defined by the parent element, <emph>not</emph> the calendar to
-            which the date is normalized.</desc>
-        <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the
-            date represented by the content of this element belongs.</desc>
-        <desc versionDate="2007-12-20" xml:lang="ko">날짜 표현 시스템 또는 달력 표시 형식을 표시한다.</desc>
-        <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該日期表示所使用的曆法計算系統。</desc>
-        <desc xml:lang="ja" versionDate="2019-02-03">この要素を含むコンテントにおける日付の暦やシステムを示す。</desc>
-        <desc versionDate="2009-01-06" xml:lang="fr">indique le système ou le calendrier auquel
-            appartient la date exprimée dans le contenu de l'élément.</desc>
-        <desc versionDate="2007-05-04" xml:lang="es">indica el sistema o calendario en que se muestra
-            una fecha.</desc>
-        <desc versionDate="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data
-            appartiene.</desc>
-        <datatype minOccurs="1" maxOccurs="unbounded">
-            <dataRef key="teidata.pointer"/>
-        </datatype>
-        <constraintSpec scheme="schematron" ident="calendar-check-altIdentifier">
-            <constraint>
-                <sch:rule context="tei:*[@calendar]">
-                    <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
-                        systems or calendars to which the date represented by the content of this element belongs,
-                        but this <sch:name/> element has no textual content.</sch:assert>
-                </sch:rule>
-            </constraint>
-        </constraintSpec>
-    </attDef>
-  </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ALTIDENTIFIER-egXML-dk" source="#UND">
       <altIdentifier>
         <settlement>San Marino</settlement>
         <repository>Huntington Library</repository>
@@ -76,7 +43,7 @@
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-BnF-Reliures">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ALTIDENTIFIER-egXML-np" source="#fr-ex-BnF-Reliures">
       <altIdentifier>
         <idno>B 106</idno>
         <note>Cote de la Bibliothèque royale au XVIIIe siècle.</note>
@@ -84,7 +51,7 @@
     </egXML>
   </exemplum>
   <exemplum versionDate="2007-05-02" xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ALTIDENTIFIER-egXML-nt" source="#UND">
       <altIdentifier>
         <settlement>台北市中正區</settlement>
         <repository>國立歷史博物館</repository>

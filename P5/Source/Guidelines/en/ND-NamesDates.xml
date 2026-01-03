@@ -24,8 +24,7 @@
   <p>The chapter begins by discussing attributes common to many of the elements discussed in the remaining parts of the chapter
       (<ptr target="#NDATTS"/>) before discussing specifically the elements provided for the encoding of component parts of
     personal names (section <ptr target="#NDPER"/>), place names (section <ptr target="#NDPLAC"/>) and organizational names
-    (section <ptr target="#NDORG"/>). Elements for encoding personal and organizational data are discussed in section <ptr
-      target="#NDPERS"/>. Elements for the encoding of geographical data are discussed in section <ptr target="#NDGEOG"/>.
+    (section <ptr target="#NDORG"/>). Elements for encoding personal and organizational data are discussed in section <ptr target="#NDPERS"/>. Elements for the encoding of geographical data are discussed in section <ptr target="#NDGEOG"/>.
     Finally, elements for encoding onomastic data are discussed in <ptr target="#NDNYM"/>, and the detailed encoding of dates and
     times is described in section <ptr target="#NDDATE"/>.</p>
 
@@ -51,20 +50,15 @@
           <att>role</att> attribute. It also provides an additional attribute, which allows the name itself to be associated with
         a base or canonical form: <specList>
           <specDesc key="att.naming" atts="role nymRef"/>
-        </specList> The encoder may use these attributes in combination as appropriate. For example: <egXML
-          xmlns="http://www.tei-c.org/ns/Examples">That silly man <name role="politician" type="person">David Paul Brown</name>
+        </specList> The encoder may use these attributes in combination as appropriate. For example: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDATTSnr-egXML-cj">That silly man <name role="politician" type="person">David Paul Brown</name>
           has suffered ...</egXML> The <att>ref</att> attribute should be used wherever it is possible to supply a direct link
-        such as a URI to indicate the location of canonical information about the referent. <egXML
-          xmlns="http://www.tei-c.org/ns/Examples">That silly man <name ref="#DPB1" type="person">David Paul Brown</name> has
+        such as a URI to indicate the location of canonical information about the referent. <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDATTSnr-egXML-ih">That silly man <name ref="#DPB1" type="person">David Paul Brown</name> has
           suffered ...</egXML> This encoding requires that there exist somewhere a <gi>person</gi> element with the identifier
           <code>DPB1</code>, which will contain canonical information about this particular person, marked up using the elements
         discussed in <ptr target="#NDPERS"/> below. The same element might alternatively be provided by some other document, of
-        course, which the same attribute could refer to by means of a URI, as explained in <ptr target="#SAXP"/>: <egXML
-          xmlns="http://www.tei-c.org/ns/Examples">That silly man <name ref="http://www.example.com/personography.xml#DPB1"
-            type="person">David Paul Brown</name> has suffered ...</egXML>More than one URI may be supplied if the name refers to
+        course, which the same attribute could refer to by means of a URI, as explained in <ptr target="#SAXP"/>: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDATTSnr-egXML-ix">That silly man <name ref="http://www.example.com/personography.xml#DPB1" type="person">David Paul Brown</name> has suffered ...</egXML>More than one URI may be supplied if the name refers to
         more than one person. For example, assuming the existence of another <gi>person</gi> element for Mrs Brown, with
-        identifier <code>EBB1</code>, a reference to <q>the Browns</q> might be encoded <egXML
-          xmlns="http://www.tei-c.org/ns/Examples">That wretched pair <name ref="#DPB1 #EBB1" type="person">the Browns</name> came
+        identifier <code>EBB1</code>, a reference to <q>the Browns</q> might be encoded <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDATTSnr-egXML-yf">That wretched pair <name ref="#DPB1 #EBB1" type="person">the Browns</name> came
           to dine ...</egXML>
       </p>
 
@@ -75,9 +69,7 @@
         constructed in a project-specific way from the value supplied for the <att>key</att> attribute.<note place="bottom">In the
           module described by chapter <ptr target="#TD"/> a similar method is used to link element descriptions to the modules or
           classes to which they belong, for example.</note> As an example of the second case, consider the use of well-established
-        codifications such as country or airport codes, which it is probably unnecessary for an encoder to expand further: <egXML
-          xmlns="http://www.tei-c.org/ns/Examples"> I never fly from <name key="LHR" type="place">Heathrow Airport</name> to <name
-            key="FR" type="place">France</name></egXML>
+        codifications such as country or airport codes, which it is probably unnecessary for an encoder to expand further: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDATTSnr-egXML-uy"> I never fly from <name key="LHR" type="place">Heathrow Airport</name> to <name key="FR" type="place">France</name></egXML>
       </p>
 
       <p>However, as explained in <ptr target="#CONARS"/>, interchange is improved by use of tag URIs in <att>ref</att> instead of
@@ -86,8 +78,7 @@
       <p>The <att>nymRef</att> attribute has a more specialized use, where it is the name itself which is of interest rather than
         the person, place, or organization being named. See section <ptr target="#NDNYM"/> for further discussion.</p>
 
-      <p>All members of the <ident type="class">att.naming</ident> class inherit the following attributes from the <ident
-          type="class">att.global.responsibility</ident> class: <specList>
+      <p>All members of the <ident type="class">att.naming</ident> class inherit the following attributes from the <ident type="class">att.global.responsibility</ident> class: <specList>
           <specDesc key="att.global.responsibility" atts="resp cert"/>
         </specList> This enables an encoder to record the agency responsible for a given assertion (for example, the name) and the
         confidence placed in that assertion by the encoder. Examples are given below.</p>
@@ -102,8 +93,7 @@
         </specList>
       </p>
       <p>The <att>when</att> attribute is used to specify a normalized form for any temporal expression, independently of how it
-        is represented in the text, as in the following example: <egXML xmlns="http://www.tei-c.org/ns/Examples"
-          source="#NDORG-eg-34"><date when="1807-06-09">June 9th</date> The period is approaching which will terminate my present
+        is represented in the text, as in the following example: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDATTSda-egXML-qi" source="#NDORG-eg-34"><date when="1807-06-09">June 9th</date> The period is approaching which will terminate my present
           copartnership. On the <date when="1808-01-01">1st Jany.</date> next, it expires by its own limitation.</egXML>
       </p>
       <p>The <att>period</att> attribute provides a convenient way of associating an event or date with a named period. Its value
@@ -112,7 +102,7 @@
         the <gi>encodingDesc</gi> of a TEI header. A <gi>taxonomy</gi> may contain simply a bibliographic reference to an external
         definition for it. More usefully, it may also contain a series of <gi>category</gi> elements, each with an identifier and
         a description. The identifier can then be used as the target for a <att>period</att> attribute. For example, a taxonomy of
-        named periods might be defined as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        named periods might be defined as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDATTSda-egXML-cq">
           <taxonomy xml:id="greekperiods">
             <category xml:id="tyranny">
               <catDesc>Before 510 BC</catDesc></category>
@@ -120,8 +110,7 @@
               <catDesc>Between 510 and 323 BC</catDesc></category>
             <category xml:id="hellenistic">
               <catDesc>
-                <ref target="http://www.wikipedia.com/wiki/Hellenistic">Hellenistic</ref>. Commonly treated as <date
-                  notBefore="-0323" notAfter="-0031">from the death of Alexander to the Roman conquest.</date>
+                <ref target="http://www.wikipedia.com/wiki/Hellenistic">Hellenistic</ref>. Commonly treated as <date notBefore="-0323" notAfter="-0031">from the death of Alexander to the Roman conquest.</date>
               </catDesc>
             </category>
             <category xml:id="roman">
@@ -136,12 +125,11 @@
           </taxonomy>
         </egXML>
       </p>
-      <p>With these definitions in place, any datable element may be associated with a specific period: <egXML
-          xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und">
+      <p>With these definitions in place, any datable element may be associated with a specific period: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDATTSda-egXML-sn" xml:lang="und">
           <placeName period="#christian">Stauropolis</placeName></egXML></p>
       <p>The other dating attributes provided by this class support a wide range of methods of specifying temporal information in
         a normalized form. The <att>from</att> and <att>to</att> attributes may be used to express the begining and ending of a
-        period of time, for example: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        period of time, for example: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDATTSda-egXML-yc">
           <event xml:id="eMBB" from="1955-12-01" to="1956-12-20">
             <label>Montgomery Bus Boycott</label>
             <desc>A political and social protest campaign against the policy of racial segregation on the public transit system of
@@ -152,8 +140,7 @@
         particular date (or time). For example the following element, extracted from an imaginary prosopographic entry for Anne
         Calthorpe, indicates that although the exact date of her death is not known, it can be narrowed down to a particular
         range: from 22 August 1579 to 28 March 1582, inclusive. Ostensibly the encoder has evidence that Anne Calthorpe was alive
-        on the 22nd of August 1579 and evidence that she was already dead on the 28th of March 1582. <egXML
-          xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+        on the 22nd of August 1579 and evidence that she was already dead on the 28th of March 1582. <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDATTSda-egXML-vq" source="#UND">
           <death notBefore="1579-08-22" notAfter="1582-03-28"/>
         </egXML></p>
       <p>Since <att>when</att> is used for a particular date or time, <att>from</att> and <att>to</att> for a duration, and
@@ -162,8 +149,7 @@
           <att>when</att> in combination with any of <att>from</att>, <att>to</att>, <att>notBefore</att>, or
         <att>notAfter</att>.</p>
       <p>The <att>from</att> or <att>to</att> attributes imply that the temporal expression to which they are attached signifies a
-        duration, so the use of either with <att>notBefore</att> or <att>notAfter</att> means a duration is indicated. <table
-          style="border-collapse:separate; border-style:solid;">
+        duration, so the use of either with <att>notBefore</att> or <att>notAfter</att> means a duration is indicated. <table xml:id="NDATTSda-table-ba" style="border-collapse:separate; border-style:solid;">
           <row role="label">
             <cell style="border: thin solid black; padding: 1ex;"/>
             <cell style="border: thin solid black; padding: 1ex;"><att>notBefore</att></cell>
@@ -201,30 +187,29 @@ or time but rather during a specifiable range cannot be formally
 expressed using only the attributes of <ident
 type="class">att.datable.w3c</ident> discussed here. See
 <ptr target="#NDDATEISO"/>.</p>-->
-      <p>Some further self-explanatory examples follow: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <p>Some further self-explanatory examples follow: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDATTSda-egXML-kk">
           <birth when="1857-03-15">15 March 1857.</birth>
         </egXML>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDATTSda-egXML-dr">
           <birth notBefore="1857-03-01" notAfter="1857-04-30">Some time in March or April of 1857.</birth>
         </egXML>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDATTSda-egXML-yl">
           <residence from="1857-03-01" to="1857-04-30">Lived in Amsterdam during March and April of 1857.</residence>
         </egXML>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDATTSda-egXML-zh">
           <date from="1857-03-01" notAfter="1857-04-30">From the 1st of March to some time later in March or April of 1857.</date>
         </egXML>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDATTSda-egXML-sy">
           <residence notBefore="1857-03-01" to="1857-04-30">From the 1st of March or sometime later to the end of April,
             1857.</residence>
         </egXML>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDATTSda-egXML-ye">
           <residence from="1856-03" to="1858-04">From sometime in March of 1856 to sometime in April of 1858.</residence>
         </egXML>
       </p>
       <p>Normalization of date and time values permits the efficient processing of data (for example, to determine whether one
         event precedes or follows another). These examples all use the W3C standard format for representation of dates and times.
-        Further examples, and discussion of some alternative approaches to normalization are given in section <ptr
-          target="#NDDATEISO"/> below.</p>
+        Further examples, and discussion of some alternative approaches to normalization are given in section <ptr target="#NDDATEISO"/> below.</p>
       <!-- need reference to something on date normalization issues here -->
     </div>
 
@@ -268,22 +253,20 @@ target="#CONA"/>).  The tag -->The
         element <gi>persName</gi> is synonymous with the element <tag>name type="person"</tag>, except that its <att>type</att>
         attribute allows for further subcategorization of the personal name itself, for example as a <val>married</val>,
           <val>birth</val>, <val>pen</val>, <val>pseudo</val>, or <val>religious</val> name. Consequently the following examples
-        are equivalent: <egXML xmlns="http://www.tei-c.org/ns/Examples">That silly man <rs ref="tag:projectname.org,2012:DPB1"
-            type="person">David Paul Brown</rs> has suffered the furniture of his office to be seized the third time for
+        are equivalent: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-ur">That silly man <rs ref="tag:projectname.org,2012:DPB1" type="person">David Paul Brown</rs> has suffered the furniture of his office to be seized the third time for
           rent.</egXML>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">That silly man <rs ref="tag:projectname.org,2012:DPB1" type="person">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-ni">That silly man <rs ref="tag:projectname.org,2012:DPB1" type="person">
             <name>David Paul Brown</name>
           </rs> has suffered ...</egXML>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">That silly man <name ref="tag:projectname.org,2012:DPB1" type="person"
-            >David Paul Brown</name> has suffered ...</egXML>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">That silly man <persName ref="tag:projectname.org,2012:DPB1">David Paul
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-go">That silly man <name ref="tag:projectname.org,2012:DPB1" type="person">David Paul Brown</name> has suffered ...</egXML>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-qf">That silly man <persName ref="tag:projectname.org,2012:DPB1">David Paul
             Brown</persName> has suffered ...</egXML>
       </p>
       <p>The <gi>persName</gi> element is more powerful than the <gi>rs</gi> and <gi>name</gi> elements because distinctive name
         components occurring within it can be marked as such.</p>
       <p>Many cultures distinguish between a family or inherited <term>surname</term> and additional personal names, often known
         as <term>given names</term>. These should be tagged using the <gi>surname</gi> and <gi>forename</gi> elements respectively
-        and may occur in any order: <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName>
+        and may occur in any order: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-wi"><persName>
             <surname>Roosevelt</surname>, <forename>Franklin</forename>
             <forename>Delano</forename>
           </persName>
@@ -294,7 +277,7 @@ target="#CONA"/>).  The tag -->The
           </persName></egXML>
       </p>
       <p>The <att>type</att> attribute may be used with both <gi>forename</gi> and <gi>surname</gi> elements to provide further
-        culture- or project-specific detail about the name component, for example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName>
+        culture- or project-specific detail about the name component, for example: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-yu"><persName>
             <forename type="first">Franklin</forename>
             <forename type="middle">Delano</forename>
             <surname>Roosevelt</surname>
@@ -313,7 +296,7 @@ target="#CONA"/>).  The tag -->The
         </egXML> Values for the <att>type</att> attribute are not constrained, and may be chosen as appropriate to the encoding
         needs of the project. They may be used to distinguish different kinds of forename or surname, as well as to indicate the
         function a name component fills within the whole. In this example, we indicate that a surname is toponymic, and also point
-        to the specific place name from which it is derived: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        to the specific place name from which it is derived: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-ij">
           <persName>
             <forename>Johan</forename>
             <surname type="toponymic" ref="#dystvold">Dystvold</surname>
@@ -325,7 +308,7 @@ target="#CONA"/>).  The tag -->The
 
       <p>The value <val>complex</val> was suggested above for the not uncommon case where the whole of a surname is composed of
         several other surname elements. These nested surnames may be individually tagged as well, together with appropriate type
-        values: <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName>
+        values: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-yv"><persName>
             <forename>Kara</forename>
             <surname type="complex">
               <surname type="paternal">Hattersley</surname>- <surname type="maternal">Smith</surname>
@@ -333,37 +316,35 @@ target="#CONA"/>).  The tag -->The
           </persName></egXML>
       </p>
       <p>The <att>full</att> attribute may be used to indicate whether a name is an abbreviation, initials, or given in full:
-          <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName>
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-sm"><persName>
             <forename full="abb">Maggie</forename>
             <surname>Thatcher</surname>
           </persName></egXML>
       </p>
 
       <p>These elements may be applied as the encoder considers appropriate, including cases where phrases or expressions are used
-        to stand for surnames or forenames, as in the following: <egXML xmlns="http://www.tei-c.org/ns/Examples"
-          source="#NDPER-eg-17"><s><persName>
+        to stand for surnames or forenames, as in the following: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-hr" source="#NDPER-eg-17"><s><persName>
               <forename>Peter</forename>
               <surname>son of Herbert</surname></persName> gives the king 40 m. for having custody of the land and heir of
                 <persName><forename>John</forename>
               <surname>son of Hugh</surname></persName>...</s></egXML>
       </p>
 
-      <p>Similarly, patronymics may be treated as forenames, thus: <egXML xmlns="http://www.tei-c.org/ns/Examples"
-          source="#NDPER-eg-18">... but it remained for <persName>
+      <p>Similarly, patronymics may be treated as forenames, thus: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-nr" source="#NDPER-eg-18">... but it remained for <persName>
             <forename>Snorri</forename>
             <forename>Sturluson</forename>
           </persName> to combine the two traditions in cyclic form.</egXML> When a patronymic is used as a surname, however (e.g.
         by an individual who otherwise would have no surname, but lives in a culture which requires surnames), it may be tagged as
-        such: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NDPER-eg-18">Even <persName><forename>Finnur</forename>
+        such: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-vj" source="#NDPER-eg-18">Even <persName><forename>Finnur</forename>
             <surname>Jonsson</surname></persName> acknowledged the artificiality of the procedure...</egXML> Alternatively, it may
         be felt more appropriate to mark a patronymic as a distinct kind of name, neither a forename nor a surname, using the
-          <gi>addName</gi> element: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NDPER-eg-18">
+          <gi>addName</gi> element: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-fl" source="#NDPER-eg-18">
           <persName>
             <forename>Egill</forename>
             <addName type="patronym">Skallagrmsson</addName>
           </persName>
         </egXML> In the following example, the <att>type</att> attribute is used to distinguish a patronymic from other forenames:
-          <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName ref="tag:projectname.org,2012:pn9">
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-ep"><persName ref="tag:projectname.org,2012:pn9">
             <forename sort="2">Sergei</forename>
             <forename sort="3" type="patronym">Mikhailovic</forename>
             <surname sort="1">Uspensky</surname>
@@ -371,26 +352,25 @@ target="#CONA"/>).  The tag -->The
       </p>
 
 
-      <p>This example also demonstrates the use of the <att>sort</att> attribute common to all members of the <ident type="class"
-          >model.persNamePart</ident> class; its effect is to state the sequence in which <gi>forename</gi> and <gi>surname</gi>
+      <p>This example also demonstrates the use of the <att>sort</att> attribute common to all members of the <ident type="class">model.persNamePart</ident> class; its effect is to state the sequence in which <gi>forename</gi> and <gi>surname</gi>
         elements should be combined when constructing a sort key for the name.</p>
       <p>Some names include generational or dynastic information, such as a number, or phrases such as <q>Junior</q>, or <q>the
           Elder</q>; these qualifications may also be used to distinguish similarly named but unrelated people. In either case,
         the <gi>genName</gi> element may be used to distinguish such labels from other parts of the name, as in the following
-        examples: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und"><persName ref="tag:projectname.org,2012:HEMA1">
+        examples: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-ul" xml:lang="und"><persName ref="tag:projectname.org,2012:HEMA1">
             <surname>Marques</surname>
             <genName>Junior</genName>, <forename>Henrique</forename>
           </persName></egXML>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und"><persName>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-km" xml:lang="und"><persName>
             <forename>Charles</forename>
             <genName>II</genName>
           </persName></egXML>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und"><persName xml:lang="de">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-nf" xml:lang="und"><persName xml:lang="de">
             <forename>Rudolf</forename>
             <genName>II</genName>
             <surname>von Habsburg</surname>
           </persName></egXML>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und"><persName>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-ot" xml:lang="und"><persName>
             <surname>Smith</surname>
             <genName>Minor</genName>
           </persName></egXML>
@@ -398,13 +378,12 @@ target="#CONA"/>).  The tag -->The
       <p>It is also often convenient to distinguish phrases (historically similar to the generational labels mentioned above) used
         to link parts of a name together, such as <q>von</q>, <q>of</q>, <q>de</q> etc. It is often a matter of arbitrary choice
         whether such components are regarded as part of the surname or not; the <gi>nameLink</gi> element is provided as a means
-        of making clear what the correct usage should be in a given case, as in the following examples: <egXML
-          xmlns="http://www.tei-c.org/ns/Examples"><persName ref="tag:projectname.org,2012:DUDO1">
+        of making clear what the correct usage should be in a given case, as in the following examples: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-bg"><persName ref="tag:projectname.org,2012:DUDO1">
             <roleName type="honorific" full="abb">Mme</roleName>
             <nameLink>de la</nameLink>
             <surname>Rochefoucault</surname>
           </persName></egXML>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und"><persName>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-qo" xml:lang="und"><persName>
             <forename>Walter</forename>
             <surname>de la Mare</surname>
           </persName></egXML>
@@ -413,8 +392,7 @@ target="#CONA"/>).  The tag -->The
         already listed. The distinction between them is that a <gi>roleName</gi> encloses an associated name component such as an
         aristocratic or official title which exists in some sense independently of its bearer. The distinction is not always a
         clear one. As elsewhere, the <att>type</att> attribute may be used with either element to supply culture- or application-
-        specific distinctions. Some typical values for this attribute for names in the Western European tradition follow: <list
-          type="gloss">
+        specific distinctions. Some typical values for this attribute for names in the Western European tradition follow: <list type="gloss">
           <label>
             <val>nobility</val>
           </label>
@@ -444,31 +422,29 @@ target="#CONA"/>).  The tag -->The
         since this is intended to mark roles which function as part of a person's name, not the role of the person bearing the
         name in general. Information about roles, occupations, etc. of a person are encoded within the <gi>person</gi> element
         discussed below in <ptr target="#NDPERS"/>.</p>
-      <p>Here are some further examples of the usage of these elements: <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName
-            ref="tag:projectname.org,2012:PGK1">
+      <p>Here are some further examples of the usage of these elements: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-wa"><persName ref="tag:projectname.org,2012:PGK1">
             <roleName type="nobility">Princess</roleName>
             <forename>Grace</forename>
           </persName></egXML>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName ref="tag:projectname.org,2012:GRMO1" type="pseudo">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-vs"><persName ref="tag:projectname.org,2012:GRMO1" type="pseudo">
             <addName type="honorific">Grandma</addName>
             <surname>Moses</surname>
           </persName></egXML>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName ref="tag:projectname.org,2012:SLWICL1">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-ky"><persName ref="tag:projectname.org,2012:SLWICL1">
             <roleName type="office">President</roleName>
             <forename>Bill</forename>
             <surname>Clinton</surname>
           </persName></egXML>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName ref="tag:projectname.org,2012:MOGA1">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-ix"><persName ref="tag:projectname.org,2012:MOGA1">
             <roleName type="military">Colonel</roleName>
             <surname>Gaddafi</surname>
           </persName></egXML>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName ref="tag:projectname.org,2012:FRTG1">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-zt"><persName ref="tag:projectname.org,2012:FRTG1">
             <forename>Frederick</forename>
             <addName type="epithet">the Great</addName>
           </persName></egXML>
       </p>
-      <p>A name may have any combination of the above elements: <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName
-            ref="tag:projectname.org,2012:EGBR1">
+      <p>A name may have any combination of the above elements: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPER-egXML-wk"><persName ref="tag:projectname.org,2012:EGBR1">
             <roleName type="office">Governor</roleName>
             <forename sort="2">Edmund</forename>
             <forename full="init" sort="3">G.</forename>
@@ -511,45 +487,42 @@ target="#CONA"/>).  The tag -->The
           <gi>rs</gi> or <gi>name</gi> elements respectively. The element <gi>orgName</gi> is provided for use where it is desired
         to distinguish organizational names more explicitly. <specList>
           <specDesc key="orgName"/>
-        </specList> This element is a member of the same attribute classes as <gi>persName</gi>, as discussed above in <ptr
-          target="#NDATTSnr"/>.</p>
-      <p>The <gi>orgName</gi> element may be used to mark up any form of organizational name: <egXML
-          xmlns="http://www.tei-c.org/ns/Examples" source="#NDORG-eg-34">About a year back, a question of considerable interest
+        </specList> This element is a member of the same attribute classes as <gi>persName</gi>, as discussed above in <ptr target="#NDATTSnr"/>.</p>
+      <p>The <gi>orgName</gi> element may be used to mark up any form of organizational name: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDORG-egXML-mf" source="#NDORG-eg-34">About a year back, a question of considerable interest
           was agitated in the <orgName type="voluntary" ref="tag:projectname.org,2012:PAS1">Pennsyla. Abolition
           Society</orgName></egXML> This encoding is equivalent to, but more specific than, either of the following
-        representations: <egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable interest
+        representations: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDORG-egXML-is">About a year back, a question of considerable interest
           was agitated in the <rs ref="tag:projectname.org,2012:PAS1" type="org">
             <name>Pennsyla. Abolition Society</name></rs>.</egXML>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable interest was agitated in the
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDORG-egXML-ud">About a year back, a question of considerable interest was agitated in the
             <name ref="tag:projectname.org,2012:PAS1" type="org">Pennsyla. Abolition Society</name>.</egXML> As shown above, like
         the <gi>rs</gi> and <gi>name</gi> elements, the <gi>orgName</gi> element has a <att>key</att> attribute with which an
         external identifier such as a database key can be assigned to the organization name, and also a <att>ref</att> attribute
         which can be used to point directly to an <gi>org</gi> element containing information about the organization itself (see
         further <ptr target="#ND-org"/>). Its <att>type</att> attribute should be used to characterize the name (rather than the
-        organization), for example as an acronym: <egXML xmlns="http://www.tei-c.org/ns/Examples">Mr Frost will be able to earn an
+        organization), for example as an acronym: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDORG-egXML-me">Mr Frost will be able to earn an
           extra fee from <orgName type="acronym">BSkyB</orgName> rather than the <orgName type="acronym">BBC</orgName>
-        </egXML> as a phrase: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NDORG-eg-38"> The feeling in
+        </egXML> as a phrase: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDORG-egXML-nc" source="#NDORG-eg-38"> The feeling in
             <country>Canada</country> is one of strong aversion to the <orgName type="phrase">United States Government</orgName>,
           and of predilection for self-government under the <orgName type="phrase">English Crown</orgName></egXML>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDORG-egXML-xh">
           <orgName>The Justified Ancients of Mu Mu</orgName>
-        </egXML> or as a composite of other kinds of name: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        </egXML> or as a composite of other kinds of name: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDORG-egXML-uh">
           <orgName type="partnerNames">
             <surname>Ernst</surname> &amp; <surname>Young</surname>
           </orgName></egXML>
       </p>
-      <p>The components of an organization's name may include place names as well as personal names: <egXML
-          xmlns="http://www.tei-c.org/ns/Examples">A spokesman from <orgName type="regional">
+      <p>The components of an organization's name may include place names as well as personal names: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDORG-egXML-cz">A spokesman from <orgName type="regional">
             <orgName>IBM</orgName>
             <country>UK</country>
-          </orgName> said ... </egXML> or role names: <egXML xmlns="http://www.tei-c.org/ns/Examples">THE TICKET which you will
+          </orgName> said ... </egXML> or role names: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDORG-egXML-xi">THE TICKET which you will
           receive herewith has been formed by the <orgName>Democratic Whig <name type="role">party</name>
           </orgName> after the most careful deliberation, with a reference to all the great objects of NATIONAL, STATE, COUNTY and
           CITY concern, and with a single eye to the <hi>Welfare and Best Interests of the Community</hi>.</egXML>
       </p>
       <p>As indicated above, organizational names may also be specified hierarchically particularly where the named organization
         is itself a department or a branch of a larger organizational entity. <q>The Department of Modern History, Glasgow
-          University</q> is an example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><orgName>
+          University</q> is an example: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDORG-egXML-gw"><orgName>
             <orgName>Department of Modern History</orgName>
             <orgName><name type="city">Glasgow</name>
               <name type="role">University</name>
@@ -598,19 +571,13 @@ target="#CONA"/>).  The tag -->The
           should be added to the two place names which are presented periphrastically in the second version of this example. This
           would preserve the distinction indicated by the choice of <gi>rs</gi> rather than <gi>name</gi> to encode them in the
           first version of this example.</note>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">After spending some time in our <rs ref="tag:projectname.org,2012:NY1"
-            type="place">modern <name ref="tag:projectname.org,2012:BA1" type="place">Babylon</name></rs>, <name
-            ref="tag:projectname.org,2012:NY1" type="place">New York</name>, I have proceeded to the <rs
-            ref="tag:projectname.org,2012:PH1" type="place">City of Brotherly Love</rs>.</egXML>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NDPLAC-eg-55">After spending some time in our <placeName
-            ref="tag:projectname.org,2012:NY1">modern <placeName ref="tag:projectname.org,2012:BA1"
-            >Babylon</placeName></placeName>, <placeName ref="tag:projectname.org,2012:NY1">New York</placeName>, I have proceeded
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPLAC-egXML-zo">After spending some time in our <rs ref="tag:projectname.org,2012:NY1" type="place">modern <name ref="tag:projectname.org,2012:BA1" type="place">Babylon</name></rs>, <name ref="tag:projectname.org,2012:NY1" type="place">New York</name>, I have proceeded to the <rs ref="tag:projectname.org,2012:PH1" type="place">City of Brotherly Love</rs>.</egXML>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPLAC-egXML-dd" source="#NDPLAC-eg-55">After spending some time in our <placeName ref="tag:projectname.org,2012:NY1">modern <placeName ref="tag:projectname.org,2012:BA1">Babylon</placeName></placeName>, <placeName ref="tag:projectname.org,2012:NY1">New York</placeName>, I have proceeded
           to the <placeName ref="tag:projectname.org,2012:PH1">City of Brotherly Love</placeName>.</egXML>
       </p>
       <div type="div3" xml:id="NDPLGU">
         <head>Geo-political Place Names</head>
-        <p>A place name may contain text with no indication of its internal structure: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und"><placeName>Rochester, NY</placeName></egXML> More usually
+        <p>A place name may contain text with no indication of its internal structure: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPLGU-egXML-jv" xml:lang="und"><placeName>Rochester, NY</placeName></egXML> More usually
           however, a place name of this kind will be further analysed in terms of its constitutive geo-political or administrative
           units. These may be arranged in ascending sequence according to their size or administrative importance, for example:
             <q>Rochester, New York</q>, or as a single such unit, for example <q>Belgium</q>. These Guidelines provide a hierarchy
@@ -622,14 +589,13 @@ target="#CONA"/>).  The tag -->The
             <specDesc key="bloc"/>
           </specList></p>
         <p>These elements are all members of the <ident type="class">model.placeNamePart</ident> class, members of which may be
-          used anywhere that text is permitted, including within each other as in the following examples: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples"><placeName>
+          used anywhere that text is permitted, including within each other as in the following examples: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPLGU-egXML-sy"><placeName>
               <settlement type="city">Rochester</settlement>, <region type="state">New York</region>
             </placeName></egXML>
-          <egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName ref="tag:projectname.org,2012:LSEA1">
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPLGU-egXML-pg"><placeName ref="tag:projectname.org,2012:LSEA1">
               <country type="nation">Laos</country>, <bloc type="sub-continent">Southeast Asia</bloc>
             </placeName></egXML>
-          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul"><placeName>
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPLGU-egXML-fq" xml:lang="mul"><placeName>
               <district type="arondissement">6ème</district>
               <settlement type="city">Paris, </settlement>
               <country>France</country>
@@ -641,8 +607,7 @@ target="#CONA"/>).  The tag -->The
         <head>Geographic Names</head>
         <p>Places may also be named in terms of geographic features such as mountains, lakes, or rivers, independently of
           geo-political units. The <gi>geogName</gi> is provided to mark up such names, as an alternative to the
-            <gi>placeName</gi> element discussed above. For example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><geogName
-              ref="tag:projectname.org,2012:MIRI1" type="river">Mississippi River</geogName></egXML>
+            <gi>placeName</gi> element discussed above. For example: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPLGF-egXML-az"><geogName ref="tag:projectname.org,2012:MIRI1" type="river">Mississippi River</geogName></egXML>
         </p>
         <p>In addition to the usual phrase level elements, the <gi>geogName</gi> element may contain the following specialized
           element: <specList>
@@ -650,14 +615,10 @@ target="#CONA"/>).  The tag -->The
           </specList>
         </p>
         <p>Where the <gi>geogFeat</gi> element is used to characterize the kind of geographic feature being named, the
-            <gi>name</gi> element will generally also be used to mark the associated proper noun or noun phrase: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples"><geogName ref="tag:projectname.org,2012:MIRI1" type="river">
+            <gi>name</gi> element will generally also be used to mark the associated proper noun or noun phrase: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPLGF-egXML-ki"><geogName ref="tag:projectname.org,2012:MIRI1" type="river">
               <name>Mississippi</name>
               <geogFeat>River</geogFeat>
-            </geogName></egXML> A more complex example, showing a variety of practices, follows: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">The isolated ridge separates two great corridors which run from <name
-              ref="tag:projectname.org,2012:GLCO1" type="place">Glencoe</name> into <geogName ref="tag:projectname.org,2012:GLET1"
-              type="glen">
+            </geogName></egXML> A more complex example, showing a variety of practices, follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPLGF-egXML-rc">The isolated ridge separates two great corridors which run from <name ref="tag:projectname.org,2012:GLCO1" type="place">Glencoe</name> into <geogName ref="tag:projectname.org,2012:GLET1" type="glen">
               <geogFeat>Glen</geogFeat>
               <name>Etive</name>
             </geogName>, the <geogName ref="tag:projectname.org,2012:LAGA1" type="hill">
@@ -669,8 +630,7 @@ target="#CONA"/>).  The tag -->The
             </geogName></egXML></p>
         <p>The Gaelic word <mentioned>lairig</mentioned> may be glossed as <gloss>sloping hill face</gloss>. The most efficient
           way of including this information in the above encoding would be to create a separate <gi>nym</gi> element for this
-          component of the name and then point to it using the <att>nymRef</att> attribute, as further discussed in <ptr
-            target="#NDNYM"/>.</p>
+          component of the name and then point to it using the <att>nymRef</att> attribute, as further discussed in <ptr target="#NDNYM"/>.</p>
       </div>
       <div type="div3" xml:id="NDPLR">
         <head>Relative Place Names</head>
@@ -686,21 +646,19 @@ target="#CONA"/>).  The tag -->The
             <gi>geogName</gi> element. <specList>
             <specDesc key="offset"/>
             <specDesc key="measure"/>
-          </specList> Some examples of relative place names are: <egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName
-              ref="tag:projectname.org,2012:NRPA1">
+          </specList> Some examples of relative place names are: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPLR-egXML-wy"><placeName ref="tag:projectname.org,2012:NRPA1">
               <offset>near the top of</offset>
               <geogName>
                 <geogFeat>Mount</geogFeat>
                 <name>Sinai</name>
               </geogName>
             </placeName></egXML>
-          <egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName>
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPLR-egXML-iw"><placeName>
               <measure>20 km</measure>
               <offset>north of</offset>
               <settlement type="city">Paris</settlement>
             </placeName></egXML> If desired, the distance specified may be normalized using the <att>unit</att> and
-            <att>quantity</att> attributes of <gi>measure</gi>: <egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName
-              ref="tag:projectname.org,2012:Duncan">
+            <att>quantity</att> attributes of <gi>measure</gi>: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPLR-egXML-av"><placeName ref="tag:projectname.org,2012:Duncan">
               <measure unit="km" quantity="17.7">11 miles</measure>
               <offset>Northwest of</offset>
               <settlement type="city">Providence</settlement>, <region type="state">RI</region>
@@ -737,7 +695,7 @@ target="#CONA"/>).  The tag -->The
       other naming mechanisms; it is intended especially for
       <soCalled>canonical</soCalled> names that are used in texts to
       mention specific named events, whether real or fictional.
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDEVTN-egXML-rp">
           <p>On <date when="1719-03-19">Monday</date>, <rs type="person">she</rs> was writing about the 
             <eventName ref="#SecondDefPrague">1618 Defenestration of Prague</eventName> which initiated the 
             <rs type="event" ref="#ThirtyYearsWar">long war</rs>.</p>
@@ -754,8 +712,7 @@ target="#CONA"/>).  The tag -->The
       elements, the <gi>eventName</gi> element is a member of the
       <ident type="class">att.canonical</ident> class, and thus the
       <att>ref</att> (or <att>key</att>) attribute may be used to
-      refer to a an <gi>event</gi> element (about which see <ptr
-      target="#NDEVNT"/>) or some other data item that contains
+      refer to a an <gi>event</gi> element (about which see <ptr target="#NDEVNT"/>) or some other data item that contains
       further information about the event.</p>
       <p>When used as a direct child of <gi>event</gi>, an
       <gi>eventName</gi> provides one of the names of the event about
@@ -789,11 +746,10 @@ target="#CONA"/>).  The tag -->The
 
       <p>As with other proper nouns or noun phrases used as names, the names of objects may be marked up simply with the
           <gi>name</gi> element. For those working with a variety of named objects the <gi>objectName</gi> element provides more
-        flexibility. <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        flexibility. <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDOBJN-egXML-my">
           <p>The <objectName ref="#MinsterLovellJewel">Minster Lovell Jewel</objectName> is probably the most similar to the
               <objectName ref="#AlfredJewel">Alfred Jewel</objectName> and was found in <placeName ref="#MinsterLovell">Minster
-              Lovell</placeName> in <placeName ref="#Oxfordshire">Oxfordshire</placeName> and is kept at the <orgName
-              ref="#AshmoleanMuseum">Ashmolean Museum</orgName>.</p>
+              Lovell</placeName> in <placeName ref="#Oxfordshire">Oxfordshire</placeName> and is kept at the <orgName ref="#AshmoleanMuseum">Ashmolean Museum</orgName>.</p>
         </egXML>
       </p>
       <p>The <gi>objectName</gi> element may be used to encode any named object whether or not this is a text-bearing object. The
@@ -876,10 +832,10 @@ target="#CONA"/>).  The tag -->The
         </specList>
       </p>
       <p>Here is a simple example:
-      <egXML xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="Rome">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSbp-egXML-uu"><place xml:id="Rome">
                <placeName>Rome</placeName>
                <location>
-                  <geo>41.891775, 12.486137</geo>
+                  <geo>41.891775 12.486137</geo>
                </location>
                <idno type="Pleiades">423025</idno>
                <note>capital of the Roman Empire</note>
@@ -901,8 +857,7 @@ target="#CONA"/>).  The tag -->The
       </p>
 
       <p>One or more <gi>listPerson</gi> elements may be supplied
-      within the <gi>standOff</gi> element (see <ptr
-      target="#SASOstdf"/>) or, when used to list the participants in
+      within the <gi>standOff</gi> element (see <ptr target="#SASOstdf"/>) or, when used to list the participants in
       a linguistic interaction, within the <gi>particDesc</gi>
       (participant description) element in the <gi>profileDesc</gi>
       element of a TEI header. Like other forms of list, however,
@@ -912,7 +867,7 @@ target="#CONA"/>).  The tag -->The
 
       <p>The <att>type</att> attribute may be used to distinguish lists of people of different kinds where this is considered
         convenient:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSE-egXML-xr">
           <standOff>
             <listPerson type="fictional">
               <person xml:id="person_FAS">
@@ -990,9 +945,7 @@ target="#CONA"/>).  The tag -->The
         </egXML>
       </p>
 
-      <p>The <gi>person</gi> element carries several attributes. As a member of the classes <ident type="class"
-          >att.global.responsibility</ident>, <ident type="class">att.editLike</ident>, and <ident type="class"
-          >att.global.source</ident> class, it carries the usual attributes for providing details about the information recorded
+      <p>The <gi>person</gi> element carries several attributes. As a member of the classes <ident type="class">att.global.responsibility</ident>, <ident type="class">att.editLike</ident>, and <ident type="class">att.global.source</ident> class, it carries the usual attributes for providing details about the information recorded
         for that person, such as its reliability or source: <specList>
           <specDesc key="att.global.responsibility" atts="cert resp"/>
           <specDesc key="att.editLike" atts="evidence"/>
@@ -1014,8 +967,7 @@ target="#CONA"/>).  The tag -->The
         falls. A simple (perhaps too simple to be useful) binary classification of age brackets would be <val>child</val> and
           <val>adult</val>. The actual age brackets useful to various projects are likely to be varied and idiosyncratic, and thus
         these Guidelines make no particular recommendation as to possible values. Instead, individual projects are recommended to
-        define the values they use in their own customization file, using a declaration like the following: <egXML
-          xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/Examples">
+        define the values they use in their own customization file, using a declaration like the following: <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:id="NDPERSE-egXML-nb">
           <elementSpec ident="person" module="namesdates" mode="change">
             <attList>
               <attDef mode="replace" ident="age">
@@ -1075,7 +1027,7 @@ target="#CONA"/>).  The tag -->The
             <specDesc key="state"/>
             <specDesc key="trait"/>
           </specList> All, apart from <gi>langKnowledge</gi> and <gi>persona</gi>, allow content of ordinary prose containing
-          phrase-level elements. <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          phrase-level elements. <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSEpc-egXML-kf">
             <socecStatus ref="tag:projectname.org,2012:AB1">Status AB1 in the RG Classification scheme</socecStatus>
           </egXML>
           <!-- socecstatus has its own @code and @scheme attributes which need
@@ -1094,13 +1046,12 @@ exemplifying here too? -->
         <p>The <gi>langKnowledge</gi> element contains either paragraphs or a number of <gi>langKnown</gi> elements; it may take a
             <att>tags</att> attribute, which provides one or more standard codes or <soCalled>tag</soCalled>s for the languages.
           The <gi>langKnown</gi> element must have a <att>tag</att> attribute, which indicates the language with the same kind of
-            <soCalled>language tag</soCalled>. These <soCalled>language tags</soCalled> are discussed in detail in <ptr
-            target="#CHSH"/>.</p>
+            <soCalled>language tag</soCalled>. These <soCalled>language tags</soCalled> are discussed in detail in <ptr target="#CHSH"/>.</p>
         <p>Furthermore, the <gi>langKnown</gi> element also has a <att>level</att> attribute to indicate the level of the person's
-          competence in the language. It is thus possible either to say: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          competence in the language. It is thus possible either to say: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSEpc-egXML-cx">
             <langKnowledge tags="ff fr wo en"><p>Speaks fluent Fulani, Wolof, and French. Some knowledge of
               English.</p></langKnowledge>
-          </egXML> or <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          </egXML> or <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSEpc-egXML-kc">
             <langKnowledge>
               <langKnown level="fluent" tag="ff">Fulani</langKnown>
               <langKnown level="fluent" tag="wo">Wolof</langKnown>
@@ -1144,7 +1095,7 @@ exemplifying here too? -->
 	       <title>Proposal: new element <gi>persPronouns</gi></title>
 	       <ptr target="https://github.com/TEIC/TEI/issues/2010#issue-647632134"/>.
 	       </bibl> -->
-          <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSEpc-egXML-ff" source="#NONE">
             <person>
               <persName>
                 <forename>Miss Major</forename>
@@ -1169,7 +1120,7 @@ exemplifying here too? -->
 	       augmenting following example with a transcription of
 	       https://www6.unca.edu/ohms/viewer.php?cachefile=APOH001.xml
 	  -->
-	  <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#TEI-L_b092ac32.2101">
+	  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSEpc-egXML-oa" source="#TEI-L_b092ac32.2101">
       <div type="email">
         <opener><salute>Dear all,</salute></opener>
         <p>With apologies for length. I'm expanding a schema …</p>
@@ -1189,13 +1140,11 @@ exemplifying here too? -->
       </div>
 	  </egXML></p>
           <p>The <gi>sex</gi> and <gi>gender</gi> elements each carry a <att>value</att> attribute to give values from a project-internal taxonomy, or an
-          external standard. <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">
+          external standard. <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSEpc-egXML-lp">
             <sex value="F">female</sex>
             <gender value="W">woman</gender>
           </egXML> As elsewhere, these coded values may be used as an alternative to or normalization of the actual descriptive
-          text contained in the element. The previous example might equally well be given as <egXML
-            xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+          text contained in the element. The previous example might equally well be given as <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSEpc-egXML-ao" source="#UND">
             <sex value="F"/>
             <gender value="W"/>
           </egXML>
@@ -1208,8 +1157,7 @@ exemplifying here too? -->
           for the characteristic concerned and a description of the feature itself supplied within a <gi>desc</gi> element. These
           may be followed by or one or more <gi>p</gi> elements supplying more detailed information about the trait. In either
           case, these may be followed by one or more notes or bibliographical references. The <att>type</att>, <att>ref</att>, and
-            <att>key</att> attributes may be used to indicate a fuller definition of the combination of feature and value. <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">
+            <att>key</att> attributes may be used to indicate a fuller definition of the combination of feature and value. <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSEpc-egXML-ae">
             <trait type="ethnicity" key="alb">
               <label>Ethnicity</label>
               <desc>Ethnic Albanian.</desc>
@@ -1221,7 +1169,7 @@ exemplifying here too? -->
 
         <p>These elements are provided as a simple means of extending the set of descriptive features available in a standardized
           way. For example, there are no predefined elements for such features as eye or hair colour. If these are to be recorded,
-          they may simply be added as new types of trait: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          they may simply be added as new types of trait: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSEpc-egXML-lh">
             <trait type="physical">
               <label>eye colour</label>
               <desc>blue</desc>
@@ -1252,8 +1200,7 @@ exemplifying here too? -->
           prioritization, and hence less likelihood of offence. The Icelandic scholar and manuscript collector Árni Magnússon, to
           give his name in standard modern Icelandic spelling, is known in Danish as Arne Magnusson, the form which he himself, as
           a long term resident of Denmark, generally used; there is also a Latinized form, Arnas Magnæus, which he used in his
-          scholarly writings. All three forms can be given, and in any order: <egXML xmlns="http://www.tei-c.org/ns/Examples"
-            xml:lang="mul">
+          scholarly writings. All three forms can be given, and in any order: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSEpc-egXML-pt" xml:lang="mul">
             <person xml:id="ArnMag">
               <persName xml:lang="is">Árni Magnússon</persName>
               <persName xml:lang="da">Arne Magnusson</persName>
@@ -1261,8 +1208,7 @@ exemplifying here too? -->
             </person>
           </egXML>
         </p>
-        <p>At the other extreme, a person may be named periphrastically as in the following example: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">
+        <p>At the other extreme, a person may be named periphrastically as in the following example: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSEpc-egXML-gc">
             <person xml:id="simon_son_of_richard2">
               <persName>Simon, son of Richard</persName>
               <residence><placeName><region>Essex</region></placeName></residence>
@@ -1273,29 +1219,27 @@ exemplifying here too? -->
 
         <p>Alternatively, the generic <gi>name</gi> element may be used for all of the naming components in a description. For
           example, a description of the first living held by the Icelandic clergyman and poet Jón Oddsson Hjaltalín might be
-          tagged as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><state type="office" from="1777-04-07"
-              to="1780-07-12">
+          tagged as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSEpc-egXML-tb"><state type="office" from="1777-04-07" to="1780-07-12">
               <p>Jón's first living — which he apparently accepted rather reluctantly — was at <name type="place">Háls í
                   Hamarsfirði</name>, <name type="place">Múlasýsla</name>, to which he was presented on 7 April 1777. He was
                 ordained the following month and spent three years at Háls, but was never happy there, due largely to the general
                 penury in which he was forced to live — a recurrent theme throughout the early part of his life. In June of 1780
                 the bishop recommended that Jón should <q xml:lang="da">promoveres til andet bedre kald, end det hand hidindtil
-                  har havt</q>, and on 12 July it was agreed that he should exchange livings with <name type="person"
-                  ref="tag:projectname.org,2012:ThorJon">sr. Þórður Jónsson</name> at <name type="place">Kálfafell á Síðu</name>,
+                  har havt</q>, and on 12 July it was agreed that he should exchange livings with <name type="person" ref="tag:projectname.org,2012:ThorJon">sr. Þórður Jónsson</name> at <name type="place">Kálfafell á Síðu</name>,
                   <name type="place">Skaftafellssýsla</name>.</p> <bibl>ÞÍ, Stms I.15, p. 733.</bibl> <bibl>ÞÍ, Stms I.17, p.
                 102.</bibl> </state>
           </egXML>
         </p>
 
         <p>Similarly, the generic <gi>state</gi> or <gi>trait</gi> element may be used in preference to the more specific elements
-          listed above: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          listed above: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSEpc-egXML-nf">
             <state type="nationality" notBefore="2002-01-15">
               <label>Nationality</label>
               <desc>American citizen from 15 January 2002.</desc>
             </state>
-          </egXML> is the same as: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          </egXML> is the same as: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSEpc-egXML-bh">
             <nationality notBefore="2002-01-15">American citizen from 15 January 2002.</nationality>
-          </egXML> or even: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
+          </egXML> or even: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSEpc-egXML-xt" xml:lang="und" source="#UND">
             <nationality notBefore="2002-01-15" key="US"/>
           </egXML>
         </p>
@@ -1319,20 +1263,14 @@ exemplifying here too? -->
         <p>In the following example, we give a brief summary of the wedding of Jane Burden to the English writer, designer, and
           socialist William Morris, encoded as an <gi>event</gi> element embedded within the <gi>person</gi> element used to
           record data about Morris, though we could equally well have embedded the <gi>event</gi> element within the
-            <gi>person</gi> element for Burden, or have encoded it independently of either <gi>person</gi> element: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">
+            <gi>person</gi> element for Burden, or have encoded it independently of either <gi>person</gi> element: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSEpe-egXML-vg">
             <person xml:id="WM">
               <!-- ... -->
               <event type="marriage" when="1859-04-26">
                 <label>Marriage</label>
-                <desc><name type="person" ref="#WM">William Morris</name> and <name type="person"
-                    ref="http://en.wikipedia.org/wiki/Jane_Burden">Jane Burden</name> were married at <name type="place">St
+                <desc><name type="person" ref="#WM">William Morris</name> and <name type="person" ref="http://en.wikipedia.org/wiki/Jane_Burden">Jane Burden</name> were married at <name type="place">St
                     Michael's Church, Ship Street, Oxford</name> on <date when="1859-04-26">26 April 1859</date>. The wedding was
-                  conducted by Morris's friend <name type="person" ref="#RWD">R. W. Dixon</name> with <name type="person"
-                    ref="#CBF">Charles Faulkner</name> as the best man. The bride was given away by her father, <name
-                    type="person" ref="#RB">Robert Burden</name>. According to the account that <name type="person"
-                    ref="http://en.wikipedia.org/wiki/Edward_Burne-Jones">Burne-Jones</name> gave <name type="person" ref="#JWM"
-                    >Mackail</name>
+                  conducted by Morris's friend <name type="person" ref="#RWD">R. W. Dixon</name> with <name type="person" ref="#CBF">Charles Faulkner</name> as the best man. The bride was given away by her father, <name type="person" ref="#RB">Robert Burden</name>. According to the account that <name type="person" ref="http://en.wikipedia.org/wiki/Edward_Burne-Jones">Burne-Jones</name> gave <name type="person" ref="#JWM">Mackail</name>
                   <quote>M. said to Dixon beforehand <said>Mind you don't call her Mary</said> but he did</quote>. The entry in
                   the Register reads: <quote>William Morris, 25, Bachelor Gentleman, 13 George Street, son of William Morris decd.
                     Gentleman. Jane Burden, minor, spinster, 65 Holywell Street, d. of Robert Burden, Groom.</quote> The witnesses
@@ -1363,28 +1301,25 @@ exemplifying here too? -->
           </egXML> In this example the <att>ref</att> attributes on the various <gi>name</gi> elements point either to an external
           source or to a <gi>person</gi> element within which other information about the person named may be found. As further
           discussed below (<ptr target="#NDPERSREL"/>), a <gi>relation</gi> element may then be used to link them in a more
-          meaningful way: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+          meaningful way: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSEpe-egXML-qk" source="#UND">
             <relation name="spouse" mutual="#WM #JBM"/>
             <relation name="friend" mutual="#WM #RWD"/>
             <relation name="parent" active="#RB" passive="#JBM"/>
           </egXML>
         </p>
-        <p>As mentioned above, all these elements, both the specific and the generic, are members of the <ident type="class"
-            >att.datable</ident> attribute class, which means they can be limited in terms of time. The following encoding, for
-          example, demonstrates that the person named David Jones changed his name in 1966 to David Bowie: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und">
+        <p>As mentioned above, all these elements, both the specific and the generic, are members of the <ident type="class">att.datable</ident> attribute class, which means they can be limited in terms of time. The following encoding, for
+          example, demonstrates that the person named David Jones changed his name in 1966 to David Bowie: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSEpe-egXML-wd" xml:lang="und">
             <person xml:id="DB">
               <persName notAfter="1966">David Jones</persName>
               <persName notBefore="1966">David Bowie</persName>
             </person>
           </egXML>
         </p>
-        <p>All the generic elements are also members of the <ident type="class">att.global.responsibility</ident> and <ident
-            type="class">att.editLike</ident> classes. These classes make available the attributes <att>cert</att>, to indicate
+        <p>All the generic elements are also members of the <ident type="class">att.global.responsibility</ident> and <ident type="class">att.editLike</ident> classes. These classes make available the attributes <att>cert</att>, to indicate
           the degree of certainty, <att>resp</att>, the agency responsible, <att>evidence</att>, the nature of the evidence used,
           and <att>source</att>, a pointer to a resource from which the information derives. In this way it is possible, in the
           case of multiple and conflicting sources, to provide more than one view of what happened, as in the following example:
-            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSEpe-egXML-tv">
             <event type="birth" resp="#XYZ" cert="high"><p>Born in <name type="place">Brixton</name> on 8 January
               1947.</p></event>
             <event type="birth" resp="#ABC" cert="low"><p>Born in <name type="place">Berkhamsted</name> on 9 January
@@ -1419,7 +1354,7 @@ exemplifying here too? -->
           relationship <mentioned>employs</mentioned>. These relationships can be inverted: parents are <q>passive</q> and
           children <q>active</q> in the relationship <mentioned>is child of</mentioned>; similarly <q>works for</q> inverts the
           active and passive roles of <q>employs</q>.</p>
-        <p>For example: <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND"><listRelation>
+        <p>For example: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDPERSREL-egXML-ja" source="#UND"><listRelation>
               <relation name="parent" active="#P1 #P2" passive="#P3 #P4"/>
               <relation name="spouse" mutual="#P1 #P2"/>
               <relation type="social" name="employer" active="#P1" passive="#P3 #P4"/>
@@ -1463,14 +1398,13 @@ exemplifying here too? -->
         elements: the presence of the <gi>orgName</gi> element described in <ptr target="#NDORG"/> is however strongly
         recommended.</p>
       <p>In other respects, the <gi>org</gi> element is used in much the same way as <gi>place</gi> or <gi>person</gi>. An
-        organization may have different names at different times: <egXML xmlns="http://www.tei-c.org/ns/Examples"><org
-            xml:id="fab4">
+        organization may have different names at different times: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ND-org-egXML-xc"><org xml:id="fab4">
             <orgName notAfter="1960">The Silver Beetles</orgName>
             <orgName from="1960-08">The Beatles</orgName>
           </org></egXML>
       </p>
       <p>The names of the people making up an organization can also change over time, (if they are known at all). For example:
-          <egXML xmlns="http://www.tei-c.org/ns/Examples"><org xml:id="FAB4">
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ND-org-egXML-di"><org xml:id="FAB4">
             <orgName notAfter="1960">The Silver Beetles</orgName>
             <orgName notBefore="1960">The Beatles</orgName>
             <state type="membership" from="1960-08" to="1962-05">
@@ -1492,7 +1426,7 @@ exemplifying here too? -->
             </state>
           </org></egXML>
       </p>
-      <p>An <gi>org</gi> may contain subordinate <gi>org</gi>s: <egXML xmlns="http://www.tei-c.org/ns/Examples"><org xml:id="OUCS">
+      <p>An <gi>org</gi> may contain subordinate <gi>org</gi>s: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ND-org-egXML-vq"><org xml:id="OUCS">
             <orgName>Oxford University Computing Services</orgName>
             <org xml:id="OUCSisg">
               <orgName>Information and Support Group</orgName>
@@ -1513,8 +1447,7 @@ exemplifying here too? -->
         </egXML>
       </p>
       <p>The following example demonstrates the use of the <gi>listOrg</gi> element to group together a number of <gi>org</gi>
-        elements, each of which is defined solely by means of an informal description, itself containing other names. <egXML
-          xmlns="http://www.tei-c.org/ns/Examples">
+        elements, each of which is defined solely by means of an informal description, itself containing other names. <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ND-org-egXML-it">
           <p>The TEI institutional hosts are: <listOrg>
               <org xml:id="bu">
                 <orgName>Brown University</orgName>
@@ -1607,10 +1540,9 @@ exemplifying here too? -->
           reference frame (the <soCalled>datum</soCalled>) used for the coordinate system itself. The default recommended by these
           Guidelines is to supply a string containing two real numbers separated by whitespace, of which the first indicates
           latitude and the second longitude according to the 1984 World Geodetic System (WGS84); this is the system currently used
-          by most GPS applications which TEI users are likely to encounter.<note place="bottom">See <ptr
-              target="http://earth-info.nga.mil/GandG/wgs84/index.html"/>. The most recent revision of this standard is known as
+          by most GPS applications which TEI users are likely to encounter.<note place="bottom">See <ptr target="http://earth-info.nga.mil/GandG/wgs84/index.html"/>. The most recent revision of this standard is known as
             the Earth Gravity Model 1996.</note>We might therefore record the information about the place known as
-            <soCalled>Lyon</soCalled> as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <soCalled>Lyon</soCalled> as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDGEOGva-egXML-pt">
             <place xml:id="LYON1" type="city">
               <placeName notBefore="1400">Lyon</placeName>
               <placeName notAfter="0640">Lugdunum</placeName>
@@ -1620,8 +1552,7 @@ exemplifying here too? -->
         </p>
 
         <p>Identifying Lyon by its geo-political status as a settlement within a country forming part of a larger political
-          entity, we might represent the same <soCalled>place</soCalled> as follows: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und">
+          entity, we might represent the same <soCalled>place</soCalled> as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDGEOGva-egXML-lp" xml:lang="und">
             <place xml:id="LYON2">
               <placeName notBefore="1400">Lyon</placeName>
               <placeName notAfter="0640">Lugdunum</placeName>
@@ -1630,10 +1561,9 @@ exemplifying here too? -->
                 <country>France</country>
               </location>
             </place>
-          </egXML> Elements such as <gi>bloc</gi> are specialized forms of <gi>placeName</gi>, as discussed in <ptr
-            target="#NDPLGU"/>.</p>
+          </egXML> Elements such as <gi>bloc</gi> are specialized forms of <gi>placeName</gi>, as discussed in <ptr target="#NDPLGU"/>.</p>
         <p>We may use the same procedure to represent the location of smaller places, such as a street or even an individual
-          building: <egXML xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="BGbldg" type="building">
+          building: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDGEOGva-egXML-mx"><place xml:id="BGbldg" type="building">
               <placeName>Brasserie Georges</placeName>
               <location>
                 <country key="FR"/>
@@ -1646,8 +1576,7 @@ exemplifying here too? -->
           concerned (a building) and the kind of name used to locate it, for example by characterizing the generic
             <gi>district</gi> as an <soCalled>arrondissement</soCalled>, or a <soCalled>quartier</soCalled>.</p>
 
-        <p>We may also treat imaginary places in the same way: <egXML xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="Atl"
-              type="imaginary">
+        <p>We may also treat imaginary places in the same way: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDGEOGva-egXML-ao"><place xml:id="Atl" type="imaginary">
               <placeName>Atlantis</placeName>
               <location>
                 <offset>beyond</offset>
@@ -1655,8 +1584,7 @@ exemplifying here too? -->
               </location>
             </place></egXML></p>
 
-        <p>A <gi>location</gi> sometimes resembles a set of instructions for finding a place: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="MYF">
+        <p>A <gi>location</gi> sometimes resembles a set of instructions for finding a place: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDGEOGva-egXML-hw"><place xml:id="MYF">
               <placeName notAfter="1969">Yasgur's Farm</placeName>
               <placeName notBefore="1969">Woodstock Festival Site</placeName>
               <location>
@@ -1667,8 +1595,7 @@ exemplifying here too? -->
               </location>
             </place></egXML>
         </p>
-        <p>The element <gi>address</gi> may also be used to identify a location in terms of its postal or other address: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="locCA" type="cemetery">
+        <p>The element <gi>address</gi> may also be used to identify a location in terms of its postal or other address: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDGEOGva-egXML-zn"><place xml:id="locCA" type="cemetery">
               <placeName>Protestant Cemetery</placeName>
               <placeName type="official" xml:lang="it">Cimitero Acattolico</placeName>
               <location type="geopolitical">
@@ -1708,14 +1635,12 @@ exemplifying here too? -->
                 standard. The OGC coordinates with the ISO TC 211 standards organization to maintain consistency between OGC and
                 ISO standards work. GML is also an ISO standard (<ref target="#ISO-19136">ISO 19136:2007</ref>).</note>
             </item>
-            <item> the Keyhole Markup Language (KML) used by Google Maps<note place="bottom">See <ptr
-                  target="https://developers.google.com/kml/documentation/"/></note>
+            <item> the Keyhole Markup Language (KML) used by Google Maps<note place="bottom">See <ptr target="https://developers.google.com/kml/documentation/"/></note>
             </item>
           </list>
         </p>
         <p>In the following example, we have defined the location of the place <soCalled>Lyon</soCalled> using GML and indicated
-          the two names associated with it at different times: <egXML xmlns:gml="http://www.opengis.net/gml"
-            xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+          the two names associated with it at different times: <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:gml="http://www.opengis.net/gml" xml:id="NDGEOGva-egXML-my" valid="feasible">
             <place xml:id="locLyon" type="city">
               <placeName notBefore="1400">Lyon</placeName>
               <placeName notAfter="0640">Lugdunum</placeName>
@@ -1732,7 +1657,7 @@ exemplifying here too? -->
         </p>
 
         <p>A <gi>bibl</gi> element may be used within <gi>location</gi> to indicate the source of the location information.</p>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDGEOGva-egXML-vp">
           <location>
             <geo>53.226658 -0.541254</geo>
             <bibl><title>Roman Inscriptions of Britain</title>, <idno>262</idno></bibl>
@@ -1743,8 +1668,7 @@ exemplifying here too? -->
       <div xml:id="NDGEOGmp">
         <head>Multiple Places</head>
         <p>A place may contain other places. This containment relation can be directly modelled in XML: thus we can say that the
-          towns of Vilnius and Kaunas are both in a place called Lithuania (or Lietuva) as follows: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul"><place xml:id="locLith">
+          towns of Vilnius and Kaunas are both in a place called Lithuania (or Lietuva) as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDGEOGmp-egXML-ea" xml:lang="mul"><place xml:id="locLith">
               <country>Lithuania</country>
               <country xml:lang="lt">Lietuva</country>
               <place>
@@ -1762,7 +1686,7 @@ exemplifying here too? -->
         <p>As a further example, the islands of Mauritius, Réunion, and Rodrigues are collectively known as the Mascarene Islands.
           Grouped together with Mauritius there are also several smaller offshore islands, with rather picturesque French names.
           These offshore islands do not however constitute an identifiable place as a whole. One way of representing this is as
-          follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="locMascarenes" type="islandGroup">
+          follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDGEOGmp-egXML-cb"><place xml:id="locMascarenes" type="islandGroup">
               <placeName>Mascarene Islands</placeName>
               <placeName>Mascarenhas Archipelago</placeName>
               <place type="island">
@@ -1786,7 +1710,7 @@ exemplifying here too? -->
         </p>
         <p>Here is a more complex example, showing the variety of names associated at different times and in different languages
           with a set of hierarchically grouped places—the settlement of Carmarthen Castle, within the town of Carmarthen, within
-          the administrative county of Carmarthenshire, Wales. <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul">
+          the administrative county of Carmarthenshire, Wales. <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDGEOGmp-egXML-qn" xml:lang="mul">
             <place xml:id="wales" type="country">
               <placeName xml:lang="cy">Cymru</placeName>
               <placeName xml:lang="en">Wales</placeName>
@@ -1815,8 +1739,7 @@ exemplifying here too? -->
         <p>This use of multiple <gi>place</gi> elements should be distinguished from the (possibly simpler) case where a number of
           places with some property in common are being grouped together for convenience, for example, in a gazetteer. The
             <gi>listPlace</gi> element is provided as a means of grouping places together where there is no implication that the
-          grouped elements constitute a distinct place. For example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><place
-              xml:id="pl-c-H" type="county">
+          grouped elements constitute a distinct place. For example: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDGEOGmp-egXML-wb"><place xml:id="pl-c-H" type="county">
               <placeName>Herefordshire</placeName>
               <listPlace type="villages">
                 <place xml:id="pl-v-AD">
@@ -1860,8 +1783,7 @@ exemplifying here too? -->
         <p>These are all specializations of the generic <gi>trait</gi> element. This element may be used for almost any kind of
           event in the life of a place; no specialized version of this element is proposed, nor do we attempt to enumerate the
           possible values which might be appropriate for the <att>type</att> attribute on any of these generic elements.</p>
-        <p>Here is an example, showing how the specific and generic elements may be combined: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">
+        <p>Here is an example, showing how the specific and generic elements may be combined: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDGEOGste-egXML-oe">
             <place xml:id="IS">
               <placeName xml:lang="en">Iceland</placeName>
               <placeName xml:lang="is">Ísland</placeName>
@@ -1885,7 +1807,7 @@ exemplifying here too? -->
         </p>
 
         <p>In the following example, the <gi>climate</gi> example is used to provided a detailed discussion of this particular
-          aspect of the information available about a particular place: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          aspect of the information available about a particular place: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDGEOGste-egXML-mj">
             <place xml:id="greece">
               <placeName>Greece</placeName>
               <climate>
@@ -1921,8 +1843,7 @@ exemplifying here too? -->
           hierarchically within each other. When this is done, values for the <att>type</att> attribute are to be understood as
           cumulatively inherited, as elsewhere in the TEI scheme (for example on <gi>category</gi> or <gi>linkGrp</gi>). In the
           following example, the outermost <gi>population</gi> element concerns the squirrel population between the dates given.
-          This is then broken down into red and gray squirrel populations, and within that into male and female: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">
+          This is then broken down into red and gray squirrel populations, and within that into male and female: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDGEOGste-egXML-ip">
             <population type="squirrel" notBefore="1901" notAfter="1902-01-11" resp="#strabo">
               <population type="red" when="1901-01-10">
                 <population type="female"><desc>12</desc></population>
@@ -1950,7 +1871,7 @@ exemplifying here too? -->
         <p>The <gi>relation</gi> element may also be used to express relationships of various kinds between places, or between
           places and persons, in much the same way as it is used to express relationships between persons alone. Returning to the
           Mascarene Islands example cited above, we might define the island group and its constituents separately, but indicate
-          the relationship by means of a <gi>relation</gi> element: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          the relationship by means of a <gi>relation</gi> element: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="place-rel-egXML-ip">
             <listPlace>
               <place xml:id="MASC">
                 <placeName>Mascarene islands</placeName>
@@ -1973,12 +1894,11 @@ exemplifying here too? -->
 
         <p>This <soCalled>stand-off</soCalled> style of representation has the advantage that we can now also represent the fact
           that a place may be a <q>part of</q> more than one other place; for example, Réunion is part of France, as well as part
-          of the Mascarenes. If we add a declaration for France to the list above: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          of the Mascarenes. If we add a declaration for France to the list above: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="place-rel-egXML-na">
             <place type="country" xml:id="FRA">
               <placeName>France</placeName>
             </place>
-          </egXML> we can now model this dual allegiance by means of a <gi>relation</gi> element: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und" source="#UND">
+          </egXML> we can now model this dual allegiance by means of a <gi>relation</gi> element: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="place-rel-egXML-da" xml:lang="und" source="#UND">
             <relation name="partOf" active="#REN" passive="#FRA #MASC"/>
           </egXML>
         </p>
@@ -2106,13 +2026,12 @@ occupation and residence.</p>
         independently of either a place, person, or organization. This may be useful not only for encoding texts which describe named events and 
         their <gi>eventName</gi>s, but also in applications as chronologies or lists of significant events (e.g., important  battles, legislative milestones, or the stages of construction of a large building, etc.).</p>
       
-      <p>The <gi>listEvent</gi> element is a member of the <ident
-        type="class">model.listLike</ident> class, and may therefore
+      <p>The <gi>listEvent</gi> element is a member of the <ident type="class">model.listLike</ident> class, and may therefore
         appear inside <gi>standOff</gi>, or wherever else lists are
         permitted, in the same way as the <gi>listPerson</gi>,
         <gi>listPlace</gi>, <gi>listOrg</gi> etc. elements described elsewhere in this
         chapter.</p>
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDEVNT-egXML-lx">
         <standOff>
           <listEvent>
             <event when="1713" ref="https://www.canadiana.ca/view/oocihm.9_01832/2">
@@ -2147,7 +2066,7 @@ occupation and residence.</p>
       <p>The next example demonstrates the use of the
         <att>where</att> attribute with <gi>event</gi>, coordinated
         with location information stored in <gi>listPlace</gi>.</p>
-      <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NDGEOGste-Falls">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDEVNT-egXML-ma" source="#NDGEOGste-Falls">
         <standOff>
           <!-- ========= events ========= -->
           <listEvent>
@@ -2186,7 +2105,7 @@ occupation and residence.</p>
               <head>SAS parachute failure</head>
               <head type="short">Bear Grylls</head>
               <ab type="altitude"><measure unit="m" quantity="4877"/></ab>
-              <ab type="survivor"><persName ref="#p-BG"></persName></ab>
+              <ab type="survivor"><persName ref="#p-BG"/></ab>
             </event>
             <event xml:id="CM" where="#l-Joh" when="2004-08-22">
               <head>Johannesburg parachute failure</head>
@@ -2198,7 +2117,7 @@ occupation and residence.</p>
               <head>Cameraman fails to open chute</head>
               <head type="short">Sport videographer</head>
               <ab type="altitude"><measure unit="m" quantity="1829"/></ab>
-              <ab type="survivor"><persName ref="#p-JB"></persName></ab>
+              <ab type="survivor"><persName ref="#p-JB"/></ab>
             </event>
           </listEvent>
           <!-- ========= places ========= -->
@@ -2206,7 +2125,7 @@ occupation and residence.</p>
             <place xml:id="l-GSN">
               <placeName xml:lang="fr">Gare de Saint-Nazaire</placeName>
               <location>
-                <geo>47.28657,-2.21171</geo>
+                <geo>47.28657 -2.21171</geo>
               </location>
             </place>
             <place xml:id="l-Joh">
@@ -2234,7 +2153,7 @@ occupation and residence.</p>
                 <region>Arnsberg</region>
                 <district>Hochsauerlandkreis</district>
                 <settlement>Schmallenberg</settlement>
-                <geo cert="low">51.154,8.357</geo>
+                <geo cert="low">51.154 8.357</geo>
               </location>
             </place>
             <place xml:id="l-PI" xml:lang="es">
@@ -2254,7 +2173,7 @@ occupation and residence.</p>
             <place xml:id="l-Seb">
               <placeName xml:lang="de">Sebnitz</placeName>
               <location>
-                <geo>50.966667,14.283333</geo>
+                <geo>50.966667 14.283333</geo>
               </location>
             </place>
             <place xml:id="l-WWIIEast">
@@ -2322,7 +2241,7 @@ occupation and residence.</p>
         attribute with six space-separated values, or using a <gi>listPlace</gi> (nested into the <gi>event</gi> or standalone).</p>
       
       <p>Events may also be modeled as hierarchies of nested <gi>event</gi>s. For example, a two part meeting might be represented as follows:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDEVNT-egXML-do">
           <event type="meeting" when="2007-05-29">
             <desc>All day meeting to resolve content models</desc>
             <event type="preamble" notAfter="13:00:00">
@@ -2359,8 +2278,7 @@ occupation and residence.</p>
         <p>The <gi>object</gi> element usually appears inside the
         <gi>listObject</gi> element which is used to group
         descriptions of identifiable objects. The <gi>listObject</gi>
-        element is a member of <ident
-        type="class">model.listLike</ident> and so may appear inside
+        element is a member of <ident type="class">model.listLike</ident> and so may appear inside
         <gi>standOff</gi>, or anywhere else that <gi>list</gi> is
         allowed. This enables the flexibility of using
         <gi>listObject</gi> to contain a set of metadata descriptions
@@ -2391,16 +2309,14 @@ occupation and residence.</p>
         an <gi>msIdentifier</gi> element with less contraints on the order of its contents. The <gi>objectIdentifier</gi> may be more
         or less detailed dependent on the needs of the encoder. In some cases an <gi>object</gi> may be used mostly as a common
         reference point for multiple <gi>objectName</gi> elements to refer back to. In situations, one might provide more detailed
-        information in the <gi>objectIdentifier</gi> where it is available or desirable. Compare <egXML
-          xmlns="http://www.tei-c.org/ns/Examples">
+        information in the <gi>objectIdentifier</gi> where it is available or desirable. Compare <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDOBJ-egXML-wt">
           <object xml:id="Excalibur-shortIdentifier">
             <objectIdentifier>
               <objectName>Excalibur</objectName>
             </objectIdentifier>
             <p>Excalibur is the name for the legendary sword of King Arthur.</p>
           </object>
-        </egXML> where only a single <gi>objectName</gi> is provided and below where multiple versions are provided. <egXML
-          xmlns="http://www.tei-c.org/ns/Examples">
+        </egXML> where only a single <gi>objectName</gi> is provided and below where multiple versions are provided. <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDOBJ-egXML-zz">
           <object xml:id="Excalibur-longerIdentifier">
             <objectIdentifier>
               <objectName type="main">Excalibur</objectName>
@@ -2426,7 +2342,7 @@ occupation and residence.</p>
         currently resides. The use of <gi>location</gi> within this enables the provision of geographical coordinates when
         describing objects not housed in traditional repositories or institutions. This may also be used to supplement more
         traditional repository location information if available and, for example, to enable providing outputs such as maps
-        showing the location of encoded objects. <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        showing the location of encoded objects. <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDOBJ-egXML-mz">
           <objectIdentifier>
             <objectName xml:lang="en">Mask of Tutankhamun</objectName>
             <idno type="carter">256a</idno>
@@ -2439,7 +2355,7 @@ occupation and residence.</p>
               <settlement>Cairo</settlement>
               <country>Egypt</country>
               <location>
-                <geo>30.047778, 31.233333</geo>
+                <geo>30.047778 31.233333</geo>
               </location>
             </address>
           </objectIdentifier>
@@ -2455,7 +2371,7 @@ occupation and residence.</p>
         information about surrogates for the object (such as digital facsimiles) as well as administrative and curatorial
         information. A full description of an object can provide more or less detail at any level to represent the state of
         knowledge about the object.
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDOBJ-egXML-ym">
           <listObject>
             <object xml:id="TutankhamunMask">
               <objectIdentifier>
@@ -2470,7 +2386,7 @@ occupation and residence.</p>
                   <settlement>Cairo</settlement>
                   <country>Egypt</country>
                   <location>
-                    <geo>30.047778, 31.233333</geo>
+                    <geo>30.047778 31.233333</geo>
                   </location>
                 </address>
               </objectIdentifier>
@@ -2492,8 +2408,7 @@ occupation and residence.</p>
               </physDesc>
               <history>
                 <origin>
-                  <p>The mask of Tutankhamun was created in <origPlace>Egypt</origPlace> around <origDate when="-1323"
-                      type="circa">1323 BC</origDate>. It is a death mask of the 18th-dynasty ancient Egyptian Pharaoh Tutankhamun
+                  <p>The mask of Tutankhamun was created in <origPlace>Egypt</origPlace> around <origDate when="-1323" type="circa">1323 BC</origDate>. It is a death mask of the 18th-dynasty ancient Egyptian Pharaoh Tutankhamun
                     who reigned 1332–1323 BC.</p>
                 </origin>
                 <provenance>
@@ -2533,7 +2448,7 @@ occupation and residence.</p>
         example here the <val>Alfred-Jewel</val> <att>xml:id</att> is referenced from a paragraph elsewhere in the document using the <att>ref</att>
          attribute on the <gi>objectName</gi> element.
 
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDOBJ-egXML-qn">
           <!-- Inside <standOff>: -->
           <listObject>
             <object xml:id="Alfred-Jewel">
@@ -2573,8 +2488,7 @@ occupation and residence.</p>
           <p>
             The <objectName ref="#MinsterLovellJewel">Minster Lovell Jewel</objectName> is probably the most similar to the
               <objectName ref="#Alfred-Jewel">Alfred Jewel</objectName> and was found in <placeName ref="#MinsterLovell">Minster
-              Lovell</placeName> in <placeName ref="#Oxfordshire">Oxfordshire</placeName> and is kept at the <orgName
-              ref="#AshmoleanMuseum">Ashmolean Museum</orgName>.
+              Lovell</placeName> in <placeName ref="#Oxfordshire">Oxfordshire</placeName> and is kept at the <orgName ref="#AshmoleanMuseum">Ashmolean Museum</orgName>.
           </p>
         </egXML>
       </p>
@@ -2585,7 +2499,7 @@ There is no restriction on the form, size, or type of object that may be describ
 
 
 <p>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDOBJ-egXML-xt">
   <object type="building" xml:lang="en" xml:id="UNAM-CL">
                <objectIdentifier>
                   <objectName type="abbr">The Central Library of UNAM</objectName>
@@ -2629,9 +2543,7 @@ There is no restriction on the form, size, or type of object that may be describ
                            Wall, this represents the pre-Hispanic era and is dominated by mythical elements relating to the
                            life-death duality. The left side of the main axis there are
                            deities and scenes pertaining to the creation of life. The right hand side of the mural contains figures
-                           relating to death. For a more detailed description see <ref
-                              target="https://en.wikipedia.org/wiki/Central_Library_(UNAM)#Murals"
-                              >https://en.wikipedia.org/wiki/Central_Library_(UNAM)#Murals</ref>.</p>
+                           relating to death. For a more detailed description see <ref target="https://en.wikipedia.org/wiki/Central_Library_(UNAM)#Murals">https://en.wikipedia.org/wiki/Central_Library_(UNAM)#Murals</ref>.</p>
                      </decoNote>
                   </decoDesc>
                </physDesc>
@@ -2695,18 +2607,17 @@ There is no restriction on the form, size, or type of object that may be describ
       </p>
       <p>Any element which is a member of the <ident type="class">att.naming</ident> class may use the attribute <att>nymRef</att>
         to indicate the nym with which it corresponds. Thus, given the following <gi>nym</gi> for the name
-          <mentioned>Antony</mentioned>: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <mentioned>Antony</mentioned>: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDNYM-egXML-fh">
           <listNym>
             <nym xml:id="N123">
               <form>Antony</form>
             </nym>
             <!-- other nym definitions here -->
-          </listNym></egXML> an occurrence of this name in running text might be encoded as follows: <egXML
-          xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und">
+          </listNym></egXML> an occurrence of this name in running text might be encoded as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDNYM-egXML-qt" xml:lang="und">
           <forename nymRef="#N123">Tony</forename> Blair </egXML> Note that this association (between "Tony" and "Antony") has
         nothing to do with any individual who might use the name.</p>
       <p>The person identified by this particular Tony may however be indicated independently using the <att>ref</att> attribute,
-        either on the forename or on the whole name component: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        either on the forename or on the whole name component: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDNYM-egXML-xw">
           <forename nymRef="#N123" ref="#BLT">Tony</forename>
           <!-- ... -->
           <person xml:id="BLT">
@@ -2717,7 +2628,7 @@ There is no restriction on the form, size, or type of object that may be describ
       <p>The <gi>nym</gi> element may be thought of as providing a specialized kind of dictionary entry. Like a dictionary entry,
         it may contain any element from the <ident type="class">model.entryPart</ident> class, such as <gi>form</gi>,
           <gi>etym</gi>, etc. For example, we may show that the canonical form for a given nym has two orthographic variants in
-        this way: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und">
+        this way: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDNYM-egXML-wb" xml:lang="und">
           <nym xml:id="J451">
             <form>
               <orth xml:lang="en-US">Ian</orth>
@@ -2726,20 +2637,17 @@ There is no restriction on the form, size, or type of object that may be describ
           </nym>
         </egXML>
       </p>
-      <p>Because a schema intending to make use of the <gi>nym</gi> or <gi>listNym</gi> element must include the <ident
-          type="module">dictionaries</ident> module as well as the <ident type="module">namesdates</ident> module, many other
+      <p>Because a schema intending to make use of the <gi>nym</gi> or <gi>listNym</gi> element must include the <ident type="module">dictionaries</ident> module as well as the <ident type="module">namesdates</ident> module, many other
         elements are available in addition to <gi>form</gi>. For example, to provide a more complex etymological decomposition of
-        a name, we might use the existing <gi>etym</gi> element, as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><nym
-            xml:id="XYZ">
+        a name, we might use the existing <gi>etym</gi> element, as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDNYM-egXML-as"><nym xml:id="XYZ">
             <form>Bogomil</form>
-            <etym>Means <gloss>favoured by God</gloss> from the <lang>Slavic</lang> elements <mentioned xml:lang="ru"
-                >bog</mentioned>
+            <etym>Means <gloss>favoured by God</gloss> from the <lang>Slavic</lang> elements <mentioned xml:lang="ru">bog</mentioned>
               <gloss>God</gloss> and <mentioned xml:lang="ru">mil</mentioned>
               <gloss>favour</gloss></etym>
           </nym></egXML>
       </p>
       <p>Where it is necessary to mark the substructure of nyms, this may be done by <gi>seg</gi> elements within the
-          <gi>form</gi>:<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und">
+          <gi>form</gi>:<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDNYM-egXML-vn" xml:lang="und">
           <nym xml:id="ABC">
             <form>
               <choice>
@@ -2754,17 +2662,16 @@ There is no restriction on the form, size, or type of object that may be describ
         and the <ident type="module">analysis</ident> (see <ptr target="#AI"/>) or <ident type="module">iso-fs</ident> modules
         (see <ptr target="#FS"/>).</p>
       <p>Alternatively, each of the constituents of <mentioned>Bogomil</mentioned> might be regarded as a nym in its own right:
-          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und">
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDNYM-egXML-ko" xml:lang="und">
           <nym xml:id="B1" type="part">
             <form>bog</form>
           </nym>
           <nym xml:id="M1" type="part">
             <form>mil</form>
           </nym>
-        </egXML> Within running text, a name can specify all the nyms associated with it: <egXML
-          xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und"> ...<name nymRef="#B1 #M1">Bogomil</name>... </egXML> Similarly,
+        </egXML> Within running text, a name can specify all the nyms associated with it: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDNYM-egXML-eg" xml:lang="und"> ...<name nymRef="#B1 #M1">Bogomil</name>... </egXML> Similarly,
         within a nym, the attribute <att>parts</att> is used to indicate its constituent parts, where these have been identified
-        as distinct nyms: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und">
+        as distinct nyms: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDNYM-egXML-xp" xml:lang="und">
           <nym xml:id="BM1" parts="#B1 #M1">
             <form>Bogomil</form>
           </nym>
@@ -2772,8 +2679,7 @@ There is no restriction on the form, size, or type of object that may be describ
       </p>
       <p>The <gi>nym</gi> element may also combine a number of other <gi>nym</gi> elements together, where it is intended to show
         that they are all regarded as variations on the same root. Thus the different forms of the name John, all being derived
-        from the same root, may be represented as a hierarchic structure like this: <egXML
-          xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und"><nym xml:id="J45">
+        from the same root, may be represented as a hierarchic structure like this: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDNYM-egXML-mt" xml:lang="und"><nym xml:id="J45">
             <form xml:lang="la">Iohannes</form>
             <nym xml:id="J450">
               <form xml:lang="en">John</form>
@@ -2792,8 +2698,7 @@ There is no restriction on the form, size, or type of object that may be describ
             </nym>
           </nym></egXML>
       </p>
-      <p>The <gi>nym</gi> element may be used for components of geographical or organizational names as well. For example: <egXML
-          xmlns="http://www.tei-c.org/ns/Examples">
+      <p>The <gi>nym</gi> element may be used for components of geographical or organizational names as well. For example: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDNYM-egXML-hg">
           <geogName ref="tag:projectname.org,2012:LAEI1" type="hill">
             <geogFeat xml:lang="gd" nymRef="#LAIRG">Lairig</geogFeat>
             <name>Eilde</name>
@@ -2852,26 +2757,25 @@ There is no restriction on the form, size, or type of object that may be describ
             third Sunday after the first Monday before Lammastide in the fifth year of the King's second marriage ... </q> but so
           does natural language.</p>
         <p>In the following examples, the <att>when</att> and <att>dur</att> attributes have been used to simplify processing of
-          variant forms of expression: <egXML xmlns="http://www.tei-c.org/ns/Examples"><date when="1786-12-11">
+          variant forms of expression: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDDATER-egXML-cc"><date when="1786-12-11">
               <date dur="P14D">A fortnight</date>
               <offset>before</offset>
               <date when="1786-12-25" type="holiday">Christmas 1786</date>
             </date></egXML>
-          <egXML xmlns="http://www.tei-c.org/ns/Examples">I reached the station <time when="14:15:00">
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDDATER-egXML-pr">I reached the station <time when="14:15:00">
               <time dur="PT30M0S">precisely half an hour</time>
               <offset>after</offset>
               <time when="13:45:00" type="occasion">the departure of the afternoon train to Boston</time>
             </time></egXML></p>
         <p>In the following example, a nested <gi>date</gi> element is used to show that <q>my birthday</q> and the cited date are
           parts of the same temporal expression, and hence to disambiguate the phrase <q>A week before my birthday on 9th
-            December</q>: <egXML xmlns="http://www.tei-c.org/ns/Examples"><date when="--12-02">
+            December</q>: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDDATER-egXML-nh"><date when="--12-02">
               <date>A week</date>
               <offset>before</offset>
               <date when="--12-09">
                 <date type="occasion">my birthday</date> on <date>9th December</date>
               </date>
-            </date></egXML> The alternative reading of this phrase could be encoded as follows: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples"><date when="--12-09">
+            </date></egXML> The alternative reading of this phrase could be encoded as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDDATER-egXML-iz"><date when="--12-09">
               <date>A week</date>
               <offset>before</offset>
               <date type="occasion" when="--12-16">my birthday</date> on <date>9th December</date>
@@ -2880,18 +2784,15 @@ There is no restriction on the form, size, or type of object that may be describ
         <p>Where more complex or ambiguous expressions are involved, and where it is desirable to make more explicit the
           interpretive processes required, the feature structure notation described in chapter <ptr target="#FS"/> may be used.
           Consider, for example, the following temporal expression which occurs in the <title>Scottish Temperance Review</title>
-          of August 1850, referring to the summer holiday known in Glasgow simply as <q>the Fair</q>: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">Not only is the city, <date ana="#gf50">during the Fair</date>, a horrible
+          of August 1850, referring to the summer holiday known in Glasgow simply as <q>the Fair</q>: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDDATER-egXML-ca">Not only is the city, <date ana="#gf50">during the Fair</date>, a horrible
             nucleus of immorality and wickedness; it sends our multitudes to pollute and demoralize the country.</egXML>
         </p>
-        <p>For the definition of the <att>ana</att> attribute, see chapter <ptr target="#AI"/> (in particular <ptr
-            target="#AIATTS"/>). It is used here to link the temporal phrase with an interpretation of it. Like most traditional
+        <p>For the definition of the <att>ana</att> attribute, see chapter <ptr target="#AI"/> (in particular <ptr target="#AIATTS"/>). It is used here to link the temporal phrase with an interpretation of it. Like most traditional
           fairs and market days, the Glasgow Fair was established by local custom and could vary from year to year. Consequently,
           in order to provide such an interpretation, it is necessary to draw upon additional information which may or may not be
           located in the particular text in question. In this case, it is necessary at least to know the spatial and temporal
           context (year and place) of the fair referred to. These and other features required for the analysis of this particular
-          temporal expression may be combined together as one feature structure of type <val>date-analysis</val>: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples"><fs xml:id="gf50" type="date-analysis">
+          temporal expression may be combined together as one feature structure of type <val>date-analysis</val>: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDDATER-egXML-wd"><fs xml:id="gf50" type="date-analysis">
               <f name="event"><string>the Fair</string></f>
               <f name="place"><string>Glasgow</string></f>
               <f name="year"><numeric value="1850"/></f>
@@ -2905,17 +2806,16 @@ There is no restriction on the form, size, or type of object that may be describ
 
         <p>The following are examples of absolute temporal expressions.</p>
         <p>
-          <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NDDATEA-eg-169">The university's view of American affairs
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDDATEA-egXML-tv" source="#NDDATEA-eg-169">The university's view of American affairs
             produced a stinging attack by Edmund Burke in the Commons debate of <date when="1775-10-26">26 October
             1775</date></egXML>
-          <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDDATEA-egXML-yq" source="#NONE">
             <date when="1993-05-14">Friday, 14 May 1993</date>
           </egXML>
         </p>
         <p>It may be useful to categorize a temporal expression which is given in terms of a named event, such as a public
-          holiday, or a named time such as <q>tea time</q> or <q>matins</q>: <egXML xmlns="http://www.tei-c.org/ns/Examples">In
-            New York, <date type="occasion" when="--01-01">New Year's Day</date> is the quietest of holidays, <date when="--07-04"
-              type="occasion">Independence Day</date> the most turbulent.</egXML>
+          holiday, or a named time such as <q>tea time</q> or <q>matins</q>: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDDATEA-egXML-ze">In
+            New York, <date type="occasion" when="--01-01">New Year's Day</date> is the quietest of holidays, <date when="--07-04" type="occasion">Independence Day</date> the most turbulent.</egXML>
         </p>
         <!-- Example needs to be re-worked
 <p>These components may be applied to dates using any calendar system
@@ -2937,18 +2837,14 @@ Journal r&#xE9;dig&#xE9; par Camille Desmoulins</title>,
         <!-- Thanks to T. Munck for providing the above example -->
         <!-- /p -->
         <p>Absolute temporal expressions denoting times which are given in terms of seconds, minutes, hours, or of well-defined
-          events (e.g. <q>noon</q>, <q>sunset</q>) may similarly be represented using the <gi>time</gi> element. <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">The train leaves for Boston at <time type="twentyfourHour" when="13:45:00"
-              >13:45</time></egXML>
-          <egXML xmlns="http://www.tei-c.org/ns/Examples">At <time type="occasion">sunset</time> we walked to the beach.</egXML>
-          <egXML xmlns="http://www.tei-c.org/ns/Examples">The train leaves for Boston at <time xml:lang="en-US" type="descriptive"
-              when="13:45:00-05:00"> a quarter of two </time></egXML>
+          events (e.g. <q>noon</q>, <q>sunset</q>) may similarly be represented using the <gi>time</gi> element. <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDDATEA-egXML-bg">The train leaves for Boston at <time type="twentyfourHour" when="13:45:00">13:45</time></egXML>
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDDATEA-egXML-jh">At <time type="occasion">sunset</time> we walked to the beach.</egXML>
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDDATEA-egXML-th">The train leaves for Boston at <time xml:lang="en-US" type="descriptive" when="13:45:00-05:00"> a quarter of two </time></egXML>
         </p>
       </div>
       <div type="div2" xml:id="NDDATEISO">
         <head>More Expressive Normalizations</head>
-        <p>The attributes for normalization of dates and times so far described use a standard format defined by <ref
-          target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>. This format is widely accepted and has significant
+        <p>The attributes for normalization of dates and times so far described use a standard format defined by <ref target="#XSD2">XML Schema Part 2: Datatypes Second Edition</ref>. This format is widely accepted and has significant
           software support. It is essentially a profile of ISO 8601 <title>Data elements and interchange formats — Information
             interchange — Representation of dates and times</title>. The full ISO standard provides formats not available in the
           W3C recommendation, for example, the capability to refer to a date by its ordinal date or week date, or to refer to a
@@ -2960,11 +2856,10 @@ Journal r&#xE9;dig&#xE9; par Camille Desmoulins</title>,
           </specList> These attributes may be used in preference to their W3C equivalent when it is necessary to provide a
           normalized value in some form not supported by the W3C attributes. For example, a century date in the W3C format must be
           expressed as a range, using the <att>from</att> attribute together with either the <att>to</att> attribute or the
-            <att>dur</att> (duration) attribute: <egXML xmlns="http://www.tei-c.org/ns/Examples"><date from="1301" to="1400"
-              >fourteenth century</date>
+            <att>dur</att> (duration) attribute: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDDATEISO-egXML-pq"><date from="1301" to="1400">fourteenth century</date>
             <date from="1301" dur="P100Y">fourteenth century</date>
           </egXML> With the attribute <att>when-iso</att>, however, it is possible to express the same normalized value in any of
-          the following additional ways: <egXML xmlns="http://www.tei-c.org/ns/Examples"><date when-iso="13">fourteenth
+          the following additional ways: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDDATEISO-egXML-cg"><date when-iso="13">fourteenth
               century</date>
             <date when-iso="1301/1400">fourteenth century</date>
             <date when-iso="1301/P100Y">fourteenth century</date>
@@ -2995,10 +2890,9 @@ Journal r&#xE9;dig&#xE9; par Camille Desmoulins</title>,
           or its adoption in Europe over the following centuries, and many other calendars are used in texts from other cultures
           and contexts. Non-Gregorian dates can be encoded using methods described below.</p>
 
-        <p>First, a Calendar Description element needs to be supplied in the <gi>teiHeader</gi> as described in <ptr
-            target="#HD44"/>:</p>
+        <p>First, a Calendar Description element needs to be supplied in the <gi>teiHeader</gi> as described in <ptr target="#HD44"/>:</p>
 
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDDATECUSTOM-egXML-po">
           <calendarDesc>
             <calendar xml:id="Julian_England"><p>The Julian calendar, as used in England until 1752.</p></calendar>
           </calendarDesc>
@@ -3006,12 +2900,10 @@ Journal r&#xE9;dig&#xE9; par Camille Desmoulins</title>,
 
         <p>The following attributes can now be used to encode dates using this calendar: <specList>
             <specDesc key="att.calendarSystem" atts="calendar"/>
-            <specDesc key="att.datable.custom"
-              atts="when-custom notBefore-custom notAfter-custom from-custom to-custom datingMethod"/>
+            <specDesc key="att.datable.custom" atts="when-custom notBefore-custom notAfter-custom from-custom to-custom datingMethod"/>
           </specList>
-          <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <p>The Poole by S. <hi>Giles</hi> Churchyarde was a large water in the yeare <date calendar="#Julian_England"
-                >1244</date>.</p>
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDDATECUSTOM-egXML-sl">
+            <p>The Poole by S. <hi>Giles</hi> Churchyarde was a large water in the yeare <date calendar="#Julian_England">1244</date>.</p>
           </egXML> Here, the <att>calendar</att> attribute points to the <gi>calendar</gi> element in the header which defines and
           describes the calendar used.</p>
 
@@ -3020,10 +2912,9 @@ Journal r&#xE9;dig&#xE9; par Camille Desmoulins</title>,
           element with attributes such as <att>when</att>, <att>notBefore</att>, <att>notAfter</att>, etc. For dates expressed in a non-Gregorian calendar, 
           such normalizations may also be expressed in terms of the non-Gregorian calendar specified by the <att>datingMethod</att> attribute. 
           The attributes <att>when-custom</att>, <att>notBefore-custom</att>, <att>from-custom</att>, etc. are provided for this purpose; the <att>datingMethod</att> attribute 
-          is used to identify the calendar used in the value of these attributes: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          is used to identify the calendar used in the value of these attributes: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDDATECUSTOM-egXML-sg">
             <head> The Tryumphs of Peace.<lb/> That Celebrated the Solemnity of the right Honorable Sr Francis Iones Knight, at
-              his Inauguration into the Maioraltie of London, on Monday being the <date when-custom="1620-10-30"
-                datingMethod="#Julian_England" calendar="#Julian_England"> 30. of October, 1620. </date>
+              his Inauguration into the Maioraltie of London, on Monday being the <date when-custom="1620-10-30" datingMethod="#Julian_England" calendar="#Julian_England"> 30. of October, 1620. </date>
             </head>
           </egXML> Here, the <att>calendar</att> attribute specifies the calendar used in the text content of the <gi>date</gi>
           element, as before, whereas the <att>datingMethod</att> attribute signifies that the calendar used in the
@@ -3033,7 +2924,7 @@ Journal r&#xE9;dig&#xE9; par Camille Desmoulins</title>,
 
         <p>Custom dating attributes can be combined with any of the standard dating attributes in order to provide a standardized
           Gregorian version of a non-Gregorian date. We might enhance the preceding example with the addition of <att>when</att>,
-          providing the Gregorian calendar equivalent of the Julian date: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          providing the Gregorian calendar equivalent of the Julian date: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDDATECUSTOM-egXML-nj">
             <date when-custom="1620-10-30" when="1620-11-09" datingMethod="#Julian_England" calendar="#Julian_England"> 30. of
               October, 1620. </date>
           </egXML>

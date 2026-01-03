@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="model" module="tagdocs">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xml:id="gi-model" ident="model" module="tagdocs">
   <desc versionDate="2015-05-15" xml:lang="en">describes the processing intended for a specified
     element.</desc>
   <classes>
@@ -18,8 +18,8 @@
       <elementRef key="outputRendition" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
-  <constraintSpec scheme="schematron" ident="no_dup_default_models">
-    <desc xml:lang="en" versionDate="2016-10-01">It is ambigous to have 2 <gi>model</gi>s
+  <constraintSpec scheme="schematron" ident="no_dup_default_models" xml:lang="en">
+    <desc versionDate="2016-10-01" xml:lang="en">It is ambigous to have 2 <gi>model</gi>s
       that have both the same <att>output</att> and have no <att>predicate</att>
       (and thus select the same set of nodes).</desc>
     <!-- We cannot possibly check, in general, that two
@@ -37,8 +37,8 @@
       </sch:rule>
     </constraint>
   </constraintSpec>
-  <constraintSpec scheme="schematron" ident="no_dup_models">
-    <desc xml:lang="en" versionDate="2016-10-01">It is ambigous to have 2 <gi>model</gi>s
+  <constraintSpec scheme="schematron" ident="no_dup_models" xml:lang="en">
+    <desc versionDate="2016-10-01" xml:lang="en">It is ambigous to have 2 <gi>model</gi>s
       that have both the same <att>output</att> and the same <att>predicate</att>
       (and thus select the same set of nodes).</desc>
     <constraint>
@@ -145,7 +145,7 @@
         </valItem>
         <valItem ident="graphic">
           <desc versionDate="2015-08-21" xml:lang="en">if <ident>url</ident> is present, uses it to
-            display graphic, else display a placeholder image. </desc>
+            display graphic, else display a placeholder image.</desc>
           <equiv name="img"/>
           <paramList>
             <paramSpec ident="url">
@@ -167,7 +167,7 @@
           </paramList>
         </valItem>
         <valItem ident="heading">
-          <desc versionDate="2015-08-21" xml:lang="en">creates a heading. </desc>
+          <desc versionDate="2015-08-21" xml:lang="en">creates a heading.</desc>
           <equiv name="span"/>
           <paramList>
             <paramSpec ident="content"/>
@@ -329,12 +329,12 @@
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-model-egXML-da" source="#UND">
       <model behaviour="inline"/>
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-model-egXML-hb">
       <elementSpec mode="change" ident="quote">
         <model predicate="ancestor::p" behaviour="inline">
           <desc versionDate="2015-08-21" xml:lang="en">If it's inside a paragraph then it's
@@ -348,7 +348,7 @@
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-model-egXML-qy">
       <model predicate="parent::person" behaviour="inline">
         <desc versionDate="2015-08-21" xml:lang="en">If it is a child of a person element, treat as
           inline</desc>
@@ -356,19 +356,19 @@
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-model-egXML-ws">
       <model behaviour="inline">
         <outputRendition>font-weight:bold</outputRendition>
       </model>
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-model-egXML-vj" source="#UND">
       <model behaviour="inline" output="print"/>
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-model-egXML-xb" source="#UND">
       <model predicate="ancestor::p" behaviour="inline">
         <param name="content" value="@n"/>
       </model>
@@ -380,7 +380,7 @@
     </egXML>
   </exemplum>-->
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-model-egXML-sh" source="#UND">
       <elementSpec mode="change" ident="date">
         <model output="print" predicate="text()" behaviour="inline"/>
         <model output="print" predicate="@when and not(text())" behaviour="inline">
@@ -393,7 +393,7 @@
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#UND">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-model-egXML-er" source="#UND">
       <elementSpec mode="change" ident="choice">
         <model predicate="sic and corr" behaviour="alternate">
           <param name="default" value="corr"/>

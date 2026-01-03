@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="teiCorpus">
-  <gloss xml:lang="en" versionDate="2020-12-20">TEI corpus</gloss>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="gi-teiCorpus" ident="teiCorpus">
+  <gloss versionDate="2020-12-20" xml:lang="en">TEI corpus</gloss>
   <gloss versionDate="2017-06-13" xml:lang="de">TEI-Korpus</gloss>
   <desc versionDate="2017-02-07" xml:lang="en">contains the whole of a TEI encoded corpus, comprising a single corpus header and one or
     more <gi>TEI</gi> elements, each containing a single text header and a text.</desc>
@@ -25,9 +25,9 @@
     einem oder mehreren <gi>TEI</gi>-Elementen, die jeweils einen eigenen TEI-Header und Text
     enthalten.</desc>
   <classes>
-    <memberOf key="model.describedResource"/>
     <memberOf key="att.global"/>
     <memberOf key="att.typed"/>
+    <memberOf key="model.describedResource"/>
   </classes>
   <content>
     <!-- teiHeader, model.resource*, model.describedResource+ -->
@@ -39,14 +39,14 @@
   </content>
   <attList>
     <attDef ident="version" usage="opt">
-      <gloss xml:lang="en" versionDate="2017-06-13">version</gloss>
+      <gloss versionDate="2017-06-13" xml:lang="en">version</gloss>
       <gloss versionDate="2017-06-13" xml:lang="de">Version</gloss>
       <desc versionDate="2018-01-24" xml:lang="en">specifies the version number of the TEI Guidelines against
         which this document is valid.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">TEI 스키마의 버전</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">TEI架構的版本</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該TEIスキームの版。</desc>
-      <desc versionDate="2009-01-06" xml:lang="fr">la version du modèle TEI</desc>
+      <desc versionDate="2009-01-06" xml:lang="fr">la version du modèle TEI.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">La versión del esquema TEI</desc>
       <desc versionDate="2007-01-21" xml:lang="it">La versione dello schema TEI</desc>
       <desc versionDate="2017-06-13" xml:lang="de">gibt die Versionsnummer der TEI-Richtlinien an, gegen die dieses Dokument validiert wird.</desc>
@@ -69,7 +69,7 @@
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-teiCorpus-egXML-lm" valid="feasible" source="#UND">
       <teiCorpus version="3.3.0">
         <teiHeader>
           <!-- header for corpus -->
@@ -95,7 +95,7 @@
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-teiCorpus-egXML-im" valid="feasible" source="#UND">
       <teiCorpus version="3.3.0">
         <teiHeader>
           <!--[en-tête du corpus]-->
@@ -120,7 +120,7 @@
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible" source="#UND">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-teiCorpus-egXML-dc" valid="feasible" source="#UND">
       <teiCorpus version="3.3.0">
         <teiHeader>
           <!-- 該文集的總header -->
@@ -146,15 +146,24 @@
     </egXML>
   </exemplum>
   <remarks versionDate="2019-12-09" xml:lang="en">
-    <p rend="dataDesc">Should contain one TEI header for the corpus, and
+    <p rend="dataDesc">Should contain one <gi>teiHeader</gi> for the corpus, and
     a series of <gi>TEI</gi> elements, one for each text.</p>
+    <p>As with all elements in the TEI scheme (except <gi>egXML</gi>) this element is
+      in the TEI namespace (see <ptr target="#SGname"/>). Thus, when it is used as the
+      outermost element of a TEI document, it is necessary to specify the TEI namespace
+      on it. This is customarily achieved by including <ident type="ns">http://www.tei-c.org/ns/1.0</ident> as the value of the XML namespace declaration (xmlns), without indicating a prefix,
+      and then not using a prefix on TEI elements in the rest of the document. For example:
+      <tag type="start">teiCorpus version="4.8.1" xml:lang="en" xmlns="http://www.tei-c.org/ns/1.0"</tag>.</p>
   </remarks>
-  <remarks xml:lang="fr" versionDate="2007-06-12">
+  <remarks versionDate="2024-12-10" xml:lang="es">
+    <p>Este elemento debe contener un <gi>teiHeader</gi> para el corpus y una serie de elementos <gi>TEI</gi> para cada texto.</p>
+    <p>Como todos los elementos en el esquema TEI (excepto <gi>egXML</gi>), este elemento se encuentra en el espacio de nombres (<foreign>namespace</foreign>) de TEI (cf. <ptr target="#SGname"/>). Por lo tanto, cuando se utiliza como el elemento más externo en un documento TEI, es necesario especificar el espacio de nombres de TEI en su interior. Esto se hace, normalmente, incluyendo <ident type="ns">http://www.tei-c.org/ns/1.0</ident> como valor de la declaración del espacio de nombres (xmlns) sin indicar un prefijo, y por lo tanto sin necesidad de utilizar un prefijo en los elementos TEI del resto del documento. Por ejemplo: <tag type="start">teiCorpus version="4.8.1" xml:lang="es" xmlns="http://www.tei-c.org/ns/1.0"</tag>.</p></remarks>
+  <remarks versionDate="2007-06-12" xml:lang="fr">
     <p rend="dataDesc">Cet élément doit contenir un en-tête TEI pour le corpus, et une suite
       d'éléments <gi>TEI</gi>, correspondant à autant de textes.</p>
     <p>Cet élément est obligatoire quand il est applicable.</p>
   </remarks>
-  <remarks xml:lang="ja" versionDate="2008-04-05">
+  <remarks versionDate="2008-04-05" xml:lang="ja">
     <p rend="dataDesc"> コーパス全体にはひとつのTEIヘダーが、要素<gi>TEI</gi>にはひとつの 要素textがある。 </p>
     <p> 当該要素素は、適応できる場合、必須である。 </p>
   </remarks>

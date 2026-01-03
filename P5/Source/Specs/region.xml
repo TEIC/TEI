@@ -1,79 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
-<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="namesdates" ident="region">
-  <gloss xml:lang="en" versionDate="2008-12-09">region</gloss>
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="namesdates" xml:id="gi-region" ident="region">
+  <gloss versionDate="2008-12-09" xml:lang="en">region</gloss>
   <gloss versionDate="2008-12-09" xml:lang="fr">région</gloss>
-  <desc versionDate="2006-01-22" xml:lang="en">contains the name of an administrative unit such as a state, province, or county, larger
-    than a settlement, but smaller than a country.</desc>
+  <desc versionDate="2006-01-22" xml:lang="en">contains the name of an administrative unit such as a state, province, or county, larger than a settlement, but smaller than a country.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">도보다는 작고 정착지보다는 큰 주, 성, 도와 같은 행정단위명을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含行政單位的名稱，例如州、省、或郡，範圍大於主政區，但小於國家。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">行政上の単位の名前を示す。例えば、地方、郡、居住地など。居住地よりも 広く、国家より狭い地域。</desc>
-  <desc versionDate="2009-01-05" xml:lang="fr">contient le nom d'une unité administrative comme un état,
-    une province ou un comté, plus grande qu'un lieu de peuplement, mais plus petite qu'un pays.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">&gt;contiene el nombre de una unidad administrativa,
-    como un estado, una región o una província, que sea mayor que un pequeño asentamiento, pero
-    menor a un país.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">contiene il nome di un'unità amministrativa, come uno
-    stato o una provincia, che sia più ampia di un piccolo insediamento ma più piccola di un paese</desc>
+  <desc versionDate="2009-01-05" xml:lang="fr">contient le nom d'une unité administrative comme un état, une province ou un comté, plus grande qu'un lieu de peuplement, mais plus petite qu'un pays.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">&gt;contiene el nombre de una unidad administrativa, como un estado, una región o una província, que sea mayor que un pequeño asentamiento, pero menor a un país.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">contiene il nome di un'unità amministrativa, come uno stato o una provincia, che sia più ampia di un piccolo insediamento ma più piccola di un paese</desc>
   <classes>
     <memberOf key="att.global"/>
-    <memberOf key="model.placeNamePart"/>
+    <memberOf key="att.cmc"/>
+    <memberOf key="att.datable"/>
     <memberOf key="att.naming"/>
     <memberOf key="att.typed"/>
-    <memberOf key="att.datable"/>
+    <memberOf key="model.placeNamePart"/>
   </classes>
   <content>
     <macroRef key="macro.phraseSeq"/>
   </content>
-  <attList>
-    <attDef ident="calendar" usage="opt" validUntil="2024-11-11">
-        <desc type="deprecationInfo" versionDate="2023-05-11" xml:lang="en">The <att>calendar</att> attribute will be removed from this element
-            as it will only be allowed on elements that represent dates with their content. This is because the <att>calendar</att> attribute
-            (unlike <att>datingMethod</att> defined in
-            <ident type="class">att.datable.custom</ident>) defines the calendar system of the date
-            in the original material defined by the parent element, <emph>not</emph> the calendar to
-            which the date is normalized.</desc>
-        <desc versionDate="2021-04-26" xml:lang="en">indicates one or more systems or calendars to which the
-            date represented by the content of this element belongs.</desc>
-        <desc versionDate="2007-12-20" xml:lang="ko">날짜 표현 시스템 또는 달력 표시 형식을 표시한다.</desc>
-        <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該日期表示所使用的曆法計算系統。</desc>
-        <desc xml:lang="ja" versionDate="2019-02-03">この要素を含むコンテントにおける日付の暦やシステムを示す。</desc>
-        <desc versionDate="2009-01-06" xml:lang="fr">indique le système ou le calendrier auquel
-            appartient la date exprimée dans le contenu de l'élément.</desc>
-        <desc versionDate="2007-05-04" xml:lang="es">indica el sistema o calendario en que se muestra
-            una fecha.</desc>
-        <desc versionDate="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data
-            appartiene.</desc>
-        <datatype minOccurs="1" maxOccurs="unbounded">
-            <dataRef key="teidata.pointer"/>
-        </datatype>
-        <constraintSpec scheme="schematron" ident="calendar-check-region">
-            <constraint>
-                <sch:rule context="tei:*[@calendar]">
-                    <sch:assert test="string-length( normalize-space(.) ) gt 0"> @calendar indicates one or more
-                        systems or calendars to which the date represented by the content of this element belongs,
-                        but this <sch:name/> element has no textual content.</sch:assert>
-                </sch:rule>
-            </constraint>
-        </constraintSpec>
-    </attDef>
-  </attList>
   <exemplum xml:lang="mul">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-region-egXML-yg">
       <placeName>
         <region type="state" n="IL">Illinois</region>
       </placeName>
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-region-egXML-ft">
       <placeName>
         <region type="state" n="IL">Illinois</region>
       </placeName>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-region-egXML-nk">
       <placeName>
         <region type="state" n="IL">依利諾</region>
       </placeName>

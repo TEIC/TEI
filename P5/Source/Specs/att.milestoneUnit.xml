@@ -4,7 +4,7 @@
      that attribute class. This centralizes the definition of the attribute and its suggested values. 
      SF ticket http://purl.org/tei/bugs/3537452. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" type="atts" ident="att.milestoneUnit">
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" type="atts" xml:id="class-attr-milestoneUnit" ident="att.milestoneUnit">
   <desc versionDate="2021-08-22" xml:lang="en">provides attributes to indicate the type of section which is changing at a specific milestone.</desc>
   <attList>
     <attDef ident="unit" usage="req">
@@ -13,7 +13,7 @@
       <desc versionDate="2007-05-02" xml:lang="zh-TW">提供此分界段落所使用的通用單位名稱。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該標石要素がある、変化が起きるセクションの種類の名前を示す。</desc>
       <desc versionDate="2009-01-06" xml:lang="fr">fournit un nom conventionnel pour le type de section
-        qui change à partir de cette balise de bornage</desc>
+        qui change à partir de cette balise de bornage.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">proporciona un nombre convencional para el tipo de
         sección que cambia en este hito.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">fornisce un nome convenzionale per il tipo di sezione
@@ -21,7 +21,7 @@
       <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="semi">
         <valItem ident="page">
-          <desc versionDate="2012-07-16" xml:lang="en">physical page breaks (synonymous with the <gi>pb</gi> element).</desc>
+          <desc versionDate="2012-07-16" xml:lang="en">physical page beginnings (synonymous with the <gi>pb</gi> element).</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">물리적 페이지 바꿈</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">分頁 (和元素<gi>pb</gi>同義) 。</desc>
           <desc versionDate="2008-04-06" xml:lang="es">cambio físico de página (sinónimo del elemento
@@ -33,7 +33,7 @@
             <gi>pb</gi>)</desc>
         </valItem>
         <valItem ident="column">
-          <desc versionDate="2012-07-16" xml:lang="en">column breaks.</desc>
+          <desc versionDate="2012-07-16" xml:lang="en">column beginnings.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">열 바꿈</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">分段。</desc>
           <desc versionDate="2008-04-06" xml:lang="es">cambio de columna.</desc>
@@ -42,7 +42,7 @@
           <desc versionDate="2007-01-21" xml:lang="it">interruzione di colonna</desc>
         </valItem>
         <valItem ident="line">
-          <desc versionDate="2012-07-16" xml:lang="en">line breaks (synonymous with the <gi>lb</gi> element).</desc>
+          <desc versionDate="2012-07-16" xml:lang="en">line beginnings (synonymous with the <gi>lb</gi> element).</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">행 바꿈</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">分行 (和元素<gi>lb</gi>同義) 。</desc>
           <desc versionDate="2008-04-06" xml:lang="es">salto de línea (sinónimo del elemento <gi>libra</gi>).</desc>
@@ -138,15 +138,15 @@
         </valItem>
       </valList>
       <exemplum xml:lang="mul">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"><milestone n="23" ed="La" unit="Dreissiger"/>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="class-attr-milestoneUnit-egXML-zq"><milestone n="23" ed="La" unit="Dreissiger"/>
           ... <milestone n="24" ed="AV" unit="verse"/> ...</egXML>
       </exemplum>
       <exemplum versionDate="2008-04-06" xml:lang="fr">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"><milestone n="23" ed="La" unit="Dreissiger"/> ... <milestone n="24" ed="AV" unit="verse"/>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="class-attr-milestoneUnit-egXML-ej"><milestone n="23" ed="La" unit="Dreissiger"/> ... <milestone n="24" ed="AV" unit="verse"/>
           ...</egXML>
       </exemplum>
       <exemplum xml:lang="zh-TW">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"><milestone n="23" ed="拉丁文版本" unit="三十"/> ...
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="class-attr-milestoneUnit-egXML-gp"><milestone n="23" ed="拉丁文版本" unit="三十"/> ...
           <milestone n="24" ed="聖經欽定版本" unit="韻文"/> ...</egXML>
       </exemplum>
       <remarks versionDate="2012-07-16" xml:lang="en">
@@ -162,7 +162,7 @@
           respect other than simply identifying the type of unit, for example as word-breaking or
           not. </p>
       </remarks>
-      <remarks xml:lang="fr" versionDate="2007-06-12">
+      <remarks versionDate="2007-06-12" xml:lang="fr">
         <p>Si l'élément <gi>milestone</gi> marque le début d'un fragment de texte qui n'est pas
           présent dans l'édition de référence, la valeur <term>absent</term> peut être donnée à
           l'attribut <att>unit</att>. On comprendra alors que l'édition de référence ne contient pas
@@ -175,7 +175,7 @@
           précaution d’emploi que celle de l'identification du type d'unité, par exemple s’il s’agit
           d’un mot coupé ou pas.</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
+      <remarks versionDate="2008-04-05" xml:lang="ja">
         <p> 標石要素が参照版中にはないテキスト部分の始点を示す場合、属性 <att>unit</att>には、特別な値<term>absent</term>が付与されるか
           もしれない。一般的な解釈では、等が版に対応する次の要素 <gi>milestone</gi>が出現するまで、当該参照版はテキストを含まな い。 </p>
         <p> ここに挙げた属性値以外にも適切なものはあるだろう(例えば、プラ トンの作品を表すステファヌス番号を示す値<term>Stephanus</term> など。 </p>
