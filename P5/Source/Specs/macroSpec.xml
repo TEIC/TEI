@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="gi-macroSpec" ident="macroSpec">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" xml:id="gi-macroSpec" ident="macroSpec">
   <gloss versionDate="2007-07-04" xml:lang="en">macro specification</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">매크로 명시</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -36,6 +36,13 @@
       <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
+  <constraintSpec scheme="schematron" ident="macroSpec_in_specGrp_or_schemaSpec" xml:lang="en">
+    <constraint>
+      <sch:pattern is-a="oddDecls_in_specGrp_or_schemaSpec">
+        <sch:param name="toe" value="tei:macroSpec"/>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-macroSpec-egXML-hw" source="#UND">
       <macroSpec module="tei" ident="macro.phraseSeq">
