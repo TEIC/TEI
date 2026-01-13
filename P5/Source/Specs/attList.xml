@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="gi-attList" ident="attList">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="gi-attList" ident="attList" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
   <gloss versionDate="2020-12-20" xml:lang="en">attribute list</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">liste d'attributs</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains documentation for all the attributes associated with this element, as a series of <gi>attDef</gi> elements.</desc>
@@ -21,6 +21,66 @@
       <elementRef key="attList"/>
     </alternate>
   </content>
+  <constraintSpec ident="no_duplicate_attrs" scheme="schematron" xml:lang="en">
+    <desc>Because it is illegal in XML to have two attributes with the
+    same name on the same element instance, it is illegal in TEI to
+    have two <gi>attDef</gi> elements with the same values of
+    <att>ns</att> and <att>ident</att> in a single <gi>attList</gi>,
+    unless the parent <gi>attList</gi> has an <att>org</att> of
+    <val>choice</val>. This applies regardless of the <att>mode</att>
+    of each <gi>attDef</gi>.</desc>
+    <constraint>
+      <sch:rule context="tei:attList[ not( ancestor::tei:attList ) ]">
+        <!--
+            Set up a dummy string that contains at least 1 character that
+            is not legal in a URI, and thus cannot be a namespace.
+        -->
+        <sch:let name="notanamespace" value="'☮🄯'"/>
+        <!-- generate a sequence of my <attDef> descendants -->
+        <sch:let name="defs" value="descendant::tei:attDef"/>
+        <!--
+            get a sequence of @ns & @ident combinations of those
+            <attDef>s, except ignore those whose parent is an
+            <attList> that is an alternation, and for which we have
+            already recorded this @ident. Thus if we see
+            <attList org="choice">
+              <attDef ident="klaatu"/>
+              <attDef ident="bodsworth"/>
+              <attDef ident="rugglesby"/>
+              <attDef ident="klaatu"/>
+            </attList>
+            The sequence should be ('klaatu','bodsworth','rugglesby','').
+        -->
+        <sch:let name="nsidents"
+          value="for $ad in $defs return
+                   if ( $ad[
+                          parent::tei:attList[ @org eq 'choice']
+                          and
+                          preceding-sibling::tei:attDef[
+                            @ident eq $ad/@ident
+                            and
+                            ( @ns, $notanamespace )[1] eq ( $ad/@ns, $notanamespace )[1]
+                            ]
+                          ]
+                      )
+                   then ''
+                   else normalize-space( if ($ad/@ns) then 'Q{'||$ad/@ns||'}'||$ad/@ident else $ad/@ident )
+                 "/>
+        <!-- get a sequence of any that occur 2+ times: -->
+        <sch:let name="dups" value="for $a in $nsidents return ( $nsidents[ . eq $a ][2] )"/>
+        <!-- remove any duplicates from the list of duplicates (-: -->
+        <sch:let name="distinct_dups" value="distinct-values( $dups )"/>
+        <!--
+            if there are any values in list of distinct duplicates (other than null),
+            warn user about them:
+        -->
+        <sch:assert test="count( $distinct_dups[ . ne ''] ) eq 0">
+          Within the attribute list defined in <sch:value-of select="ancestor::*[@ident][1]/@ident"/>,
+          the following attributes have been defined multiple times: <sch:value-of select="$distinct_dups"/>.
+        </sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="org">
       <gloss versionDate="2007-07-04" xml:lang="en">organization</gloss>
@@ -103,7 +163,9 @@
           <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
         </attDef>
         <attDef ident="mutual" usage="opt">
-          <desc versionDate="2005-07-24" xml:lang="en">supplies a list of participants amongst all of whom the relationship holds equally.</desc>
+          <desc versionDate="2005-07-24" xml:lang="en">supplies a list
+            of participants amongst all of whom the relationship holds
+            equally.</desc>
           <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
         </attDef>
       </attList>
