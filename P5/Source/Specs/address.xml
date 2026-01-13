@@ -14,7 +14,9 @@
   <desc versionDate="2016-11-24" xml:lang="de">enthält eine Postadresse, z. B. eines Verlegers, einer Organisation oder einer Einzelperson.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.canonical"/>
     <memberOf key="att.cmc"/>
+    <memberOf key="att.typed"/>
     <memberOf key="model.addressLike"/>
     <memberOf key="model.divBottomPart"/>
     <memberOf key="model.divTopPart"/>
@@ -29,6 +31,78 @@
       </sequence>
     </sequence>
   </content>
+  <attList>
+    <attDef ident="type" mode="change">
+      <desc versionDate="2026-01-13" xml:lang="en">characterizes the
+      address in some sense, using any convenient classification
+      scheme or typology.</desc>
+      <valList type="semi">
+        <!-- This list is probably somewhat US-centric; updates welcome. -->
+        <valItem ident="billing">
+          <desc versionDate="2026-01-13" xml:lang="en">the address to
+          which a bill for goods or services should be sent.</desc>
+        </valItem>
+        <valItem ident="delivery">
+          <desc versionDate="2026-01-13" xml:lang="en">the address to
+          which packages should be sent via a private delivery service.</desc>
+        </valItem>
+        <valItem ident="mailing">
+          <desc versionDate="2026-01-13" xml:lang="en">the address to
+          which mail should be sent via a public postal service.</desc>
+        </valItem>
+        <valItem ident="military">
+          <desc versionDate="2026-01-13" xml:lang="en">the address to
+          which deployed military personnel should be sent.</desc>
+        </valItem>
+        <valItem ident="physical">
+          <desc versionDate="2026-01-13" xml:lang="en">the address of
+          a building irrespective of where mail to its occupants
+          should be sent (for example, for the fire
+          department).</desc>
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="role" usage="opt">
+      <desc versionDate="2026-01-13" xml:lang="en">specifies a primary role or classification for the address.</desc>
+      <datatype maxOccurs="unbounded"><dataRef key="teidata.enumerated"/></datatype>
+      <valList type="open">
+        <valItem ident="sentFrom">
+          <desc versionDate="2026-01-13" xml:lang="en">the address of
+          the sender of a piece of correspondence.</desc>
+        </valItem>
+        <valItem ident="return">
+          <desc versionDate="2026-01-13" xml:lang="en">the address to
+          which undeliverable mail should be returned.</desc>
+        </valItem>
+        <valItem ident="addressedTo">
+          <desc versionDate="2026-01-13" xml:lang="en">the address of
+          the intended recipient of a piece of correspondence.</desc>
+        </valItem>
+        <valItem ident="start">
+          <desc versionDate="2026-01-13" xml:lang="en">the address of
+          the beginning of a route, for example of a race.</desc>
+        </valItem>
+        <valItem ident="finish">
+          <desc versionDate="2026-01-13" xml:lang="en">the address of
+          the end of a route, for example of a race.</desc>
+        </valItem>
+        <valItem ident="pickup">
+          <desc versionDate="2026-01-13" xml:lang="en">the address at
+          which a person or package is picked up, for example by a
+          taxi or delivery service.</desc>
+        </valItem>
+        <valItem ident="dropOff">
+          <desc versionDate="2026-01-13" xml:lang="en">the address at
+          which a person or package is dropped off, for example by a
+          taxi or delivery service.</desc>
+        </valItem>
+      </valList>
+      <remarks versionDate="2026-01-13" xml:lang="en">
+        <p>Values for this attribute should be locally defined by a
+        project, typically by a <gi>valList</gi> element in the
+        project schema specification.</p></remarks>
+    </attDef>
+  </attList>
   <exemplum xml:lang="en">
     <p>Using just the elements defined by the core module, an address could be represented as follows:</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-address-egXML-rj" source="#NONE">
