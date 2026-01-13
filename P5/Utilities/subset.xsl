@@ -71,10 +71,10 @@
     <bibl>
       <xsl:copy-of select="@xml:id"/>
       <xsl:comment>
-	<xsl:text> This &lt;bibl> is a stub </xsl:text>
-	<xsl:if test="self::biblStruct">
-	  <xsl:text>that is actually a &lt;biblStruct> in the source </xsl:text>
-	</xsl:if>
+        <xsl:text> This &lt;bibl> is a stub </xsl:text>
+        <xsl:if test="self::biblStruct">
+          <xsl:text>that is actually a &lt;biblStruct> in the source </xsl:text>
+        </xsl:if>
       </xsl:comment>
     </bibl>
   </xsl:template>
