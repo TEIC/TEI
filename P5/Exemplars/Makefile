@@ -45,6 +45,16 @@ ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -lib ../Utilities/li
 
 default: schemas
 
+# Note on construction of this file:
+#   For every target that does stuff the target starts by echoing a
+#   blank line and a notification line about which target is being
+#   run. The “$@” variable is used, which writes out the file name of
+#   the target. If the target name contains a ‘%’ (and thus gets run
+#   over multiple matching files) the message says “target file”
+#   instead of just “target”. Thus the user sees the actual file being
+#   worked on, and can figure out the target from that name.
+# —Syd, 2025-09-21 (copied from 2021-08-20 msg in P5/Test/Makefile.)
+
 schemas: $(NORMALODDS) $(ODDSJUSTRELAX) $(SPECIALODDS) $(ADDITIONALXSDS) $(ODDSJRNCID)
 	echo Done
 
@@ -52,6 +62,8 @@ docschemas: $(DOCODDS) $(DOCONLYODDS)
 	echo Done schemas which needed doc
 
 %.special: %.odd
+	@echo " "
+	@echo "--------- P5/Exemplars/Makefile work on target file $@ ---------"
 	xmllint --xinclude $*.odd > $*.odd.xinclude
 	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd.xinclude validateodd compileodd rng validaterng validatesecondrng isoschematron validateschematron exampleschema cleanup
 	../run-onvdl $*.nvdl $*.odd.xinclude
@@ -59,16 +71,22 @@ docschemas: $(DOCODDS) $(DOCONLYODDS)
 	${TRANG} $*.rng $*.rnc
 
 %.rng: %.odd
+	@echo " "
+	@echo "--------- P5/Exemplars/Makefile work on target file $@ ---------"
 	@echo debug: run lots of stuff via Test/antruntest, normal
 	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd dtd rng validaterng  isoschematron validateschematron cleanup
 	${TRANG}  $*.rng $*.rnc
 
 tei_customization.rng: tei_customization.odd
+	@echo " "
+	@echo "--------- P5/Exemplars/Makefile work on target $@ ---------"
 	@echo debug: run lots of stuff via Test/antruntest, DTDcompat=false
 	$(ANT) -f ../Test/antruntest.xml -Doutputname=tei_customization -Dtestfile=tei_customization.tei -DoddFile=tei_customization.odd -DDTDcompat=false validateodd compileodd dtd rng validaterng  isoschematron validateschematron cleanup
 	${TRANG} tei_customization.rng tei_customization.rnc
 
 %.dtd: %.odd
+	@echo " "
+	@echo "--------- P5/Exemplars/Makefile work on target file $@ ---------"
 	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng dtd exampleschema isoschematron validateschematron cleanup
 	../run-onvdl $*.nvdl $*.odd
 	${TRANG}  $*.rng $*.rnc
@@ -85,15 +103,21 @@ tei_customization.rng: tei_customization.odd
 	xmllint --noout --dtdvalid $*.dtd $*.tei
 
 %.doc.pdf: %.odd
+	@echo " "
+	@echo "--------- P5/Exemplars/Makefile work on target file $@ ---------"
 	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd docepub docpdf dochtml cleanup
 
 %.doc.epub: %.odd
+	@echo " "
+	@echo "--------- P5/Exemplars/Makefile work on target file $@ ---------"
 	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dlang=`echo $* | sed 's/.*_//'` -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng docepub docpdf dochtml exampleschema cleanup
 	../run-onvdl $*.nvdl $*.odd
 	-rm $*.doc.xml
 	-rm $*.rng
 
 %.xsd: %.rng
+	@echo " "
+	@echo "--------- P5/Exemplars/Makefile work on target file $@ ---------"
 	${TRANG}   -o disable-abstract-elements $*.rng $*.xsd
 	-test -f xml.xsd && mv xml.xsd $*_xml.xsd                && perl -p -i -e "s+teix.xsd+$*_teix.xsd+;s+ns1.xsd+$*_ns1.xsd+" $*_xml.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*.xsd
 	-test -f teix.xsd && mv teix.xsd $*_teix.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+" $*_teix.xsd      && perl -p -i -e "s/teix.xsd/$*_teix.xsd/" $*.xsd
@@ -107,11 +131,15 @@ tei_customization.rng: tei_customization.odd
 tei_customization.odd: ../Utilities/TEI-to-tei_customization.xslt ../p5subset.xml
 #	Note that the "../p5subset.xml" in above line is the same as the definition
 #	of ${SOURCE}, but you can't use a variable as prerequisite (at least, it
-#	didn't work for me. :-)  Syd, 2017-11-05
+#	didn't work for me. :-)  — Syd, 2017-11-05
+	@echo " "
+	@echo "--------- P5/Exemplars/Makefile work on target $@ ---------"
 	@echo generating tei_customization.odd from p5subset
 	$(SAXON) -s:${SOURCE} -xsl:../Utilities/TEI-to-tei_customization.xslt -o:tei_customization.odd
 
 dist: schemas docschemas
+	@echo " "
+	@echo "--------- P5/Exemplars/Makefile work on target $@ ---------"
 	rm -rf tei[0-9]*.xml ../release/tei-p5-exemplars
 	rm -f *-teix*
 	rm -f *compiled* *.doc.tex
@@ -140,6 +168,8 @@ dist: schemas docschemas
 	cp ../catalog.p5.custom ../release/tei-p5-exemplars/share/xml/tei/custom/schema/catalog.xml
 
 clean:
+	@echo " "
+	@echo "--------- P5/Exemplars/Makefile work on target $@ ---------"
 	mv tei_lite_fr.nvdl tei_lite_fr.nvdl.bak
 	rm -f *.processed *.xsd *.dtd *.doc.* *.rnc tei*.xsl tei*.rng *.compiled* *~ *.xi *.isosch *.epub *.pdf *.html *.nvdl *-teix*
 	mv tei_lite_fr.nvdl.bak tei_lite_fr.nvdl
