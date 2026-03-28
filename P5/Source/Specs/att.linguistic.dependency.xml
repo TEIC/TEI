@@ -2,149 +2,77 @@
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins-paderborn.tei-c.org/view/LingSIG/job/TEIP5-LingSIG-att.linguistic.dependency/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" xml:id="ATTLINGDEP" type="atts" ident="att.linguistic.dependency">
-  <desc versionDate="2024-11-13" xml:lang="en">provides attributes for annotating dependency relationships between word-level elements.</desc>
+  <desc versionDate="2025-02-21" xml:lang="en">provides attributes for annotating dependency relations between word-level elements.</desc>
   <classes/>
   <attList>
     <attDef ident="head" usage="opt">
-      <gloss versionDate="2024-11-13" xml:lang="en">head of a dependency</gloss>
-      <desc versionDate="2024-11-25" xml:lang="en">encodes a dependency relation between the element
-        bearing this attribute and the element having the attribute value as its index (i.e., as the
-        value of its attribute <att>n</att>). In a dependency graph, the node represented by the
-        former element is said to be the <term>dependent</term> and the node represented by the
-        latter is said to be its <term>head</term>. By convention, the value <val>0</val> indicates
-        that the element bearing this attribute is the root of the dependency graph.</desc>
-      <datatype><dataRef key="teidata.text"/></datatype>
+      <gloss versionDate="2025-02-21" xml:lang="en">syntactic head of a dependency relation</gloss>
+      <desc versionDate="2025-02-21" xml:lang="en">encodes a syntactic
+        dependency relation between the element bearing this attribute and its
+        syntactic head, i.e. the element having the attribute value as the value of
+        its <att>n</att> attribute.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
       <exemplum xml:lang="en">
-        <p>Universal Dependencies analysis of the sentence <q>I had no clue.</q>, provided below in the plain text, column-based CoNNL-U format.</p>
-        <p>
-<eg xml:space="preserve"># text = I had no clue.
-1   I       I       PRON    PRP   Case=Nom|Number=Sing|Person=1     2   nsubj   _   _
-2   had     have    VERB    VBP   Number=Sing|Person=1|Tense=Past   0   root    _   _
-3   no      no      DET     DT    PronType=Neg                      4   det     _   _
-4   clue    clue    NOUN    NN    Number=Sing                       2   obj     _   SpaceAfter=No
-5   .       .       PUNCT   .     _                                 2   punct   _   _</eg></p>
-        
-        <p>Above, each segment of the source text (in the second column from the left) is provided
-          with various types of annotations, sorted across the particular columns. The implicit column labels 
-          are listed below, with an example taken from the second line of the source example, i.e., with the 
-          annotations of the segment <mentioned>had</mentioned>.</p>
-        <p>
-          <eg xml:space="preserve">ID  FORM    LEMMA   UPOS    XPOS  FEATS                             HEAD  DEPREL  DEPS  MISC
-2   had     have    VERB    VBP   Number=Sing|Person=1|Tense=Past   0     root    _     _</eg></p>
-        
-        <p>The meanings of the particular column labels are as follows (quoted after the <ref
-            target="https://universaldependencies.org/format.html">UD documentation</ref>): <list>
-            <item>ID: Word index, integer starting at 1 for each new sentence; may be a range for
-              multiword tokens; may be a decimal number for empty nodes (decimal numbers can be
-              lower than 1 but must be greater than 0).</item>
-            <item>FORM: Word form or punctuation symbol.</item>
-            <item>LEMMA: Lemma or stem of word form.</item>
-            <item>UPOS: Universal part-of-speech tag.</item>
-            <item>XPOS: Optional language-specific (or treebank-specific) part-of-speech /
-              morphological tag; underscore if not available.</item>
-            <item>FEATS: List of morphological features from the universal feature inventory or from
-              a defined language-specific extension; underscore if not available.</item>
-            <item>HEAD: Head of the current word, which is either a value of ID or zero (0).</item>
-            <item>DEPREL: Universal dependency relation to the HEAD (root iff HEAD = 0) or a defined
-              language-specific subtype of one.</item>
-            <item>DEPS: Enhanced dependency graph in the form of a list of head-deprel pairs.</item>
-            <item>MISC: Any other annotation.</item>
-          </list>
-        </p>
-
-        <p>What follows is the proposed TEI encoding. The table below shows the relationships
-          between the particular columns of the CoNNL-U and the elements of the TEI
-          serialisation.</p>
-
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ATTLINGDEP-egXML-head1">
-          <p>
-            <w n="1" lemma="I" pos="PRON" msd="Case=Nom|Number=Sing|Person=1" head="2" deprel="nsubj">I</w>
-            <w n="2" lemma="have" pos="VERB" msd="Number=Sing|Person=1|Tense=Past" head="0" deprel="root">had</w>
-            <w n="3" lemma="no" pos="DET" msd="PronType=Neg" head="4" deprel="det">no</w>
-            <w n="4" lemma="clue" pos="NOUN" msd="Number=Sing" head="2" deprel="obj" join="right">clue</w>
-            <pc n="5" lemma="." pos="PUNCT" msd="_" head="2" deprel="punct">.</pc>
-          </p>
+        <p>Universal Dependency (UD) annotation of the English sentence <q>They buy books.</q>.</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <s n="0">
+            <w n="1" head="2" deprel="nsubj" pos="PRON" lemma="they">They</w>
+            <w n="2" head="0" deprel="root" pos="VERB" lemma="buy">buy</w>
+            <w n="3" head="2" deprel="obj" pos="NOUN" lemma="book">books</w>
+            <pc n="4" head="2" deprel="punct" pos="PUNCT" lemma=".">.</pc>
+          </s>
         </egXML>
-        
-        <p>Note that the example above skips part of the information provided by the original source, namely the content of the XPOS column.</p>
-
       </exemplum>
-      
-      
-      
-<!--  Potential constraints: 
-      @n - can't be "0"
-      @xpos (if it is added) shouldn't probably be used if @pos is missing
-      "_" as values? It all depends on how much we want to encode for UD specifically
-      
-      
-      
-      -->
-      
-      <!-- 
-# text = I had no clue.
-1   I       I       PRON    PRP   Case=Nom|Number=Sing|Person=1     2   nsubj   _   _
-2   had     have    VERB    VBP   Number=Sing|Person=1|Tense=Past   0   root    _   _
-3   no      no      DET     DT    PronType=Neg                      4   det     _   _
-4   clue    clue    NOUN    NN    Number=Sing                       2   obj     _   SpaceAfter=No
-5   .       .       PUNCT   .     _                                 2   punct   _   _
-      
-      -->
-      
-      
-      
-<!--   
- 
-        <p>
-          <figure xml:id="AILADEP-figure-rs-spec">
-            <graphic width="450px" url="file://../Guidelines/en/Images/UD_Ihadnoclue_let-rug-nl.png"/>
-            <head>Dependency diagram for the sentence "I had no clue", visualised from the CoNLL-U format by the <ref target="https://github.com/rug-compling/conllu-viewer">conllu-viewer</ref> tool.</head>
-          </figure>
-        </p>
- 
-        
-      
-      BUILD: Check validity with special-purpose XSL code, looking for bad links etc
-ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -q -lib Utilities/lib/saxon10he.jar -f antbuilder.xml -DXSL=/var/jenkins_home/jobs/Stylesheets-dev/lastSuccessful/archive/dist/xml/tei/stylesheet validators
-     [echo] Run Schematron script (normal part of Guidelines)
-     [echo] Run Schematron script (Examples in Guidelines marked as valid)
-     [echo] Run ad hoc XSLT validators
-
-BUILD SUCCESSFUL
-Total time: 36 seconds
-<Messages>
-   <WARNING>Schematron warning: 
-                 [Test: true()] Location: /TEI[1]/text[1]/body[1]/div[10]/div[2]/div[1]/p[4]/specGrp[1]/elementSpec[1]/exemplum[1]/egXML[namespace-uri()='http://www.tei-c.org/ns/Examples'][1]/superEntry[namespace-uri()='http://www.tei-c.org/ns/Examples'][1]</WARNING>
-   <WARNING>Schematron warning: 
-                 [Test: true()] Location: /TEI[1]/text[1]/body[1]/div[10]/div[2]/div[1]/p[4]/specGrp[1]/elementSpec[1]/exemplum[2]/egXML[namespace-uri()='http://www.tei-c.org/ns/Examples'][1]/superEntry[namespace-uri()='http://www.tei-c.org/ns/Examples'][1]</WARNING>
-   <WARNING>Schematron warning: 
-                 [Test: true()] Location: /TEI[1]/text[1]/body[1]/div[10]/div[2]/div[1]/p[4]/specGrp[1]/elementSpec[1]/exemplum[3]/egXML[namespace-uri()='http://www.tei-c.org/ns/Examples'][1]/superEntry[namespace-uri()='http://www.tei-c.org/ns/Examples'][1]</WARNING>
-</Messages>
-(grep -q "<ERROR>" ValidatorLog.xml;if [ $? -ne 1 ] ; then echo "Oh dear me. ERROR found";diff ValidatorLog.xml expected-results/ValidatorLog.xml;false; fi)
-sh graphics.sh
-
-ERROR FILE DOES NOT EXIST: ../Guidelines/en/Images/UD_Ihadnoclue_let-rug-nl.png
-
-make: *** [Makefile:180: valid] Error 1
-Build step 'Execute shell' marked build as failure
-      
-      -->
-      
+      <exemplum xml:lang="en">
+        <p>Universal Dependency (UD) annotation of the English sentence <q>They
+          buy and sell books.</q>.</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <s n="0">
+            <w n="1" head="2 4" deprel="nsubj nsubj" pos="PRON PRP" msd="Case=Nom|Number=Plur" lemma="they">They</w>
+            <w n="2" head="0" deprel="root" pos="VERB VBP" msd="Number=Plur|Person=3|Tense=Pres" lemma="buy">buy</w>
+            <w n="3" head="4" deprel="cc" pos="CCONJ CC" lemma="and">and</w>
+            <w n="4" head="2 0" deprel="conj root" pos="VERB VBP" msd="Number=Plur|Person=3|Tense=Pres" lemma="sell">sell</w>
+            <w n="5" head="2 4" deprel="obj obj" pos="NOUN NNS" msd="Number=Plur" lemma="book">books</w>
+            <pc n="6" head="2" deprel="punct" pos="PUNCT ." lemma=".">.</pc>
+          </s>
+        </egXML>
+      </exemplum>
     </attDef>
-    
+
     <attDef ident="deprel" usage="opt">
-      <gloss versionDate="2024-11-13" xml:lang="en">dependency relation</gloss>
-      <desc versionDate="2024-11-25" xml:lang="en">provides a classifying label for the dependency
-        relation between the element bearing this attribute and the element identified by the
-        attribute <att>head</att>. If the value of <att>head</att> is <val>0</val>, then, by
-        convention, the value of <att>deprel</att> should be <val>root</val>.</desc>
-      <datatype><dataRef key="teidata.text"/></datatype>
+      <gloss versionDate="2025-02-21" xml:lang="en">type of a dependency relation</gloss>
+      <desc versionDate="2025-02-21" xml:lang="en">provides a label for the type
+        of the syntactic dependency relation between the element bearing this
+        attribute and the element identified by its <att>head</att> attribute.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
+      <exemplum xml:lang="en">
+        <p>Universal Dependency (UD) annotation of the English sentence <q>They buy books.</q>.</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <s n="0">
+            <w n="1" head="2" deprel="nsubj" pos="PRON" lemma="they">They</w>
+            <w n="2" head="0" deprel="root" pos="VERB" lemma="buy">buy</w>
+            <w n="3" head="2" deprel="obj" pos="NOUN" lemma="book">books</w>
+            <pc n="4" head="2" deprel="punct" pos="PUNCT" lemma=".">.</pc>
+          </s>
+        </egXML>
+      </exemplum>
+      <exemplum xml:lang="en">
+        <p>Universal Dependency (UD) annotation of the English sentence <q>They
+          buy and sell books.</q>.</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <s n="0">
+            <w n="1" head="2 4" deprel="nsubj nsubj" pos="PRON PRP" msd="Case=Nom|Number=Plur" lemma="they">They</w>
+            <w n="2" head="0" deprel="root" pos="VERB VBP" msd="Number=Plur|Person=3|Tense=Pres" lemma="buy">buy</w>
+            <w n="3" head="4" deprel="cc" pos="CCONJ CC" lemma="and">and</w>
+            <w n="4" head="2 0" deprel="conj root" pos="VERB VBP" msd="Number=Plur|Person=3|Tense=Pres" lemma="sell">sell</w>
+            <w n="5" head="2 4" deprel="obj obj" pos="NOUN NNS" msd="Number=Plur" lemma="book">books</w>
+            <pc n="6" head="2" deprel="punct" pos="PUNCT ." lemma=".">.</pc>
+          </s>
+        </egXML>
+      </exemplum>
     </attDef>
-    
-    
-
   </attList>
-  <remarks xml:lang="en" versionDate="2024-11-28">
+  <!-- <remarks xml:lang="en" versionDate="2024-11-28">
     <p>The following table summarises the serialisation choices for the CoNNL-U format in the TEI.</p>
     <p>
       <table cols="3">
@@ -208,9 +136,8 @@ Build step 'Execute shell' marked build as failure
           <cell>@join="right"</cell>
           <cell>att.linguistic</cell>
         </row>
-
       </table>
     </p>
-  </remarks>
- 
+  </remarks> -->
+
 </classSpec>
