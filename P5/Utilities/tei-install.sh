@@ -18,6 +18,10 @@
 # bug fix: changed $dir to $jenkinsdir in the "Get special HTML pages
 # for TEI web site" section of install() function.
 
+# Changed 2026-04-16 by MDH for https://github.com/TEIC/TEI/issues/2748:
+# removed the lines which injected Google Analytics JS into every web
+# page.
+
 # Changed 2016-03-30 by MDH to ensure that the oxygen folder with
 # updateSite.oxygen in it is copied from the old current release to
 # the folder which will become the new one, so that it stays available
@@ -42,8 +46,6 @@ install()
 	    echo unpack web guidelines to ${Vault}/${name}/${version};
 	    ${ECHO} unzip -q -o teiwebsiteguidelines -d ${Vault}/${name}/${version}/doc/tei-p5-doc;
 	    ${ECHO} rm teiwebsiteguidelines.zip;
-	    GOOGLE=$(<google.txt)
-	    ${ECHO} find ${Vault}/${name}/${version}/doc/tei-p5-doc -name "*.html" -exec sed -i.bak -e "s/<\/head>/$GOOGLE/" \{\} \;;
     esac
 }
 
