@@ -14,7 +14,9 @@
   <desc versionDate="2016-11-24" xml:lang="de">enthält eine Postadresse, z. B. eines Verlegers, einer Organisation oder einer Einzelperson.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.canonical"/>
     <memberOf key="att.cmc"/>
+    <memberOf key="att.typed"/>
     <memberOf key="model.addressLike"/>
     <memberOf key="model.divBottomPart"/>
     <memberOf key="model.divTopPart"/>
@@ -29,6 +31,93 @@
       </sequence>
     </sequence>
   </content>
+  <attList>
+    <attDef ident="type" mode="change">
+      <desc versionDate="2026-01-13" xml:lang="en">characterizes the
+      address in some sense, using any convenient classification
+      scheme or typology.</desc>
+      <valList type="semi">
+        <!-- This list is probably somewhat US-centric; updates welcome. -->
+        <valItem ident="billing">
+          <desc versionDate="2026-01-13" xml:lang="en">the address to
+          which a bill for goods or services should be sent.</desc>
+        </valItem>
+        <valItem ident="delivery">
+          <desc versionDate="2026-01-13" xml:lang="en">the address to
+          which packages should be sent via a private delivery service.</desc>
+        </valItem>
+        <valItem ident="mailing">
+          <desc versionDate="2026-01-13" xml:lang="en">the address to
+          which mail should be sent via a public postal service.</desc>
+        </valItem>
+        <valItem ident="military">
+          <desc versionDate="2026-01-15" xml:lang="en">the address to
+          which mail to deployed military personnel should be sent.</desc>
+        </valItem>
+        <valItem ident="physical">
+          <desc versionDate="2026-01-13" xml:lang="en">the address of
+          a building irrespective of where mail to its occupants
+          should be sent (for example, for the fire
+          department).</desc>
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="role" usage="opt">
+      <desc versionDate="2026-01-02" xml:lang="en">specifies further information about the purpose of the address.</desc>
+      <datatype maxOccurs="unbounded"><dataRef key="teidata.enumerated"/></datatype>
+      <valList type="open">
+        <valItem ident="sender">
+          <desc versionDate="2026-01-13" xml:lang="en">the address of
+          the sender of a piece of correspondence.</desc>
+        </valItem>
+        <valItem ident="return">
+          <desc versionDate="2026-01-13" xml:lang="en">the address to
+          which undeliverable mail should be returned.</desc>
+        </valItem>
+        <valItem ident="recipient ">
+          <desc versionDate="2026-01-13" xml:lang="en">the address of
+          the intended recipient of a piece of correspondence.</desc>
+        </valItem>
+        <valItem ident="work">
+          <desc versionDate="2026-01-15" xml:lang="en">the address to
+          which work-related mail should be sent, typically that of
+          the recipient’s employer.</desc>
+        </valItem>
+        <valItem ident="home">
+          <desc versionDate="2026-01-15" xml:lang="en">the address to
+          which non-work-related mail should be sent, typically the
+          domicile of the recipient.</desc>
+        </valItem>
+        <valItem ident="start">
+          <desc versionDate="2026-01-13" xml:lang="en">the address of
+          the beginning of a route, for example of a race.</desc>
+        </valItem>
+        <valItem ident="finish">
+          <desc versionDate="2026-01-13" xml:lang="en">the address of
+          the end of a route, for example of a race.</desc>
+        </valItem>
+        <valItem ident="pickup">
+          <desc versionDate="2026-01-13" xml:lang="en">the address at
+          which a person or package is picked up, for example by a
+          taxi or delivery service.</desc>
+        </valItem>
+        <valItem ident="dropOff">
+          <desc versionDate="2026-01-13" xml:lang="en">the address at
+          which a person or package is dropped off, for example by a
+          taxi or delivery service.</desc>
+        </valItem>
+      </valList>
+      <remarks xml:lang="en" versionDate="2026-02-16">
+        <p>Whereas <att>type</att> is used to differentiate the kind
+        of address (e.g. a street address vs. a post office box, or a
+        physical address vs. a mailing address), <att>role</att> is
+        used to differentiate the purpose of the address, for example
+        within a correspondence ecosystem (e.g. the address of the
+        sender vs. that of the intended recipient, or a college
+        student's permanent address vs. address while at school).</p>
+      </remarks>
+    </attDef>
+  </attList>
   <exemplum xml:lang="en">
     <p>Using just the elements defined by the core module, an address could be represented as follows:</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-address-egXML-rj" source="#NONE">
@@ -104,16 +193,35 @@
     </egXML>
   </exemplum>
   <remarks versionDate="2007-12-16" xml:lang="en">
-    <p rend="dataDesc">This element should be used for postal addresses only. Within it, the generic element <gi>addrLine</gi> may be used as an alternative to any of the more specialized elements available from the <ident type="class">model.addrPart</ident> class, such as <gi>street</gi>, <gi>postCode</gi> etc.</p>
+    <p rend="dataDesc">This element should be used for postal
+    addresses only. Within it, the generic element <gi>addrLine</gi>
+    may be used as an alternative to any of the more specialized
+    elements available from the <ident
+    type="class">model.addrPart</ident> class, such as
+    <gi>street</gi>, <gi>postCode</gi> etc.</p>
   </remarks>
   <remarks versionDate="2007-06-12" xml:lang="fr">
-    <p rend="dataDesc">Cet élément ne doit être utilisé que pour donner une adresse postale. A l'intérieur de cet élément, l'élément générique <gi>addrLine</gi> peut être utilisé comme élément alternatif aux éléments plus spécialisés de la classe <ident type="class">model.addrPart</ident> class, tels que <gi>street</gi>, <gi>postCode</gi> etc.</p>
+    <p rend="dataDesc">Cet élément ne doit être utilisé que pour
+    donner une adresse postale. A l'intérieur de cet élément,
+    l'élément générique <gi>addrLine</gi> peut être utilisé comme
+    élément alternatif aux éléments plus spécialisés de la classe
+    <ident type="class">model.addrPart</ident> class, tels que
+    <gi>street</gi>, <gi>postCode</gi> etc.</p>
   </remarks>
   <remarks versionDate="2008-04-05" xml:lang="ja">
-    <p rend="dataDesc"> 当該要素は、郵便配達情報にのみ使用されるべきである。 子要素として要素<gi>addrLine</gi>は、クラスmodel.addrPartにある要 素の代わりとして、例えば、要素<gi>street</gi>や要素 <gi>postcode</gi>として使用することができる。 </p>
+    <p rend="dataDesc"> 当該要素は、郵便配達情報にのみ使用されるべきで
+    ある。 子要素として要素<gi>addrLine</gi>は、クラスmodel.addrPartに
+    ある要 素の代わりとして、例えば、要素<gi>street</gi>や要素
+    <gi>postcode</gi>として使用することができる。 </p>
   </remarks>
   <remarks versionDate="2016-11-24" xml:lang="de">
-    <p rend="dataDesc">Dieses Element sollte ausschließlich für postalische Addressen verwendet werden. Innerhalb des Elements kann das generische <gi>addrLine</gi>-Element als Alternative zu den spezielleren Elementen aus der <ident type="class">model.addrPart</ident>-Klasse, wie<gi>street</gi> (Straße), <gi>postCode</gi> (Postleitzahl), etc. verwendet werden.</p>
+    <p rend="dataDesc">Dieses Element sollte ausschließlich für
+    postalische Addressen verwendet werden. Innerhalb des Elements
+    kann das generische <gi>addrLine</gi>-Element als Alternative zu
+    den spezielleren Elementen aus der <ident
+    type="class">model.addrPart</ident>-Klasse, wie <gi>street</gi>
+    (Straße), <gi>postCode</gi> (Postleitzahl), etc. verwendet
+    werden.</p>
   </remarks>
   <listRef>
     <ptr target="#CONAAD"/>
