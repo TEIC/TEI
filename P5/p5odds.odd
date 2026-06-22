@@ -62,7 +62,7 @@
             <!-- We attempted to enforce this with an abstract
                  pattern, but found that oNVDL does not support
                  abstract patterns. Thus, at least for now, just use
-                 a bulky, straightfoward, ineligant, but easier to
+                 a bulky, straightfoward, inelegant, but easier to
                  process pattern. -->
             <sch:pattern id="en-gloss-if-any">
               <sch:rule context="  tei:elementSpec[tei:gloss]
@@ -162,7 +162,7 @@
           <!-- 
                This definition of <teix:egXML> overrides that of P5 which, for
                some reason I don't grok, does not allow a <teix:egXML> descendant.
-               —Syd, 2018-06-13
+                —Syd, 2018-06-13
           -->
           <content>
             <alternate minOccurs="1" maxOccurs="unbounded">
@@ -678,7 +678,7 @@
                 </valItem>
                 <valItem ident="URI">
                   <gloss versionDate="2024-12-04" xml:lang="en">Uniform Resource Identifier</gloss>
-		  <desc versionDate="2013-10-30" xml:lang="en">any form of web address (that is, a URL or a URN)</desc>
+                  <desc versionDate="2013-10-30" xml:lang="en">any form of web address (that is, a URL or a URN)</desc>
                 </valItem>
                 <valItem ident="URL">
                   <gloss versionDate="2024-12-04" xml:lang="en">Uniform Resource Locator</gloss>
@@ -689,6 +689,21 @@
               </valList>
             </attDef>
           </attList>
+        </elementSpec>
+
+        <!--
+            Use of <interleave> in a content model means that our
+            Stylesheets cannot generate a DTD from that
+            ODD. Furthermore, it would be very difficult to impossible
+            to alter the Stylesheets do so. Thus although vanilla P5
+            alows for <interleave> to occur inside <alternation>,
+            <content>, or <sequence>, we are not allowing ourselves to
+            use it within P5 at all.
+        -->
+        <elementSpec module="tagdocs" ident="interleave" mode="change">
+          <classes>
+            <memberOf key="att.repeatable" mode="delete"/>
+          </classes>
         </elementSpec>
 
         <elementSpec ident="classes" mode="change" module="tagdocs">

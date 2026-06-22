@@ -10,19 +10,14 @@
   <gloss versionDate="2007-05-04" xml:lang="es">discurso</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">battuta</gloss>
   <gloss versionDate="2017-06-13" xml:lang="de">Figurenrede</gloss>
-  <desc versionDate="2012-12-27" xml:lang="en">contains an individual speech in a performance text, or a passage presented as such in a prose or
-    verse text.</desc>
+  <desc versionDate="2012-12-27" xml:lang="en">contains an individual speech in a performance text, or a passage presented as such in a prose or verse text.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">공연 텍스트에서 개별 대화 또는 산문이나 운문 텍스트에서 공연적 텍스트로 제시된 단락</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">劇本中的個人台詞，或散文、韻文中的個人演說。</desc>
   <desc versionDate="2008-04-06" xml:lang="ja">演技テキストまたは韻文・散文中にある個々の発話を示す。</desc>
-  <desc versionDate="2009-01-06" xml:lang="fr">monologue dans un texte écrit pour la scène ou un passage
-    présenté sous cette forme dans un texte en prose ou en vers.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">Un discurso individual de un texto dramático, o un pasaje
-    en prosa o en verso presentado como tal.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">Una singola battuta in un testo drammatico, o un brano
-    presentato come tale in un testo in prosa o in versi</desc>
-  <desc versionDate="2017-06-13" xml:lang="de">enthält eine einzelne Figurenrede in einem Dramentext oder eine entsprechende Passage in einem
-    Prosatext oder lyrischen Text.</desc>
+  <desc versionDate="2009-01-06" xml:lang="fr">monologue dans un texte écrit pour la scène ou un passage présenté sous cette forme dans un texte en prose ou en vers.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">Un discurso individual de un texto dramático, o un pasaje en prosa o en verso presentado como tal.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">Una singola battuta in un testo drammatico, o un brano presentato come tale in un testo in prosa o in versi</desc>
+  <desc versionDate="2017-06-13" xml:lang="de">enthält eine einzelne Figurenrede in einem Dramentext oder eine entsprechende Passage in einem Prosatext oder lyrischen Text.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.ascribed.directed"/>
@@ -31,116 +26,17 @@
     <memberOf key="model.divPart"/>
   </classes>
   <content>
-    <!--
-        In RELAX NG compact syntax, using two extra pattern
-        declarations:
-           spPart_sans = ( lg | model.lLike | model.pLike | model.listLike | model.attributable | q )
-           spPart_con  = ( spPart_sans | model.stageLike )
-    -->
-    <!--
-        model.global*,
-        ( model.stageLike, model.global* )*,
-        (
-          ( ( speaker, model.global*), ( spPart_con, model.global* ) )
-          |
-          ( spPart_sans, model.global* )
-        ),
-        ( spPart_con, model.global* )*
-    -->
-    <!-- However, since this (4.10.2) is just a patch release, we are
-         not making new classes or macros to make this simpler. We
-         should do that next regular release, though, IMHO. Thus below
-         this you will find the same content model but using a class
-         model.spPart (defined like spPart_sans, above), just to make
-         updating easier. —Syd, 2025-09-02 -->
-    <sequence>
-      <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <classRef key="model.stageLike" minOccurs="1" maxOccurs="1"/>
-        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-      </sequence>
-      <alternate minOccurs="1" maxOccurs="1">
-        <sequence minOccurs="1" maxOccurs="1">
-          <sequence minOccurs="1" maxOccurs="1">
-            <elementRef key="speaker" minOccurs="1" maxOccurs="1"/>
-            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          </sequence>
-          <sequence minOccurs="1" maxOccurs="1">
-            <alternate minOccurs="1" maxOccurs="1">
-              <elementRef key="lg"/>
-              <classRef key="model.lLike"/>
-              <classRef key="model.pLike"/>
-              <classRef key="model.listLike"/>
-              <classRef key="model.attributable"/>
-              <elementRef key="q"/>
-              <classRef key="model.stageLike"/>
-            </alternate>
-            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          </sequence>
-        </sequence>
-        <sequence minOccurs="1" maxOccurs="1">
-          <alternate minOccurs="1" maxOccurs="1">
-            <elementRef key="lg"/>
-            <classRef key="model.lLike"/>
-            <classRef key="model.pLike"/>
-            <classRef key="model.listLike"/>
-            <classRef key="model.attributable"/>
-            <elementRef key="q"/>
-          </alternate>
-          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-        </sequence>
-      </alternate>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <alternate minOccurs="1" maxOccurs="1">
-          <elementRef key="lg"/>
-          <classRef key="model.lLike"/>
-          <classRef key="model.pLike"/>
-          <classRef key="model.listLike"/>
-          <classRef key="model.attributable"/>
-          <elementRef key="q"/>
-          <classRef key="model.stageLike"/>
-        </alternate>
-        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-      </sequence>
-    </sequence>
-    <!-- BELOW -->
-    <!--
-        This is the same content model as above, but using the class
-        model.spPart, which should be defined as
-        ( lg | model.lLike | model.pLike | model.listLike | model.attributable | q)
-    -->
-    <!--
-    <sequence>
-      <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <classRef key="model.stageLike" minOccurs="1" maxOccurs="1"/>
-        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-      </sequence>
-      <alternate minOccurs="1" maxOccurs="1">
-        <sequence minOccurs="1" maxOccurs="1">
-          <sequence minOccurs="1" maxOccurs="1">
-            <elementRef key="speaker" minOccurs="1" maxOccurs="1"/>
-            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          </sequence>
-          <sequence minOccurs="1" maxOccurs="1">
-            <macroRef key="spPart_con"/>
-            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          </sequence>
-        </sequence>
-        <sequence minOccurs="1" maxOccurs="1">
-          <classRef key="model.spPart" minOccurs="1" maxOccurs="1"/>
-          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-        </sequence>
-      </alternate>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <alternate minOccurs="1" maxOccurs="1">
-          <classRef key="model.spPart" minOccurs="1" maxOccurs="1"/>
-          <classRef key="model.stageLike"/>
-        </alternate>
-        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-      </sequence>
-    </sequence>
-    -->
+    <alternate minOccurs="0" maxOccurs="unbounded">
+      <classRef key="model.stageLike"/>
+      <classRef key="model.global"/>
+      <classRef key="model.lLike"/>
+      <classRef key="model.pLike"/>
+      <classRef key="model.listLike"/>
+      <classRef key="model.attributable"/>
+      <elementRef key="speaker"/>
+      <elementRef key="lg"/>
+      <elementRef key="q"/>
+    </alternate>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-sp-egXML-vc" source="#CODR-eg-296">

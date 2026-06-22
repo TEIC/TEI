@@ -68,9 +68,15 @@
   <!-- Keep stub bibliography entries just in case someone points to them -->
   <xsl:template match="listBibl/bibl[@xml:id]|listBibl/biblStruct[@xml:id]">
     <xsl:text>&#x0A;</xsl:text>
-    <xsl:copy>
+    <bibl>
       <xsl:copy-of select="@xml:id"/>
-    </xsl:copy>
+      <xsl:comment>
+        <xsl:text> This &lt;bibl> is a stub </xsl:text>
+        <xsl:if test="self::biblStruct">
+          <xsl:text>that is actually a &lt;biblStruct> in the source </xsl:text>
+        </xsl:if>
+      </xsl:comment>
+    </bibl>
   </xsl:template>
   
   <!--
