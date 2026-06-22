@@ -58,7 +58,7 @@
   <constraintSpec ident="noDefault4Required" scheme="schematron" xml:lang="en">
     <constraint>
       <sch:rule context="tei:attDef[@usage eq 'req']">
-        <sch:report test="tei:defaultVal">Since the @<sch:value-of select="@ident"/> attribute is required, it will always be specified. Thus the default value (of "<sch:value-of select="normalize-space(tei:defaultVal)"/>") will never be used. Either change the definition of the attribute so it is not required ("rec" or "opt"), or remove the defaultVal element.</sch:report>
+        <sch:report test="tei:defaultVal">Since the @<sch:value-of select="@ident"/> attribute is required, it will always be specified. Thus the default value (of "<sch:value-of select="normalize-space(tei:defaultVal)"/>") will never be used. Either change the definition of the attribute so it is not required ("rec" or "opt"), or remove the &lt;defaultVal> element.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -79,10 +79,10 @@
                                      and tei:valList[ @type eq 'closed']
                                      and tei:datatype[ @maxOccurs &gt; 1  or  @minOccurs &gt; 1  or  @maxOccurs eq 'unbounded']
                                    ]">
-        <sch:assert test="tokenize(normalize-space(tei:defaultVal),'&#x20;') = tei:valList/tei:valItem/@ident">In the <sch:value-of select="local-name(ancestor::*[@ident][1])"/> defining
+        <sch:assert test="tokenize(normalize-space(tei:defaultVal),'&#x20;') = tei:valList/tei:valItem/@ident">In the &lt;<sch:value-of select="local-name(ancestor::*[@ident][1])"/>> defining
         <sch:value-of select="ancestor::*[@ident][1]/@ident"/> the default value of the
         @<sch:value-of select="@ident"/> attribute is not among the closed list of possible
-        values</sch:assert>
+        values.</sch:assert>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -95,10 +95,10 @@
                                         or  ( if ( @maxOccurs castable as xs:integer ) then ( @maxOccurs cast as xs:integer eq 1 ) else false() )
                                                      ]
                                    ]">
-        <sch:assert test="string(tei:defaultVal) = tei:valList/tei:valItem/@ident">In the <sch:value-of select="local-name(ancestor::*[@ident][1])"/> defining
+        <sch:assert test="string(tei:defaultVal) = tei:valList/tei:valItem/@ident">In the &lt;<sch:value-of select="local-name(ancestor::*[@ident][1])"/>> defining
         <sch:value-of select="ancestor::*[@ident][1]/@ident"/> the default value of the
         @<sch:value-of select="@ident"/> attribute is not among the closed list of possible
-        values</sch:assert>
+        values.</sch:assert>
       </sch:rule>
     </constraint>
   </constraintSpec>
