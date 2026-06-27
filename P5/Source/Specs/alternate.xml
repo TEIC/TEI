@@ -10,18 +10,24 @@
     <memberOf key="model.contentPart"/>
   </classes>
   <content>
-    <alternate minOccurs="1" maxOccurs="unbounded">
-      <elementRef key="valList"/>
-      <classRef key="model.contentPart"/>
+    <alternate>
+      <sequence>
+        <elementRef key="valList" minOccurs="1" maxOccurs="1"/>
+        <classRef key="model.contentPart" minOccurs="0" maxOccurs="unbounded"/>
+      </sequence>
+      <sequence>
+        <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>
+        <elementRef key="valList" minOccurs="0" maxOccurs="1"/>
+      </sequence>        
+      <!--
+          That is, either the content starts with a <valList>, in
+          which case it (the <valList>) may be followed by zero or
+          more contentPart elements, OR it starts with a contentPart
+          element, in which case they (the conentPart elements) may be
+          followed by zero or one <valList>.
+      -->
     </alternate>
   </content>
-  <constraintSpec ident="alternatechilden" scheme="schematron" xml:lang="en">
-    <constraint>
-      <sch:rule context="tei:alternate">
-        <sch:assert test="count(*) gt 1">The alternate element must have at least two child elements</sch:assert>
-      </sch:rule>
-    </constraint>
-  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-alternate-egXML-eg" xml:lang="en" source="#UND"><content>
       <alternate>

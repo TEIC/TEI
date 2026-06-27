@@ -9,23 +9,16 @@
     <memberOf key="model.contentPart"/>
   </classes>
   <content>
-    <classRef key="model.contentPart" maxOccurs="unbounded"/>
+    <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>
   </content>
-  <constraintSpec ident="interleavechilden" scheme="schematron" xml:lang="en">
-    <constraint>
-      <sch:rule context="tei:interleave">
-        <sch:assert test="count(*) gt 1">The interleave element must have at least two child elements</sch:assert>
-      </sch:rule>
-    </constraint>
-  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#UND">
       <content>
         <interleave>
           <elementRef key="persName"/>
           <alternate minOccurs="0">
-              <elementRef key="placeName"/>
-              <elementRef key="location"/>
+            <elementRef key="placeName"/>
+            <elementRef key="location"/>
           </alternate>
           <elementRef key="note" minOccurs="0"/>
         </interleave>
