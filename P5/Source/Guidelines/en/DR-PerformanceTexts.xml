@@ -655,8 +655,8 @@ disguise, as in the following examples:
    <castItem><role xml:id="hh">Henry Higgins</role></castItem>
 </castList>
 <sp who="#hh">
-   <speaker>The Notetaker</speaker>
-   <p> ... </p>
+   <speaker>The Note Taker</speaker>
+   <p>Live where you like; but stop that noise.</p>
 </sp></egXML>
 <!-- GB Shaw, Pygmalion --></p>
 <p>If the speaker attributions are completely regular (and may thus be
@@ -744,6 +744,72 @@ Levant</head>
 </spGrp>
 </egXML></p>
 </div>
+  <div type="div3" xml:id="DRSIM"><head>Simultaneous Action</head>
+    <p>In printed or written versions of performance texts, a variety of
+      techniques may be used to indicate the temporal alignment of speeches or
+      actions.  Speeches may be printed vertically aligned on the page, or
+      braced together; stage directions (e.g. <q>Speaking at the same
+        time</q>) are also often used.  In operatic or musical works in
+      particular, the need to indicate timing and alignment of individual
+      parts of a song may lead to very complex layout.</p>
+    <p>One simple method of indicating the temporal alignment of speeches or
+      actions is to use the <gi>spGrp</gi> element discussed in
+      section <ptr target="#DRSPG"/>, with a <att>type</att> attribute to specify the 
+      reason for grouping, as in the following example:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DRSIM-egXML-sj" source="#DR-eg-08"><sp> <speaker>Mangan</speaker>
+          <stage type="delivery">wildly</stage>
+          <p>Look here: I'm going to take off all my clothes.</p>
+          <stage type="action">he begins tearing off his coat.</stage>
+      </sp>
+        <spGrp org="parallel" rend="braced">
+          <sp> <speaker>Lady Utterword</speaker>
+            <p>Mr Mangan!</p>
+          </sp>
+          <sp> <speaker>Captain Shotover</speaker>
+            <p>Whats that?</p>
+          </sp>
+          <sp> <speaker>Hector</speaker>
+            <p>Ha! ha! Do. Do.</p>
+          </sp>
+          <sp> <speaker>Ellie</speaker>
+            <p>Please dont.</p>
+          </sp>
+          <stage type="delivery">in consternation</stage>
+        </spGrp>
+        <sp> <speaker>Mrs. Hushabye</speaker>
+          <stage type="action">catching his arm and stopping him</stage>
+          <p>Alfred: for shame! Are you mad?</p>
+        </sp></egXML></p>
+    <!-- martindholmes says: I believe there is a typo above: "dont"
+       should be "don't". However, I don't have access to a 1916
+       edition to confirm this. No edition I can find has "dont". -->
+    <!-- I think the correct date should be 1919. The lack of apostrophes
+is one of Shaw's quirks, represented faithfully in the standard
+Constable edition of 1931, and in reprints of that such as the Penguin
+Classics 2000 edition available at Google Books (LB) 
+EBB: Confirmed on checking 1919 Constable edition of Heartbreak House. Updating BIB accordingly. -->
+    
+    <p>In the original, the stage direction <q>in consternation</q> is
+      printed opposite a brace grouping all four speeches, indicating that all
+      four characters speak at once, and that the stage direction applies to
+      all of them. Rather than attempting to represent the appearance of the
+      source, this example encoding represents its presumed meaning: the
+      <gi>stage</gi> element is placed arbitrarily after the last relevant
+      speech,  and the four speeches with which it is to be associated are 
+      grouped by means of the <gi>spGrp</gi> element. The <att>rend</att> 
+      attribute is used to specify the fact that the three speeches were 
+      grouped by the brace in the copy text. Producing a readable version 
+      of the text which simulates the original printed effect may however
+      require more complex markup and processing.
+    </p>
+    <p>More powerful and more precise mechanisms for temporal alignment are
+      defined in chapter <ptr target="#TS"/>.  These would be appropriate for
+      encodings which focus on the actual performance of a text
+      rather than its structure or formal properties.  The module described
+      in that chapter includes a large number of other detailed proposals for
+      the encoding of such features as voice quality, prosody, etc., which
+      might be relevant to such a treatment of performance texts.
+    </p></div>
 <div type="div3" xml:id="DRSTA"><head>Stage Directions</head>
 <p>Both between and within the speeches of a written performance text,
 it is normal practice to include a wide variety of descriptive
@@ -1196,72 +1262,7 @@ have it close to the fragments it unifies.</p>
 <p>Like the <att>next</att> and <att>prev</att> attributes, the
 <gi>join</gi> element requires the additional module for linking, which
 is selected as shown above.</p></div>
-<div type="div3" xml:id="DRSIM"><head>Simultaneous Action</head>
-<p>In printed or written versions of performance texts, a variety of
-techniques may be used to indicate the temporal alignment of speeches or
-actions.  Speeches may be printed vertically aligned on the page, or
-braced together; stage directions (e.g. <q>Speaking at the same
-time</q>) are also often used.  In operatic or musical works in
-particular, the need to indicate timing and alignment of individual
-parts of a song may lead to very complex layout.</p>
-<p>One simple method of indicating the temporal alignment of speeches or
-actions is to use the <gi>spGrp</gi> element discussed in
-section <ptr target="#DRSPG"/>, with a <att>type</att> attribute to specify the 
-reason for grouping, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DRSIM-egXML-sj" source="#DR-eg-08"><sp> <speaker>Mangan</speaker>
-  <stage type="delivery">wildly</stage>
-  <p>Look here: I'm going to take off all my clothes.</p>
-  <stage type="action">he begins tearing off his coat.</stage>
-</sp>
-  <spGrp type="simultaneous" rend="braced">
-<sp> <speaker>Lady Utterword</speaker>
-  <p>Mr Mangan!</p>
-</sp>
-<sp> <speaker>Captain Shotover</speaker>
-  <p>Whats that?</p>
-</sp>
-<sp> <speaker>Hector</speaker>
-  <p>Ha! ha! Do. Do.</p>
-</sp>
-<sp> <speaker>Ellie</speaker>
-  <p>Please dont.</p>
-</sp>
-<stage type="delivery">in consternation</stage>
-</spGrp>
-<sp> <speaker>Mrs. Hushabye</speaker>
-  <stage type="action">catching his arm and stopping him</stage>
-  <p>Alfred: for shame! Are you mad?</p>
-</sp></egXML></p>
-  <!-- martindholmes says: I believe there is a typo above: "dont"
-       should be "don't". However, I don't have access to a 1916
-       edition to confirm this. No edition I can find has "dont". -->
-
-<!-- I think the correct date should be 1919. The lack of apostrophes
-is one of Shaw's quirks, represented faithfully in the standard
-Constable edition of 1931, and in reprints of that such as the Penguin
-Classics 2000 edition available at Google Books (LB) -->
-
-<p>In the original, the stage direction <q>in consternation</q> is
-printed opposite a brace grouping all four speeches, indicating that all
-four characters speak at once, and that the stage direction applies to
-all of them. Rather than attempting to represent the appearance of the
-source, this example encoding represents its presumed meaning: the
-<gi>stage</gi> element is placed arbitrarily after the last relevant
-speech,  and the four speeches with which it is to be associated are 
-grouped by means of the <gi>spGrp</gi> element. The <att>rend</att> 
-attribute is used to specify the fact that the three speeches were 
-grouped by the brace in the copy text. Producing a readable version 
-of the text which simulates the original printed effect may however
-require more complex markup and processing.
-</p>
-<p>More powerful and more precise mechanisms for temporal alignment are
-defined in chapter <ptr target="#TS"/>.  These would be appropriate for
-encodings the focus of which is on the actual performance of a text
-rather than its structure or formal properties.  The module described
-in that chapter includes a large number of other detailed proposals for
-the encoding of such features as voice quality, prosody, etc., which
-might be relevant to such a treatment of performance texts.
-</p></div></div>
+</div>
 <div type="div2" xml:id="DROTH"><head>Other Types of Performance Text</head>
 <p>Most of the elements and structures identified thus far are derived
 from traditional theatrical texts.  Although other performance texts,

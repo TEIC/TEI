@@ -9,8 +9,8 @@
  const footnotePopup = document.createElement('div'),
     footnotePopupContent = document.createElement('div'),
     closeBtn = document.createElement('button');
- let biblFrame = null;
 
+ let divBiblWithShadow = null;
 
 document.addEventListener("DOMContentLoaded", function() {
   footnotePopup.setAttribute('id', 'footnotePopup');
@@ -24,6 +24,8 @@ document.addEventListener("DOMContentLoaded", function() {
   footnotePopup.appendChild(footnotePopupContent);
   document.getElementsByTagName('body')[0].appendChild(footnotePopup);
 
+  getBiblSource();
+
 //Now we work through the links to footnotes.
   // Create an array of links to notes.
   let links = Array.from(document.querySelectorAll('a[href ^= "#Note"]'))
@@ -32,8 +34,34 @@ document.addEventListener("DOMContentLoaded", function() {
   // Add event listeners to show popup notes when each link is clicked.
   links.forEach(link => { link.addEventListener('click', showPopupFootnote) });
   
-  addBiblFrame();
 });
+
+async function getBiblSource(){
+  try{
+    //Get the BIB file.
+    const response = await fetch('BIB.html');
+    const unparsedHtml = await response.text();
+    //Parse it so we can get the bits we need.
+    const parser = new DOMParser();
+    const bibDoc = parser.parseFromString(unparsedHtml, 'text/html');
+    //Find the bibls.
+    const listBibls = bibDoc.querySelectorAll('ol.listBibl');
+    //Create an element to attach them to.
+    divBiblWithShadow = document.createElement('div');
+    document.body.appendChild(divBiblWithShadow);
+    divBiblWithShadow.style.display = 'none';
+
+    //Create a shadow root.
+    const shadow = divBiblWithShadow.attachShadow({mode: 'open'});
+    listBibls.forEach(el => shadow.appendChild(el));
+
+    //Now we're in a position to switch out the hrefs with 
+    //onclick events.
+    setupBiblPopups();
+  } catch (err) {
+    console.error('Error retrieving BIB.html:', err);
+  }
+}
 
 function showPopupFootnote(event){
   event.preventDefault();
@@ -104,29 +132,18 @@ function setupBiblPopups () {
   var links = document.getElementsByTagName('a');
   for (var i=0; i<links.length; i++){
     var href = links[i].getAttribute('href');
-    if (href && href.substring(0, 9) == 'BIB.html#'){
-      var biblId = href.substring(9, href.length);
-        links[i].onclick = function(e) {
-          e.preventDefault();
-          showPopupBibl(e.target, biblId)
-        }
-      //}
+    if (href && href.match(/BIB.html#/)){
+      let biblId = href.split('#')[1];
+      links[i].addEventListener('click', function(e) {
+        e.preventDefault();
+        showPopupBibl(e.target, biblId);
+      });
+      links[i].removeAttribute('href');
+      //Add this so that we retain the appearance
+      //even though the @href is gone.
+      links[i].classList.add('popupLink');
     }
   }
-}
-
-//This function creates an invisible iframe and loads the BIB.html document
-//into it, so we can retrieve references from it and show them in popups.
-function addBiblFrame(){
-//First make sure we're not running this on the bibliography itself.
-    var biblDoc = new RegExp('BIB\.html(#.+)?$');
-    var isBibliography = biblDoc.exec(window.location);
-    if (isBibliography){return;}
-    biblFrame = document.createElement('iframe');
-    biblFrame.style.display = 'none';
-    document.getElementsByTagName('body')[0].appendChild(biblFrame);
-    biblFrame.setAttribute('src', 'BIB.html');
-    biblFrame.addEventListener("load", setupBiblPopups);
 }
 
 //This function shows a bibl popup. It differs slightly from the function for note
@@ -136,7 +153,7 @@ function showPopupBibl(el, biblId){
 //We have to be cautious here; some browsers block access to the iframe 
 //document contents from another document, especially when running locally.
   try{
-    bibl = biblFrame.contentDocument.getElementById(biblId);
+    bibl = divBiblWithShadow.shadowRoot.getElementById(biblId);
   }
   catch(e){
     document.location = 'BIB.html#' + biblId;

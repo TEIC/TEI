@@ -41,7 +41,7 @@ checkrnv:
 
 testall.examples: testall.xsd
 	@echo " "
-	@echo "--------- work on target $@ ---------"
+	@echo "--------- P5/Test/Makefile work on target $@ ---------"
 	$(SAXON) -o:testall-ex.odd -s:testall.odd -xsl:../Utilities/odd2exodd.xsl
 	$(ANT) -f antruntest.xml -Doutputname=testall-examples -DoddFile=testall-ex.odd compileodd rng cleanup
 	@echo check egXML in testall.odd
@@ -50,14 +50,14 @@ testall.examples: testall.xsd
 
 %.dtd: %.odd
 	@echo " "
-	@echo "--------- work on target file $@ ---------"
+	@echo "--------- P5/Test/Makefile work on target file $@ ---------"
 	$(ANT) -f antruntest.xml -Doutputname=$* -Dtestfile=$*.xml -DoddFile=$*.odd validateodd compileodd dtd rng validaterng cleanup
 	@echo Check file using DOCTYPE in instance
 	xmllint --noout --valid $*.xml
 
 %.xsd: %.odd
 	@echo " "
-	@echo "--------- work on target file $@ ---------"
+	@echo "--------- P5/Test/Makefile work on target file $@ ---------"
 	$(ANT) -f antruntest.xml -Doutputname=$* -Dtestfile=$*.xml -DoddFile=$*.odd validateodd compileodd rng validaterng  isoschematron validateschematron cleanup
 	${TRANG}   -o disable-abstract-elements $*.rng $*.xsd
 	-test -f xml.xsd && cp xml.xsd $*_xml.xsd    && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+;s+teix.xsd+$*_teix.xsd+" $*.xsd
@@ -69,7 +69,7 @@ testall.examples: testall.xsd
 
 %.special: %.odd checkrnv
 	@echo " "
-	@echo "--------- work on target file $@ ---------"
+	@echo "--------- P5/Test/Makefile work on target file $@ ---------"
 	@echo "BUILD:  Test schema from (special) $<"
 	xmllint --xinclude $< > xi_$<
 	$(ANT) -f antruntest.xml -Dtestfile=$*.xml -DoddFile=xi_$*.odd -Doutputname=$* validateodd compileodd rng validaterng cleanup
@@ -79,7 +79,7 @@ testall.examples: testall.xsd
 
 testmeta2010:
 	@echo " "
-	@echo "--------- work on target $@ ---------"
+	@echo "--------- P5/Test/Makefile work on target $@ ---------"
 	@echo check that TEI web site is up and responding ...
 	-TEISITE=`curl -s --head http://www.tei-c.org/Vault/P5/1.5.0/xml/tei/odd/p5subset.xml`
 ifdef TEISITE
@@ -97,14 +97,14 @@ endif
 
 test-frag: checkrnv
 	@echo " "
-	@echo "--------- work on target $@ ---------"
+	@echo "--------- P5/Test/Makefile work on target $@ ---------"
 	@echo BUILD: Testing files which exercise inclusion of fragments
 	${JING} -t -c frag.rnc testfrag.xml
 	rnv frag.rnc testfrag.xml
 
 detest: checkrnv
 	@echo " "
-	@echo "--------- work on target $@ ---------"
+	@echo "--------- P5/Test/Makefile work on target $@ ---------"
 	@echo BUILD: Test file with deliberate mistakes
 	@echo "--- run ant to validate ODD file (./detest.odd) against p5odds.rng & p5odds.isosch:"
 	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd validateodd > detest_odd_schematron.log 2>&1
