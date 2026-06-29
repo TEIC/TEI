@@ -62,6 +62,20 @@
       </sch:rule>
     </constraint>
   </constraintSpec>
+  <!-- NOTE: MH added 2026-06-29 per SB for issue #2876.
+    Remove the following when valList is removed from the content model. -->
+  <constraintSpec ident="child-valList-deprecated" scheme="schematron" xml:lang="en">
+    <constraint>
+      <sch:rule context="tei:elementSpec/tei:valList">
+        <sch:report test="true()">
+          Use of &lt;valList> as a direct child of &lt;elementSpec> is deprecated
+          and will be invalid after 2027-08-31. To express a controlled vocabulary
+          as the content model of an element, place the &lt;valList> inside a
+          &lt;content> element.
+        </sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="prefix" usage="opt">
       <desc versionDate="2010-06-23" xml:lang="en">specifies a default prefix which will be
