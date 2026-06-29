@@ -10,11 +10,9 @@
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含以列表方式呈現的任何連續項目。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">リストのような、項目列を示す。</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">contient une suite d'items ordonnés dans une liste.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">contiene cualquier secuencia de ítems o elementos
-    organizados en una lista.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">contiene una qualsiasi sequenza di voci organizzate in
-    una lista.</desc>
-    <desc versionDate="2016-11-25" xml:lang="de">enthält eine Reihe von Listenpunkten, die als Liste organisiert sind.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">contiene cualquier secuencia de ítems o elementos organizados en una lista.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">contiene una qualsiasi sequenza di voci organizzate in una lista.</desc>
+  <desc versionDate="2016-11-25" xml:lang="de">enthält eine Reihe von Listenpunkten, die als Liste organisiert sind.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.cmc"/>
@@ -22,71 +20,58 @@
     <memberOf key="att.typed"/>
     <memberOf key="model.listLike"/>
   </classes>
-  <!-- 	    <rng:zeroOrMore>
+  <!--      <rng:zeroOrMore>
               <rng:ref name="model.global"/>
               </rng:zeroOrMore> -->
-  <!-- The removal of this component (and the same one after <headItem> is-->
-  <!-- wrong, and breaks the content model. The right thing to do, IMHO,-->
-  <!-- is to leave these in, and either-->
-  <!-- * improve the ODD -> DTD process so that it does the right thing-->
-  <!--   (which would probably be very hard)-->
-  <!-- * require the user to fix the content model if & when she removes-->
-  <!--   <headItem> or <headLabel>-->
-  <!-- I haven't fixed this particular instance yet, because we hope to-->
-  <!-- completely revamp the content of <list>, anyway, hopefully-->
-  <!-- removing the special-purpose <headItem> and <headLabel>. -Syd -->
+  <!--
+      The removal of this component (and the same one after <headItem> is
+      wrong, and breaks the content model. The right thing to do, IMHO,
+      is to leave these in, and either
+      * improve the ODD -> DTD process so that it does the right thing
+      (which would probably be very hard)
+      * require the user to fix the content model if & when she removes
+      <headItem> or <headLabel>
+      I haven't fixed this particular instance yet, because we hope to
+      completely revamp the content of <list>, anyway, hopefully
+      removing the special-purpose <headItem> and <headLabel>. —Syd
+  -->
   <content>
     <sequence>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          
-            <classRef key="model.divTop"/>
-            <classRef key="model.global"/>
-            <elementRef key="desc" minOccurs="0" maxOccurs="unbounded"/>          
-        </alternate>
-      
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.divTop"/>
+        <classRef key="model.global"/>
+        <elementRef key="desc" minOccurs="0" maxOccurs="unbounded"/>          
+      </alternate>      
       <alternate>
         <sequence minOccurs="1" maxOccurs="unbounded">
           <elementRef key="item"/>
-          
-            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          
+          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
         <sequence>
-          
-            <elementRef key="headLabel" minOccurs="0"/>
-          
-          
-            <elementRef key="headItem" minOccurs="0"/>
-          
+          <elementRef key="headLabel" minOccurs="0"/>
+          <elementRef key="headItem" minOccurs="0"/>
           <sequence minOccurs="1" maxOccurs="unbounded">
             <elementRef key="label"/>
-            
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-            
+            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
             <elementRef key="item"/>
-            
-              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-            
+            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
           </sequence>
         </sequence>
       </alternate>
-      
-        <sequence minOccurs="0" maxOccurs="unbounded">
-          
-            <classRef key="model.divBottom"/>
-          
-          
-            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
-          
-        </sequence>
-      
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.divBottom"/>
+        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+      </sequence>
     </sequence>
   </content>
   <constraintSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="gloss-list-must-have-labels" scheme="schematron" xml:lang="en">
     <constraint>
       <sch:rule context="tei:list[@type='gloss']">
-	<sch:assert test="tei:label">The content of a "gloss" list should include a sequence of one or more pairs of a label element followed by an item element</sch:assert>
+        <sch:assert test="tei:label">
+          The content of a "gloss" list should include a sequence of
+          one or more pairs of a &lt;label> element followed by an
+          &lt;item> element.
+        </sch:assert>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -96,7 +81,6 @@
         @type and the new recommendation to use @rend, but the general consensus is that providing suggestions
         in the prose is better than formalizing them in the ODD.
     -->
-    
     <attDef ident="type" usage="opt" mode="change">
       <gloss versionDate="2017-06-25" xml:lang="en">type</gloss>
       <gloss versionDate="2017-06-25" xml:lang="de">Typ</gloss>
@@ -193,7 +177,7 @@
         <item>a butcher</item>
         <item>a baker</item>
         <item>a candlestick maker, with 
-	  <list rend="bulleted"><item>rings on his fingers</item><item>bells on his toes</item></list>
+          <list rend="bulleted"><item>rings on his fingers</item><item>bells on his toes</item></list>
             </item>
       </list>
     </egXML>

@@ -11,6 +11,13 @@
   <content>
     <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>
   </content>
+  <constraintSpec ident="sequencechilden" scheme="schematron" xml:lang="en">
+    <constraint>
+      <sch:rule context="tei:sequence">
+        <sch:assert test="count(*) gt 1">The &lt;sequence> element must have at least two child elements.</sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="preserveOrder" validUntil="2027-05-06">
       <desc type="deprecationInfo" versionDate="2024-03-15" xml:lang="en">The <att>preserveOrder</att> on <gi>sequence</gi> has been deprecated. The <gi>interleave</gi> element should be used to denote unordered constructs.</desc>

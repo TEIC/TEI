@@ -17,10 +17,10 @@
       <sch:rule context="tei:*[ @minOccurs and @maxOccurs ]">
         <sch:let name="min" value="@minOccurs cast as xs:integer"/>
         <sch:let name="max" value="if ( normalize-space( @maxOccurs ) eq 'unbounded') then -1 else @maxOccurs cast as xs:integer"/>
-        <sch:assert test="$max eq -1 or $max ge $min">@maxOccurs should be greater than or equal to @minOccurs</sch:assert>
+        <sch:assert test="$max eq -1 or $max ge $min">@maxOccurs should be greater than or equal to @minOccurs.</sch:assert>
       </sch:rule>
       <sch:rule context="tei:*[ @minOccurs and not( @maxOccurs ) ]">
-        <sch:assert test="@minOccurs cast as xs:integer lt 2">When @maxOccurs is not specified, @minOccurs must be 0 or 1</sch:assert>
+        <sch:assert test="@minOccurs cast as xs:integer lt 2">When @maxOccurs is not specified, @minOccurs must be 0 or 1.</sch:assert>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -33,11 +33,8 @@
       <gloss versionDate="2007-11-06" xml:lang="it">numero minimo di occorrenze</gloss>
       <gloss versionDate="2007-05-04" xml:lang="es">número mínimo de apariciones</gloss>
       <gloss versionDate="2023-09-27" xml:lang="ja">最小出現数</gloss>
-      <desc versionDate="2013-11-21" xml:lang="en">indicates the smallest number of times this
-      component may occur.</desc>
+      <desc versionDate="2013-11-21" xml:lang="en">indicates the smallest number of times this component may occur.</desc>
       <desc versionDate="2023-09-27" xml:lang="ja">この部品が出現し得る最小回数を示す。</desc>
-      
-      
       <datatype>
         <dataRef key="teidata.count"/>
       </datatype>
@@ -51,8 +48,7 @@
       <gloss versionDate="2007-11-06" xml:lang="it">numero minimo di occorrenze</gloss>
       <gloss versionDate="2007-05-04" xml:lang="es">número máximo de apariciones.</gloss>
       <gloss versionDate="2023-09-27" xml:lang="ja">最大出現数</gloss>
-      <desc versionDate="2013-11-21" xml:lang="en">indicates the largest number of times this
-      component may occur.</desc>
+      <desc versionDate="2013-11-21" xml:lang="en">indicates the largest number of times this component may occur.</desc>
       <desc versionDate="2023-09-27" xml:lang="ja">概算推量のための最大推定値を与える。</desc>
       <datatype>
         <dataRef key="teidata.unboundedCount"/>

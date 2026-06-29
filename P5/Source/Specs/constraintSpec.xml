@@ -45,9 +45,9 @@
     <constraint>
       <sch:rule context="tei:constraintSpec">
         <sch:report test="tei:constraint/sch1x:* and @scheme = ('isoschematron','schematron')">Rules
-        in the Schematron 1.* language must be inside a constraintSpec
-        with a value other than 'schematron' or 'isoschematron' on the
-        scheme attribute</sch:report>
+        in the Schematron 1.* language must be inside a &lt;constraintSpec>
+        with a value other than "schematron" or "isoschematron" on the
+        @scheme attribute.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -56,8 +56,8 @@
     <constraint>
       <sch:rule context="tei:constraintSpec[ @mode = ('add','replace') or not( @mode ) ]">
         <sch:report test="tei:constraint/sch:* and not( @scheme eq 'schematron')">Rules
-          in the ISO Schematron language must be inside a constraintSpec
-          with the value 'schematron' on the scheme attribute</sch:report>
+          in the ISO Schematron language must be inside a &lt;constraintSpec>
+          with the value "schematron" on the @scheme attribute.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -74,8 +74,8 @@
       <sch:rule context="(tei:constraintSpec|tei:constraintDecl)[ @scheme eq 'schematron'][ .//sch:assert | .//sch:report ]">
         <sch:let name="assertsHaveContext" value="for $a in .//sch:assert return exists( $a/ancestor::sch:rule/@context )"/>
         <sch:let name="reportsHaveContext" value="for $r in .//sch:report return exists( $r/ancestor::sch:rule/@context )"/>
-        <sch:report test="( $assertsHaveContext, $reportsHaveContext ) = false()">An &lt;sch:assert&gt; or &lt;sch:report&gt;
-          element must be a descendant of an &lt;sch:rule&gt; that has a @context; one or more inside this
+        <sch:report test="( $assertsHaveContext, $reportsHaveContext ) = false()">An &lt;sch:assert> or &lt;sch:report>
+          element must be a descendant of an &lt;sch:rule> that has a @context; one or more inside this
           <sch:value-of select="local-name(.)"/> are not.</sch:report>
       </sch:rule>
     </constraint>
@@ -85,7 +85,9 @@
       <sch:rule context="tei:constraintSpec[ @mode eq 'add' or not( @mode ) ]">
         <sch:let name="myIdent" value="normalize-space(@ident)"/>
         <sch:report test="preceding::tei:constraintSpec[ normalize-space(@ident) eq $myIdent ]">
-        The @ident of 'constraintSpec' should be unique; this one (<sch:value-of select="$myIdent"/>) is the same as that of a previous 'constraintSpec'.
+        The @ident of &lt;constraintSpec> should be unique; this one
+        (<sch:value-of select="$myIdent"/>) is the same as that of a
+        previous &lt;constraintSpec>.
         </sch:report>
       </sch:rule>
     </constraint>
@@ -105,7 +107,10 @@
       <constraintSpec scheme="schematron" ident="usage_based_on_mode" xml:lang="en">
         <constraint>
           <sch:rule context="tei:constraintSpec[ @mode = ('add','replace')  or  not( @mode ) ]">
-            <sch:assert test="@scheme">The @scheme attribute of &lt;constraintSpec&gt; is required when the @mode is <sch:value-of select="if (@mode) then concat('&#34;',@mode,'&#34;') else 'not specified'"/> (here on "<sch:value-of select="@ident"/>")</sch:assert>
+            <sch:assert test="@scheme">
+            The @scheme attribute of &lt;constraintSpec> is required when the @mode is
+            <sch:value-of select="if (@mode) then concat('&quot;',@mode,'&quot;') else 'not specified'"/>
+            (here on "<sch:value-of select="@ident"/>").</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
@@ -173,7 +178,7 @@
           <sch:rule context="tei:figure">
             <sch:report test="not( tei:figDesc | tei:head )">You should
             provide information in a figure from which
-            we can construct an alt attribute in HTML</sch:report>
+            we can construct an @alt attribute in HTML.</sch:report>
           </sch:rule>
         </constraint>
       </constraintSpec>

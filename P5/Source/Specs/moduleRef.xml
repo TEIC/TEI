@@ -25,7 +25,7 @@
     <constraint>
       <sch:rule context="tei:moduleRef">
         <sch:report test="* and @key">
-          Child elements of <sch:name/> are only allowed when an external module is being loaded
+          Child elements of &lt;<sch:name/>> are only allowed when an external module is being loaded.
         </sch:report>
       </sch:rule>
     </constraint>
@@ -37,16 +37,17 @@
       <constraintSpec scheme="schematron" ident="not-same-prefix" xml:lang="en">
         <constraint>
           <sch:rule context="tei:moduleRef">
-            <sch:report test="//*[ not( generate-id(.) eq generate-id( current() ) ) ]/@prefix = @prefix">The prefix attribute
-            of <sch:name/> should not match that of any other
-            element (it would defeat the purpose)</sch:report>
+            <sch:report test="//*[ not( generate-id(.) eq generate-id( current() ) ) ]/@prefix = @prefix">
+              The @prefix attribute of &lt;<sch:name/>> should not
+              match that of any other element (it would defeat the
+              purpose).</sch:report>
           </sch:rule>
         </constraint>
       </constraintSpec>
       <constraintSpec scheme="schematron" ident="not-except-and-include" xml:lang="en">
         <constraint>
           <sch:rule context="tei:moduleRef">
-            <sch:report test="@except and @include">It is an error to supply both the @include and @except attributes</sch:report>
+            <sch:report test="@except and @include">It is an error to supply both the @include and @except attributes.</sch:report>
           </sch:rule>
         </constraint>
       </constraintSpec>
