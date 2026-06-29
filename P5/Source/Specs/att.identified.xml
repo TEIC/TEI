@@ -32,11 +32,7 @@
       this useful test.
     -->
     <constraint>
-      <sch:rule context="( tei:elementSpec[@module] | tei:classSpec[@module] | tei:macroSpec[@module] )[
-                           ( ancestor::tei:schemaSpec | ancestor::tei:TEI | ancestor::tei:teiCorpus )
-                           and
-                           ( //tei:moduleSpec | //tei:moduleRef )
-                           ]">
+      <sch:rule context="( tei:elementSpec[@module] | tei:classSpec[@module] | tei:macroSpec[@module] )[                            ( ancestor::tei:schemaSpec | ancestor::tei:TEI | ancestor::tei:teiCorpus )                            and                            ( //tei:moduleSpec | //tei:moduleRef )                            ]">
         <sch:assert test="( //tei:moduleSpec/@ident | //tei:moduleRef/@key ) = @module">
           Specification <sch:value-of select="@ident"/>: the value of the module attribute
           ("<sch:value-of select="@module"/>") should correspond to an existing module, via
