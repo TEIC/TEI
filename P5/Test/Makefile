@@ -107,7 +107,7 @@ detest: checkrnv
 	@echo "--------- P5/Test/Makefile work on target $@ ---------"
 	@echo BUILD: Test file with deliberate mistakes
 	@echo "--- run ant to validate ODD file (./detest.odd) against p5odds.rng & p5odds.isosch:"
-	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd validateodd > detest_odd_schematron.log 2>&1
+	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd validateodd > detest_odd_schematron.run 2>&1
 #	If a RELAX NG error is found by the above cmd, it dies, and this (the "detest") target fails.
 #	Any Schematron errors that are found are written to detest_odd_schematron.svrl, which we now
 #	convert to detest_odd_schematron.log
@@ -141,6 +141,6 @@ clean:
 	rm -f test*.doc.xml test*.rnc test*.dtd test*.compiled.* test*.xsd test*.rnc test*.rng test*.xsl test*.isosch
 	rm -rf LOG *~ *.xsd Schema RomaResults DTD
 	rm -rf *.doc.*
-	rm -f detest.log detest.log.all
+	rm -f detest.isosch detest.odd.processed detest.rn[cg] detest.svrl detest.xsl
+	rm -f detest_*
 	rm -f *-examples.rng *-examples.rnc *test*.nvdl *-ex.odd
-	rm -f detest.rnc    detest.rng   detest.dtd   detest.isosch
