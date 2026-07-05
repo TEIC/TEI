@@ -24,7 +24,7 @@
   -->
   
   <xsl:variable name="myName" select="tokenize( static-base-uri(), '/')[last()]"/>
-  <xsl:variable name="version" select="'1.10.0'"/>
+  <xsl:variable name="version" select="'1.11.0'"/>
   <xsl:param name="versionDate" select="format-date(current-date(),'[Y]-[M01]-[D01]')"/>
 
   <!--
@@ -68,6 +68,12 @@
 
   <xsl:variable name="revisionDesc">
     <revisionDesc>
+      <change who="#sbauman.emt" when="2026-06-23">
+        Change the content models of the grouping elements
+        (<gi>alternate</gi>, <gi>interleave</gi>, and
+        <gi>sequence</gi>) so they require two children, as P5 no
+        longer does.
+      </change>
       <change who="#sbauman.emt" when="2024-09-20">
         Add capability for new <gi>constraintDecl</gi> element:
         * Require <att>scheme</att>
@@ -685,7 +691,7 @@
             customization.</p>
             <p>We call this TEI language the <name>TEI ODD Customization for writing TEI ODD
                 Customizations</name> language (or TOCTOC for short).
-              It is instantited in the TEI exemplar <name type="file">tei_customization</name>,
+              It is instantiated in the TEI exemplar <name type="file">tei_customization</name>,
               which differs from <name
                   type="file">tei_odds</name><note>Available in <ref
                     target="https://raw.githubusercontent.com/TEIC/TEI/dev/P5/Exemplars/tei_odds.odd"
@@ -694,17 +700,21 @@
               <list>
                 <item>constraining the elements available (e.g., <gi>gap</gi> and
                     <gi>imprimatur</gi> are not available)</item>
+                <item>altering the content model of some elements (in
+                    particular, the <gi>alternate</gi>, <gi>interleave</gi>, and
+                    <gi>sequence</gi> elements are required to have two
+                    children each)</item>
                 <item>requiring some otherwise optional attributes (e.g., <att>mode</att> of
                     <gi>classes</gi>, or <att>module</att> on <gi>elementSpec</gi> unless the
                     <att>mode</att> is specified as <val>add</val>)</item>
                 <item>limiting the content of <gi>constraint</gi> to ISO Schematron, and thus
-                  permitting validation of the Schematron therein</item>
+                    permitting validation of the Schematron therein</item>
                 <item>constraining the values of several attributes</item>
                 <item>requiring that the four required modules be imported</item>
                 <item>requiring that <gi>altIdent</gi> be an NCName (i.e., not have a prefix) unless
-                it is the child of <gi>valItem</gi> (or <gi>taxonomy</gi>)</item>
+                    it is the child of <gi>valItem</gi> (or <gi>taxonomy</gi>)</item>
                 <item>flagging <tag>*Spec</tag> elements that are neither in the <gi>schemaSpec</gi>
-                  nor referred to from a <gi>specGrpRef</gi> within it</item>
+                    nor referred to from a <gi>specGrpRef</gi> within it</item>
                 <item>warning if required elements (e.g., <gi>teiHeader</gi>) are deleted</item>
                 <item>using, and encouraging the use of, the
                 <att>prefix</att> attribute of
@@ -1256,6 +1266,89 @@
                 </content>
               </elementSpec>
 
+              <elementSpec module="tagdocs" ident="alternate" mode="change">
+                <content>
+                <!--
+                    What we would like to have is
+                      <interleave>
+                        <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>
+                        <alternate>
+                          <classRef key="model.contentPart" minOccurs="1" maxOccurs="1"/>
+                          <elementRef key="valList" minOccurs="0" maxOccurs="1">
+                        </alternate>
+                      </interleave>
+                    OR, equivalently,
+                    ( model.contentPart+ & ( model.contentPart | valList? ) )
+                    but
+                    a) that is not valid in RELAX NG, anyway (because
+                       model.contentPart is a member of an interleave
+                       more than once); and
+                    b) even if it were it probably could not be converted to DTD (or to XSD?)
+                       due to ambiguity.   
+    
+                    So the following mildly complex content model does the
+                    same thing without use of <interleave> and in an
+                    unambiguous way. (Thus it can be converted to a valid
+                    DTD.) Here is a briefly annotated version of the ODD
+                    content model that follows, expressed using the RELAX
+                    NG compact syntax instead:
+                    (
+                      ( valList, model.contentPart+ )        # starts with <valList>
+                      |                                      # (and is followed by %contentPart;s)
+                      (                                      # OR
+                        model.contentPart,                   # starts with %contentPart;
+                        (                                    #   which is followed by
+                          valList                            #     <valList>
+                          |                                  #     or
+                          ( model.contentPart+, valList? )   #     more %contentPart;s and maybe a <valList>
+                        )
+                      )
+                    )
+                -->
+                <alternate minOccurs="1" maxOccurs="1">
+                  <!--
+                      Two possible sets of children: my content either starts with
+                      <valList> or with a member of model.contentPart.
+                  -->
+                  <sequence minOccurs="1" maxOccurs="1">
+                    <!-- Content starts with <valList> is simple: a single
+                         <valList> followed by one or more members of
+                         model.contentPart: -->
+                    <elementRef key="valList" minOccurs="1" maxOccurs="1"/>
+                    <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>
+                  </sequence>
+                  <sequence minOccurs="1" maxOccurs="1">
+                    <!-- Content starts with a member of model.contentPart is not
+                         as simple: after the single initial member of
+                         model.contentPart we could either have just a <valList>
+                         (for a total of 2 children) or we could have an
+                         additional one or more members of model.contentPart,
+                         optionally followed by a <valList>. -->
+                    <classRef key="model.contentPart" minOccurs="1" maxOccurs="1"/>
+                    <alternate minOccurs="1" maxOccurs="1">
+                      <elementRef key="valList" minOccurs="1" maxOccurs="1"/>
+                      <sequence minOccurs="1" maxOccurs="1">
+                        <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>       
+                        <elementRef key="valList" minOccurs="0" maxOccurs="1"/>
+                      </sequence>
+                    </alternate>
+                  </sequence>
+                </alternate>
+                </content>
+              </elementSpec>
+
+              <elementSpec module="tagdocs" ident="interleave" mode="change">
+                <content>
+                  <classRef key="model.contentPart" minOccurs="2" maxOccurs="unbounded"/>
+                </content>
+              </elementSpec>
+              
+              <elementSpec module="tagdocs" ident="sequence" mode="change">
+                <content>
+                  <classRef key="model.contentPart" minOccurs="2" maxOccurs="unbounded"/>
+                </content>
+              </elementSpec>
+              
               <elementSpec module="tagdocs" ident="valList" mode="change">
                 <attList>
                   <attDef mode="change" ident="type" usage="req"/>
