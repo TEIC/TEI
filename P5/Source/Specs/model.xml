@@ -2,8 +2,7 @@
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xml:id="gi-model" ident="model" module="tagdocs">
-  <desc versionDate="2015-05-15" xml:lang="en">describes the processing intended for a specified
-    element.</desc>
+  <desc versionDate="2015-05-15" xml:lang="en">describes the processing intended for a specified element.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.predicate"/>
@@ -19,9 +18,7 @@
     </sequence>
   </content>
   <constraintSpec scheme="schematron" ident="no_dup_default_models" xml:lang="en">
-    <desc versionDate="2016-10-01" xml:lang="en">It is ambigous to have 2 <gi>model</gi>s
-      that have both the same <att>output</att> and have no <att>predicate</att>
-      (and thus select the same set of nodes).</desc>
+    <desc versionDate="2016-10-01" xml:lang="en">It is ambigous to have 2 <gi>model</gi>s that have both the same <att>output</att> and have no <att>predicate</att> (and thus select the same set of nodes).</desc>
     <!-- We cannot possibly check, in general, that two
          <att>predicate</att>s select the same set of nodes or not.
          But if two <att>predicate</att>s are equal (or two
@@ -31,9 +28,11 @@
       <sch:rule context="tei:model[ not( parent::tei:modelSequence ) ][ not( @predicate ) ]">
         <sch:let name="output" value="normalize-space( @output )"/>
         <sch:report test="following-sibling::tei:model [ not( @predicate )] [ normalize-space( @output ) eq $output ]">
-          There are 2 (or more) 'model' elements in this '<sch:value-of select="local-name(..)"/>'
-          that have no predicate, but are targeted to the same output
-          ("<sch:value-of select="( $output, parent::modelGrp/@output, 'all')[1]"/>")</sch:report>
+          There are 2 (or more) &lt;model&gt; elements in this
+          &lt;<sch:value-of select="local-name(..)"/>&gt; that have no
+          predicate, but are targeted to the same output
+          ("<sch:value-of select="( $output, parent::modelGrp/@output, 'all')[1]"/>").
+        </sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -46,25 +45,23 @@
         <sch:let name="predicate" value="normalize-space( @predicate )"/>
         <sch:let name="output" value="normalize-space( @output )"/>
         <sch:report test="following-sibling::tei:model [ normalize-space( @predicate ) eq $predicate ] [ normalize-space( @output ) eq $output ]">
-          There are 2 (or more) 'model' elements in this
-          '<sch:value-of select="local-name(..)"/>' that have
+          There are 2 (or more) &lt;model&gt; elements in this
+          &lt;<sch:value-of select="local-name(..)"/>&gt; that have
           the same predicate, and are targeted to the same output
-          ("<sch:value-of select="( $output, parent::modelGrp/@output, 'all')[1]"/>")</sch:report>
+          ("<sch:value-of select="( $output, parent::modelGrp/@output, 'all')[1]"/>").
+        </sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>
     <attDef ident="behaviour" usage="req">
-      <desc versionDate="2015-08-21" xml:lang="en">names the process or function which this
-        processing model uses in order to produce output.</desc>
+      <desc versionDate="2015-08-21" xml:lang="en">names the process or function which this processing model uses in order to produce output.</desc>
       <datatype>
         <dataRef key="teidata.enumerated"/>
       </datatype>
       <valList type="semi">
         <valItem ident="alternate">
-          <desc versionDate="2015-08-21" xml:lang="en">support display of alternative
-            visualisations, for example by displaying the preferred content, by displaying both in
-            parallel, or by toggling between the two.</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">support display of alternative visualisations, for example by displaying the preferred content, by displaying both in parallel, or by toggling between the two.</desc>
           <paramList>
             <paramSpec ident="default">
               <desc versionDate="2015-08-21" xml:lang="en">supplies the preferred content</desc>
@@ -75,12 +72,10 @@
           </paramList>
         </valItem>
         <valItem ident="anchor">
-          <desc versionDate="2015-08-21" xml:lang="en">create an identifiable anchor point in the
-            output.</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">create an identifiable anchor point in the output.</desc>
           <paramList>
             <paramSpec ident="id">
-              <desc versionDate="2016-01-22" xml:lang="en">supplies an identifier for the anchor
-                point</desc>
+              <desc versionDate="2016-01-22" xml:lang="en">supplies an identifier for the anchor point</desc>
             </paramSpec>
           </paramList>
           <!-- why wouldnt this be xml:id ? -->
@@ -100,8 +95,7 @@
           </paramList>
         </valItem>
         <valItem ident="break">
-          <desc versionDate="2015-08-21" xml:lang="en">create a line, column, or page break
-            according to the value of <ident>type</ident></desc>
+          <desc versionDate="2015-08-21" xml:lang="en">create a line, column, or page break according to the value of <ident>type</ident></desc>
           <paramList>
             <paramSpec ident="type"/>
             <paramSpec ident="label"/>
@@ -144,8 +138,7 @@
           </paramList>
         </valItem>
         <valItem ident="graphic">
-          <desc versionDate="2015-08-21" xml:lang="en">if <ident>url</ident> is present, uses it to
-            display graphic, else display a placeholder image.</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">if <ident>url</ident> is present, uses it to display graphic, else display a placeholder image.</desc>
           <equiv name="img"/>
           <paramList>
             <paramSpec ident="url">
@@ -161,8 +154,7 @@
               <desc versionDate="2015-08-21" xml:lang="en">scaling for image</desc>
             </paramSpec>
             <paramSpec ident="title">
-              <desc versionDate="2015-08-21" xml:lang="en">title of figure (usually not displayed
-                directly)</desc>
+              <desc versionDate="2015-08-21" xml:lang="en">title of figure (usually not displayed directly)</desc>
             </paramSpec>
           </paramList>
         </valItem>
@@ -175,17 +167,15 @@
           </paramList>
         </valItem>
         <valItem ident="index">
-          <desc versionDate="2015-08-21" xml:lang="en">generate list according to
-              <ident>type</ident>.</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">generate list according to <ident>type</ident>.</desc>
           <paramList>
             <paramSpec ident="type"/>
           </paramList>
         </valItem>
         <valItem ident="inline">
-          <desc versionDate="2015-08-21" xml:lang="en">creates inline element out of
-              <ident>content</ident>
-            <!--if there's something in <gi>outputRendition</gi>, use that
-            formatting otherwise just show text of selected content.--></desc>
+          <desc versionDate="2015-08-21" xml:lang="en">creates inline element out of <ident>content</ident></desc>
+          <!--if there's something in <gi>outputRendition</gi>, use that
+              formatting otherwise just show text of selected content.-->
           <equiv name="span"/>
           <paramList>
             <paramSpec ident="content"/>
@@ -228,8 +218,7 @@
           </paramList>
         </valItem>
         <valItem ident="note">
-          <desc versionDate="2015-08-21" xml:lang="en">create a note, often out of line, depending
-            on the value of <ident>place</ident>; could be margin, footnote, endnote, inline</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">create a note, often out of line, depending on the value of <ident>place</ident>; could be margin, footnote, endnote, inline</desc>
           <paramList>
             <paramSpec ident="content"/>
             <paramSpec ident="place"/>
@@ -240,8 +229,7 @@
           <desc versionDate="2015-08-21" xml:lang="en">do nothing, do not process children</desc>
         </valItem>
         <valItem ident="paragraph">
-          <desc versionDate="2015-08-21" xml:lang="en">create a paragraph out of
-              <ident>content</ident>.</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">create a paragraph out of <ident>content</ident>.</desc>
           <equiv name="p"/>
           <paramList>
             <paramSpec ident="content"/>
@@ -256,8 +244,7 @@
           </paramList>
         </valItem>
         <valItem ident="section">
-          <desc versionDate="2015-08-21" xml:lang="en">create a new section of the output
-            document</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">create a new section of the output document</desc>
           <paramList>
             <paramSpec ident="content"/>
           </paramList>
@@ -285,12 +272,11 @@
       </valList>
     </attDef>
     <attDef ident="useSourceRendition" usage="opt">
-      <desc versionDate="2015-08-21" xml:lang="en">whether to obey any rendition attribute that is
-        present.</desc>
+      <desc versionDate="2015-08-21" xml:lang="en">whether to obey any rendition attribute that is present.</desc>
       <datatype>
         <dataRef key="teidata.truthValue"/>
       </datatype>
-      <remarks versionDate="2016-02-23" xml:lang="en">
+      <remarks ident="model-attr.useSourceRendition-remarks" versionDate="2016-02-23" xml:lang="en">
         <p>If the <att>useSourceRendition</att> attribute is not specified, or has the value
             <val>false</val>, any renditional information specified in the source document should be
           ignored. </p>
@@ -303,26 +289,21 @@
       </datatype>
       <valList type="open">
         <valItem ident="web">
-          <desc versionDate="2015-08-21" xml:lang="en">the output is intended for presentation in a
-            web format</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">the output is intended for presentation in a web format</desc>
         </valItem>
         <valItem ident="print">
-          <desc versionDate="2015-08-21" xml:lang="en">the output is intended for presentation in a
-            print format</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">the output is intended for presentation in a print format</desc>
         </valItem>
         <valItem ident="plain">
-          <desc versionDate="2015-08-21" xml:lang="en">the output is intended for presentation in a
-            plain text format</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">the output is intended for presentation in a plain text format</desc>
         </valItem>
       </valList>
-      <remarks versionDate="2016-02-23" xml:lang="en">
-        <p>If the <att>output</att> attribute is not specified, this model is assumed to apply for
-          all forms of output. </p>
+      <remarks ident="model-attr.output-remarks" versionDate="2016-02-23" xml:lang="en">
+        <p>If the <att>output</att> attribute is not specified, this model is assumed to apply for all forms of output.</p>
       </remarks>
     </attDef>
     <attDef ident="cssClass" usage="opt">
-      <desc versionDate="2015-08-21" xml:lang="en">the name of a CSS class which should be
-        associated with this element</desc>
+      <desc versionDate="2015-08-21" xml:lang="en">the name of a CSS class which should be associated with this element</desc>
       <datatype maxOccurs="unbounded">
         <dataRef key="teidata.name"/>
       </datatype>
@@ -337,12 +318,10 @@
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-model-egXML-hb">
       <elementSpec mode="change" ident="quote">
         <model predicate="ancestor::p" behaviour="inline">
-          <desc versionDate="2015-08-21" xml:lang="en">If it's inside a paragraph then it's
-            inline</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">If it's inside a paragraph then it's inline</desc>
         </model>
         <model predicate="not(ancestor::p)" behaviour="block">
-          <desc versionDate="2015-08-21" xml:lang="en">If it's not inside a paragraph then it is
-            block level</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">If it's not inside a paragraph then it is block level</desc>
         </model>
       </elementSpec>
     </egXML>
@@ -350,8 +329,7 @@
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-model-egXML-qy">
       <model predicate="parent::person" behaviour="inline">
-        <desc versionDate="2015-08-21" xml:lang="en">If it is a child of a person element, treat as
-          inline</desc>
+        <desc versionDate="2015-08-21" xml:lang="en">If it is a child of a person element, treat as inline</desc>
       </model>
     </egXML>
   </exemplum>
@@ -410,7 +388,7 @@
       </elementSpec>
     </egXML>
   </exemplum>
-  <remarks versionDate="2015-08-21" xml:lang="en">
+  <remarks ident="model-remarks" versionDate="2015-08-21" xml:lang="en">
     <p>The intended output to be generated for a particular behaviour of a processing model may be
       documented in one or all of the three following ways. Firstly, the <att>cssClass</att>
       attribute may be used to specify the name of a CSS style in some associated CSS stylesheet

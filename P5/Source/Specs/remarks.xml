@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="gi-remarks" ident="remarks">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" xml:id="gi-remarks" ident="remarks">
   <gloss versionDate="2007-06-12" xml:lang="en">remarks</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">remarques</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains any commentary or discussion about the usage of an element, attribute, class, or entity not otherwise documented within the containing element.</desc>
@@ -19,10 +19,27 @@
   <content>
     <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
   </content>
+  <constraintSpec scheme="schematron" ident="deprecate-identless-remarks" xml:lang="en" validUntil="2027-06-01">
+    <desc type="deprecationInfo">In order to properly allow
+    customization of remarks, a &lt;remarks> element must be
+    identifiable; thus it needs to have an @ident attribute.</desc>
+    <constraint>
+      <sch:rule context="tei:remarks">
+        <sch:assert test="@ident" role="warning">
+          The @ident attribute will be required on &lt;remarks> after 2027-06-01.
+        </sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="ident" usage="opt">
       <desc versionDate="2025-02-11" xml:lang="en">supplies the identifier by which the remarks may be referenced.</desc>
       <datatype><dataRef key="teidata.name"/></datatype>
+      <remarks ident="gi-remarks-attr.ident-remarks" xml:lang="en" versionDate="2026-06-29">
+        <!-- "deprecationInfo": -->
+        <p>This attribute will become required (rather than optional)
+        after 2027-06-01.</p>
+      </remarks>
     </attDef>
   </attList>
   <exemplum xml:lang="en">

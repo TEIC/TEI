@@ -25,7 +25,7 @@
     <constraint>
       <sch:rule context="tei:moduleRef">
         <sch:report test="* and @key">
-          Child elements of <sch:name/> are only allowed when an external module is being loaded
+          Child elements of &lt;<sch:name/>&gt; are only allowed when an external module is being loaded.
         </sch:report>
       </sch:rule>
     </constraint>
@@ -37,20 +37,21 @@
       <constraintSpec scheme="schematron" ident="not-same-prefix" xml:lang="en">
         <constraint>
           <sch:rule context="tei:moduleRef">
-            <sch:report test="//*[ not( generate-id(.) eq generate-id( current() ) ) ]/@prefix = @prefix">The prefix attribute
-            of <sch:name/> should not match that of any other
-            element (it would defeat the purpose)</sch:report>
+            <sch:report test="//*[ not( generate-id(.) eq generate-id( current() ) ) ]/@prefix = @prefix">
+              The @prefix attribute of &lt;<sch:name/>&gt; should not
+              match that of any other element (it would defeat the
+              purpose).</sch:report>
           </sch:rule>
         </constraint>
       </constraintSpec>
       <constraintSpec scheme="schematron" ident="not-except-and-include" xml:lang="en">
         <constraint>
           <sch:rule context="tei:moduleRef">
-            <sch:report test="@except and @include">It is an error to supply both the @include and @except attributes</sch:report>
+            <sch:report test="@except and @include">It is an error to supply both the @include and @except attributes.</sch:report>
           </sch:rule>
         </constraint>
       </constraintSpec>
-      <remarks versionDate="2011-09-21" xml:lang="en">
+      <remarks ident="moduleRef-attr.prefix-remarks" versionDate="2011-09-21" xml:lang="en">
         <p>Use of this attribute avoids name collisions (and
         thus invalid schemas) when the external schema being
         mixed in with TEI uses a name the TEI or some other
@@ -121,7 +122,7 @@ specified module into the schema being defined.</desc>
       <moduleRef key="linking"/>
     </egXML>
   </exemplum>
-  <remarks versionDate="2010-05-09" xml:lang="en">
+  <remarks ident="moduleRef-remarks" versionDate="2010-05-09" xml:lang="en">
     <p>If neither <att>include</att> nor <att>except</att> is
     supplied, the effect of this element is to make all the declarations
     contained by the referenced module available to the schema being
@@ -138,7 +139,7 @@ processor should signal an error. </p>
     along with the content of the resource indicated by the  <att>url</att> attribute into the 
       target RELAX NG schema. </p>
   </remarks>
-  <remarks versionDate="2007-06-12" xml:lang="fr">
+  <remarks ident="moduleRef-remarks" versionDate="2007-06-12" xml:lang="fr">
     <p>Les modules sont identifiés par le nom fourni comme valeur de l'attribut
                 <att>ident</att> dans l'élément <gi>moduleSpec</gi> où ils sont déclarés. Un URI
                 peut aussi être indiqué dans le cas d'un module non TEI et l'on s'attend à ce qu'il
@@ -146,7 +147,7 @@ processor should signal an error. </p>
     <p>La fonction de cet élément est de rendre toutes les déclarations contenues par le module
                 référencé disponibles pour le schéma que l'on compile.</p>
   </remarks>
-  <remarks versionDate="2008-04-05" xml:lang="ja">
+  <remarks ident="moduleRef-remarks" versionDate="2008-04-05" xml:lang="ja">
     <p>
     モジュールは、要素<gi>module</gi>の属性<att>ident</att>の値として
   ある名前で指定される。TEIでないモジュールの場合は、URIはで示される。
