@@ -50,7 +50,7 @@
           </attList>
         </elementSpec>
         
-        <constraintSpec scheme="schematron" ident="when_glosses_English_required">
+        <constraintSpec scheme="schematron" ident="when_glosses_English_required" xml:lang="en">
           <desc>Per <ref
           target="https://github.com/TEIC/TEI/issues/2037">ticket
           237</ref>, Council has decided that every specification
@@ -173,7 +173,7 @@
           </content>
         </elementSpec>
         <elementSpec ident="eg" mode="change" module="tagdocs">
-          <constraintSpec ident="no_leading_nor_trailing_new_newlines" scheme="schematron">
+          <constraintSpec ident="no_leading_nor_trailing_new_newlines" scheme="schematron" xml:lang="en">
             <desc xml:lang="en" versionDate="2020-12-18">
               In order to prevent inconsistent <soCalled>sizes</soCalled> of the box
               that holds the example in the HTML output, and even moreso to avoid
@@ -477,7 +477,7 @@
         </elementSpec>
 
         <classSpec ident="att.translatable" mode="change" type="atts">
-          <constraintSpec mode="add"
+          <constraintSpec mode="add" xml:lang="en"
                           ident="require-translatability"
                           scheme="schematron">
             <constraint>
@@ -506,7 +506,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec mode="add" ident="en-first" scheme="schematron">
+          <constraintSpec mode="add" ident="en-first" scheme="schematron" xml:lang="en">
             <desc xml:lang="en" versionDate="2022-05-13">Per ticket
               <ref target="https://github.com/TEIC/TEI/issues/2279">2279</ref>,
               require that the English translatable element goes
@@ -538,7 +538,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec mode="add" ident="only-one-each-lang" scheme="schematron">
+          <constraintSpec mode="add" ident="only-one-each-lang" scheme="schematron" xml:lang="en">
             <desc xml:lang="en" versionDate="2022-05-13">Per ticket <ref target="https://github.com/TEIC/TEI/issues/2279">2279</ref>, require that there be only one
               of any given att.translatable element sibling for any given language. Note that
               we would prefer to be able to say <said>a member of att.translatable</said>, but
@@ -574,7 +574,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="all-sibling-parent-desc" scheme="schematron">
+          <constraintSpec ident="all-sibling-parent-desc" scheme="schematron" xml:lang="en">
             <constraint>
               <sch:rule context="*[tei:desc[@versionDate]]">
                 <sch:report role="nonfatal" test="count( tei:desc )
@@ -586,7 +586,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="all-sibling-parent-gloss" scheme="schematron">
+          <constraintSpec ident="all-sibling-parent-gloss" scheme="schematron" xml:lang="en">
             <constraint>
               <sch:rule context="*[tei:gloss[@versionDate]]">
                 <sch:report role="nonfatal" test="count( tei:gloss )
@@ -598,7 +598,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="all-sibling-parent-remarks" scheme="schematron">
+          <constraintSpec ident="all-sibling-parent-remarks" scheme="schematron" xml:lang="en">
             <constraint>
               <sch:rule context="*[tei:remarks[@versionDate]]">
                 <sch:report role="nonfatal" test="count( tei:remarks )
@@ -610,7 +610,7 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="all-sibling-parent-valDesc" scheme="schematron">
+          <constraintSpec ident="all-sibling-parent-valDesc" scheme="schematron" xml:lang="en">
             <constraint>
               <sch:rule context="*[tei:valDesc[@versionDate]]">
                 <sch:report role="nonfatal" test="
@@ -696,9 +696,14 @@
             Stylesheets cannot generate a DTD from that
             ODD. Furthermore, it would be very difficult to impossible
             to alter the Stylesheets do so. Thus although vanilla P5
-            alows for <interleave> to occur inside <alternation>,
+            allows for <interleave> to occur inside <alternation>,
             <content>, or <sequence>, we are not allowing ourselves to
             use it within P5 at all.
+            HOWEVER, we cannot actually delete the entire element here
+            because (I think) of the way examples are validated during
+            our build process. They (the content of the <egXML>
+            elements) are (incorrectly, IMHO) validated against
+            p5odds, not against tei_all.
         -->
         <elementSpec module="tagdocs" ident="interleave" mode="change">
           <classes>
@@ -706,8 +711,85 @@
           </classes>
         </elementSpec>
 
+        <elementSpec module="tagdocs" ident="alternate" mode="change">
+          <content>
+            <!--
+                What we would like to have is
+                  <interleave>
+                    <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>
+                    <alternate>
+                      <classRef key="model.contentPart" minOccurs="1" maxOccurs="1"/>
+                      <elementRef key="valList" minOccurs="0" maxOccurs="1">
+                    </alternate>
+                  </interleave>
+                OR, equivalently,
+                ( model.contentPart+ & ( model.contentPart | valList? ) )
+                but
+                a) that is not valid in RELAX NG, anyway (because
+                   model.contentPart is a member of an interleave
+                   more than once); and
+                b) even if it were it probably could not be converted to DTD (or to XSD?)
+                   due to ambiguity.   
+
+                So the following mildly complex content model does the
+                same thing without use of <interleave> and in an
+                unambiguous way. (Thus it can be converted to a valid
+                DTD.) Here is a briefly annotated version of the ODD
+                content model that follows, expressed using the RELAX
+                NG compact syntax instead:
+                (
+                  ( valList, model.contentPart+ )        # starts with <valList>
+                  |                                      # (and is followed by %contentPart;s)
+                  (                                      # OR
+                    model.contentPart,                   # starts with %contentPart;
+                    (                                    #   which is followed by
+                      valList                            #     <valList>
+                      |                                  #     or
+                      ( model.contentPart+, valList? )   #     more %contentPart;s and maybe a <valList>
+                    )
+                  )
+                )
+            -->
+            <alternate minOccurs="1" maxOccurs="1">
+              <!--
+                  Two possible sets of children: my content either starts with
+                  <valList> or with a member of model.contentPart.
+              -->
+              <sequence minOccurs="1" maxOccurs="1">
+                <!-- Content starts with <valList> is simple: a single
+                     <valList> followed by one or more members of
+                     model.contentPart: -->
+                <elementRef key="valList" minOccurs="1" maxOccurs="1"/>
+                <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>
+              </sequence>
+              <sequence minOccurs="1" maxOccurs="1">
+                <!-- Content starts with a member of model.contentPart is not
+                     as simple: after the single initial member of
+                     model.contentPart we could either have just a <valList>
+                     (for a total of 2 children) or we could have an
+                     additional one or more members of model.contentPart,
+                     optionally followed by a <valList>. -->
+                <classRef key="model.contentPart" minOccurs="1" maxOccurs="1"/>
+                <alternate minOccurs="1" maxOccurs="1">
+                  <elementRef key="valList" minOccurs="1" maxOccurs="1"/>
+                  <sequence minOccurs="1" maxOccurs="1">
+                    <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>       
+                    <elementRef key="valList" minOccurs="0" maxOccurs="1"/>
+                  </sequence>
+                </alternate>
+              </sequence>
+            </alternate>
+          </content>
+        </elementSpec>
+        
+        <elementSpec module="tagdocs" ident="sequence" mode="change">
+          <content>
+            <classRef key="model.contentPart" minOccurs="2" maxOccurs="unbounded"/>
+          </content>
+        </elementSpec>
+        
         <elementSpec ident="classes" mode="change" module="tagdocs">
-          <constraintSpec mode="add" scheme="schematron" ident="order_of_membership">
+          <constraintSpec mode="add" scheme="schematron" ident="order_of_membership" xml:lang="en">
             <desc>Added per <ref target="https://github.com/TEIC/TEI/issues/2463">#2463</ref>.</desc>
             <constraint>
               <sch:rule context="tei:classes">
@@ -758,7 +840,7 @@
         </macroSpec>
 
         <elementSpec mode="change" ident="TEI">
-          <constraintSpec ident="must-have-attglobal" scheme="schematron" mode="add">
+          <constraintSpec ident="must-have-attglobal" scheme="schematron" mode="add" xml:lang="en">
             <constraint>
               <sch:rule context="tei:elementSpec[not(@mode)]">
                 <sch:assert test="tei:classes/tei:memberOf[@key='att.global']">Error: TEI element <sch:value-of select="@ident"/> must be member of att.global class</sch:assert>
@@ -768,7 +850,7 @@
         </elementSpec>
 
         <elementSpec ident="remarks" mode="change">          
-          <constraintSpec ident="only-one-remark-per-lang" scheme="schematron" mode="add">
+          <constraintSpec ident="only-one-remark-per-lang" scheme="schematron" mode="add" xml:lang="en">
             <constraint>
               <sch:rule context="tei:remarks[@xml:lang]">
                 <sch:let name="langVal" value="@xml:lang"/>
@@ -784,7 +866,7 @@
 
         <!-- Per TEI ticket #2285, restrict where <altIdent> can go in GLs. -->
         <elementSpec ident="altIdent" module="tagdocs" mode="change">
-          <constraintSpec scheme="schematron" ident="restricted-altIdent-placement">
+          <constraintSpec scheme="schematron" ident="restricted-altIdent-placement" xml:lang="en">
             <constraint>
               <sch:rule context="tei:altIdent">
                 <sch:assert test="parent::tei:elementSpec|parent::tei:attDef|parent::tei:valItem">The &lt;altIdent> element should only be used as a child of &lt;elementSpec>, &lt;attDef>, or &lt;valItem>.</sch:assert>
@@ -794,7 +876,7 @@
         </elementSpec>
         
         <dataSpec ident="teidata.temporal.working" mode="change">
-          <constraintSpec ident="not_in_future" scheme="schematron">
+          <constraintSpec ident="not_in_future" scheme="schematron" xml:lang="en">
             <desc>When a <att>versionDate</att> is specified, its value
             should not be in the future.</desc>
             <!-- Note that this constraint is fired on the specific *attributes* that
