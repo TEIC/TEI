@@ -41,16 +41,13 @@
     <constraint>
       <sch:ns prefix="teix" uri="http://www.tei-c.org/ns/Examples"/>
       <sch:rule context="tei:attDef">
-        <sch:assert test="ancestor::teix:egXML[ @valid eq 'feasible']
-                       or @mode eq 'change'
-                       or @mode eq 'delete'
-                       or tei:datatype
-                       or tei:valList[ @type eq 'closed']">
+        <sch:assert test="ancestor::teix:egXML[ @valid eq 'feasible']                        or @mode eq 'change'                        or @mode eq 'delete'                        or tei:datatype                        or tei:valList[ @type eq 'closed']">
           Attribute: the definition of the @<sch:value-of select="@ident"/> attribute in the
-          <sch:value-of select="ancestor::*[@ident][1]/@ident"/>
-          <sch:value-of select="'&#x20;'"/>
-          <sch:value-of select="local-name(ancestor::*[@ident][1])"/> should
-          have a closed valList or a datatype
+          "<sch:value-of select="ancestor::*[@ident][1]/@ident"/>"
+          <sch:value-of select="' &lt;'"/>
+          <sch:value-of select="local-name(ancestor::*[@ident][1])"/>&gt;
+          should have a child &lt;valList&gt; with a @type of "closed" or
+          a child &lt;datatype&gt;.
         </sch:assert>
       </sch:rule>
     </constraint>

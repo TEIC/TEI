@@ -874,7 +874,7 @@ to mark any technical term, thus:
           <constraintSpec ident="ref-or-key-or-name" scheme="schematron">
             <constraint>
               <sch:rule context="tei:relation">
-                <sch:assert test="@ref or @key or @name">One of the attributes @name, @ref, or @key must be supplied</sch:assert>
+                <sch:assert test="@ref or @key or @name">One of the attributes @name, @ref, or @key must be supplied.</sch:assert>
               </sch:rule>
             </constraint>
           </constraintSpec>
@@ -882,7 +882,7 @@ to mark any technical term, thus:
           <constraintSpec ident="active-mutual" scheme="schematron">
             <constraint>
               <sch:rule context="tei:relation">
-                <sch:report test="@active and @mutual">Only one of the attributes @active and @mutual may be supplied</sch:report>
+                <sch:report test="@active and @mutual">Only one of the attributes @active and @mutual may be supplied.</sch:report>
               </sch:rule>
             </constraint>
           </constraintSpec>
@@ -890,7 +890,7 @@ to mark any technical term, thus:
           <constraintSpec ident="active-passive" scheme="schematron">
             <constraint>
               <sch:rule context="tei:relation">
-                <sch:report test="@passive and not(@active)">the attribute @passive may be supplied only if the attribute @active is supplied</sch:report>
+                <sch:report test="@passive and not(@active)">the attribute @passive may be supplied only if the attribute @active is supplied.</sch:report>
               </sch:rule>
             </constraint>
           </constraintSpec>
@@ -906,13 +906,13 @@ to mark any technical term, thus:
       whose <att>scheme</att> matches that of the
       <gi>constraintDecl</gi>.
         <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#NONE">
-	  <constraintDecl scheme="schematron" queryBinding="xslt3">
-	    <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
-	    <sch:ns prefix="xi" uri="http://www.w3.org/2001/XInclude"/>
-	    <sch:let name="edition" value="substring-before( /*/tei:teiHeader//tei:editionStmt/tei:edition/@n, '.')"/>
-	    <sch:let name="uses_old_encoding" value="$edition cast as xs:integer lt 3"/>
-      	  </constraintDecl>
-	</egXML>
+          <constraintDecl scheme="schematron" queryBinding="xslt3">
+            <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
+            <sch:ns prefix="xi" uri="http://www.w3.org/2001/XInclude"/>
+            <sch:let name="edition" value="substring-before( /*/tei:teiHeader//tei:editionStmt/tei:edition/@n, '.')"/>
+            <sch:let name="uses_old_encoding" value="$edition cast as xs:integer lt 3"/>
+          </constraintDecl>
+        </egXML>
       In this example the Schematron query language binding is set (to
       <val>xslt3</val>) for use by a Schematron processor, two
       namespace prefixes are bound to namespace URIs for later use within
@@ -939,8 +939,8 @@ to mark any technical term, thus:
           <constraintSpec ident="subclauses" scheme="schematron">
             <constraint>
               <sch:rule context="tei:div">
-                <sch:report test="count( tei:div | xi:include[ contains( @href, 'sect') ] ) eq 1">if it contains any
-		subdivisions, a division must contain at least two of them</sch:report>
+                <sch:report test="count( tei:div | xi:include[ contains( @href, 'sect') ] ) eq 1">If it contains any
+                subdivisions, a division must contain at least two of them.</sch:report>
               </sch:rule>
             </constraint>
           </constraintSpec>
@@ -953,17 +953,23 @@ to mark any technical term, thus:
           <constraintSpec ident="introtitle" scheme="schematron">
             <constraint>
               <sch:rule context="tei:teiHeader">
-                <sch:assert test="tei:fileDesc/tei:titleStmt/tei:title[@type='introductory']"> an introductory component of the title is expected</sch:assert>
+                <sch:assert test="tei:fileDesc/tei:titleStmt/tei:title[@type='introductory']">
+                  An introductory component of the title is expected.
+                </sch:assert>
               </sch:rule>
             </constraint>
           </constraintSpec>
           <constraintSpec ident="maintitle" scheme="schematron">
             <constraint>
               <sch:rule context="tei:teiHeader[ $uses_old_encoding ]">
-                <sch:assert test="tei:fileDesc/tei:titleStmt/tei:title[@type eq 'main']"> a main title must be supplied</sch:assert>
+                <sch:assert test="tei:fileDesc/tei:titleStmt/tei:title[@type eq 'main']">
+                  A main title must be supplied.
+                </sch:assert>
               </sch:rule>
               <sch:rule context="tei:teiHeader[ not( $uses_old_encoding ) ]">
-                <sch:assert test="tei:fileDesc/tei:titleStmt/tei:title[ not( @type eq 'sub' ) ]"> a main title must be supplied</sch:assert>
+                <sch:assert test="tei:fileDesc/tei:titleStmt/tei:title[ not( @type eq 'sub' ) ]">
+                  A main title must be supplied.
+                </sch:assert>
               </sch:rule>
             </constraint>
           </constraintSpec>
@@ -978,8 +984,10 @@ to mark any technical term, thus:
             <constraint>
               <sch:pattern id="altTags">
                 <sch:rule context="tei:figure">
-                  <sch:assert test="tei:figDesc or tei:head"> You should provide information in a figure from
-                    which we can construct an alt attribute in HTML </sch:assert>
+                  <sch:assert test="tei:figDesc or tei:head">
+                    You should provide information in a &lt;figure> from
+                    which we can construct an @alt attribute in HTML.
+                  </sch:assert>
                 </sch:rule>
               </sch:pattern>
             </constraint>
@@ -992,8 +1000,8 @@ to mark any technical term, thus:
             <constraint>
               <sch:pattern id="Tables">
                 <sch:rule context="tei:table">
-                  <sch:assert test="tei:head">A &lt;table&gt; should have a caption, using a &lt;head&gt; element</sch:assert>
-		  <sch:report test="parent::tei:body">Do not use tables to lay out the document body</sch:report>
+                  <sch:assert test="tei:head">A &lt;table&gt; should have a caption, using a &lt;head&gt; element.</sch:assert>
+                  <sch:report test="parent::tei:body">Do not use tables to lay out the document body.</sch:report>
                 </sch:rule>
               </sch:pattern>
             </constraint>
@@ -1147,7 +1155,7 @@ to mark any technical term, thus:
               <constraintSpec ident="lessThan150" scheme="schematron">
                 <constraint>
                   <sch:rule context="@ageAtDeath">
-                    <sch:assert test=". le 150">age at death must be an integer less than 150</sch:assert>
+                    <sch:assert test=". le 150">Age at death must be an integer less than 150.</sch:assert>
                   </sch:rule>
                 </constraint>
               </constraintSpec>
