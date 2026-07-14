@@ -52,9 +52,9 @@
     <constraint>
       <sch:rule context="tei:constraintSpec">
         <sch:report test="tei:constraint/sch1x:* and @scheme = ('isoschematron','schematron')">Rules
-        in the Schematron 1.* language must be inside a constraintSpec
-        with a value other than 'schematron' or 'isoschematron' on the
-        scheme attribute</sch:report>
+        in the Schematron 1.* language must be inside a &lt;constraintSpec&gt;
+        with a value other than "schematron" or "isoschematron" on the
+        @scheme attribute.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -63,8 +63,8 @@
     <constraint>
       <sch:rule context="tei:constraintSpec[ @mode = ('add','replace') or not( @mode ) ]">
         <sch:report test="tei:constraint/sch:* and not( @scheme eq 'schematron')">Rules
-          in the ISO Schematron language must be inside a constraintSpec
-          with the value 'schematron' on the scheme attribute</sch:report>
+          in the ISO Schematron language must be inside a &lt;constraintSpec&gt;
+          with the value "schematron" on the @scheme attribute.</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -92,7 +92,9 @@
       <sch:rule context="tei:constraintSpec[ @mode eq 'add' or not( @mode ) ]">
         <sch:let name="myIdent" value="normalize-space(@ident)"/>
         <sch:report test="preceding::tei:constraintSpec[ normalize-space(@ident) eq $myIdent ]">
-        The @ident of 'constraintSpec' should be unique; this one (<sch:value-of select="$myIdent"/>) is the same as that of a previous 'constraintSpec'.
+        The @ident of &lt;constraintSpec&gt; should be unique; this one
+        (<sch:value-of select="$myIdent"/>) is the same as that of a
+        previous &lt;constraintSpec&gt;.
         </sch:report>
       </sch:rule>
     </constraint>
@@ -112,7 +114,10 @@
       <constraintSpec scheme="schematron" ident="usage_based_on_mode" xml:lang="en">
         <constraint>
           <sch:rule context="tei:constraintSpec[ @mode = ('add','replace')  or  not( @mode ) ]">
-            <sch:assert test="@scheme">The @scheme attribute of &lt;constraintSpec&gt; is required when the @mode is <sch:value-of select="if (@mode) then concat('&quot;',@mode,'&quot;') else 'not specified'"/> (here on "<sch:value-of select="@ident"/>")</sch:assert>
+            <sch:assert test="@scheme">
+            The @scheme attribute of &lt;constraintSpec&gt; is required when the @mode is
+            <sch:value-of select="if (@mode) then concat('&#34;',@mode,'&#34;') else 'not specified'"/>
+            (here on "<sch:value-of select="@ident"/>").</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
@@ -122,7 +127,7 @@
           <gloss versionDate="2024-02-28" xml:lang="ja">ISO スキマトロン</gloss>
         </valItem>
       </valList>
-      <remarks versionDate="2023-08-06" xml:lang="en">
+      <remarks ident="constraintSpec-attr.scheme-remarks" versionDate="2023-08-06" xml:lang="en">
         <p>These Guidelines no longer recommend, and the current TEI
         stylesheets no longer support, the use of Schematron 1.x
         within <gi>constraintSpec</gi>. Thus the value
@@ -136,7 +141,7 @@
         for what a processor should do if its value does not match
         that of the <gi>constraintSpec</gi> being deleted.</p>
       </remarks>
-      <remarks versionDate="2024-02-28" xml:lang="ja">
+      <remarks ident="constraintSpec-attr.scheme-remarks" versionDate="2024-02-28" xml:lang="ja">
         <p><gi>constraintSpec</gi>でのSchematron 1.xの利用は、このガイドラインでは推奨せず最近のTEIスタイルシートでもサポートしない。
         それ故、<val>schematron</val>の値はISO Schematronが<gi>constraintSpec</gi>で用いられることを示すのに使う。</p>
       </remarks>
@@ -180,7 +185,7 @@
           <sch:rule context="tei:figure">
             <sch:report test="not( tei:figDesc | tei:head )">You should
             provide information in a figure from which
-            we can construct an alt attribute in HTML</sch:report>
+            we can construct an @alt attribute in HTML.</sch:report>
           </sch:rule>
         </constraint>
       </constraintSpec>
@@ -197,7 +202,7 @@
       </constraintSpec>
     </egXML>
   </exemplum>
-  <remarks versionDate="2022-04-09" xml:lang="en">
+  <remarks ident="constraintSpec-remarks" versionDate="2022-04-09" xml:lang="en">
     <p>A child <gi>constraint</gi> is required when the
     <att>mode</att> attribute has the value <val>replace</val> or
     <val>add</val> (or is not specified, as <val>add</val> is the

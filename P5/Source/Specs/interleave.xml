@@ -11,6 +11,13 @@
   <content>
     <classRef key="model.contentPart" minOccurs="1" maxOccurs="unbounded"/>
   </content>
+  <constraintSpec ident="interleavechilden" scheme="schematron" xml:lang="en">
+    <constraint>
+      <sch:rule context="tei:interleave">
+        <sch:assert test="count(*) gt 1">The &lt;interleave&gt; element must have at least two child elements.</sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" source="#UND">
       <content>
@@ -30,7 +37,7 @@
     <gi>note</gi> element, in any order.</p>
     <p>To express this content model in a DTD, the original schema
     language for XML, one might use
-    <eg xml:space="preserve"><![CDATA[(   persName
+    <eg xml:space="preserve">(   persName
       | ( persName, note )
       | ( persName, ( placeName | location ) ) 
       | ( note, persName )
@@ -41,9 +48,9 @@
       | ( note, ( placeName | location ), persName )
       | ( ( placeName | location ), note, persName )
       | ( ( placeName | location ), persName, note )
-    )]]></eg></p>
+    )</eg></p>
   </exemplum>
-  <remarks xml:lang="en" versionDate="2025-05-18">
+  <remarks ident="interleave-remarks" xml:lang="en" versionDate="2025-05-18">
     <p>If an ODD file makes use of this element, current processing
     software will not be able to generate a DTD from it. For this
     reason TEI P5 itself does not currently make use of
