@@ -84,8 +84,9 @@
           <moduleRef key="header"/>
           <moduleRef key="core"/>
           <moduleRef key="tei"/>
-	  <moduleRef key="cmc"/>
+	        <moduleRef key="cmc"/>
           <moduleRef key="textstructure"/>
+          <moduleRef key="namesdates"/>
           <moduleRef key="analysis"/>
           <moduleRef key="textcrit"/>
           <moduleRef key="transcr"/>
@@ -94,7 +95,12 @@
           <moduleRef key="tagdocs"/>
           <moduleRef key="spoken"/>
           <moduleRef key="figures"/>
-          <elementSpec ident="p" mode="change">
+          
+          <moduleSpec ident="test">
+            <desc>A test module for elements to belong to in tests.</desc>
+          </moduleSpec>
+          
+          <elementSpec ident="p" mode="change" module="core">
             <constraintSpec mode="add" ident="c1" scheme="schematron" xml:lang="en">
               <constraint>
                 <sch:rule context="p">
@@ -186,7 +192,7 @@
               </attDef>
             </attList>
           </elementSpec>
-          <elementSpec ident="div" mode="change">
+          <elementSpec ident="div" mode="change" module="textstructure">
             <constraintSpec mode="add" ident="canondiv" scheme="schematron" xml:lang="en">
               <constraint>
                 <sch:rule context="tei:div">
@@ -206,7 +212,7 @@
               </constraint>
             </constraintSpec>
           </elementSpec>
-          <elementSpec ident="lg" mode="change">
+          <elementSpec ident="lg" mode="change" module="core">
             <content>
               <group xmlns="http://relaxng.org/ns/structure/1.0">
                 <zeroOrMore>
@@ -241,7 +247,7 @@
               </group>
             </content>
           </elementSpec>
-          <elementSpec ident="l" mode="change">
+          <elementSpec ident="l" mode="change" module="core">
             <classes mode="replace">
 	      <!-- This should fire an error becase "att.metrical", "att.enjamb",
 		   and "model.lLike" are not in alphabetical order. -->
@@ -251,7 +257,7 @@
               <memberOf key="model.lLike" min="2" max="6"/>
             </classes>
           </elementSpec>
-          <elementSpec ident="blort" mode="add">
+          <elementSpec ident="blort" mode="add" module="test">
             <desc  xml:lang="en" versionDate="2014-01-12">a completely spurious element made up for testing purposes only</desc>
             <classes>
               <memberOf key="model.pPart.data"/>
@@ -388,7 +394,7 @@
               </attDef>
             </attList>
           </elementSpec>
-          <elementSpec ident="blort2" mode="add">
+          <elementSpec ident="blort2" mode="add" module="test">
             <desc xml:lang="en" versionDate="2024-03-13">
               Another completely spurious element made up for testing purposes only.
               For information on what is being tested, see <gi>remarks</gi>.
@@ -469,7 +475,7 @@
               ensure the saneness of <gi>defaultVal</gi></p>
             </remarks>
           </elementSpec>
-          <elementSpec ident="blort3" mode="add">
+          <elementSpec ident="blort3" mode="add" module="test">
             <desc xml:lang="en" versionDate="2016-09-27">another completely spurious element made up for testing purposes only</desc>
             <classes>
               <memberOf key="model.pPart.data"/>
@@ -529,11 +535,11 @@
             </constraintSpec>
           </elementSpec>
 
-          <elementSpec ident="relation" mode="change">
+          <elementSpec ident="relation" mode="change" module="namesdates">
             <constraintSpec ident="activepassive" mode="delete" scheme="schematron" xml:lang="en"/>
           </elementSpec>
 
-          <elementSpec ident="abbr" mode="change">
+          <elementSpec ident="abbr" mode="change" module="core">
             <!-- missing @versionDate: -->
             <gloss xml:lang="en">change of abbr for the sake of change (element gloss)</gloss>
             <!-- missing @xml:lang: -->
@@ -565,7 +571,7 @@
             </listRef>
           </elementSpec>
 
-          <elementSpec ident="no_duplicate_attrs_1_valid" mode="add">
+          <elementSpec ident="no_duplicate_attrs_1_valid" mode="add" module="test">
             <desc xml:lang="en" versionDate="2024-03-13">
               Another completely spurious element made up for testing purposes only.
               For information on what is being tested, see <gi>remarks</gi>.
@@ -595,7 +601,7 @@
             </remarks>
           </elementSpec>
 
-          <elementSpec ident="no_duplicate_attrs_1_invalid" mode="add">
+          <elementSpec ident="no_duplicate_attrs_1_invalid" mode="add" module="test">
             <desc xml:lang="en" versionDate="2024-03-13">
               Another completely spurious element made up for testing purposes only.
               For information on what is being tested, see <gi>remarks</gi>.
@@ -624,7 +630,7 @@
             </remarks>
           </elementSpec>
 
-          <elementSpec ident="no_duplicate_attrs_2_valid" mode="add">
+          <elementSpec ident="no_duplicate_attrs_2_valid" mode="add" module="test">
             <desc xml:lang="en" versionDate="2024-03-13">
               Another completely spurious element made up for testing purposes only.
               For information on what is being tested, see <gi>remarks</gi>.
@@ -657,7 +663,7 @@
             </remarks>
           </elementSpec>
 
-          <elementSpec ident="no_duplicate_attrs_3_invalid" mode="add">
+          <elementSpec ident="no_duplicate_attrs_3_invalid" mode="add" module="test">
             <desc xml:lang="en" versionDate="2024-03-13">
               Another completely spurious element made up for testing purposes only.
               For information on what is being tested, see <gi>remarks</gi>.
@@ -716,7 +722,7 @@
             </remarks>
           </elementSpec>
 
-          <elementSpec ident="no_duplicate_attrs_3_valid" mode="add">
+          <elementSpec ident="no_duplicate_attrs_3_valid" mode="add" module="test">
             <desc xml:lang="en" versionDate="2024-03-13">
               Another completely spurious element made up for testing purposes only.
               For information on what is being tested, see <gi>remarks</gi>.
@@ -773,7 +779,7 @@
             </remarks>
           </elementSpec>
 
-          <elementSpec ident="no_duplicate_attrs_4_invalid" mode="add">
+          <elementSpec ident="no_duplicate_attrs_4_invalid" mode="add" module="test">
             <desc xml:lang="en" versionDate="2024-03-13">
               Another completely spurious element made up for testing purposes only.
               For information on what is being tested, see <gi>remarks</gi>.
@@ -813,7 +819,7 @@
           </elementSpec>
          
           <specGrpRef target="#limit_attrs_on_elementRef"/>
-          <elementSpec ident="test_elementRef_attr_constraints" mode="add">
+          <elementSpec ident="test_elementRef_attr_constraints" mode="add" module="test">
             <desc xml:lang="en" versionDate="2024-05-02">yet another completely spurious element made up for testing purposes only</desc>
             <classes>
               <memberOf key="att.global"/>
