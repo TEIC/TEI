@@ -658,6 +658,10 @@ that practice. -->
             <!-- ... -->
           </schemaSpec></egXML>
       </p>
+      <p>When a customization introduces a new element, and therefore a new namespace, it is recommended to redefine <att>defaultExceptions</att> on <gi>schemaSpec</gi> with any new namespaces because elements matched by <gi>anyElement</gi> (when present in a customization) must exclude any element that may carry an <att>xml:id</att> attribute. This is particularly important if the target schema language is RELAX NG and ID/IDREF checking is desired and failure to do so results in <soCalled>conflicting ID-types</soCalled> validation errors.
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="MDNS-egXML-de" xml:lang="und" source="#UND"><schemaSpec ns="http://www.example.org/ns/nonTEI" ident="example" defaultExceptions="http://www.tei-c.org/ns/1.0 http://www.tei-c.org/ns/Examples http://www.example.org/ns/nonTEI">
+          <!-- ... -->
+        </schemaSpec></egXML></p>
       <p>In addition to the TEI canonical namespace mentioned above, the TEI may also define
         namespaces for approved translations of the TEI schema into other languages.
         <!--These may be
