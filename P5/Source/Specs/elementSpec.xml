@@ -46,6 +46,20 @@
       <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
+  <constraintSpec ident="module-att-required-on-elementSpec" xml:lang="en" scheme="schematron" validUntil="2027-08-01">
+    <desc type="deprecationInfo">
+      The @module attribute will be required on &lt;elementSpec> after 
+      2027-08-01.
+    </desc>
+    <constraint>
+      <sch:rule context="tei:elementSpec">
+        <sch:assert test="@module" role="warning">
+          WARNING: The @module attribute will be required on the 
+          &lt;elementSpec> element after 2027-08-01.
+        </sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <constraintSpec scheme="schematron" ident="child-constraint-based-on-mode" xml:lang="en">
     <!-- 
          This constraint specification is much like the

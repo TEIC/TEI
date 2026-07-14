@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="gi-classSpec" ident="classSpec">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron"  module="tagdocs" xml:id="gi-classSpec" ident="classSpec">
   <gloss versionDate="2007-07-04" xml:lang="en">class specification</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">부류 명시</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -42,6 +42,20 @@ that is a group of
         <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
+  <constraintSpec ident="module-att-required-on-classSpec" xml:lang="en" scheme="schematron" validUntil="2027-08-01">
+    <desc type="deprecationInfo">
+      The @module attribute will be required on &lt;classSpec> after 
+      2027-08-01.
+    </desc>
+    <constraint>
+      <sch:rule context="tei:classSpec">
+        <sch:assert test="@module" role="warning">
+          WARNING: The @module attribute will be required on the 
+          &lt;classSpec> element after 2027-08-01.
+        </sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="type" mode="change" usage="req">
       <desc versionDate="2005-10-05" xml:lang="en">indicates whether this is a model class or an attribute class</desc>
