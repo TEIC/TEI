@@ -272,8 +272,7 @@ than one <gi>performance</gi> element should be used, wherever possible.
  </p>
 <p>Names of persons, places, and dates of particular significance within
 the performance record may be explicitly marked using the general
-purpose <gi>name</gi>, <tag>rs type="place"</tag> and <gi>date</gi>
-elements described in section <ptr target="#CONADA"/>.
+purpose elements for encoding names and dates as described in <ptr target="#CO"/>.
 No particular elements for such features as stagehouses,
 directors, etc., are proposed at this time.
  </p>
@@ -329,8 +328,39 @@ Or:
 </performance></egXML>
 <!-- La Machine Infernale, Jean Cocteau -->
  </p>
+  
+  <p>Performance-specific information (e.g. different actors in different performances) can be encoded using the <att>perf</att> attribute, provided by the <ident>att.performed</ident> attribute class:
+    <specList>
+      <specDesc key="att.performed"/>
+    </specList>
+The <att>perf</att> attribute allows one or more pointers to documentation (given through e.g. the <gi>performance</gi> or <gi>event</gi> elements) to associate an element (such as <gi>actor</gi>) with one or more performances:
+    
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="DRPERF-egXML-perf" source="#DRPERF-eg-13.1">
+    <performance xml:id="L1025P1"><p>First performed at the Strand Theatre, on the 18th of July, 1832.</p></performance>
+    <performance xml:id="L1025P2"><p>Royal Victoria Theatre in July 1834</p></performance>
+    
+    <castList>
+      <head>Characters.</head>
+      <castItem>
+        <role gender="M">CHARLES WYNDHAM</role>
+        <roleDesc>(an Englishman amusing himself in Paris)</roleDesc>
+        <actor sex="M" perf="#L1025P1">Mr. ABBOTT.</actor>
+        <actor sex="M" perf="#L1025P2">Mr. SELBY.</actor>
+      </castItem>
+      <castItem>
+        <role gender="M">SAM</role>
+        <roleDesc>(his Servant)</roleDesc>
+        <actor sex="M" perf="#L1025P1">Mr. MITCHELL. </actor>
+        <actor sex="M" perf="#L1025P2">Mr. ROSS.</actor>
+      </castItem>
+      <!-- ... -->
+    </castList>
+  </egXML>
+  </p>
+  
 <specGrp xml:id="DDRPERF" n="The performance element">
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/performance.xml"/>
+  <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/performance.xml"/>
+  <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.performed.xml"/>
 </specGrp>
 </div>
 <div type="div3" xml:id="DRCAST"><head>Cast Lists</head>
@@ -772,7 +802,7 @@ Levant</head>
             <p>Ha! ha! Do. Do.</p>
           </sp>
           <sp> <speaker>Ellie</speaker>
-            <p>Please dont.</p>
+            <p>Please <sic>dont</sic>.</p>
           </sp>
           <stage type="delivery">in consternation</stage>
         </spGrp>
@@ -787,7 +817,9 @@ Levant</head>
 is one of Shaw's quirks, represented faithfully in the standard
 Constable edition of 1931, and in reprints of that such as the Penguin
 Classics 2000 edition available at Google Books (LB) 
-EBB: Confirmed on checking 1919 Constable edition of Heartbreak House. Updating BIB accordingly. -->
+EBB: Confirmed on checking 1919 Constable edition of Heartbreak House. Updating BIB accordingly.
+JT (2026): Because of the above conversation, I've now wrapped the `dont` in a `<sic>`
+    to remove any future confusion.-->
     
     <p>In the original, the stage direction <q>in consternation</q> is
       printed opposite a brace grouping all four speeches, indicating that all
@@ -919,7 +951,7 @@ attributes permit a relatively formal specification for movements of
 characters, using user-defined codes to identify the characters involved
 (the <att>who</att> attribute), the direction of the movement
 (<att>type</att> attribute), and optionally which part of the stage is
-involved (<att>where</att> attribute).  For stage-historical purposes, a
+involved (<att>where</att> attribute). For stage-historical purposes, a
 <att>perf</att> attribute is also provided; this allows the recording of
 different <gi>move</gi> elements 
 as taken in different performances of the same text.</p>
