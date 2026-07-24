@@ -658,10 +658,20 @@ that practice. -->
             <!-- ... -->
           </schemaSpec></egXML>
       </p>
-      <p>When a customization introduces a new element, and therefore a new namespace, it is recommended to redefine <att>defaultExceptions</att> on <gi>schemaSpec</gi> with any new namespaces because elements matched by <gi>anyElement</gi> (when present in a customization) must exclude any element that may carry an <att>xml:id</att> attribute. This is particularly important if the target schema language is RELAX NG and ID/IDREF checking is desired and failure to do so results in <soCalled>conflicting ID-types</soCalled> validation errors.
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="MDNS-egXML-de" xml:lang="und" source="#UND"><schemaSpec ns="http://www.example.org/ns/nonTEI" ident="example" defaultExceptions="http://www.tei-c.org/ns/1.0 http://www.tei-c.org/ns/Examples http://www.example.org/ns/nonTEI">
+      <p>When a customization introduces a new elements, and therefore one or more new namespaces, users may want to consider redefining
+        <att>defaultExceptions</att> on <gi>schemaSpec</gi> such that the new
+        namespace or namespaces are included. This is because elements matched by 
+        <gi>anyElement</gi> (e.g. the one used as the content of <gi>xenoData</gi>) must exclude any element that may carry 
+        an ID-type attribute (generally <att>xml:id</att>). 
+        This is particularly important if the target schema language is RELAX NG and one wishes to enable ID/IDREF/IDREFS compatibility mode: not adding 
+        the new namespaces to <att>defaultExceptions</att>
+        will result in <soCalled>conflicting ID-types</soCalled> errors.
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="MDNS-egXML-de" xml:lang="und" source="#UND">
+          <schemaSpec ns="http://www.example.org/ns/nonTEI" ident="example" defaultExceptions="http://www.example.org/ns/nonTEI http://www.tei-c.org/ns/1.0 http://www.tei-c.org/ns/Examples">
           <!-- ... -->
         </schemaSpec></egXML></p>
+      
+      
       <p>In addition to the TEI canonical namespace mentioned above, the TEI may also define
         namespaces for approved translations of the TEI schema into other languages.
         <!--These may be
