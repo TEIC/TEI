@@ -72,7 +72,7 @@ die()
     exit 1
 }
 
-Vault=/data2/Vault
+Vault=/data/Vault
 Jenkins=https://jenkins.tei-c.org
 ECHO=
 SFUSER=rahtz
