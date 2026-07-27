@@ -23,12 +23,14 @@
   </teiHeader>
   <text>
     <body>
-      <p>Release 4.12.0 is codenamed <q>The Igor Release</q>, because it shares the performance date of first theater 
-        adapation of Mary Shelley’s <title level="m">Frankenstein</title>, which first featured
-        Victor Frankenstein’s lab assistant (then named <q>Fritz</q>, better known now as <q>Igor</q>. 
-        Coincidentally, this release includes new encoding of theatrical performance data.</p>
-      <p>This release introduces new features and resolves a number of issues raised by the TEI
-        community. The majority of these changes and corrections are a consequence of feature
+      <p>Release 4.12.0 is codenamed <q>The Igor Release</q>, because 203 years ago today 
+        marked the theatrical debut of Victor Frankenstein’s lab assistant (then named <q>Fritz</q>
+        but better known to us today as <q>Igor</q>) in 
+        <ref target="https://en.wikipedia.org/wiki/Presumption;_or,_the_Fate_of_Frankenstein">the very first stage adaptation of the novel</ref> 
+        <title level="m">Frankenstein</title>. Notably, this release introduces 
+        new encoding for theatrical performance data.</p>
+      <p>The release includes other revisions to the TEI Guidelines, and it resolves 
+        a number of issues. Several of these changes and corrections are a consequence of feature
         requests or bugs reported by the TEI community using the GitHub tracking system. A full list
         of the issues resolved in the course of this release cycle may be found under the <ref
           target="https://github.com/TEIC/TEI/milestone/23?closed=1">4.12.0 milestone</ref>.  Many
@@ -56,14 +58,14 @@
         <item></item>
         </list>-->
       </p>
-      <p>The following changes introduced with this release could invalidate ODD customizations in
+   <!--   <p>The following changes introduced with this release could invalidate ODD customizations in
         TEI projects. Those maintaining ODD customizations of the TEI should be aware of the
         following changes and may need to adapt their ODD files accordingly. 
         <list>
           <head>ODD-breaking changes and deprecations</head>
           <item>...</item>
         </list>
-      </p>
+      </p>-->
       <p>
         <list>
           <head>Improvements of prose and examples</head>
@@ -79,19 +81,25 @@
         </list>-->
       </p>
      <!-- STYLESHEETS-->
-      <p>In addition, improvements have been made to the XSLT stylesheets (which provide
+      <p>In addition, revisions have been made to the XSLT stylesheets (which provide
         processing of TEI ODD files for <ref target="https://romabeta.tei-c.org/">Roma</ref> and
           <ref target="https://teigarage.tei-c.org/">TEIGarage</ref> as well as other TEI
         conversions). The Stylesheets are maintained separately from the Guidelines in <ref
-          target="https://github.com/TEIC/Stylesheets">the Stylesheets repository</ref>. A
-        full list of the issues resolved in the course of this release cycle may be found under the
+          target="https://github.com/TEIC/Stylesheets">the Stylesheets repository</ref>, and the issue
+        resolved in this release cycle is marked by the
         <ref target="https://github.com/TEIC/Stylesheets/milestone/21?closed=1">7.61.0
-          milestone</ref>.</p>
-
-      <p>Highlights of this release follow.<list>
-         <item>...</item>
-        </list>
-      </p>
+          Stylesheets milestone</ref>.</p>
+      <p>Until this release, the Stylesheets has given <q>magic</q> or exceptional treatment to the
+         the namespace prefix <q>xlink:</q>, allowing ODD developers to apply the prefix without declaring the
+        xlink namespace. This special handling has been reserved exclusively for the xlink namespace, and not 
+        for any others used with TEI. With this release of the Stylesheets, we remove the special handling. 
+        The change is introduced without a deprecation period because, without the magic handling of the namespace,
+        the necessity to declare the namespace will be reported in routine processing as with other namespaces 
+        (<ref target="https://github.com/TEIC/Stylesheets/issues/800">Stylesheets #800</ref> 
+        and <ref target="https://github.com/TEIC/Stylesheets/pull/811">PR #811</ref>). 
+        Note that this change in Stylesheets processing could invalidate ODD customizations in TEI projects. 
+        Those maintaining ODD customizations of the TEI may need to adapt their ODD files if they reference the <q>xlink:</q>
+        namespace.</p>
     </body>
   </text>
 </TEI>
