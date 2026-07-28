@@ -23,7 +23,7 @@
   </teiHeader>
   <text>
     <body>
-      <p>Release 4.12.0 is codenamed <q>The Igor Release</q>, because 203 years ago, July 28, 1823
+      <p>Release 4.12.0 is codenamed <q>The Igor Release</q>, because July 28, 1823
         marked the theatrical debut of Victor Frankenstein’s lab assistant (then named <q>Fritz</q>
         but better known to us today as <q>Igor</q>) in 
         <ref target="https://en.wikipedia.org/wiki/Presumption;_or,_the_Fate_of_Frankenstein">the very first stage adaptation of the novel</ref> 
@@ -52,7 +52,8 @@
             (where elements may appear in any order). Consequently, we deprecate 
             the use of <att>preserveOrder</att> on the <gi>sequence</gi> element to indicate unordered content, 
             and this attribute will no longer be valid on the <gi>sequence</gi> element after May 6, 2027. 
-            (See <ref target="https://github.com/TEIC/TEI/issues/2154">#2154</ref> 
+            Caution: Use of the <gi>interleave</gi> element is intended for use in RELAX NG schemas, 
+            and will result in a nonfunctional DTD. (See <ref target="https://github.com/TEIC/TEI/issues/2154">#2154</ref> 
             and <ref target="https://github.com/TEIC/TEI/pull/2538">PR #2538</ref>.)</item>
           <item></item>
           
@@ -77,11 +78,10 @@
             <gi>remarks</gi> in the Guidelines. (See <ref target="https://github.com/TEIC/TEI/issues/2896">#2896</ref> 
             and <ref target="https://github.com/TEIC/TEI/pull/2918">PR #2918</ref>.)</item>
           <item>This release resolves a problem in ODD processing by removing Schematron constraints 
-            that had prohibited a single child of <gi>sequence</gi>, 
-            <gi>alternate</gi>, and the new <gi>interleave</gi> element. 
-            (See <ref target="https://github.com/TEIC/TEI/issues/2913">#2913</ref> and 
-            <ref target="https://github.com/TEIC/TEI/pull/2915">PR #2915</ref>.) </item>
-         
+            that had required each occurrence of a <gi>sequence</gi>, <gi>alternate</gi>, 
+            or the new <gi>interleave</gi> element to have two or more children. 
+            These elements may each now have only one child. (See <ref target="https://github.com/TEIC/TEI/issues/2913">#2913</ref> 
+            and <ref target="https://github.com/TEIC/TEI/pull/2915">PR #2915</ref>.) </item>
         </list>
         <!--<list>
           <head>Changes to classes</head>
@@ -104,13 +104,16 @@
         <list>
           <head>Revisions of prose and examples</head>
           <item>...</item>
-          <item>Element specification pages throughout these Guidelines now change the display of their Schematron constraints,
-          such that elements mentioned in the Schematron messages are now wrapped in angle brackets to improve their visibility.
-          We caution that this improvement in visiblity may also introduce a problem: these Schematron messages may not be well-formed 
-          when copied and pasted directly into XML documents (<ref target="https://github.com/TEIC/TEI/pull/2910">#PR 2910</ref> 
+          <item>Schematron messages throughout the Guidelines have been updated so that 
+            whenever the message is a sentence it ends in the appropriate punctuation mark, 
+            and element names are now wrapped in angle brackets to improve their visibility. 
+            We caution that this improvement in visibility also introduces a problem: 
+            Schematron messages that have element names so indicated cannot be copied 
+            as well-formed XML and pasted directly into an XML document 
+            (<ref target="https://github.com/TEIC/TEI/pull/2910">#PR 2910</ref> 
             and <ref target="https://github.com/TEIC/TEI/pull/2911">#PR 2911</ref>).</item>
           <item>A new paragraph has been added to the USE chapter to advise on use of the <att>defaultExceptions</att> attribute
-            when introducing elements in other namespaces or no namespace in ODD customization
+            when introducing elements in other namespaces or no namespace in an ODD customization
             (<ref target="https://github.com/TEIC/TEI/issues/2837">#2837</ref> and 
             <ref target="https://github.com/TEIC/TEI/pull/2928">PR #2928</ref>).</item>
           <item>A broken link in the USE chapter has been corrected by pointing to a better resource in the TEI Vault 
@@ -131,15 +134,15 @@
       </p>
      <!-- STYLESHEETS-->
       
-   <!--  
+
      <p>In addition, revisions have been made to the XSLT stylesheets (which provide
         processing of TEI ODD files for <ref target="https://romabeta.tei-c.org/">Roma</ref> and
           <ref target="https://teigarage.tei-c.org/">TEIGarage</ref> as well as other TEI
         conversions). The Stylesheets are maintained separately from the Guidelines in <ref
-          target="https://github.com/TEIC/Stylesheets">the Stylesheets repository</ref>, and the issue
-        resolved in this release cycle is marked by the
-        <ref target="https://github.com/TEIC/Stylesheets/milestone/21?closed=1">7.61.0
-          Stylesheets milestone</ref>.</p>
+          target="https://github.com/TEIC/Stylesheets">the Stylesheets repository</ref>. The Stylesheets have been
+     updated to version 7.61.0 with necessary updates to the test suite and code required for producing the Guidelines.</p>
+       
+       <!-- Not yet solved, as this change was reverted:
       <p>Until this release, the Stylesheets has given <q>magic</q> or exceptional treatment to the
          the namespace prefix <q>xlink:</q>, allowing ODD developers to apply the prefix without declaring the
         xlink namespace. This special handling has been reserved exclusively for the xlink namespace, and not 
