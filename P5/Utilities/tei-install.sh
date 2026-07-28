@@ -42,8 +42,10 @@ install()
 	    echo unpack web guidelines to ${Vault}/${name}/${version};
 	    ${ECHO} unzip -q -o teiwebsiteguidelines -d ${Vault}/${name}/${version}/doc/tei-p5-doc;
 	    ${ECHO} rm teiwebsiteguidelines.zip;
-	    GOOGLE=$(<google.txt)
-	    ${ECHO} find ${Vault}/${name}/${version}/doc/tei-p5-doc -name "*.html" -exec sed -i.bak -e "s/<\/head>/$GOOGLE/" \{\} \;;
+# MDH/MS/EBB 2026-07-28: Council no longer wants Google code running on our server. 
+# We also don't understand why backup HTML files were being generated here.
+#	    GOOGLE=$(<google.txt)
+#	    ${ECHO} find ${Vault}/${name}/${version}/doc/tei-p5-doc -name "*.html" -exec sed -i.bak -e "s/<\/head>/$GOOGLE/" \{\} \;;
     esac
 }
 
