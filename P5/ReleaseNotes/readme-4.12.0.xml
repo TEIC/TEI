@@ -35,17 +35,18 @@
         of the issues resolved in the course of this release cycle may be found under the <ref
           target="https://github.com/TEIC/TEI/milestone/23?closed=1">4.12.0 milestone</ref>.  Many
         thanks to the community contributors who reported issues, sent bug fixes, and helped with
-        the drafting that led to this release, including: Julia J. Beine, Lou Burnard, James Cummings, 
-        Gabriel Egan, Frederik Elwert, Dario Kampkaspar, Jun Ogawa, Kazuhiro Okada, Klaus Rettinghaus.
-        We are especially grateful to Peter Stadler for helping prepare and monitor new 
-        server infrastructure for this release.</p>
+        the drafting that led to this release, including: Piotr Banski, Julia J. Beine, Lou Burnard, 
+        James Cummings, Gabriel Egan, Frederik Elwert, Dario Kampkaspar, Jun Ogawa, Kazuhiro Okada, 
+        and Klaus Rettinghaus. We are especially grateful to Peter Stadler for helping prepare and monitor 
+        new server infrastructure for this release.</p>
       <p>The following changes are particularly worth highlighting in this release: 
         <list>
           <head>New encoding features</head>
           <item>The <name type="datatype">teidata.point</name> datatype now allows an optional third coordinate to support the
             encoding of surfaces and zones on three-dimensional objects, with new explanation and examples in the Guidelines 
             (<ref target="https://github.com/TEIC/TEI/issues/2816">#2816</ref>, 
-            <ref target="https://github.com/TEIC/TEI/pull/2821">PR #2821</ref>, and 
+            <ref target="https://github.com/TEIC/TEI/pull/2821">PR #2821</ref>, 
+            <ref target="https://github.com/TEIC/TEI/pull/2903">PR #2903</ref>, and
             <ref target="https://github.com/TEIC/TEI/pull/2922">PR #2922</ref>).</item>
           <item>We introduce <gi>interleave</gi> to simplify content modeling in ODD. With this release, <gi>interleave</gi> 
             is now the preferred way for ODD customizers to indicate unordered content models 
@@ -62,7 +63,7 @@
           <head>Changes to content models and classes</head>
           <item>Previously the <att>perf</att> atttribute was only available on the <gi>move</gi> and <gi>tech</gi> elements
             to encode performance-specific information. This release adds <att>perf</att> to a 
-            new <name type="class">att.performed</name> to expand its use
+            new class, <name type="class">att.performed</name>, to expand its use
             to <gi>actor</gi> and members of <name type="class">model.stageLike</name>: <gi>camera</gi>, <gi>caption</gi>,
             <gi>move</gi>, <gi>sound</gi>, <gi>stage</gi>, <gi>tech</gi>, and <gi>view</gi>. 
             (See <ref target="https://github.com/TEIC/TEI/issues/2724">#2724</ref> and 
@@ -73,6 +74,11 @@
             Examples are provided to show how these can be used with linked data resources. (See 
             <ref target="https://github.com/TEIC/TEI/issues/2873">#2873</ref>  
             <ref target="https://github.com/TEIC/TEI/pull/2923">PR #2923</ref>).</item>
+          <item>The <gi>gloss</gi> element has been added to <name type="class">att.placement</name> and explanation has 
+            been added to the Guidelines so that encoders can indicate their positioning in a document 
+            (<ref target="https://github.com/TEIC/TEI/issues/2892">#2892</ref>, 
+            <ref target="https://github.com/TEIC/TEI/pull/2899">PR #2899</ref> and
+            <ref target="https://github.com/TEIC/TEI/pull/2902">PR #2902</ref>).</item>
           <item>The <att>ident</att> attribute of the <gi>remarks</gi>
             element will be required after 2027-06-01. Also, <att>ident</att> is now in use on 
             <gi>remarks</gi> in the Guidelines. (See <ref target="https://github.com/TEIC/TEI/issues/2896">#2896</ref> 
@@ -89,11 +95,13 @@
         </list>-->
         <list>
           <head>Changes to the build process for publishing the Guidelines</head>
-        <item></item>
+        <item>Modifications have been made to the scripts that initiate build tests to prevent them failing when the TEI website
+          is down (<ref target="https://github.com/TEIC/TEI/issues/2908">#2908</ref> and 
+          <ref target="https://github.com/TEIC/TEI/pull/2909">PR #2909</ref>).</item>
         </list>
       </p>
    <!--   <p>The following changes introduced with this release could invalidate ODD customizations in
-        TEI projects. Those maintaining ODD customizations of the TEI should be aware of the
+        TEI projects. Those maintaining OD"D customizations of the TEI should be aware of the
         following changes and may need to adapt their ODD files accordingly. 
         <list>
           <head>ODD-breaking changes and deprecations</head>
@@ -119,6 +127,8 @@
           <item>A broken link in the USE chapter has been corrected by pointing to a better resource in the TEI Vault 
             (<ref target="https://github.com/TEIC/TEI/issues/2700">#2700</ref> 
             and <ref target="https://github.com/TEIC/TEI/pull/2934">PR #2934</ref>).</item>
+          <item>The explanation, encoding, and punctuation of the <gi>appInfo</gi> and <gi>application</gi> 
+            elements has been improved (<ref target="https://github.com/TEIC/TEI/pull/2901">PR #2901</ref>).</item>
           
         </list>
        <list>
