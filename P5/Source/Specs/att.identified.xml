@@ -7,18 +7,36 @@
   <desc versionDate="2007-05-02" xml:lang="zh-TW">可利用屬性 <att>key</att>來參照的元素</desc>
   <desc versionDate="2022-05-09" xml:lang="ja">後で<att>key</att>属性によって参照されうる要素を指定する属性を示す。</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">fournit les attributs pour des éléments référençables au moyen d'un attribut <att>key</att>.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">elementos a los que se puede hacer referencia a través del atributo <att>key</att>.</desc> <desc versionDate="2007-01-21" xml:lang="it">elementi ai quali si può fare riferimento tramite l'attributo <att>key</att></desc>
+  <desc versionDate="2007-05-04" xml:lang="es">elementos a los que se puede hacer referencia a través del atributo <att>key</att>.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">elementi ai quali si può fare riferimento tramite l'attributo <att>key</att></desc>
   <classes>
-    
     <memberOf key="att.combinable"/>
   </classes>
   <constraintSpec ident="spec-in-module" scheme="schematron" xml:lang="en">
+    <!--
+      The @context below is somewhat complicated, because we do not
+      want to test @module attributes that occur in a circumstance
+      where the module it refers to is almost certainly defined
+      elsewhere, so would not be in this file, anyway. So we test that
+      the @module is either
+      1) in a file that has at least a <schemaSpec>, if not a <TEI>
+         (or <teiCorpus); and
+      2) in a file that has at least one <moduleSpec> or <moduleRef>,
+         because if there are no <moduleSpec>s nor <moduleRef>s, there
+         cannot be one that is refered to by this @module attribute.
+      The result of (1) is that we ignore the various sub-files that
+      make up P5 (and other similar cases); the result of (2) is that
+      we ignore most customization files. The good news is that
+      ignoring these cases avoids a lot of false positives; the bad
+      news is that quite a few cases of @module will go unchecked by
+      this useful test.
+    -->
     <constraint>
-      <sch:rule context="tei:elementSpec[@module]|tei:classSpec[@module]|tei:macroSpec[@module]">
-        <sch:assert test="(not(ancestor::tei:schemaSpec | ancestor::tei:TEI | ancestor::tei:teiCorpus)) or (not(@module) or (not(//tei:moduleSpec) and not(//tei:moduleRef)) or (//tei:moduleSpec[@ident = current()/@module]) or (//tei:moduleRef[@key = current()/@module]))">
-        Specification <sch:value-of select="@ident"/>: the value of the module attribute ("<sch:value-of select="@module"/>") 
-should correspond to an existing module, via a moduleSpec or
-      moduleRef</sch:assert>
+      <sch:rule context="( tei:elementSpec[@module] | tei:classSpec[@module] | tei:macroSpec[@module] )[                            ( ancestor::tei:schemaSpec | ancestor::tei:TEI | ancestor::tei:teiCorpus )                            and                            ( //tei:moduleSpec | //tei:moduleRef )                            ]">
+        <sch:assert test="( //tei:moduleSpec/@ident | //tei:moduleRef/@key ) = @module">
+          Specification <sch:value-of select="@ident"/>: the value of the module attribute
+          ("<sch:value-of select="@module"/>") should correspond to an existing module, via
+          a moduleSpec or moduleRef.</sch:assert>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -30,7 +48,7 @@ should correspond to an existing module, via a moduleSpec or
       <desc versionDate="2008-04-05" xml:lang="ja">当該要素を参照する識別子を示す。</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">fournit l'identifiant qui référence cet élément.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">proporciona el identificador utilizado para indicar un elemento.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">specifica l'identificatore utilizzato per indicare l'elemento</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">specifica l'identificatore utilizzato per indicare l'elemento.</desc>
       <datatype><dataRef key="teidata.name"/></datatype>
     </attDef>
     <attDef ident="predeclare" usage="opt">
@@ -41,7 +59,7 @@ should correspond to an existing module, via a moduleSpec or
       <desc versionDate="2008-04-05" xml:lang="ja">当該オブジェクトが、<ident type="module">TEI</ident>基盤モジュー ルで事前に宣言されるべきかどうかを示す。</desc>
       <desc versionDate="2009-05-27" xml:lang="fr">précise si cet objet nécessite une prédéfinition dans le module d'infrastructure <ident type="module">tei</ident>.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">declara si la clase debe ser considerada global y por tanto definida en el módulo core</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">dichiara se la classe debba essere considerata globale e quindi definita nel modulo core</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">dichiara se la classe debba essere considerata globale e quindi definita nel modulo core.</desc>
       <datatype><dataRef key="teidata.truthValue"/></datatype>
       <defaultVal>false</defaultVal>
     </attDef>
@@ -52,7 +70,7 @@ should correspond to an existing module, via a moduleSpec or
       <desc versionDate="2008-04-05" xml:lang="ja">当該オブジェクトが定義されているモジュール名を示す。</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">fournit le nom du module dans lequel doit être défini cet objet.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">proporciona el nombre del módulo en que el objeto debe ser definido.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica il nome del modulo nel quale l'oggetto deve essere definito</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica il nome del modulo nel quale l'oggetto deve essere definito.</desc>
       <datatype><dataRef key="teidata.xmlName"/></datatype>
     </attDef>
   </attList>

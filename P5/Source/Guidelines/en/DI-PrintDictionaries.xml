@@ -296,7 +296,6 @@ derived headwords.
 <specGrpRef target="#DDITPET"/>
 <specGrpRef target="#DDITPUS"/>
 <specGrpRef target="#DDITPXR"/>
-<specGrpRef target="#DDITPRE"/>
 <specGrpRef target="#DDIHW"/>
 
 <specGrp xml:id="DEDIMV" n="Attributes for dictionary work">
@@ -319,12 +318,12 @@ which may be marked in their own right.  In some styles of markup,
 tags will be applied only to the low-level items, leaving the
 constituent groups which contain them untagged. We distinguish the
 class of <term>top-level constituents</term> of dictionary entries,
-which can occur directly within the <gi>entry</gi> element, from the class of
-<term>phrase-level</term> constituents, which can normally occur only
-within top-level constituents. The top-level constituents of
-dictionary entries are described in section <ptr target="#DIENGP"/>,
-and documented more fully, together with their phrase-level
-sub-constituents, in section <ptr target="#DITP"/>. </p>
+which can occur directly within the <gi>entry</gi> element, from the
+class of <term>phrase-level</term> constituents, which can normally
+occur only within top-level constituents. The top-level constituents
+of dictionary entries are described in section <ptr
+target="#DIENGP"/>, and documented more fully, together with their
+phrase-level sub-constituents, in section <ptr target="#DITP"/>. </p>
 
 <p>In addition, however, dictionary entries often have a complex
 hierarchical structure. For example, an entry may consist of two or
@@ -352,9 +351,7 @@ for an entry that has only one sense to group together all parts of
 the definition relating to the word sense since this leads to more 
 consistent encoding across entries. 
 All of these levels may each contain any of the
-constituent parts of an entry. A special case of hierarchical
-structure is represented by the <gi>re</gi> (related entry) element,
-which is discussed in section <ptr target="#DITPRE"/>. Finally, the
+constituent parts of an entry. The
 element <gi>dictScrap</gi> may be used at any point in the hierarchy
 to delimit parts of the dictionary entry which are structurally
 anomalous, as further discussed in section <ptr target="#DIFR"/>.<specList>
@@ -463,7 +460,6 @@ homograph, or only to a particular sense. The examples below illustrate this poi
 <specDesc key="usg"/>
 <specDesc key="xr"/>
 <specDesc key="etym"/>
-<specDesc key="re"/>
 <specDesc key="note"/>
 </specList>
 </p>
@@ -716,9 +712,6 @@ section <ptr target="#DITPSE"/> and section <ptr target="#DITPMI"/>
 </item>
 <item>the <gi>usg</gi>, <gi>lbl</gi>, <gi>xr</gi>, and <gi>note</gi> elements are
 described in section <ptr target="#DITPMI"/>
-</item>
-<item>the <gi>re</gi> element, which marks nested entries for related words, is
-described in section <ptr target="#DITPRE"/>
 </item>
 </list>
 </p>
@@ -1929,13 +1922,14 @@ such material.<specList>
 </div>
 <div type="div3" xml:id="DITPRE">
 <head>Related Entries</head>
-<p>The <gi>re</gi> element encloses a degenerate entry which appears in the body of
-another entry for some purpose. Many dictionaries include related entries for direct
-derivatives or inflected forms of the entry word, or for compound words, phrases,
-collocations, and idioms containing the entry word. </p>
-<p>Related entries can be complex, and may in fact include any of the information to be
-found in a regular entry. Therefore, the <gi>re</gi> element is defined to contain
-the same elements as an <gi>entry</gi> element. </p>
+<p>Many dictionaries include nested entries for direct derivatives or
+inflected forms of the entry word, or for compound words, phrases,
+collocations, and idioms containing the entry word.
+These related entries can be complex, and may in fact include any of the information to be
+found in a regular entry. Therefore, the <gi>entry</gi> element itself is used to contain
+them. The <att>type</att> and <att>subtype</att> attributes may be used to
+differentiate these related entries from the top-level
+constituent entries or further categorize them.</p>
 <p>Examples:<q rend="display">
 <hi rend="bold">bevvy</hi>
   <code lang="ipa">(ˈbɛvɪ)</code> <emph>informal</emph> n, pl <hi rend="bold">-vies</hi> <hi rend="bold">1</hi> a drink, esp an
@@ -1982,15 +1976,6 @@ the same elements as an <gi>entry</gi> element. </p>
 </entry>
 </egXML>
 </p>
-<specGrp xml:id="DDITPRE" n="Related entries">
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/re.xml"/>
-
-
-
-
-
- </specGrp>
-
 </div>
 </div>
 <div type="div2" xml:id="DIHW">

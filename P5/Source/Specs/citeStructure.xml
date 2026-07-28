@@ -22,7 +22,7 @@
       <datatype>
         <dataRef name="string" restriction=".+"/>
       </datatype>
-      <remarks versionDate="2020-03-24" xml:lang="en">
+      <remarks ident="citeStructure-attr.delim-remarks" versionDate="2020-03-24" xml:lang="en">
         <p><att>delim</att> must contain at least one character.</p>
       </remarks>
     </attDef>
@@ -39,14 +39,14 @@
       <constraintSpec ident="citestructure-outer-match" scheme="schematron" xml:lang="en">
         <constraint>
           <sch:rule context="tei:citeStructure[not(parent::tei:citeStructure)]">
-            <sch:assert test="starts-with(@match,'/')">An XPath in @match on the outer <sch:name/> must start with '/'.</sch:assert>
+            <sch:assert test="starts-with(@match,'/')">An XPath in @match on the outer &lt;<sch:name/>> must start with '/'.</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
       <constraintSpec ident="citestructure-inner-match" scheme="schematron" xml:lang="en">
         <constraint>
           <sch:rule context="tei:citeStructure[parent::tei:citeStructure]">
-            <sch:assert test="not(starts-with(@match,'/'))">An XPath in @match must not start with '/' except on the outer <sch:name/>.</sch:assert>
+            <sch:assert test="not(starts-with(@match,'/'))">An XPath in @match must not start with '/' except on the outer &lt;<sch:name/>>.</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
