@@ -37,18 +37,21 @@
     <gi>note</gi> element, in any order.</p>
     <p>To express this content model in a DTD, the original schema
     language for XML, one might use
-    <eg xml:space="preserve">(   persName
-      | ( persName, note )
-      | ( persName, ( placeName | location ) ) 
-      | ( note, persName )
-      | ( ( placeName | location ), persName )
-      | ( persName, note, ( placeName | location ) )
-      | ( persName, ( placeName | location ), note )
-      | ( note, persName, ( placeName | location ) )
-      | ( note, ( placeName | location ), persName )
-      | ( ( placeName | location ), note, persName )
-      | ( ( placeName | location ), persName, note )
-    )</eg></p>
+    <eg xml:space="preserve">( ( location,  (   ( note,                   persName? ) | ( persName, note?                     ) )? )
+| ( note,      ( ( ( location | placeName ), persName? ) | ( persName, ( location | placeName )? ) )? )
+| ( persName,  ( ( ( location | placeName ), note?     ) | ( note,     ( location | placeName )? ) )? )
+| ( placeName, (   ( note,                   persName? ) | ( persName, note?                     ) )? )
+)</eg></p>
+<!-- also deterministic, aka non-ambiguous; and more what I would
+     probably write, but a bit less easy to make sense of:
+(
+  ( persName, ( ( ( placeName | location ), note? ) | ( note, ( placeName | location )? ) )? )
+|
+  ( ( placeName | location ), ( ( note, persName? ) | ( persName, note? ) )? )
+|
+  ( note, ( ( ( placeName | location ), persName? ) | ( persName, ( placeName | location )? ) )? )
+)
+ — Syd, 2026-08-15 -->
   </exemplum>
   <remarks ident="interleave-remarks" xml:lang="en" versionDate="2025-05-18">
     <p>If an ODD file makes use of this element, current processing

@@ -658,6 +658,20 @@ that practice. -->
             <!-- ... -->
           </schemaSpec></egXML>
       </p>
+      <p>When a customization introduces new elements, and therefore one or more new namespaces, users may want to consider redefining
+        <att>defaultExceptions</att> on <gi>schemaSpec</gi> such that the new
+        namespace or namespaces are included. This is because elements matched by 
+        <gi>anyElement</gi> (e.g. the one used as the content of <gi>xenoData</gi>) must exclude any element that may carry 
+        an ID-type attribute (generally <att>xml:id</att>). 
+        This is particularly important if the target schema language is RELAX NG and one wishes to enable ID/IDREF/IDREFS compatibility mode: not adding 
+        the new namespaces to <att>defaultExceptions</att>
+        will result in <soCalled>conflicting ID-types</soCalled> errors.
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="MDNS-egXML-de" xml:lang="und" source="#UND">
+          <schemaSpec ns="http://www.example.org/ns/nonTEI" ident="example" defaultExceptions="http://www.example.org/ns/nonTEI http://www.tei-c.org/ns/1.0 http://www.tei-c.org/ns/Examples">
+          <!-- ... -->
+        </schemaSpec></egXML></p>
+      
+      
       <p>In addition to the TEI canonical namespace mentioned above, the TEI may also define
         namespaces for approved translations of the TEI schema into other languages.
         <!--These may be
@@ -729,10 +743,9 @@ that practice. -->
         how the TEI encoding schema might be adopted to meet 90% of the needs of 90% of the TEI user
         community, the TEI editors produced a brief tutorial defining one specific
           <soCalled>clean</soCalled> modification of the TEI schema, which they called TEI Lite.
-        This tutorial and its associated DTD became very popular and are still available from the
-        TEI web site at <ptr target="http://www.tei-c.org/Guidelines/Customization/Lite/"/>. The
-        tutorial and associated schema specification is also included as one of the exemplars
-        provided with TEI P5. </p>
+        This tutorial and its associated DTD became very popular and remain available in the TEI P5 Vault at <ptr target="https://tei-c.org/Vault/P4/Lite/"/>. The
+        lastest version of the tutorial and associated schema specification is included as one of the exemplars
+        provided with TEI P5 and is available from the TEI web site at <ptr target="https://tei-c.org/guidelines/customization/"/>. </p>
       <p>An updated and expanded version of this schema known as <ident>TEI simplePrint</ident> was
         added to the Exemplars at release 3.1.0. The elements it defines have been modified to take
         advantage of the <soCalled>processing model</soCalled> features (see further <ptr target="#TDPM"/>) introduced to the Guidelines at release 3.0.0. </p>

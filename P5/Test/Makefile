@@ -81,7 +81,7 @@ testmeta2010:
 	@echo " "
 	@echo "--------- P5/Test/Makefile work on target $@ ---------"
 	@echo check that TEI web site is up and responding ...
-	-TEISITE=`curl -s --head http://www.tei-c.org/Vault/P5/1.5.0/xml/tei/odd/p5subset.xml`
+	-TEISITE=`curl --silent --max-time 15 --show-error --head http://www.tei-c.org/Vault/P5/1.5.0/xml/tei/odd/p5subset.xml`
 ifdef TEISITE
 	@echo ... it is, so run tests
 	$(ANT) -f antruntest.xml -DoddFile=testmeta2010.odd -Dtestfile=testmeta2010.xml validateodd

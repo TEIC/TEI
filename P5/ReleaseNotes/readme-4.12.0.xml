@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI P5 version 4.12.0 and Stylesheets version 7.61.0 release notes</title>
+      </titleStmt>
+      <editionStmt>
+        <edition>
+          <date when="2026-07-28">Tuesday, 28 July 2026</date>
+        </edition>
+      </editionStmt>
+      <publicationStmt>
+        <authority>The Text Encoding Initiative</authority>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Created retrospectively from ChangeLog and GitHub trackers</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>Release 4.12.0 is codenamed <q>The Igor Release</q>, because July 28, 1823
+        marked the theatrical debut of Victor Frankenstein’s lab assistant (then named <q>Fritz</q>
+        but better known to us today as <q>Igor</q>) in 
+        <ref target="https://en.wikipedia.org/wiki/Presumption;_or,_the_Fate_of_Frankenstein">the very first stage adaptation of the novel</ref> 
+        <title level="m">Frankenstein</title>. Coincidentally this release introduces 
+        new encoding for theatrical performance data.</p>
+      <p>The release includes other revisions to the TEI Guidelines, and it resolves 
+        a number of issues. Several of these changes and corrections are a consequence of feature
+        requests or bugs reported by the TEI community using the GitHub tracking system. A full list
+        of the issues resolved in the course of this release cycle may be found under the <ref
+          target="https://github.com/TEIC/TEI/milestone/23?closed=1">4.12.0 milestone</ref>.  Many
+        thanks to the community contributors who reported issues, sent bug fixes, and helped with
+        the drafting that led to this release, including: Piotr Banski, Julia J. Beine, Lou Burnard, 
+        James Cummings, Gabriel Egan, Frederik Elwert, Dario Kampkaspar, Jun Ogawa, Kazuhiro Okada, 
+        and Klaus Rettinghaus. We are especially grateful to Peter Stadler for helping prepare and monitor 
+        new server infrastructure for this release.</p>
+      <p>The following changes are particularly worth highlighting in this release: 
+        <list>
+          <head>New encoding features</head>
+          <item>The <name type="datatype">teidata.point</name> datatype now allows an optional third coordinate to support the
+            encoding of surfaces and zones on three-dimensional objects, with new explanation and examples in the Guidelines 
+            (<ref target="https://github.com/TEIC/TEI/issues/2816">#2816</ref>, 
+            <ref target="https://github.com/TEIC/TEI/pull/2821">PR #2821</ref>, 
+            <ref target="https://github.com/TEIC/TEI/pull/2903">PR #2903</ref>, and
+            <ref target="https://github.com/TEIC/TEI/pull/2922">PR #2922</ref>).</item>
+          <item>We introduce <gi>interleave</gi> to simplify content modeling in ODD. With this release, <gi>interleave</gi> 
+            is now the preferred way for ODD customizers to indicate unordered content models 
+            (where elements may appear in any order). Consequently, we deprecate 
+            the use of <att>preserveOrder</att> on the <gi>sequence</gi> element to indicate unordered content, 
+            and this attribute will no longer be valid on the <gi>sequence</gi> element after May 6, 2027. 
+            Caution: The <gi>interleave</gi> element is intended for use in RELAX NG schemas, 
+            and will result in a nonfunctional DTD. (See <ref target="https://github.com/TEIC/TEI/issues/2154">#2154</ref> 
+            and <ref target="https://github.com/TEIC/TEI/pull/2538">PR #2538</ref>.)</item>
+        </list>
+        <list>
+          <head>Changes to content models and classes</head>
+          <item>Previously the <att>perf</att> attribute was only available on the <gi>move</gi> and <gi>tech</gi> elements
+            to encode performance-specific information. This release adds <att>perf</att> to a 
+            new class, <name type="class">att.performed</name>, to expand its use
+            to <gi>actor</gi> and members of <name type="class">model.stageLike</name>: <gi>camera</gi>, <gi>caption</gi>,
+            <gi>move</gi>, <gi>sound</gi>, <gi>stage</gi>, <gi>tech</gi>, and <gi>view</gi>. 
+            (See <ref target="https://github.com/TEIC/TEI/issues/2724">#2724</ref> and 
+            <ref target="https://github.com/TEIC/TEI/pull/2921">PR #2921</ref>.)
+           </item>
+          <item>With this release, the <gi>sp</gi> element is now permitted to contain an <gi>app</gi>
+            element as its only child (<ref target="https://github.com/TEIC/TEI/issues/2317">#2317</ref> 
+            and <ref target="https://github.com/TEIC/TEI/pull/2817">PR #2817</ref>).</item>
+          <item>The <gi>dictScrap</gi> element is now a member of <name type="class">model.entryPart</name>,
+            which permits it to be nested in the <gi>entryFree</gi> element 
+            (<ref target="https://github.com/TEIC/TEI/issues/2862">#2862</ref>).</item>
+          <item>With this release, <gi>org</gi>, <gi>place</gi>, and <gi>person</gi> are now 
+          members of <name type="class">att.datable</name> to permit these to be marked with date and date-range information
+            (<ref target="https://github.com/TEIC/TEI/issues/2451">#2451</ref> and 
+            <ref target="https://github.com/TEIC/TEI/pull/2881">PR #2881</ref>).</item>
+          <item>The <att>role</att> attribute on the <gi>personGrp</gi> element has now been modified to permit 
+            multiple values, mirroring its definition on the <gi>person</gi> element 
+            (<ref target="https://github.com/TEIC/TEI/issues/2890">#2890</ref> 
+            and <ref target="https://github.com/TEIC/TEI/pull/2891">PR #2891</ref>).</item>
+          <item>With this release, <gi>birth</gi> and <gi>death</gi> are now members of
+            <name type="class">att.locatable</name>, which permits applying the <att>where</att> attribute to these elements.
+            Examples are provided to show how these can be used with linked data resources. (See 
+            <ref target="https://github.com/TEIC/TEI/issues/2873">#2873</ref> and  
+            <ref target="https://github.com/TEIC/TEI/pull/2923">PR #2923</ref>.)</item>
+          <item>The <gi>gloss</gi> element has been added to <name type="class">att.placement</name> and explanation has 
+            been added to the Guidelines so that encoders can indicate their positioning in a document 
+            (<ref target="https://github.com/TEIC/TEI/issues/2892">#2892</ref>, 
+            <ref target="https://github.com/TEIC/TEI/pull/2899">PR #2899</ref> and
+            <ref target="https://github.com/TEIC/TEI/pull/2902">PR #2902</ref>).</item>
+          <item>The <gi>q</gi> element is now a member of <name type="class">att.typed</name>, giving it 
+            <att>type</att> and <att>subtype</att> attributes (<ref target="https://github.com/TEIC/TEI/issues/2830">#2830</ref> 
+            and <ref target="https://github.com/TEIC/TEI/pull/2831">PR #2831</ref>).</item>
+          <item>This release resolves a problem in ODD processing by removing Schematron constraints 
+            that had required each occurrence of a <gi>sequence</gi>, <gi>alternate</gi>, 
+            or the new <gi>interleave</gi> element to have two or more children. 
+            These elements may each now have only one child. (See <ref target="https://github.com/TEIC/TEI/issues/2913">#2913</ref> 
+            and <ref target="https://github.com/TEIC/TEI/pull/2915">PR #2915</ref>.) </item>
+          <item>Some excessively complicated XPath in the Schematron for the class <name type="class">att.identified</name> 
+            was simplified, updated, and thoroughly tested (<ref target="https://github.com/TEIC/TEI/issues/2898">#2898</ref> 
+            and <ref target="https://github.com/TEIC/TEI/pull/2900">PR #2900</ref>).</item>
+        </list>
+        <!--<list>
+          <head>Changes to classes</head>
+         <item></item>
+        </list>-->
+        <list>
+          <head>Changes to the build process for publishing the Guidelines</head>
+        <item>Modifications have been made to the scripts that initiate build tests to prevent them failing when the TEI website
+          is down (<ref target="https://github.com/TEIC/TEI/issues/2908">#2908</ref> and 
+          <ref target="https://github.com/TEIC/TEI/pull/2909">PR #2909</ref>).</item>
+        </list>
+      </p>
+   <p>The following changes introduced with this release could invalidate ODD customizations in
+        TEI projects. Those maintaining ODD customizations of the TEI should be aware of the
+        following changes and may need to adapt their ODD files accordingly. 
+        <list>
+          <head>ODD-breaking changes and deprecations</head>
+          <item>The <att>ident</att> attribute of the <gi>remarks</gi>
+            element will be required after 2027-06-01. Also, <att>ident</att> is now in use on 
+            <gi>remarks</gi> in the Guidelines. (See <ref target="https://github.com/TEIC/TEI/issues/2896">#2896</ref> 
+            and <ref target="https://github.com/TEIC/TEI/pull/2918">PR #2918</ref>.)</item>
+          <item>This release deprecates the direct nesting of <gi>valList</gi> within <gi>elementSpec</gi>. <gi>valList</gi>
+            children of <gi>elementSpec</gi> will be invalid after 2027-08-31. (See 
+            <ref target="https://github.com/TEIC/TEI/issues/2876">#2876</ref> and
+            <ref target="https://github.com/TEIC/TEI/pull/2886">PR #2886</ref>.)</item>
+        </list>
+      </p>
+      <p>
+        <list>
+          <head>Revisions of prose and examples</head>
+          <item>Schematron messages throughout the Guidelines have been updated so that 
+            whenever the message is a sentence it ends in the appropriate punctuation mark, 
+            and element names are now wrapped in angle brackets to improve their visibility. 
+            We caution that this improvement in visibility also introduces a problem: 
+            Schematron messages that have element names so indicated cannot be copied 
+            as well-formed XML and pasted directly into an XML document 
+            (<ref target="https://github.com/TEIC/TEI/pull/2910">#PR 2910</ref> 
+            and <ref target="https://github.com/TEIC/TEI/pull/2911">#PR 2911</ref>).</item>
+          <item>A new paragraph has been added to the USE chapter to advise on use of the <att>defaultExceptions</att> attribute
+            when introducing elements in other namespaces or no namespace in an ODD customization
+            (<ref target="https://github.com/TEIC/TEI/issues/2837">#2837</ref> and 
+            <ref target="https://github.com/TEIC/TEI/pull/2928">PR #2928</ref>).</item>
+          <item>A broken link in the USE chapter has been corrected by pointing to a better resource in the TEI Vault 
+            (<ref target="https://github.com/TEIC/TEI/issues/2700">#2700</ref> 
+            and <ref target="https://github.com/TEIC/TEI/pull/2934">PR #2934</ref>).</item>
+          <item>The explanation, encoding, and punctuation of the <gi>appInfo</gi> and <gi>application</gi> 
+            elements has been improved (<ref target="https://github.com/TEIC/TEI/pull/2901">PR #2901</ref>).</item>
+          <item>The explanation of <q>prefix</q> and <gi>prefixDef</gi> have been improved 
+            (<ref target="https://github.com/TEIC/TEI/issues/2001">#2001</ref> and 
+            <ref target="https://github.com/TEIC/TEI/pull/2885">PR #2885</ref>).</item>
+          <item>The <gi>soCalled</gi> element now has a new German description, and new glosses 
+            in German and Italian (<ref target="https://github.com/TEIC/TEI/pull/2878">PR #2878</ref>).</item>
+          <item>German translations for units are added to <name type="class">att.dimensions</name>
+            and <name type="class">att.measurement</name> 
+            (<ref target="https://github.com/TEIC/TEI/pull/2884">PR #2884</ref>).</item>
+          <item>Glosses in English, French, and German have been supplied for the <att>rendition</att>
+            attribute (<ref target="https://github.com/TEIC/TEI/issues/2787">#2787</ref> 
+            and <ref target="https://github.com/TEIC/TEI/pull/2791">PR #2791</ref>).</item>
+        </list>
+       <!--<list>
+          <head>Documentation</head>
+        <item>...</item>
+        </list>-->
+        <list>
+          <head>Housekeeping</head>
+          <item>The <gi>re</gi> element, deprecated and marked for removal in March 2026, has now been removed from the Guidelines 
+            (<ref target="https://github.com/TEIC/TEI/issues/2456">#2456</ref> and 
+            <ref target="https://github.com/TEIC/TEI/pull/2874">PR #2874</ref>).</item>
+          <item>Processing efficiency has been improved for building the TEI P5 Guidelines by revising an XPath comparison operator
+            in p5odds.odd (<ref target="https://github.com/TEIC/TEI/issues/2926">#2926</ref> 
+            and <ref target="https://github.com/TEIC/TEI/pull/2927">PR #2927</ref>).</item>
+        </list>
+      </p>
+     <!-- STYLESHEETS-->
+
+     <p> The Stylesheets are maintained separately from the Guidelines in <ref
+          target="https://github.com/TEIC/Stylesheets">the Stylesheets repository</ref>, which 
+       provides processing of TEI ODD files for <ref target="https://romabeta.tei-c.org/">Roma</ref> and
+       <ref target="https://teigarage.tei-c.org/">TEIGarage</ref> as well as other TEI
+       conversions. With this release, the Stylesheets repository has been
+     updated to version 7.61.0 with necessary updates to the test suite and code required for producing the Guidelines.</p>
+       
+       <!-- SAVE FOR LATER RELEASE:
+      <p>Until this release, the Stylesheets has given <q>magic</q> or exceptional treatment to the
+         the namespace prefix <q>xlink:</q>, allowing ODD developers to apply the prefix without declaring the
+        xlink namespace. This special handling has been reserved exclusively for the xlink namespace, and not 
+        for any others used with TEI. With this release of the Stylesheets, we remove the special handling. 
+        The change is introduced without a deprecation period because, without the magic handling of the namespace,
+        the necessity to declare the namespace will be reported in routine processing as with other namespaces 
+        (<ref target="https://github.com/TEIC/Stylesheets/issues/800">Stylesheets #800</ref> 
+        and <ref target="https://github.com/TEIC/Stylesheets/pull/811">PR #811</ref>). 
+        Note that this change in Stylesheets processing could invalidate ODD customizations in TEI projects. 
+        Those maintaining ODD customizations of the TEI may need to adapt their ODD files if they reference the <q>xlink:</q>
+        namespace.</p>-->
+    </body>
+  </text>
+</TEI>
