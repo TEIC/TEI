@@ -131,7 +131,7 @@ detest: checkrnv
 #	svrl_text_only.xslt we used
 #	xmllint --xpath '//*[local-name(.)="text"]/text()[normalize-space(.)!=""]' IN.svrl | perl -pe 's, +, ,g;' | egrep -v '^ *$$'
 #	which produces a similar messages-only log file, but that
-#	version did not containt the XPaths to where the problem was
+#	version did not contain the XPaths to where the problem was
 #	found.
 
 
