@@ -367,12 +367,14 @@ with others.--></p>
       <div type="div2" xml:id="STGA">
         <head>Global Attributes</head>
         <p>The following attributes are defined in the infrastructure module for every TEI element. <specList>
-            <specDesc key="att.global" atts="xml:id n xml:lang rend style               rendition xml:base xml:space               source cert resp                "/>
+            <specDesc key="att.global" atts="xml:id n xml:lang rend style               rendition xml:base xml:space               source cert resp edStatus"/>
           </specList>
         </p>
         <p>Some of these attributes (specifically <att>xml:id</att>, <att>n</att>, <att>xml:lang</att>, 
           <att>xml:base</att> and <att>xml:space</att>) are provided by the <ident type="class">att.global</ident> attribute class itself.
-          The others are provided by one its subclasses <ident type="class">att.global.rendition</ident>,
+          The others are provided by one its subclasses 
+          <ident type="class">att.global.editorialStatus</ident>,
+          <ident type="class">att.global.rendition</ident>,
           <ident type="class">att.global.responsibility</ident>, or <ident type="class">att.global.source</ident>.
           Their usage is discussed in the following subsections.</p><p>Several other globally-available
             attributes are defined by other subclasses of the <ident type="class">att.global</ident> class. These 
@@ -617,7 +619,7 @@ Georgie, and Dim, ... &lt;/p&gt;</egXML>
         
      
         <div xml:id="STGAso">
-          <head>Sources, certainty, and responsibility</head>
+          <head>Sources, certainty, responsibility, and editorial status</head>
           <p>The <att>source</att> attribute is used to indicate the source of an element and its content, for example 
             by pointing to a bibliographic citation for a quotation to indicate the source from which it derives.  The target of the
             pointer may be an entry in a bibliographic list of some kind, or a pointer to a digital version of the source itself. </p>
@@ -718,8 +720,44 @@ for they shall be called the children of God.</egXML>
             Pointing to multiple <gi>respStmt</gi>s allows the encoder to specify clearly each of the roles played in part of a TEI file (creating, transcribing, encoding, editing, proofing etc.). 
            If appropriate, the <gi>name</gi> element inside a <gi>respStmt</gi> may also be associated with a more detailed <gi>person</gi>
             or <gi>org</gi> element using methods discussed in chapter <ptr target="#ND"/>.</p>
-        </div>
+          <p>The <att>edStatus</att> attribute is used to indicate the editorial status of an element. Encoders can use it to keep track of their encoding workflow. Values may be defined by encoding projects based on their specific needs. Suggested values include, but are not limited to:
+          <list>
+            <item>draft</item>
+            <item>candidate</item>
+            <item>expired</item>
+            <item>frozen</item>
+            <item>proposed</item>
+            <item>proofed</item>
+            <item>submitted</item>
+            <item>unfinished</item>
+            <item>unpublished</item>
+            <item>published</item>
+            <item>cross-checked</item>
+            <item>approved</item>
+            <item>cleared</item>
+            <item>deprecated</item>
+          </list>
+          The example below shows how <att>edStatus</att> may be used to indicate that the encoding of the quote has been cross-checked (e.g. by multiple editors), while the bibliographical entry is yet to be finished as it’s missing page numbers.
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="STGAso-egXML-ed">
+            <p>
+              <!-- ... -->
+              <quote source="#chicago-15_ed2" edStatus="cross-checked">Grammatical theories 
+                are in flux, and the more we learn, the less we 
+                seem to know.</quote>
+              <!-- ... -->
+            </p>
+            <!-- ... -->
+            <bibl xml:id="chicago-15_ed2" edStatus="unfinished"><title level="m">The Chicago Manual of Style</title>, 
+              <edition>15th edition</edition>. 
+              <pubPlace>Chicago</pubPlace>: 
+              <publisher>University of Chicago Press</publisher> 
+              (<date>2003</date>), 
+              <!-- biblScope yet to be encoded -->.
+            </bibl>
+          </egXML>
+        </p>
         
+        </div>
         <div xml:id="STGAba">
           <head>Evaluation of Links</head>
           <p>Several TEI elements carry attributes whose values are defined as <code>anyURI</code>,
@@ -903,6 +941,7 @@ one, or vice versa, should be done with care. </p>
             <xi:include href="../../Specs/att.editLike.xml"/>
             <xi:include href="../../Specs/att.edition.xml"/>
             <xi:include href="../../Specs/att.fragmentable.xml"/>
+            <xi:include href="../../Specs/att.global.editorialStatus.xml"/>
             <xi:include href="../../Specs/att.global.rendition.xml"/>
             <xi:include href="../../Specs/att.global.responsibility.xml"/>
             <xi:include href="../../Specs/att.global.source.xml"/>
