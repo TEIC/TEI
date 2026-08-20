@@ -64,8 +64,10 @@
              $gi][2]" because then an error would be generated for
              each of the multiple occurrences of $gi. -->
         <sch:let name="gi" value="name(.)"/>
-        <sch:report test="preceding-sibling::*[ name(.) eq $gi ]                           and                           not( following-sibling::*[ name(.) eq $gi ] )">
-          Only one <sch:name/> is allowed as a child of <sch:value-of select="name(..)"/>.
+        <sch:report test="preceding-sibling::*[ name(.) eq $gi ]
+                          and
+                          not( following-sibling::*[ name(.) eq $gi ] )">
+          Only one &lt;<sch:name/>> is allowed as a child of &lt;<sch:value-of select="name(..)"/>>.
         </sch:report>
       </sch:rule>
     </constraint>

@@ -107,9 +107,12 @@ detest: checkrnv
 	@echo "--------- P5/Test/Makefile work on target $@ ---------"
 	@echo BUILD: Test file with deliberate mistakes
 	@echo "--- run ant to validate ODD file (./detest.odd) against p5odds.rng & p5odds.isosch:"
-	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd validateodd > detest_odd_schematron.log 2>&1
+	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd validateodd > detest_odd_schematron.run 2>&1
 #	If a RELAX NG error is found by the above cmd, it dies, and this (the "detest") target fails.
-#	Any Schematron errors that are found are written to detest_odd_schematron.svrl.
+#	Any Schematron errors that are found are written to detest_odd_schematron.svrl, which we now
+#	convert to detest_odd_schematron.log
+	@echo "--- extract only the messages from the resulting SVRL (./detest_odd_schematron.svrl → ./detest_odd_schematron.log):"
+	$(SAXON) -s:detest_odd_schematron.svrl -xsl:../Utilities/svrl_text_only.xslt -o:detest_odd_schematron.log
 	@echo "--- run ant to compile ODD file into RelaxNG and Schematron (detest.odd → detest.rng & detest.isosch):"
 	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd compileodd rng isoschematron 
 	@echo "--- convert RelaxNG to compact syntax with trang (./detest.rng → ./detest.rnc):"
@@ -118,34 +121,18 @@ detest: checkrnv
 	-rnv detest.rnc detest.xml > detest_xml_relaxng.log 2>&1
 	@echo "--- validate XML file (./detest.xml) against Schematron (./detest.xsl) using Saxon:"
 	$(SAXON) -s:detest.xml -xsl:detest.xsl > detest.svrl
-	@echo --- Extract only the messages from the resulting SVRL
+	@echo "--- extract only the messages from the resulting SVRL (./detest.svrl → ./detest_xml_schematron.log):"
 	$(SAXON) -s:detest.svrl -xsl:../Utilities/svrl_text_only.xslt -o:detest_xml_schematron.log
 	@echo "--- compare each of the 3 log files just created to the corresponding one in expected-results/:"
 	diff -C0 -bBw expected-results/detest_xml_relaxng.log    ./
 	diff -C0 -bBw expected-results/detest_xml_schematron.log ./
-#	Note on following somewhat complicated 'diff' command:
-#	The SVRL file contains lots of stuff, like timestamps,
-#	filepaths, and auto-assigned namespace prefixes that are
-#	different when executed in different environments (like the
-#	Travis server, e.g.). Thus rather than comparing the files
-#	directly, we extract only the <svrl:text> elements first, and
-#	compare the results of only that. (Yes, it would be more
-#	efficient to store expected-results/detest_odd_schematron.txt
-#	in the repo rather than generating it every time it is to be
-#	tested, but it seems to me this generation process is wonky
-#	enough that it would be difficult to reproduce every time the
-#	Schematron is updated.)
-	@xmllint --xpath '//*[local-name(.)="text"]/text()[normalize-space(.)!=""]' \
-	        expected-results/detest_odd_schematron.svrl                         \
-        | perl -pe 's, +, ,g;'                                                      \
-	| egrep -v '^ *$$'                                                          \
-	> expected-results/detest_odd_schematron.txt
-	@xmllint --xpath '//*[local-name(.)="text"]/text()[normalize-space(.)!=""]' \
-	                         detest_odd_schematron.svrl                         \
-        | perl -pe 's, +, ,g;'                                                      \
-	| egrep -v '^ *$$'                                                          \
-	>                  detest_odd_schematron.txt
-	diff -C0 -bBw expected-results/detest_odd_schematron.txt ./
+	diff -C0 -bBw expected-results/detest_odd_schematron.log ./
+#	Note for posterity: at one point instead of
+#	svrl_text_only.xslt we used
+#	xmllint --xpath '//*[local-name(.)="text"]/text()[normalize-space(.)!=""]' IN.svrl | perl -pe 's, +, ,g;' | egrep -v '^ *$$'
+#	which produces a similar messages-only log file, but that
+#	version did not contain the XPaths to where the problem was
+#	found.
 
 
 clean:
@@ -154,6 +141,6 @@ clean:
 	rm -f test*.doc.xml test*.rnc test*.dtd test*.compiled.* test*.xsd test*.rnc test*.rng test*.xsl test*.isosch
 	rm -rf LOG *~ *.xsd Schema RomaResults DTD
 	rm -rf *.doc.*
-	rm -f detest.log detest.log.all
+	rm -f detest.isosch detest.odd.processed detest.rn[cg] detest.svrl detest.xsl
+	rm -f detest_*
 	rm -f *-examples.rng *-examples.rnc *test*.nvdl *-ex.odd
-	rm -f detest.rnc    detest.rng   detest.dtd   detest.isosch

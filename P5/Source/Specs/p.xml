@@ -31,8 +31,20 @@
   <constraintSpec ident="abstractModel-structure-p-in-ab-or-p" scheme="schematron" xml:lang="en">
     <constraint>
       <sch:rule context="tei:p">
-        <sch:report test="(ancestor::tei:ab or ancestor::tei:p) and                        not( ancestor::tei:floatingText                           | parent::tei:exemplum                           | parent::tei:item                           | parent::tei:note                           | parent::tei:q                           | parent::tei:quote                           | parent::tei:remarks                           | parent::tei:said                           | parent::tei:sp                           | parent::tei:stage                           | parent::tei:cell                           | parent::tei:figure )">
-          Abstract model violation: Paragraphs may not occur inside other paragraphs or ab elements.
+        <sch:report test="(ancestor::tei:ab or ancestor::tei:p) and
+                       not( ancestor::tei:floatingText
+                          | parent::tei:exemplum
+                          | parent::tei:item
+                          | parent::tei:note
+                          | parent::tei:q
+                          | parent::tei:quote
+                          | parent::tei:remarks
+                          | parent::tei:said
+                          | parent::tei:sp
+                          | parent::tei:stage
+                          | parent::tei:cell
+                          | parent::tei:figure )">
+          Abstract model violation: Paragraphs may not occur inside other paragraphs or &lt;ab> elements.
         </sch:report>
       </sch:rule>
     </constraint>
@@ -41,7 +53,7 @@
     <constraint>
       <sch:rule context="tei:l//tei:p">
         <sch:assert test="ancestor::tei:floatingText | parent::tei:figure | parent::tei:note">
-          Abstract model violation: Metrical lines may not contain higher-level structural elements such as div, p, or ab, unless p is a child of figure or note, or is a descendant of floatingText.
+          Abstract model violation: Metrical lines (&lt;l> elements) may not contain higher-level structural elements such as &lt;div>, &lt;p>, or &lt;ab>, unless &lt;p> is a child of &lt;figure> or &lt;note>, or is a descendant of &lt;floatingText>.
         </sch:assert>
       </sch:rule>
     </constraint>
