@@ -428,7 +428,7 @@ phenomenon and alternate approaches to encoding it, this section
 describes ways of encoding the following textual features, all
 of which are conventionally rendered using some kind of highlighting:
 <list rend="bulleted">
-<item>emphasis, foreign words and other linguistically distinct uses
+<item>emphasis, words in other languages or other linguistically distinct uses
 of highlighting</item>
 <item>representation of speech and thought, quotation, etc.</item>
 <item>technical terms, glosses, etc.</item></list>
@@ -467,7 +467,7 @@ places in older texts, editorial corrections or additions, etc.</item></list>
  </p>
 <p>The textual functions indicated by highlighting may not be rendered
 consistently in different parts of a text or in different texts. (For
-example, a foreign word may appear in italics if the surrounding text is
+example, a word in another language may appear in italics if the surrounding text is
 in roman, but in roman if the surrounding text is in italics.)  For this
 reason, these Guidelines distinguish between the encoding of rendering
 itself and the encoding of the underlying feature expressed by it.
@@ -543,11 +543,11 @@ which are not discussed in this section include <gi>title</gi>
 (discussed in section <ptr target="#COBI"/>) and <gi>name</gi> (discussed
 in section <ptr target="#CONARS"/>).
  </p></div>
-<div type="div3" xml:id="COHQH"><head>Emphasis, Foreign Words, and Unusual Language</head>
+<div type="div3" xml:id="COHQH"><head>Emphasis, Words in Other Languages, and Unusual Language</head>
 <p>This subsection discusses the following elements:
 <specList><specDesc key="foreign"/><specDesc key="emph"/><specDesc key="distinct"/></specList>
 These elements are all members of the <ident type="class">model.emphLike</ident> class. </p>
-<div type="div4" xml:id="COHQHF"><head>Foreign Words or Expressions</head>
+<div type="div4" xml:id="COHQHF"><head>Words or Expressions in Other Languages</head>
 <p>Words or phrases which are not in the main language of the text
 should be tagged as such, at least where the fact is indicated in the
 text. Where the word or phrase concerned is already distinguished from
@@ -558,15 +558,33 @@ specify additionally that its language distinguishes it from the
 surrounding text. Any element in the TEI scheme may take an
 <att>xml:lang</att> attribute, which specifies both the writing system
 and the language used by its content (see sections <ptr target="#STGAla"/> and <ptr target="#CHSH"/> for discussion of this
-attribute and its values respectively). Where there is no other
-applicable element, the element <gi>foreign</gi> may be used to
-provide a peg onto which the <att>xml:lang</att> may be attached.
+attribute and its values respectively). 
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="COHQHF-egXML-me" source="#COHQHF-eg-5"><q>Aren't you confusing <foreign xml:lang="la">post hoc</foreign> with <foreign xml:lang="la">propter
 hoc</foreign>?</q> said the Bee Master. <q>Wax-moth only succeed when
 weak bees let them in.</q></egXML>
+  Where there is no other
+  applicable element, the element <gi>seg</gi> may be used to
+  provide a peg onto which the <att>xml:lang</att> may be attached.
+</p>
+  
+<p>The <gi>foreign</gi> element should not be used in multilingual texts or texts originating from multilingual contexts because the words 
+  in question may not be <soCalled>foreign</soCalled> to their intended audience.
+  In these cases it is also preferable to use <gi>seg</gi> with the appropriate <att>xml:lang</att>, or <gi>emph</gi> if the text is emphasized.</p>
+  <p>The following examples originate from bilingual contexts, namely English and Scots and Spanish and French. 
+    <!-- TODO: add source -->
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="COHQF-egXML-aa" >
+    where there was "<del>a</del> <seg xml:lang="sco">Deel a Sole</seg> upon the Shoe"
+  </egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="COHQF-egXML-kbl" source="#COHQHF-eg-kbl">
+    <closer xml:lang="es">y firmo su Mrd. Con las demas partes Expressadas. de que yo el Es.<hi rend="sup">no</hi> Doy fe
+      <lb/>Derneville Fran.<hi rend="sup">co</hi> Broutin
+      <lb/>D Leonardo Mazange Frãn.<hi rend="sup">co</hi> Liotau
+      <lb/>Louis Lessier <emph xml:lang="fr">fils</emph>
+    </closer>
+  </egXML>
 </p>
 
-<p>The <gi>foreign</gi> element should not be used to represent foreign words
+<p>The <gi>foreign</gi> element should additionally not be used to represent words in another language
 which are mentioned or glossed within the text: for these use the
 appropriate element from section <ptr target="#COHTG"/> below. Compare the
 following example sentences:
@@ -600,7 +618,7 @@ indicated by the use of underlining.  As the following examples
 demonstrate, an encoder may choose whether or not to make explicit the
 particular type of rendition associated with the emphasis. If a source
 text consistently renders a particular feature (e.g. emphasis or words
-in foreign languages) in a particular way, the rendering associated
+in a different language) in a particular way, the rendering associated
 with that feature may be described in the TEI header using the
 <gi>rendition</gi> element.  The <att>rend</att>,
 <att>rendition</att>, or <att>style</att> attributes may then be used
