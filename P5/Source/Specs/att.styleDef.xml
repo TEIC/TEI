@@ -47,12 +47,22 @@
         </valItem>
       </valList>
       <remarks ident="att.styleDef-attr.scheme-remarks" versionDate="2013-04-11" xml:lang="en">
-        <p>If no value for the @scheme attribute is provided, then the default assumption should be that CSS is in use.</p>
+        <p>If no value for the <att>scheme</att> attribute is provided, then the default assumption should be that CSS is in use.</p>
       </remarks>
     </attDef>
     <attDef ident="schemeVersion" usage="opt">
       <desc versionDate="2013-04-12" xml:lang="en">supplies a version number for the style language provided in <att>scheme</att>.</desc>
-      <datatype><dataRef key="teidata.versionNumber"/></datatype>
+      <datatype><dataRef key="teidata.version"/></datatype>
+      <!--
+          All version numbers of XSLFO (1.0, & 1.1) and of CSS (1, 2,
+          2.1, & 3) are expressible using teidata.version.Unicode. But
+          we cannot predcit what the version numbering system for
+          other schemes a project might use are, so here we are
+          accepting anything that looks like any version numbering
+          system we know about. If there is a need for some other
+          system, it should probably be a new datatype. —Syd,
+          2026-08-15
+      -->
       <constraintSpec ident="schemeVersionRequiresScheme" scheme="schematron" xml:lang="en">
         <constraint>
           <sch:rule context="tei:*[@schemeVersion]">
