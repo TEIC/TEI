@@ -20,7 +20,7 @@
     </fileDesc>
     <revisionDesc>
       <change when="2024-10-29" who="#sbauman.emt">
-	Added <att>xml:lang</att> to every <gi>constraintSpec</gi>
+        Added <att>xml:lang</att> to every <gi>constraintSpec</gi>
       </change>
       <change when="2024-03-13" who="#sbauman.emt">
         Add specifications for several new elements
@@ -71,7 +71,10 @@
   <text>
     <body>
       <div>
-        <head>A Test Schema</head>
+        <head>A Test <elementSpec ident="erroneous"
+        mode="add"><desc>should be flagged as an error: elementSpec
+        should not be in head; also this desc does not have @xml:lang
+        nor @versionDate.</desc></elementSpec>Schema</head>
         <p>Here is the introduction to your document</p>
         <specGrp xml:id="limit_attrs_on_elementRef">
           <elementRef key="p" minOccurs="2" maxOccurs="4">
@@ -84,7 +87,7 @@
           <moduleRef key="header"/>
           <moduleRef key="core"/>
           <moduleRef key="tei"/>
-	  <moduleRef key="cmc"/>
+          <moduleRef key="cmc"/>
           <moduleRef key="textstructure"/>
           <moduleRef key="analysis"/>
           <moduleRef key="textcrit"/>
@@ -243,8 +246,8 @@
           </elementSpec>
           <elementSpec ident="l" mode="change">
             <classes mode="replace">
-	      <!-- This should fire an error becase "att.metrical", "att.enjamb",
-		   and "model.lLike" are not in alphabetical order. -->
+              <!-- This should fire an error becase "att.metrical", "att.enjamb",
+                   and "model.lLike" are not in alphabetical order. -->
               <memberOf key="att.global"/>
               <memberOf key="att.metrical"/>
               <memberOf key="att.enjamb"/>
@@ -464,7 +467,7 @@
                 </valList>
               </attDef>
             </attList>
-            <remarks ident="blort2-remarks" xml:lang="en">
+            <remarks versionDate="2024-03-13" ident="blort2-remarks" xml:lang="en">
               <p>This element tests schematron constraints that try to
               ensure the saneness of <gi>defaultVal</gi></p>
             </remarks>
@@ -546,7 +549,8 @@
                 <desc xml:lang="en" versionDate="2022-04-04">change of type for the sake of change (attr desc)</desc>
               </attDef>
             </attList>
-            <remarks ident="abbr-remarks" xml:lang="en"><p>change of abbr for the sake of change (remarks)</p></remarks>
+            <remarks versionDate="2022-04-04"
+                     ident="abbr-remarks" xml:lang="en"><p>change of abbr for the sake of change (remarks)</p></remarks>
             <listRef>
               <ref type="invalid" n="1">no target (2B caught by Schematron)</ref>
               <ref type="valid" n="2" target="https://www.example.edu/tst">good target absolute URI</ref>
