@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
+<?xml-model href="https://jenkins-paderborn.tei-c.org/view/LingSIG/job/TEIP5-LingSIG-att.linguistic.dependency/ws/P5/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<!--
+  https://jenkins-paderborn.tei-c.org/view/LingSIG/job/TEIP5-LingSIG-att.linguistic.dependency/lastSuccessfulBuild/artifact/P5/p5.nvdl
+  Note the above PI substitution that enables us to use the added spec file. The original PI is below:
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>-->
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" xml:id="ATTLINGDEP" type="atts" ident="att.linguistic.dependency">
+  <desc versionDate="2025-12-02" xml:lang="en">provides attributes for
+    annotating dependency relations between word-level elements.</desc>
+  <classes/>
+  <attList>
+    <attDef ident="depN" usage="opt">
+      <gloss versionDate="2025-12-02" xml:lang="en">token index</gloss>
+      <desc versionDate="2025-12-02" xml:lang="en">encodes the token index or index
+        range of a word-level element in a syntactic dependency relation.</desc>
+      <datatype><dataRef key="teidata.word"/></datatype>
+      <remarks xml:lang="en" ident="att.linguistic.dependency.depN-remarks" versionDate="2025-12-02">
+        <p>The value of <att>depN</att> is usually an integer or a hyphen-separated range of
+          integers; for special cases one may also use specific notations like <val>5.1</val> (cf.
+          the example below).</p>
+      </remarks>
+    </attDef>
+    <attDef ident="depR" usage="opt">
+      <gloss versionDate="2025-12-02" xml:lang="en">syntactic dependency relation</gloss>
+      <desc versionDate="2025-12-02" xml:lang="en">encodes a dependency relation
+        between the element bearing this attribute and its syntactic head in
+        terms of a pair consisting of the head’s token index and <!-- a label
+        for --> the type of the dependency relation.</desc>
+      <datatype><dataRef key="teidata.text"/></datatype>
+      <remarks ident="att.linguistic.dependency.depR-remarks" versionDate="2025-12-02" xml:lang="en">
+        <p>The value of <att>depR</att> should use a colon to separate the head’s token index
+          from<!-- the label for --> the type of the dependency relation.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="depE" usage="opt">
+      <gloss versionDate="2025-12-02" xml:lang="en">enhanced syntactic dependency relations</gloss>
+      <desc versionDate="2025-12-02" xml:lang="en">encodes enhanced syntactic
+        dependency relations between the element bearing this attribute and its
+        syntactic heads in terms of a list of pairs each consisting of the
+        head’s token index and <!-- a label for --> the type of the dependency
+        relation.</desc>
+      <datatype><dataRef key="teidata.text"/></datatype>
+      <remarks ident="att.linguistic.dependency.depE-remarks" versionDate="2025-12-02" xml:lang="en">
+        <p>The value of <att>depE</att> should use a colon to separate the head’s token index from
+          <!-- the label for --> the type of the dependency relation, and a pipe symbol as a
+          list-item separator.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <p>Universal Dependency (UD) annotation of the English sentence <q>She buys
+    books.</q>:</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <s>
+        <w depN="1" depR="2:nsubj" pos="PRON" lemma="she">She</w>
+        <w depN="2" depR="0:root" pos="VERB" lemma="buy">buys</w>
+        <w depN="3" depR="2:obj" pos="NOUN" lemma="book" join="right">books</w>
+        <pc depN="4" depR="2:punct" pos="PUNCT" lemma=".">.</pc>
+      </s>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <p>Universal Dependency (UD) annotation of the English sentence <q>She buys and sells books.</q>.</p>
+    <p>Note that the value of <att>pos</att> is a list, in this case used for two kinds of tagsets: universal 
+      (<soCalled>UPOS</soCalled> in the table below) and language-particular (<soCalled>XPOS</soCalled>).</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <s>
+        <w depN="1" depR="2:nsubj" depE="2:nsubj|4:nsubj" pos="PRON PRP" msd="Case=Nom|Gender=Fem|Number=Sing|Person=3|PronType=Prs" lemma="she">She</w>
+        <w depN="2" depR="0:root" depE="0:root" pos="VERB VBZ" msd="Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin" lemma="buy">buys</w>
+        <w depN="3" depR="4:cc" depE="4:cc" pos="CCONJ CC" lemma="and">and</w>
+        <w depN="4" depR="2:conj" depE="0:root|2:conj" pos="VERB VBZ" msd="Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin" lemma="sell">sells</w>
+        <w depN="5" depR="2:obj" depE="2:obj|4:obj" pos="NOUN NNS" msd="Number=Plur" lemma="book" join="right">books</w>
+        <pc depN="6" depR="2:punct" depE="2:punct" pos="PUNCT ." lemma=".">.</pc>
+      </s>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <p>Universal Dependency (UD) annotation of the English sentence
+      <q>She likes coffee and he tea.</q>:</p>
+    <p>This gapping example shows the difference between basic dependency
+      relations, here with an elided (absent) second occurrence of
+      <mentioned>likes</mentioned>, and expanded dependency relations, here
+      featuring an empty syntactic atom (with token index <val>5.1</val>). (For
+      the representation of empty nodes in UD, cf.
+      <ptr target="https://universaldependencies.org/format.html#words-tokens-and-empty-nodes"/>.)</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <s>
+        <w depN="1" depR="2:nsubj" depE="2:nsubj" pos="PRON" lemma="she">She</w>
+        <w depN="2" depR="0:root" depE="0:root" pos="VERB" lemma="like">likes</w>
+        <w depN="3" depR="2:obj" depE="2:obj" pos="NOUN" lemma="coffee">coffee</w>
+        <w depN="4" depR="5:cc" depE="5.1:cc" pos="CCONJ" lemma="and">and</w>
+        <w depN="5" depR="2:conj" depE="5.1:nsubj" pos="PRON" lemma="he">he</w>
+        <w depN="5.1" depE="2:conj" pos="VERB" lemma="like">likes</w>
+        <w depN="6" depR="5:orphan" depE="5.1:obj" pos="NOUN" lemma="tea" join="right">tea</w>
+        <pc depN="7" depR="2:punct" depE="5.1:punct" pos="PUNCT" lemma=".">.</pc>
+      </s>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <p>Universal Dependency (UD) annotation of the German noun phrase <q
+    xml:lang="de">ein Hotel zum Wohlfühlen</q>.</p>
+    <p>This example illustrates the handling of a surface word form like
+      <mentioned>zum</mentioned> (with token index range <val>3-4</val>) which
+      is analysed here as a contraction of the syntactic atoms <mentioned>zu</mentioned>
+      and <mentioned>dem</mentioned> (with token indices <val>3</val> and
+      <val>4</val>). (For the handling of index ranges in UD, cf.
+      <ptr target="https://universaldependencies.org/format.html#words-tokens-and-empty-nodes"/>.)</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <phr>
+        <w depN="1" depR="2:det" pos="DET" lemma="eine">ein</w>
+        <w depN="2" depR="0:root" pos="NOUN" lemma="Hotel">Hotel</w>
+        <w depN="3-4" type="surface">zum</w>
+        <w depN="3" depR="5:case" pos="ADP" lemma="zu">zu</w>
+        <w depN="4" depR="5:det" pos="DET" lemma="die">dem</w>
+        <w depN="5" depR="2:nmod" pos="NOUN" lemma="Wohlfühlen">Wohlfühlen</w>
+      </phr>
+    </egXML>
+  </exemplum>
+  <remarks ident="att.linguistic.dependency-remarks" xml:lang="en" versionDate="2025-12-02">
+    <p>In the UD examples above, a <att>depR</att> value of <val>0:root</val> by
+      convention refers to an unrepresented, <soCalled>virtual</soCalled>, root
+      node. (For discussion, cf. section <ptr target="#AILADEP"/>.)</p>
+    <p>The following table summarises the serialisation choices for UD’s CoNLL-U format in TEI XML.
+      <table cols="3">
+        <row role="label">
+          <cell>CoNLL-U column</cell>
+          <cell>TEI representation</cell>
+          <cell>TEI class</cell>
+        </row>
+        <row>
+          <cell><code>ID</code></cell>
+          <cell><att>depN</att></cell>
+          <cell><ident type="class">att.linguistic.dependency</ident></cell>
+        </row>
+        <row>
+          <cell><code>FORM</code></cell>
+          <cell><gi>w</gi> or <gi>pc</gi> content</cell>
+          <cell><ident type="class">model.segLike</ident></cell>
+        </row>
+        <row>
+          <cell><code>LEMMA</code></cell>
+          <cell><att>lemma</att></cell>
+          <cell><ident type="class">att.linguistic</ident></cell>
+        </row>
+        <row>
+          <cell><code>UPOS</code></cell>
+          <cell><att>pos</att></cell>
+          <cell><ident type="class">att.linguistic</ident></cell>
+        </row>
+        <row>
+          <cell><code>XPOS</code></cell>
+          <cell>additional list item in <att>pos</att></cell>
+          <cell><ident type="class">att.linguistic</ident></cell>
+        </row>
+        <row>
+          <cell><code>FEATS</code></cell>
+          <cell><att>msd</att></cell>
+          <cell><ident type="class">att.linguistic</ident></cell>
+        </row>
+        <row>
+          <cell><code>HEAD</code></cell>
+          <cell><att>depR</att>, part before <code>:</code></cell>
+          <cell><ident type="class">att.linguistic.dependency</ident></cell>
+        </row>
+        <row>
+          <cell><code>DEPREL</code></cell>
+          <cell><att>depR</att>, part after <code>:</code></cell>
+          <cell><ident type="class">att.linguistic.dependency</ident></cell>
+        </row>
+        <row>
+          <cell><code>DEPS</code></cell>
+          <cell><att>depE</att></cell>
+          <cell><ident type="class">att.linguistic.dependency</ident></cell>
+        </row>
+        <row>
+          <cell><code>SpaceAfter=No</code> in <code>MISC</code></cell>
+          <cell><att>join</att> with value <val>right</val></cell>
+          <cell><ident type="class">att.linguistic</ident></cell>
+        </row>
+      </table>
+    </p>
+   <p>The syntax of the <code>FEATS</code> and <code>DEPS</code> columns, with
+     pipe-separated list values, can be used as-is for the values of
+     <att>msd</att> and <att>depE</att>. The syntax of the items in
+     <att>depE</att> values, with a colon separating the head’s token index and
+     the type of the dependency relations, should also be used for <att>depR</att>.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#AILADEP"/>
+  </listRef>
+</classSpec>

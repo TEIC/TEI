@@ -3,8 +3,9 @@
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" xml:id="ATTLING" type="atts" ident="att.linguistic">
   <desc versionDate="2017-03-24" xml:lang="en">provides a set of attributes concerning linguistic features of tokens, for usage within token-level elements, specifically <gi>w</gi> and <gi>pc</gi> in the analysis module.</desc>
-  <classes>    
+  <classes>
     <memberOf key="att.lexicographic.normalized"/>
+    <memberOf key="att.linguistic.dependency"/>
   </classes>
   <attList>
     <attDef ident="lemma" usage="opt">
@@ -51,10 +52,10 @@
       </exemplum>
     </attDef>
     <attDef ident="pos" usage="opt">
-      <desc versionDate="2017-03-24" xml:lang="en">(part of speech) indicates the part of speech assigned to a token 
-        (i.e. information on whether it is a noun, adjective, or verb), usually according to some official reference 
+      <desc versionDate="2017-03-24" xml:lang="en">(part of speech) indicates the part of speech assigned to a token
+        (i.e. information on whether it is a noun, adjective, or verb), usually according to some official reference
         vocabulary (e.g. for German: STTS, for English: CLAWS, for Polish: NKJP, etc.).</desc>
-      <datatype><dataRef key="teidata.text"/></datatype>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
       <exemplum xml:lang="en">
         <p>The German sentence <q>Wir fahren in den Urlaub.</q> tagged with the Stuttgart-Tuebingen-Tagset (STTS).</p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ATTLING-egXML-hd">
@@ -89,6 +90,21 @@
             <pc pos="!">!</pc>
           </p>
         </egXML>
+      </exemplum>
+      <exemplum xml:lang="en">
+      <p>Some approaches (such as Universal Dependencies) use concurrent POS markup,
+      with POS tags from different POS tagsets. In such applications, the concurrent
+      POS tags can be given as a space-separated list in the <att>pos</att> value.</p>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="ATTLING-egXML-vii">
+        <p>
+          <w pos="PRON PRP" lemma="she">She</w>
+          <w pos="VERB VBZ" lemma="buy">buys</w>
+          <w pos="CCONJ CC" lemma="and">and</w>
+          <w pos="VERB VBZ" lemma="sell">sells</w>
+          <w pos="NOUN NNS" lemma="book">books</w>
+          <pc pos="PUNCT ." lemma=".">.</pc>
+        </p>
+      </egXML>
       </exemplum>
     </attDef>
     <attDef ident="msd" usage="opt">
@@ -173,12 +189,11 @@
     <p>These attributes make it possible to encode simple language corpora and to add a layer of
       linguistic information to any tokenized resource. See section <ptr target="#AILALW"/> for
       discussion.</p>
-      <p>These guidelines provide no semantic basis or suggested
-      precedence when both <att>lemma</att> and <att>lemmaRef</att> are
-      provided. For this reason simultaneous use of both is not
-      recommended for interchange unless documentation explaining the
-      use is provided, probably in an ODD customization.</p>
-  </remarks>
+    <p>These guidelines provide no semantic basis or suggested precedence when both <att>lemma</att>
+      and <att>lemmaRef</att> are provided. For this reason simultaneous use of both is not
+      recommended for interchange unless documentation explaining the use is provided, probably in
+      an ODD customization.</p>
+      </remarks>
   <listRef>
     <ptr target="#AILALW"/>
   </listRef>
