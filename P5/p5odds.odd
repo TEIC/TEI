@@ -30,7 +30,7 @@
         <moduleRef key="gaiji"/>
         <moduleRef key="namesdates"/>
         <moduleRef key="textstructure" except="div1 div2 div3 div4 div5 div6 div7"/>
-        <moduleRef key="tagdocs"/>
+        <moduleRef key="tagdocs" except="valDesc"/>
         <moduleRef key="dictionaries"/>
         <moduleRef key="linking"/>
         <moduleRef key="figures"/>
@@ -606,19 +606,6 @@
                                                   count( tei:remarks[@versionDate] )
                                                   ">
                   Error: sibling 'remarks' elements with and without @versionDate.
-                </sch:report>
-              </sch:rule>
-            </constraint>
-          </constraintSpec>
-          <constraintSpec ident="all-sibling-parent-valDesc" scheme="schematron" xml:lang="en">
-            <constraint>
-              <sch:rule context="*[tei:valDesc[@versionDate]]">
-                <sch:report role="nonfatal" test="
-                                                  count( tei:valDesc )
-                                                  ne
-                                                  count( tei:valDesc[@versionDate] )
-                                                  ">
-                  Error: sibling 'valDesc' elements with and without @versionDate.
                 </sch:report>
               </sch:rule>
             </constraint>
