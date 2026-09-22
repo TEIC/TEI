@@ -67,12 +67,27 @@
       </modelSequence>
     </egXML>
   </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-modelSequence-egXML-mt" source="#UND">
+      <modelSequence predicate="@break">
+        <model predicate="@break='no'" behaviour="inline" cssClass="lb-hyphen">
+          <desc>generate a hyphen for line breaks marked as non-word breaking; 
+            wrap it in an inline element with lb-hyphen class so its presentation can be controlled by CSS</desc>
+          <param name="content" value="'-'"/>
+        </model>
+        <model behaviour="break" cssClass="lb">
+          <param name="type" value="'line'"/>
+          <param name="label" value="@n"/>
+        </model>
+      </modelSequence>
+    </egXML>
+  </exemplum>
   <remarks ident="modelSequence-remarks" versionDate="2026-09-22" xml:lang="en">
-    <p>All of the <gi>model</gi> elements inside a <gi>modelSequence</gi> element must be processed.
-      The operations indicated by each <gi>model</gi> child cannot be dependent on any other
-      operation in the sequence but are subject to the rules governing application of models in
-      regard to their <att>output</att> and <att>predicate</att> attributes. The results must be
-      rendered in the order given by the list of <gi>model</gi>s in the <gi>modelSequence</gi>.</p>
+    <p>All of the <gi>model</gi> elements inside a <gi>modelSequence</gi> element must be evaluated in the 
+      order they appear in the sequence.
+      The processing indicated by each <gi>model</gi> child cannot be dependent on any other
+      model in the sequence. All models are subject to the rules governing applicability of models in
+      regard to their <att>output</att> and <att>predicate</att> attributes.</p>
   </remarks>
   <listRef>
     <ptr target="#TDPMMS"/>
