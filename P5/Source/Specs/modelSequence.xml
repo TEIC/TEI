@@ -5,7 +5,7 @@
   <desc versionDate="2017-02-07" xml:lang="en">any sequence of model or <gi>modelSequence</gi> elements which is to be processed as a single set of actions.</desc>
   <classes>
     <memberOf key="att.global"/>
-    </classes>
+  </classes>
   <content>
     <sequence>
       <alternate minOccurs="0" maxOccurs="unbounded">
@@ -57,24 +57,22 @@
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-modelSequence-egXML-oj" source="#UND">
-      <modelGrp output="print">
-        <modelSequence>
-          <model behaviour="inline">
-            <param name="content" value="@n"/>
-          </model>
-          <model behaviour="footnote">
-            <param name="place" value="'foot'"/>
-          </model>
-        </modelSequence>
-      </modelGrp>
+      <modelSequence>
+        <model behaviour="inline" predicate="@n">
+          <param name="content" value="@n"/>
+        </model>
+        <model behaviour="note">
+          <param name="place" value="'foot'"/>
+        </model>
+      </modelSequence>
     </egXML>
   </exemplum>
-  <remarks ident="modelSequence-remarks" versionDate="2016-11-21" xml:lang="en">
-    <p>All of the <gi>model</gi> elements inside a <gi>modelSequence</gi> 
-      element must be processed. The operations indicated by each <gi>model</gi> 
-      child cannot be dependent on any other operation in the sequence. The results 
-      must be rendered in the order given by the list of <gi>model</gi>s in the 
-      <gi>modelSequence</gi>.</p>
+  <remarks ident="modelSequence-remarks" versionDate="2026-09-22" xml:lang="en">
+    <p>All of the <gi>model</gi> elements inside a <gi>modelSequence</gi> element must be processed.
+      The operations indicated by each <gi>model</gi> child cannot be dependent on any other
+      operation in the sequence but are subject to the rules governing application of models in
+      regard to their <att>output</att> and <att>predicate</att> attributes. The results must be
+      rendered in the order given by the list of <gi>model</gi>s in the <gi>modelSequence</gi>.</p>
   </remarks>
   <listRef>
     <ptr target="#TDPMMS"/>
