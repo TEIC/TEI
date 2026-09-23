@@ -52,13 +52,13 @@
   </constraintSpec>
   <attList>
     <attDef ident="behaviour" usage="req">
-      <desc versionDate="2015-08-21" xml:lang="en">names the process or function which this processing model uses in order to produce output.</desc>
+      <desc versionDate="2015-08-21" xml:lang="en">names the process or function which this processing model uses in order to produce output</desc>
       <datatype>
         <dataRef key="teidata.enumerated"/>
       </datatype>
       <valList type="semi">
         <valItem ident="alternate">
-          <desc versionDate="2015-08-21" xml:lang="en">support display of alternative visualisations, for example by displaying the preferred content, by displaying both in parallel, or by toggling between the two.</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">support display of alternative visualisations, for example by displaying the preferred content, by displaying both in parallel, or by toggling between the two</desc>
           <paramList>
             <paramSpec ident="default">
               <desc versionDate="2015-08-21" xml:lang="en">supplies the preferred content</desc>
@@ -69,13 +69,12 @@
           </paramList>
         </valItem>
         <valItem ident="anchor">
-          <desc versionDate="2015-08-21" xml:lang="en">create an identifiable anchor point in the output.</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">create an identifiable anchor point in the output</desc>
           <paramList>
             <paramSpec ident="id">
               <desc versionDate="2016-01-22" xml:lang="en">supplies an identifier for the anchor point</desc>
             </paramSpec>
           </paramList>
-          <!-- why wouldnt this be xml:id ? -->
         </valItem>
         <valItem ident="block">
           <desc versionDate="2015-08-21" xml:lang="en">create a block structure</desc>
@@ -85,7 +84,7 @@
           </paramList>
         </valItem>
         <valItem ident="body">
-          <desc versionDate="2015-08-21" xml:lang="en">create the body of a document.</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">create the body of a document</desc>
           <equiv name="body"/>
           <paramList>
             <paramSpec ident="content"/>
@@ -106,6 +105,7 @@
           </paramList>
         </valItem>
         <valItem ident="cit">
+          <!-- MT: consider removing this behaviour from the suggested list -->
           <desc versionDate="2015-08-21" xml:lang="en">show the content, with an indication of the
             source</desc>
           <paramList>
@@ -164,20 +164,18 @@
           </paramList>
         </valItem>
         <valItem ident="index">
-          <desc versionDate="2015-08-21" xml:lang="en">generate list according to <ident>type</ident>.</desc>
+          <!-- MT: consider removing this behaviour from the suggested list; 
+           it was never implemented anywhere; it's unclear what's supposed to happen and how a generic indexing mechanism would work across outputs and platforms -->
+          <desc versionDate="2015-08-21" xml:lang="en">generate list according to <ident>type</ident></desc>
           <paramList>
             <paramSpec ident="type"/>
           </paramList>
         </valItem>
         <valItem ident="inline">
           <desc versionDate="2015-08-21" xml:lang="en">creates inline element out of <ident>content</ident></desc>
-          <!--if there's something in <gi>outputRendition</gi>, use that
-              formatting otherwise just show text of selected content.-->
           <equiv name="span"/>
           <paramList>
             <paramSpec ident="content"/>
-            <paramSpec ident="label"/>
-            <!-- does what ? -->
           </paramList>
         </valItem>
         <valItem ident="link">
@@ -188,19 +186,20 @@
             <paramSpec ident="uri">
               <desc versionDate="2015-08-21" xml:lang="en">link url</desc>
             </paramSpec>
+            <paramSpec ident="target">
+              <desc versionDate="2026-09-23" xml:lang="en">link target</desc>
+            </paramSpec>
           </paramList>
         </valItem>
         <valItem ident="list">
-          <desc versionDate="2015-08-21" xml:lang="en">create a list.
-            <!--by following
-              <term>content</term>--></desc>
+          <desc versionDate="2016-09-23" xml:lang="en">create a list wrapper</desc>
           <equiv name="ol"/>
           <paramList>
             <paramSpec ident="content"/>
           </paramList>
         </valItem>
         <valItem ident="listItem">
-          <desc versionDate="2015-08-21" xml:lang="en">create a list item.</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">create a list item</desc>
           <equiv name="li"/>
           <paramList>
             <paramSpec ident="content"/>
@@ -208,14 +207,14 @@
         </valItem>
         <valItem ident="metadata">
           <desc versionDate="2015-08-21" xml:lang="en">create metadata section</desc>
-          <!-- eh what? -->
+          <!-- MT: consider removing this behaviour from the suggested list, or limit its scope to formats that support metadata distinct from the document content -->
           <equiv name="head"/>
           <paramList>
             <paramSpec ident="content"/>
           </paramList>
         </valItem>
         <valItem ident="note">
-          <desc versionDate="2015-08-21" xml:lang="en">create a note, often out of line, depending on the value of <ident>place</ident>; could be margin, footnote, endnote, inline</desc>
+          <desc versionDate="2026-09-23" xml:lang="en">create a note</desc>
           <paramList>
             <paramSpec ident="content"/>
             <paramSpec ident="place"/>
@@ -226,13 +225,12 @@
           <desc versionDate="2015-08-21" xml:lang="en">do nothing, do not process children</desc>
         </valItem>
         <valItem ident="paragraph">
-          <desc versionDate="2015-08-21" xml:lang="en">create a paragraph out of <ident>content</ident>.</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">create a paragraph</desc>
           <equiv name="p"/>
           <paramList>
             <paramSpec ident="content"/>
           </paramList>
         </valItem>
-        <!-- how is this different from block ? -->
         <valItem ident="row">
           <desc versionDate="2015-08-21" xml:lang="en">create a table row</desc>
           <equiv name="tr"/>
