@@ -18,12 +18,8 @@
     </sequence>
   </content>
   <constraintSpec scheme="schematron" ident="no_dup_default_models" xml:lang="en">
-    <desc versionDate="2016-10-01" xml:lang="en">It is ambigous to have 2 <gi>model</gi>s that have both the same <att>output</att> and have no <att>predicate</att> (and thus select the same set of nodes).</desc>
-    <!-- We cannot possibly check, in general, that two
-         <att>predicate</att>s select the same set of nodes or not.
-         But if two <att>predicate</att>s are equal (or two
-         <gi>model</gi>s do not have <att>predicate</att>s), then they
-         will select the same set of nodes. -->
+    <desc versionDate="2026-09-23" xml:lang="en">When multiple <gi>model</gi>s have both the same <att>output</att> and have no <att>predicate</att>, only the first will be ever applicable.</desc>
+    <!-- Models must be distinguished by their predicates or outputs to be potentially applicable, otherwise the "first matching model" rule will prevent subsequent models from being used. -->
     <constraint>
       <sch:rule context="tei:model[ not( parent::tei:modelSequence ) ][ not( @predicate ) ]">
         <sch:let name="output" value="normalize-space( @output )"/>
@@ -32,14 +28,14 @@
           &lt;<sch:value-of select="local-name(..)"/>&gt; that have no
           predicate, but are targeted to the same output
           ("<sch:value-of select="( $output, parent::modelGrp/@output, 'all')[1]"/>").
+          The second and subsequent such &lt;model&gt; elements will never be used.
         </sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
   <constraintSpec scheme="schematron" ident="no_dup_models" xml:lang="en">
-    <desc versionDate="2016-10-01" xml:lang="en">It is ambigous to have 2 <gi>model</gi>s
-      that have both the same <att>output</att> and the same <att>predicate</att>
-      (and thus select the same set of nodes).</desc>
+    <desc versionDate="2026-09-23" xml:lang="en">When multiple <gi>model</gi>s have both the same <att>output</att> and the same <att>predicate</att>, only the first will be ever applicable.</desc>
+    <!-- Models must be distinguished by their predicates or outputs to be potentially applicable, otherwise the "first matching model" rule will prevent subsequent models from being used. -->
     <constraint>
       <sch:rule context="tei:model[ not( parent::tei:modelSequence ) ][ @predicate ]">
         <sch:let name="predicate" value="normalize-space( @predicate )"/>
@@ -49,6 +45,7 @@
           &lt;<sch:value-of select="local-name(..)"/>&gt; that have
           the same predicate, and are targeted to the same output
           ("<sch:value-of select="( $output, parent::modelGrp/@output, 'all')[1]"/>").
+          The second and subsequent such &lt;model&gt; elements will never be used.
         </sch:report>
       </sch:rule>
     </constraint>
