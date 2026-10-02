@@ -43,6 +43,18 @@
       </sch:rule>
     </constraint>
   </constraintSpec>
+  <constraintSpec ident="child-valList-deprecated" scheme="schematron" xml:lang="en">
+    <constraint>
+      <sch:rule context="tei:dataSpec/tei:valList">
+        <sch:report test="true()">
+          Use of &lt;valList> as a direct child of &lt;dataSpec> is deprecated
+          and will be invalid after 2027-10-01. To express a controlled vocabulary
+          as the content model of an element, place the &lt;valList> inside a
+          &lt;content> element.
+        </sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-dataSpec-egXML-kh">
       <dataSpec ident="teidata.pointer">
@@ -56,6 +68,13 @@
       </dataSpec>
     </egXML>
   </exemplum>
+  <remarks xml:lang="en" versionDate="2026-10-02" validUntil="2027-08-31" ident="dataSpec-remarks">
+    <p><gi>dataSpec</gi> currently allows <gi>valList</gi> as a direct child,
+      but this usage is deprecated and will be removed on 2027-09-01. 
+      If a <gi>valList</gi> is used to specify the content model of an element,
+      it should be placed inside the <gi>content</gi> child of the 
+      <gi>dataSpec</gi>.</p>
+  </remarks>
   <listRef>
     <ptr target="#TDcrystals"/>
     <ptr target="#TDENT"/>
