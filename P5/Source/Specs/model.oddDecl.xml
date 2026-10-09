@@ -1,18 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="model" xml:id="ODDDECL" ident="model.oddDecl">
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" type="model" xml:id="ODDDECL" ident="model.oddDecl">
   <desc versionDate="2005-10-10" xml:lang="en">groups elements which generate declarations in some markup language in ODD documents.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">ODD 문서에서 마크업 언어로 선언을 생성하는 요소를 모아 놓는다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">匯集的元素使ODD文件內某些標記語言中產生宣告。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">ODD文書で使用される要素の宣言を生成する要素をまとめる。</desc>
-  <desc versionDate="2009-05-27" xml:lang="fr">regroupe les éléments qui, dans des documents ODD,
-    génèrent des déclarations dans un langage d'encodage.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">agrupa elementos que generan declaraciones en un lenguaje
-    de codificación dado en documentos aislados</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">raggruppa elementi che generano dichiarazioni in un dato
-    linguaggio di codifica in documenti isolati</desc>
+  <desc versionDate="2009-05-27" xml:lang="fr">regroupe les éléments qui, dans des documents ODD, génèrent des déclarations dans un langage d'encodage.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">agrupa elementos que generan declaraciones en un lenguaje de codificación dado en documentos aislados</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">raggruppa elementi che generano dichiarazioni in un dato linguaggio di codifica in documenti isolati</desc>
   <classes>
     <memberOf key="model.inter"/>
   </classes>
+  <constraintSpec scheme="schematron" ident="avoid_oddDecls_in_silly_places" xml:lang="en">
+    <!-- 
+         The <egXML> referred to in the constraint below is, of
+         course, in the teix: namespace, not the tei: namespace.
+         However, at the point in the processing pipeline when we want
+         to test this the content of <egXML>s have been extracted and
+         put in the TEI namespace for testing.
+         At least, that's what I think is going on. —Syd, 2026-01-03
+    -->
+    <!--
+        Note-to-maintainers: to reference the name of the current
+        element you could use <sch:value-of select="'$toe'"/> rather
+        than <sch:value-of select="name(.)"/>.
+    -->
+    <constraint>
+      <sch:pattern id="oddDecls_in_specGrp_or_schemaSpec" abstract="true">
+        <sch:rule context="$toe">
+          <sch:assert test="ancestor::tei:specGrp | ancestor::tei:schemaSpec | ancestor::tei:egXML">
+            DEPRECATION WARNING: Sometime after 2028-03-09 the &lt;<sch:value-of select="name(.)"/>>
+            element will no longer be allowed as a child of &lt;<sch:value-of select="name(..)"/>>;
+            it will need to be a descendant of either a &lt;specGrp> or a &lt;schemaSpec>.
+          </sch:assert>
+        </sch:rule>
+      </sch:pattern>
+    </constraint>
+  </constraintSpec>
 </classSpec>

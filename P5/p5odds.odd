@@ -538,42 +538,6 @@
               </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec mode="add" ident="only-one-each-lang" scheme="schematron" xml:lang="en">
-            <desc xml:lang="en" versionDate="2022-05-13">Per ticket <ref target="https://github.com/TEIC/TEI/issues/2279">2279</ref>, require that there be only one
-              of any given att.translatable element sibling for any given language. Note that
-              we would prefer to be able to say <said>a member of att.translatable</said>, but
-              there is currently no way to that, so we enumerate them. Also note that we simply
-              compare <att>xml:lang</att> values, such that <val>fr-CA</val> and <val>fr-FR</val>
-              would be considered different languages. (We may want to be smarter about this in
-              the future.)</desc>
-            <constraint>
-              <sch:rule context="  tei:elementSpec/tei:desc[ position() gt 1 ]
-                                 | tei:elementSpec/tei:gloss[ position() gt 1 ]
-                                 | tei:elementSpec/tei:remarks[ position() gt 1 ]
-                                 | tei:classSpec/tei:desc[ position() gt 1 ]
-                                 | tei:classSpec/tei:gloss[ position() gt 1 ]
-                                 | tei:classSpec/tei:remarks[ position() gt 1 ]
-                                 | tei:macroSpec/tei:desc[ position() gt 1 ]
-                                 | tei:macroSpec/tei:gloss[ position() gt 1 ]
-                                 | tei:macroSpec/tei:remarks[ position() gt 1 ]
-                                 | tei:attDef/tei:desc[ position() gt 1 ]
-                                 | tei:attDef/tei:gloss[ position() gt 1 ]
-                                 | tei:attDef/tei:remarks[ position() gt 1 ]
-                                 | tei:valItem/tei:desc[ position() gt 1 ]
-                                 | tei:valItem/tei:gloss[ position() gt 1 ]
-                                 | tei:valItem/tei:remarks[ position() gt 1 ]
-                                 | tei:moduleSpec/tei:desc[ position() gt 1 ]
-                                 | tei:moduleSpec/tei:gloss[ position() gt 1 ]
-                                 | tei:moduleSpec/tei:remarks[ position() gt 1 ]
-                                  ">
-                <sch:let name="myGI" value="name(.)"/>
-                <sch:let name="myType" value="@type"/>
-                <sch:let name="hasType" value="if (@type) then true() else false()"/>
-                <sch:let name="lang" value="normalize-space( @xml:lang )"/>
-                <sch:report test="preceding-sibling::*[ name(.) eq $myGI ][(not(@type) and not($hasType)) or @type eq $myType][ normalize-space( @xml:lang) eq $lang ]">The sibling <sch:value-of select="$myGI"/> children of a <sch:value-of select="name(..)"/> should each have a different @xml:lang; this one duplicates the "<sch:value-of select="$lang"/>" of a preceding sibling.</sch:report>
-              </sch:rule>
-            </constraint>
-          </constraintSpec>
           <constraintSpec ident="all-sibling-parent-desc" scheme="schematron" xml:lang="en">
             <constraint>
               <sch:rule context="*[tei:desc[@versionDate]]">
