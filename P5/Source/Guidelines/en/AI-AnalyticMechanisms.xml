@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
-<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="https://jenkins-paderborn.tei-c.org/view/LingSIG/job/TEIP5-LingSIG-att.linguistic.dependency/ws/P5/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<!--
+  https://jenkins-paderborn.tei-c.org/view/LingSIG/job/TEIP5-LingSIG-att.linguistic.dependency/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl
+  Note the above PI substitution that enables us to use the added spec file. The original PI is below:
+<?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>-->
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="AI" n="15"><head>Simple Analytic Mechanisms</head>
 
 <p>This chapter describes a module for associating simple analyses and
@@ -23,7 +27,7 @@ text segments according to the familiar linguistic categories of
 generic <gi>seg</gi> element described in section <ptr target="#SASE"/>.</p>
 <p>Section <ptr target="#AIATTS"/> introduces an additional global
 attribute which allows passages of text to be associated with
-specialized elements representing their interpretation. 
+specialized elements representing their interpretation.
 These <soCalled>interpretative</soCalled> elements (<gi>span</gi> and
 <gi>interp</gi>) are described in detail in section <ptr target="#AISP"/>.
 They allow the encoder to specify an analysis as a series of names and
@@ -42,7 +46,7 @@ used to associate simple linguistic analysis with text segments.</p>
 category</term> elements which may be used to represent the segmentation of
 a text into the traditional linguistic categories of
 <term>sentence</term>, <term>clause</term>, <term>phrase</term>,
-<term>word</term>, <term>morpheme</term>, 
+<term>word</term>, <term>morpheme</term>,
 <term>characters</term>, and <term>punctuation marks</term>.
 </p>
 <div type="div3" xml:id="AILCW"><head>Words and Above</head>
@@ -50,7 +54,7 @@ a text into the traditional linguistic categories of
 constitutes a <soCalled>word</soCalled> or a
 <soCalled>sentence</soCalled>, these remain generally useful concepts.
 In this section we discuss elements provided for marking up linguistic
-units down to the word level, however defined. 
+units down to the word level, however defined.
 <specList><specDesc key="s"/><specDesc key="cl"/><specDesc key="phr"/><specDesc key="w"/>
 </specList>
  </p>
@@ -65,26 +69,26 @@ They also share attributes from <ident type="class">att.typed</ident>:
 that text is permitted within a document, when the module defined by
 this chapter is included in a schema.</p>
 
-<p>The <gi>w</gi> and <gi>pc</gi> elements belong to the <ident type="class">att.linguistic</ident> class, which supplies 
-attributes that may be used for lightweight linguistic annotation (see section <ptr target="#AILALW"/> below): 
+<p>The <gi>w</gi> and <gi>pc</gi> elements belong to the <ident type="class">att.linguistic</ident> class, which supplies
+attributes that may be used for lightweight linguistic annotation (see section <ptr target="#AILALW"/> below):
 <specList><specDesc key="att.linguistic" atts="lemma lemmaRef pos msd join"/></specList></p>
-<p>Additionally, these elements also have access to the <ident type="class">att.lexicographic.normalized</ident> class, 
-which supplies the attributes <att>norm</att> and <att>orig</att>: the former for handling 
-normalization/regularization at the word level, the latter providing the original form if the element 
-content is modernized or regularized. Note that these attributes are a local (word-level) alternative 
-to the robust mechanism that uses the <gi>choice</gi>, <gi>orig</gi>, and <gi>reg</gi> elements, 
+<p>Additionally, these elements also have access to the <ident type="class">att.lexicographic.normalized</ident> class,
+which supplies the attributes <att>norm</att> and <att>orig</att>: the former for handling
+normalization/regularization at the word level, the latter providing the original form if the element
+content is modernized or regularized. Note that these attributes are a local (word-level) alternative
+to the robust mechanism that uses the <gi>choice</gi>, <gi>orig</gi>, and <gi>reg</gi> elements,
 discussed in section <ptr target="#COEDREG"/> and in chapter <ptr target="#TC"/>. The <gi>choice</gi>-based
 mechanism is the default descriptive device, while the <att>norm</att> and <att>orig</att> attributes are used to
-handle a subset of normalizations in linguistic contexts where a single sequence of tokens is a priority, for example 
-in historical corpora subject to linguistic analysis. It needs to be stressed that the simplified attribute-based 
+handle a subset of normalizations in linguistic contexts where a single sequence of tokens is a priority, for example
+in historical corpora subject to linguistic analysis. It needs to be stressed that the simplified attribute-based
 mechanism is not meant to be used for editorial interventions.
-<note place="bottom">The <ident type="class">att.lexicographic.normalized</ident> class is also used in dictionary 
-entries, as discussed in chapter <ptr target="#DI"/>.</note></p> 
+<note place="bottom">The <ident type="class">att.lexicographic.normalized</ident> class is also used in dictionary
+entries, as discussed in chapter <ptr target="#DI"/>.</note></p>
 
 <p>The <gi>s</gi> element may be used simply to segment a text
 end-to-end  into a series of non-overlapping segments, referred to here
 and elsewhere as <term>s-units</term>, or <term>sentences</term>.
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AILCW-egXML-jj" source="#AI-BIBL-1"><p> 
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AILCW-egXML-jj" source="#AI-BIBL-1"><p>
   <s>Nineteen fifty-four, when I was eighteen years old,
     is held to be a crucial turning point in the history of
     the Afro-American — for the U.S.A. as a whole — the
@@ -143,7 +147,7 @@ phrases, with no need to include segmentation at a higher level as well.
 <p>For verse texts, the overlapping of metrical and syntactic structure
 requires that special care be given to representing both using an
 element hierarchy. One simple approach is to split the syntactic phrases
-into fragments when they cross verse boundaries, reuniting them 
+into fragments when they cross verse boundaries, reuniting them
 with the <att>part</att> attribute:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AILCW-egXML-kc" source="#AI-BIBL-3"><div type="stanza">
   <l><cl part="I">Tweedledum and Tweedledee</cl></l>
@@ -160,7 +164,7 @@ Another approach is to use the <att>next</att> and <att>prev</att>
 attributes defined in the additional module for linking (chapter <ptr target="#SA"/>):
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AILCW-egXML-xu" source="#AI-BIBL-3"><l><cl next="#c5" xml:id="c3" part="I">For Tweedledum said
    <cl next="#c6" xml:id="c4" part="I">Tweedledee</cl></cl></l>
-<l><cl prev="#c3" xml:id="c5" part="F">  
+<l><cl prev="#c3" xml:id="c5" part="F">
    <cl prev="#c4" xml:id="c6" part="F">Had spoiled his nice new rattle.</cl></cl></l></egXML>
 Other methods are also possible; for discussion, see chapter <ptr target="#NH"/>.
  </p>
@@ -171,8 +175,8 @@ category. The <att>function</att> attribute on the <gi>cl</gi> and
 about the function of the category. Legal values for these
 two attributes are not defined by these Guidelines, but should be
 documented in the <gi>segmentation</gi> element of the
-<gi>encodingDesc</gi> element within the document's header. 
-A general approach to the encoding of linguistic categories for 
+<gi>encodingDesc</gi> element within the document's header.
+A general approach to the encoding of linguistic categories for
 parts of a text is discussed in section <ptr target="#AILA"/> below.
 </p>
 <p>Using traditional terminology, these attributes provide a convenient
@@ -192,16 +196,16 @@ Such detailed encodings as the following may require careful
 formatting if they are to be easily readable however.
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AILCW-egXML-rl"><p>
   <s>
-    <cl type="finite-declarative" function="independent"> 
+    <cl type="finite-declarative" function="independent">
       <phr type="NP" function="subject">Nineteen fifty-four,
       <cl type="finite-relative-declarative" function="appositive">
 	when <phr type="NP" function="subject">I</phr>
 	<phr type="VP" function="predicate">was eighteen years old</phr>
 	</cl></phr>,
-	<phr type="VP" function="predicate">  
+	<phr type="VP" function="predicate">
 	  <phr type="V" function="verb-main">is held</phr>
-	  <phr type="NP" function="complement"> 
-	    <cl type="nonfinite" function="predicate-nom.">    
+	  <phr type="NP" function="complement">
+	    <cl type="nonfinite" function="predicate-nom.">
 	      <phr type="V" function="copula">to be</phr>
 	      <phr type="NP" function="predicate-nom.">a crucial turning point
 	      <phr type="PP" function="postmodifier">in
@@ -218,16 +222,16 @@ formatting if they are to be easily readable however.
 	      </phr>
 	      —
 	      <phr type="NP" function="appositive-predicate-nom.">the year
-	      <cl type="finite-relative" function="adjectival">      
+	      <cl type="finite-relative" function="adjectival">
 		<phr type="NP" function="subject">segregation</phr>
-		<phr type="VP" function="predicate">       
+		<phr type="VP" function="predicate">
 		  <phr type="V" function="verb-main">was outlawed</phr>
 		  <phr type="PP" function="postmodifier">by the U.S. Supreme Court</phr>
   </phr></cl></phr></cl></phr></phr>.</cl></s>
   <s>
-    <cl type="finite-declarative" function="independent"> 
+    <cl type="finite-declarative" function="independent">
       <phr type="NP" function="subject">It</phr>
-      <phr type="VP" function="predicate">  
+      <phr type="VP" function="predicate">
 	<phr type="V" function="verb-main">was</phr>
 	also
 	<phr type="NP" function="predicate-nom.">a crucial year for me</phr>
@@ -287,11 +291,11 @@ describes a phrase which consists of something mentioned.
 <!-- added following brief plug for otherwise  unsung attributes -->
 </p>
 <p>The <gi>w</gi> element <!-- and <gi>m</gi> elements carry --> carries additional attributes
-which may be of use in many indexing or analytic applications. The 
+which may be of use in many indexing or analytic applications. The
 <att>lemma</att> attribute may be used to specify  the
 <term>lemma</term>, that is the head- or uninflected form of an
 inflected verb or noun, for example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AILCW-egXML-yf" xml:lang="la"><s xml:lang="la">  
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AILCW-egXML-yf" xml:lang="la"><s xml:lang="la">
    <w lemma="timeo">timeo</w>
    <w lemma="danaii">Danaos</w>
    <w lemma="et">et</w>
@@ -303,16 +307,17 @@ inflected verb or noun, for example:
 <att>lemmaRef</att> pointer attribute than to supply an explicit
 uninflected form. This attribute assumes the existence of a list of
 uninflected forms, for example in an online lexicon, with which
-individual <g>w</g> entries can be associated using the usual TEI
+individual <gi>w</gi> entries can be associated using the usual TEI
 pointer mechanisms. Assuming that a
 standardized lexicon for Latin is available at the location
 <code>http://lexicon.org/latin.xml</code>, we might for example revise the above
 example as:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AILCW-egXML-un" xml:lang="la"><s xml:lang="la">  
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AILCW-egXML-un" xml:lang="la"><s xml:lang="la">
    <w lemmaRef="http://lexicon.org/latin.xml#timeo">timeo</w>
    <w lemmaRef="http://lexicon.org/latin.xml#danaii">Danaos</w>
 <!-- ... -->
 </s></egXML></p>
+<p>For examples of other attributes of <gi>w</gi>, see section <ptr target="#AILA"/>.</p>
 </div>
 
 <div xml:id="AIPC"><head>Below the Word Level</head>
@@ -325,11 +330,11 @@ such as morphemes, characters, or punctuation.
 <p>The <gi>m</gi> element is used to mark up morphologically
 identified segmentation below the word level. Analogous to the
 <att>lemma</att> attribute for <gi>w</gi>, there is a
-<att>baseForm</att> attribute for the <gi>m</gi> element, 
+<att>baseForm</att> attribute for the <gi>m</gi> element,
 which may be used to indicate the <soCalled>base form</soCalled> of
 an inflected morpheme; where appropriate, <gi>m</gi> elements may also
 be organized hierarchically:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AIPC-egXML-ld"><w type="adjective">  
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AIPC-egXML-ld"><w type="adjective">
    <m type="base">
      <m type="prefix" baseForm="con">com</m>
      <m type="root">fort</m>
@@ -344,7 +349,7 @@ provide a means for those cases where it is considered helpful to distinguish
 lexical from sub-lexical tokens, to complement the more general
 mechanism already provided by the <gi>seg</gi> element, using which
 the above example could alternatively be marked up as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AIPC-egXML-rm"><seg type="adjective">  
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AIPC-egXML-rm"><seg type="adjective">
    <seg type="base">
      <seg type="prefix">com</seg>
      <seg type="morph">fort</seg>
@@ -359,7 +364,7 @@ linguistic difference between characters like letters or diacritics
 and punctuation marks. The former are used to
 construct meaningful units like morphemes or words. The latter are
 functionally independent units acting at the level of syntactic
-units. A word may consist of a single letter (for example <soCalled>I</soCalled> in English),
+units. A word may consist of a single letter (for example <mentioned>I</mentioned> in English),
 but this  does not mean that we should use <gi>c</gi> instead of <gi>w</gi>
 to mark it up. </p>
 
@@ -443,21 +448,21 @@ named <soCalled>para</soCalled>:
 </p>
 
 <p>A similar encoding can be used for hyphenation:
-  
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AIPC-egXML-im" xml:space="preserve">A fire<pc force="strong">-</pc>proof vest is recom<pc force="weak">-</pc><lb/>
-mended. 
+mended.
 </egXML>
-  
-    Refer to <ptr target="#COPU-2"/> for a discussion of the motivations for 
+
+    Refer to <ptr target="#COPU-2"/> for a discussion of the motivations for
   explicitely recording the presence of hyphens.</p>
 
 
 <p>The <gi>w</gi>, <gi>m</gi>, <gi>c</gi>, and <gi>pc</gi> elements can be used
 together to give a fairly detailed low-level grammatical analysis of
 text. For example, consider the following segmentation of the English
-S-unit <mentioned>I didn't do it</mentioned>.
+S-unit <q>I didn't do it.</q>.
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AIPC-egXML-dc"><w>I</w>
-<w> 
+<w>
    <m baseForm="do">did</m>
    <m>n't</m>
 </w>
@@ -467,13 +472,13 @@ S-unit <mentioned>I didn't do it</mentioned>.
 <!-- shouldn't we attribute this to Bart Simpson? :-) -->
  </p>
 <p>This segmentation, crude as it is, succeeds in representing the idea
-that <mentioned>did</mentioned> occurring  as a morphological
-component of  the word
+that <mentioned>did</mentioned> occurring as a morphological
+component of the word
 <mentioned>didn't</mentioned> has something in common with the word <gi>do</gi>. A further advantage of segmenting the text down
 to this level is that it becomes relatively simple to associate each
 such segment with a more detailed formal analysis, for example by
-providing a baseform, or morphological analysis at whichever level is appropriate. 
-This matter is taken up in detail in section <ptr target="#AILA"/>. 
+providing a baseform, or morphological analysis at whichever level is appropriate.
+This matter is taken up in detail in section <ptr target="#AILA"/>.
  </p>
 
 
@@ -489,6 +494,7 @@ This matter is taken up in detail in section <ptr target="#AILA"/>.
 <specGrp xml:id="DAILA" n="Linguistic Word-level Attributes">
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.lexicographic.normalized.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.linguistic.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.linguistic.dependency.xml"/>
 </specGrp>
 </div>
 </div>
@@ -500,9 +506,9 @@ The <att>ana</att> attribute may be specified for any element.
 Its effect is to associate the element with one or more others
 representing an analysis or interpretation of it. Its target should be
 one of the elements described in the section <ptr target="#AISP"/> below,
-or some other interpretative element such as <gi>note</gi>, on which 
+or some other interpretative element such as <gi>note</gi>, on which
 see section <ptr target="#CONO"/> or <gi>fs</gi>,
-on which see chapter <ptr target="#FS"/>. If a hierarchical form of classification 
+on which see chapter <ptr target="#FS"/>. If a hierarchical form of classification
 is desired then it may point to <gi>category</gi> element at a suitable level in a
 <gi>taxonomy</gi> see <ptr target="#HD55"/>.</p>
 <specGrp xml:id="DAIGA" n="Global attribute for analysis">
@@ -535,7 +541,7 @@ grouping elements <gi>spanGrp</gi> and <gi>interpGrp</gi>.
 <gi>span</gi> and <gi>interp</gi> elements may be used to indicate
 that the annotations are of specific types, for example thematic or
 structural. The annotation itself is supplied as the content of the
-<gi>span</gi> or <gi>interp</gi> element. 
+<gi>span</gi> or <gi>interp</gi> element.
 In the case of the <gi>span</gi> element, the span of text being
 annotated is indicated by values of the <att>from</att>,
 <att>to</att> or <att>target</att> attributes, used in combination as
@@ -549,7 +555,7 @@ aggregating the contents of the (possibly non-contiguous) elements pointed to by
 is an error to supply only the <att>to</att> attribute; to supply more
 than one pointer value for either <att>to</att> or <att>from</att>
 attributes; or to supply either of these in conjunction with the
-<att>target</att> attribute. 
+<att>target</att> attribute.
 In the case of <gi>interp</gi> (see below), the span is indicated by a
 pointer from a <gi>link</gi> element or some similar mechanism.  The
 <att>resp</att> attribute indicates the annotator responsible for this annotation.
@@ -570,7 +576,7 @@ attribute:
 <span target="#mk02 #up02">phrasal verb "make up"</span>
 </egXML>
 This second approach might be cumbersome if the number of components
-to be combined is very large. It is however essential if the 
+to be combined is very large. It is however essential if the
 components do not follow each other, as in this example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AISP-egXML-bd">
 <s><w>Did</w><w>you</w><w xml:id="mk03">make</w><w>it</w><w xml:id="up03">up</w></s>
@@ -617,7 +623,7 @@ convenient to group them within a <gi>spanGrp</gi> or <gi>interpGrp</gi> element
   <!-- other spans identified by DTL here -->
 </spanGrp></egXML>
  </p>
-<p>Spans may also be used to represent structural divisions within 
+<p>Spans may also be used to represent structural divisions within
 a narrative, particularly when these do not coincide with the
 structure implied by the element structure. Consider the following narrative:
 <q rend="display">
@@ -807,8 +813,8 @@ as borderline cases both the formal structural properties of the text
 information about its context (the circumstances of its production, its
 genre or medium).  The structural properties of any TEI-conformant text
 should be represented using the structural elements discussed elsewhere
-in this chapter and in chapters <ptr target="#CO"/>, <ptr target="#DS"/>, 
-<ptr target="#VE"/>, <ptr target="#DR"/>, <ptr target="#TS"/>, <ptr target="#DI"/>, 
+in this chapter and in chapters <ptr target="#CO"/>, <ptr target="#DS"/>,
+<ptr target="#VE"/>, <ptr target="#DR"/>, <ptr target="#TS"/>, <ptr target="#DI"/>,
 and <ptr target="#CC"/>. The contextual
 properties of a TEI text are fully documented in the TEI header, which
 is discussed in chapter <ptr target="#HD"/>, and in section <ptr target="#CCAH"/>.
@@ -845,25 +851,25 @@ into the quarry and never surfaced.</q> </p> <p>Our discussion focuses
 on the way that this sentence might be analysed using the CLAWS system
 developed at the University of Lancaster but exactly the same
 principles may be applied to a wide variety of other systems.<note place="bottom">For the word-class tagging method used by CLAWS see
-<ptr target="#AI-BIBL-6"/>; 
+<ptr target="#AI-BIBL-6"/>;
 For an overview of the system see <ptr type="cit" target="#AI-BIBL-7"/>. The example sentence was processed
 using an online version of the CLAWS tagger at <ptr target="http://ucrel.lancs.ac.uk/claws/"/> </note>
 Output from the system consists of a segmented and tokenized version
 of the text, in which word class codes have been associated with each
 token. CLAWS offers outputs in a variety of non-XML and XML formats:
 for example, the simplest format for the sample sentence would be:
-<eg xml:space="preserve"><![CDATA[The_AT0 victim_NN1 's_POS friends_NN2 told_VVD police_NN2 that_CJT Kruger_NP0 
+<eg xml:space="preserve"><![CDATA[The_AT0 victim_NN1 's_POS friends_NN2 told_VVD police_NN2 that_CJT Kruger_NP0
 drove_VVD into_PRP the_AT0 quarry_NN1 and_CJC never_AV0 surfaced_VVD]]></eg></p>
 <p>This may be easily transformed into an equivalent TEI XML representation:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AILAGD-egXML-ld"><s><w ana="#AT0">The </w> 
-<w ana="#NN1">victim</w><w ana="#POS">'s</w> 
-<w ana="#NN2">friends </w> <w ana="#VVD">told </w> 
-<w ana="#NN2">police </w> <w ana="#CJT">that </w> 
-<w ana="#NP0">Kruger </w> <w ana="#VVD">drove </w> <w ana="#PRP">into </w> 
-<w ana="#AT0">the </w> <w ana="#NN1">quarry </w> 
-<w ana="#CJC">and </w> <w ana="#AV0">never </w> 
-<w ana="#VVD">surfaced</w></s></egXML> 
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AILAGD-egXML-ld"><s><w ana="#AT0">The </w>
+<w ana="#NN1">victim</w><w ana="#POS">'s</w>
+<w ana="#NN2">friends </w> <w ana="#VVD">told </w>
+<w ana="#NN2">police </w> <w ana="#CJT">that </w>
+<w ana="#NP0">Kruger </w> <w ana="#VVD">drove </w> <w ana="#PRP">into </w>
+<w ana="#AT0">the </w> <w ana="#NN1">quarry </w>
+<w ana="#CJC">and </w> <w ana="#AV0">never </w>
+<w ana="#VVD">surfaced</w></s></egXML>
 
 Although the names used for the attribute values here may have some
 significance for the human reader (<val>AT0</val> for
@@ -887,7 +893,7 @@ in the header:
  <interp xml:id="PRP">Preposition</interp>
  <interp xml:id="VVD">Verb past tense</interp>
 </interpGrp>
-</egXML> 
+</egXML>
 
 If the codes are considered to
 be compositional (for example that <val>NN1</val> and <val>NN2</val>
@@ -903,8 +909,8 @@ analysis into phrase and clause elements can be superimposed on the
 word and morpheme tagging in the preceding illustration. For example,
 CLAWS provides the following constituent analysis of the sample
 sentence (the word class codes have been deleted):
-<eg xml:space="preserve"><![CDATA[[N [G The victim's G] friends N] [V told [N police N] [Fn that 
-[N Krueger N] [V [V& drove [P into [N the quarry N]P]V&] and 
+<eg xml:space="preserve"><![CDATA[[N [G The victim's G] friends N] [V told [N police N] [Fn that
+[N Krueger N] [V [V& drove [P into [N the quarry N]P]V&] and
 [V+ never surfaced V+]V]Fn]V]]]></eg></p>
 <p>Treating the labels on the brackets as phrase or clause
 interpretations, this analysis of the structure of the example sentence
@@ -913,37 +919,37 @@ can be combined with the word class analysis and represented as follows
 phrase, has been replaced by <val>V1</val>, and <val>V+</val>, representing the
 second part, has been replaced by <val>V2</val>).
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AILAGD-egXML-xd"><s type="sentence">
-   <phr ana="#n">  
-      <phr ana="#gn">    
+   <phr ana="#n">
+      <phr ana="#gn">
          <w ana="#AT0">The</w>
          <w ana="#NN1">victim</w>
          <m ana="#POS">'s</m>
       </phr>
       <w ana="#NN2">friends</w>
    </phr>
-   <phr ana="#v">  
+   <phr ana="#v">
       <w ana="#VVD">told</w>
       <phr ana="#n">
          <w ana="#NN2">police</w>
       </phr>
-      <cl ana="#fn">    
+      <cl ana="#fn">
          <w ana="#CJT">that</w>
          <phr ana="#n">
             <w ana="#NP0">Krueger</w>
          </phr>
-         <phr ana="#v">      
-            <phr ana="#v1">        
+         <phr ana="#v">
+            <phr ana="#v1">
                <w ana="#VVD">drove</w>
-               <phr ana="#pr">          
+               <phr ana="#pr">
                   <w ana="#PRP">into</w>
-                  <phr ana="#n">            
+                  <phr ana="#n">
                      <w ana="#AT0">the</w>
                      <w ana="#NN1">quarry</w>
                   </phr>
                </phr>
             </phr>
             <w ana="#CJC">and</w>
-            <phr ana="#v2">        
+            <phr ana="#v2">
                <w ana="#AV0">never</w>
                <w ana="#VVD">surfaced</w>
             </phr>
@@ -974,15 +980,15 @@ In this case, each linguistic segment to be annotated must be supplied with its 
 <att>xml:id</att> attribute:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AILAGD-egXML-iy"><s>
-<w xml:id="word-1">The</w> 
-<w xml:id="word-2">victim</w> 
-<w xml:id="word-3">'s</w> <w xml:id="word-4">friends</w> 
-<w xml:id="word-5">told</w> <w xml:id="word-6">police</w> 
-<w xml:id="word-7">that</w> <w xml:id="word-8">Kruger</w> 
-<w xml:id="word-9">drove</w> <w xml:id="word10">into</w> 
-<w xml:id="word11">the</w> <w xml:id="word12">quarry</w> 
-<w xml:id="word13">and</w> <w xml:id="word14">never</w> 
-<w xml:id="word15">surfaced</w></s></egXML> 
+<w xml:id="word-1">The</w>
+<w xml:id="word-2">victim</w>
+<w xml:id="word-3">'s</w> <w xml:id="word-4">friends</w>
+<w xml:id="word-5">told</w> <w xml:id="word-6">police</w>
+<w xml:id="word-7">that</w> <w xml:id="word-8">Kruger</w>
+<w xml:id="word-9">drove</w> <w xml:id="word10">into</w>
+<w xml:id="word11">the</w> <w xml:id="word12">quarry</w>
+<w xml:id="word13">and</w> <w xml:id="word14">never</w>
+<w xml:id="word15">surfaced</w></s></egXML>
 
 Each segment-interpretation pair may now be represented by means of a
 <gi>link</gi> element inside an appropriate <gi>linkGrp</gi> element:
@@ -1028,7 +1034,7 @@ containers for grammatical information, and a standardized way of filling them i
 attributes that belong to the <ident type="class">att.linguistic</ident> class: <specList>
 <specDesc key="att.linguistic" atts="lemma pos msd join"/>
 </specList></p>
-    
+
 <p>The essence of lightweight linguistic annotation is that the basic grammatical information
 is encapsulated at the word level, together with the orthographic shape of the word. This
 has clear advantages for automatic processing but, on the other hand, this form of data
@@ -1039,8 +1045,8 @@ part-of-speech or morphosyntactic descriptions, single values have to fit into t
 attributes). Another important principle that this kind of annotation is sensitive to is the
 need for (near) homomorphism between the assumed tokenization (division of the text stream
 into minimal units) and the division into minimal syntactic units (<term>word forms</term>,
-in the terminology of ISO Morpho-Syntactic Framework, ISO 24611<note place="bottom">All 
-definitions contained within ISO standards can be accessed at the ISO Online Browsing Platform. For ISO MAF, see 
+in the terminology of ISO Morpho-Syntactic Framework, ISO 24611<note place="bottom">All
+definitions contained within ISO standards can be accessed at the ISO Online Browsing Platform. For ISO MAF, see
 <ptr target="https://www.iso.org/obp/ui#iso:std:iso:24611:ed-1:v1:en"/>.</note>), because it is the former that results
 from the process of tokenization, but the latter that can be lemmatized and meaningfully
 described by means of grammatical features. Where tokens are only minimally mismatched with
@@ -1050,7 +1056,7 @@ disjoint tokens). Beyond that, more robust TEI mechanisms, based on standoff pri
 feature structures, should replace lightweight annotation.</p>
     <!-- I think it would be best to reference Bański, Haaf, and Mueller (2018) at this point, to avoid an in-depth discussion -->
 
-<p>The basic grammatical information encoded by means of 
+<p>The basic grammatical information encoded by means of
 <ident type="class">att.linguistic</ident> is sufficient for the purpose of enhancing queries or improving
 the analysis of search results by, for example, making it possible to distinguish between
 the noun <mentioned>cut</mentioned> and the identically spelled verb
@@ -1065,7 +1071,7 @@ base form (also called <term>bare infinitive</term>), so the value of <att>lemma
 the verbal forms <mentioned>write</mentioned>, <mentioned>writes</mentioned>,
 <mentioned>wrote</mentioned>, <mentioned>written</mentioned>, and
 <mentioned>writing</mentioned> is typically <val>write</val>.</p>
-    
+
 <p>Together with the span-delimiting elements mentioned in this section, such as <gi>s</gi>,
 <gi>cl</gi>, or <gi>phr</gi>, lightweight grammatical annotation may be used to build
 basic syntactic constituency structures, where hierarchical information is expressed through
@@ -1075,21 +1081,21 @@ syntactic structures, one needs to turn to more robust mechanisms offered by the
 may involve graph description (see chapter <ptr target="#GD"/>) or standoff techniques (see
 section <ptr target="#SASO"/>), and where grammatical labels may need to be annotated by
 means of feature structures (see chapter <ptr target="#FS"/>).</p>
-    
-<p>Some of the above-mentioned robust methods will also prove handy in cases where more than one tagset 
-(label inventory) is used to label the words, or where automatic morphological analysis yields multiple 
-possibilities (for example, the form <mentioned>cutting</mentioned> is morphologically ambiguous between 
-verbal, adjectival, and nominal) and needs to be followed by (often also automatic) disambiguation in 
-morphosyntactic contexts, with varying probabilities that may also need to be recorded together with their 
+
+<p>Some of the above-mentioned robust methods will also prove handy in cases where more than one tagset
+(label inventory) is used to label the words, or where automatic morphological analysis yields multiple
+possibilities (for example, the form <mentioned>cutting</mentioned> is morphologically ambiguous between
+verbal, adjectival, and nominal) and needs to be followed by (often also automatic) disambiguation in
+morphosyntactic contexts, with varying probabilities that may also need to be recorded together with their
 corresponding part-of-speech and morphosyntactic values.</p>
-    
-<p>It should be borne in mind that tokenization, lemmatization, part-of-speech identification, and 
-morphosyntactic labelling, especially when performed automatically, should in most cases be seen as 
-involving pragmatic decisions, dictated by concrete practical goals, economy of description, or the 
-demands of particular analytic and/or visualization tools. It comes therefore as no surprise that 
-numerous alternative (and often conflicting) lemmatization strategies and tagsets exist, in use by 
-various communities and various tools, and that they change with time (a case in point is the CLAWS 
-tagset for English, with several versions that merge the part-of-speech and morphosyntactic information 
+
+<p>It should be borne in mind that tokenization, lemmatization, part-of-speech identification, and
+morphosyntactic labelling, especially when performed automatically, should in most cases be seen as
+involving pragmatic decisions, dictated by concrete practical goals, economy of description, or the
+demands of particular analytic and/or visualization tools. It comes therefore as no surprise that
+numerous alternative (and often conflicting) lemmatization strategies and tagsets exist, in use by
+various communities and various tools, and that they change with time (a case in point is the CLAWS
+tagset for English, with several versions that merge the part-of-speech and morphosyntactic information
 to various degrees).
 <note place="bottom">Given that the English language has relatively poor inflectional
 morphology, the decision to merge part-of-speech symbols with morphosyntactic features (as
@@ -1097,32 +1103,32 @@ in, e.g., CLAWS-7, where the value <val>PPHO1</val> signals the 3rd person singu
 pronoun) is fully justified as the most economical approach. For languages with more
 robust inflection, the <att>pos</att> and <att>msd</att> attributes will either be used
 separately, or the part-of-speech information will be merged into the morphosyntactic
-description.</note> The nature and description of these systems is outside the scope of these 
-Guidelines, but it has to be stressed that all the strategies adopted for linguistic annotation, 
-even at the lightweight level of complexity, <emph>must</emph> be documented in the header of the 
-given electronic resource, not only for the purpose of guaranteeing successful data interpretation and exchange, but 
+description.</note> The nature and description of these systems is outside the scope of these
+Guidelines, but it has to be stressed that all the strategies adopted for linguistic annotation,
+even at the lightweight level of complexity, <emph>must</emph> be documented in the header of the
+given electronic resource, not only for the purpose of guaranteeing successful data interpretation and exchange, but
 also for the sake of sustainability of the results of the given project.</p>
-    
+
 <p>The last of the att.linguistic attributes, <att>join</att>, has the most text-technological
 flavour. It can be used to amend the loss of whitespace-related information in non-inline
-markup.</p> 
+markup.</p>
 <p>Compare the following two listings. The first difference between them is in the
 tagset used (CLAWS-5 vs. CLAWS-7) and only serves to exemplify the need to document the
 choice of descriptive vocabulary in the header, lest the encoded information is unreadable or
 confusing. The second difference is the difference in the treatment of inter-token
 whitespace, and it is here that the <att>join</att> attribute proves indispensable.</p>
-    
+
 <p>The first example listing uses CLAWS-5 and inline annotation, where whitespace serves as
 part of the markup:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AILALW-egXML-qn" xml:space="preserve">
-<s><w pos="AT0">The</w> <w pos="NN1">victim</w><w pos="POS">'s</w> <w pos="NN2">friends</w> 
-   <w pos="VVD">told</w> <w pos="NN2">police</w> <w pos="CJT">that</w> <w pos="NP0">Kruger</w> 
-   <w pos="VVD">drove</w> <w pos="PRP">into</w> <w pos="AT0">the</w> <w pos="NN1">quarry</w> 
+<s><w pos="AT0">The</w> <w pos="NN1">victim</w><w pos="POS">'s</w> <w pos="NN2">friends</w>
+   <w pos="VVD">told</w> <w pos="NN2">police</w> <w pos="CJT">that</w> <w pos="NP0">Kruger</w>
+   <w pos="VVD">drove</w> <w pos="PRP">into</w> <w pos="AT0">the</w> <w pos="NN1">quarry</w>
    <w pos="CJC">and</w> <w pos="AV0">never</w> <w pos="SENT">surfaced</w><pc pos="PUN">.</pc></s>
 </egXML></p>
-    
+
 <p>In the second example, the attribute <att>join</att> is the only way to encode whether two
-tokens are adjacent or not: 
+tokens are adjacent or not:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AILALW-egXML-sb"><s>
 <w pos="AT">The</w>
 <w pos="NN1">victim</w>
@@ -1146,8 +1152,8 @@ have <att>join</att> with the value <val>right</val> on the tokens
 <mentioned>victim</mentioned> and <mentioned>surfaced</mentioned>, or whether information
 on a single direction of adjacency is enough. Strategies vary, and it is important to
 document them in the TEI header.</p>
-<p>The following example shows a German sentence <mentioned>Wir fahren in den
-Urlaub.</mentioned> (<q>We're going on vacation.</q>) annotated with all the attributes discussed
+<p>The following example shows a German sentence <q>Wir fahren in den
+Urlaub.</q> ("We're going on vacation.") annotated with all the attributes discussed
 above.<note place="bottom">The annotation values have been adapted from the <ref target="https://weblicht.sfs.uni-tuebingen.de/weblicht/">CLARIN Weblicht service</ref>,
 where e.g. the full morphosyntactic description of the first item reads: <code><![CDATA[[cat pronoun,
 personal true, substituting true, person 1, case nominative, number plural]]]></code>, and has been
@@ -1170,15 +1176,15 @@ either record the original spelling (when the corpus text is normalized) or to r
 normalized variants (when the element content of the corpus preserves the original
 spelling). The attribute class <ident type="class">att.lexicographic.normalized</ident> can be used for that purpose:
 <specList><specDesc key="att.lexicographic.normalized" atts="norm orig"/></specList></p>
-<p>The first fragment below comes from "Gottfried, Newe Welt Vnd Americanische Historien. Frankfurt/M., 1631" 
+<p>The first fragment below comes from "Gottfried, Newe Welt Vnd Americanische Historien. Frankfurt/M., 1631"
 encoded in the Deutsches Textarchiv and records normalized forms in the <att>norm</att> attribute.
   <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AILALW-egXML-du">
     <w norm="unvermutete">vnuermuthete</w>
     <w norm="Freundschaft">Freundſchafft</w>
     <w norm="angeboten">angebotten</w>
-  </egXML></p>  
-<p>The following example comes from the EarlyPrint project and uses the attribute <att>orig</att> to 
-record the original spelling (note that the <att>xml:id</att> attributes have been removed for the 
+  </egXML></p>
+<p>The following example comes from the EarlyPrint project and uses the attribute <att>orig</att> to
+record the original spelling (note that the <att>xml:id</att> attributes have been removed for the
 sake of readability).
   <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="AILALW-egXML-lo">
     <w lemma="he" pos="pns">he</w>
@@ -1187,6 +1193,176 @@ sake of readability).
     <w lemma="forth" pos="av" orig="sorth">forth</w>
   </egXML></p>
 </div>
+
+<div type="div3" xml:id="AILADEP">
+<head>Syntactic Dependency Relations between Word-level Elements</head>
+<p>For the purpose of encoding linguistic annotations of syntactic dependency
+relations between word-level elements, these Guidelines provide attributes that
+belong to the <ident type="class">att.linguistic.dependency</ident> class:
+<specList>
+<specDesc key="att.linguistic.dependency" atts="depN depR depE"/>
+</specList></p>
+<p>Syntactic dependency relations such as <soCalled>subject</soCalled> or
+<soCalled>object</soCalled> between words and other tokens are usually
+represented by means of dependency graphs. A simple example for such a graph is
+given below.
+<figure>
+<graphic width="200px" url="Images/dependency1.png"/>
+</figure>
+In this directed graph, every node is labelled with one token of the sentence
+<q>She buys books.</q>. The nodes are connected by arcs which
+represent the relation of <!-- direct --> syntactic superordination. Read in
+inverse direction, the arcs correspond to the relation of <!-- direct -->
+syntactic subordination or <term>dependency</term>, holding between a
+<term>dependent</term> node and a <term>head</term> node each. Arcs, in turn,
+are labelled with the type of the dependency relation
+(<q>nsubj</q>, <q>obj</q>,
+<q>punct</q>).<note place="bottom">The labels for types of
+dependency relations are taken from the Universal Dependencies (UD) inventory
+(cf. <ptr target="https://universaldependencies.org/u/dep/index.html"/>).</note>
+For instance, in the case of the arc labelled with <q>obj</q> and connecting
+the nodes labelled with the tokens <mentioned>buys</mentioned> and
+<mentioned>books</mentioned>, the latter node is said to be the
+dependent node and the former its head node.</p>
+<p>An equivalent rendition of this graph is given below, where the direction of
+the arrowless arcs is implicitly given by the vertical dimension. For
+convenience, the horizontal positions of the nodes are made explicit in terms of
+numerical, 1-based, token indices.
+<figure>
+<graphic width="200px" url="Images/dependency2.png"/>
+</figure>
+As implied from this rendition, the node with token index 2 (labelled with
+<mentioned>buys</mentioned>) is the <term>root</term> of the dependency graph:
+from this node, every other node in the graph can be reached by following a path
+of arcs from top to bottom.</p>
+<p>Using the <att>depN</att> and <att>depR</att> attributes defined by the <ident
+type="class">att.linguistic.dependency</ident> class, the dependency relations
+in the above example can be encoded as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<s>
+  <w depN="1" depR="2:nsubj">She</w>
+  <w depN="2">buys</w>
+  <w depN="3" depR="2:obj">books</w>
+  <pc depN="4" depR="2:punct">.</pc>
+</s>
+</egXML>
+Here, <att>depN</att> attributes represent the indices of the tokens marked up
+with <gi>w</gi> and <gi>pc</gi> elements. Dependency relations are encoded by
+means of <att>depR</att> attributes whose values are colon-separated pairs,
+specifying the token index of the head node and the type of the dependency
+relation.</p>
+<p>A widely used notation for annotations of dependency relations and other
+linguistic information is the plain-text, column-based <term>CoNLL-U</term>
+format, used by <ref target="https://universaldependencies.org/">Universal
+Dependencies</ref> (UD) and related frameworks. A CoNLL-U representation of the
+example at hand is given below:<note place="bottom">CoNLL-U representations 
+can be pasted into, among others, the online 
+<ref target="https://urd2.let.rug.nl/~kleiweg/conllu/">conllu-viewer</ref>, 
+a tool offered by the department of Computational Linguistics, University of 
+Groningen. The viewer produces interactive graph diagrams for basic and enhanced
+dependencies.</note>
+<eg xml:space="preserve">1	She	she	PRON	_	_	2	nsubj	_	_
+2	buys	buy	VERB	_	_	0	root	_	_
+3	books	book	NOUN	_	_	2	obj	_	SpaceAfter=No
+4	.	.	PUNCT	_	_	2	punct	_	_</eg>
+The first column gives the indices of the tokens in the current sentence, the
+second column the tokens themselves, the third column the corresponding lemma,
+the fourth column a UD part-of-speech tag, the seventh column the token index of
+the syntactic head of the current token, and the eighth column a label of the
+type of the dependency relation between the token and its head. The very last,
+tenth, column can be used for miscellaneous information, such as whether the
+token is adjacent to the following one or whether whitespace should be added
+when joining them. Empty columns are marked with <code>_</code>. Note that by
+convention, the implicit root <mentioned>buys</mentioned> with token index 2 is
+explicitly marked by the dependency relation <mentioned>root</mentioned>,
+pointing to an unrepresented, <soCalled>virtual</soCalled>, root node with token
+index 0.</p>
+<p>This <soCalled>virtual</soCalled> root node is made explicit in the
+corresponding dependency graph below.
+<figure>
+<graphic width="300px" url="Images/dependency3.png"/>
+</figure>
+Here, the node with token index 2 and label <mentioned>buys</mentioned> is
+connected to an unlabelled node with token index 0 via an arc labelled with
+<q>root</q>. Except for the <soCalled>virtual</soCalled> root
+node, each node is, in addition, annotated with lemmas and part-of-speech
+tags.</p>
+<p>In order to encode the linguistic annotation from the above CoNLL-U example,
+the attributes <att>pos</att>, <att>lemma</att>, and <att>join</att> defined by
+the <ident type="class">att.linguistic</ident> class can be used together with
+the <att>depN</att> and <att>depR</att> attributes:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<s>
+  <w depN="1" depR="2:nsubj" pos="PRON" lemma="she">She</w>
+  <w depN="2" depR="0:root" pos="VERB" lemma="buy">buys</w>
+  <w depN="3" depR="2:obj" pos="NOUN" lemma="book" join="right">books</w>
+  <pc depN="4" depR="2:punct" pos="PUNCT" lemma=".">.</pc>
+</s>
+</egXML>
+As in the previous example, <att>depN</att> attributes represent the indices of
+the tokens marked up with <gi>w</gi> and <gi>pc</gi> elements; the
+index <val>0</val> for the <soCalled>virtual</soCalled> root node is left
+implicit. Dependency relations are again encoded by means of <att>depR</att>
+attributes of the <gi>w</gi> and <gi>pc</gi> elements. Note that the <gi>w</gi>
+element with the token <mentioned>buys</mentioned> in its content now also has a
+<att>depR</att> attribute. Part-of-speech tags and lemmas are given as the
+values of <att>pos</att> and <att>lemma</att> attributes. Last, but not least,
+the <att>join</att> attribute can be used for information on whether a token is
+adjacent to the tokens on its left-hand or right-hand side when joining
+them.</p>
+<p>A more complex example in the CoNLL-U format is given below:<note
+place="bottom">This example is adapted from the documentation of the CoNLL-U
+format at <ptr target="https://universaldependencies.org/format.html"/>. The
+tagging follows the conventions of the <ref
+target="https://universaldependencies.org/treebanks/en_ewt/index.html">UD English
+EWT</ref> corpus.</note>
+<eg xml:space="preserve">1	She	she	PRON	PRP	Case=Nom|Gender=Fem|Number=Sing|Person=3|PronType=Prs	2	nsubj	2:nsubj|4:nsubj	_
+2	buys	buy	VERB	VBZ	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	0:root	_
+3	and	and	CCONJ	CC	_	4	cc	4:cc	_
+4	sells	sell	VERB	VBZ	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	2	conj	0:root|2:conj	_
+5	books	book	NOUN	NNS	Number=Plur	2	obj	2:obj|4:obj	SpaceAfter=No
+6	.	.	PUNCT	.	_	2	punct	2:punct	_</eg>
+In this linguistic annotation of the sentence <q>She buys and sells
+books.</q> with coordination ellipsis, there are additional non-empty
+columns. The fifth column provides a concurrent part-of-speech tagging using a
+non-UD tagset. The sixth column adds a pipe-separated list of morphosyntactic
+features. And the ninth column encodes an enhanced dependency graph with
+additional dependency relations.</p>
+<p>As can be seen from the graphic rendition below, there are dependent nodes
+with multiple arcs, connecting them with more than one head node. For
+convenience, those additional arcs are rendered with arrowheads.
+<figure>
+<graphic width="600px" url="Images/dependency4.png"/>
+</figure></p>
+<p>The above representation makes an explicit claim that the pronoun
+<mentioned>she</mentioned> is the subject of both the verb <mentioned>buy</mentioned> and
+the verb <mentioned>sell</mentioned>, while the noun <mentioned>books</mentioned> acts as
+the object of both these verbs.</p>
+<p>The above example may be encoded as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<s>
+  <w depN="1" depR="2:nsubj" depE="2:nsubj|4:nsubj" pos="PRON PRP" msd="Case=Nom|Gender=Fem|Number=Sing|Person=3|PronType=Prs" lemma="she">She</w>
+  <w depN="2" depR="0:root" depE="0:root" pos="VERB VBZ" msd="Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin" lemma="buy">buys</w>
+  <w depN="3" depR="4:cc" depE="4:cc" pos="CCONJ CC" lemma="and">and</w>
+  <w depN="4" depR="2:conj" depE="0:root|2:conj" pos="VERB VBZ" msd="Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin" lemma="sell">sells</w>
+  <w depN="5" depR="2:obj" depE="2:obj|4:obj" pos="NOUN NNS" msd="Number=Plur" lemma="book" join="right">books</w>
+  <pc depN="6" depR="2:punct" depE="2:punct" pos="PUNCT ." lemma=".">.</pc>
+</s>
+</egXML></p>
+<p>As in the CoNLL-U format, the enhanced dependency graph <!-- with additional
+dependency relations --> is represented using <att>depE</att> attributes. An
+<att>depE</att> attribute holds a list of pipe-separated values, each of which
+is a colon-separated pair, consisting of the token index and a dependency
+relation type. The verb form <mentioned>sells</mentioned> with token index 4,
+for instance, has <val>0:root|2:conj</val> as its <att>depE</att> value, to be
+interpreted as being both the dependent node of a root relation to the
+<soCalled>virtual</soCalled> root node with index 0 as well as the dependent
+node of a conjunct relation to the node with index 2 (the verb form
+<mentioned>buys</mentioned>). Concurrent part-of-speech tags are given as
+whitespace-separated list values of <att>pos</att> attributes, and <att>msd</att>
+attributes are used to encode the morphosyntactic UD features.</p>
+</div>
+
 <div type="div3" xml:id="AILASP"><head>Spoken Text</head>
 <p>The mechanisms proposed in this chapter may also be used to encode
 analyses of an entirely different kind, for example discourse function.
