@@ -306,7 +306,7 @@ readus:
 	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc/en
 	cp VERSION release/tei-p5-doc/share/doc/tei-p5-doc
 	@echo BUILD: Make web pages for release notes
-	for i in ReleaseNotes/readme*xml; do \
+	for i in ReleaseNotes/readme-4.12.0.xml; do \
 	${ANT} -f ${XSL}/html/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=readme \
 	-DinputFile=`pwd`/$$i -DoutputFile=`pwd`/release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
 	done
