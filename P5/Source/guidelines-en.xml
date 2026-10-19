@@ -71,46 +71,6 @@
         <sch:ns prefix="rna" uri="http://relaxng.org/ns/compatibility/annotations/1.0"/>
         <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
         <sch:ns prefix="sch1x" uri="http://www.ascc.net/xml/schematron"/>
-
-        <!-- Keys for use in "????" -->
-        <xsl:key name="specGrpRefBYtarget"    match="tei:specGrpRef"     use="@target"/>
-        <xsl:key name="specGrpBYid"           match="tei:specGrp"        use="'#'||@xml:id"/>
-        <xsl:key name="classSpecBYident"
-                 match="tei:schemaSpec/tei:classSpec"
-                 use="@ident||( @ns, parent::tei:schemaSpec/@ns )[1]"/>
-        <xsl:key name="classSpecBYident"
-                 match="tei:specGrp[ key('specGrpRefBYtarget', concat('#', @xml:id ) )]/tei:classSpec"
-                 use="@ident||( @ns, parent::tei:specGrp/key('specGrpRefBYtarget', concat('#', @xml:id ) )/parent::tei:schemaSpec/@ns )[1]"/>
-        <xsl:key name="constraintSpecBYident"
-                 match="tei:schemaSpec/tei:constraintSpec"
-                 use="@ident||( @ns, parent::tei:schemaSpec/@ns )[1]"/>
-        <xsl:key name="constraintSpecBYident"
-                 match="tei:specGrp[ key('specGrpRefBYtarget', concat('#', @xml:id ) )]/tei:constraintSpec"
-                 use="@ident||( @ns, parent::tei:specGrp/key('specGrpRefBYtarget', concat('#', @xml:id ) )/parent::tei:schemaSpec/@ns )[1]"/>
-        <xsl:key name="dataSpecBYident"
-                 match="tei:schemaSpec/tei:dataSpec"
-                 use="@ident||( @ns, parent::tei:schemaSpec/@ns )[1]"/>
-        <xsl:key name="dataSpecBYident"
-                 match="tei:specGrp[ key('specGrpRefBYtarget', concat('#', @xml:id ) )]/tei:dataSpec"
-                 use="@ident||( @ns, parent::tei:specGrp/key('specGrpRefBYtarget', concat('#', @xml:id ) )/parent::tei:schemaSpec/@ns )[1]"/>
-        <xsl:key name="elementSpecBYident"
-                 match="tei:schemaSpec/tei:elementSpec"
-                 use="@ident||( @ns, parent::tei:schemaSpec/@ns )[1]"/>
-        <xsl:key name="elementSpecBYident"
-                 match="tei:specGrp[ key('specGrpRefBYtarget', concat('#', @xml:id ) )]/tei:elementSpec"
-                 use="@ident||( @ns, parent::tei:specGrp/key('specGrpRefBYtarget', concat('#', @xml:id ) )/parent::tei:schemaSpec/@ns )[1]"/>
-        <xsl:key name="macroSpecBYident"
-                 match="tei:schemaSpec/tei:macroSpec"
-                 use="@ident||( @ns, parent::tei:schemaSpec/@ns )[1]"/>
-        <xsl:key name="macroSpecBYident"
-                 match="tei:specGrp[ key('specGrpRefBYtarget', concat('#', @xml:id ) )]/tei:macroSpec"
-                 use="@ident||( @ns, parent::tei:specGrp/key('specGrpRefBYtarget', concat('#', @xml:id ) )/parent::tei:schemaSpec/@ns )[1]"/>
-        <xsl:key name="moduleSpecBYident"
-                 match="tei:moduleSpec"
-                 use="@ident||( @ns, parent::tei:schemaSpec/@ns )[1]"/>
-        <xsl:key name="prefixDefBYident"
-                 match="tei:prefixDef"
-                 use="@ident||( @ns, parent::tei:schemaSpec/@ns )[1]"/>
       </constraintDecl>
     </encodingDesc>
     <revisionDesc>
