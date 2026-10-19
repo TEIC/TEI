@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- © TEI Consortium. Dual-licensed under CC-by and BSD2 licenses; see the file COPYING.txt for details. -->
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" type="atts" ident="att.translatable" predeclare="true">
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" type="atts" ident="att.translatable" xmlns:sch="http://purl.oclc.org/dsdl/schematron" predeclare="true">
   <desc versionDate="2006-10-15" xml:lang="en">provides attributes used to  indicate the status of a translatable
 portion of an ODD document.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">ODD 문서의 번역 가능 부분의 상태를 나타내는 속성을 제시한다.</desc>
@@ -11,6 +11,53 @@ portion of an ODD document.</desc>
       d'une partie traduisible d'un document ODD.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos utilizados para indicar el estatus de un fragmento traducibile de un documento aislado.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">assegna degli attributi utilizzati per indicare lo status di una porzione traducibile di un documento isolato.</desc>
+  <constraintSpec mode="add" ident="only-one-each-lang" scheme="schematron" xml:lang="en">
+    <!-- Added per ticket https://github.com/TEIC/TEI/issues/2729 -->
+    <desc xml:lang="en" versionDate="2026-08-21">
+      This constraint requires that there be only one of any sibling
+      element type from att.translatable with a given <att>type</att>
+      for any given natural language. Note that to determine natural
+      language we simply compare <att>xml:lang</att> values, such that
+      <val>fr-CA</val> and <val>fr-FR</val> would be considered
+      different languages.
+      <!-- We may want to be smarter about this in the future. -->
+    </desc>
+    <!--
+        We would prefer to be able to say “a member of
+        att.translatable”, but there is currently no way
+        to do that, so we just enumerate them.
+    -->
+    <constraint>
+      <sch:rule context="  tei:elementSpec/tei:desc
+                         | tei:elementSpec/tei:gloss
+                         | tei:elementSpec/tei:remarks
+                         | tei:classSpec/tei:desc
+                         | tei:classSpec/tei:gloss
+                         | tei:classSpec/tei:remarks
+                         | tei:macroSpec/tei:desc
+                         | tei:macroSpec/tei:gloss
+                         | tei:macroSpec/tei:remarks
+                         | tei:attDef/tei:desc
+                         | tei:attDef/tei:gloss
+                         | tei:attDef/tei:remarks
+                         | tei:valItem/tei:desc
+                         | tei:valItem/tei:gloss
+                         | tei:valItem/tei:remarks
+                         | tei:moduleSpec/tei:desc
+                         | tei:moduleSpec/tei:gloss
+                         | tei:moduleSpec/tei:remarks
+                         ">
+        <sch:let name="myGI" value="name(.)"/>
+        <sch:let name="noType" value="not( @type )"/>
+        <sch:let name="myType" value="normalize-space( @type )"/>
+        <sch:let name="lang" value="normalize-space( ancestor-or-self::*[@xml:lang][1]/@xml:lang )"/>
+        <sch:report test="preceding-sibling::*[ name(.) eq $myGI ]
+                                              [ ( not( @type) and $noType )  or  normalize-space( @type ) eq $myType ]
+                                              [ normalize-space( ancestor-or-self::*[@xml:lang][1]/@xml:lang ) eq $lang ]">
+        The sibling &lt;<sch:value-of select="$myGI"/>> children of a &lt;<sch:value-of select="name(..)"/>> should each have a different @xml:lang; this one duplicates the "<sch:value-of select="$lang"/>" of a preceding sibling.</sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="versionDate" usage="opt">
       <desc versionDate="2012-05-23" xml:lang="en">specifies the date on which the source text was extracted and sent to the translator</desc>
