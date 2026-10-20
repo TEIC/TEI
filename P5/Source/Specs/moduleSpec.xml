@@ -34,10 +34,10 @@
   </content>
   <constraintSpec ident="specs-without-module-att-deprecated" scheme="schematron" xml:lang="en">
     <constraint>
-      <sch:rule context="tei:*[local-name() = ('elementSpec', 'classSpec', 'macroSpec', 'dataSpec')][not(@module)]">
-        <sch:report test="true()" role="warning">
+      <sch:rule context="tei:elementSpec|tei:classSpec|tei:macroSpec|tei:dataSpec">
+        <sch:assert test="@module" role="warning">
           The @module attribute will be required on <sch:name/> and other *Spec elements after 2028-06-30.
-        </sch:report>
+        </sch:assert>
       </sch:rule>
     </constraint>
   </constraintSpec>
