@@ -679,7 +679,15 @@
         }
       });
     </script>
-    <script src="https://tei-c.org/js/main.js"></script>
+    <!-- MT 2026-10 Defer loading the main.js script so it doesn't block the display of HTML pages in case tei-c.org is unavailable -->
+    <script>
+      window.addEventListener("load", function () {
+        var s = document.createElement("script");
+        s.src = "https://tei-c.org/js/main.js";
+        s.async = true;
+        document.head.appendChild(s);
+      });
+    </script>
 
     <xsl:call-template name="jsForOdds"/>
 
