@@ -27,8 +27,7 @@
       <gloss versionDate="2008-04-06" xml:lang="es">identificador</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">identificateur</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">identificatore</gloss>
-        <gloss versionDate="2016-11-17" xml:lang="de">Identifikator</gloss>
-<!--  NOTE (MDH 2016-04-24): This @versionDate is clearly wrong; we updated from ISO 3066 to BCP 47 around 2010 or 2011.  -->
+      <gloss versionDate="2016-11-17" xml:lang="de">Identifikator</gloss>
       <desc versionDate="2007-07-08" xml:lang="en">Supplies a language code constructed as defined in <ref target="https://tools.ietf.org/html/bcp47">BCP 47</ref> which is used to identify the
         language documented by this element, and which may be referenced by the global
         <att>xml:lang</att> attribute.</desc>
@@ -67,7 +66,12 @@
         texto que usa esa lengua.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica la percentuale approsimativa (per volume)
         di testo che usa questa lingua.</desc>
-      <datatype><dataRef name="nonNegativeInteger"/></datatype>
+      <datatype>
+        <dataRef name="nonNegativeInteger">
+          <dataFacet name="maxInclusive" value="100"/>
+          <dataFacet name="minInclusive" value="0"/>
+        </dataRef>
+      </datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
