@@ -168,7 +168,7 @@
           <xsl:call-template name="stdfooter"/>
         </body>
       </html>
-    </xsl:result-document>    
+    </xsl:result-document>
     <xsl:apply-imports/>
     <xsl:for-each select="key('ELEMENTDOCS',1)">
       <xsl:variable name="me" select="@ident"/>
@@ -176,7 +176,7 @@
       <xsl:variable name="langs">
         <xsl:value-of select="concat(normalize-space(tei:generateDocumentationLang(.)),' ')"/>
       </xsl:variable>
-      <xsl:result-document       
+      <xsl:result-document
         html-version="{$htmlVersion}"
         normalization-form="{$normalizationForm}"
         encoding="{$outputEncoding}"
@@ -233,10 +233,10 @@
               the use of <xsl:text>&lt;</xsl:text>
               <xsl:value-of select="$me"/>
               <xsl:text>&gt;</xsl:text>
-              is not the main 
-              focus of the passage in question. In other cases, examples may be direct 
-              translations of each other, and hence identical from the perspective of 
-              their encoding.</p>             
+              is not the main
+              focus of the passage in question. In other cases, examples may be direct
+              translations of each other, and hence identical from the perspective of
+              their encoding.</p>
                 <xsl:for-each
                     select="/TEI/text/body/div[@xml:id=$mychapter]">
                   <xsl:if test="count(key('EXAMPLES',concat(@xml:id,$me)))&gt;0">
@@ -359,7 +359,7 @@
     </xsl:for-each>
   </xsl:template>
 
-  
+
 
   <xsl:template name="startDivHook">
     <xsl:if
@@ -490,34 +490,34 @@
 
   <xsl:template name="mainTOC">
     <xsl:param name="force"/>
-        
-        
+
+
 <!-- MDH 2013-06: changes for new TOC page layout.      -->
-        
-        <p class="lang_links"> 
-                [<a href="../../en/html/index.html">English</a>] 
-                [<a href="../../de/html/index.html">Deutsch</a>] 
-                [<a href="../../es/html/index.html">Español</a>] 
-                [<a href="../../it/html/index.html">Italiano</a>] 
-                [<a href="../../fr/html/index.html">Français</a>] 
+
+        <p class="lang_links">
+                [<a href="../../en/html/index.html">English</a>]
+                [<a href="../../de/html/index.html">Deutsch</a>]
+                [<a href="../../es/html/index.html">Español</a>]
+                [<a href="../../it/html/index.html">Italiano</a>]
+                [<a href="../../fr/html/index.html">Français</a>]
                 [<a href="../../ja/html/index.html">日本語</a>]
-                [<a href="../../ko/html/index.html">한국어</a>] 
-                [<a href="../../zh-TW/html/index.html">中文</a>] 
-                
+                [<a href="../../ko/html/index.html">한국어</a>]
+                [<a href="../../zh-TW/html/index.html">中文</a>]
+
                 <br/>
-                
+
                 <a href="../../en/Guidelines.pdf" class="ebookLink">
-                        <img src="icons/e-book-icons/mdh_pdf_doc_32x32.png" width="32" height="32" 
+                        <img src="icons/e-book-icons/mdh_pdf_doc_32x32.png" width="32" height="32"
                                 alt="PDF version for downloading and printing."
                                 title="PDF version for downloading and printing."/>
                 </a>
                 <a href="../../en/Guidelines.epub" class="ebookLink">
-                        <img src="icons/e-book-icons/mdh_epub_doc_32x32.png" width="32" height="32" 
+                        <img src="icons/e-book-icons/mdh_epub_doc_32x32.png" width="32" height="32"
                                 alt="ePub version for mobile devices."
                                 title="ePub version for mobile devices."/>
                 </a>
         </p>
-        
+
         <div class="col_left">
                 <div class="toc_front">
                         <h3>
@@ -539,7 +539,7 @@
                                 </xsl:for-each>
                         </ul>
                 </div>
-                
+
                 <div class="toc_back">
                         <h3>
                                 <xsl:sequence select="tei:i18n('Back Matter')"/>
@@ -556,12 +556,12 @@
                                 </xsl:if>
                         </xsl:for-each>
                 </div>
-                
-                
+
+
         </div>
-        
+
         <div class="col_centre">
-                
+
                 <div class="toc_body">
                         <h3>
                                 <xsl:sequence select="tei:i18n('Text body')"/>
@@ -578,9 +578,9 @@
                                 </xsl:if>
                         </xsl:for-each>
                 </div>
-                
+
         </div>
-        
+
         <div class="col_right">
                 <div>
                         <h3>TEI sourcecode</h3>
@@ -597,7 +597,7 @@
                         </ul>
                 </div>
         </div>
-    
+
 
   </xsl:template>
 
@@ -606,6 +606,7 @@
   <xsl:template match="divGen[@type='toc']"/>
 
   <xsl:template name="javascriptHook">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <script type="text/javascript" src="popupFootnotes.js"/>
     <xsl:comment>CAMPAIGN JS</xsl:comment>
     <script type="text/javascript">
@@ -651,7 +652,7 @@
         if (outDateTr) {
           const link = document.createElement('a');
           link.href = `https://translate.tei-c.org/translate.html?edit=${location}`;
-          
+
           const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
           svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
           svg.setAttribute("width", "16");
@@ -660,20 +661,20 @@
           svg.setAttribute("aria-label", "Translation out of date.");
           svg.setAttribute("viewBox", "0 0 16 16");
           svg.setAttribute("style", "position:absolute; top:2px; right:2px; color:red");
-          
+
           const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
           title.textContent = "Translation out of date.";
           svg.appendChild(title);
-          
+
           const path1 = document.createElementNS("http://www.w3.org/2000/svg", "path");
           path1.setAttribute("d", "M6.146 7.146a.5.5 0 0 1 .708 0L8 8.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 9l1.147 1.146a.5.5 0 0 1-.708.708L8 9.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 9 6.146 7.854a.5.5 0 0 1 0-.708z");
-          
+
           const path2 = document.createElementNS("http://www.w3.org/2000/svg", "path");
           path2.setAttribute("d", "M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z");
-          
+
           svg.appendChild(path1);
           svg.appendChild(path2);
-          
+
           link.appendChild(svg);
           outDateTr.appendChild(link);
         }
@@ -684,14 +685,14 @@
     <xsl:call-template name="jsForOdds"/>
 
   </xsl:template>
-  
+
   <xsl:template name="bodyHook">
     <div id="container">
       <xsl:if test="not($googleAnalytics='')">
         <xsl:copy-of select="doc('nav.html')"/>
       </xsl:if>
     </div>
-    
+
     <div class="mainhead">
       <h1>TEI: <xsl:sequence select="tei:i18n('GuidelinesTEI')"/></h1>
       <p><xsl:value-of select="/TEI/teiHeader/fileDesc/editionStmt/edition"/></p>
@@ -782,7 +783,7 @@
       </xsl:when>
     </xsl:choose>
   </xsl:template>
-  
+
   <xsl:function name="tei:checkLang" as="xs:string">
     <xsl:param name="lang"/>
       <xsl:sequence select="if
