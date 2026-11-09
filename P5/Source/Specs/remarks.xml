@@ -31,6 +31,21 @@
       </sch:rule>
     </constraint>
   </constraintSpec>
+  <constraintSpec scheme="schematron" ident="deprecate-multiple-remarks-same-lang" xml:lang="en" validUntil="2028-02-02">
+    <desc type="deprecationInfo">Only one &lt;remarks> element should be provided for
+    each language. For multiple topics in the same language, use &lt;p> (paragraph)
+    elements inside a single &lt;remarks> element.</desc>
+    <constraint>
+      <sch:rule context="tei:remarks">
+        <sch:let name="lang" value="@xml:lang"/>
+        <sch:assert test="not(preceding-sibling::tei:remarks[@xml:lang = $lang])" role="warning">
+          After 2028-02-02, only one &lt;remarks> element per language will be allowed. 
+          For multiple topics in the same language, use &lt;p> (paragraph)
+          elements inside a single &lt;remarks> element.
+        </sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="ident" usage="opt">
       <desc versionDate="2025-02-11" xml:lang="en">supplies the identifier by which the remarks may be referenced.</desc>
