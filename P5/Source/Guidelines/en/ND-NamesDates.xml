@@ -2296,12 +2296,7 @@ occupation and residence.</p>
         The <gi>object</gi> element is a more general descriptive form of the <gi>msDesc</gi> element. The latter should be used
         for describing manuscripts and similar text-bearing objects but can be viewed as a more specific form of the
         <gi>object</gi> element.</p>
-        <p><!-- JC: Update after a couple of releases -->
-          <emph>Please note:</emph> The <gi>object</gi> element is a recent addition to TEI P5 Guidelines as of version 3.5.0 and as such might
-          be more prone to further revision in the next few releases as its use develops. This may be particularly evident where its
-          contents have been borrowed from <gi>msDesc</gi> and have yet to be generalized from their use in the context of manuscript descriptions.
-        </p>
-        <p>The <gi>object</gi> element usually appears inside the
+      <p>The <gi>object</gi> element usually appears inside the
         <gi>listObject</gi> element which is used to group
         descriptions of identifiable objects. The <gi>listObject</gi>
         element is a member of <ident type="class">model.listLike</ident> and so may appear inside
@@ -2314,27 +2309,25 @@ occupation and residence.</p>
       <p>
         <specList>
           <specDesc key="objectIdentifier"/>
-          <specDesc key="msContents"/>
+          <specDesc key="objectContents"/>
           <specDesc key="physDesc"/>
           <specDesc key="history"/>
           <specDesc key="additional"/>
         </specList>
+        
         Overall, the basic structure of an <gi>object</gi> element is akin to that of <gi>msDesc</gi> in that it is providing a
-        structured description of an object. After a group of
-        identifying information, it has the option of paragraphs or, if the <ident type="module">msdescription</ident> module is
+        structured description of an object. After a group of identifying information, it has the option of paragraphs or, 
+        if the <ident type="module">msdescription</ident> module is
         loaded, <gi>msContents</gi>, <gi>physDesc</gi>, <gi>history</gi>, and <gi>additional</gi> elements for descriptive
         metadata about this object. Although these elements originate from manuscript description the <gi>object</gi> element may
-        be used for all forms of object (whether text-bearing or not).
+        be used for all forms of object (whether text-bearing or not). Where the object is a manuscript or early printed work with 
+        similar characteristics, the <gi>msContents</gi> element may be used instead of the <gi>objectContents</gi> element.</p>
 
-        <!-- JC: Update after a couple of releases -->
-        Where descendents of <gi>object</gi> still have the hallmarks
-        of their use in manuscript description, the descriptions as relating to manuscripts should be interpreted as applying to all
-        forms of object (text-bearing) or not.</p>
         <p>The <gi>objectIdentifier</gi> element is a general-purpose
         grouping element for location or identification information relating to a single object or resource. It is very similar to
-        an <gi>msIdentifier</gi> element with less contraints on the order of its contents. The <gi>objectIdentifier</gi> may be more
+        an <gi>msIdentifier</gi> element with fewer contraints on the order of its contents. The <gi>objectIdentifier</gi> may be more
         or less detailed dependent on the needs of the encoder. In some cases an <gi>object</gi> may be used mostly as a common
-        reference point for multiple <gi>objectName</gi> elements to refer back to. In situations, one might provide more detailed
+        reference point for multiple <gi>objectName</gi> elements to point to. In such situations, one might provide more detailed
         information in the <gi>objectIdentifier</gi> where it is available or desirable. Compare <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDOBJ-egXML-wt">
           <object xml:id="Excalibur-shortIdentifier">
             <objectIdentifier>
@@ -2387,8 +2380,8 @@ occupation and residence.</p>
           </objectIdentifier>
         </egXML>
       </p>
-      <p>The <gi>msContents</gi> element is currently used to provide a description of the intellectual contents of any text on an object
-        and, being optional, is not necessary if there are no intellectual contents to describe. (Such contents, especially in the
+      <p>The <gi>objectContents</gi> element is used to provide a description of the intellectual contents of an object
+        and, being optional, is not necessary if there are no discrete intellectual contents to describe. (Such contents, especially in the
         case of artistic objects, may not always be textual.) The <gi>physDesc</gi> element may be used to give a physical
         description of the object either in prose or using more structured elements as and where they apply to that kind of
         object. The <gi>history</gi> element provides the option to describe the history of the object as paragraphs or with more
@@ -2416,51 +2409,63 @@ occupation and residence.</p>
                   </location>
                 </address>
               </objectIdentifier>
-              <msContents>
-                <p>The back and shoulders of the mask is inscribed with a protective spell in Egyptian hieroglyphs formed of ten
-                  vertical and horizontal lines. This spell first appeared on masks in the Middle Kingdom at least 500 years
-                  before Tutankhamun, and comes from chapter 151 of the <title>Book of the Dead</title>.</p>
-              </msContents>
+              <objectContents>
+                <p>The back and shoulders of the mask is inscribed with a protective spell in Egyptian 
+                  hieroglyphs formed of tenvertical and horizontal lines. This spell first appeared on 
+                  masks in the Middle Kingdom at least 500 years before Tutankhamun, and comes from 
+                  chapter 151 of the <title>Book of the Dead</title>.</p>
+              </objectContents>
               <physDesc>
-                <p>The mask of Tutankhamun is 54cm x 39.3cm x 49cm. It is constructed from two layers of high-karat gold that
-                  varies in thickness from 1.5-3mm. It weighs approximately 10.23kg and x-ray crystallography shows that it is
-                  composed of two alloys of gold with a lighter 18.4 karat shade being used for the face and neck while a heavier
-                  22.5 karat gold was used for the rest of the mask.</p>
-                <p>In the mask Tutankhamun wears a nemes headcloth which has the royal insignia of a cobra (Wadjet) and vulture
-                  (Nekhbet) on it. These are thought respectively to symbolize Tutankhamun's rule of both Lower Egypt and Upper
-                  Egypt. His ears are pierced for earrings. The mask has rich inlays of coloured glass and gemstones, including
-                  lapis lazuli surrounding the eye and eyebrows, quartz for the eyes, obsidian for the pupils. The broad collar is
-                  made up of carnelian, feldspar, turquoise, amazonite, faience and other stones.</p>
+                <p>The mask of Tutankhamun is <height>54cm</height> x <width>39.3cm</width> x 
+                  <depth>49cm</depth>. It is constructed from two layers of high-karat gold that
+                  varies in thickness from 1.5-3mm. It weighs approximately 10.23kg and x-ray 
+                  crystallography shows that it is composed of two alloys of gold with a lighter 
+                  18.4 karat shade being used for the face and neck while a heavier 22.5 karat gold 
+                  was used for the rest of the mask.</p>
+                <p>In the mask Tutankhamun wears a nemes headcloth which has the royal insignia of a 
+                  cobra (Wadjet) and vulture (Nekhbet) on it. These are thought respectively to 
+                  symbolize Tutankhamun's rule of both Lower Egypt and Upper Egypt. His ears are 
+                  pierced for earrings. The mask has rich inlays of coloured glass and gemstones, 
+                  including lapis lazuli surrounding the eye and eyebrows, quartz for the eyes, 
+                  obsidian for the pupils. The broad collar is made up of carnelian, feldspar, 
+                  turquoise, amazonite, faience and other stones.</p>
               </physDesc>
               <history>
                 <origin>
-                  <p>The mask of Tutankhamun was created in <origPlace>Egypt</origPlace> around <origDate when="-1323" type="circa">1323 BC</origDate>. It is a death mask of the 18th-dynasty ancient Egyptian Pharaoh Tutankhamun
-                    who reigned 1332–1323 BC.</p>
+                  <p>The mask of Tutankhamun was created in <origPlace>Egypt</origPlace> around 
+                    <origDate when="-1323" type="circa">1323 BC</origDate>. It is a death mask of the 
+                    18th-dynasty ancient Egyptian Pharaoh Tutankhamun who reigned 1332–1323 BC.</p>
                 </origin>
                 <provenance>
-                  <p>The mask of Tutankhamun was found in his burial chamber at Theban Necropolis in the Valley of the Kings in
-                    1922. On 28 October 1925 the excavation team led by English archaeologist Howard Carter opened the heavy
-                    sarcophagus and three coffins and were the first people in around 3,250 years to see the mask of Tutankhamun.
-                    Carter wrote in his diary: <quote> The pins removed, the lid was raised. The penultimate scene was disclosed –
-                      a very neatly wrapped mummy of the young king, with golden mask of sad but tranquil expression, symbolizing
-                      Osiris … the mask bears that god's attributes, but the likeness is that of Tut.Ankh.Amen – placid and
-                      beautiful, with the same features as we find upon his statues and coffins. The mask has fallen slightly
-                      back, thus its gaze is straight up to the heavens. </quote>
+                  <p>The mask of Tutankhamun was found in his burial chamber at Theban Necropolis in 
+                    the Valley of the Kings in 1922. On 28 October 1925 the excavation team led by 
+                    English archaeologist Howard Carter opened the heavy sarcophagus and three 
+                    coffins and were the first people in around 3,250 years to see the mask of 
+                    Tutankhamun.
+                    Carter wrote in his diary: <quote> The pins removed, the lid was raised. The 
+                      penultimate scene was disclosed – a very neatly wrapped mummy of the young king, 
+                      with golden mask of sad but tranquil expression, symbolizing Osiris … the mask 
+                      bears that god's attributes, but the likeness is that of Tut.Ankh.Amen – placid 
+                      and beautiful, with the same features as we find upon his statues and coffins. 
+                      The mask has fallen slightlyback, thus its gaze is straight up to the heavens. </quote>
                   </p>
                 </provenance>
-                <acquisition> In December 1925, the mask was removed from the tomb, placed in a crate and transported 635
-                  kilometres (395 mi) to the Egyptian Museum in Cairo, where it remains on public display. </acquisition>
+                <acquisition> In December 1925, the mask was removed from the tomb, placed in a crate 
+                  and transported 635 kilometres (395 mi) to the Egyptian Museum in Cairo, where it 
+                  remains on public display. </acquisition>
               </history>
               <additional>
                 <adminInfo>
                   <custodialHist>
-                    <custEvent when="1944">When it was discovered in 1925, the 2.5kg narrow gold beard was no longer attached to
-                      the mask and was reattached to the chin by use of a wooden dowel in 1944.</custEvent>
-                    <custEvent when="2014-08"> In August 2014 when the mask was removed from its display case for cleaning, the
-                      beard fell off again. Those working in the museum unadvisedly used a quick-drying epoxy to attempt to fix
-                      it, but left the beard off-centre. </custEvent>
-                    <custEvent when="2015-01">The damage was noticed and repaired in January 2015 by a German-Egyptian team who
-                      used beeswax, a material known to be used as adhesives by the ancient Egyptians.</custEvent>
+                    <custEvent when="1944">When it was discovered in 1925, the 2.5kg narrow gold beard 
+                      was no longer attached to the mask and was reattached to the chin by use of a 
+                      wooden dowel in 1944.</custEvent>
+                    <custEvent when="2014-08"> In August 2014 when the mask was removed from its display 
+                      case for cleaning, the beard fell off again. Those working in the museum unadvisedly 
+                      used a quick-drying epoxy to attempt to fixit, but left the beard off-centre. </custEvent>
+                    <custEvent when="2015-01">The damage was noticed and repaired in January 2015 by a 
+                      German-Egyptian team who used beeswax, a material known to be used as adhesives 
+                      by the ancient Egyptians.</custEvent>
                   </custodialHist>
                 </adminInfo>
               </additional>
@@ -2468,6 +2473,116 @@ occupation and residence.</p>
           </listObject>
         </egXML>
       </p>
+      <p>
+        In some cases, especially in the description of artistic works, the use of 
+        <gi>classCode</gi> inside individual <gi>objectItem</gi> elements enables 
+        the referencing of applicable classification codes from standard classification systems, 
+        such as Iconclass. 
+        
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-objectItem-egXML-lc">
+        <objectItem n="7">
+          <locus>Upper register, far-right wing panel (recto/verso).</locus>
+          <classCode scheme="http://iconclass.org/" n="71A51">71A51 Adam and/or Eve overcome with repentance</classCode>
+          <classCode scheme="http://iconclass.org/" n="71A82">71A82 The killing of Abel</classCode>
+          <classCode scheme="http://iconclass.org/" n="11I2(CUMAEAN)">11I2(CUMAEAN) Cumaean sibyl</classCode>
+          <note>Recto: Eve, in similar anatomical realism as Adam, holding a small citrus fruit
+            (representing the forbidden fruit). Above her is a grisaille relief of Cain murdering
+            Abel. Verso: The top inner-left shutter shows the Cumaean Sibyl looking down towards
+            the Virgin. Below contains architectural detail of the room for the annunciation
+            scene.</note>
+        </objectItem>
+        </egXML>
+        
+      </p>
+
+
+<p>
+  In a fuller context of a complete <gi>object</gi> element the benefit of including such classification information are more evident. 
+  Where a <gi>locus</gi> is provided for the <gi>objectItem</gi> this must come first.  
+  Below, an example for <name>The Ghent Altarpiece</name> illustrates a detailed <gi>objectContents</gi>.
+  
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-objectContents-egXML-jc">
+      <object type="polyptych" xml:id="ghentAltarpiece-jc">
+        <objectIdentifier>
+          <objectName type="main">The Ghent Altarpiece</objectName>
+          <objectName type="alt">The Adoration of the Mystic Lamb</objectName>
+          <institution>St Bavo's Cathedral</institution>
+          <idno type="inventory">Sint-Baafskathedraal 10000092</idno>
+          <altIdentifier>
+            <idno>Sint-Baafskathedraal 426</idno>
+          </altIdentifier>
+          <idno type="WikiData">Q734834</idno>
+          <idno type="VIAF">121038913</idno>
+          <idno type="GND">4065420-5</idno>
+          <idno type="LOC">n99001208</idno>
+        </objectIdentifier>
+        <objectContents>
+          <summary>The Ghent Altarpiece is a monumental 15th-century polyptych altarpiece consisting
+            of 12 distinct physical oak panels, eight of which are double-sided wings. Together,
+            they form an exhaustive and complex theological narrative visible in different
+            configurations when open or closed. The work is believed to have been primarily created
+            by Hubert van Eyck (d. 1426) and his brother Jan van Eyck (d. 1441). It was unveiled on 6 May 1432. </summary>
+          <objectItem n="1">
+            <locus>Upper register, far-left wing panel (recto/verso).</locus>
+            <classCode scheme="http://iconclass.org/" n="71A51">71A51 Adam and/or Eve overcome with repentance</classCode>
+            <classCode scheme="http://iconclass.org/" n="71A81">71A81 the sacrifice of Cain and Abel</classCode>
+            <classCode scheme="http://iconclass.org/" n="11I2(ERYTHRAEAN)">11I2(ERYTHRAEAN) Erythraean sibyl</classCode>
+            <note>Recto: Adam, depicted with striking anatomical realism representing the fall of
+              man. Above him is a small grisaille relief of Cain and Abel's sacrifices. Verso: The
+              top inner-right shutter shows the Erythraean Sibyl and architectural
+              detail below.</note>
+          </objectItem>
+          <objectItem n="2">
+            <locus>Upper register, inner-left wing panel (recto/verso).</locus>
+            <classCode scheme="http://iconclass.org/" n="11G21">11G21 Angels singing</classCode>
+            <classCode scheme="http://iconclass.org/" n="11I12">11I12 Prophet Zechariah</classCode>
+            <classCode scheme="http://iconclass.org/" n="73A52">73A52 The Annunciation</classCode>
+            <note>Recto: Singing Angels, displaying meticulously detailed facial expressions that
+              reflect individual vocal ranges and pitches. Verso: The Annunciation (The Angel
+              Gabriel), showing the archangel extending lilies while delivering his message to Mary.
+              In a lunette above The Prophet Zechariah looks down. </note>
+          </objectItem>
+          
+          <!-- More <objectItem> elements -->
+          
+          <objectItem n="12">
+            <locus>Lower register, far-right wing panel (recto/verso).</locus>
+            <classCode scheme="http://iconclass.org/" n="11Q621">11Q621 Pilgrims</classCode>
+            <classCode scheme="http://iconclass.org/" n="11H(CHRISTOPHER)">11H(CHRISTOPHER) The giant and martyr St Christopher</classCode>
+            <classCode scheme="http://iconclass.org/" n="11(+5)">11(+5) Donor Portrait</classCode>
+            <note>Recto: The Holy Pilgrims, led by the giant Saint Christopher, walking through a
+              lush Mediterranean landscape toward the adoration of the lamb. Verso: A vivid portrait
+              of Lysbette Borluut, wife of Joost Vijd, shown kneeling in prayer.</note>
+          </objectItem>
+        </objectContents>
+        <physDesc>
+          <p>A massive polyptych that is <measure unit="m" quantity="5.2" type="width">5.2m
+              wide</measure> and <measure unit="m" quantity="3.75" max="3.75" type="height"> up to
+                3.75m</measure> high composed of 12 oak panels painted in oil, housed in a complex,
+            re-engineered structural framework that allows the hinged components to fold inward.</p>
+        </physDesc>
+        <history>
+          <origin>The altarpiece is believed to have been created by Hubert van Eyck (d. 1426) and
+            completed by his brother Jan van Eyck; unveiled on 6 May, 1432, inside the church of St. John the Baptist (now St. Bavo's Cathedral).</origin>
+          <provenance>The work escaped Calvinist iconoclasts in 1566 when the altarpiece was dismantled and
+            hidden the cathedral tower and later moved to the town hall. The panels were taken to Paris 
+            and exhibited at the Louvre after the French Revolution, being returned to Ghent in 1815
+            after the Battle of Waterloo. The Diocese of Ghent pawned them in 1815, and not repaying
+            the debt they were sold to English collector Edward Solly who later sold them to
+            Frederick William III (King of Prussia) who exhibited them in the Gemäldegalerie,
+            Berlin. These were later returned along with other panels which had been seized after
+            World War I. During World War II they were taken by Nazi forces and eventually hidden 
+            in the Altaussee salt mines, and recovered by the Allied <soCalled>Monuments Men</soCalled>.</provenance>
+          <acquisition>The panels were returned to St. Bavo's Cathedral in Ghent, Belgium, in 1945,
+            where the reassembled altarpiece remains in a climate-controlled, secure modern
+            enclosure.</acquisition>
+        </history>
+      </object>
+    </egXML>
+    
+  
+</p>
+
 
 
       <p>If the object is being referenced from elsewhere in the document, this is usually done with an <gi>objectName</gi>. For
@@ -2475,7 +2590,7 @@ occupation and residence.</p>
          attribute on the <gi>objectName</gi> element.
 
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="NDOBJ-egXML-qn">
-          <!-- Inside <standOff>: -->
+          <standOff>
           <listObject>
             <object xml:id="Alfred-Jewel">
               <objectIdentifier>
@@ -2490,32 +2605,39 @@ occupation and residence.</p>
                 <objectName>Alfred Jewel</objectName>
               </objectIdentifier>
               <physDesc>
-                <p>The Alfred Jewel is about 6.4 cm in length and is made of combination of filigreed <material>gold</material>
-                  surrounding a polished teardrop shaped piece of transparent <material>quartz</material>. Underneath the rock
-                  crystal is a cloisonné enamel image of a man with ecclesiastical symbols. The sides of the jewel holding the
-                  crystal in place contain an openwork inscription saying "AELFRED MEC HEHT GEWYRCAN", meaning 'Alfred ordered me
-                  made'.</p>
+                <p>The Alfred Jewel is about 6.4 cm in length and is made of combination of 
+                  filigreed <material>gold</material> surrounding a polished teardrop shaped 
+                  piece of transparent <material>quartz</material>. Underneath the rock crystal 
+                  is a cloisonné enamel image of a man with ecclesiastical symbols. The sides 
+                  of the jewel holding the crystal in place contain an openwork inscription 
+                  saying "AELFRED MEC HEHT GEWYRCAN", meaning 'Alfred ordered me made'.</p>
               </physDesc>
               <history>
-                <origin>It is generally accepted that the Alfred Jewel dates from the <origDate>late 9th Century</origDate> and
-                  was most likely made in <origPlace>England</origPlace>. </origin>
-                <provenance when="1693">The jewel was discovered in 1693 at Petherton Park, North Petherton in the English county
-                  of Somerset, on land owned by Sir Thomas Wroth. North Petherton is about 8 miles away from Athelney, where King
-                  Alfred founded a monastery. </provenance>
-                <provenance when="1698">A description of the Alfred Jewel was first published in 1698, in the Philosophical
-                  Transactions of the Royal Society.</provenance>
-                <acquisition> It was bequeathed to Oxford University by Colonel Nathaniel Palmer (c. 1661-1718) and today is in
-                  the Ashmolean Museum in Oxford. </acquisition>
+                <origin>It is generally accepted that the Alfred Jewel dates from the 
+                  <origDate>late 9th Century</origDate> and was most likely made in 
+                  <origPlace>England</origPlace>. </origin>
+                <provenance when="1693">The jewel was discovered in 1693 at Petherton Park, 
+                  North Petherton in the English county of Somerset, on land owned by Sir 
+                  Thomas Wroth. North Petherton is about 8 miles away from Athelney, where 
+                  King Alfred founded a monastery. </provenance>
+                <provenance when="1698">A description of the Alfred Jewel was first published 
+                  in 1698, in the Philosophical Transactions of the Royal Society.</provenance>
+                <acquisition> It was bequeathed to Oxford University by Colonel Nathaniel 
+                  Palmer (c. 1661-1718) and today is in the Ashmolean Museum in Oxford. </acquisition>
               </history>
             </object>
           </listObject>
+          </standOff>
 
           <!-- Inside <text>: -->
           <p>
-            The <objectName ref="#MinsterLovellJewel">Minster Lovell Jewel</objectName> is probably the most similar to the
-              <objectName ref="#Alfred-Jewel">Alfred Jewel</objectName> and was found in <placeName ref="#MinsterLovell">Minster
-              Lovell</placeName> in <placeName ref="#Oxfordshire">Oxfordshire</placeName> and is kept at the <orgName ref="#AshmoleanMuseum">Ashmolean Museum</orgName>.
+            The <objectName ref="#MinsterLovellJewel">Minster Lovell Jewel</objectName> is 
+            probably the most similar to the <objectName ref="#Alfred-Jewel">Alfred 
+              Jewel</objectName> and was found in <placeName ref="#MinsterLovell">Minster
+              Lovell</placeName> in <placeName ref="#Oxfordshire">Oxfordshire</placeName> 
+            and is kept at the <orgName ref="#AshmoleanMuseum">Ashmolean Museum</orgName>.
           </p>
+            
         </egXML>
       </p>
 
@@ -2537,58 +2659,67 @@ There is no restriction on the form, size, or type of object that may be describ
                </objectIdentifier>
                <physDesc>
                   <objectDesc>
-                     <p>The Central Library encompasses an area of <dim unit="m" quantity="16000" type="area">16 thousand square
-                           meters</dim> and is built on a three meter platform. The base contains two <material>basalt</material>
+                     <p>The Central Library encompasses an area of <dim unit="m" quantity="16000" type="area">16 thousand square meters</dim> 
+                       and is built on a three meter platform. The base contains two <material>basalt</material>
                         <objectType>fountains</objectType> and <objectType>decorative reliefs</objectType> inspired by
                         pre-Hispanic art.</p>
-                     <p>The library has ten windowless floors for book storage, each having enough space for 120 thousand volumes.
-                        These storage areas have the necessary lighting, temperature and humidty conditions for book conservation.
-                        In the reading room, flanked by a garden on each side, the diffuse and matte light is filtered through
-                           <material>thin tecali stone slabs</material>. The semi-basement of the building contains the service
-                        and administrative offices of the library.</p>
-                     <p>The building facades are covered with one of the largest murals in the world and is made from naturally
-                        colored stone tiles. It is entitled <title>Historical Representation of Culture</title> and is by
+                     <p>The library has ten windowless floors for book storage, each having enough 
+                       space for 120 thousand volumes. These storage areas have the necessary lighting, 
+                       temperature and humidty conditions for book conservation.
+                        In the reading room, flanked by a garden on each side, the diffuse and matte 
+                        light is filtered through <material>thin tecali stone slabs</material>. 
+                       The semi-basement of the building contains the service and administrative offices 
+                       of the library.</p>
+                     <p>The building facades are covered with one of the largest murals in the world and 
+                       is made from naturally colored stone tiles. It is entitled 
+                       <title>Historical Representation of Culture</title> and is by
                            <persName role="artist">Juan O'Gorman</persName>.</p>
                   </objectDesc>
                   <decoDesc>
                      <decoNote>
-                        <label>Base</label> At the base of the building there are two basalt fountains and decorative reliefs
-                        around the outside that are inspired by pre-Hispanic art. The color of the stone in these elements is left
-                        exposed to take advantage of the stone's texture as an aesthetic and expressive element, and to give a
-                        sense of continuity to the external pavement.</decoNote>
+                        <label>Base</label> At the base of the building there are two basalt fountains 
+                       and decorative reliefs around the outside that are inspired by pre-Hispanic art. 
+                       The color of the stone in these elements is leftexposed to take advantage of 
+                       the stone's texture as an aesthetic and expressive element, and to give a sense 
+                       of continuity to the external pavement.</decoNote>
                      <decoNote>
                         <label>Murals</label>
-                        <p>The outside windowless portion of the building contains one of the largest murals in the world. This is
-                           called <title>Historical Representation of the Culture</title> and is a <material>stone polychromatic
-                              mosaic</material> based on the combination of 12 basic colors. The mural is created in an
-                           impressionist style where the coloured tiles when seen from a distance form specific figures. The 12
-                           colors where chosen from 150 samples of original stones with the criteria including the stone's
-                           resistance to degredation by weather. According to the artist, <persName role="artist">Juan
-                              O'Gorman</persName>, in the mosaic he represented three fundamental historical facets of the Mexican
-                           culture: the pre-Hispanic era, the Spanish colonial era, and the modern age. For example with the North
-                           Wall, this represents the pre-Hispanic era and is dominated by mythical elements relating to the
-                           life-death duality. The left side of the main axis there are
-                           deities and scenes pertaining to the creation of life. The right hand side of the mural contains figures
-                           relating to death. For a more detailed description see <ref target="https://en.wikipedia.org/wiki/Central_Library_(UNAM)#Murals">https://en.wikipedia.org/wiki/Central_Library_(UNAM)#Murals</ref>.</p>
+                        <p>The outside windowless portion of the building contains one of the largest 
+                          murals in the world. This is called <title>Historical Representation of the Culture</title> 
+                          and is a <material>stone polychromatic mosaic</material> based on the 
+                          combination of 12 basic colors. The mural is created in an impressionist style 
+                          where the coloured tiles when seen from a distance form specific figures. 
+                          The 12 colors where chosen from 150 samples of original stones with the 
+                          criteria including the stone's resistance to degredation by weather. According 
+                          to the artist, <persName role="artist">Juan O'Gorman</persName>, in the mosaic 
+                          he represented three fundamental historical facets of the Mexican culture: 
+                          the pre-Hispanic era, the Spanish colonial era, and the modern age. For 
+                          example with the North Wall, this represents the pre-Hispanic era and is 
+                          dominated by mythical elements relating to the life-death duality. The left 
+                          side of the main axis there are deities and scenes pertaining to the creation 
+                          of life. The right hand side of the mural contains figures relating to death. 
+                          For a more detailed description see <ref target="https://en.wikipedia.org/wiki/Central_Library_(UNAM)#Murals">https://en.wikipedia.org/wiki/Central_Library_(UNAM)#Murals</ref>.</p>
                      </decoNote>
                   </decoDesc>
                </physDesc>
                <history>
-                  <origin> In <origDate when="1948" type="conceptual">1948</origDate> the architect and artist Juan O'Gorman, in
-                     collaboration with architects Gustavo Saavedra and Juan Martinez de Velasco designed the building with a
-                     functionalist approach, as part of the greater project of the construction of the University City on the
-                     grounds of the Pedregal de San Angel in Mexico City. Originally the building was planned to host the National
-                     Library and National Newspaper Library of Mexico. The library finally opened its doors for the first time on
-                        <origDate when="1956-04-05" type="opening">5 April 1956</origDate>. In July 2007 it was declared a UNESCO
-                     world heritage site. </origin>
+                  <origin> In <origDate when="1948" type="conceptual">1948</origDate> the architect and 
+                    artist Juan O'Gorman, in collaboration with architects Gustavo Saavedra and Juan 
+                    Martinez de Velasco designed the building with a functionalist approach, as part 
+                    of the greater project of the construction of the University City on the grounds 
+                    of the Pedregal de San Angel in Mexico City. Originally the building was planned 
+                    to host the National Library and National Newspaper Library of Mexico. The 
+                    library finally opened its doors for the first time on 
+                    <origDate when="1956-04-05" type="opening">5 April 1956</origDate>. In July 2007 
+                    it was declared a UNESCO world heritage site. </origin>
 
                </history>
                <additional>
                   <adminInfo>
                      <custodialHist>
-                        <custEvent from="1981" to="1983"> The library was significantly remodelled from 1981 - 1983 with the
-                           purpose of changing from closed shelving to open stacks, providing users more direct access to the
-                           collections. </custEvent>
+                        <custEvent from="1981" to="1983"> The library was significantly remodelled 
+                          from 1981 - 1983 with the purpose of changing from closed shelving to open 
+                          stacks, providing users more direct access to the collections. </custEvent>
                      </custodialHist>
                   </adminInfo>
                </additional>
@@ -2604,6 +2735,8 @@ There is no restriction on the form, size, or type of object that may be describ
       <specGrp xml:id="DNDOBJ" n="Names for objects">
         <xi:include href="../../Specs/objectName.xml"/>
         <xi:include href="../../Specs/object.xml"/>
+        <xi:include href="../../Specs/objectContents.xml"/>
+        <xi:include href="../../Specs/objectItem.xml"/>
         <xi:include href="../../Specs/listObject.xml"/>
         <xi:include href="../../Specs/model.objectLike.xml"/>
         <xi:include href="../../Specs/objectIdentifier.xml"/>

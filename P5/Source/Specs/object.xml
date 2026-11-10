@@ -17,16 +17,10 @@
     <sequence>
       <elementRef key="objectIdentifier" minOccurs="1" maxOccurs="unbounded"/>
       <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
-      <!--
-          The desired content model for the following is
-            ( pLike | ( msContents? & physDesc? & history? & additional? ) )
-          but of course we can't use interleave, as DTDs (and maybe XSD)
-          will not support that. See https://github.com/TEIC/TEI/issues/2214.
-        -->
       <alternate>
         <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
-        <!-- Cannot use maxOccurs=4 because resulting content model is ambiguous -->
         <alternate minOccurs="0" maxOccurs="unbounded">
+          <elementRef key="objectContents"/>
           <elementRef key="msContents"/>
           <elementRef key="physDesc"/>
           <elementRef key="history"/>
@@ -108,11 +102,11 @@
               </location>
             </address>
           </objectIdentifier>
-          <msContents>
+          <objectContents>
             <p>The back and shoulders of the mask is inscribed with a protective spell in Egyptian hieroglyphs formed of ten
               vertical and horizontal lines. This spell first appeared on masks in the Middle Kingdom at least 500 years
               before Tutankhamun, and comes from chapter 151 of the <title>Book of the Dead</title>.</p>
-          </msContents>
+          </objectContents>
           <physDesc>
             <p> The mask of Tutankhamun is 54cm x 39.3cm x 49cm. It is constructed from two layers of high-karat gold that
               varies in thickness from 1.5-3mm. It weighs approximately 10.23kg and x-ray crystallography shows that it is
@@ -126,8 +120,8 @@
           </physDesc>
           <history>
             <origin>
-              <p>The mask of Tutankhamun was created in <origPlace>Egypt</origPlace> around <origDate when="-1323" type="circa">1323 BC</origDate>. It is a death mask of the 18th-dynasty ancient Egyptian Pharaoh Tutankhamun
-                who reigned 1332–1323 BC. </p>
+              <p>The mask of Tutankhamun was created in <origPlace>Egypt</origPlace> around <origDate when="-1323" type="circa">1323 BC</origDate>. 
+                It is a death mask of the 18th-dynasty ancient Egyptian Pharaoh Tutankhamun who reigned 1332–1323 BC. </p>
             </origin>
             <provenance>
               <p>The mask of Tutankhamun was found in his burial chamber at Theban Necropolis in the Valley of the Kings in
@@ -161,15 +155,9 @@
     </egXML>
     
   </exemplum>
-<remarks ident="object-remarks" versionDate="2019-12-27" xml:lang="en">
-        <p>
-        <!--JC: Remove warnings of version number after a couple of releases.  -->
-        The <gi>object</gi> element is a recent addition to the TEI P5 Guidelines as of version 3.5.0 and as such may
-        be more prone to further revision in the next few releases as its use develops. This may be particularly evident where its 
-        contents have been borrowed from <gi>msDesc</gi> and have yet to be generalized from their use in the context of manuscript descriptions.  
-        </p>
-  
-  <p>The <gi>object</gi> element may be used for describing any object, text-bearing or not, though where the textuality of the object is the 
+<remarks ident="object-remarks" versionDate="2026-07-09" xml:lang="en">
+        <p>The <gi>object</gi> element derives historically from <gi>msDesc</gi> but is a more generalized version. This may be particularly evident where some of its 
+        contents overlap with those of <gi>msDesc</gi>. The <gi>object</gi> element may be used for describing any object, text-bearing or not, though where the textuality of the object is the 
     primary concern or a collection is mostly composed of manuscripts, encoders may prefer the <gi>msDesc</gi> element (a more specific form of <gi>object</gi>) which may be used not only to
     describe manuscripts but any form of text-bearing objects such as early printed books.    
   </p>
