@@ -51,7 +51,21 @@
             </attList>
             The sequence should be ('klaatu','bodsworth','rugglesby','').
         -->
-        <sch:let name="nsidents" value="for $ad in $defs return                    if ( $ad[                           parent::tei:attList[ @org eq 'choice']                           and                           preceding-sibling::tei:attDef[                             @ident eq $ad/@ident                             and                             ( @ns, $notanamespace )[1] eq ( $ad/@ns, $notanamespace )[1]                             ]                           ]                       )                    then ''                    else normalize-space( if ($ad/@ns) then 'Q{'||$ad/@ns||'}'||$ad/@ident else $ad/@ident )                  "/>
+
+        <sch:let name="nsidents" value="for $ad in $defs return
+                    if ( $ad[
+                           parent::tei:attList[ @org eq 'choice']
+                           and
+                           preceding-sibling::tei:attDef[
+                             @ident eq $ad/@ident
+                             and
+                             ( @ns, $notanamespace )[1] eq ( $ad/@ns, $notanamespace )[1]
+                             ]
+                           ]
+                       )
+                    then ''
+                    else normalize-space( if ($ad/@ns) then 'Q{'||$ad/@ns||'}'||$ad/@ident else $ad/@ident )
+                  "/>
         <!-- get a sequence of any that occur 2+ times: -->
         <sch:let name="dups" value="for $a in $nsidents return ( $nsidents[ . eq $a ][2] )"/>
         <!-- remove any duplicates from the list of duplicates (-: -->
