@@ -18,12 +18,8 @@
     </sequence>
   </content>
   <constraintSpec scheme="schematron" ident="no_dup_default_models" xml:lang="en">
-    <desc versionDate="2016-10-01" xml:lang="en">It is ambigous to have 2 <gi>model</gi>s that have both the same <att>output</att> and have no <att>predicate</att> (and thus select the same set of nodes).</desc>
-    <!-- We cannot possibly check, in general, that two
-         <att>predicate</att>s select the same set of nodes or not.
-         But if two <att>predicate</att>s are equal (or two
-         <gi>model</gi>s do not have <att>predicate</att>s), then they
-         will select the same set of nodes. -->
+    <desc versionDate="2026-09-23" xml:lang="en">When multiple <gi>model</gi>s have both the same <att>output</att> and have no <att>predicate</att>, only the first will be ever applicable.</desc>
+    <!-- Models must be distinguished by their predicates or outputs to be potentially applicable, otherwise the "first matching model" rule will prevent subsequent models from being used. -->
     <constraint>
       <sch:rule context="tei:model[ not( parent::tei:modelSequence ) ][ not( @predicate ) ]">
         <sch:let name="output" value="normalize-space( @output )"/>
@@ -32,14 +28,14 @@
           &lt;<sch:value-of select="local-name(..)"/>&gt; that have no
           predicate, but are targeted to the same output
           ("<sch:value-of select="( $output, parent::modelGrp/@output, 'all')[1]"/>").
+          The second and subsequent such &lt;model&gt; elements will never be used.
         </sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
   <constraintSpec scheme="schematron" ident="no_dup_models" xml:lang="en">
-    <desc versionDate="2016-10-01" xml:lang="en">It is ambigous to have 2 <gi>model</gi>s
-      that have both the same <att>output</att> and the same <att>predicate</att>
-      (and thus select the same set of nodes).</desc>
+    <desc versionDate="2026-09-23" xml:lang="en">When multiple <gi>model</gi>s have both the same <att>output</att> and the same <att>predicate</att>, only the first will be ever applicable.</desc>
+    <!-- Models must be distinguished by their predicates or outputs to be potentially applicable, otherwise the "first matching model" rule will prevent subsequent models from being used. -->
     <constraint>
       <sch:rule context="tei:model[ not( parent::tei:modelSequence ) ][ @predicate ]">
         <sch:let name="predicate" value="normalize-space( @predicate )"/>
@@ -49,19 +45,20 @@
           &lt;<sch:value-of select="local-name(..)"/>&gt; that have
           the same predicate, and are targeted to the same output
           ("<sch:value-of select="( $output, parent::modelGrp/@output, 'all')[1]"/>").
+          The second and subsequent such &lt;model&gt; elements will never be used.
         </sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>
     <attDef ident="behaviour" usage="req">
-      <desc versionDate="2015-08-21" xml:lang="en">names the process or function which this processing model uses in order to produce output.</desc>
+      <desc versionDate="2015-08-21" xml:lang="en">names the process or function which this processing model uses in order to produce output</desc>
       <datatype>
         <dataRef key="teidata.enumerated"/>
       </datatype>
       <valList type="semi">
         <valItem ident="alternate">
-          <desc versionDate="2015-08-21" xml:lang="en">support display of alternative visualisations, for example by displaying the preferred content, by displaying both in parallel, or by toggling between the two.</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">support display of alternative visualisations, for example by displaying the preferred content, by displaying both in parallel, or by toggling between the two</desc>
           <paramList>
             <paramSpec ident="default">
               <desc versionDate="2015-08-21" xml:lang="en">supplies the preferred content</desc>
@@ -72,13 +69,12 @@
           </paramList>
         </valItem>
         <valItem ident="anchor">
-          <desc versionDate="2015-08-21" xml:lang="en">create an identifiable anchor point in the output.</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">create an identifiable anchor point in the output</desc>
           <paramList>
             <paramSpec ident="id">
               <desc versionDate="2016-01-22" xml:lang="en">supplies an identifier for the anchor point</desc>
             </paramSpec>
           </paramList>
-          <!-- why wouldnt this be xml:id ? -->
         </valItem>
         <valItem ident="block">
           <desc versionDate="2015-08-21" xml:lang="en">create a block structure</desc>
@@ -88,7 +84,7 @@
           </paramList>
         </valItem>
         <valItem ident="body">
-          <desc versionDate="2015-08-21" xml:lang="en">create the body of a document.</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">create the body of a document</desc>
           <equiv name="body"/>
           <paramList>
             <paramSpec ident="content"/>
@@ -109,6 +105,7 @@
           </paramList>
         </valItem>
         <valItem ident="cit">
+          <!-- MT: consider removing this behaviour from the suggested list -->
           <desc versionDate="2015-08-21" xml:lang="en">show the content, with an indication of the
             source</desc>
           <paramList>
@@ -167,20 +164,18 @@
           </paramList>
         </valItem>
         <valItem ident="index">
-          <desc versionDate="2015-08-21" xml:lang="en">generate list according to <ident>type</ident>.</desc>
+          <!-- MT: consider removing this behaviour from the suggested list; 
+           it was never implemented anywhere; it's unclear what's supposed to happen and how a generic indexing mechanism would work across outputs and platforms -->
+          <desc versionDate="2015-08-21" xml:lang="en">generate list according to <ident>type</ident></desc>
           <paramList>
             <paramSpec ident="type"/>
           </paramList>
         </valItem>
         <valItem ident="inline">
           <desc versionDate="2015-08-21" xml:lang="en">creates inline element out of <ident>content</ident></desc>
-          <!--if there's something in <gi>outputRendition</gi>, use that
-              formatting otherwise just show text of selected content.-->
           <equiv name="span"/>
           <paramList>
             <paramSpec ident="content"/>
-            <paramSpec ident="label"/>
-            <!-- does what ? -->
           </paramList>
         </valItem>
         <valItem ident="link">
@@ -191,19 +186,20 @@
             <paramSpec ident="uri">
               <desc versionDate="2015-08-21" xml:lang="en">link url</desc>
             </paramSpec>
+            <paramSpec ident="target">
+              <desc versionDate="2026-09-23" xml:lang="en">link target</desc>
+            </paramSpec>
           </paramList>
         </valItem>
         <valItem ident="list">
-          <desc versionDate="2015-08-21" xml:lang="en">create a list.
-            <!--by following
-              <term>content</term>--></desc>
+          <desc versionDate="2016-09-23" xml:lang="en">create a list wrapper</desc>
           <equiv name="ol"/>
           <paramList>
             <paramSpec ident="content"/>
           </paramList>
         </valItem>
         <valItem ident="listItem">
-          <desc versionDate="2015-08-21" xml:lang="en">create a list item.</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">create a list item</desc>
           <equiv name="li"/>
           <paramList>
             <paramSpec ident="content"/>
@@ -211,14 +207,14 @@
         </valItem>
         <valItem ident="metadata">
           <desc versionDate="2015-08-21" xml:lang="en">create metadata section</desc>
-          <!-- eh what? -->
+          <!-- MT: consider removing this behaviour from the suggested list, or limit its scope to formats that support metadata distinct from the document content -->
           <equiv name="head"/>
           <paramList>
             <paramSpec ident="content"/>
           </paramList>
         </valItem>
         <valItem ident="note">
-          <desc versionDate="2015-08-21" xml:lang="en">create a note, often out of line, depending on the value of <ident>place</ident>; could be margin, footnote, endnote, inline</desc>
+          <desc versionDate="2026-09-23" xml:lang="en">create a note</desc>
           <paramList>
             <paramSpec ident="content"/>
             <paramSpec ident="place"/>
@@ -229,13 +225,12 @@
           <desc versionDate="2015-08-21" xml:lang="en">do nothing, do not process children</desc>
         </valItem>
         <valItem ident="paragraph">
-          <desc versionDate="2015-08-21" xml:lang="en">create a paragraph out of <ident>content</ident>.</desc>
+          <desc versionDate="2015-08-21" xml:lang="en">create a paragraph</desc>
           <equiv name="p"/>
           <paramList>
             <paramSpec ident="content"/>
           </paramList>
         </valItem>
-        <!-- how is this different from block ? -->
         <valItem ident="row">
           <desc versionDate="2015-08-21" xml:lang="en">create a table row</desc>
           <equiv name="tr"/>
@@ -320,8 +315,8 @@
         <model predicate="ancestor::p" behaviour="inline">
           <desc versionDate="2015-08-21" xml:lang="en">If it's inside a paragraph then it's inline</desc>
         </model>
-        <model predicate="not(ancestor::p)" behaviour="block">
-          <desc versionDate="2015-08-21" xml:lang="en">If it's not inside a paragraph then it is block level</desc>
+        <model behaviour="block">
+          <desc versionDate="2015-08-21" xml:lang="en">In all other cases it is a block</desc>
         </model>
       </elementSpec>
     </egXML>
@@ -335,9 +330,7 @@
   </exemplum>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-model-egXML-ws">
-      <model behaviour="inline">
-        <outputRendition>font-weight:bold</outputRendition>
-      </model>
+      <model behaviour="inline" cssClass="strong"/>
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
@@ -360,11 +353,12 @@
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-model-egXML-sh" source="#UND">
       <elementSpec mode="change" ident="date">
-        <model output="print" predicate="text()" behaviour="inline"/>
         <model output="print" predicate="@when and not(text())" behaviour="inline">
           <param name="content" value="@when"/>
         </model>
-        <model predicate="@when" output="web" behaviour="alternate">
+        <model output="print" behaviour="inline"/>
+        <model output="web" predicate="@when" behaviour="alternate">
+          <param name="default" value="."/>
           <param name="alternate" value="@when"/>
         </model>
       </elementSpec>
@@ -388,17 +382,18 @@
       </elementSpec>
     </egXML>
   </exemplum>
-  <remarks ident="model-remarks" versionDate="2015-08-21" xml:lang="en">
-    <p>The intended output to be generated for a particular behaviour of a processing model may be
-      documented in one or all of the three following ways. Firstly, the <att>cssClass</att>
+  <remarks ident="model-remarks" versionDate="2026-09-23" xml:lang="en">
+    <p>The intended formatting of the output associated with a model may be
+      documented in any combination of the three following ways. Firstly, the <att>cssClass</att>
       attribute may be used to specify the name of a CSS style in some associated CSS stylesheet
-      which is to be applied to each occurrence of a specified element found (in a given context,
-      for a specified output). Secondly, the attribute <att>useSourceRendition</att> may be used to
-      indicate that the default rendition for occurrences of this element, as defined by a
-        <gi>rendition</gi> element in the document header, should be applied. Thirdly, the styling
-      to be applied may be specified explicitly as content of a child <gi>outputRendition</gi>
-      element. When more than one of these options is used, they are understood to be combined in
+      which is to be applied. Secondly, the attribute <att>useSourceRendition</att> may be used to
+      indicate that the value of the <gi>rendition</gi> attribute for the currently processed element 
+      should be resolved against a <gi>rendition</gi> element defined elsewhere, and thus determined styles be applied.
+      Thirdly, the styling to be applied may be specified explicitly in the <gi>outputRendition</gi> child
+      of the <gi>model</gi> element. When more than one of these options is used, they are understood to be combined in
       accordance with the rules for multiple declaration of the styling language used.</p>
+    <p>The latter approach should be considered discouraged, for separation of concerns and maintainability 
+      the former methods are better suited.</p>
   </remarks>
   <listRef>
     <ptr target="#TDPMPM"/>

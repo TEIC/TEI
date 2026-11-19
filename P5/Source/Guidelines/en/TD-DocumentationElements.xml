@@ -1461,7 +1461,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
         <p>The <gi>modelGrp</gi> element can be used to group together all the processing models which have in
           common a particular intended output, as in the following example:
           <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="TDPMMC-egXML-cj">
-            <modelGrp output="mobile">
+            <modelGrp>
               <model behaviour="inline" predicate="@rend='inline'">
                 <outputRendition>font-size: 7pt;</outputRendition>
               </model>
@@ -1469,7 +1469,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
                 <outputRendition>text-color: red;</outputRendition>
               </model>
             </modelGrp>
-            <modelGrp output="print">
+            <modelGrp>
               <model behaviour="inline" predicate="@rend='inline'">
                 <outputRendition>font-size: 12pt;</outputRendition>
               </model>
@@ -1562,7 +1562,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
           displayed by default whenever a <gi>choice</gi> element is processed for output to the web:
           <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="TDPMMB-egXML-it" source="#UND">
             <elementSpec ident="choice" mode="change">
-              <modelGrp output="web">
+              <modelGrp>
                 <model predicate="sic and corr" behaviour="alternate">
                   <param name="default" value="corr[@cert='high']"/>
                   <param name="alternate" value="sic"/>
@@ -1597,7 +1597,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
         </list>
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="TDPMOU-egXML-pf" source="#UND">
           <elementSpec ident="date" mode="change">
-            <modelGrp output="print">
+            <modelGrp>
               <model predicate="text()" behaviour="inline"/>
               <model predicate="@when and not(text())" behaviour="inline">
                 <param name="content" value="@when"/>
@@ -1727,11 +1727,6 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
             <item>If there are two or more <gi>model</gi> elements provided for an <gi>elementSpec</gi> but
               they have different <att>output</att> attributes then the implementation should choose the
                 <gi>model</gi> appropriate to the desired output. </item>
-            <item>If there are two or more <gi>model</gi> elements provided for an <gi>elementSpec</gi> but
-              they have different <att>predicate</att> attributes then the implementation should choose the
-                <gi>model</gi> whose <att>predicate</att> provides the most specific context (where
-                <term>specific</term> is understood in the same way as in XSLT) <!-- need reference -->
-            </item>
           </list> In the following example, which shows part of the element specification for the <gi>head</gi>
           element, there are two <gi>model</gi> elements, one with and one without a <att>predicate</att>
           attribute:
@@ -1748,17 +1743,6 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
           In this example, an implementation should use the first processing model only for <gi>head</gi>
           elements with a <gi>list</gi> element as parent; for all other <gi>head</gi> elements, the second
           processing model should be used.</p>
-        <!--<p> Where the models are only distinguished by the <att>output</att> attribute, then the
-          taret form of output should determine which <gi>model</gi> element is applicable. In the
-          case of truly ambiguous rules, the implemntation is left to decide how to process these.
-          To be clear, two <gi>model</gi> elements inside an <gi>elementSpec</gi> for the
-            <gi>head</gi> element with no distinguishing <att>output</att> or <att>predicate</att>
-          attributes are not necessarily an error, though an implementation may decide to treat it
-          as such.</p>
-        <p>This lightly specified implementation model should be interpreted as broadly similar to
-          the processing model for XSLT.</p>
--->
-        <!-- deleted the foregoing since it repeats points already made-->
         <specGrp xml:id="TDSG6" n="Elements for documenting processing models">
           <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.xml"/>
           <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/modelSequence.xml"/>
