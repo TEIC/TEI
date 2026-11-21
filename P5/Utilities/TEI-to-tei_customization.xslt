@@ -18,7 +18,7 @@
 
   <!--
     WARNING: The namespaces bindings on the root <xsl:stylesheet> element, above,
-    are interogated and used as the possible <sch:ns> children in the content
+    are interrogated and used as the possible <sch:ns> children in the content
     model of <constraintDecl>. So even if it is not used as a namespace in this
     program, remove at your user’s risk.
   -->
@@ -233,7 +233,7 @@
         </list>
       </change>
       <change who="#sbauman.emt" when="2015-06-19">
-        Fix bug in <name>only-1-per</name> contraint (which was added
+        Fix bug in <name>only-1-per</name> constraint (which was added
         674 days ago — why did this bug last even 1 day?)
       </change>
       <change who="#sbauman.emt" when="2015-01-24">
@@ -261,7 +261,7 @@
       </change>
       <change who="#sbauman.emt" when="2015-01-22">
         <list>
-          <item n="r25493">Re-generate based on current TEI (in preperation for conversion to
+          <item n="r25493">Re-generate based on current TEI (in preparation for conversion to
             <soCalled>Pure ODD</soCalled>)</item>
           <item>Allow <gi>editionStmt</gi> (and <gi>edition</gi>) in the
             <gi>teiHeader</gi></item>
@@ -303,7 +303,7 @@
         <gi>constraint</gi>.
       </change>
       <change who="#sbauman.emt" when="2012-06-17">
-        Remove the new <gi>notatedMusic</gi> and <gi>gb</gi> elments.
+        Remove the new <gi>notatedMusic</gi> and <gi>gb</gi> elements.
       </change>
       <change who="#sbauman.emt" when="2011-09-20">
         <list>
@@ -331,7 +331,7 @@
       <change who="#sbauman.emt" when="2011-09-01">
         <list>
           <item>remove addition of <name type="class">att.identifiable</name> to <name
-            type="class">att.combineable</name>, as it's there already in current P5</item>
+            type="class">att.combinable</name>, as it's there already in current P5</item>
           <item>remove (extraneous?) <gi scheme="Schematron">rule</gi> elements that have no
             <att>context</att></item>
           <item>retro-write several change log entries</item>
@@ -357,7 +357,7 @@
         <list>
           <item>constrain <att>start</att> of <gi>schemaSpec</gi></item>
           <item>constrain <att>key</att> of <gi>elmentRef</gi></item>
-          <item>improve remakrs of <gi>constraint</gi> so that it correctly reflects that we
+          <item>improve remarks of <gi>constraint</gi> so that it correctly reflects that we
           only permit ISO Schematron</item>
           <item>constrain content of <gi>altIdent</gi>, unless it is a child of
           <gi>valItem</gi></item>
@@ -637,7 +637,7 @@
               and customization of the <title>TEI Guidelines</title>,
               and also for the creation (and perhaps customization) of
               other, non-TEI, markup languages. Thus the TEI ODD
-              langauge is, by default, much more flexible than needed
+              language is, by default, much more flexible than needed
               for writing TEI customization ODDs. For example, the
               Guidelines define the <att>key</att> attribute of the
               <gi>moduleRef</gi> element as any XML name (without a
@@ -837,7 +837,7 @@
                 </constraintSpec>
                 <constraintSpec scheme="schematron" ident="no-outside-specs" xml:lang="en">
                   <desc>A <tag>*Spec</tag> element should either be within <gi>schemaSpec</gi>,
-                    or be in a <gi>specGrp</gi> referred to by a <gi>specGrpRef</gi> wihin
+                    or be in a <gi>specGrp</gi> referred to by a <gi>specGrpRef</gi> within
                     <gi>schemaSpec</gi>.</desc>
                   <constraint>
                     <sch:rule context="tei:classSpec[ not( ancestor::tei:schemaSpec ) ]
