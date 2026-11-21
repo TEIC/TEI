@@ -24,7 +24,7 @@
   -->
   
   <xsl:variable name="myName" select="tokenize( static-base-uri(), '/')[last()]"/>
-  <xsl:variable name="version" select="'1.11.0'"/>
+  <xsl:variable name="version" select="'1.12.0'"/>
   <xsl:param name="versionDate" select="format-date(current-date(),'[Y]-[M01]-[D01]')"/>
 
   <!--
@@ -68,6 +68,11 @@
 
   <xsl:variable name="revisionDesc">
     <revisionDesc>
+      <change who="#sbauman.emt" when="2026-11-21">
+        Add and use new datatype "custdata.enumeratedName", which is
+        like teidata.enumerated by is intended for xsd:Name values
+        rather than xsd:tokens that match [^\p{C}\p{Z}]+].
+      </change>
       <change who="#sbauman.emt" when="2026-06-23">
         Change the content models of the grouping elements
         (<gi>alternate</gi>, <gi>interleave</gi>, and
@@ -784,6 +789,16 @@
                 <!-- put extra sanity check here? -->
               </constraintSpec>
 
+              <dataSpec ident="custdata.enumeratedName" mode="add">
+                <desc versionDate="2007-10-22" xml:lang="en">defines
+                the range of attribute values expressed as a single
+                XML Name taken from a list of documented
+                possibilities.</desc>
+                <content>
+                  <dataRef key="teidata.name"/>
+                </content>
+              </dataSpec>
+
               <elementSpec module="tagdocs" ident="schemaSpec" mode="change">
                 <content>
                   <sequence>
@@ -875,7 +890,7 @@
                     <desc xml:lang="en" versionDate="{$versionDate}">specifies entry points to the schema, i.e. which elements may be used as
                       the root of documents conforming to it.</desc>
                     <datatype minOccurs="0" maxOccurs="unbounded">
-                      <dataRef key="teidata.enumerated"/>
+                      <dataRef key="custdata.enumeratedName"/>
                     </datatype>
                     <valList type="closed">
                       <xsl:copy-of select="$elements"/>
@@ -914,7 +929,7 @@
                     <attList>
                       <attDef ident="prefix" usage="req">
                         <datatype minOccurs="1" maxOccurs="1">
-                          <dataRef key="teidata.enumerated"/>
+                          <dataRef key="custdata.enumeratedName"/>
                         </datatype>
                         <valList type="closed">
                           <valItem ident="{name(.)}"/>
@@ -1073,7 +1088,7 @@
                     <desc xml:lang="en" versionDate="{$versionDate}">supplies a list of the elements which are to be copied from the specified
                       module into the schema being defined.</desc>
                     <datatype minOccurs="0" maxOccurs="unbounded">
-                      <dataRef key="teidata.enumerated"/>
+                      <dataRef key="custdata.enumeratedName"/>
                     </datatype>
                     <!-- Note: constraint "include-required" should (in
                          some sense) be defined here, but was moved to
@@ -1086,7 +1101,7 @@
                     <desc xml:lang="en" versionDate="{$versionDate}">supplies a list of the elements which are not to be copied from the
                       specified module into the schema being defined.</desc>
                     <datatype minOccurs="0" maxOccurs="unbounded">
-                      <dataRef key="teidata.enumerated"/>
+                      <dataRef key="custdata.enumeratedName"/>
                     </datatype>
                     <!-- Note: constraint "need-required" should (in
                          some sense) be defined here, but was moved to
@@ -1100,7 +1115,7 @@
                     <!-- key= is because we use <moduleRef> w/ url= in this -->
                     <!-- ODD; not because we ever teach url= in our workshops. -->
                     <datatype minOccurs="1" maxOccurs="1">
-                      <dataRef key="teidata.enumerated"/>
+                      <dataRef key="custdata.enumeratedName"/>
                     </datatype>
                     <valList type="closed">
                       <xsl:copy-of select="$modules"/>
@@ -1113,7 +1128,7 @@
                 <attList>
                   <attDef ident="key" mode="replace" usage="req">
                     <datatype minOccurs="1" maxOccurs="1">
-                      <dataRef key="teidata.enumerated"/>
+                      <dataRef key="custdata.enumeratedName"/>
                     </datatype>
                     <valList type="semi">
                       <xsl:copy-of select="$classes"/>
@@ -1123,7 +1138,7 @@
                     <desc versionDate="2011-09-21" xml:lang="en">supplies a list of class members
                       which are to be included in the schema being defined.</desc>
                     <datatype minOccurs="0" maxOccurs="unbounded">
-                      <dataRef key="teidata.enumerated"/>
+                      <dataRef key="custdata.enumeratedName"/>
                     </datatype>
                     <valList type="semi">
                       <xsl:copy-of select="$atts-from-classes_class-in-desc"/>
@@ -1133,7 +1148,7 @@
                     <desc versionDate="2011-09-21" xml:lang="en">supplies a list of class members
                       which are to be excluded from the schema being defined.</desc>
                     <datatype minOccurs="0" maxOccurs="unbounded">
-                      <dataRef key="teidata.enumerated"/>
+                      <dataRef key="custdata.enumeratedName"/>
                     </datatype>
                     <valList type="semi">
                       <xsl:copy-of select="$atts-from-classes_class-in-desc"/>
@@ -1229,7 +1244,7 @@
                 <attList>
                   <attDef ident="key" mode="replace" usage="req">
                     <datatype minOccurs="1" maxOccurs="1">
-                      <dataRef key="teidata.enumerated"/>
+                      <dataRef key="custdata.enumeratedName"/>
                     </datatype>
                     <valList type="closed">
                       <xsl:copy-of select="$elements"/>
@@ -1473,7 +1488,7 @@
                 <attList>
                   <attDef ident="ident" mode="replace" usage="req">
                     <datatype minOccurs="1" maxOccurs="1">
-                      <dataRef key="teidata.enumerated"/>
+                      <dataRef key="custdata.enumeratedName"/>
                     </datatype>
                     <valList type="semi">
                       <xsl:copy-of select="$elements-module-in-desc"/>
@@ -1582,7 +1597,7 @@
                 <attList>
                   <attDef mode="replace" ident="scheme">
                     <datatype minOccurs="1" maxOccurs="1">
-                      <dataRef key="teidata.enumerated"/>
+                      <dataRef key="custdata.enumeratedName"/>
                     </datatype>
                     <valList type="semi">
                       <valItem ident="imaginary"/>
@@ -1711,7 +1726,7 @@
                 <attList>
                   <attDef ident="module" mode="replace">
                     <datatype minOccurs="1" maxOccurs="1">
-                      <dataRef key="teidata.enumerated"/>
+                      <dataRef key="custdata.enumeratedName"/>
                     </datatype>
                     <valList type="closed">
                       <xsl:copy-of select="$modules"/>
