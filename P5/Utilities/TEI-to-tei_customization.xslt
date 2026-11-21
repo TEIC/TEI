@@ -481,9 +481,9 @@
               <sch:let name="include" value="tokenize( normalize-space(@include),' ')"/>
               <sch:let name="except"  value="tokenize( normalize-space(@except), ' ')"/>
               <sch:assert test="every $gi in $include satisfies $gi = ( {$GILIST} )">One or more of the elements included on the '<sch:value-of
-                select="@key"/>' ＜moduleRef＞ are not actually available in that module</sch:assert>
+                select="@key"/>' &lt;moduleRef> are not actually available in that module</sch:assert>
               <sch:assert test="every $gi in $except  satisfies $gi = ( {$GILIST} )">One or more of the elements excepted on the '<sch:value-of
-                select="@key"/>' ＜moduleRef＞ are not actually available in that module</sch:assert>
+                select="@key"/>' &lt;moduleRef> are not actually available in that module</sch:assert>
             </sch:rule>
           </xsl:if>
         </xsl:for-each>
@@ -767,7 +767,7 @@
               <constraintSpec scheme="schematron" ident="mode-child-sanity" xml:lang="en">
                 <constraint>
                   <sch:rule context="*[ @mode eq 'delete' ]">
-                    <sch:report test="child::*">The specification element ＜<sch:name/>＞ has both a
+                    <sch:report test="child::*">The specification element &lt;<sch:name/>> has both a
                       mode= of "delete" and child elements, which is incongruous</sch:report>
                   </sch:rule>
                   <sch:rule context="
@@ -781,7 +781,7 @@
                     | tei:attDef[ @mode = ('add','change','replace') ]
                     | tei:classes[ @mode = ('add','change','replace') ]">
                     <sch:assert test="child::* | (@* except (@mode, @ident))">The specification
-                      element ＜<sch:name/>＞ has a mode= of "<sch:value-of select="@mode"/>", but
+                      element &lt;<sch:name/>> has a mode= of "<sch:value-of select="@mode"/>", but
                       does not have any child elements or schema-changing attributes, which is
                       incongruous</sch:assert>
                   </sch:rule>
@@ -790,10 +790,9 @@
               </constraintSpec>
 
               <dataSpec ident="custdata.enumeratedName" mode="add">
-                <desc versionDate="2007-10-22" xml:lang="en">defines
-                the range of attribute values expressed as a single
-                XML Name taken from a list of documented
-                possibilities.</desc>
+                <desc versionDate="2026-11-21" xml:lang="en">defines a
+                set of documented values, each expressed as a single
+                XML Name.</desc>
                 <content>
                   <dataRef key="teidata.name"/>
                 </content>
@@ -847,8 +846,8 @@
                                         [ substring-after( normalize-space( @target ), '#') 
                                           eq
                                           current()/ancestor::tei:specGrp/@xml:id ]"
-                        >＜<sch:name/>＞ should be in ＜schemaSpec＞ or referred to from within
-                        ＜schemaSpec＞</sch:assert>
+                        >&lt;<sch:name/>> should be in &lt;schemaSpec> or referred to from within
+                        &lt;schemaSpec></sch:assert>
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
@@ -863,10 +862,10 @@
                   and only 1.</desc>
                   <constraint>
                     <sch:rule context="/">
-                      <sch:report test="count( //tei:schemaSpec ) eq 0">There's no ＜schemaSpec＞, so
+                      <sch:report test="count( //tei:schemaSpec ) eq 0">There's no &lt;schemaSpec>, so
                         this isn't much of a TEI customization</sch:report>
                       <sch:report test="count( //tei:schemaSpec ) gt 1">You have more than one
-                        ＜schemaSpec＞; current ODD processors will only look at the first
+                        &lt;schemaSpec>; current ODD processors will only look at the first
                         one</sch:report>
                     </sch:rule>
                   </constraint>
@@ -996,7 +995,7 @@
                     Schematron schemas that are included in this schema.</desc>
                   <constraint>
                     <sch:rule context="tei:moduleRef[ @url ]">
-                      <sch:assert test="@prefix"> a ＜moduleRef＞ that uses the url= attribute should
+                      <sch:assert test="@prefix"> a &lt;moduleRef> that uses the url= attribute should
                         have a prefix= attribute, too </sch:assert>
                     </sch:rule>
                   </constraint>
@@ -1021,21 +1020,21 @@
                       <xsl:comment> In either case, if &amp; when TEI changes the list of </xsl:comment>
                       <xsl:comment> elements which are *required*, we need to change this </xsl:comment>
                       <xsl:comment> code (in <xsl:value-of select="$myName"/>) manually. </xsl:comment>
-                      <sch:report test="'TEI'=$exceptions">Removing ＜TEI＞ from your schema
+                      <sch:report test="'TEI'=$exceptions">Removing &lt;TEI> from your schema
                       guarantees it is not TEI conformant, and will will likely be outright
                       invalid</sch:report>
-                      <sch:report test="'teiHeader'=$exceptions">Removing ＜teiHeader＞ from your
+                      <sch:report test="'teiHeader'=$exceptions">Removing &lt;teiHeader> from your
                       schema guarantees it is not TEI conformant</sch:report>
-                      <sch:report test="'fileDesc'=$exceptions">Removing ＜fileDesc＞ from your
+                      <sch:report test="'fileDesc'=$exceptions">Removing &lt;fileDesc> from your
                       schema guarantees it is not TEI conformant</sch:report>
-                      <sch:report test="'titleStmt'=$exceptions">Removing ＜titleStmt＞ from your
+                      <sch:report test="'titleStmt'=$exceptions">Removing &lt;titleStmt> from your
                       schema guarantees it is not TEI conformant</sch:report>
-                      <sch:report test="'title'=$exceptions">Removing ＜title＞ from your schema
+                      <sch:report test="'title'=$exceptions">Removing &lt;title> from your schema
                       guarantees it is not TEI conformant</sch:report>
                       <sch:report test="'publicationStmt'=$exceptions">Removing
-                      ＜publicationStmt＞ from your schema guarantees it is not TEI
+                      &lt;publicationStmt> from your schema guarantees it is not TEI
                       conformant</sch:report>
-                      <sch:report test="'sourceDesc'=$exceptions">Removing ＜sourceDesc＞ from
+                      <sch:report test="'sourceDesc'=$exceptions">Removing &lt;sourceDesc> from
                       your schema guarantees it is not TEI conformant</sch:report>
                     </sch:rule>
                   </constraint>
@@ -1044,40 +1043,40 @@
                       <constraint>
                         <sch:rule context="tei:moduleRef[ @key eq 'textstructure' and @include ]">
                           <sch:let name="inclusions" value="tokenize( @include, '\s+' )"/>
-                          <sch:report test="not('TEI'=$inclusions)">Not including ＜TEI＞ in your
+                          <sch:report test="not('TEI'=$inclusions)">Not including &lt;TEI> in your
                             schema guarantees it is not TEI conformant, and will likely be outright
                             invalid</sch:report>
                         </sch:rule>
                         <sch:rule context="tei:moduleRef[ @key eq 'header' and @include ]">
                           <sch:let name="inclusions" value="tokenize( @include, '\s+' )"/>
-                          <sch:report test="not('teiHeader'=$inclusions)">Not including ＜teiHeader＞
+                          <sch:report test="not('teiHeader'=$inclusions)">Not including &lt;teiHeader>
                             in your schema guarantees it is not TEI conformant</sch:report>
                         </sch:rule>
                         <sch:rule context="tei:moduleRef[ @key eq 'header' and @include ]">
                           <sch:let name="inclusions" value="tokenize( @include, '\s+' )"/>
-                          <sch:report test="not('fileDesc'=$inclusions)">Not including ＜fileDesc＞ in
+                          <sch:report test="not('fileDesc'=$inclusions)">Not including &lt;fileDesc> in
                             your schema guarantees it is not TEI conformant</sch:report>
                         </sch:rule>
                         <sch:rule context="tei:moduleRef[ @key eq 'header' and @include ]">
                           <sch:let name="inclusions" value="tokenize( @include, '\s+' )"/>
-                          <sch:report test="not('titleStmt'=$inclusions)">Not including ＜titleStmt＞
+                          <sch:report test="not('titleStmt'=$inclusions)">Not including &lt;titleStmt>
                             in your schema guarantees it is not TEI conformant</sch:report>
                         </sch:rule>
                         <sch:rule context="tei:moduleRef[ @key eq 'header' and @include ]">
                           <sch:let name="inclusions" value="tokenize( @include, '\s+' )"/>
                           <sch:report test="not('publicationStmt'=$inclusions)">Not including
-                            ＜publicationStmt＞ in your schema guarantees it is not TEI
+                            &lt;publicationStmt> in your schema guarantees it is not TEI
                             conformant</sch:report>
                         </sch:rule>
                         <sch:rule context="tei:moduleRef[ @key eq 'header' and @include ]">
                           <sch:let name="inclusions" value="tokenize( @include, '\s+' )"/>
                           <sch:report test="not('sourceDesc'=$inclusions)">Not including
-                            ＜sourceDesc＞ in your schema guarantees it is not TEI
+                            &lt;sourceDesc> in your schema guarantees it is not TEI
                             conformant</sch:report>
                         </sch:rule>
                         <sch:rule context="tei:moduleRef[ @key eq 'core' and @include ]">
                           <sch:let name="inclusions" value="tokenize( @include, '\s+' )"/>
-                          <sch:report test="not('title'=$inclusions)">Not including ＜title＞ in your
+                          <sch:report test="not('title'=$inclusions)">Not including &lt;title> in your
                             schema guarantees it is not TEI conformant</sch:report>
                         </sch:rule>
                       </constraint>
@@ -1427,10 +1426,10 @@
                   <constraint>
                     <sch:rule context="tei:elementSpec">
                       <sch:assert test="@mode">
-                        in a customization ODD, the mode= attribute of ＜elementSpec＞ should be specified
+                        in a customization ODD, the mode= attribute of &lt;elementSpec> should be specified
                       </sch:assert>
                       <sch:report test="not( @module )  and  not( @mode='add')">
-                        the module= attribute of ＜elementSpec＞ must be specified anytime the mode= is not 'add'
+                        the module= attribute of &lt;elementSpec> must be specified anytime the mode= is not 'add'
                       </sch:report>
                     </sch:rule>
                   </constraint>
@@ -1439,27 +1438,27 @@
                   <constraint>
                     <sch:rule context="tei:elementSpec">
                       <sch:report test="//tei:elementSpec[ @ident eq current()/@ident  and  not( . is current() ) ]"
-                      >Current ODD processors will not correctly handle more than one ＜elementSpec＞ with the same @ident</sch:report>
+                      >Current ODD processors will not correctly handle more than one &lt;elementSpec> with the same @ident</sch:report>
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
                 <constraintSpec scheme="schematron" ident="dont-delete-required" xml:lang="en">
                   <constraint>
                     <sch:rule context="tei:elementSpec">
-                      <sch:report test="@mode='delete' and @ident='TEI'">Removing ＜TEI＞ from your
+                      <sch:report test="@mode='delete' and @ident='TEI'">Removing &lt;TEI> from your
                         schema guarantees it is not TEI conformant</sch:report>
-                      <sch:report test="@mode='delete' and @ident='teiHeader'">Removing ＜teiHeader＞
+                      <sch:report test="@mode='delete' and @ident='teiHeader'">Removing &lt;teiHeader>
                         from your schema guarantees it is not TEI conformant</sch:report>
-                      <sch:report test="@mode='delete' and @ident='fileDesc'">Removing ＜fileDesc＞ from
+                      <sch:report test="@mode='delete' and @ident='fileDesc'">Removing &lt;fileDesc> from
                         your schema guarantees it is not TEI conformant</sch:report>
-                      <sch:report test="@mode='delete' and @ident='titleStmt'">Removing ＜titleStmt＞
+                      <sch:report test="@mode='delete' and @ident='titleStmt'">Removing &lt;titleStmt>
                         from your schema guarantees it is not TEI conformant</sch:report>
-                      <sch:report test="@mode='delete' and @ident='title'">Removing ＜title＞ from your
+                      <sch:report test="@mode='delete' and @ident='title'">Removing &lt;title> from your
                         schema guarantees it is not TEI conformant</sch:report>
                       <sch:report test="@mode='delete' and @ident='publicationStmt'">Removing
-                        ＜publicationStmt＞ from your schema guarantees it is not TEI
+                        &lt;publicationStmt> from your schema guarantees it is not TEI
                         conformant</sch:report>
-                      <sch:report test="@mode='delete' and @ident='sourceDesc'">Removing ＜sourceDesc＞
+                      <sch:report test="@mode='delete' and @ident='sourceDesc'">Removing &lt;sourceDesc>
                         from your schema guarantees it is not TEI conformant</sch:report>
                     </sch:rule>
                   </constraint>
@@ -1467,21 +1466,21 @@
                 <constraintSpec scheme="schematron" ident="content_when_adding" xml:lang="en">
                   <constraint>
                     <sch:rule context="tei:elementSpec[ @mode = ('add','replace') ]">
-                      <sch:assert test="tei:content">When adding a new element (whether replacing an old one or not), a content model must be specified; but this ＜elementSpec＞ does not have a ＜content＞ child.</sch:assert>
+                      <sch:assert test="tei:content">When adding a new element (whether replacing an old one or not), a content model must be specified; but this &lt;elementSpec> does not have a &lt;content> child.</sch:assert>
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
                 <constraintSpec scheme="schematron" ident="empty_when_deleting" xml:lang="en">
                   <constraint>
                     <sch:rule context="tei:elementSpec[ @mode eq 'delete']">
-                      <sch:report test="*">When used to delete an element from your schema, the ＜elementSpec＞ should be empty</sch:report>
+                      <sch:report test="*">When used to delete an element from your schema, the &lt;elementSpec> should be empty</sch:report>
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
                 <constraintSpec scheme="schematron" ident="add_implies_ns" xml:lang="en">
                   <constraint>
                     <sch:rule context="tei:elementSpec[ @mode eq 'add'  or  not( @mode ) ]">
-                      <sch:assert test="ancestor-or-self::*/@ns">When used to add an element, ＜elementSpec＞ (or its ancestor ＜schemaSpec＞) should have an @ns attribute.</sch:assert>
+                      <sch:assert test="ancestor-or-self::*/@ns">When used to add an element, &lt;elementSpec> (or its ancestor &lt;schemaSpec>) should have an @ns attribute.</sch:assert>
                     </sch:rule>
                   </constraint>
                 </constraintSpec>
@@ -1743,7 +1742,7 @@
                         <sch:rule context="@xml:id">
                           <sch:let name="myID" value="normalize-space(.)"/>
                           <sch:report test="../(ancestor::*|preceding::*)/@xml:id[ normalize-space(.) eq $myID ]"
-                            >The @xml:id "<sch:value-of select="."/>" on ＜<sch:value-of select="name(..)"/>＞ duplicates an @xml:id found earlier in the document</sch:report>
+                            >The @xml:id "<sch:value-of select="."/>" on &lt;<sch:value-of select="name(..)"/>> duplicates an @xml:id found earlier in the document</sch:report>
                         </sch:rule>
                       </constraint>
                     </constraintSpec>
@@ -1778,7 +1777,7 @@
                                      |tei:schemaSpec[@source]">
                     <sch:assert
                       test="matches(normalize-space(@source), '^tei:([0-9]+\.[0-9]+\.[0-9]+|current)$')"
-                      role="information">The @source attribute of ＜<sch:name/>＞ is not in the
+                      role="information">The @source attribute of &lt;<sch:name/>> is not in the
                       recommended format, which is either "tei:current" or "tei:x.y.z", where x.y.z is a version number.</sch:assert>
                   </sch:rule>
                 </constraint>
