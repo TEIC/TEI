@@ -13,12 +13,18 @@
   <desc versionDate="2007-01-21" xml:lang="it">contiene la documentazione relativa agli attributi associati all'elemento in questione sotto forma di una serie di elementi attDef.</desc>
   <classes>
     <memberOf key="att.global"/>
-    </classes>
+  </classes>
   <content>
     <alternate minOccurs="1" maxOccurs="unbounded">
       <elementRef key="attRef"/>
       <elementRef key="attDef"/>
       <elementRef key="attList"/>
+      <anyElement require="http://relaxng.org/ns/structure/1.0"
+                  except="rng:choice rng:element rng:attribute rng:div rng:except rng:anyName
+                          rng:data rng:define rng:empty rng:externalRef rng:grammar rng:group
+                          rng:include rng:interleave rng:list rng:mixed rng:name
+                          rng:notAllowed rng:nsName rng:oneOrMore rng:optional rng:param
+                          rng:parentRef rng:start rng:text rng:value rng:zeroOrMore"/>
     </alternate>
   </content>
   <constraintSpec ident="no_duplicate_attrs" scheme="schematron" xml:lang="en">
@@ -51,7 +57,21 @@
             </attList>
             The sequence should be ('klaatu','bodsworth','rugglesby','').
         -->
-        <sch:let name="nsidents" value="for $ad in $defs return                    if ( $ad[                           parent::tei:attList[ @org eq 'choice']                           and                           preceding-sibling::tei:attDef[                             @ident eq $ad/@ident                             and                             ( @ns, $notanamespace )[1] eq ( $ad/@ns, $notanamespace )[1]                             ]                           ]                       )                    then ''                    else normalize-space( if ($ad/@ns) then 'Q{'||$ad/@ns||'}'||$ad/@ident else $ad/@ident )                  "/>
+        <sch:let name="nsidents" value="for $ad in $defs return
+                                          if (
+                                            $ad[
+                                              parent::tei:attList[ @org eq 'choice']
+                                              and
+                                              preceding-sibling::tei:attDef[
+                                                @ident eq $ad/@ident
+                                                and
+                                                ( @ns, $notanamespace )[1] eq ( $ad/@ns, $notanamespace )[1]
+                                              ]
+                                            ]
+                                          )
+                                        then ''
+                                        else normalize-space( if ($ad/@ns) then 'Q{'||$ad/@ns||'}'||$ad/@ident else $ad/@ident )
+                                        "/>
         <!-- get a sequence of any that occur 2+ times: -->
         <sch:let name="dups" value="for $a in $nsidents return ( $nsidents[ . eq $a ][2] )"/>
         <!-- remove any duplicates from the list of duplicates (-: -->
@@ -64,6 +84,22 @@
           Within the attribute list defined in "<sch:value-of select="ancestor::*[@ident][1]/@ident"/>",
           the following attributes have been defined multiple times: <sch:value-of select="$distinct_dups"/>.
         </sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="anyElement_workaround_only_rngRef" scheme="schematron" xml:lang="en">
+    <desc>The intent is for the content model of <gi>attList</gi> to
+    allow only <gi>attDef</gi>, <gi>attList</gi>, <gi>attRef</gi>, and
+    <gi>rng:ref</gi> as children of <gi>attList</gi>. However, the current
+    TEI Stylesheets <!-- 7.62.0a --> do not process the
+    <att>except</att> attribute of the <gi>anyElement</gi>
+    properly. This constraint is a workaround for that problem, and
+    should be deleted in its entirety once that problem is fixed.</desc>
+    <constraint>
+      <sch:rule context="tei:attList">
+        <sch:report test="rng:*[ not( self::rng:ref )]">
+          error: element "<sch:value-of select="name(.)"/> not allowed here; expected element "attDef", "attList", "attDef", or "rng:ref".
+        </sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
