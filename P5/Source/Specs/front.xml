@@ -34,21 +34,15 @@
   </classes>
   <content>
     <sequence>
-      <!-- 
-           we start with allowing a group of mixed-up p-like elements.
-           when we are done with them, we can start considering
-           div-like elements, and the things that
-           can occur after them.
-      -->
       <alternate minOccurs="0" maxOccurs="unbounded">
         <classRef key="model.frontPart"/>
+        <classRef key="model.global"/>
+        <classRef key="model.listLike"/>
         <classRef key="model.pLike"/>
         <classRef key="model.pLike.front"/>
-        <classRef key="model.global"/>
       </alternate>
       <sequence minOccurs="0">
         <alternate>
-          <!-- 1. has a div1Like, after optional front parts -->
           <sequence>
             <classRef key="model.div1Like"/>
             <alternate minOccurs="0" maxOccurs="unbounded">
@@ -57,7 +51,6 @@
               <classRef key="model.global"/>
             </alternate>
           </sequence>
-          <!-- 1. has a divLike, after optional front parts -->
           <sequence>
             <classRef key="model.divLike"/>
             <alternate minOccurs="0" maxOccurs="unbounded">
@@ -67,7 +60,6 @@
             </alternate>
           </sequence>
         </alternate>
-        <!-- and some bottoms, mebbe -->
         <sequence minOccurs="0">
           <classRef key="model.divBottom"/>
           <alternate minOccurs="0" maxOccurs="unbounded">
