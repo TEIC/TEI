@@ -3,8 +3,7 @@
 <?xml-model href="https://jenkins.tei-c.org/job/TEIP5-dev/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="modelGrp" xml:id="gi-modelGrp">
   <gloss versionDate="2022-06-09" xml:lang="en">model group</gloss>
-  <desc versionDate="2017-02-07" xml:lang="en">any grouping of <gi>model</gi> or <gi>modelSequence</gi> elements with
-    a common output method.</desc>
+  <desc versionDate="2026-09-22" xml:lang="en">any grouping of <gi>model</gi> or <gi>modelSequence</gi> elements.</desc>
   <classes>
     <memberOf key="att.global"/>
     </classes>
@@ -14,84 +13,44 @@
         <classRef key="model.identEquiv"/>
         <classRef key="model.descLike"/>
       </alternate>
-      <elementRef key="outputRendition" minOccurs="0"/>
       <alternate minOccurs="1" maxOccurs="unbounded">
         <elementRef key="modelSequence"/>
         <elementRef key="model"/>
       </alternate>
     </sequence>
   </content>
-  <attList>
-    <attDef ident="useSourceRendition" usage="opt">
-      <desc versionDate="2015-05-15" xml:lang="en">whether to obey any rendition attribute which is
-        present.</desc>
-      <datatype>
-        <dataRef key="teidata.truthValue"/>
-      </datatype>
-    </attDef>
-    <attDef ident="output" usage="opt">
-      <desc versionDate="2015-05-15" xml:lang="en">the intended output method.</desc>
-      <datatype>
-        <dataRef key="teidata.enumerated"/>
-      </datatype>
-      <valList type="semi">
-        <valItem ident="web">
-          <desc versionDate="2015-05-15" xml:lang="en">the output is intended for presentation in a
-            web format</desc>
-        </valItem>
-        <valItem ident="print">
-          <desc versionDate="2015-05-15" xml:lang="en">the output is intended for presentation in a
-            print format</desc>
-        </valItem>
-        <valItem ident="plaintext">
-          <desc versionDate="2015-05-15" xml:lang="en">the output is intended for presentation in a
-            plain text format</desc>
-        </valItem>
-      </valList>
-    </attDef>
-  </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-modelGrp-egXML-tj">
-      <elementSpec mode="change" ident="abbr">
-        <modelGrp output="web">
-          <model predicate="parent::choice" behaviour="omit"/>
-          <model predicate="ancestor::front" behaviour="inline">
-            <outputRendition>font-style:italic; </outputRendition>
-          </model>
-          <model predicate="not(parent::choice)" behaviour="inline">
-            <outputRendition scope="before">content: ' ('</outputRendition>
-            <outputRendition scope="after">content: ')'</outputRendition>
-          </model>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-modelGrp-egXML-mt" source="#UND">
+      <elementSpec mode="change" ident="choice">
+        <modelGrp>
+          <desc>Models for outputs that are likely to be printed (including Word)</desc>
+          <model output="fo" behaviour="pass-through"/>
+          <model output="print" behaviour="pass-through"/>
+          <model output="docx" behaviour="pass-through"/>
         </modelGrp>
-        <modelGrp output="print">
-          <model predicate="parent::choice" behaviour="omit"/>
-          <model predicate="not(parent::choice)" behaviour="note">
-            <param name="place" value="'foot'"/>
+        <modelGrp>
+          <desc>Models for other outputs, supporting interactive features</desc>
+          <model predicate="$mode='diplomatic'" behaviour="alternate">
+            <desc>For diplomatic mode present source version as default</desc>
+            <param name="default" value="(sic, orig, abbr, tail(seg))"/>
+            <param name="alternate" value="(corr, reg, expan, head(seg))"/>
+          </model>
+          <model behaviour="alternate">
+            <desc>For any other mode or output present edited version as default</desc>
+            <param name="default" value="(corr, reg, expan, head(seg))"/>
+            <param name="alternate" value="(sic, orig, abbr, tail(seg))"/>
           </model>
         </modelGrp>
       </elementSpec>
     </egXML>
   </exemplum>
-  <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:id="gi-modelGrp-egXML-am" source="#UND">
-      <modelGrp output="print">
-        <modelSequence>
-          <model behaviour="inline">
-            <param name="content" value="@n"/>
-          </model>
-          <model behaviour="note">
-            <param name="place" value="'foot'"/>
-          </model>
-        </modelSequence>
-      </modelGrp>
-    </egXML>
-  </exemplum>
   <remarks ident="modelGrp-remarks" versionDate="2015-08-21" xml:lang="en">
-    <!-- <p>The <gi>modelGrp</gi> element may be used to group <gi>model</gi> elements for any purpose
-      but if doing so by major output format (web, print, plaintext) then the <att>output</att>
-      attribute should be used.</p>-->
-    <p>The child <gi>model</gi> elements of a <gi>modelGrp</gi> are always processed
-      independently.</p>
+    <p>The <gi>modelGrp</gi> element may be used to group <gi>model</gi> and <gi>modelSequence</gi> 
+      elements for any purpose. Usually a <gi>desc</gi> element will be used in conjunction, to document 
+      the purpose of the group or any characteristics its members may share.</p>
+    <p>Presence of <gi>modelGrp</gi> does not affect the processing defined by its descendant elements 
+      in any way. The nested <gi>model</gi> and <gi>modelSequence</gi> elements of a <gi>modelGrp</gi> 
+      are always evaluated and processed independently, in accordance with their respective specifications.</p>
   </remarks>
   <listRef>
     <ptr target="#TDPMMC"/>
