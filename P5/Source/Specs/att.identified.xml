@@ -12,6 +12,35 @@
   <classes>
     <memberOf key="att.combinable"/>
   </classes>
+  <constraintSpec ident="unique-per-construct" scheme="schematron" xml:lang="en">
+    <constraint><!--
+          Note: The list of elements we fire on is close to, but *not*
+                the same as, those in att.identified. We do not fire on
+                <attDef>, <paramSpec>, or <schemaSpec> (which are members of
+                att.identified) but do fire on <prefixDef> (which is not).
+                Furthermore, we only fire on one of those elements if
+                it is
+                a) a child of <schemaSpec>, or
+                b) a child of a <specGrp> whose @xml:id is referred to
+                   by a <specGrpRef>.
+                Note also that the ultimate predicate is only used during
+                internal TEI testing procedures; in all other cases the
+                elements found in an <egXML> are not in the TEI
+                namespace but rather in the TEI Examples namespace,
+                and thus would not match, anyway.
+      -->
+      <sch:rule context="(tei:classSpec|tei:constraintSpec|tei:dataSpec|tei:elementSpec|tei:macroSpec|tei:moduleSpec|tei:prefixDef)
+                         [ parent::tei:schemaSpec | parent::tei:specGrp[ key('specGrpRefBYtarget', concat('#', @xml:id ) ) ] ]
+                         [ not( ancestor::tei:egXML ) ]">
+        <sch:let name="keyname" value="local-name(.)||'BYident'"/>
+        <sch:let name="keyuse"
+                 value="@ident||( @ns, parent::tei:schemaSpec/@ns, parent::tei:specGrp[ key('specGrpRefBYtarget', concat('#', @xml:id ) ) ] )[1]"/>
+        <sch:report test="key( $keyname, $keyuse ) except self::*">
+          There is more than one <sch:value-of select="name(.)"/> with ident=<sch:value-of select="@ident"/>
+        </sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <constraintSpec ident="spec-in-module" scheme="schematron" xml:lang="en">
     <!--
       The @context below is somewhat complicated, because we do not
@@ -32,7 +61,12 @@
       this useful test.
     -->
     <constraint>
-      <sch:rule context="( tei:elementSpec[@module] | tei:classSpec[@module] | tei:macroSpec[@module] )[                            ( ancestor::tei:schemaSpec | ancestor::tei:TEI | ancestor::tei:teiCorpus )                            and                            ( //tei:moduleSpec | //tei:moduleRef )                            ]">
+      <sch:rule context="( tei:elementSpec[@module] | tei:classSpec[@module] | tei:macroSpec[@module] )
+                         [
+                           ( ancestor::tei:schemaSpec | ancestor::tei:TEI | ancestor::tei:teiCorpus )
+                           and
+                           ( //tei:moduleSpec | //tei:moduleRef )
+                         ]">
         <sch:assert test="( //tei:moduleSpec/@ident | //tei:moduleRef/@key ) = @module">
           Specification <sch:value-of select="@ident"/>: the value of the module attribute
           ("<sch:value-of select="@module"/>") should correspond to an existing module, via
